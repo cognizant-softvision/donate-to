@@ -1,16 +1,16 @@
 
 <br />
 <p align="center">
-  <h3 align="center">Name of App</h3>
+  <h3 align="center">TBD</h3>
 
   <p align="center">
     A platform to donate resources that we have in our houses to hospitals and NGOs in an easy and secure way.
     <br />
     One for all, All for one!
     <br />
-    <a href="https://github.com/github_username/repo/issues">Report Bug</a>
+    <a href="https://github.com/cognizant-softvision/donate-to/issues">Report Bug</a>
     ·
-    <a href="https://github.com/github_username/repo/issues">Request Feature</a>
+    <a href="https://github.com/cognizant-softvision/donate-to/issues">Request Feature</a>
   </p>
 </p>
 
@@ -57,7 +57,7 @@ Admin users have permission to create an entity and moderate orders and users.
 <!-- ROADMAP -->
 ## Roadmap
 
-See the [open issues](https://github.com/github_username/repo/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/cognizant-softvision/donate-to/issues) for a list of proposed features (and known issues).
 
 
 
@@ -86,4 +86,4 @@ Distributed under the GNU GPLv3 License. See `LICENSE` for more information.
 
 Facundo Lewis - facu.lewis@gmail.com
 
-Project Link: [https://github.com/github_username/repo](https://github.com/github_username/repo)
+Project Link: [https://github.com/cognizant-softvision/donate-to](https://github.com/cognizant-softvision/donate-to)
