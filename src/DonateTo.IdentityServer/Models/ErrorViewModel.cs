@@ -1,5 +1,3 @@
-using System;
-
 namespace DonateTo.IdentityServer.Models
 {
     public class ErrorViewModel
