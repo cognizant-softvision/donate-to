@@ -2,7 +2,7 @@
 
 namespace DonateTo.ApplicationCore.Interfaces.Repositories
 {
-    public interface IUserRepository : IRepository<User, int>
+    public interface IUserRepository : IRepository<User>
     {
     }
 }

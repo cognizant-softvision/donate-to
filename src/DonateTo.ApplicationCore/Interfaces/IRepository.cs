@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using DonateTo.ApplicationCore.Entities;
 
 namespace DonateTo.ApplicationCore.Interfaces
 {
-    public interface IRepository<TEntity, TKey> where TEntity : Entity<TKey> where TKey : IComparable, IFormattable
+    public interface IRepository<TEntity> where TEntity : class , IEntity
     {
         IEnumerable<TEntity> Get();
 
