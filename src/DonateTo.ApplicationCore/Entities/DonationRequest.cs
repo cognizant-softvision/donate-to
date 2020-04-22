@@ -13,7 +13,7 @@ namespace DonateTo.ApplicationCore.Entities
         public Status Status { get; set; }
         public User User { get; set; }
         public IEnumerable<DonationRequestItem> DonationRequestItems { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public DateTime DonationCreatedDate { get; set; }
         public DateTime EditedTime { get; set; }
         public DateTime FinishDate { get; set; }
     }
