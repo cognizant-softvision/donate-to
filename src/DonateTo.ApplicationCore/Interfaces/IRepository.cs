@@ -11,9 +11,9 @@ namespace DonateTo.ApplicationCore.Interfaces
         
         Task<IEnumerable<TEntity>> GetAsync();
 
-        TEntity Get<TKey>(TKey id);
+        TEntity Get(long id);
 
-        Task<TEntity> GetAsync<TKey>(TKey id);
+        Task<TEntity> GetAsync(long id);
 
         TEntity Add(TEntity entity);
 
