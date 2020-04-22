@@ -1,6 +1,6 @@
 ﻿namespace DonateTo.ApplicationCore.Entities
 {
-    public class DonationRequestItem : Entity<int>
+    public class DonationRequestItem : Entity
     {
         public string Title { get; set; }
         public string Observation { get; set; }

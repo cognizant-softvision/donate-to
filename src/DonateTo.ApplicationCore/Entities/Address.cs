@@ -1,6 +1,6 @@
 ﻿namespace DonateTo.ApplicationCore.Entities
 {
-    public class Address : Entity<int>
+    public class Address : Entity
     {
         public string Street { get; set; }
         public string State { get; set; }

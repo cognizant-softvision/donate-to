@@ -9,9 +9,11 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         Task<User> CreateAsync(User todoItem);
 
         User Create(User todoItem);
-        
+
         User Get(int id);
-        
+
+        Task<User> GetAsync(int id);
+
         Task UpdateAsync(User todoItem);
         
         void Update(User todoItem);
@@ -21,5 +23,7 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         void Delete(int id);
         
         IEnumerable<User> Get();
+
+        Task<IEnumerable<User>> GetAsync();
     }
 }

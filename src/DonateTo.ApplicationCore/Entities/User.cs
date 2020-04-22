@@ -1,6 +1,6 @@
 ﻿namespace DonateTo.ApplicationCore.Entities
 {
-    public class User : Entity<int>
+    public class User : Entity
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

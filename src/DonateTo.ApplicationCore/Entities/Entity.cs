@@ -1,11 +1,13 @@
 ﻿using System;
-using DonateTo.ApplicationCore.Interfaces;
 
 namespace DonateTo.ApplicationCore.Entities
 {
-    public abstract class Entity<TKey> : IEntity where TKey : IComparable, IFormattable
+    public abstract class Entity
     {
-        public TKey Id { get; set; }
-        public long CreatedAt { get; set; }
+        public long Id { get; set; }
+        public User CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public User UpdateBy { get; set; }
+        public DateTime UpdateDate { get; set; }
     }
 }

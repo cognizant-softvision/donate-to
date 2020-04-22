@@ -2,7 +2,7 @@
 
 namespace DonateTo.ApplicationCore.Entities
 {
-    public class Donation : Entity<int>
+    public class Donation : Entity
     {
         public string Observation { get; set; }
         public int DayOfWeek { get; set; }

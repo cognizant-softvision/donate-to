@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DonateTo.ApplicationCore.Entities
 {
-    public class DonationRequest : Entity<int>
+    public class DonationRequest : Entity
     {
         public string Title { get; set; }
         public string Observation { get; set; }

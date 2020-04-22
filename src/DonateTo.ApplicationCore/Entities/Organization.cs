@@ -1,6 +1,6 @@
 ﻿namespace DonateTo.ApplicationCore.Entities
 {
-    public class Organization : Entity<int>
+    public class Organization : Entity
     {
         public string Name { get; set; }
         public string Description { get; set; }
