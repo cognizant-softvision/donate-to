@@ -38,7 +38,7 @@ namespace DonateTo.WebApi.Swagger
             return services;
         }
 
-        public static IApplicationBuilder UseSwaggerWithVersioning(this IApplicationBuilder app, IApiVersionDescriptionProvider provider, IConfiguration configuration)
+        public static IApplicationBuilder UseSwaggerWithVersioning(this IApplicationBuilder app, IApiVersionDescriptionProvider provider)
         {
             app.UseSwagger();
             app.UseSwaggerUI(
