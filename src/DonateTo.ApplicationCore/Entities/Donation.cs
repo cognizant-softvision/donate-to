@@ -12,7 +12,5 @@ namespace DonateTo.ApplicationCore.Entities
         public Address Address { get; set; }
         public Status Status { get; set; }
         public DateTime PickUpDate { get; set; }
-        public DateTime DonationCreatedDate { get; set; }
-        public DateTime EditedTime { get; set; }
     }
 }

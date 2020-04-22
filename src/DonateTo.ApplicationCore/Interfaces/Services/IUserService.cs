@@ -6,17 +6,17 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
 {
     public interface IUserService
     {
-        Task<User> CreateAsync(User todoItem);
+        Task<User> CreateAsync(User user);
 
-        User Create(User todoItem);
+        User Create(User user);
 
         User Get(int id);
 
         Task<User> GetAsync(int id);
 
-        Task UpdateAsync(User todoItem);
+        Task UpdateAsync(User user);
         
-        void Update(User todoItem);
+        void Update(User user);
         
         Task DeleteAsync(int id);
         

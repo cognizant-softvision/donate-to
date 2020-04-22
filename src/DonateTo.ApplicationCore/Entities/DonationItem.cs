@@ -10,7 +10,5 @@ namespace DonateTo.ApplicationCore.Entities
         public DonationRequestItem DonationRequestItem { get; set; }
         public Unit Unit { get; set; }
         public Status Status { get; set; }
-        public DateTime DonationCreatedDate { get; set; }
-        public DateTime EditedTime { get; set; }
     }
 }
