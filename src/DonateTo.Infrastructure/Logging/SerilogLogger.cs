@@ -10,9 +10,19 @@ namespace DonateTo.Infrastructure.Logging
             Log.Logger.Debug(template);
         }
 
-        public static void Debug(Exception ex, string template)
+        public static void Debug(string template, Exception ex)
         {
-            Log.Logger.Debug(ex, template);
+            Log.Logger.Debug(template, ex);
+        }
+
+        public static void Information(string template)
+        {
+            Log.Logger.Information(template);
+        }
+
+        public static void Error(string template, Exception ex)
+        {
+            Log.Logger.Error(template, ex);
         }
     }
 }
