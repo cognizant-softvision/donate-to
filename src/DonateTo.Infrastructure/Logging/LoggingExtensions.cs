@@ -10,7 +10,7 @@ namespace DonateTo.Infrastructure.Logging
     {
         public static IServiceCollection AddLoggingToPipeline(this IServiceCollection services, IConfiguration configuration)
         {
-            var cs = configuration.GetSection("ConnectionString:PostgreSQL").Value;
+            var cs = configuration.GetConnectionString("PostgreSQL");
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
                 .WriteTo.PostgreSQL(cs,"Logs")
