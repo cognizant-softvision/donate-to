@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using DonateTo.Infrastructure.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -9,11 +12,14 @@ namespace DonateTo.WebApi.V1.Controllers
     [ApiController]
     public class SampleController : ControllerBase
     {
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<string>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<IEnumerable<string>> Get()
         {
+            Logger.Debug("stasas");
+
             return Ok(new string[] { "value1", "value2" });
         }
         
