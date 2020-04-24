@@ -1,3 +1,4 @@
+using DonateTo.Infrastructure.Logging;
 using DonateTo.WebApi.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,6 +26,8 @@ namespace DonateTo.WebApi
             services.AddVersioning();
 
             services.AddSwagger();
+
+            services.AddLoggingToPipeline(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
