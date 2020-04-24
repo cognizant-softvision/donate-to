@@ -2,7 +2,6 @@
 using DonateTo.Infrastructure.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -17,7 +16,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<IEnumerable<string>> Get()
         {
-            Logger.Debug("stasas");
+            Logger.Debug("Testing Logger");
 
             return Ok(new string[] { "value1", "value2" });
         }

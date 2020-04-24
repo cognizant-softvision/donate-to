@@ -10,17 +10,17 @@ namespace DonateTo.Infrastructure.Logging
     {
         public static IServiceCollection AddLoggingToPipeline(this IServiceCollection services, IConfiguration configuration)
         {
-            var cs = configuration.GetConnectionString("PostgreSQL");
+            var connectionString = configuration.GetConnectionString("PostgreSQL");
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Debug()
-                .WriteTo.PostgreSQL(cs,"Logs")
+                .WriteTo.PostgreSQL(connectionString, "Logs")
                 .WriteTo.Providers(new LoggerProviderCollection())
                 .CreateLogger();
 
-           var loggerFactory = services.BuildServiceProvider().GetRequiredService<ILoggerFactory>();
-           loggerFactory.AddSerilog(Log.Logger);
+            var loggerFactory = services.BuildServiceProvider().GetRequiredService<ILoggerFactory>();
+            loggerFactory.AddSerilog(Log.Logger);
 
-           return services;
+            return services;
         }
     }
 }

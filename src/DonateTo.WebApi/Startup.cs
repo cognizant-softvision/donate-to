@@ -42,7 +42,7 @@ namespace DonateTo.WebApi
 
             app.UseRouting();
 
-            app.UseSwaggerWithVersioning(provider, Configuration);
+            app.UseSwaggerWithVersioning(provider);
 
             app.UseAuthorization();
 
