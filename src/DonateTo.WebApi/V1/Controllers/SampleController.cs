@@ -3,7 +3,6 @@ using DonateTo.Infrastructure.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Serilog;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
