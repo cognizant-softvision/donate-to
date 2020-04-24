@@ -1,7 +1,6 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -20,9 +19,10 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
         {
             return DbContext.Set<TEntity>();
         }
-        public Task<IEnumerable<TEntity>> GetAsync()
+
+        public async Task<IEnumerable<TEntity>> GetAsync()
         {
-            throw new NotImplementedException();
+            return await Task.FromResult(DbContext.Set<TEntity>()).ConfigureAwait(false);
         }
 
         public TEntity Get(long id)
@@ -55,9 +55,11 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
             return entity;
         }
 
-        public Task<TEntity> UpdateAsync(TEntity entity)
+        public async Task<TEntity> UpdateAsync(TEntity entity)
         {
-            throw new NotImplementedException();
+            DbContext.Entry(entity).State = EntityState.Modified;
+
+            return await Task.FromResult(entity).ConfigureAwait(false);
         }
 
         public void Delete(TEntity entity)
@@ -65,9 +67,9 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
             DbContext.Set<TEntity>().Remove(entity);
         }
 
-        public Task DeleteAsync(TEntity entity)
+        public async Task DeleteAsync(TEntity entity)
         {
-            throw new NotImplementedException();
+            await Task.FromResult(DbContext.Set<TEntity>().Remove(entity)).ConfigureAwait(false);
         }
     }
 }
