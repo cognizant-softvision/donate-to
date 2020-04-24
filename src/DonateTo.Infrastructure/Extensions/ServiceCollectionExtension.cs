@@ -13,7 +13,7 @@ namespace DonateTo.Infrastructure.Extensions
         public static void AddEntityFramework(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<DonateToDbContext>(
-                options => options.UseNpgsql(configuration.GetConnectionString("Default"))
+                options => options.UseNpgsql(configuration.GetConnectionString("PostgreSQL"))
             );
 
             services.AddScoped<IUnitOfWork, EntityFrameworkUnitOfWork<DonateToDbContext>>();

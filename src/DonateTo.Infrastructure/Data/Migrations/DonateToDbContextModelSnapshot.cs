@@ -3,17 +3,15 @@ using System;
 using DonateTo.Infrastructure.Data.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace DonateTo.Infrastructure.Migrations
+namespace DonateTo.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(DonateToDbContext))]
-    [Migration("20200423223826_InitialMigration")]
-    partial class InitialMigration
+    partial class DonateToDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
