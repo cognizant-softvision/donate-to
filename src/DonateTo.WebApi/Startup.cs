@@ -16,7 +16,6 @@ namespace DonateTo.WebApi
 
         public Startup(IConfiguration configuration)
         {
-
             Configuration = configuration;
         }
 
