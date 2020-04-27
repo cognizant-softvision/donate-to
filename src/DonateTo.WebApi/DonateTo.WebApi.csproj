@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DonateTo.Infrastructure\DonateTo.Infrastructure.csproj" />
-    <ProjectReference Include="..\DonateTo.Services\DonateTo.Services.csproj" />
   </ItemGroup>
 
 

@@ -1,5 +1,5 @@
 using DonateTo.Infrastructure.Logging;
-using DonateTo.Services.Extensions;
+using DonateTo.WebApi.Middlewares;
 using DonateTo.WebApi.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -41,7 +41,7 @@ namespace DonateTo.WebApi
 
             app.UseHttpsRedirection();
 
-            app.UseExceptionHandlerMiddleware();
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.UseRouting();
 

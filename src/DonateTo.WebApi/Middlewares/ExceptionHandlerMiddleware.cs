@@ -4,7 +4,7 @@ using System.Net;
 using System.Threading.Tasks;
 using DonateTo.Infrastructure.Logging;
 
-namespace DonateTo.Services.Extensions
+namespace DonateTo.WebApi.Middlewares
 {
     public class ExceptionHandlerMiddleware
     {
@@ -36,7 +36,7 @@ namespace DonateTo.Services.Extensions
             return context.Response.WriteAsync(new 
             {
                 context.Response.StatusCode,
-                Message = "Internal Server Error."
+                Message = "An Unhandled Exception Occurred."
             }.ToString());
         }
     }
