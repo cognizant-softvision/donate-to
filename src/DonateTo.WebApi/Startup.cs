@@ -1,6 +1,7 @@
 using DonateTo.Infrastructure.Logging;
 using DonateTo.WebApi.Swagger;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
@@ -11,8 +12,11 @@ namespace DonateTo.WebApi
 {
     public class Startup
     {
+        private const string DonateToCorsPolicy = "_donateToCorsPolicy";
+
         public Startup(IConfiguration configuration)
         {
+
             Configuration = configuration;
         }
 
@@ -25,14 +29,18 @@ namespace DonateTo.WebApi
 
             services.AddVersioning();
 
+            services.AddCors(SetupCorsPolicyAction);
+
             services.AddSwagger();
 
             services.AddLoggingToPipeline(Configuration);
         }
 
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -42,7 +50,7 @@ namespace DonateTo.WebApi
 
             app.UseRouting();
 
-            app.UseCors();
+            app.UseCors(DonateToCorsPolicy);
 
             app.UseSwaggerWithVersioning(provider);
 
@@ -52,6 +60,19 @@ namespace DonateTo.WebApi
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private void SetupCorsPolicyAction(CorsOptions options)
+        {
+            var domains = Configuration.GetSection("WebApiConfig:AllowedDomainCors").Value;
+
+            if (!string.IsNullOrEmpty(domains))
+                options.AddPolicy(
+                    DonateToCorsPolicy,
+                    builder =>
+                    {
+                        builder.WithOrigins(domains.Split(';'));
+                    });
         }
     }
 }
