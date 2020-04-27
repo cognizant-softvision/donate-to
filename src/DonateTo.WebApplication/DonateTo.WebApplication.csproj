@@ -24,9 +24,32 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\shared\components\index.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="ClientApp\i18n\" />
     <Folder Include="ClientApp\hooks\" />
     <Folder Include="ClientApp\config\" />
+    <Folder Include="ClientApp\src\app\auth\login\" />
+    <Folder Include="ClientApp\src\app\auth\register\" />
+    <Folder Include="ClientApp\src\app\shared\animations\" />
+    <Folder Include="ClientApp\src\app\shared\asyncServices\http\" />
+    <Folder Include="ClientApp\src\app\shared\components\header\" />
+    <Folder Include="ClientApp\src\app\shared\components\languageSelector\" />
+    <Folder Include="ClientApp\src\app\shared\components\loadingPlaceholder\" />
+    <Folder Include="ClientApp\src\app\shared\components\spinner\" />
+    <Folder Include="ClientApp\src\app\shared\components\profileActionBar\" />
+    <Folder Include="ClientApp\src\app\shared\components\pageNotFound\" />
+    <Folder Include="ClientApp\src\app\shared\containers\layout\" />
+    <Folder Include="ClientApp\src\app\shared\guards\" />
+    <Folder Include="ClientApp\src\app\shared\models\auth\" />
+    <Folder Include="ClientApp\src\app\shared\utility\" />
+    <Folder Include="ClientApp\src\app\shared\sandbox\" />
+    <Folder Include="ClientApp\src\app\shared\pipes\" />
+    <Folder Include="ClientApp\src\assets\fonts\" />
+    <Folder Include="ClientApp\src\assets\images\" />
+    <Folder Include="ClientApp\src\assets\styles\" />
     <Folder Include="ClientApp\src\shared\async-services\http\" />
     <Folder Include="ClientApp\src\shared\models\" />
     <Folder Include="ClientApp\src\shared\guards\" />
@@ -34,6 +57,10 @@
     <Folder Include="ClientApp\src\shared\store\" />
     <Folder Include="ClientApp\src\styles\" />
     <Folder Include="Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\shared\components\index.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
