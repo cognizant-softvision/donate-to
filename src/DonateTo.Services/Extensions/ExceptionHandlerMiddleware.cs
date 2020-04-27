@@ -36,7 +36,7 @@ namespace DonateTo.Services.Extensions
             return context.Response.WriteAsync(new 
             {
                 context.Response.StatusCode,
-                Message = "Internal Server Error from the custom middleware."
+                Message = "Internal Server Error."
             }.ToString());
         }
     }
