@@ -67,12 +67,13 @@ namespace DonateTo.WebApi
             var domainsAllowed = Configuration.GetSection("WebApiConfig:AllowedDomainCors").Value;
 
             if (!string.IsNullOrEmpty(domainsAllowed))
+            {
                 options.AddPolicy(
                     DonateToCorsPolicy,
-                    builder =>
-                    {
+                    builder =>{
                         builder.WithOrigins(domainsAllowed.Split(';'));
                     });
+            }
         }
     }
 }
