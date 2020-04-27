@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\shared\components\index.ts" />
+    <None Remove="ClientApp\src\app\shared\store\index.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +45,9 @@
     <Folder Include="ClientApp\src\app\shared\containers\layout\" />
     <Folder Include="ClientApp\src\app\shared\guards\" />
     <Folder Include="ClientApp\src\app\shared\models\auth\" />
+    <Folder Include="ClientApp\src\app\shared\store\actions\" />
+    <Folder Include="ClientApp\src\app\shared\store\effects\" />
+    <Folder Include="ClientApp\src\app\shared\store\reducers\" />
     <Folder Include="ClientApp\src\app\shared\utility\" />
     <Folder Include="ClientApp\src\app\shared\sandbox\" />
     <Folder Include="ClientApp\src\app\shared\pipes\" />
@@ -61,6 +65,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\shared\components\index.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\shared\store\index.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
