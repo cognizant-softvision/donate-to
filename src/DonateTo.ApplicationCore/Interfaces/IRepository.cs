@@ -14,6 +14,10 @@ namespace DonateTo.ApplicationCore.Interfaces
 
         Task<TEntity> GetAsync(long id);
 
+        IEnumerable<TEntity> GetPaged(int page, int pageSize);
+
+        Task <IEnumerable<TEntity>> GetPagedAsync(int page, int pageSize);
+
         TEntity Add(TEntity entity);
 
         Task<TEntity> AddAsync(TEntity entity);

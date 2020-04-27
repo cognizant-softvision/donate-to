@@ -4,14 +4,14 @@ namespace DonateTo.Infrastructure.Data.Pagination
 {
     public class PagedResult<T> : PagedResultBase where T : class
     {
-        private IList<T> results;
+        private IEnumerable<T> results;
 
-        public IList<T> GetResults()
+        public IEnumerable<T> GetResults()
         {
             return results;
         }
 
-        public void SetResults(IList<T> value)
+        public void SetResults(IEnumerable<T> value)
         {
             results = value;
         }
