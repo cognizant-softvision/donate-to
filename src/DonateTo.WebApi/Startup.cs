@@ -64,14 +64,14 @@ namespace DonateTo.WebApi
 
         private void SetupCorsPolicyAction(CorsOptions options)
         {
-            var domains = Configuration.GetSection("WebApiConfig:AllowedDomainCors").Value;
+            var domainsAllowed = Configuration.GetSection("WebApiConfig:AllowedDomainCors").Value;
 
-            if (!string.IsNullOrEmpty(domains))
+            if (!string.IsNullOrEmpty(domainsAllowed))
                 options.AddPolicy(
                     DonateToCorsPolicy,
                     builder =>
                     {
-                        builder.WithOrigins(domains.Split(';'));
+                        builder.WithOrigins(domainsAllowed.Split(';'));
                     });
         }
     }
