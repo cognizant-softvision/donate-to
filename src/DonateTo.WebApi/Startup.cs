@@ -42,6 +42,8 @@ namespace DonateTo.WebApi
 
             app.UseRouting();
 
+            app.UseCors();
+
             app.UseSwaggerWithVersioning(provider);
 
             app.UseAuthorization();
