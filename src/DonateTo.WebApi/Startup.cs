@@ -35,11 +35,9 @@ namespace DonateTo.WebApi
             services.AddLoggingToPipeline(Configuration);
         }
 
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -69,7 +67,8 @@ namespace DonateTo.WebApi
             {
                 options.AddPolicy(
                     DonateToCorsPolicy,
-                    builder =>{
+                    builder =>
+                    {
                         builder.WithOrigins(domainsAllowed.Split(';'));
                     });
             }
