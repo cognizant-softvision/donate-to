@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using DonateTo.ApplicationCore.Entities;
+using DonateTo.ApplicationCore.Models.Pagination;
 
 namespace DonateTo.ApplicationCore.Interfaces
 {
@@ -14,9 +15,9 @@ namespace DonateTo.ApplicationCore.Interfaces
 
         Task<TEntity> GetAsync(long id);
 
-        IEnumerable<TEntity> GetPaged(int page, int pageSize);
+        PagedResult<TEntity> GetPaged(int page, int pageSize);
 
-        Task <IEnumerable<TEntity>> GetPagedAsync(int page, int pageSize);
+        Task <PagedResult<TEntity>> GetPagedAsync(int page, int pageSize);
 
         TEntity Add(TEntity entity);
 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DonateTo.Infrastructure.Data.Pagination
+namespace DonateTo.ApplicationCore.Models.Pagination
 {
     public class PagedResult<T> : PagedResultBase where T : class
     {

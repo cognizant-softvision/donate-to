@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DonateTo.Infrastructure.Data.Pagination
+namespace DonateTo.ApplicationCore.Models.Pagination
 {
     public abstract class PagedResultBase
     {
