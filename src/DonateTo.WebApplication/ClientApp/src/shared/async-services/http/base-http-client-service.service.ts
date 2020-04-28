@@ -7,7 +7,8 @@ import { Base } from 'src/shared/models/base';
 @Injectable({
     providedIn: 'root'
 })
-export class BaseService<T extends Base> {
+
+export class BaseHttpClientService<T extends Base> {
     constructor(
       private httpClient: HttpClient,
       private url: string,
@@ -18,12 +19,10 @@ export class BaseService<T extends Base> {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
 
-  //#region [ Public ]
   get(): Observable<T[]> {
     return this.httpClient
       .get<T[]>(`${this.url}/${this.endpoint}`)
       .pipe(
-        retry(2),
         catchError(this.handleError)
       );
   }
@@ -32,7 +31,6 @@ export class BaseService<T extends Base> {
     return this.httpClient
       .get<T>(`${this.url}/${this.endpoint}/${id}`)
       .pipe(
-        retry(2),
         catchError(this.handleError)
       );
   }
@@ -41,7 +39,6 @@ export class BaseService<T extends Base> {
     return this.httpClient
     .post<T>(`${this.url}/${this.endpoint}`, JSON.stringify(item), this.httpOptions)
       .pipe(
-        retry(2),
         catchError(this.handleError)
       );
   }
@@ -49,7 +46,6 @@ export class BaseService<T extends Base> {
   update(item: T): Observable<T> {
     return this.httpClient.put<T>(`${this.url}/${this.endpoint}/${item.id}`, JSON.stringify(item), this.httpOptions)
       .pipe(
-        retry(2),
         catchError(this.handleError)
       );
   }
@@ -57,13 +53,10 @@ export class BaseService<T extends Base> {
   delete(item: T) {
     return this.httpClient.delete<T>(`${this.url}/${this.endpoint}/${item.id}`, this.httpOptions)
       .pipe(
-        retry(2),
         catchError(this.handleError)
       );
   }
-  //#endregion
 
-  //#region [ Private ]
   private handleError(error: HttpErrorResponse){
     let errorMessage = '';
 
@@ -72,10 +65,9 @@ export class BaseService<T extends Base> {
       errorMessage = error.error.message;
     } else {
       // error server
-      errorMessage = `Código do erro: ${error.status}, ` + `mensagem: ${error.message}`;
+      errorMessage = `Error code: ${error.status}, ` + `message: ${error.message}`;
     }
 
     return throwError(errorMessage);
   }
-  //#endregion
 }
