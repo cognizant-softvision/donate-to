@@ -1,5 +1,7 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces;
+using DonateTo.ApplicationCore.Models.Pagination;
+using DonateTo.Infrastructure.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -75,6 +77,18 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
         public async Task DeleteAsync(TEntity entity)
         {
             await Task.FromResult(DbContext.Set<TEntity>().Remove(entity)).ConfigureAwait(false);
+        }
+
+        ///<inheritdoc cref="IRepository{TEntity}"/>
+        public PagedResult<TEntity> GetPaged(int page, int pageSize)
+        {
+            return DbContext.Set<TEntity>().GetPaged(page, pageSize);
+        }
+
+        ///<inheritdoc cref="IRepository{TEntity}"/>
+        public async Task<PagedResult<TEntity>> GetPagedAsync(int page, int pageSize)
+        {
+            return await DbContext.Set<TEntity>().GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
     }
 }

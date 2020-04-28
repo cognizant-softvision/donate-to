@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using DonateTo.ApplicationCore.Entities;
+using DonateTo.ApplicationCore.Models.Pagination;
 
 namespace DonateTo.ApplicationCore.Interfaces
 {
@@ -35,6 +36,22 @@ namespace DonateTo.ApplicationCore.Interfaces
         /// <param name="id">Entity id.</param>
         /// <returns>Task of TEntity.</returns>
         Task<TEntity> GetAsync(long id);
+        
+        /// <summary>
+        ///     Gets a list of paged entities by page and page size. 
+        /// </summary>
+        /// <param name="page">Number of the page to be obtained.</param>
+        /// <param name="pageSize">Max number of rows in a specific page.</param>
+        /// <returns>PagedResult of TEntity.</returns>
+        PagedResult<TEntity> GetPaged(int page, int pageSize);
+
+        /// <summary>
+        ///     Gets a list of paged entities by page and page size async.
+        /// </summary>
+        /// <param name="page">Number of the page to be obtained.</param>
+        /// <param name="pageSize">Max number of rows in a specific page.</param>
+        /// <returns>Task of PagedResult of TEntity.</returns>
+        Task<PagedResult<TEntity>> GetPagedAsync(int page, int pageSize);
 
         /// <summary>
         ///     Add an entity.
