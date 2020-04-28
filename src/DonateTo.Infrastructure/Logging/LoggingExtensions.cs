@@ -11,8 +11,8 @@ namespace DonateTo.Infrastructure.Logging
         /// <summary>
         ///     Add a Logger to the logging pipeline.
         /// </summary>
-        /// <param name="services">IServiceCollection</param>
-        /// <param name="configuration">IConfiguration</param>
+        /// <param name="services">IServiceCollection.</param>
+        /// <param name="configuration">IConfiguration.</param>
         /// <returns></returns>
         public static IServiceCollection AddLoggingToPipeline(this IServiceCollection services, IConfiguration configuration)
         {
