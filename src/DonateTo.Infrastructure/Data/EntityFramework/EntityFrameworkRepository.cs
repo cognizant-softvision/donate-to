@@ -74,11 +74,13 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
             await Task.FromResult(DbContext.Set<TEntity>().Remove(entity)).ConfigureAwait(false);
         }
 
+        ///<inheritdoc cref="IRepository{TEntity}"/>
         public PagedResult<TEntity> GetPaged(int page, int pageSize)
         {
             return DbContext.Set<TEntity>().GetPaged(page, pageSize);
         }
 
+        ///<inheritdoc cref="IRepository{TEntity}"/>
         public async Task<PagedResult<TEntity>> GetPagedAsync(int page, int pageSize)
         {
             return await DbContext.Set<TEntity>().GetPagedAsync(page, pageSize).ConfigureAwait(false);

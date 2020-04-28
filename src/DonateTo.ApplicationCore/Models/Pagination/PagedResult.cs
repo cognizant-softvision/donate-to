@@ -1,24 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DonateTo.ApplicationCore.Models.Pagination
 {
-    public class PagedResult<T> : PagedResultBase where T : class
+    public class PagedResult<T> where T : class
     {
-        private IEnumerable<T> results;
+        public int CurrentPage { get; set; }
+        public int PageCount { get; set; }
+        public int PageSize { get; set; }
+        public int RowCount { get; set; }
 
-        public IEnumerable<T> GetResults()
+        public IEnumerable<T> Results { get; set; }
+
+        public int FirstRowOnPage
         {
-            return results;
+            get { return (CurrentPage - 1) * PageSize + 1; }
         }
 
-        public void SetResults(IEnumerable<T> value)
+        public int LastRowOnPage
         {
-            results = value;
+            get { return Math.Min(CurrentPage * PageSize, RowCount); }
         }
 
         public PagedResult()
         {
-            SetResults(new List<T>());
+            Results = new List<T>();
         }
     }
 }
