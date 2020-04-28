@@ -8,12 +8,20 @@ export class ErrorService {
 
     constructor() { }
 
+    /**
+   * Adds a new value to the Subject
+   *
+   * @param errors - List of string
+   * @returns void
+   */
     public addErrors = (errors: string[]): void =>
         this.errors.next(errors)
 
+    /**
+   *  Observable that the Subject casts to
+   *
+   * @returns Observable
+   */
     public getErrors = () =>
         this.errors.asObservable()
-
-    // Could implement a method that shows the error
-    public show(error: string) {}
 }
