@@ -2,6 +2,7 @@ using DonateTo.Infrastructure.Logging;
 using DonateTo.WebApi.Middlewares;
 using DonateTo.WebApi.Swagger;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +14,8 @@ namespace DonateTo.WebApi
 {
     public class Startup
     {
+        private const string DonateToCorsPolicy = "_donateToCorsPolicy";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -26,6 +29,8 @@ namespace DonateTo.WebApi
             services.AddControllers();
 
             services.AddVersioning();
+
+            services.AddCors(SetupCorsPolicyAction);
 
             services.AddSwagger();
 
@@ -48,6 +53,8 @@ namespace DonateTo.WebApi
 
             app.UseRouting();
 
+            app.UseCors(DonateToCorsPolicy);
+
             app.UseSwaggerWithVersioning(provider);
 
             app.UseAuthorization();
@@ -56,6 +63,21 @@ namespace DonateTo.WebApi
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private void SetupCorsPolicyAction(CorsOptions options)
+        {
+            var domainsAllowed = Configuration.GetSection("WebApiConfig:AllowedDomainCors").Value;
+
+            if (!string.IsNullOrEmpty(domainsAllowed))
+            {
+                options.AddPolicy(
+                    DonateToCorsPolicy,
+                    builder =>
+                    {
+                        builder.WithOrigins(domainsAllowed.Split(';'));
+                    });
+            }
         }
     }
 }

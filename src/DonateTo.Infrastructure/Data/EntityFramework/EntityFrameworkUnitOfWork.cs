@@ -4,6 +4,10 @@ using System.Threading.Tasks;
 
 namespace DonateTo.Infrastructure.Data.EntityFramework
 {
+    /// <summary>
+    ///     Implementation of Unit of Work using Entity Framework Core
+    /// </summary>
+    /// <typeparam name="TContext"></typeparam>
     public class EntityFrameworkUnitOfWork<TContext> : IUnitOfWork where TContext : DbContext
     {
         private readonly TContext _dbContext;
