@@ -20,30 +20,23 @@ services:
     networks:
      - postgres_donate
 
- indetity_server_donate:
-    image: identity_server_donate
-    container_name: identity_server_donate
-    build:
-      context: .
-      dockerfile: DonateTo.IdentityServer/Dockerfile
-
- webapp_donate:
-    image: webapp_donate
-    container_name: webapp_donate
-    build:
-      context: .
-      dockerfile: DonateTo.WebApp/Dockerfile
-    depends_on:
-      -identity_server_donate
-    ports:
-      - "8080:80"
+  webapi_donate:
+     image: webapi_donate
+     container_name: webapi_donate
+     build:
+       context: .
+       dockerfile: src/DonateTo.WebApi/Dockerfile
+     ports:
+       - "8080:80"
 
   webapplication_donate:
     image: webapplication_donate
     container_name: webapplication_donate
     build:
       context: .
-      dockerfile: DonateTo.WebApplication/Dockerfile
-    depends_on:
-      -identity_server_donate
-      -webapp_donate
+      dockerfile: src/DonateTo.WebApplication/Dockerfile
+    ports:
+        - "8080:80"
+
+volumes:
+  db_volume:
