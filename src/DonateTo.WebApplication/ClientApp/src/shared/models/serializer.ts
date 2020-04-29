@@ -1,6 +1,6 @@
-import { Base } from "./base";
+import { BaseModel } from './baseModel';
 
 export interface Serializer {
-    fromJson(json: any): Base;
-    toJson(resource: Base): any;
+    fromJson(json: any): BaseModel;
+    toJson(resource: BaseModel): any;
   }

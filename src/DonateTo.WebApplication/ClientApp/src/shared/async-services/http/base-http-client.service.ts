@@ -2,15 +2,14 @@
 import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpInterceptor, HttpRequest, HttpHandler } from '@angular/common/http';
 import { retry, catchError, map } from 'rxjs/operators';
-import { Base } from 'src/shared/models/base';
-import { environment } from '../../../environments/environment';
+import { BaseModel } from 'src/shared/models/baseModel';
 import { Serializer } from 'src/shared/models/serializer';
 
 @Injectable({
     providedIn: 'root'
 })
 
-export class BaseHttpClientService<T extends Base> {
+export class BaseHttpClientService<T extends BaseModel> {
     constructor(
       private httpClient: HttpClient,
       private url: string,

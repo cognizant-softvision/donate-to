@@ -17,8 +17,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpErrorInterceptor } from 'src/shared/async-services/http/http-error.interceptor';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
