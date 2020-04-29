@@ -1,13 +1,13 @@
 version: '3.4'
 
 networks:
-    postgres_donate:
+    postgres_donateto:
         driver: bridge
 
 services:
-  postgres_donate:
+  postgres_donateto:
     image: postgres:10.0-alpine
-    container_name: donate_postgres
+    container_name: donateto_postgres
     ports:
       - "5432:5432"
     restart: always
@@ -18,25 +18,27 @@ services:
       POSTGRES_PASSWORD: "donate"
       POSTGRES_DB: "donate"
     networks:
-     - postgres_donate
+     - postgres_donateto
 
-  webapi_donate:
-     image: webapi_donate
-     container_name: webapi_donate
+  webapi_donateto:
+     image: webapi_donateto
+     container_name: webapi_donateto
      build:
        context: .
        dockerfile: src/DonateTo.WebApi/Dockerfile
      ports:
        - "8080:80"
+       - "8081:433"
 
-  webapplication_donate:
-    image: webapplication_donate
-    container_name: webapplication_donate
+  webapplication_donateto:
+    image: webapplication_donateto
+    container_name: webapplication_donateto
     build:
       context: .
       dockerfile: src/DonateTo.WebApplication/Dockerfile
     ports:
         - "8080:80"
+        - "8081:433"
 
 volumes:
   db_volume:
