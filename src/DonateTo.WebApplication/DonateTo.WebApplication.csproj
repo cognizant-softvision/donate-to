@@ -33,7 +33,6 @@
   <ItemGroup>
     <Folder Include="ClientApp\i18n\" />
     <Folder Include="ClientApp\hooks\" />
-    <Folder Include="ClientApp\config\" />
     <Folder Include="ClientApp\src\app\auth\login\" />
     <Folder Include="ClientApp\src\app\auth\register\" />
     <Folder Include="ClientApp\src\app\shared\animations\" />
