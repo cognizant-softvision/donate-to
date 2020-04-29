@@ -1,45 +1,30 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class BaseApiController : ControllerBase
+    public abstract class BaseApiController<T> : ControllerBase where T : class
     {
-        // GET: api/BaseApi
         [HttpGet]
-        public ActionResult <IEnumerable<string>> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public abstract ActionResult<IEnumerable<T>> Get();
 
-        // GET: api/BaseApi/5
         [HttpGet("{id}", Name = "Get")]
-        public ActionResult <string> Get(int id)
-        {
-            return "value";
-        }
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public abstract ActionResult<IEnumerable<T>> Get(int id);
 
-        // POST: api/BaseApi
         [HttpPost]
-        public IActionResult Post([FromBody] string value)
-        {
-            return Ok();
-        }
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public abstract IActionResult Post([FromBody] string value);
 
-        // PUT: api/BaseApi/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] string value)
-        {
-            return Ok();
-        }
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public abstract IActionResult Put(int id, [FromBody] string value);
 
-        // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            return Ok();
-        }
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public abstract IActionResult Delete(int id);
     }
 }
