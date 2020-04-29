@@ -8,6 +8,11 @@ namespace DonateTo.WebApi.Swagger
 {
     public static class SwaggerExtensions
     {
+        /// <summary>
+        ///     Add service API versioning to the collection.
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
         public static IServiceCollection AddVersioning(this IServiceCollection services)
         {
             services.AddApiVersioning(
@@ -26,6 +31,11 @@ namespace DonateTo.WebApi.Swagger
             return services;
         }
 
+        /// <summary>
+        ///     Add Swagger to the collection.
+        /// </summary>
+        /// <param name="services">IServiceCollection.</param>
+        /// <returns></returns>
         public static IServiceCollection AddSwagger(this IServiceCollection services)
         {
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, SwaggerOptions>();
@@ -35,6 +45,13 @@ namespace DonateTo.WebApi.Swagger
             return services;
         }
 
+        /// <summary>
+        ///     Add SwaggerUI to the ASP.NET Core pipeline. This method generate
+        ///     the SwaggerUI for each specified API version.
+        /// </summary>
+        /// <param name="app">IApplicationBuilder.</param>
+        /// <param name="provider">IApiVersionDescriptionProvider.</param>
+        /// <returns></returns>
         public static IApplicationBuilder UseSwaggerWithVersioning(this IApplicationBuilder app, IApiVersionDescriptionProvider provider)
         {
             app.UseSwagger();

@@ -26,12 +26,13 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\shared\components\index.ts" />
     <None Remove="ClientApp\src\app\shared\store\index.ts" />
+    <None Remove="ClientApp\src\shared\async-services\http\base-service.service.ts" />
+    <None Remove="ClientApp\src\shared\models\base.ts" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="ClientApp\i18n\" />
     <Folder Include="ClientApp\hooks\" />
-    <Folder Include="ClientApp\config\" />
     <Folder Include="ClientApp\src\app\auth\login\" />
     <Folder Include="ClientApp\src\app\auth\register\" />
     <Folder Include="ClientApp\src\app\shared\animations\" />
@@ -54,8 +55,6 @@
     <Folder Include="ClientApp\src\assets\fonts\" />
     <Folder Include="ClientApp\src\assets\images\" />
     <Folder Include="ClientApp\src\assets\styles\" />
-    <Folder Include="ClientApp\src\shared\async-services\http\" />
-    <Folder Include="ClientApp\src\shared\models\" />
     <Folder Include="ClientApp\src\shared\guards\" />
     <Folder Include="ClientApp\src\shared\components\" />
     <Folder Include="ClientApp\src\shared\store\" />
@@ -66,6 +65,8 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\app\shared\components\index.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\shared\store\index.ts" />
+    <TypeScriptCompile Include="ClientApp\src\shared\async-services\http\base-service.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\shared\models\base.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
