@@ -1,11 +1,17 @@
 import { BrowserModule } from '@angular/platform-browser';
+
 // Angular core modules
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+
+// Routes
+import { AppRoutingModule } from './app-routing.module';
 
 // Modules
+import { AuthModule } from './auth/auth.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
@@ -31,6 +37,12 @@ import { DonationEffects } from './shared/store/donation/effects';
     DonationListComponent
   ],
   imports: [
+    AppRoutingModule,
+    // Angular core dependencies
+    BrowserModule,
+    FormsModule,
+    CommonModule,
+
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
@@ -40,6 +52,8 @@ import { DonationEffects } from './shared/store/donation/effects';
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ]),
+    EffectsModule.forRoot([]),
+    AuthModule
     StoreModule.forRoot({ donation: DonationReducer }),
     EffectsModule.forRoot([DonationEffects])
   ],

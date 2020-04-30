@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using DonateTo.ApplicationCore.Models.Pagination;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using DonateTo.ApplicationCore.Entities;
-using DonateTo.ApplicationCore.Models.Pagination;
 
 namespace DonateTo.ApplicationCore.Interfaces
 {
@@ -9,7 +8,7 @@ namespace DonateTo.ApplicationCore.Interfaces
     ///     Interface to implement the Repository Pattern.
     /// </summary>
     /// <typeparam name="TEntity">Entity.</typeparam>
-    public interface IRepository<TEntity> where TEntity : Entity
+    public interface IRepository<TEntity> where TEntity : class
     {
         /// <summary>
         ///     Get a list of entities.

@@ -2,8 +2,8 @@
 import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpInterceptor, HttpRequest, HttpHandler } from '@angular/common/http';
 import { retry, catchError, map } from 'rxjs/operators';
-import { BaseModel } from 'src/shared/models/baseModel';
-import { Serializer } from 'src/shared/models/serializer';
+import { BaseModel } from 'src/app/shared/models/baseModel';
+import { Serializer } from 'src/app/shared/models/serializer';
 
 @Injectable({
     providedIn: 'root'
