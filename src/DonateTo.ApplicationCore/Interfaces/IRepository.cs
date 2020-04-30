@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using DonateTo.ApplicationCore.Entities;
 
 namespace DonateTo.ApplicationCore.Interfaces
 {
-    public interface IRepository<TEntity> where TEntity : Entity
+    public interface IRepository<TEntity> where TEntity : class 
     {
         IEnumerable<TEntity> Get();
         
