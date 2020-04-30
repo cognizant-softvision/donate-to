@@ -13,7 +13,7 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TContext"></typeparam>
-    public abstract class EntityFrameworkRepository<TEntity, TContext> : IRepository<TEntity> where TEntity : Entity where TContext : DbContext
+    public abstract class EntityFrameworkRepository<TEntity, TContext> : IRepository<TEntity> where TEntity : class where TContext : DbContext
     {
         protected TContext DbContext { get; private set; }
 
