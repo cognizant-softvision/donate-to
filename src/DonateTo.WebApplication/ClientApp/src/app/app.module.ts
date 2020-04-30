@@ -10,30 +10,38 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { DonationComponent } from './shared/components/donation/donation.component';
+import { DonationListComponent } from './shared/components/donation-list/donation-list.component';
+import { ErrorService } from 'src/shared/async-services/error.service';
 
 // Third party libraries
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpErrorInterceptor } from 'src/shared/async-services/http/http-error.interceptor';
+import { DonationReducer } from './shared/store/donation/reducer';
+import { DonationEffects } from './shared/store/donation/effects';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     CounterComponent,
-    FetchDataComponent
+    FetchDataComponent,
+    DonationComponent,
+    DonationListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    // ErrorService,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ]),
-    EffectsModule.forRoot([])
+    StoreModule.forRoot({ donation: DonationReducer }),
+    EffectsModule.forRoot([DonationEffects])
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }

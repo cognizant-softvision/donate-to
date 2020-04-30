@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DonateTo.ApplicationCore.Models.Donation;
 using DonateTo.Infrastructure.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,13 +13,13 @@ namespace DonateTo.WebApi.V1.Controllers
     {
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<string>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<Donation>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<IEnumerable<Donation>> Get()
         {
             Logger.Debug("Testing Logger");
 
-            return Ok(new string[] { "value1", "value2" });
+            return Ok(new Donation[] { new Donation() { Id = 1, Name = "Donation 1"}, new Donation() { Id = 2, Name = "Donation 2" } });
         }
         
         [HttpGet("{id}", Name = "Get")]

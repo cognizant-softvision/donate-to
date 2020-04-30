@@ -9,7 +9,7 @@ import {ErrorService} from '../error.service';
 })
 
 export class HttpErrorInterceptor implements HttpInterceptor {
-    constructor(private errorService: ErrorService) {}
+    // constructor(private errorService: ErrorService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     return next.handle(req).pipe(
