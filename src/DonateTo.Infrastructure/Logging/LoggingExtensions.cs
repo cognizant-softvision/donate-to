@@ -8,6 +8,12 @@ namespace DonateTo.Infrastructure.Logging
 {
     public static class LoggingExtensions
     {
+        /// <summary>
+        ///     Add a Logger to the logging pipeline.
+        /// </summary>
+        /// <param name="services">IServiceCollection.</param>
+        /// <param name="configuration">IConfiguration.</param>
+        /// <returns></returns>
         public static IServiceCollection AddLoggingToPipeline(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString("PostgreSQL");
