@@ -6,4 +6,5 @@ Dockerfile*
 */bin
 */obj
 .vscode
+.vs/
 LICENSE

@@ -27,8 +27,8 @@ services:
        context: .
        dockerfile: src/DonateTo.WebApi/Dockerfile
      ports:
-       - "8080:80"
-       - "8081:433"
+       - 8080:80
+       - 8081:443
 
   webapplication_donateto:
     image: webapplication_donateto
@@ -37,8 +37,8 @@ services:
       context: .
       dockerfile: src/DonateTo.WebApplication/Dockerfile
     ports:
-        - "8080:80"
-        - "8081:433"
+        - 8082:80
+        - 8083:443
 
 volumes:
   db_volume:
