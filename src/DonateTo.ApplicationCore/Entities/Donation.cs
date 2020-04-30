@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DonateTo.ApplicationCore.Entities
 {
@@ -12,5 +13,6 @@ namespace DonateTo.ApplicationCore.Entities
         public Address Address { get; set; }
         public Status Status { get; set; }
         public DateTime PickUpDate { get; set; }
+        public IEnumerable<DonationItem> DonationItems { get; set; }
     }
 }
