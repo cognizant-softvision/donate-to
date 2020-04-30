@@ -21,7 +21,7 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { HttpErrorInterceptor } from 'src/shared/async-services/http/http-error.interceptor';
+import { HttpErrorInterceptor } from 'src/app/shared/async-services/http/http-error.interceptor';
 
 @NgModule({
   declarations: [
