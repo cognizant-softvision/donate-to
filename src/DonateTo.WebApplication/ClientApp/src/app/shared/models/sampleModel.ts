@@ -1,6 +1,6 @@
 import { BaseModel } from "./baseModel";
 
-export class Donation implements BaseModel{
+export class SampleModel implements BaseModel{
     id: number;
     name: string;
 }

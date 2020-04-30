@@ -16,25 +16,22 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { DonationComponent } from './shared/components/donation/donation.component';
-import { DonationListComponent } from './shared/components/donation-list/donation-list.component';
-import { ErrorService } from 'src/shared/async-services/error.service';
+import { HttpErrorInterceptor } from './shared/async-services/http/http-error.interceptor';
 
 // Third party libraries
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { HttpErrorInterceptor } from 'src/shared/async-services/http/http-error.interceptor';
-import { DonationReducer } from './shared/store/donation/reducer';
-import { DonationEffects } from './shared/store/donation/effects';
+
+//Stores
+import { SampleReducer } from './shared/store/sample/reducer';
+import { SampleEffects } from './shared/store/sample/effects';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     CounterComponent,
-    FetchDataComponent,
-    DonationComponent,
-    DonationListComponent
+    FetchDataComponent
   ],
   imports: [
     AppRoutingModule,
@@ -46,16 +43,14 @@ import { DonationEffects } from './shared/store/donation/effects';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
-    // ErrorService,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ]),
-    EffectsModule.forRoot([]),
-    AuthModule
-    StoreModule.forRoot({ donation: DonationReducer }),
-    EffectsModule.forRoot([DonationEffects])
+    AuthModule,
+    StoreModule.forRoot({ sample: SampleReducer }),
+    EffectsModule.forRoot([SampleEffects])
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }

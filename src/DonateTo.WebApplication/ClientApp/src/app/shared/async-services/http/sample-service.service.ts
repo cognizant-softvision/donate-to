@@ -1,25 +1,27 @@
 import { Injectable } from '@angular/core';
 import { BaseHttpClientService } from './base-http-client.service';
-import { BaseModel } from '../../models/baseModel';
 import { HttpClient } from '@angular/common/http';
 import * as config from 'config/development.json';
-import { Donation } from 'src/shared/models/Donation';
+import { SampleModel } from '../../models/sampleModel';
 
 @Injectable({
     providedIn: 'root'
 })
 
-export class SampleService extends BaseHttpClientService<Donation> {
+export class SampleService extends BaseHttpClientService<SampleModel> {
     constructor(httpClient: HttpClient) {
         super(
             httpClient,
             config.api.baseUrl,
-            'api/v1/sample',
-            undefined
+            'api/v1/sample'
         );
     }
 
     getSample() {
         return this.get();
+    }
+
+    createSample(sample: SampleModel) {
+        return this.create(sample);
     }
 }
