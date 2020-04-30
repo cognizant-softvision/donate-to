@@ -12,6 +12,7 @@ namespace DonateTo.WebApi.V1.Controllers
     {
         public override ActionResult<IEnumerable<string>> Get()
         {
+            Logger.Debug("Testing Logger");
             return Ok(new string[] { "value1", "value2" });
         }
 

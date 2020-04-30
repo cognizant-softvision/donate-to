@@ -8,7 +8,7 @@ namespace DonateTo.WebApi.V1.Controllers
     public abstract class BaseApiController<T> : ControllerBase where T : class
     {
         /// <summary>
-        ///     Use the method to request a resource from the server.
+        /// Use the method to request a resource from the server.
         /// </summary>
         /// <returns>Status 200 if the request has succeeded or
         ///  Status 500 if that have an error</returns>
@@ -18,7 +18,7 @@ namespace DonateTo.WebApi.V1.Controllers
         public abstract ActionResult<IEnumerable<T>> Get();
 
         /// <summary>
-        ///     Use the method to request a resource from the server.
+        /// Use the method to request a resource from the server.
         /// </summary>
         /// <param name="id">ID of the resource to be search.</param>
         /// <returns>Status 200 if the request has succeeded,
@@ -31,7 +31,7 @@ namespace DonateTo.WebApi.V1.Controllers
         public abstract ActionResult<IEnumerable<T>> Get(long id);
 
         /// <summary>
-        ///     Use the method to send a resource to the server.
+        /// Use the method to send a resource to the server.
         /// </summary>
         /// <param name="value">Value to be send.</param>
         /// <returns>Status 201 if the request has created,
@@ -44,7 +44,7 @@ namespace DonateTo.WebApi.V1.Controllers
         public abstract IActionResult Post([FromBody] string value);
 
         /// <summary>
-        ///     Use the method to update an existing resource on the server.
+        /// Use the method to update an existing resource on the server.
         /// </summary>
         /// <param name="id">ID of the resource to be update.</param>
         /// <param name="value">New value of the resource.</param>
@@ -56,7 +56,7 @@ namespace DonateTo.WebApi.V1.Controllers
         public abstract IActionResult Put(long id, [FromBody] string value);
 
         /// <summary>
-        ///     Use the method to  delete a resource from the server.
+        /// Use the method to  delete a resource from the server.
         /// </summary>
         /// <param name="id">ID of the resource to be delete</param>
         /// <returns>Status 200 if the request has succeeded,
