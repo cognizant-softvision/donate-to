@@ -24,12 +24,7 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Entity>()
-                .Ignore(e => e.CreatedBy)
-                .Ignore(e => e.UpdateBy);
-
-            modelBuilder.Entity<User>()
-                .Ignore(u => u.Role);
+            modelBuilder.Ignore<Entity>();
         }
     }
 }
