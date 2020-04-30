@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DonateTo.ApplicationCore.Entities;
 
@@ -7,7 +9,7 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
     public interface IUserService
     {
         /// <summary>
-        ///     Create an user async.
+        /// Create an user async.
         /// </summary>
         /// <param name="user">User entity.</param>
         /// <returns>User entity.</returns>
@@ -28,48 +30,65 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         User Get(int id);
 
         /// <summary>
-        ///     Get an user by id async.
+        /// Get an user by id async.
         /// </summary>
         /// <param name="id">User id.</param>
         /// <returns>User.</returns>
         Task<User> GetAsync(int id);
 
         /// <summary>
-        ///     Update an user async.
+        /// Update an user async.
         /// </summary>
         /// <param name="user">User entity.</param>
         /// <returns>Task.</returns>
         Task UpdateAsync(User user);
         
         /// <summary>
-        ///     Update an user.
+        /// Update an user.
         /// </summary>
         /// <param name="user">User.</param>
         void Update(User user);
         
         /// <summary>
-        ///     Delete an user async.
+        /// Delete an user async.
         /// </summary>
         /// <param name="id">User id.</param>
         /// <returns>Task.</returns>
         Task DeleteAsync(int id);
         
         /// <summary>
-        ///     Delete an user.
+        /// Delete an user.
         /// </summary>
         /// <param name="id">User id.</param>
         void Delete(int id);
         
         /// <summary>
-        ///     Get a list of users.
+        /// Get a list of users
         /// </summary>
-        /// <returns>IEnumerable of User.</returns>
-        IEnumerable<User> Get();
+        /// <param name="filter">filter</param>
+        /// <returns>IEnumerable of users.</returns>
+        IEnumerable<User> Get(Expression<Func<User, bool>> filter);
 
         /// <summary>
-        ///     Get a list of users async.
+        /// Get a list of users async.
         /// </summary>
+        /// <param name="filter">filter</param>
         /// <returns>IEnumerable of User.</returns>
-        Task<IEnumerable<User>> GetAsync();
+        Task<IEnumerable<User>> GetAsync(Expression<Func<User, bool>> filter);
+
+        /// <summary>
+        /// Validate user credentials
+        /// </summary>
+        /// <param name="email">Email</param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        bool ValidateCredentials(string email, string password);
+        
+        /// <summary>
+        /// Get First or Default
+        /// </summary>
+        /// <param name="filter">Filter</param>
+        /// <returns>User</returns>
+        User FirstOrDefault(Expression<Func<User, bool>> filter);
     }
 }

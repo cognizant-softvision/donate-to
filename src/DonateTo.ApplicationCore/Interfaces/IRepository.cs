@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Models.Pagination;
@@ -9,22 +11,31 @@ namespace DonateTo.ApplicationCore.Interfaces
     ///     Interface to implement the Repository Pattern.
     /// </summary>
     /// <typeparam name="TEntity">Entity.</typeparam>
-    public interface IRepository<TEntity> where TEntity : Entity
+    public interface IRepository<TEntity> where TEntity : class
     {
         /// <summary>
-        ///     Get a list of entities.
+        /// Get a list of entities.
         /// </summary>
+        /// <param name="filter">Filter</param>
         /// <returns>IEnumerable of TEntity.</returns>
-        IEnumerable<TEntity> Get();
-        
-        /// <summary>
-        ///     Get a list of entities async.
-        /// </summary>
-        /// <returns>Task of IEnumerable of TEntity.</returns>
-        Task<IEnumerable<TEntity>> GetAsync();
+        IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> filter);
 
         /// <summary>
-        ///     Get an entity by id.
+        /// Get a list of entities async.
+        /// </summary>
+        /// <param name="filter">Filter</param>
+        /// <returns>Task of IEnumerable of TEntity.</returns>
+        Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter);
+
+        /// <summary>
+        /// Get a First or default entities.
+        /// </summary>
+        /// <param name="filter">Filter</param>
+        /// <returns>IEnumerable of TEntity.</returns>
+        TEntity FirstOrDefault(Expression<Func<TEntity, bool>> filter);
+
+        /// <summary>
+        /// Get an entity by id.
         /// </summary>
         /// <param name="id">Entity id.</param>
         /// <returns>TEntity.</returns>
