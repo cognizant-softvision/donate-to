@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using DonateTo.ApplicationCore.Entities;
-using DonateTo.ApplicationCore.Models.Pagination;
 
 namespace DonateTo.ApplicationCore.Interfaces
 {
