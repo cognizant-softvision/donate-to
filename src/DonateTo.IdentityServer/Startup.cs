@@ -11,9 +11,8 @@ using DonateTo.ApplicationCore.Entities;
 using Microsoft.AspNetCore.Identity;
 using IdentityServer4.Configuration;
 using System;
-using DonateTo.ApplicationCore.Interfaces.Services;
-using DonateTo.Services.Services;
 using DonateTo.Services.Extensions;
+using AutoMapper;
 
 namespace DonateTo.IdentityServer
 {
@@ -39,6 +38,7 @@ namespace DonateTo.IdentityServer
 
             services.AddDbContext<DonateToDbContext>();
             services.AddDonateToModule(Configuration);
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddIdentity<User, Role>(options =>
             {

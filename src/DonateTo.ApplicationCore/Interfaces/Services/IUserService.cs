@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DonateTo.ApplicationCore.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace DonateTo.ApplicationCore.Interfaces.Services
 {
@@ -11,7 +12,15 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// <summary>
         /// Create an user async.
         /// </summary>
-        /// <param name="user">User entity.</param>
+        /// <param name="user">User.</param>
+        /// <param name="password">Password.</param>
+        /// <returns>User entity.</returns>
+        Task<IdentityResult> CreateAsync(User user, string password);
+
+        /// <summary>
+        /// Create an user async.
+        /// </summary>
+        /// <param name="user">User.</param>        
         /// <returns>User entity.</returns>
         Task<User> CreateAsync(User user);
 
@@ -75,14 +84,6 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// <param name="filter">filter</param>
         /// <returns>IEnumerable of User.</returns>
         Task<IEnumerable<User>> GetAsync(Expression<Func<User, bool>> filter);
-
-        /// <summary>
-        /// Validate user credentials
-        /// </summary>
-        /// <param name="email">Email</param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        bool ValidateCredentials(string email, string password);
         
         /// <summary>
         /// Get First or Default

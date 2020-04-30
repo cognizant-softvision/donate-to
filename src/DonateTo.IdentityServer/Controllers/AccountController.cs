@@ -1,14 +1,15 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.IdentityServer.Models;
 using IdentityServer4.Events;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
-using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DonateTo.IdentityServer.Controllers
@@ -17,22 +18,22 @@ namespace DonateTo.IdentityServer.Controllers
     {
         private readonly IUserService _userService;
         private readonly IIdentityServerInteractionService _interactionService;
-        private readonly IClientStore _clientStore;
         private readonly IEventService _eventsService;
-        IAuthenticationSchemeProvider _schemeProvider;
+        private readonly IMapper _mapper;
+        private readonly SignInManager<User> _signInManager;
 
         public AccountController(
             IUserService userService,
             IIdentityServerInteractionService interactionService,
-            IClientStore clientStore,
             IEventService eventsService,
-            IAuthenticationSchemeProvider schemeProvider)
+            SignInManager<User> signInManager,
+            IMapper mapper)
         {
             _userService = userService;
             _interactionService = interactionService;
-            _clientStore = clientStore;
             _eventsService = eventsService;
-            _schemeProvider = schemeProvider;
+            _signInManager = signInManager;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
@@ -77,8 +78,10 @@ namespace DonateTo.IdentityServer.Controllers
 
             if (ModelState.IsValid)
             {
-                // validate username/password against in-memory store
-                if (_userService.ValidateCredentials(model.Email, model.Password))
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberLogin, false);
+
+                // validate username/password against service
+                if (result.Succeeded)
                 {
                     var user = _userService.FirstOrDefault(u => u.Email == model.Email);
                     await _eventsService.RaiseAsync(new UserLoginSuccessEvent(user.Email, user.Id, user.FullName));
@@ -122,15 +125,45 @@ namespace DonateTo.IdentityServer.Controllers
             return View(vm);
         }
 
-        public IActionResult Logout()
+        [HttpGet]
+        public IActionResult Register()
         {
             return View();
         }
 
-
-        public IActionResult SignIn()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(UserRegistrationModel userModel)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                return View(userModel);
+            }
+
+            var user = _mapper.Map<User>(userModel);
+
+            var result = await _userService.CreateAsync(user, userModel.Password);
+
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.TryAddModelError(error.Code, error.Description);
+                }
+
+                return View(userModel);
+            }
+
+            return RedirectToAction("Login");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
         #region private
