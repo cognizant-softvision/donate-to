@@ -28,7 +28,7 @@ services:
        dockerfile: src/DonateTo.WebApi/Dockerfile
      ports:
        - 8080:80
-       - 8081:443
+       - 8082:443
 
   webapplication_donateto:
     image: webapplication_donateto
@@ -37,8 +37,18 @@ services:
       context: .
       dockerfile: src/DonateTo.WebApplication/Dockerfile
     ports:
-        - 8082:80
-        - 8083:443
+        - 8084:80
+        - 8086:443
+
+  identityserver_donateto:
+    image: identityserver_donateto
+    container_name: identityserver_donateto
+    build:
+      context: .
+      dockerfile: src/DonateTo.IdentityServer/Dockerfile
+    ports:
+        - 8088:80
+        - 8090:443
 
 volumes:
   db_volume:

@@ -11,7 +11,7 @@ namespace DonateTo.Infrastructure.Extensions
     public static class ServiceCollectionExtension
     {
         /// <summary>
-        ///     Add the EF DbContext and every repository as scoped to the collection.
+        /// Add the EF DbContext and every repository as scoped to the collection.
         /// </summary>
         /// <param name="services">IServiceCollection</param>
         /// <param name="configuration">IConfiguration</param>

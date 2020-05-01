@@ -1,7 +1,6 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Interfaces.Services;
-using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -12,14 +11,11 @@ namespace DonateTo.Services.Services
     public class UserService : IUserService
     {
         private readonly IRepository<User> _userRepository;
-        private readonly UserManager<User> _userManager;
 
         public UserService (
-            IRepository<User> userRepository,
-            UserManager<User> userManager)
+            IRepository<User> userRepository)
         {
             _userRepository = userRepository;
-            _userManager = userManager;
         }
 
         public User Create(User user)
@@ -30,11 +26,6 @@ namespace DonateTo.Services.Services
         public Task<User> CreateAsync(User user)
         {
             throw new NotImplementedException();
-        }
-
-        public async Task<IdentityResult> CreateAsync(User user, string password)
-        {
-            return await _userManager.CreateAsync(user, password).ConfigureAwait(true);
         }
 
         public void Delete(int id)
@@ -49,7 +40,7 @@ namespace DonateTo.Services.Services
 
         public User FirstOrDefault(Expression<Func<User, bool>> filter)
         {
-            throw new NotImplementedException();
+            return _userRepository.FirstOrDefault(filter);
         }
 
         public User Get(int id)

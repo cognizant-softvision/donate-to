@@ -8,7 +8,7 @@ namespace DonateTo.ApplicationCore.Entities
     /// <summary>
     /// User 
     /// </summary>
-    public class User : IdentityUser
+    public class User : IdentityUser<long>
     {
         /// <summary>
         /// First Name
@@ -19,11 +19,6 @@ namespace DonateTo.ApplicationCore.Entities
         /// Last Name
         /// </summary>
         public string LastName { get; set; }
-
-        /// <summary>
-        /// Phone Number
-        /// </summary>
-        public string Phone { get; set; }
 
         /// <summary>
         /// Identity Number

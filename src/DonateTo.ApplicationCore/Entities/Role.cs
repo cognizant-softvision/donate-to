@@ -6,7 +6,7 @@ namespace DonateTo.ApplicationCore.Entities
     /// <summary>
     /// System Role
     /// </summary>
-    public class Role : IdentityRole
+    public class Role : IdentityRole<long>
     {
         /// <summary>
         /// Description

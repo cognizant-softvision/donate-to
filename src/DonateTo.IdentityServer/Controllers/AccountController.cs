@@ -19,20 +19,23 @@ namespace DonateTo.IdentityServer.Controllers
         private readonly IUserService _userService;
         private readonly IIdentityServerInteractionService _interactionService;
         private readonly IEventService _eventsService;
-        private readonly IMapper _mapper;
         private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly IMapper _mapper;
 
         public AccountController(
             IUserService userService,
             IIdentityServerInteractionService interactionService,
             IEventService eventsService,
             SignInManager<User> signInManager,
+            UserManager<User> userManager,
             IMapper mapper)
         {
             _userService = userService;
             _interactionService = interactionService;
             _eventsService = eventsService;
             _signInManager = signInManager;
+            _userManager = userManager;
             _mapper = mapper;
         }
 
@@ -84,7 +87,7 @@ namespace DonateTo.IdentityServer.Controllers
                 if (result.Succeeded)
                 {
                     var user = _userService.FirstOrDefault(u => u.Email == model.Email);
-                    await _eventsService.RaiseAsync(new UserLoginSuccessEvent(user.Email, user.Id, user.FullName));
+                    await _eventsService.RaiseAsync(new UserLoginSuccessEvent(user.Email, user.Id.ToString(), user.FullName));
 
                     // only set explicit expiration here if user chooses "remember me". 
                     // otherwise we rely upon expiration configured in cookie middleware.
@@ -99,7 +102,7 @@ namespace DonateTo.IdentityServer.Controllers
                     };
 
                     // issue authentication cookie with subject ID and email
-                    await HttpContext.SignInAsync(user.Id, user.Email, props);
+                    await HttpContext.SignInAsync(user.Id.ToString(), user.Email, props);
 
                     if (context != null || Url.IsLocalUrl(model.ReturnUrl))
                     {
@@ -142,7 +145,7 @@ namespace DonateTo.IdentityServer.Controllers
 
             var user = _mapper.Map<User>(userModel);
 
-            var result = await _userService.CreateAsync(user, userModel.Password);
+            var result = await _userManager.CreateAsync(user, userModel.Password);
 
             if (!result.Succeeded)
             {

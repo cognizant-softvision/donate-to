@@ -13,6 +13,7 @@ using IdentityServer4.Configuration;
 using System;
 using DonateTo.Services.Extensions;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace DonateTo.IdentityServer
 {
@@ -36,13 +37,24 @@ namespace DonateTo.IdentityServer
 
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
-            services.AddDbContext<DonateToDbContext>();
+            services.AddDbContext<DonateToDbContext>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString("PostgreSQL")));
+
             services.AddDonateToModule(Configuration);
             services.AddAutoMapper(typeof(Startup));
 
+            var identityOptions = Configuration.GetSection("Identity").GetSection("Options");
+
             services.AddIdentity<User, Role>(options =>
             {
-                options.SignIn.RequireConfirmedEmail = true;
+
+                options.Password.RequiredLength = identityOptions.GetSection("Password").GetValue<int>("RequiredLength");
+                options.Password.RequireDigit = identityOptions.GetSection("Password").GetValue<bool>("RequireDigit");
+                options.Password.RequireUppercase = identityOptions.GetSection("Password").GetValue<bool>("RequireUppercase");
+                options.Password.RequireLowercase = identityOptions.GetSection("Password").GetValue<bool>("RequireLowercase");
+                options.Password.RequireNonAlphanumeric = identityOptions.GetSection("Password").GetValue<bool>("RequireNonAlphanumeric");
+                options.User.RequireUniqueEmail = identityOptions.GetSection("User").GetValue<bool>("RequireUniqueEmail");
+                options.SignIn.RequireConfirmedEmail = identityOptions.GetSection("SignIn").GetValue<bool>("RequireConfirmedEmail");
             })
             .AddEntityFrameworkStores<DonateToDbContext>()
             .AddDefaultTokenProviders();

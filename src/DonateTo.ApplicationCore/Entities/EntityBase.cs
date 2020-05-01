@@ -1,12 +1,10 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DonateTo.ApplicationCore.Entities
 {
     /// <summary>
     /// Entity Base
     /// </summary>
-    [NotMapped]
     public abstract class EntityBase
     {
         /// <summary>

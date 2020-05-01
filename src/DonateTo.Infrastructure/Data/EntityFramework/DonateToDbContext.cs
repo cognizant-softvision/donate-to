@@ -1,5 +1,7 @@
 ﻿using DonateTo.ApplicationCore.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace DonateTo.Infrastructure.Data.EntityFramework
 {
@@ -24,7 +26,15 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<EntityBase>();
+            if (modelBuilder != null)
+            {
+                modelBuilder.Ignore<EntityBase>();
+
+                foreach (IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes())
+                {
+                    entityType.SetTableName(entityType.DisplayName());
+                }
+            }
         }
     }
 }

@@ -12,14 +12,6 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// <summary>
         /// Create an user async.
         /// </summary>
-        /// <param name="user">User.</param>
-        /// <param name="password">Password.</param>
-        /// <returns>User entity.</returns>
-        Task<IdentityResult> CreateAsync(User user, string password);
-
-        /// <summary>
-        /// Create an user async.
-        /// </summary>
         /// <param name="user">User.</param>        
         /// <returns>User entity.</returns>
         Task<User> CreateAsync(User user);
