@@ -129,6 +129,12 @@ namespace DonateTo.IdentityServer.Controllers
         }
 
         [HttpGet]
+        public IActionResult LoggedIn()
+        {
+            return View();
+        }
+
+        [HttpGet]
         public IActionResult Register()
         {
             return View();
@@ -167,6 +173,12 @@ namespace DonateTo.IdentityServer.Controllers
             await _signInManager.SignOutAsync();
 
             return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
+
+        [HttpGet]
+        public IActionResult SignedUp()
+        {
+            return View();
         }
 
         #region private

@@ -12,6 +12,8 @@ namespace DonateTo.IdentityServer.Models
         [EmailAddress]
         public string Email { get; set; }
 
+        public string UserName { get => Email; }
+
         public string IdentityNumber { get; set; }
 
         public string Phone { get; set; }

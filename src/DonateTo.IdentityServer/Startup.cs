@@ -47,7 +47,6 @@ namespace DonateTo.IdentityServer
 
             services.AddIdentity<User, Role>(options =>
             {
-
                 options.Password.RequiredLength = identityOptions.GetSection("Password").GetValue<int>("RequiredLength");
                 options.Password.RequireDigit = identityOptions.GetSection("Password").GetValue<bool>("RequireDigit");
                 options.Password.RequireUppercase = identityOptions.GetSection("Password").GetValue<bool>("RequireUppercase");

@@ -23,12 +23,20 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
         public DbSet<Status> Status { get; set; }
         public DbSet<Unit> Units { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<IdentityUserClaim<long>> UserClaims { get; set; }
+        public DbSet<IdentityRoleClaim<long>> RoleClaims { get; set; }
+        public DbSet<IdentityUserLogin<long>> UserLogins { get; set; }
+        public DbSet<IdentityUserRole<long>> UserRoles { get; set; }
+        public DbSet<IdentityUserToken<long>> UserTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             if (modelBuilder != null)
             {
                 modelBuilder.Ignore<EntityBase>();
+                modelBuilder.Entity<IdentityUserLogin<long>>().HasNoKey();
+                modelBuilder.Entity<IdentityUserRole<long>>().HasNoKey();
+                modelBuilder.Entity<IdentityUserToken<long>>().HasNoKey();
 
                 foreach (IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes())
                 {
