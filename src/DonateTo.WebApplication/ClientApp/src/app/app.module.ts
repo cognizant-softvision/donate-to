@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 // Angular core modules
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -22,6 +22,12 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpErrorInterceptor } from 'src/app/shared/async-services/http/http-error.interceptor';
+import {
+  TranslateService,
+  TranslateModule,
+  TranslateLoader,
+  TranslateStaticLoader
+} from 'ng2-translate';
 
 @NgModule({
   declarations: [
@@ -32,10 +38,14 @@ import { HttpErrorInterceptor } from 'src/app/shared/async-services/http/http-er
   ],
   imports: [
     AppRoutingModule,
+    AuthModule,
     // Angular core dependencies
     BrowserModule,
     FormsModule,
     CommonModule,
+
+    // Third party modules
+    TranslateModule.forRoot(),
 
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
@@ -45,8 +55,7 @@ import { HttpErrorInterceptor } from 'src/app/shared/async-services/http/http-er
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ]),
-    EffectsModule.forRoot([]),
-    AuthModule
+    EffectsModule.forRoot([])
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
