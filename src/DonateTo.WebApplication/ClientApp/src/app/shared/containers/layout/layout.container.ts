@@ -1,28 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { LayoutSandbox } from './layout.sandbox';
 
 @Component({
   selector: 'app-layout',
   template: './layout.container.html',
-  styleUrls: ['./layout.container.scss']
+  styleUrls: ['./layout.container.scss'],
 })
-export class LayoutContainer {
-
-  public userImage: string = '';
-  public userEmail: string = '';
+export class LayoutContainerComponent {
+  public userImage = '';
+  public userEmail = '';
   private assetsFolder: string;
 
-  private subscriptions: Array<Subscription> = [];
+  private subscriptions: Subscription[] = [];
 
-  constructor(
-    public layoutSandbox: LayoutSandbox
-  ) {
-  }
+  constructor(public layoutSandbox: LayoutSandbox) {}
 
-  ngOnInit() {
-  }
-
-  private registerEvents() {
-  }
+  private registerEvents() {}
 }

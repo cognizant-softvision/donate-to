@@ -29,7 +29,6 @@
     "aspnet-prerendering": "^3.0.1",
     "bootstrap": "^4.4.1",
     "core-js": "^3.6.5",
-    "jquery": "3.4.1",
     "ng-zorro-antd": "^9.1.0",
     "oidc-client": "^1.10.1",
     "popper.js": "^1.16.1",
@@ -45,6 +44,7 @@
     "@types/jasminewd2": "~2.0.8",
     "@types/node": "~12.11.6",
     "codelyzer": "^5.2.2",
+    "husky": "^4.2.5",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "^4.4.1",
@@ -52,6 +52,9 @@
     "karma-coverage-istanbul-reporter": "^2.1.1",
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.5.3",
+    "prettier": "^2.0.5",
+    "pretty-quick": "^2.0.1",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "3.8.3"
   },
   "optionalDependencies": {
@@ -59,5 +62,11 @@
     "protractor": "~5.4.2",
     "ts-node": "~8.4.1",
     "tslint": "~5.20.0"
+  },
+  "husky": {
+    "hooks": {
+        "pre-commit": "pretty-quick --staged && ng lint",
+        "pre-push": "ng build"
+    }
   }
 }
