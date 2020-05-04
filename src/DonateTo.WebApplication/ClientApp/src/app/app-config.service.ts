@@ -1,10 +1,10 @@
+import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClientModule, HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class ConfigService {
-  private config: Object;
-  private env: Object;
+  private config: object;
+  private env: object;
 
   constructor(private http: HttpClient) {}
 
@@ -19,7 +19,7 @@ export class ConfigService {
         'Content-Type': 'application/json',
         DataType: 'application/json',
       });
-      const options = { headers: headers };
+      const options = { headers };
 
       this.http.get('/config/env.json').subscribe((env_data) => {
         this.env = env_data;

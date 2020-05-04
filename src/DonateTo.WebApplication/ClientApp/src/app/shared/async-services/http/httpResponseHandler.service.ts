@@ -75,7 +75,7 @@ export class HttpResponseHandler {
    */
   private handleUnauthorized(responseBody: any): void {
     // Read configuration in order to see if we need to display 401 notification message
-    let unauthorizedEndpoints: Array<string> = this.configService.get('notifications').unauthorizedEndpoints;
+    let unauthorizedEndpoints: string[] = this.configService.get('notifications').unauthorizedEndpoints;
 
     unauthorizedEndpoints = unauthorizedEndpoints.filter(
       (endpoint) => this.getRelativeUrl(responseBody.url) === endpoint
@@ -110,12 +110,12 @@ export class HttpResponseHandler {
    */
   private handleNotFound(responseBody: any): void {
     // Read configuration in order to see if we need to display 401 notification message
-    let notFoundEndpoints: Array<string> = this.configService.get('notifications').notFoundEndpoints;
+    let notFoundEndpoints: string[] = this.configService.get('notifications').notFoundEndpoints;
     notFoundEndpoints = notFoundEndpoints.filter((endpoint) => this.getRelativeUrl(responseBody.url) === endpoint);
 
     if (notFoundEndpoints.length) {
-      const message = this.translateService.instant('ServerError404'),
-        title = this.translateService.instant('ErrorNotificationTitle');
+      const message = this.translateService.instant('ServerError404');
+      const title = this.translateService.instant('ErrorNotificationTitle');
 
       this.showNotificationError(title, message);
     }
@@ -125,8 +125,8 @@ export class HttpResponseHandler {
    * Shows notification errors when server response status is 500
    */
   private handleServerError(): void {
-    const message = this.translateService.instant('ServerError500'),
-      title = this.translateService.instant('ErrorNotificationTitle');
+    const message = this.translateService.instant('ServerError500');
+    const title = this.translateService.instant('ErrorNotificationTitle');
 
     this.showNotificationError(title, message);
   }

@@ -1,41 +1,31 @@
 import { BrowserModule } from '@angular/platform-browser';
 
 // Angular core modules
+import { CommonModule } from '@angular/common';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
 
 // Routes
 import { AppRoutingModule } from './app-routing.module';
 
 // Modules
-import { AuthModule } from './auth/auth.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
+import { AuthModule } from './auth/auth.module';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { HomeComponent } from './home/home.component';
 
 // Third party libraries
-import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { TranslateLoader, TranslateModule, TranslateService, TranslateStaticLoader } from 'ng2-translate';
 import { HttpErrorInterceptor } from 'src/app/shared/async-services/http/http-error.interceptor';
-import {
-  TranslateService,
-  TranslateModule,
-  TranslateLoader,
-  TranslateStaticLoader
-} from 'ng2-translate';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    CounterComponent,
-    FetchDataComponent
-  ],
+  declarations: [AppComponent, HomeComponent, CounterComponent, FetchDataComponent],
   imports: [
     AppRoutingModule,
     AuthModule,
@@ -55,11 +45,9 @@ import {
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ]),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([]),
   ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
-  ],
-  bootstrap: [AppComponent]
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
