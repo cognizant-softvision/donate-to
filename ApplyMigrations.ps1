@@ -22,7 +22,6 @@ if((docker inspect donateto_postgres).count -eq 1)
     Write-Output "Checking if PostgreDb is UP."
     if((docker inspect -f '{{.State.Running}}' donateto_postgres) -eq 'false' )
     {
-       Write-Output "Checking if PostgreDb is DOWN."
        Write-Output "Starting Container."
        docker-compose up -d postgres_donateto
     }
