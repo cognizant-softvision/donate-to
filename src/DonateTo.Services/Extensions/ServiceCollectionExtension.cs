@@ -1,5 +1,10 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 ﻿using DonateTo.ApplicationCore.Interfaces.Services;
+=======
+﻿using DonateTo.ApplicationCore.Entities;
+using DonateTo.ApplicationCore.Interfaces.Services;
+>>>>>>> dccc6f2... Create base controller for the web api (#36)
 =======
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces.Services;
@@ -22,8 +27,12 @@ namespace DonateTo.Services.Extensions
         {
             service.AddEntityFramework(configuration);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
             service.AddScoped<IUserService, UserService>();
+=======
+            service.AddScoped<IBaseService<SampleModel>, SampleService>();
+>>>>>>> dccc6f2... Create base controller for the web api (#36)
 =======
             service.AddScoped<IBaseService<SampleModel>, SampleService>();
 >>>>>>> dccc6f2... Create base controller for the web api (#36)
