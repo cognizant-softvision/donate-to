@@ -4,7 +4,6 @@ using DonateTo.Infrastructure.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DonateTo.Services.Services
