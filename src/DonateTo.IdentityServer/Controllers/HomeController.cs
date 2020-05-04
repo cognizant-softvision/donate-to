@@ -1,7 +1,5 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using DonateTo.IdentityServer.Models;
 
 namespace DonateTo.IdentityServer.Controllers
 {
@@ -16,18 +14,12 @@ namespace DonateTo.IdentityServer.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Login", "Account", new { returnUrl = "~/Account/SignedUp" });
         }
 
         public IActionResult Privacy()
         {
             return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

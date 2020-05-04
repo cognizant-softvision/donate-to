@@ -2,7 +2,7 @@
 
 namespace DonateTo.ApplicationCore.Entities
 {
-    public class DonationItem : Entity
+    public class DonationItem : EntityBase
     {
         public decimal Quantity { get; set; }
         public string Observation { get; set; }
