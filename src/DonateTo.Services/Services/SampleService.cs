@@ -4,10 +4,6 @@ using DonateTo.Infrastructure.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-<<<<<<< HEAD
-=======
-using System.Text;
->>>>>>> dccc6f2... Create base controller for the web api (#36)
 using System.Threading.Tasks;
 
 namespace DonateTo.Services.Services
