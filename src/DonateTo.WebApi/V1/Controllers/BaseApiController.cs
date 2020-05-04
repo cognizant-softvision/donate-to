@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DonateTo.ApplicationCore.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +8,13 @@ namespace DonateTo.WebApi.V1.Controllers
     [ApiController]
     public abstract class BaseApiController<T> : ControllerBase where T : class
     {
+        private IBaseService<T> _serviceProvider  { get; set; }
+
+        public BaseApiController(IBaseService<T> baseService)
+        {
+            _serviceProvider = baseService;
+        }
+
         /// <summary>
         /// Use the method to request a resource from the server.
         /// </summary>
@@ -15,7 +23,12 @@ namespace DonateTo.WebApi.V1.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public abstract ActionResult<IEnumerable<T>> Get();
+        public virtual ActionResult<IEnumerable<T>> Get()
+        {
+            var result = _serviceProvider.GetAsync();
+
+            return Ok(result);
+        }
 
         /// <summary>
         /// Use the method to request a resource from the server.
@@ -28,7 +41,12 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public abstract ActionResult<IEnumerable<T>> Get(long id);
+        public virtual ActionResult<IEnumerable<T>> Get(long id)
+        {
+            var result = _serviceProvider.GetAsync(id);
+
+            return Ok(result);
+        }
 
         /// <summary>
         /// Use the method to send a resource to the server.
@@ -41,7 +59,12 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public abstract IActionResult Post([FromBody] string value);
+        public virtual IActionResult Post([FromBody] T value)
+        {
+            var result = _serviceProvider.CreateAsync(value);
+
+            return Ok(result);
+        }
 
         /// <summary>
         /// Use the method to update an existing resource on the server.
@@ -53,7 +76,12 @@ namespace DonateTo.WebApi.V1.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public abstract IActionResult Put(long id, [FromBody] string value);
+        public virtual IActionResult Put(long id, [FromBody] T value)
+        {
+            var result = _serviceProvider.UpdateAsync(value, id);
+
+            return Ok(result);
+        }
 
         /// <summary>
         /// Use the method to  delete a resource from the server.
@@ -66,6 +94,11 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public abstract IActionResult Delete(long id);
+        public virtual IActionResult Delete(long id)
+        {
+            var result = _serviceProvider.DeleteAsync(id);
+
+            return Ok(result);
+        }
     }
 }

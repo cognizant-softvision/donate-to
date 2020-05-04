@@ -12,6 +12,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DonateTo.Infrastructure", "src\DonateTo.Infrastructure\DonateTo.Infrastructure.csproj", "{84A34DB3-37C3-4CFE-ABC5-7FA6ACEE562B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DonateTo.WebApi", "src\DonateTo.WebApi\DonateTo.WebApi.csproj", "{4C08425C-21AC-4ECA-87F4-DA2141510860}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CED49C38-BDF6-41E7-BA41-1D67B439591E} = {CED49C38-BDF6-41E7-BA41-1D67B439591E}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DonateTo.WebApplication", "src\DonateTo.WebApplication\DonateTo.WebApplication.csproj", "{B7CDD2F4-0141-4478-BF99-84364CD6096B}"
 EndProject
