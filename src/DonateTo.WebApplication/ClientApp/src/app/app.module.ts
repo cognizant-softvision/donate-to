@@ -20,8 +20,9 @@ import { HomeComponent } from './home/home.component';
 // Third party libraries
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { HttpErrorInterceptor } from 'src/app/shared/async-services/http/http-error.interceptor';
+import { SampleReducer } from './shared/store/sample/reducer';
+import { SampleEffects } from './shared/store/sample/effects';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, CounterComponent, FetchDataComponent],
@@ -40,8 +41,9 @@ import { HttpErrorInterceptor } from 'src/app/shared/async-services/http/http-er
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ]),
-    EffectsModule.forRoot([]),
     AuthModule,
+    StoreModule.forRoot({ sample: SampleReducer }),
+    EffectsModule.forRoot([SampleEffects])
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }],
   bootstrap: [AppComponent],
