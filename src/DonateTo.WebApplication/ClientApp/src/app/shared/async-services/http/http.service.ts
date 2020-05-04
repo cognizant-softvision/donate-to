@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  RequestMethod
-} from '@angular/http';
-import { Observable } from 'rxjs';
 import { HttpResponseHandler } from './httpResponseHandler.service';
-import { HttpAdapter } from './http.adapter';
 import { ConfigService } from '../../../app-config.service';
 import { HttpClient, HttpRequest, HttpResponse } from '@angular/common/http';
 
