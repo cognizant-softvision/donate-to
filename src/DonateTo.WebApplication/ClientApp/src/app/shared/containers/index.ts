@@ -1,20 +1,15 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
 import { ComponentsModule } from '../components';
-import { LayoutContainer } from './layout/layout.container';
+import { LayoutContainerComponent } from './layout/layout.container';
 
-export const CONTAINERS = [
-    LayoutContainer
-];
+export const CONTAINERS = [LayoutContainerComponent];
 
 @NgModule({
-  imports: [
-      CommonModule,
-      ComponentsModule
-  ],
+  imports: [CommonModule, ComponentsModule],
   declarations: CONTAINERS,
   exports: CONTAINERS,
-  providers: []
+  providers: [],
 })
-export class ContainersModule { }
+export class ContainersModule {}
