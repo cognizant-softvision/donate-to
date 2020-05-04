@@ -3,7 +3,10 @@ using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Models.Pagination;
 using DonateTo.Infrastructure.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace DonateTo.Infrastructure.Data.EntityFramework
@@ -22,14 +25,19 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
             DbContext = dbContext;
         }
 
-        public IEnumerable<TEntity> Get()
+        public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> filter)
         {
-            return DbContext.Set<TEntity>();
+            return DbContext.Set<TEntity>().FirstOrDefault(filter);
         }
 
-        public async Task<IEnumerable<TEntity>> GetAsync()
+        public IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> filter)
         {
-            return await Task.FromResult(DbContext.Set<TEntity>()).ConfigureAwait(false);
+            return DbContext.Set<TEntity>().Where(filter).ToList();
+        }
+
+        public async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter)
+        {
+            return await Task.FromResult(DbContext.Set<TEntity>().Where(filter).ToList()).ConfigureAwait(false);
         }
 
         public TEntity Get(long id)

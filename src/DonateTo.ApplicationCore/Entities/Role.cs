@@ -1,9 +1,36 @@
-﻿namespace DonateTo.ApplicationCore.Entities
+﻿using Microsoft.AspNetCore.Identity;
+using System;
+
+namespace DonateTo.ApplicationCore.Entities
 {
-    public class Role
+    /// <summary>
+    /// System Role
+    /// </summary>
+    public class Role : IdentityRole<long>
     {
-        public long Id { get; set; }
-        public string Name { get; set; }
+        /// <summary>
+        /// Description
+        /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// Created by
+        /// </summary>
+        public string CreatedBy { get; set; }
+
+        /// <summary>
+        /// Created Date
+        /// </summary>
+        public DateTime CreatedDate { get; set; }
+
+        /// <summary>
+        /// Updated By
+        /// </summary>
+        public string UpdateBy { get; set; }
+
+        /// <summary>
+        /// Updated Date
+        /// </summary>
+        public DateTime UpdateDate { get; set; }
     }
 }

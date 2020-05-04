@@ -1,6 +1,6 @@
 ﻿namespace DonateTo.ApplicationCore.Entities
 {
-    public class SampleModel : Entity
+    public class SampleModel : EntityBase
     {
         public string Name { get; set; }
     }
