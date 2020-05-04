@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DonateTo.ApplicationCore\DonateTo.ApplicationCore.csproj" />
     <ProjectReference Include="..\DonateTo.Services\DonateTo.Services.csproj" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
