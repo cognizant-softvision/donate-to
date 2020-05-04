@@ -8,11 +8,11 @@ namespace DonateTo.WebApi.V1.Controllers
     [ApiController]
     public abstract class BaseApiController<T> : ControllerBase where T : class
     {
-        private IBaseService<T> _serviceProvider  { get; set; }
+        private IBaseService<T> _baseService  { get; set; }
 
         public BaseApiController(IBaseService<T> baseService)
         {
-            _serviceProvider = baseService;
+            _baseService = baseService;
         }
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public virtual ActionResult<IEnumerable<T>> Get()
         {
-            var result = _serviceProvider.GetAsync();
+            var result = _baseService.GetAsync();
 
             return Ok(result);
         }
@@ -43,7 +43,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public virtual ActionResult<IEnumerable<T>> Get(long id)
         {
-            var result = _serviceProvider.GetAsync(id);
+            var result = _baseService.GetAsync(id);
 
             return Ok(result);
         }
@@ -61,7 +61,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public virtual IActionResult Post([FromBody] T value)
         {
-            var result = _serviceProvider.CreateAsync(value);
+            var result = _baseService.CreateAsync(value);
 
             return Ok(result);
         }
@@ -78,7 +78,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public virtual IActionResult Put(long id, [FromBody] T value)
         {
-            var result = _serviceProvider.UpdateAsync(value, id);
+            var result = _baseService.UpdateAsync(value, id);
 
             return Ok(result);
         }
@@ -96,7 +96,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public virtual IActionResult Delete(long id)
         {
-            var result = _serviceProvider.DeleteAsync(id);
+            var result = _baseService.DeleteAsync(id);
 
             return Ok(result);
         }

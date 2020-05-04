@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DonateTo.Services.Services
 {
-    class SampleService : IBaseService<SampleModel>
+    public class SampleService : IBaseService<SampleModel>
     {
         public SampleModel Create(SampleModel entity)
         {
@@ -57,12 +57,12 @@ namespace DonateTo.Services.Services
             throw new NotImplementedException();
         }
 
-        public void Update(SampleModel entity, long id)
+        public SampleModel Update(SampleModel entity, long id)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(SampleModel entity, long id)
+        public Task<SampleModel> UpdateAsync(SampleModel entity, long id)
         {
             throw new NotImplementedException();
         }
