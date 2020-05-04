@@ -36,7 +36,7 @@ namespace DonateTo.Services.Services
             throw new NotImplementedException();
         }
 
-        public IEnumerable<SampleModel> Get(long id)
+        public SampleModel Get(long id)
         {
             throw new NotImplementedException();
         }

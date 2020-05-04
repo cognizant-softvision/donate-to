@@ -22,7 +22,7 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// </summary>
         /// <param name="id">Entity id.</param>
         /// <returns>TEntity.</returns>
-        IEnumerable<T> Get(long id);
+        T Get(long id);
 
         /// <summary>
         /// Get an entity by id async.
