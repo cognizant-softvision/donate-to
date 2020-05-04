@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { HttpClientModule, HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class ConfigService {
-
   private config: Object;
   private env: Object;
 
@@ -16,20 +14,21 @@ export class ConfigService {
    */
   load() {
     return new Promise((resolve, reject) => {
-      const headers = new HttpHeaders({ 'Accept': 'application/json', 'Content-Type': 'application/json', 'DataType': 'application/json' });
+      const headers = new HttpHeaders({
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        DataType: 'application/json',
+      });
       const options = { headers: headers };
 
-      this.http.get('/config/env.json')
-      .subscribe((env_data) => {
+      this.http.get('/config/env.json').subscribe((env_data) => {
         this.env = env_data;
 
-        this.http.get('/config/' + env_data['env'] + '.json')
-          .subscribe((data) => {
-            this.config = data;
-            resolve(true);
-          });
+        this.http.get('/config/' + env_data['env'] + '.json').subscribe((data) => {
+          this.config = data;
+          resolve(true);
+        });
       });
-
     });
   }
 

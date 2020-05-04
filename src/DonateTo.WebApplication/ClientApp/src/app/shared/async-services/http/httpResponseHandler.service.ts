@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
-import { TranslateService } from 'ng2-translate';
-import { NotificationsService } from 'angular2-notifications';
-import { ConfigService } from '../../../app-config.service';
 import { Router } from '@angular/router';
+import { NotificationsService } from 'angular2-notifications';
+import { TranslateService } from 'ng2-translate';
 import { Observable, throwError } from 'rxjs';
+import { ConfigService } from '../../../app-config.service';
 
 @Injectable()
 export class HttpResponseHandler {
-    constructor(
-        private router: Router,
-        private translateService: TranslateService,
-        private notificationsService: NotificationsService,
-        private configService: ConfigService
+  constructor(
+    private router: Router,
+    private translateService: TranslateService,
+    private notificationsService: NotificationsService,
+    private configService: ConfigService
   ) {}
 
   /**
@@ -64,7 +64,7 @@ export class HttpResponseHandler {
         this.handleServerError();
       }
     } else {
-        this.handleServerError();
+      this.handleServerError();
     }
   }
 
@@ -77,13 +77,17 @@ export class HttpResponseHandler {
     // Read configuration in order to see if we need to display 401 notification message
     let unauthorizedEndpoints: Array<string> = this.configService.get('notifications').unauthorizedEndpoints;
 
-    unauthorizedEndpoints = unauthorizedEndpoints.filter(endpoint => this.getRelativeUrl(responseBody.url) === endpoint);
+    unauthorizedEndpoints = unauthorizedEndpoints.filter(
+      (endpoint) => this.getRelativeUrl(responseBody.url) === endpoint
+    );
     this.router.navigate(['/login']);
 
     if (unauthorizedEndpoints.length) {
-      this.notificationsService.info('Info',
-                                    this.translateService.instant('ServerError401'),
-                                    this.configService.get('notifications').options);
+      this.notificationsService.info(
+        'Info',
+        this.translateService.instant('ServerError401'),
+        this.configService.get('notifications').options
+      );
     }
   }
 
@@ -91,9 +95,11 @@ export class HttpResponseHandler {
    * Shows notification errors when server response status is 403
    */
   private handleForbidden(): void {
-    this.notificationsService.error('error',
-                                    this.translateService.instant('ServerError403'),
-                                    this.configService.get('notifications').options);
+    this.notificationsService.error(
+      'error',
+      this.translateService.instant('ServerError403'),
+      this.configService.get('notifications').options
+    );
     this.router.navigate(['/login']);
   }
 
@@ -105,11 +111,11 @@ export class HttpResponseHandler {
   private handleNotFound(responseBody: any): void {
     // Read configuration in order to see if we need to display 401 notification message
     let notFoundEndpoints: Array<string> = this.configService.get('notifications').notFoundEndpoints;
-    notFoundEndpoints = notFoundEndpoints.filter(endpoint => this.getRelativeUrl(responseBody.url) === endpoint);
+    notFoundEndpoints = notFoundEndpoints.filter((endpoint) => this.getRelativeUrl(responseBody.url) === endpoint);
 
     if (notFoundEndpoints.length) {
       const message = this.translateService.instant('ServerError404'),
-            title   = this.translateService.instant('ErrorNotificationTitle');
+        title = this.translateService.instant('ErrorNotificationTitle');
 
       this.showNotificationError(title, message);
     }
@@ -120,7 +126,7 @@ export class HttpResponseHandler {
    */
   private handleServerError(): void {
     const message = this.translateService.instant('ServerError500'),
-          title   = this.translateService.instant('ErrorNotificationTitle');
+      title = this.translateService.instant('ErrorNotificationTitle');
 
     this.showNotificationError(title, message);
   }
@@ -132,15 +138,14 @@ export class HttpResponseHandler {
    */
   private handleErrorMessages(response: any): void {
     if (!response) {
-        return;
+      return;
     }
 
     for (const key of Object.keys(response)) {
       if (Array.isArray(response[key])) {
         response[key].forEach((value) => this.showNotificationError('Error', this.getTranslatedValue(value)));
-      }
-      else {
-          this.showNotificationError('Error', this.getTranslatedValue(response[key]));
+      } else {
+        this.showNotificationError('Error', this.getTranslatedValue(response[key]));
       }
     }
   }

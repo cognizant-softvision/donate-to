@@ -37,6 +37,7 @@
     "oidc-client": "^1.10.1",
     "popper.js": "^1.16.1",
     "rxjs": "^6.5.5",
+    "rxjs-compat": "^6.5.5",
     "zone.js": "0.10.3"
   },
   "devDependencies": {
@@ -69,8 +70,8 @@
   },
   "husky": {
     "hooks": {
-        "pre-commit": "pretty-quick --staged && ng lint",
-        "pre-push": "ng build"
+      "pre-commit": "pretty-quick --staged && ng lint",
+      "pre-push": "ng build"
     }
   }
 }
