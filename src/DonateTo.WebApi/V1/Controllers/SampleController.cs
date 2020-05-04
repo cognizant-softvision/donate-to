@@ -10,6 +10,5 @@ namespace DonateTo.WebApi.V1.Controllers
     public class SampleController : BaseApiController<SampleModel>
     {
         public SampleController(IBaseService<SampleModel> sampleService) : base(sampleService) { }
-
     }
 }

@@ -10,11 +10,7 @@ import { SampleModel } from '../../models/sampleModel';
 
 export class SampleService extends BaseHttpClientService<SampleModel> {
     constructor(httpClient: HttpClient) {
-        super(
-            httpClient,
-            config.api.baseUrl,
-            'api/v1/sample'
-        );
+        super(httpClient, config.api.baseUrl, 'api/v1/sample');
     }
 
     getSample() {

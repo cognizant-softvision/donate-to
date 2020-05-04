@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,11 +9,11 @@ namespace DonateTo.WebApi.V1.Controllers
     [ApiController]
     public abstract class BaseApiController<T> : ControllerBase where T : class
     {
-        private IBaseService<T> _baseService  { get; set; }
+        private IBaseService<T> BaseService  { get; set; }
 
         public BaseApiController(IBaseService<T> baseService)
         {
-            _baseService = baseService;
+            BaseService = baseService;
         }
 
         /// <summary>
@@ -23,9 +24,9 @@ namespace DonateTo.WebApi.V1.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public virtual ActionResult<IEnumerable<T>> Get()
+        public virtual async Task<ActionResult<IEnumerable<T>>> Get()
         {
-            var result = _baseService.GetAsync();
+            var result = await BaseService.GetAsync().ConfigureAwait(false);
 
             return Ok(result);
         }
@@ -41,9 +42,9 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public virtual ActionResult<IEnumerable<T>> Get(long id)
+        public virtual async Task<ActionResult<IEnumerable<T>>> Get(long id)
         {
-            var result = _baseService.GetAsync(id);
+            var result = await BaseService.GetAsync(id).ConfigureAwait(false);
 
             return Ok(result);
         }
@@ -59,9 +60,9 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public virtual IActionResult Post([FromBody] T value)
+        public virtual async Task<IActionResult> Post([FromBody] T value)
         {
-            var result = _baseService.CreateAsync(value);
+            var result = await BaseService.CreateAsync(value).ConfigureAwait(false);
 
             return Ok(result);
         }
@@ -76,9 +77,9 @@ namespace DonateTo.WebApi.V1.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public virtual IActionResult Put(long id, [FromBody] T value)
+        public virtual async Task<IActionResult> Put(long id, [FromBody] T value)
         {
-            var result = _baseService.UpdateAsync(value, id);
+            var result = await BaseService.UpdateAsync(value, id).ConfigureAwait(false);
 
             return Ok(result);
         }
@@ -94,11 +95,11 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public virtual IActionResult Delete(long id)
+        public virtual async Task<IActionResult> Delete(long id)
         {
-            var result = _baseService.DeleteAsync(id);
+            await BaseService.DeleteAsync(id).ConfigureAwait(false);
 
-            return Ok(result);
+            return Ok();
         }
     }
 }

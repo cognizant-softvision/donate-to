@@ -24,8 +24,7 @@ export class BaseHttpClientService<T extends BaseModel> {
    * @returns Observable List of T
    */
   get(): Observable<T[]> {
-    return this.httpClient
-      .get<T[]>(`${this.url}/${this.endpoint}`);
+    return this.httpClient.get<T[]>(`${this.url}/${this.endpoint}`);
   }
 
   /**
@@ -35,8 +34,7 @@ export class BaseHttpClientService<T extends BaseModel> {
    * @returns Observable of T
    */
   getById(id: number): Observable<T> {
-    return this.httpClient
-      .get<T>(`${this.url}/${this.endpoint}/${id}`);
+    return this.httpClient.get<T>(`${this.url}/${this.endpoint}/${id}`);
   }
 
   /**
@@ -46,8 +44,7 @@ export class BaseHttpClientService<T extends BaseModel> {
    * @returns Observable of T
    */
   create(item: T): Observable<T> {
-    return this.httpClient
-    .post<T>(`${this.url}/${this.endpoint}`, JSON.stringify(item), this.httpOptions);
+    return this.httpClient.post<T>(`${this.url}/${this.endpoint}`, JSON.stringify(item), this.httpOptions);
   }
 
   /**
