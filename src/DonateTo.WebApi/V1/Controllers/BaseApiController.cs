@@ -9,11 +9,11 @@ namespace DonateTo.WebApi.V1.Controllers
     [ApiController]
     public abstract class BaseApiController<T> : ControllerBase where T : class
     {
-        private IBaseService<T> BaseService  { get; set; }
+        private IBaseService<T> _baseService  { get; set; }
 
         public BaseApiController(IBaseService<T> baseService)
         {
-            BaseService = baseService;
+            _baseService = baseService;
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public virtual async Task<ActionResult<IEnumerable<T>>> Get()
         {
-            var result = await BaseService.GetAsync().ConfigureAwait(false);
+            var result = await _baseService.GetAsync().ConfigureAwait(false);
 
             return Ok(result);
         }
@@ -44,7 +44,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public virtual async Task<ActionResult<IEnumerable<T>>> Get(long id)
         {
-            var result = await BaseService.GetAsync(id).ConfigureAwait(false);
+            var result = await _baseService.GetAsync(id).ConfigureAwait(false);
 
             return Ok(result);
         }
@@ -62,7 +62,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public virtual async Task<IActionResult> Post([FromBody] T value)
         {
-            var result = await BaseService.CreateAsync(value).ConfigureAwait(false);
+            var result = await _baseService.CreateAsync(value).ConfigureAwait(false);
 
             return Ok(result);
         }
@@ -79,7 +79,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public virtual async Task<IActionResult> Put(long id, [FromBody] T value)
         {
-            var result = await BaseService.UpdateAsync(value, id).ConfigureAwait(false);
+            var result = await _baseService.UpdateAsync(value, id).ConfigureAwait(false);
 
             return Ok(result);
         }
@@ -97,7 +97,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public virtual async Task<IActionResult> Delete(long id)
         {
-            await BaseService.DeleteAsync(id).ConfigureAwait(false);
+            await _baseService.DeleteAsync(id).ConfigureAwait(false);
 
             return Ok();
         }
