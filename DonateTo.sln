@@ -26,6 +26,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DonateTo.IdentityServer", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3E96C7D4-2A8A-4813-9462-1D028721072A}"
 	ProjectSection(SolutionItems) = preProject
+		ApplyMigrations.ps1 = ApplyMigrations.ps1
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
