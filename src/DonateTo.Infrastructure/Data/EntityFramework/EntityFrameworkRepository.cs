@@ -55,7 +55,7 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
         }
         public virtual async Task<TEntity> GetAsync(long id)
         {
-            return await DbContext.Set<TEntity>().FindAsync(id);
+            return await DbContext.Set<TEntity>().FindAsync(id).ConfigureAwait(false);
         }
 
         public virtual TEntity Add(TEntity entity)
@@ -67,7 +67,7 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
 
         public virtual async Task<TEntity> AddAsync(TEntity entity)
         {
-            await DbContext.Set<TEntity>().AddAsync(entity);
+            await DbContext.Set<TEntity>().AddAsync(entity).ConfigureAwait(false);
 
             return entity;
         }

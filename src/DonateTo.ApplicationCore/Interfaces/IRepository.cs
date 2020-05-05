@@ -27,7 +27,7 @@ namespace DonateTo.ApplicationCore.Interfaces
         /// <returns>Task of IQueryable of TEntity.</returns>
         Task<IQueryable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter);
 
-                /// <summary>
+        /// <summary>
         /// Get a list of entities.
         /// </summary>
         /// <returns>IQueryable of TEntity.</returns>

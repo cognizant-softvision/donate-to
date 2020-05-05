@@ -11,7 +11,6 @@ namespace DonateTo.WebApi.V1.Controllers
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
-    [Authorize]
     [ApiController]
     public abstract class BaseApiController<T> : ControllerBase where T : class
     {
@@ -71,7 +70,7 @@ namespace DonateTo.WebApi.V1.Controllers
         public virtual async Task<IActionResult> Post([FromBody] T value)
         {
             var result = await _baseService.CreateAsync(value).ConfigureAwait(false);
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
 
             return Ok(result);
         }
@@ -89,7 +88,7 @@ namespace DonateTo.WebApi.V1.Controllers
         public virtual async Task<IActionResult> Put(long id, [FromBody] T value)
         {
             var result = await _baseService.UpdateAsync(value, id).ConfigureAwait(false);
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
 
             return Ok(result);
         }
@@ -108,7 +107,7 @@ namespace DonateTo.WebApi.V1.Controllers
         public virtual async Task<IActionResult> Delete(long id)
         {
             await _baseService.DeleteAsync(id).ConfigureAwait(false);
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
 
             return Ok();
         }
@@ -119,7 +118,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public virtual async Task<ActionResult<PagedResult<T>>> GetPaged(int page, int pageSize)
         {
-            return await this._baseService.GetPagedAsync(page, pageSize);
+            return await this._baseService.GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
     }
 }

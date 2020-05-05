@@ -23,7 +23,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<PagedResult<DonationRequest>>> SearchDonation(string queryString,int page, int pageSize)
         {
-            return await this._searchService.SearchDonationRequestAsync(queryString, page, pageSize);
+            return await this._searchService.SearchDonationRequestAsync(queryString, page, pageSize).ConfigureAwait(false);
         }    
         
     }

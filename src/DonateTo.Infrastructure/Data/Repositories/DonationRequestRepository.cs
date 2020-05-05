@@ -16,7 +16,7 @@ namespace DonateTo.Infrastructure.Data.Repositories
         
         private IQueryable<DonationRequest> GetHydratedDonationRequests() {
             return DbContext.Set<DonationRequest>().Include( d => d.Address).Include( d => d.Status)
-                .Include( d => d.DonationRequestItems.Select(dr => dr.DonationRequestItemCategories)).Include( d => d.DonationRequestCategories)
+                .Include( d => d.DonationRequestItems).Include( d => d.DonationRequestCategories)
                 .Include( d => d.Organization);
         }
 
@@ -38,7 +38,7 @@ namespace DonateTo.Infrastructure.Data.Repositories
         }
         public override async Task<DonationRequest> GetAsync(long id)
         {
-            return await this.GetHydratedDonationRequests().FirstOrDefaultAsync(d => d.Id.Equals(id));
+            return await this.GetHydratedDonationRequests().FirstOrDefaultAsync(d => d.Id.Equals(id)).ConfigureAwait(false);
         }
         ///<inheritdoc cref="IRepository{DonationRequest}"/>
         public override PagedResult<DonationRequest> GetPaged(int page, int pageSize)

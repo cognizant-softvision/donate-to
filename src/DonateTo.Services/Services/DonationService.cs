@@ -14,7 +14,5 @@ namespace DonateTo.Services
         public DonationService(IRepository<Donation> donationRepository):base(donationRepository)
         {
         }
-
-
     }
 }

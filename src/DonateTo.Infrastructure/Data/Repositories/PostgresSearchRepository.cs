@@ -56,8 +56,8 @@ namespace DonateTo.Infrastructure.Data.Repositories
         /// <param name="page"> Curent results page <param>
         /// <param name="pageSize"> Size of results page <param>
         /// <returns>Task of Paged DonationRequests of matching criteria.</returns>
-        public Task<PagedResult<DonationRequest>> SearchDonationRequestAsync(string queryString, int page, int pageSize) {
-           return SearchDonationRequestQuery(queryString).GetPagedAsync(page, pageSize );
+        public async Task<PagedResult<DonationRequest>> SearchDonationRequestAsync(string queryString, int page, int pageSize) {
+           return await SearchDonationRequestQuery(queryString).GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
 
     }

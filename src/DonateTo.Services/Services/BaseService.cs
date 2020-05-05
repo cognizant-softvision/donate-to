@@ -19,7 +19,7 @@ namespace DonateTo.Services
 
         ///<inheritdoc cref="IBaseService{TEntity}"/>
         public virtual async Task<TEntity> CreateAsync(TEntity entity) {
-            return await this._entityRequestRepository.AddAsync(entity);
+            return await this._entityRequestRepository.AddAsync(entity).ConfigureAwait(false);
         }
 
         ///<inheritdoc cref="IBaseService{TEntity}"/>
@@ -34,7 +34,7 @@ namespace DonateTo.Services
 
          ///<inheritdoc cref="IBaseService{TEntity}"/>
         public virtual async Task<TEntity> GetAsync(long id){
-            return await this._entityRequestRepository.GetAsync(id);
+            return await this._entityRequestRepository.GetAsync(id).ConfigureAwait(false);
         }
 
         ///<inheritdoc cref="IBaseService{TEntity}"/>
@@ -42,20 +42,20 @@ namespace DonateTo.Services
             if(entity.Id != id) {
                 throw new InvalidOperationException();
             }
-            return await this._entityRequestRepository.UpdateAsync(entity);
+            return await this._entityRequestRepository.UpdateAsync(entity).ConfigureAwait(false);
         }
         
         ///<inheritdoc cref="IBaseService{TEntity}"/>
         public virtual TEntity Update(TEntity entity, long id) {
             if(entity.Id != id) {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException("The id on the entity and the one passed on do not match.");
             }
             return this._entityRequestRepository.Update(entity);
         }
         
         ///<inheritdoc cref="IBaseService{TEntity}"/>
         public virtual async Task DeleteAsync(long id) {
-            await this._entityRequestRepository.DeleteAsync(id);
+            await this._entityRequestRepository.DeleteAsync(id).ConfigureAwait(false);
         }
         
         ///<inheritdoc cref="IBaseService{TEntity}"/>
@@ -70,7 +70,7 @@ namespace DonateTo.Services
 
         ///<inheritdoc cref="IBaseService{TEntity}"/>
         public virtual async Task<PagedResult<TEntity>> GetPagedAsync(int page, int pageSize)  {
-            return await this._entityRequestRepository.GetPagedAsync(page, pageSize);
+            return await this._entityRequestRepository.GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
 
         ///<inheritdoc cref="IBaseService{TEntity}"/>
@@ -80,7 +80,7 @@ namespace DonateTo.Services
 
         ///<inheritdoc cref="IBaseService{TEntity}"/>
         public virtual async Task<IEnumerable<TEntity>> GetAsync()  {
-            return await this._entityRequestRepository.GetAsync();
+            return await this._entityRequestRepository.GetAsync().ConfigureAwait(false);
         }
 
     }

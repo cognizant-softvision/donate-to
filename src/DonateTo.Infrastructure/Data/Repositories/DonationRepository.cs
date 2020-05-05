@@ -38,7 +38,7 @@ namespace DonateTo.Infrastructure.Data.Repositories
         }
         public override async Task<Donation> GetAsync(long id)
         {
-            return await this.GetHydratedDonations().FirstOrDefaultAsync(d => d.Id.Equals(id));
+            return await this.GetHydratedDonations().FirstOrDefaultAsync(d => d.Id.Equals(id)).ConfigureAwait(false);
         }
         ///<inheritdoc cref="IRepository{Donation}"/>
         public override PagedResult<Donation> GetPaged(int page, int pageSize)
