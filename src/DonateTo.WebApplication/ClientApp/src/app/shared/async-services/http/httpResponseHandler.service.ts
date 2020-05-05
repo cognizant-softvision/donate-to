@@ -182,6 +182,7 @@ export class HttpResponseHandler {
    * @param message
    */
   private showNotificationError(title: string, message: string): void {
+    console.log(title + ': ' + message);
     this.notificationsService.error(title, message, this.configService.get('notifications').options);
   }
 }
