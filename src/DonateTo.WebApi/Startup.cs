@@ -75,7 +75,9 @@ namespace DonateTo.WebApi
                     DonateToCorsPolicy,
                     builder =>
                     {
-                        builder.WithOrigins(domainsAllowed.Split(';'));
+                        builder.WithOrigins(domainsAllowed.Split(';'))
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
                     });
             }
         }

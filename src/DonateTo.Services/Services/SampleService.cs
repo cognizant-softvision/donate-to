@@ -12,12 +12,12 @@ namespace DonateTo.Services.Services
     {
         public SampleModel Create(SampleModel entity)
         {
-            throw new NotImplementedException();
+            return entity;
         }
 
         public Task<SampleModel> CreateAsync(SampleModel entity)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(entity);
         }
 
         public void Delete(long id)
@@ -43,9 +43,11 @@ namespace DonateTo.Services.Services
         public Task<IEnumerable<SampleModel>> GetAsync()
         {
             Logger.Debug("Testing Logger");
-            var listModel = new List<SampleModel>();
-            listModel.Add(new SampleModel());
-            listModel.Add(new SampleModel());
+            var listModel = new List<SampleModel>
+            {
+                new SampleModel() { Id = 1, Name = "Sample 1" },
+                new SampleModel() { Id = 2, Name = "Sample 2" }
+            };
             var result = listModel.AsEnumerable();
 
             return Task.FromResult(result);

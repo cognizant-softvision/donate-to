@@ -20,6 +20,9 @@ import { NotificationsModule } from './shared/notifications/notifications.module
 
 // Third party libraries
 import { EffectsModule } from '@ngrx/effects';
+import { HttpErrorInterceptor } from 'src/app/shared/async-services/http/http-error.interceptor';
+import { TranslateModule } from 'ng2-translate';
+import { SampleModule } from './home/sample.module';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { TranslateLoader, TranslateModule, TranslateService, TranslateStaticLoader } from 'ng2-translate';
@@ -47,7 +50,12 @@ import { HttpErrorInterceptor } from 'src/app/shared/async-services/http/http-er
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ]),
+    AuthModule,
+    StoreModule.forRoot([]),
     EffectsModule.forRoot([]),
+
+    // NgRx Store modules
+    SampleModule,
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }],
   bootstrap: [AppComponent],
