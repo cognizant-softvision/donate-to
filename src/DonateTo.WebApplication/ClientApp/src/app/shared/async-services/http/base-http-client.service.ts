@@ -1,27 +1,13 @@
-﻿import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpHandler,
-  HttpHeaders,
-  HttpInterceptor,
-  HttpRequest,
-} from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { catchError, map, retry } from 'rxjs/operators';
 import { BaseModel } from 'src/app/shared/models/baseModel';
-import { Serializer } from 'src/app/shared/models/serializer';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BaseHttpClientService<T extends BaseModel> {
-  constructor(
-    private httpClient: HttpClient,
-    private url: string,
-    private endpoint: string,
-    private serializer: Serializer
-  ) {}
+  constructor(private httpClient: HttpClient, private url: string, private endpoint: string) {}
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -53,9 +39,7 @@ export class BaseHttpClientService<T extends BaseModel> {
    * @returns Observable of T
    */
   create(item: T): Observable<T> {
-    return this.httpClient
-      .post<T>(`${this.url}/${this.endpoint}`, JSON.stringify(item), this.httpOptions)
-      .pipe(map((data) => this.serializer.fromJson(data) as T));
+    return this.httpClient.post<T>(`${this.url}/${this.endpoint}`, JSON.stringify(item), this.httpOptions);
   }
 
   /**
@@ -65,9 +49,7 @@ export class BaseHttpClientService<T extends BaseModel> {
    * @returns Observable of T
    */
   update(item: T): Observable<T> {
-    return this.httpClient
-      .put<T>(`${this.url}/${this.endpoint}/${item.id}`, JSON.stringify(item), this.httpOptions)
-      .pipe(map((data) => this.serializer.fromJson(data) as T));
+    return this.httpClient.put<T>(`${this.url}/${this.endpoint}/${item.id}`, JSON.stringify(item), this.httpOptions);
   }
 
   /**
