@@ -1,34 +1,33 @@
-import { ActionTypes } from './actions';
+import { ActionTypes, AddSampleFailed, LoadSamples, LoadSamplesFailed, LoadSamplesSuccess } from './actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { catchError, map, mergeMap } from 'rxjs/operators';
-import { EMPTY } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { SampleService } from '../../async-services/http/sample-service.service';
 
 @Injectable()
 export class SampleEffects {
   @Effect()
-  loadSamples$ = this.actions$.pipe(
+  loadSamples$: Observable<{}> = this.actions$.pipe(
     ofType(ActionTypes.LOAD_SAMPLES),
-    mergeMap(() =>
+    map((action: LoadSamples) => action.payload),
+    switchMap(() =>
       this.sampleService.getSample().pipe(
-        map((samples) => {
-          return { type: ActionTypes.LOAD_SAMPLES_SUCCESS, payload: samples };
-        }),
-        catchError(() => EMPTY)
+        map((samples) => new LoadSamplesSuccess(samples)),
+        catchError(() => of(new LoadSamplesFailed()))
       )
     )
   );
 
   @Effect()
-  addSample$ = this.actions$.pipe(
+  addSample$: Observable<{}> = this.actions$.pipe(
     ofType(ActionTypes.ADD_SAMPLE),
-    mergeMap((data: any) =>
+    switchMap((data: any) =>
       this.sampleService.createSample(data.payload).pipe(
         map((samples) => {
           return { type: ActionTypes.ADD_SAMPLE_SUCCESS, payload: samples };
         }),
-        catchError(() => EMPTY)
+        catchError(() => of(new AddSampleFailed(data.payload)))
       )
     )
   );
