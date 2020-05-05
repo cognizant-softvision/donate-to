@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AddSample, LoadSamples } from '../shared/store/sample/actions';
+import { AddSample, LoadSamples } from '../shared/store/sample';
 import { SampleModel } from '../shared/models/sampleModel';
 import { select, Store } from '@ngrx/store';
 
