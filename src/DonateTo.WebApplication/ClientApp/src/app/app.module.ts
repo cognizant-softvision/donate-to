@@ -21,12 +21,9 @@ import { NotificationsModule } from './shared/notifications/notifications.module
 // Third party libraries
 import { EffectsModule } from '@ngrx/effects';
 import { HttpErrorInterceptor } from 'src/app/shared/async-services/http/http-error.interceptor';
-import { TranslateModule } from 'ng2-translate';
 import { SampleModule } from './home/sample.module';
 import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { TranslateLoader, TranslateModule, TranslateService, TranslateStaticLoader } from 'ng2-translate';
-import { HttpErrorInterceptor } from 'src/app/shared/async-services/http/http-error.interceptor';
+import { TranslateModule } from 'ng2-translate';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, CounterComponent, FetchDataComponent],
