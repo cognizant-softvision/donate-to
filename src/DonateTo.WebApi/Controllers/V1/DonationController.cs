@@ -8,7 +8,7 @@ using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Models.Pagination;
 
-namespace DonateTo.WebApi.Controllers
+namespace DonateTo.WebApi.Controllers.V1
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -67,7 +67,7 @@ namespace DonateTo.WebApi.Controllers
             }
 
             await this._donationService.UpdateAsync(donation);
-            await _unitOfWork.SaveAsync();
+            await this._unitOfWork.SaveAsync();
             return Ok();
         }
         
@@ -75,10 +75,10 @@ namespace DonateTo.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Donation))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Consumes(MediaTypeNames.Application.Json)]
-        public async Task<Donation> Post(Donation donation)
+        public Donation Post(Donation donation)
         {
-           var finalDonation = await this._donationService.CreateAsync(donation);
-           await _unitOfWork.SaveAsync();
+           var finalDonation =  this._donationService.Create(donation);
+           this._unitOfWork.Save();
            return finalDonation;
 
         }

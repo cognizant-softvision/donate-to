@@ -7,8 +7,7 @@ namespace DonateTo.ApplicationCore.Entities
     {
         public string Title { get; set; }
         public string Observation { get; set; }
-        public int Priority { get; set; }
-        
+        public int Priority { get; set; }        
         
         public long OrganizationId { get; set; }
         public Organization Organization { get; set; }
@@ -20,7 +19,6 @@ namespace DonateTo.ApplicationCore.Entities
         public User User { get; set; }
         public IEnumerable<DonationRequestItem> DonationRequestItems { get; set; }
         public DateTime FinishDate { get; set; }
-
         public IEnumerable<DonationRequestCategory> DonationRequestCategories { get; set; }        
     }
 }
