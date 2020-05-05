@@ -1,24 +1,59 @@
 import { ActionsUnion, ActionTypes } from './actions';
 
-export const initialState = {
-  items: [],
-};
+class InitialState implements SampleState {
+  loading: boolean;
+  failed: boolean;
+  items: any;
+}
 
-export function SampleReducer(state = initialState, action: ActionsUnion) {
+export function SampleReducer(state = InitialState, action: ActionsUnion) {
   switch (action.type) {
+    case ActionTypes.LOAD_SAMPLES:
+      return {
+        ...state,
+        loading: true,
+        failed: false,
+        items: action.payload,
+      };
+
     case ActionTypes.LOAD_SAMPLES_SUCCESS:
       return {
         ...state,
-        items: [...action.payload],
+        loading: false,
+        failed: false,
+        items: action.payload,
+      };
+
+    case ActionTypes.LOAD_SAMPLES_FAILED:
+      return {
+        ...state,
+        loading: false,
+        failed: true,
       };
 
     case ActionTypes.ADD_SAMPLE_SUCCESS:
       return {
         ...state,
-        items: [...state.items, action.payload],
+        loading: false,
+        failed: false,
+        items: action.payload,
+      };
+
+    case ActionTypes.ADD_SAMPLE_FAILED:
+      return {
+        ...state,
+        loading: false,
+        failed: true,
+        items: action.payload,
       };
 
     default:
       return state;
   }
+}
+
+export interface SampleState {
+  loading: boolean;
+  failed: boolean;
+  items: [];
 }

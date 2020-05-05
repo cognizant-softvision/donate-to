@@ -20,10 +20,9 @@ import { HomeComponent } from './home/home.component';
 // Third party libraries
 import { EffectsModule } from '@ngrx/effects';
 import { HttpErrorInterceptor } from 'src/app/shared/async-services/http/http-error.interceptor';
-import { SampleEffects } from './shared/store/sample/effects';
-import { SampleReducer } from './shared/store/sample/reducer';
+import { TranslateModule } from 'ng2-translate';
+import { SampleModule } from './home/sample.module';
 import { StoreModule } from '@ngrx/store';
-import { TranslateLoader, TranslateModule, TranslateService, TranslateStaticLoader } from 'ng2-translate';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, CounterComponent, FetchDataComponent],
@@ -47,8 +46,11 @@ import { TranslateLoader, TranslateModule, TranslateService, TranslateStaticLoad
       { path: 'fetch-data', component: FetchDataComponent },
     ]),
     AuthModule,
-    StoreModule.forRoot({ sample: SampleReducer }),
-    EffectsModule.forRoot([SampleEffects]),
+    StoreModule.forRoot([]),
+    EffectsModule.forRoot([]),
+
+    // NgRx Store modules
+    SampleModule,
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }],
   bootstrap: [AppComponent],
