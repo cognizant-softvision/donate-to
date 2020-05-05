@@ -14,5 +14,6 @@ namespace DonateTo.ApplicationCore.Entities
         public User User { get; set; }
         public IEnumerable<DonationRequestItem> DonationRequestItems { get; set; }
         public DateTime FinishDate { get; set; }
+        public IEnumerable<Category> Categories { get; set; } 
     }
 }

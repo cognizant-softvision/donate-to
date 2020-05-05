@@ -19,16 +19,24 @@ namespace DonateTo.WebApi.Controllers
         private readonly IUnitOfWork _unitOfWork; 
         public DonationController(IDonationService donationService, IUnitOfWork unitOfWork)
         {
-            _donationService = donationService;   
-            _unitOfWork = unitOfWork;
+            this._donationService = donationService;   
+            this._unitOfWork = unitOfWork;
         }
         
         [HttpGet("/:pageNumber/:pageSize")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedResult<Donation>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<PagedResult<Donation>>> GetPagedAsync(int page, int pageSize)
+        public async Task<ActionResult<PagedResult<Donation>>> GetPaged(int page, int pageSize)
         {
-            return await _donationService.GetPagedAsync(page, pageSize);
+            return await this._donationService.GetPagedAsync(page, pageSize);
+        }
+
+        [HttpGet("/:queryString/:pageNumber/:pageSize")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedResult<Donation>))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<PagedResult<Donation>>> SearchDonation(string queryString,int page, int pageSize)
+        {
+            return await this._donationService.SearchDonationAsync(queryString, page, pageSize);
         }
         
         [HttpGet("/:id")]
@@ -36,7 +44,7 @@ namespace DonateTo.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Donation>> Get(int id)
         {
-            return await _donationService.GetAsync(id);
+            return await this._donationService.GetAsync(id);
         }
 
         [HttpDelete("/:id")]
@@ -44,7 +52,7 @@ namespace DonateTo.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> Delete(int id)
         {
-            await _donationService.DeleteAsync(id);
+            await this._donationService.DeleteAsync(id);
             return Ok();
         }
 
@@ -58,7 +66,7 @@ namespace DonateTo.WebApi.Controllers
                 return new BadRequestResult();
             }
 
-            await _donationService.UpdateAsync(donation);
+            await this._donationService.UpdateAsync(donation);
             await _unitOfWork.SaveAsync();
             return Ok();
         }
@@ -69,7 +77,7 @@ namespace DonateTo.WebApi.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         public async Task<Donation> Post(Donation donation)
         {
-           var finalDonation = await _donationService.CreateAsync(donation);
+           var finalDonation = await this._donationService.CreateAsync(donation);
            await _unitOfWork.SaveAsync();
            return finalDonation;
 
