@@ -16,6 +16,7 @@ import { AuthModule } from './auth/auth.module';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { HomeComponent } from './home/home.component';
+import { NotificationsModule } from './shared/notifications/notifications.module';
 
 // Third party libraries
 import { EffectsModule } from '@ngrx/effects';
@@ -29,6 +30,7 @@ import { HttpErrorInterceptor } from 'src/app/shared/async-services/http/http-er
   imports: [
     AppRoutingModule,
     AuthModule,
+    NotificationsModule,
     // Angular core dependencies
     BrowserModule,
     FormsModule,
