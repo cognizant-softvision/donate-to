@@ -1,22 +1,17 @@
-﻿import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BaseModel } from 'src/app/shared/models/baseModel';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class BaseHttpClientService<T extends BaseModel> {
-    constructor(
-      private httpClient: HttpClient,
-      private url: string,
-      private endpoint: string
-    ) { }
+  constructor(private httpClient: HttpClient, private url: string, private endpoint: string) {}
 
-    httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-    };
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  };
 
   /**
    * Makes a HTTP GET request.
@@ -66,5 +61,4 @@ export class BaseHttpClientService<T extends BaseModel> {
   delete(item: T) {
     return this.httpClient.delete<T>(`${this.url}/${this.endpoint}/${item.id}`, this.httpOptions);
   }
-
 }

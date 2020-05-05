@@ -19,19 +19,24 @@ import { HomeComponent } from './home/home.component';
 
 // Third party libraries
 import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
 import { HttpErrorInterceptor } from 'src/app/shared/async-services/http/http-error.interceptor';
-import { SampleReducer } from './shared/store/sample/reducer';
 import { SampleEffects } from './shared/store/sample/effects';
+import { SampleReducer } from './shared/store/sample/reducer';
+import { StoreModule } from '@ngrx/store';
+import { TranslateLoader, TranslateModule, TranslateService, TranslateStaticLoader } from 'ng2-translate';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, CounterComponent, FetchDataComponent],
   imports: [
     AppRoutingModule,
+    AuthModule,
     // Angular core dependencies
     BrowserModule,
     FormsModule,
     CommonModule,
+
+    // Third party modules
+    TranslateModule.forRoot(),
 
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
@@ -43,7 +48,7 @@ import { SampleEffects } from './shared/store/sample/effects';
     ]),
     AuthModule,
     StoreModule.forRoot({ sample: SampleReducer }),
-    EffectsModule.forRoot([SampleEffects])
+    EffectsModule.forRoot([SampleEffects]),
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }],
   bootstrap: [AppComponent],

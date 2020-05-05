@@ -2,11 +2,11 @@ import { Action } from '@ngrx/store';
 import { SampleModel } from '../../models/sampleModel';
 
 export enum ActionTypes {
-  ADD_SAMPLE= '[Sample] Add Sample',
+  ADD_SAMPLE = '[Sample] Add Sample',
   ADD_SAMPLE_SUCCESS = '[Sample] Add success',
 
   LOAD_SAMPLES = '[Sample] Load items from server',
-  LOAD_SAMPLES_SUCCESS = '[Sample] Load success'
+  LOAD_SAMPLES_SUCCESS = '[Sample] Load success',
 }
 
 export class AddSample implements Action {
