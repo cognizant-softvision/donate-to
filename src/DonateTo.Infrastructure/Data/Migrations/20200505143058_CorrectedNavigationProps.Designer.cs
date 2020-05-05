@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace DonateTo.Infrastructure.Data.Migrations
+namespace DonateTo.Infrastructure.Migrations
 {
     [DbContext(typeof(DonateToDbContext))]
-    [Migration("20200504035248_AddedFTSIndexes")]
-    partial class AddedFTSIndexes
+    [Migration("20200505143058_CorrectedNavigationProps")]
+    partial class CorrectedNavigationProps
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,8 +37,8 @@ namespace DonateTo.Infrastructure.Data.Migrations
                     b.Property<string>("Country")
                         .HasColumnType("text");
 
-                    b.Property<long?>("CreatedById")
-                        .HasColumnType("bigint");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");
@@ -64,19 +64,15 @@ namespace DonateTo.Infrastructure.Data.Migrations
                     b.Property<string>("Street")
                         .HasColumnType("text");
 
-                    b.Property<long?>("UpdateById")
-                        .HasColumnType("bigint");
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("UpdateById");
-
-                    b.ToTable("Addresses");
+                    b.ToTable("Address");
                 });
 
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Category", b =>
@@ -86,8 +82,8 @@ namespace DonateTo.Infrastructure.Data.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<long?>("CreatedById")
-                        .HasColumnType("bigint");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");
@@ -95,32 +91,18 @@ namespace DonateTo.Infrastructure.Data.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<long?>("DonationRequestId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("DonationRequestItemId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<long?>("UpdateById")
-                        .HasColumnType("bigint");
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("DonationRequestId");
-
-                    b.HasIndex("DonationRequestItemId");
-
-                    b.HasIndex("UpdateById");
-
-                    b.ToTable("Categories");
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Donation", b =>
@@ -130,11 +112,11 @@ namespace DonateTo.Infrastructure.Data.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<long?>("AddressId")
+                    b.Property<long>("AddressId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("CreatedById")
-                        .HasColumnType("bigint");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");
@@ -142,7 +124,7 @@ namespace DonateTo.Infrastructure.Data.Migrations
                     b.Property<int>("DayOfWeek")
                         .HasColumnType("integer");
 
-                    b.Property<long?>("DonationRequestId")
+                    b.Property<long>("DonationRequestId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Observation")
@@ -151,7 +133,7 @@ namespace DonateTo.Infrastructure.Data.Migrations
                     b.Property<DateTime>("PickUpDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<long?>("StatusId")
+                    b.Property<long>("StatusId")
                         .HasColumnType("bigint");
 
                     b.Property<int>("TimeEnd")
@@ -160,8 +142,8 @@ namespace DonateTo.Infrastructure.Data.Migrations
                     b.Property<int>("TimeStart")
                         .HasColumnType("integer");
 
-                    b.Property<long?>("UpdateById")
-                        .HasColumnType("bigint");
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("timestamp without time zone");
@@ -170,15 +152,11 @@ namespace DonateTo.Infrastructure.Data.Migrations
 
                     b.HasIndex("AddressId");
 
-                    b.HasIndex("CreatedById");
-
                     b.HasIndex("DonationRequestId");
 
                     b.HasIndex("StatusId");
 
-                    b.HasIndex("UpdateById");
-
-                    b.ToTable("Donations");
+                    b.ToTable("Donation");
                 });
 
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.DonationItem", b =>
@@ -188,16 +166,16 @@ namespace DonateTo.Infrastructure.Data.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<long?>("CreatedById")
-                        .HasColumnType("bigint");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<long?>("DonationId")
+                    b.Property<long>("DonationId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("DonationRequestItemId")
+                    b.Property<long>("DonationRequestItemId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Observation")
@@ -206,21 +184,19 @@ namespace DonateTo.Infrastructure.Data.Migrations
                     b.Property<decimal>("Quantity")
                         .HasColumnType("numeric");
 
-                    b.Property<long?>("StatusId")
+                    b.Property<long>("StatusId")
                         .HasColumnType("bigint");
 
                     b.Property<long?>("UnitId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("UpdateById")
-                        .HasColumnType("bigint");
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
 
                     b.HasIndex("DonationId");
 
@@ -230,9 +206,7 @@ namespace DonateTo.Infrastructure.Data.Migrations
 
                     b.HasIndex("UnitId");
 
-                    b.HasIndex("UpdateById");
-
-                    b.ToTable("DonationItems");
+                    b.ToTable("DonationItem");
                 });
 
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.DonationRequest", b =>
@@ -242,11 +216,11 @@ namespace DonateTo.Infrastructure.Data.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<long?>("AddressId")
+                    b.Property<long>("AddressId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("CreatedById")
-                        .HasColumnType("bigint");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");
@@ -257,42 +231,53 @@ namespace DonateTo.Infrastructure.Data.Migrations
                     b.Property<string>("Observation")
                         .HasColumnType("text");
 
-                    b.Property<long?>("OrganizationId")
+                    b.Property<long>("OrganizationId")
                         .HasColumnType("bigint");
 
                     b.Property<int>("Priority")
                         .HasColumnType("integer");
 
-                    b.Property<long?>("StatusId")
+                    b.Property<long>("StatusId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
-                    b.Property<long?>("UpdateById")
-                        .HasColumnType("bigint");
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<long?>("UserId")
+                    b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
 
-                    b.HasIndex("CreatedById");
-
                     b.HasIndex("OrganizationId");
 
                     b.HasIndex("StatusId");
 
-                    b.HasIndex("UpdateById");
-
                     b.HasIndex("UserId");
 
-                    b.ToTable("DonationRequests");
+                    b.ToTable("DonationRequest");
+                });
+
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.DonationRequestCategory", b =>
+                {
+                    b.Property<long>("CategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("DonationRequestId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("CategoryId", "DonationRequestId");
+
+                    b.HasIndex("DonationRequestId");
+
+                    b.ToTable("DonationRequestCategory");
                 });
 
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.DonationRequestItem", b =>
@@ -302,8 +287,8 @@ namespace DonateTo.Infrastructure.Data.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<long?>("CreatedById")
-                        .HasColumnType("bigint");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");
@@ -323,21 +308,32 @@ namespace DonateTo.Infrastructure.Data.Migrations
                     b.Property<string>("Observation")
                         .HasColumnType("text");
 
-                    b.Property<long?>("UpdateById")
-                        .HasColumnType("bigint");
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
                     b.HasIndex("DonationRequestId");
 
-                    b.HasIndex("UpdateById");
+                    b.ToTable("DonationRequestItem");
+                });
 
-                    b.ToTable("DonationRequestItems");
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.DonationRequestItemCategory", b =>
+                {
+                    b.Property<long>("CategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("DonationRequestItemId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("CategoryId", "DonationRequestItemId");
+
+                    b.HasIndex("DonationRequestItemId");
+
+                    b.ToTable("DonationRequestItemCategory");
                 });
 
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Organization", b =>
@@ -359,8 +355,8 @@ namespace DonateTo.Infrastructure.Data.Migrations
                     b.Property<string>("ContactPosition")
                         .HasColumnType("text");
 
-                    b.Property<long?>("CreatedById")
-                        .HasColumnType("bigint");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");
@@ -371,19 +367,15 @@ namespace DonateTo.Infrastructure.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<long?>("UpdateById")
-                        .HasColumnType("bigint");
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("UpdateById");
-
-                    b.ToTable("Organizations");
+                    b.ToTable("Organization");
                 });
 
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Role", b =>
@@ -393,26 +385,11 @@ namespace DonateTo.Infrastructure.Data.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("Description")
+                    b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("text");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("CreatedBy")
                         .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Status", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<long?>("CreatedById")
-                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");
@@ -423,17 +400,46 @@ namespace DonateTo.Infrastructure.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<long?>("UpdateById")
-                        .HasColumnType("bigint");
+                    b.Property<string>("NormalizedName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
+                    b.ToTable("Role");
+                });
 
-                    b.HasIndex("UpdateById");
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Status", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Status");
                 });
@@ -448,8 +454,8 @@ namespace DonateTo.Infrastructure.Data.Migrations
                     b.Property<string>("Code")
                         .HasColumnType("text");
 
-                    b.Property<long?>("CreatedById")
-                        .HasColumnType("bigint");
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");
@@ -460,19 +466,15 @@ namespace DonateTo.Infrastructure.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<long?>("UpdateById")
-                        .HasColumnType("bigint");
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
-
-                    b.HasIndex("UpdateById");
-
-                    b.ToTable("Units");
+                    b.ToTable("Unit");
                 });
 
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.User", b =>
@@ -482,8 +484,23 @@ namespace DonateTo.Infrastructure.Data.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<string>("Email")
                         .HasColumnType("text");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
@@ -497,179 +514,242 @@ namespace DonateTo.Infrastructure.Data.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("text");
 
-                    b.Property<string>("Phone")
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("NormalizedEmail")
                         .HasColumnType("text");
 
-                    b.Property<long?>("RoleId")
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("text");
+
+                    b.Property<long>("RoleId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("Users");
+                    b.ToTable("IdentityRoleClaim<long>");
                 });
 
-            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Address", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<long>", b =>
                 {
-                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "UpdateBy")
-                        .WithMany()
-                        .HasForeignKey("UpdateById");
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("text");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IdentityUserClaim<long>");
                 });
 
-            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Category", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<long>", b =>
                 {
-                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("text");
 
-                    b.HasOne("DonateTo.ApplicationCore.Entities.DonationRequest", null)
-                        .WithMany("Categories")
-                        .HasForeignKey("DonationRequestId");
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("text");
 
-                    b.HasOne("DonateTo.ApplicationCore.Entities.DonationRequestItem", null)
-                        .WithMany("Categories")
-                        .HasForeignKey("DonationRequestItemId");
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("text");
 
-                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "UpdateBy")
-                        .WithMany()
-                        .HasForeignKey("UpdateById");
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.ToTable("IdentityUserLogin<long>");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<long>", b =>
+                {
+                    b.Property<long>("RoleId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.ToTable("IdentityUserRole<long>");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<long>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("text");
+
+                    b.ToTable("IdentityUserToken<long>");
                 });
 
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Donation", b =>
                 {
                     b.HasOne("DonateTo.ApplicationCore.Entities.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressId");
-
-                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DonateTo.ApplicationCore.Entities.DonationRequest", "DonationRequest")
                         .WithMany()
-                        .HasForeignKey("DonationRequestId");
+                        .HasForeignKey("DonationRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DonateTo.ApplicationCore.Entities.Status", "Status")
                         .WithMany()
-                        .HasForeignKey("StatusId");
-
-                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "UpdateBy")
-                        .WithMany()
-                        .HasForeignKey("UpdateById");
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.DonationItem", b =>
                 {
-                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
                     b.HasOne("DonateTo.ApplicationCore.Entities.Donation", "Donation")
                         .WithMany("DonationItems")
-                        .HasForeignKey("DonationId");
+                        .HasForeignKey("DonationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DonateTo.ApplicationCore.Entities.DonationRequestItem", "DonationRequestItem")
                         .WithMany()
-                        .HasForeignKey("DonationRequestItemId");
+                        .HasForeignKey("DonationRequestItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DonateTo.ApplicationCore.Entities.Status", "Status")
                         .WithMany()
-                        .HasForeignKey("StatusId");
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DonateTo.ApplicationCore.Entities.Unit", "Unit")
                         .WithMany()
                         .HasForeignKey("UnitId");
-
-                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "UpdateBy")
-                        .WithMany()
-                        .HasForeignKey("UpdateById");
                 });
 
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.DonationRequest", b =>
                 {
                     b.HasOne("DonateTo.ApplicationCore.Entities.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressId");
-
-                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DonateTo.ApplicationCore.Entities.Organization", "Organization")
                         .WithMany()
-                        .HasForeignKey("OrganizationId");
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DonateTo.ApplicationCore.Entities.Status", "Status")
                         .WithMany()
-                        .HasForeignKey("StatusId");
-
-                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "UpdateBy")
-                        .WithMany()
-                        .HasForeignKey("UpdateById");
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("DonateTo.ApplicationCore.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.DonationRequestCategory", b =>
+                {
+                    b.HasOne("DonateTo.ApplicationCore.Entities.Category", "Category")
+                        .WithMany("DonationRequestCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DonateTo.ApplicationCore.Entities.DonationRequest", "DonationRequest")
+                        .WithMany("DonationRequestCategories")
+                        .HasForeignKey("DonationRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.DonationRequestItem", b =>
                 {
-                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
                     b.HasOne("DonateTo.ApplicationCore.Entities.DonationRequest", null)
                         .WithMany("DonationRequestItems")
                         .HasForeignKey("DonationRequestId");
-
-                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "UpdateBy")
-                        .WithMany()
-                        .HasForeignKey("UpdateById");
                 });
 
-            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Organization", b =>
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.DonationRequestItemCategory", b =>
                 {
-                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
+                    b.HasOne("DonateTo.ApplicationCore.Entities.Category", "Category")
+                        .WithMany("DonationRequestItemCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "UpdateBy")
-                        .WithMany()
-                        .HasForeignKey("UpdateById");
-                });
-
-            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Status", b =>
-                {
-                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
-                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "UpdateBy")
-                        .WithMany()
-                        .HasForeignKey("UpdateById");
-                });
-
-            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Unit", b =>
-                {
-                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById");
-
-                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "UpdateBy")
-                        .WithMany()
-                        .HasForeignKey("UpdateById");
-                });
-
-            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.User", b =>
-                {
-                    b.HasOne("DonateTo.ApplicationCore.Entities.Role", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId");
+                    b.HasOne("DonateTo.ApplicationCore.Entities.DonationRequestItem", "DonationRequestItem")
+                        .WithMany("DonationRequestItemCategories")
+                        .HasForeignKey("DonationRequestItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

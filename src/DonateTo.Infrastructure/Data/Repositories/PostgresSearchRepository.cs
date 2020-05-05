@@ -24,11 +24,11 @@ namespace DonateTo.Infrastructure.Data.Repositories
            var query = this._dbContext.Donations.Where( donation => 
                 EF.Functions.ILike(donation.DonationRequest.Title, likeString) ||
                 EF.Functions.ILike(donation.DonationRequest.Organization.Name, likeString) ||                
-                donation.DonationRequest.Categories.Any( cdr => EF.Functions.ILike(cdr.Name, likeString)) ||
+                donation.DonationRequest.DonationRequestCategories.Any( cdr => EF.Functions.ILike(cdr.Category.Name, likeString)) ||
                 donation.DonationRequest.DonationRequestItems.Any( dri =>
                         EF.Functions.ILike(dri.Name, likeString)) ||
                 donation.DonationRequest.DonationRequestItems.Any( dri =>
-                        dri.Categories.Any( cdr => EF.Functions.ILike(cdr.Name, likeString)))
+                        dri.DonationRequestItemCategories.Any( cdr => EF.Functions.ILike(cdr.Category.Name, likeString)))
            );
            return query;
         }
