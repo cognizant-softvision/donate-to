@@ -2,13 +2,12 @@ using Microsoft.AspNetCore.Mvc;
 using DonateTo.ApplicationCore.Entities;
 using Microsoft.AspNetCore.Http;
 using System.Net.Mime;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Models.Pagination;
 
-namespace DonateTo.WebApi.Controllers.V1
+namespace DonateTo.WebApi.V1.Controllers
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -75,10 +74,10 @@ namespace DonateTo.WebApi.Controllers.V1
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Donation))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Consumes(MediaTypeNames.Application.Json)]
-        public Donation Post(Donation donation)
+        public async Task<Donation> Post(Donation donation)
         {
-           var finalDonation =  this._donationService.Create(donation);
-           this._unitOfWork.Save();
+           var finalDonation = await this._donationService.CreateAsync(donation);
+           await this._unitOfWork.SaveAsync();
            return finalDonation;
 
         }
