@@ -24,10 +24,10 @@ function ApplyMigration() {
    Write-Output "Finishing Applying Migrations"
 }
 
-CheckContainerStatus
 if (($migrations | Measure-Object).Count -eq 0) {
    Write-Output "No migrations found"
 }
 else {
+   CheckContainerStatus
    ApplyMigration
 }
