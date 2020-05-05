@@ -75,8 +75,8 @@
   display: inline;
 }
 .grants .grant li:after {
-  content: ', ';
+  content: ", ";
 }
 .grants .grant li:last-child:after {
-  content: '';
+  content: "";
 }

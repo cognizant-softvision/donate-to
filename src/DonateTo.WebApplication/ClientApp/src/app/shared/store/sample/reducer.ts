@@ -1,7 +1,7 @@
 import { ActionsUnion, ActionTypes } from './actions';
 
 export const initialState = {
-  items: []
+  items: [],
 };
 
 export function SampleReducer(state = initialState, action: ActionsUnion) {
@@ -9,13 +9,13 @@ export function SampleReducer(state = initialState, action: ActionsUnion) {
     case ActionTypes.LOAD_SAMPLES_SUCCESS:
       return {
         ...state,
-        items: [...action.payload]
+        items: [...action.payload],
       };
 
     case ActionTypes.ADD_SAMPLE_SUCCESS:
       return {
         ...state,
-        items: [...state.items, action.payload]
+        items: [...state.items, action.payload],
       };
 
     default:

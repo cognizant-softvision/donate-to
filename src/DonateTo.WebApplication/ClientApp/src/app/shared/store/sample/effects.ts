@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import { EMPTY } from 'rxjs';
-import { catchError, map, mergeMap } from 'rxjs/operators';
 import { ActionTypes } from './actions';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { catchError, map, mergeMap } from 'rxjs/operators';
+import { EMPTY } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { SampleService } from '../../async-services/http/sample-service.service';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class SampleEffects {
     ofType(ActionTypes.LOAD_SAMPLES),
     mergeMap(() =>
       this.sampleService.getSample().pipe(
-        map(samples => {
+        map((samples) => {
           return { type: ActionTypes.LOAD_SAMPLES_SUCCESS, payload: samples };
         }),
         catchError(() => EMPTY)
@@ -25,7 +25,7 @@ export class SampleEffects {
     ofType(ActionTypes.ADD_SAMPLE),
     mergeMap((data: any) =>
       this.sampleService.createSample(data.payload).pipe(
-        map(samples => {
+        map((samples) => {
           return { type: ActionTypes.ADD_SAMPLE_SUCCESS, payload: samples };
         }),
         catchError(() => EMPTY)
@@ -33,8 +33,5 @@ export class SampleEffects {
     )
   );
 
-  constructor(
-    private actions$: Actions,
-    private sampleService: SampleService
-  ) {}
+  constructor(private actions$: Actions, private sampleService: SampleService) {}
 }
