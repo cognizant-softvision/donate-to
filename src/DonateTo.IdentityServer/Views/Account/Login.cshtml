@@ -1,46 +1,27 @@
 ﻿@model LoginViewModel
 
-<div class="login-page">
-    <div class="page-header">
-        <h1>Login</h1>
+<form class="form-signin" asp-route="Login" id="login-form">
+    <input type="hidden" asp-for="ReturnUrl" />
+
+    <h1 class="h3 mb-3 font-weight-normal account-title">Donate</h1>
+
+    <label asp-for="Email" class="sr-only">Email address</label>
+    <input type="email" asp-for="Email" class="form-control" placeholder="E-mail" autofocus required>
+
+    <label asp-for="Password" class="sr-only">Password</label>
+    <input type="password" class="form-control" asp-for="Password" placeholder="Password" required>
+
+    @if (ViewContext.ModelState.IsValid == false)
+    {
+        <div class="alert alert-danger">Incorrect user or password</div>
+    }
+
+    <button class="btn btn-lg btn-primary btn-block submit-button" name="button" id="login-button" value="login">Log in</button>
+
+    <div class="form-group">
+        <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Register">Forgot Password?</a>
     </div>
-
-    <partial name="_ValidationSummary" />
-
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="panel panel-default">
-                <div class="panel-body">
-
-                    <form asp-route="Login">
-                        <input type="hidden" asp-for="ReturnUrl" />
-
-                        <fieldset>
-                            <div class="form-group">
-                                <label asp-for="Email"></label>
-                                <input type="email" class="form-control" placeholder="Email" asp-for="Email" autofocus>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Password"></label>
-                                <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
-                            </div>
-                            @if (Model.AllowRememberLogin)
-                            {
-                                <div class="form-group login-remember">
-                                    <label asp-for="RememberLogin">
-                                        <input asp-for="RememberLogin">
-                                        <strong>Remember Me?</strong>
-                                    </label>
-                                </div>
-                            }
-                            <div class="form-group">
-                                <button class="btn btn-primary" name="button" value="login">Login</button>
-                                <button class="btn btn-default" name="button" value="cancel">Cancel</button>
-                            </div>
-                        </fieldset>
-                    </form>
-                </div>
-            </div>
-        </div>
+    <div class="form-group">
+        Don't have an account? <a asp-area="" asp-controller="Account" asp-action="Register">Join Now</a>
     </div>
-</div>
+</form>
