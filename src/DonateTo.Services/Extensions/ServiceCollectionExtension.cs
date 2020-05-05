@@ -20,8 +20,9 @@ namespace DonateTo.Services.Extensions
             service.AddEntityFramework(configuration);
             
             service.AddScoped<IUserService, UserService>();
-            service.AddScoped<IBaseService<SampleModel>, SampleService>();
-            service.AddTransient<IDonationService, DonationService>();
+            service.AddTransient<IBaseService<Donation>, DonationService>();
+            service.AddTransient<IBaseService<DonationRequest>, DonationRequestService>();
+            service.AddTransient<ISearchService, SearchService>();
         }
     }
 }

@@ -9,12 +9,13 @@ using System.Collections.Generic;
 
 namespace DonateTo.Services
 {
-    public class DonationService: BaseService<Donation>
+    public class DonationRequestService: BaseService<DonationRequest>
     {
-        public DonationService(IRepository<Donation> donationRepository):base(donationRepository)
+        private readonly IRepository<DonationRequest> _donationRequestRepository;
+        public DonationRequestService(IRepository<DonationRequest> donationRequestRepository): base(donationRequestRepository)
         {
-        }
-
+            this._donationRequestRepository = donationRequestRepository;
+        }        
 
     }
 }

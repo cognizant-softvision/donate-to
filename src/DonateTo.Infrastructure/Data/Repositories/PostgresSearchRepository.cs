@@ -18,20 +18,20 @@ namespace DonateTo.Infrastructure.Data.Repositories
             this.DbContext = dbContext;
         }
 
-        private IQueryable<Donation> GetHydratedDonations() {
-            return DbContext.Set<Donation>().Include( d => d.Address).Include( d => d.Status).Include( d => d.DonationItems)
-                .Include( d => d.DonationRequest.DonationRequestItems).Include( d => d.DonationRequest.DonationRequestCategories)
-                .Include( d => d.DonationRequest.Organization).Include( d => d.DonationRequest.Status);
+        private IQueryable<DonationRequest> GetHydratedDonationRequests() {
+            return DbContext.Set<DonationRequest>().Include( d => d.Address).Include( d => d.Status).Include( d => d.DonationRequestItems)
+                .Include( d => d.DonationRequestItems).Include( d => d.DonationRequestCategories)
+                .Include( d => d.Organization).Include( d => d.Status);
         }
-        private IQueryable<Donation> SearchDonationQuery(string queryString) {
+        private IQueryable<DonationRequest> SearchDonationRequestQuery(string queryString) {
            var likeString =  $"%{queryString}%";
-           var query = this.GetHydratedDonations().Where( donation => 
-                EF.Functions.ILike(donation.DonationRequest.Title, likeString) ||
-                EF.Functions.ILike(donation.DonationRequest.Organization.Name, likeString) ||                
-                donation.DonationRequest.DonationRequestCategories.Any( cdr => EF.Functions.ILike(cdr.Category.Name, likeString)) ||
-                donation.DonationRequest.DonationRequestItems.Any( dri =>
+           var query = this.GetHydratedDonationRequests().Where( donation => 
+                EF.Functions.ILike(donation.Title, likeString) ||
+                EF.Functions.ILike(donation.Organization.Name, likeString) ||                
+                donation.DonationRequestCategories.Any( cdr => EF.Functions.ILike(cdr.Category.Name, likeString)) ||
+                donation.DonationRequestItems.Any( dri =>
                         EF.Functions.ILike(dri.Name, likeString)) ||
-                donation.DonationRequest.DonationRequestItems.Any( dri =>
+                donation.DonationRequestItems.Any( dri =>
                         dri.DonationRequestItemCategories.Any( cdr => EF.Functions.ILike(cdr.Category.Name, likeString)))
            );
            return query;
@@ -43,10 +43,10 @@ namespace DonateTo.Infrastructure.Data.Repositories
         /// <param name="queryString"> String to search <param>
         /// <param name="page"> Curent results page <param>
         /// <param name="pageSize"> Size of results page <param>
-        /// <returns>Paged Donations of matching criteria.</returns>
-        public PagedResult<Donation> SearchDonation(string queryString, int page, int pageSize)
+        /// <returns>Paged DonationRequests of matching criteria.</returns>
+        public PagedResult<DonationRequest> SearchDonationRequest(string queryString, int page, int pageSize)
         {
-          return SearchDonationQuery(queryString).GetPaged(page, pageSize);
+          return SearchDonationRequestQuery(queryString).GetPaged(page, pageSize);
         }
         
         /// <summary>
@@ -55,9 +55,9 @@ namespace DonateTo.Infrastructure.Data.Repositories
         /// <param name="queryString"> String to search <param>
         /// <param name="page"> Curent results page <param>
         /// <param name="pageSize"> Size of results page <param>
-        /// <returns>Task of Paged Donations of matching criteria.</returns>
-        public Task<PagedResult<Donation>> SearchDonationAsync(string queryString, int page, int pageSize) {
-           return SearchDonationQuery(queryString).GetPagedAsync(page, pageSize );
+        /// <returns>Task of Paged DonationRequests of matching criteria.</returns>
+        public Task<PagedResult<DonationRequest>> SearchDonationRequestAsync(string queryString, int page, int pageSize) {
+           return SearchDonationRequestQuery(queryString).GetPagedAsync(page, pageSize );
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using DonateTo.ApplicationCore.Interfaces;
+﻿using DonateTo.ApplicationCore.Entities;
+using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Models.Pagination;
 using DonateTo.Infrastructure.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +15,7 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TContext"></typeparam>
-    public abstract class EntityFrameworkRepository<TEntity, TContext> : IRepository<TEntity> where TEntity : class where TContext : DbContext
+    public abstract class EntityFrameworkRepository<TEntity, TContext> : IRepository<TEntity> where TEntity : class  where TContext : DbContext
     {
         protected TContext DbContext { get; private set; }
 
@@ -83,6 +84,18 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
             DbContext.Entry(entity).State = EntityState.Modified;
 
             return await Task.FromResult(entity).ConfigureAwait(false);
+        }
+
+        public virtual void Delete(long id)
+        {
+            var entity =  DbContext.Set<TEntity>().Find(id);
+            DbContext.Set<TEntity>().Remove(entity);
+        }
+
+        public virtual async Task DeleteAsync(long id)
+        {
+            var entity =  await DbContext.Set<TEntity>().FindAsync(id);
+            await Task.FromResult(DbContext.Set<TEntity>().Remove(entity)).ConfigureAwait(false);
         }
 
         public virtual void Delete(TEntity entity)

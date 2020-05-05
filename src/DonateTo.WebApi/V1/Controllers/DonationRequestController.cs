@@ -8,9 +8,9 @@ namespace DonateTo.WebApi.V1.Controllers
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class DonationController : BaseApiController<Donation>
+    public class DonationRequestController : BaseApiController<DonationRequest>
     {
-        public DonationController(IBaseService<Donation> donationService, IUnitOfWork unitOfWork) :
+        public DonationRequestController(IBaseService<DonationRequest> donationService, IUnitOfWork unitOfWork) :
          base(donationService, unitOfWork)
         {
         }

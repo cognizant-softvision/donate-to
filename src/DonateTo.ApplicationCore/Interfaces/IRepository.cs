@@ -116,5 +116,18 @@ namespace DonateTo.ApplicationCore.Interfaces
         /// <param name="entity">Entity.</param>
         /// <returns>Task.</returns>
         Task DeleteAsync(TEntity entity);
+
+        /// <summary>
+        ///     Delete an entity.
+        /// </summary>
+        /// <param name="id">Id of Entity.</param>
+        void Delete(long id);
+
+        /// <summary>
+        ///     Delete an entity async.
+        /// </summary>
+        /// <param name="id">Id of Entity.</param>
+        /// <returns>Task.</returns>
+        Task DeleteAsync(long id);
     }
 }
