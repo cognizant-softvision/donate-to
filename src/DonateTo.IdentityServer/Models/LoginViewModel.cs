@@ -1,6 +1,4 @@
-﻿using DonateTo.IdentityServer.Models;
-
-namespace DonateTo.IdentityServer
+﻿namespace DonateTo.IdentityServer.Models
 {
     public class LoginViewModel : LoginInputModel
     {
