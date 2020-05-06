@@ -1,5 +1,4 @@
 using DonateTo.Infrastructure.Logging;
-using DonateTo.WebApi.Middlewares;
 using DonateTo.WebApi.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
@@ -9,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DonateTo.Services.Extensions;
+using Newtonsoft.Json;
 
 namespace DonateTo.WebApi
 {
@@ -28,7 +28,9 @@ namespace DonateTo.WebApi
         {
             var bearerOptions = Configuration.GetSection("Bearer").GetSection("Options");
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options => {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
 
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
@@ -58,10 +60,12 @@ namespace DonateTo.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/error");
+            }
 
             app.UseHttpsRedirection();
-
-            app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.UseRouting();
 

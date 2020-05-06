@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using DonateTo.ApplicationCore.Models.Pagination;
 
 namespace DonateTo.ApplicationCore.Interfaces.Services
 {
@@ -21,6 +22,20 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// <param name="filter">Filter</param>
         /// <returns>IEnumerable of entity.</returns>
         Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> filter = null);
+
+
+
+        /// <summary>
+        /// Get a paged list of entity.
+        /// </summary>
+        /// <returns>IEnumerable of entity.</returns>
+        PagedResult<T> GetPaged(int page, int pageSize);
+
+        /// <summary>
+        /// Get a paged list of entity async.
+        /// </summary>
+        /// <returns>IEnumerable of entity.</returns>
+        Task<PagedResult<T>> GetPagedAsync(int page, int pageSize);
 
 
         /// <summary>
@@ -68,13 +83,13 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// <summary>
         /// Delete an entity.
         /// </summary>
-        /// <param name="id">Entity id.</param>
+        /// <param name="id">Id of Entity to delete.</param>
         void Delete(long id);
 
         /// <summary>
         /// Delete an entity async.
         /// </summary>
-        /// <param name="id">Entity id.</param>
+        /// <param name="id">Id of Entity to delete.</param>
         /// <returns>Task.</returns>
         Task DeleteAsync(long id);
 

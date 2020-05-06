@@ -1,6 +1,7 @@
 ﻿using DonateTo.ApplicationCore.Models.Pagination;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -18,20 +19,32 @@ namespace DonateTo.ApplicationCore.Interfaces
         /// <param name="filter">Filter</param>
         /// <returns>IEnumerable of TEntity.</returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "<Pending>")]
-        IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> filter);
+        IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> filter);
 
         /// <summary>
         /// Get a list of entities async.
         /// </summary>
         /// <param name="filter">Filter</param>
-        /// <returns>Task of IEnumerable of TEntity.</returns>
-        Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter);
+        /// <returns>Task of IQueryable of TEntity.</returns>
+        Task<IQueryable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter);
+
+        /// <summary>
+        /// Get a list of entities.
+        /// </summary>
+        /// <returns>IQueryable of TEntity.</returns>
+        IQueryable<TEntity> Get();
+
+        /// <summary>
+        /// Get a list of entities async.
+        /// </summary>
+        /// <returns>Task of IQueryable of TEntity.</returns>
+        Task<IQueryable<TEntity>> GetAsync();
 
         /// <summary>
         /// Get a First or default entities.
         /// </summary>
         /// <param name="filter">Filter</param>
-        /// <returns>IEnumerable of TEntity.</returns>
+        /// <returns>IQueryable of TEntity.</returns>
         TEntity FirstOrDefault(Expression<Func<TEntity, bool>> filter);
 
 
@@ -106,5 +119,18 @@ namespace DonateTo.ApplicationCore.Interfaces
         /// <param name="entity">Entity.</param>
         /// <returns>Task.</returns>
         Task DeleteAsync(TEntity entity);
+
+        /// <summary>
+        ///     Delete an entity.
+        /// </summary>
+        /// <param name="id">Id of Entity.</param>
+        void Delete(long id);
+
+        /// <summary>
+        ///     Delete an entity async.
+        /// </summary>
+        /// <param name="id">Id of Entity.</param>
+        /// <returns>Task.</returns>
+        Task DeleteAsync(long id);
     }
 }

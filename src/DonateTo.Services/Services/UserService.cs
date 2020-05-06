@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace DonateTo.Services.Services
+namespace DonateTo.Services
 {
     public class UserService : IUserService
     {
