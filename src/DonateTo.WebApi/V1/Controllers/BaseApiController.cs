@@ -9,7 +9,7 @@ namespace DonateTo.WebApi.V1.Controllers
     [ApiController]
     public abstract class BaseApiController<T> : ControllerBase where T : class
     {
-        private IBaseService<T> _baseService  { get; set; }
+        private IBaseService<T> _baseService { get; set; }
 
         public BaseApiController(IBaseService<T> baseService)
         {
@@ -24,6 +24,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "<Pending>")]
         public virtual async Task<ActionResult<IEnumerable<T>>> Get()
         {
             var result = await _baseService.GetAsync().ConfigureAwait(false);
@@ -42,6 +43,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "<Pending>")]
         public virtual async Task<ActionResult<IEnumerable<T>>> Get(long id)
         {
             var result = await _baseService.GetAsync(id).ConfigureAwait(false);

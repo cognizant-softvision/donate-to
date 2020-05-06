@@ -31,7 +31,7 @@ namespace DonateTo.WebApi.Middlewares
             }
             catch (Exception exc)
             {
-                Logger.Error("Unhandled Exception occurred",exc);
+                Logger.Error("Unhandled Exception occurred", exc);
                 await HandleExceptionAsync(httpContext).ConfigureAwait(false);
             }
         }
@@ -41,7 +41,7 @@ namespace DonateTo.WebApi.Middlewares
         /// </summary>
         /// <param name="httpContext">HttpContext with all the 
         /// information about the request.</param>
-        private Task HandleExceptionAsync(HttpContext context)
+        private static Task HandleExceptionAsync(HttpContext context)
         {
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;

@@ -26,7 +26,17 @@ namespace DonateTo.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var bearerOptions = Configuration.GetSection("Bearer").GetSection("Options");
+
             services.AddControllers();
+
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", options =>
+                {
+                    options.Authority = bearerOptions.GetValue<string>("Authority");
+                    options.RequireHttpsMetadata = bearerOptions.GetValue<bool>("RequireHttpsMetadata");
+                    options.Audience = bearerOptions.GetValue<string>("Audience");
+                });
 
             services.AddVersioning();
 
@@ -39,7 +49,9 @@ namespace DonateTo.WebApi
             services.AddDonateToModule(Configuration);
         }
 
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
             if (env.IsDevelopment())
@@ -57,6 +69,7 @@ namespace DonateTo.WebApi
 
             app.UseSwaggerWithVersioning(provider);
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

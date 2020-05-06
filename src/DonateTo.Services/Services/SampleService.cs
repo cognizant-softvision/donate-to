@@ -4,6 +4,7 @@ using DonateTo.Infrastructure.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace DonateTo.Services.Services
@@ -30,7 +31,12 @@ namespace DonateTo.Services.Services
             throw new NotImplementedException();
         }
 
-        public IEnumerable<SampleModel> Get()
+        public SampleModel FirstOrDefault(Expression<Func<SampleModel, bool>> filter = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<SampleModel> Get(Expression<Func<SampleModel, bool>> filter = null)
         {
             throw new NotImplementedException();
         }
@@ -40,7 +46,7 @@ namespace DonateTo.Services.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<SampleModel>> GetAsync()
+        public Task<IEnumerable<SampleModel>> GetAsync(Expression<Func<SampleModel, bool>> filter = null)
         {
             Logger.Debug("Testing Logger");
             var listModel = new List<SampleModel>

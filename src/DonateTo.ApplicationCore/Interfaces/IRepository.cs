@@ -17,6 +17,7 @@ namespace DonateTo.ApplicationCore.Interfaces
         /// </summary>
         /// <param name="filter">Filter</param>
         /// <returns>IEnumerable of TEntity.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "<Pending>")]
         IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> filter);
 
         /// <summary>
@@ -33,11 +34,13 @@ namespace DonateTo.ApplicationCore.Interfaces
         /// <returns>IEnumerable of TEntity.</returns>
         TEntity FirstOrDefault(Expression<Func<TEntity, bool>> filter);
 
+
         /// <summary>
         /// Get an entity by id.
         /// </summary>
         /// <param name="id">Entity id.</param>
         /// <returns>TEntity.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "<Pending>")]
         TEntity Get(long id);
 
         /// <summary>
