@@ -13,9 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 // Modules
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
-import { HomeComponent } from './home/home.component';
+import { HomeModule } from './home/home.module';
 import { NotificationsModule } from './shared/notifications/notifications.module';
 
 // Third party libraries
@@ -26,11 +24,12 @@ import { StoreModule } from '@ngrx/store';
 import { TranslateModule } from 'ng2-translate';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, CounterComponent, FetchDataComponent],
+  declarations: [AppComponent],
   imports: [
     AppRoutingModule,
     AuthModule,
     NotificationsModule,
+    HomeModule,
     // Angular core dependencies
     BrowserModule,
     FormsModule,
@@ -41,13 +40,7 @@ import { TranslateModule } from 'ng2-translate';
 
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
-    FormsModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-    ]),
-    AuthModule,
+    RouterModule.forRoot([]),
     StoreModule.forRoot([]),
     EffectsModule.forRoot([]),
 
