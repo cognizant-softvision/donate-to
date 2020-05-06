@@ -18,6 +18,10 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
         public DbSet<DonationItem> DonationItems { get; set; }
         public DbSet<DonationRequest> DonationRequests { get; set; }
         public DbSet<DonationRequestItem> DonationRequestItems { get; set; }
+
+        public DbSet<DonationRequestCategory> DonationRequestCategories { get; set; }
+        public DbSet<DonationRequestItemCategory> DonationRequestItemCategories { get; set; }
+
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Status> Status { get; set; }
@@ -31,6 +35,7 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             if (modelBuilder != null)
             {
                 modelBuilder.Ignore<EntityBase>();
@@ -42,7 +47,35 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
                 {
                     entityType.SetTableName(entityType.DisplayName());
                 }
+            
+            #region many to many relationships
+            // Code to set up many to many relationships
+                modelBuilder.Entity<DonationRequestCategory>()
+                    .HasOne<Category>(c => c.Category)
+                    .WithMany(drc => drc.DonationRequestCategories)
+                    .HasForeignKey(c => c.CategoryId);
+                modelBuilder.Entity<DonationRequestCategory>()
+                    .HasOne<DonationRequest>(dr => dr.DonationRequest)
+                    .WithMany(drc => drc.DonationRequestCategories)
+                    .HasForeignKey(c => c.DonationRequestId);
+
+                modelBuilder.Entity<DonationRequestItemCategory>()
+                    .HasOne<Category>(c => c.Category)
+                    .WithMany(drc => drc.DonationRequestItemCategories)
+                    .HasForeignKey(c => c.CategoryId);
+                modelBuilder.Entity<DonationRequestItemCategory>()
+                    .HasOne<DonationRequestItem>(dr => dr.DonationRequestItem)
+                    .WithMany(drc => drc.DonationRequestItemCategories)
+                    .HasForeignKey(c => c.DonationRequestItemId);
+
+                modelBuilder.Entity<DonationRequestCategory>().HasKey
+                    (drc => new { drc.CategoryId, drc.DonationRequestId});
+                modelBuilder.Entity<DonationRequestItemCategory>().HasKey
+                    (drc => new { drc.CategoryId, drc.DonationRequestItemId});
+
+            #endregion
             }
         }
+
     }
 }
