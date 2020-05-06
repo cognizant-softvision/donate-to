@@ -14,27 +14,27 @@ namespace DonateTo.Services
         private readonly IRepository<TEntity> _entityRequestRepository;
         public BaseService(IRepository<TEntity> entityRequestRepository)
         {
-            this._entityRequestRepository = entityRequestRepository;
+            _entityRequestRepository = entityRequestRepository;
         }
 
         ///<inheritdoc cref="IBaseService{TEntity}"/>
         public virtual async Task<TEntity> CreateAsync(TEntity entity) {
-            return await this._entityRequestRepository.AddAsync(entity).ConfigureAwait(false);
+            return await _entityRequestRepository.AddAsync(entity).ConfigureAwait(false);
         }
 
         ///<inheritdoc cref="IBaseService{TEntity}"/>
         public virtual TEntity Create(TEntity entity) {
-            return this._entityRequestRepository.Add(entity);
+            return _entityRequestRepository.Add(entity);
         }
 
         ///<inheritdoc cref="IBaseService{TEntity}"/>
         public virtual TEntity Get(long id) {
-            return this._entityRequestRepository.Get(id);
+            return _entityRequestRepository.Get(id);
         }
 
          ///<inheritdoc cref="IBaseService{TEntity}"/>
         public virtual async Task<TEntity> GetAsync(long id){
-            return await this._entityRequestRepository.GetAsync(id).ConfigureAwait(false);
+            return await _entityRequestRepository.GetAsync(id).ConfigureAwait(false);
         }
 
         ///<inheritdoc cref="IBaseService{TEntity}"/>
@@ -42,7 +42,7 @@ namespace DonateTo.Services
             if(entity.Id != id) {
                 throw new InvalidOperationException();
             }
-            return await this._entityRequestRepository.UpdateAsync(entity).ConfigureAwait(false);
+            return await _entityRequestRepository.UpdateAsync(entity).ConfigureAwait(false);
         }
         
         ///<inheritdoc cref="IBaseService{TEntity}"/>
@@ -50,37 +50,37 @@ namespace DonateTo.Services
             if(entity.Id != id) {
                 throw new InvalidOperationException("The id on the entity and the one passed on do not match.");
             }
-            return this._entityRequestRepository.Update(entity);
+            return _entityRequestRepository.Update(entity);
         }
         
         ///<inheritdoc cref="IBaseService{TEntity}"/>
         public virtual async Task DeleteAsync(long id) {
-            await this._entityRequestRepository.DeleteAsync(id).ConfigureAwait(false);
+            await _entityRequestRepository.DeleteAsync(id).ConfigureAwait(false);
         }
         
         ///<inheritdoc cref="IBaseService{TEntity}"/>
         public virtual void Delete(long id) {
-            this._entityRequestRepository.Delete(id);
+            _entityRequestRepository.Delete(id);
         }
         
         ///<inheritdoc cref="IBaseService{TEntity}"/>
         public virtual PagedResult<TEntity> GetPaged(int page, int pageSize) {
-            return this._entityRequestRepository.GetPaged(page, pageSize);
+            return _entityRequestRepository.GetPaged(page, pageSize);
         }
 
         ///<inheritdoc cref="IBaseService{TEntity}"/>
         public virtual async Task<PagedResult<TEntity>> GetPagedAsync(int page, int pageSize)  {
-            return await this._entityRequestRepository.GetPagedAsync(page, pageSize).ConfigureAwait(false);
+            return await _entityRequestRepository.GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
 
         ///<inheritdoc cref="IBaseService{TEntity}"/>
         public virtual IEnumerable<TEntity> Get() {
-            return this._entityRequestRepository.Get();
+            return _entityRequestRepository.Get();
         }
 
         ///<inheritdoc cref="IBaseService{TEntity}"/>
         public virtual async Task<IEnumerable<TEntity>> GetAsync()  {
-            return await this._entityRequestRepository.GetAsync().ConfigureAwait(false);
+            return await _entityRequestRepository.GetAsync().ConfigureAwait(false);
         }
 
     }

@@ -11,21 +11,21 @@ namespace DonateTo.Infrastructure.Data.Repositories
 {
     public class PostgresSearchRepository : ISearchRepository
     {
-        private readonly DonateToDbContext DbContext;
+        private readonly DonateToDbContext _dbContext;
 
         public PostgresSearchRepository(DonateToDbContext dbContext)
         {
-            this.DbContext = dbContext;
+            _dbContext = dbContext;
         }
 
         private IQueryable<DonationRequest> GetHydratedDonationRequests() {
-            return DbContext.Set<DonationRequest>().Include( d => d.Address).Include( d => d.Status).Include( d => d.DonationRequestItems)
+            return _dbContext.Set<DonationRequest>().Include( d => d.Address).Include( d => d.Status).Include( d => d.DonationRequestItems)
                 .Include( d => d.DonationRequestItems).Include( d => d.DonationRequestCategories)
                 .Include( d => d.Organization).Include( d => d.Status);
         }
         private IQueryable<DonationRequest> SearchDonationRequestQuery(string queryString) {
            var likeString =  $"%{queryString}%";
-           var query = this.GetHydratedDonationRequests().Where( donation => 
+           var query = GetHydratedDonationRequests().Where( donation => 
                 EF.Functions.ILike(donation.Title, likeString) ||
                 EF.Functions.ILike(donation.Organization.Name, likeString) ||                
                 donation.DonationRequestCategories.Any( cdr => EF.Functions.ILike(cdr.Category.Name, likeString)) ||

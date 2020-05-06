@@ -118,7 +118,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public virtual async Task<ActionResult<PagedResult<T>>> GetPaged(int page, int pageSize)
         {
-            return await this._baseService.GetPagedAsync(page, pageSize).ConfigureAwait(false);
+            return await _baseService.GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
     }
 }

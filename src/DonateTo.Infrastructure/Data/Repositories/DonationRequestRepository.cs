@@ -23,33 +23,33 @@ namespace DonateTo.Infrastructure.Data.Repositories
         ///<inheritdoc cref="IRepository{DonationRequest}"/>
         public override IQueryable<DonationRequest> Get()
         {
-            return this.GetHydratedDonationRequests();
+            return GetHydratedDonationRequests();
                 
         }
         ///<inheritdoc cref="IRepository{DonationRequest}"/>
         public override async Task<IQueryable<DonationRequest>> GetAsync()
         {
-            return await Task.FromResult(this.GetHydratedDonationRequests()).ConfigureAwait(false);
+            return await Task.FromResult(GetHydratedDonationRequests()).ConfigureAwait(false);
         }
         ///<inheritdoc cref="IRepository{DonationRequest}"/>
         public override DonationRequest Get(long id)
         {
-            return this.GetHydratedDonationRequests().FirstOrDefault(d => d.Id.Equals(id));
+            return GetHydratedDonationRequests().FirstOrDefault(d => d.Id.Equals(id));
         }
         public override async Task<DonationRequest> GetAsync(long id)
         {
-            return await this.GetHydratedDonationRequests().FirstOrDefaultAsync(d => d.Id.Equals(id)).ConfigureAwait(false);
+            return await GetHydratedDonationRequests().FirstOrDefaultAsync(d => d.Id.Equals(id)).ConfigureAwait(false);
         }
         ///<inheritdoc cref="IRepository{DonationRequest}"/>
         public override PagedResult<DonationRequest> GetPaged(int page, int pageSize)
         {
-            return this.GetHydratedDonationRequests().GetPaged(page, pageSize);
+            return GetHydratedDonationRequests().GetPaged(page, pageSize);
         }
 
         ///<inheritdoc cref="IRepository{DonationRequest}"/>
         public override async Task<PagedResult<DonationRequest>> GetPagedAsync(int page, int pageSize)
         {
-            return await this.GetHydratedDonationRequests().GetPagedAsync(page, pageSize).ConfigureAwait(false);
+            return await GetHydratedDonationRequests().GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
     }
 }

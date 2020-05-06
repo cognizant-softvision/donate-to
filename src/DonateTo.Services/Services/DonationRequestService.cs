@@ -14,7 +14,7 @@ namespace DonateTo.Services
         private readonly IRepository<DonationRequest> _donationRequestRepository;
         public DonationRequestService(IRepository<DonationRequest> donationRequestRepository): base(donationRequestRepository)
         {
-            this._donationRequestRepository = donationRequestRepository;
+            _donationRequestRepository = donationRequestRepository;
         }        
 
     }

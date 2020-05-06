@@ -8,7 +8,7 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
     {
 
         /// <summary>
-        ///     Searches for a query string amongst multiple tables and multiples columns synchronously.
+        ///Searches for a query string amongst multiple tables and multiples columns synchronously.
         /// </summary>
         /// <param name="queryString"> String to search <param>
         /// <param name="page"> Curent results page <param>
@@ -17,7 +17,7 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         PagedResult<DonationRequest> SearchDonationRequest(string queryString, int page, int pageSize);
 
         /// <summary>
-        ///    Searches for a query string amongst multiple tables and multiples columns asynchronously.
+        ///Searches for a query string amongst multiple tables and multiples columns asynchronously.
         /// </summary>
         /// <param name="queryString"> String to search <param>
         /// <param name="page"> Curent results page <param>

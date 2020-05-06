@@ -15,17 +15,17 @@ namespace DonateTo.Services
         private readonly ISearchRepository _searchRepository;
         public SearchService(IRepository<DonationRequest> donationRepository, ISearchRepository searchRepository)
         {
-            this._searchRepository = searchRepository;
+            _searchRepository = searchRepository;
         }
 
         ///<inheritdoc cref="ISearchService"/>
         public PagedResult<DonationRequest> SearchDonationRequest(string queryString, int page, int pageSize) {
-            return this._searchRepository.SearchDonationRequest(queryString, page, pageSize);
+            return _searchRepository.SearchDonationRequest(queryString, page, pageSize);
         }
 
         ///<inheritdoc cref="ISearchService"/>
         public async Task<PagedResult<DonationRequest>> SearchDonationRequestAsync(string queryString, int page, int pageSize) {
-             return await this._searchRepository.SearchDonationRequestAsync(queryString, page, pageSize).ConfigureAwait(false);
+             return await _searchRepository.SearchDonationRequestAsync(queryString, page, pageSize).ConfigureAwait(false);
 
         }
     }

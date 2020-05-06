@@ -82,7 +82,7 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// <summary>
         /// Delete an entity async.
         /// </summary>
-        /// <param name="entiidty">Id of Entity to delete.</param>
+        /// <param name="id">Id of Entity to delete.</param>
         /// <returns>Task.</returns>
         Task DeleteAsync(long id);
     }
