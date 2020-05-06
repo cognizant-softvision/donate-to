@@ -1,5 +1,4 @@
 using DonateTo.Infrastructure.Logging;
-using DonateTo.WebApi.Middlewares;
 using DonateTo.WebApi.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
@@ -49,10 +48,12 @@ namespace DonateTo.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/error");
+            }
 
             app.UseHttpsRedirection();
-
-            app.UseMiddleware<ExceptionHandlerMiddleware>();
 
             app.UseRouting();
 
