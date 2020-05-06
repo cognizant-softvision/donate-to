@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { AddSample, LoadSamples } from '../shared/store/sample';
 import { SampleModel } from '../shared/models/sampleModel';
 import { select, Store } from '@ngrx/store';
+import { HomeSandbox } from './home.sandbox';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
-  constructor(private store: Store<{ items: SampleModel[]; cart: [] }>) {
+  constructor(private store: Store<{ items: SampleModel[] }>, public homeSandbox: HomeSandbox) {
     store.pipe(select((state: any) => state.sample)).subscribe((data) => (this.samples = data.items));
   }
 
