@@ -142,7 +142,7 @@ namespace DonateTo.IdentityServer.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(UserRegistrationModel userModel)
+        public async Task<IActionResult> Register(UserRegistrationViewModel userModel)
         {
             if (!ModelState.IsValid)
             {

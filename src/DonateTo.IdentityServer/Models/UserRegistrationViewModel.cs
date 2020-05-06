@@ -2,7 +2,7 @@
 
 namespace DonateTo.IdentityServer.Models
 {
-    public class UserRegistrationModel
+    public class UserRegistrationViewModel
     {
         [Required(ErrorMessage = "FirstName is required")]
         public string FirstName { get; set; }
