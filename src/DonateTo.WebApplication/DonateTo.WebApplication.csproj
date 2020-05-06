@@ -22,8 +22,12 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ClientApp\src\app\shared\asyncServices\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\src\app\shared\asyncServices\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\shared\asyncServices\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="ClientApp\src\app\shared\asyncServices\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
@@ -40,7 +44,6 @@
     <Folder Include="ClientApp\src\app\auth\login\" />
     <Folder Include="ClientApp\src\app\auth\register\" />
     <Folder Include="ClientApp\src\app\shared\animations\" />
-    <Folder Include="ClientApp\src\app\shared\asyncServices\http\" />
     <Folder Include="ClientApp\src\app\shared\components\header\" />
     <Folder Include="ClientApp\src\app\shared\components\languageSelector\" />
     <Folder Include="ClientApp\src\app\shared\components\loadingPlaceholder\" />
