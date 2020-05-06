@@ -1,5 +1,4 @@
 using DonateTo.Infrastructure.Logging;
-using DonateTo.WebApi.Middlewares;
 using DonateTo.WebApi.Swagger;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
