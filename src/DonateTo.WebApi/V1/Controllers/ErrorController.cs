@@ -9,21 +9,23 @@ namespace DonateTo.WebApi.V1.Controllers
     public class ErrorController : ControllerBase
     {
         /// <summary>
-        /// Add this controller to capture any unhandled exception.
+        /// This controller is used to capture any unhandled exception by the exception middleware.
         /// </summary>
         [Route("/error")]
         public IActionResult Error()
         {
             var context = HttpContext.Features.Get<IExceptionHandlerFeature>();
-            var errorMessage = context?.Error.Message ?? "An Unhandled Exception Occurred.";
+            string errorMessage = "No message was found.";
 
             if (context?.Error != null)
-                Logger.Error($"Unhandled Exception occurred: {errorMessage}", context.Error);
-            
+            {
+                errorMessage = !string.IsNullOrWhiteSpace(context.Error.Message) ? context.Error.Message : errorMessage;
+                Logger.Error($"An unhandled exception occurred:{errorMessage}", context.Error);
+            }
 
             return Problem(
                 detail: errorMessage,
-                title: "An Unhandled Exception Occurred.");
+                title: "An unhandled exception occurred.");
         }
     }
 }
