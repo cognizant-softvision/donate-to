@@ -18,19 +18,24 @@ export class HomeSandbox extends Sandbox {
   }
 
   /**
-   * Loads donations from the server
+   * Loads sample from the server
    */
-  public loadDonations(): void {}
+  public createSample(): void {}
 
   /**
-   * Loads donation details from the server
+   * Loads samples from the server
    */
-  public loadDonationDetails(id: number): void {}
+  public loadSamples(): void {}
 
   /**
-   * Dispatches an action to select donation details
+   * Loads sample details from the server
    */
-  public selectDonation(): void {}
+  public loadSampleDetails(id: number): void {}
+
+  /**
+   * Dispatches an action to select sample details
+   */
+  public selectSample(): void {}
 
   /**
    * Unsubscribes from events
@@ -46,6 +51,6 @@ export class HomeSandbox extends Sandbox {
     // Subscribes to culture
     this.subscriptions.push(this.culture$.subscribe((culture: string) => (this.culture = culture)));
 
-    // If user is logged in, load donations
+    // If user is logged in, load samples
   }
 }
