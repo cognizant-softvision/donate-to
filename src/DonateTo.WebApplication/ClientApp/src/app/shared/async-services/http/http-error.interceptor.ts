@@ -1,14 +1,14 @@
 import { HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/internal/operators';
+import { NotificationsService } from '../../notifications/notifications.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpErrorInterceptor implements HttpInterceptor {
-  constructor(public toasterService: ToastrService) {}
+  constructor(private notificationsService: NotificationsService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     return next.handle(req).pipe(
@@ -20,7 +20,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           errorMessage = `Server-side error: ${error.status} ${error.message}`;
         }
 
-        this.toasterService.error(errorMessage, error.title, { positionClass: 'toast-bottom-center' });
+        this.notificationsService.createNotification('error', error.title, errorMessage);
         console.log(errorMessage);
         return throwError(errorMessage);
       })
