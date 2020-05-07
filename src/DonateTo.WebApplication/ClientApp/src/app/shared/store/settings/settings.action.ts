@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { type } from '../../../utility';
+import { type } from '../../utility';
 
 export const ActionTypes = {
   SET_LANGUAGE: type('[Settings] SetLanguage'),

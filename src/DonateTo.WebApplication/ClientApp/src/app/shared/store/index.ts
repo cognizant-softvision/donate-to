@@ -11,7 +11,7 @@ import { createSelector } from 'reselect';
  * the state of the reducer plus any selector functions. The `* as`
  * notation packages up all of the exports into a single object.
  */
-import * as fromSettings from './settings/reducers/settings.reducer';
+import * as fromSettings from './settings/settings.reducer';
 
 export interface State {
   settings: fromSettings.State;

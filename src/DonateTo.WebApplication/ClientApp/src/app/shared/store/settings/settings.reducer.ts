@@ -1,6 +1,6 @@
 import '@ngrx/core/add/operator/select';
 import 'rxjs/add/operator/map';
-import * as settings from '../actions/settings.action';
+import * as settings from './settings.action';
 
 export interface State {
   selectedLanguage: string;
