@@ -13,6 +13,8 @@ import { createSelector } from 'reselect';
  */
 import * as fromSettings from './settings.reducer';
 
+export * from './settings.action';
+export * from './settings.reducer';
 export interface State {
   settings: fromSettings.State;
 }

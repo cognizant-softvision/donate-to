@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Sandbox } from './shared/sandbox/base.sandbox';
 import { Store } from '@ngrx/store';
-import * as store from './shared/store/settings';
-import * as settingsActions from './shared/store/settings/settings.action';
+import * as settings from './shared/store/settings';
 import { TranslateService } from 'ng2-translate';
 import { ConfigService } from './app-config.service';
 
 @Injectable()
 export class AppSandbox extends Sandbox {
   constructor(
-    protected appState$: Store<store.State>,
+    protected appState$: Store<settings.State>,
     private translate: TranslateService,
     private configService: ConfigService
   ) {
@@ -31,8 +30,8 @@ export class AppSandbox extends Sandbox {
     const selectedCulture = localization.languages.filter((lang) => lang.code === selectedLang)[0].culture;
 
     this.translate.use(selectedLang);
-    this.appState$.dispatch(new settingsActions.SetLanguageAction(selectedLang));
-    this.appState$.dispatch(new settingsActions.SetCultureAction(selectedCulture));
+    this.appState$.dispatch(new settings.SetLanguageAction(selectedLang));
+    this.appState$.dispatch(new settings.SetCultureAction(selectedCulture));
   }
 
   /**
