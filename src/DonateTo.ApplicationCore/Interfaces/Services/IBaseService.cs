@@ -23,8 +23,6 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// <returns>IEnumerable of entity.</returns>
         Task<IEnumerable<T>> GetAsync(Expression<Func<T, bool>> filter = null);
 
-
-
         /// <summary>
         /// Get a paged list of entity.
         /// </summary>
@@ -36,7 +34,6 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// </summary>
         /// <returns>IEnumerable of entity.</returns>
         Task<PagedResult<T>> GetPagedAsync(int page, int pageSize);
-
 
         /// <summary>
         /// Get an entity by id.

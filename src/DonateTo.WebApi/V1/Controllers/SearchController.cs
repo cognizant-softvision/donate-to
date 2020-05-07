@@ -24,7 +24,6 @@ namespace DonateTo.WebApi.V1.Controllers
         public async Task<ActionResult<PagedResult<DonationRequest>>> SearchDonation(string queryString,int page, int pageSize)
         {
             return await _searchService.SearchDonationRequestAsync(queryString, page, pageSize).ConfigureAwait(false);
-        }    
-        
+        }         
     }
 }

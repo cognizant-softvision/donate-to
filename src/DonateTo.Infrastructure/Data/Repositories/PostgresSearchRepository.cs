@@ -23,6 +23,7 @@ namespace DonateTo.Infrastructure.Data.Repositories
                 .Include( d => d.DonationRequestItems).Include( d => d.DonationRequestCategories)
                 .Include( d => d.Organization).Include( d => d.Status);
         }
+
         private IQueryable<DonationRequest> SearchDonationRequestQuery(string queryString) {
            var likeString =  $"%{queryString}%";
            var query = GetHydratedDonationRequests().Where( donation => 
@@ -59,7 +60,5 @@ namespace DonateTo.Infrastructure.Data.Repositories
         public async Task<PagedResult<DonationRequest>> SearchDonationRequestAsync(string queryString, int page, int pageSize) {
            return await SearchDonationRequestQuery(queryString).GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
-
-    }
-    
+    }   
 }

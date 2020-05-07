@@ -6,7 +6,7 @@ namespace DonateTo.Infrastructure.Logging
     public static class Logger
     {
         /// <summary>
-        ///     Write a log event with the Debug level.
+        /// Write a log event with the Debug level.
         /// </summary>
         /// <param name="template">Message template describing the event.</param>
         public static void Debug(string template)
@@ -15,7 +15,7 @@ namespace DonateTo.Infrastructure.Logging
         }
 
         /// <summary>
-        ///     Write a log event with the Debug level.
+        /// Write a log event with the Debug level.
         /// </summary>
         /// <param name="template">Message template describing the event.</param>
         /// <param name="ex">Exception of the event.</param>
@@ -25,7 +25,7 @@ namespace DonateTo.Infrastructure.Logging
         }
 
         /// <summary>
-        ///     Write a log event with the Information level.
+        /// Write a log event with the Information level.
         /// </summary>
         /// <param name="template">Message template describing the event.</param>
         public static void Information(string template)
@@ -34,7 +34,7 @@ namespace DonateTo.Infrastructure.Logging
         }
 
         /// <summary>
-        ///     Write a log event with the Error level.
+        /// Write a log event with the Error level.
         /// </summary>
         /// <param name="template">Message template describing the event.</param>
         /// <param name="ex">Exception of the event.</param>

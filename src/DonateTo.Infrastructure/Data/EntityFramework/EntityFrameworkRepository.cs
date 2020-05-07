@@ -1,5 +1,4 @@
-﻿using DonateTo.ApplicationCore.Entities;
-using DonateTo.ApplicationCore.Interfaces;
+﻿using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Models.Pagination;
 using DonateTo.Infrastructure.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 namespace DonateTo.Infrastructure.Data.EntityFramework
 {
     /// <summary>
-    ///     Implementation of the Repository Pattern using Entity Framework Core
+    /// Implementation of the Repository Pattern using Entity Framework Core
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     /// <typeparam name="TContext"></typeparam>
@@ -56,6 +55,7 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
         {
             return DbContext.Set<TEntity>().Find(id);
         }
+
         public virtual async Task<TEntity> GetAsync(long id)
         {
             return await DbContext.Set<TEntity>().FindAsync(id).ConfigureAwait(false);

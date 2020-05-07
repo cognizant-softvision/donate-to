@@ -7,8 +7,7 @@ namespace DonateTo.ApplicationCore.Entities
     {
         public string Title { get; set; }
         public string Observation { get; set; }
-        public int Priority { get; set; }        
-        
+        public int Priority { get; set; }              
         public long OrganizationId { get; set; }
         public Organization Organization { get; set; }
         public long AddressId { get; set; }

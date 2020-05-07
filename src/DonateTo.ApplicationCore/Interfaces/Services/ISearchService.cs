@@ -6,7 +6,6 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
 {
     public interface ISearchService
     {
-
         /// <summary>
         ///Searches for a query string amongst multiple tables and multiples columns synchronously.
         /// </summary>
