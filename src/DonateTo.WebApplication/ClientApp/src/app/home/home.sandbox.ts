@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { Sandbox } from '../shared/sandbox/base.sandbox';
-import * as store from '../shared/store';
+import * as store from '../shared/store/settings';
 
 @Injectable()
 export class HomeSandbox extends Sandbox {

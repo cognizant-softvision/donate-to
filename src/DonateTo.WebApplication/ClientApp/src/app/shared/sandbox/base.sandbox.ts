@@ -1,5 +1,5 @@
 import { Store } from '@ngrx/store';
-import * as store from '../store';
+import * as store from '../store/settings';
 
 export abstract class Sandbox {
   public culture$ = this.appState$.select(store.getSelectedCulture);
