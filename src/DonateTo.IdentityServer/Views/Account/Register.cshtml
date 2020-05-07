@@ -7,12 +7,12 @@
 <form class="form-card" asp-action="Register">
     <h3 class="mb-3 font-weight-normal card-title">Sign Up</h3>
 
-    <label asp-for="FirstName" class="sr-only">LastName</label>
-    <input type="text" asp-for="FirstName" class="form-control" placeholder="FirstName">
+    <label asp-for="FirstName" class="sr-only">First Name</label>
+    <input type="text" asp-for="FirstName" class="form-control" placeholder="First Name">
     <span asp-validation-for="FirstName"></span>
 
-    <label asp-for="LastName" class="sr-only">LastName</label>
-    <input type="text" asp-for="LastName" class="form-control" placeholder="LastName">
+    <label asp-for="LastName" class="sr-only">Last Name</label>
+    <input type="text" asp-for="LastName" class="form-control" placeholder="Last Name">
     <span asp-validation-for="LastName"></span>
 
     <label asp-for="Email" class="sr-only">Email address</label>
@@ -38,6 +38,7 @@
     </div>
 </form>
 
+<script src="~/js/singup.js" asp-append-version="true"></script>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

@@ -142,16 +142,16 @@ namespace DonateTo.IdentityServer.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(UserRegistrationViewModel userModel)
+        public async Task<IActionResult> Register(UserRegistrationViewModel userRegistrationViewModel)
         {
             if (!ModelState.IsValid)
             {
-                return View(userModel);
+                return View(userRegistrationViewModel);
             }
 
-            var user = _mapper.Map<User>(userModel);
+            var user = _mapper.Map<User>(userRegistrationViewModel);
 
-            var result = await _userManager.CreateAsync(user, userModel.Password);
+            var result = await _userManager.CreateAsync(user, userRegistrationViewModel.Password);
 
             if (!result.Succeeded)
             {
@@ -160,7 +160,7 @@ namespace DonateTo.IdentityServer.Controllers
                     ModelState.TryAddModelError(error.Code, error.Description);
                 }
 
-                return View(userModel);
+                return View(userRegistrationViewModel);
             }
 
             return RedirectToAction("Login");
