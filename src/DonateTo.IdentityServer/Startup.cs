@@ -22,7 +22,8 @@ namespace DonateTo.IdentityServer
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment Environment { get; set; }
 
-        public Startup(IConfiguration configuration, IWebHostEnvironment env)
+        public Startup(IConfiguration configuration, 
+            IWebHostEnvironment env)
         {
             Configuration = configuration;
             Environment = env;
@@ -32,8 +33,6 @@ namespace DonateTo.IdentityServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
-            services.AddSingleton<IConfiguration>(Configuration);
 
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
@@ -86,14 +85,8 @@ namespace DonateTo.IdentityServer
             .AddInMemoryClients(clients)
             .AddAspNetIdentity<User>();
 
-            if (Environment.IsDevelopment())
-            {
-                builder.AddDeveloperSigningCredential();
-            }
-            else
-            {
-                throw new Exception("Need to configure key material");
-            }
+            //Need to handle credentials for production
+            builder.AddDeveloperSigningCredential();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,6 +1,5 @@
 ﻿using DonateTo.ApplicationCore.Models.Pagination;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -17,27 +16,16 @@ namespace DonateTo.ApplicationCore.Interfaces
         /// Get a list of entities.
         /// </summary>
         /// <param name="filter">Filter</param>
-        /// <returns>IQueryable of TEntity.</returns>
-        IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> filter);
+        /// <returns>IEnumerable of TEntity.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "<Pending>")]
+        IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> filter = null);
 
         /// <summary>
         /// Get a list of entities async.
         /// </summary>
         /// <param name="filter">Filter</param>
         /// <returns>Task of IQueryable of TEntity.</returns>
-        Task<IQueryable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter);
-
-        /// <summary>
-        /// Get a list of entities.
-        /// </summary>
-        /// <returns>IQueryable of TEntity.</returns>
-        IQueryable<TEntity> Get();
-
-        /// <summary>
-        /// Get a list of entities async.
-        /// </summary>
-        /// <returns>Task of IQueryable of TEntity.</returns>
-        Task<IQueryable<TEntity>> GetAsync();
+        Task<IQueryable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null);
 
         /// <summary>
         /// Get a First or default entities.
@@ -46,11 +34,13 @@ namespace DonateTo.ApplicationCore.Interfaces
         /// <returns>IQueryable of TEntity.</returns>
         TEntity FirstOrDefault(Expression<Func<TEntity, bool>> filter);
 
+
         /// <summary>
         /// Get an entity by id.
         /// </summary>
         /// <param name="id">Entity id.</param>
         /// <returns>TEntity.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "<Pending>")]
         TEntity Get(long id);
 
         /// <summary>
