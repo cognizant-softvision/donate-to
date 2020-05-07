@@ -1,7 +1,9 @@
-import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ConfigService {
   private config: object;
   private env: object;
@@ -21,7 +23,7 @@ export class ConfigService {
       });
       const options = { headers };
 
-      this.http.get('/config/env.json').subscribe((env_data) => {
+      this.http.get('../../config/env.json').subscribe((env_data) => {
         this.env = env_data;
 
         this.http.get('/config/' + env_data['env'] + '.json').subscribe((data) => {

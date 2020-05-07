@@ -16,19 +16,20 @@ import { AuthModule } from './auth/auth.module';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { HomeComponent } from './home/home.component';
+import { SampleModule } from './home/sample.module';
 
 // Third party libraries
 import { EffectsModule } from '@ngrx/effects';
 import { HttpErrorInterceptor } from 'src/app/shared/async-services/http/http-error.interceptor';
 import { TranslateModule } from 'ng2-translate';
-import { SampleModule } from './home/sample.module';
+import { OAuthModule } from 'angular-oauth2-oidc';
 import { StoreModule } from '@ngrx/store';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, CounterComponent, FetchDataComponent],
   imports: [
     AppRoutingModule,
-    AuthModule,
     // Angular core dependencies
     BrowserModule,
     FormsModule,
@@ -36,6 +37,8 @@ import { StoreModule } from '@ngrx/store';
 
     // Third party modules
     TranslateModule.forRoot(),
+    OAuthModule.forRoot(),
+    ToastrModule.forRoot(),
 
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
@@ -45,12 +48,12 @@ import { StoreModule } from '@ngrx/store';
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ]),
-    AuthModule,
     StoreModule.forRoot([]),
     EffectsModule.forRoot([]),
 
     // NgRx Store modules
     SampleModule,
+    AuthModule,
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }],
   bootstrap: [AppComponent],

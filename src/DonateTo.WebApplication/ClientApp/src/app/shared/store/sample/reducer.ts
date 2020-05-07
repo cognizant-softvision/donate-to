@@ -36,7 +36,7 @@ export function SampleReducer(state = InitialState, action: ActionsUnion) {
         ...state,
         loading: false,
         failed: false,
-        items: action.payload,
+        // items: [...state.items, action.payload]
       };
 
     case ActionTypes.ADD_SAMPLE_FAILED:

@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ComponentsModule } from '../shared/components';
+import { AuthEffects, AuthReducer } from '../shared/store/auth';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
-  imports: [CommonModule, BrowserAnimationsModule, FormsModule, ReactiveFormsModule, ComponentsModule],
+  imports: [CommonModule, StoreModule.forFeature('auth', AuthReducer), EffectsModule.forFeature([AuthEffects])],
   declarations: [],
-  providers: [],
+  providers: [AuthEffects],
 })
 export class AuthModule {}

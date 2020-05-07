@@ -18,5 +18,14 @@
     "defaultLanguage": "en"
   },
 
+  "authConfig": {
+    "issuer": "https://localhost:44392",
+    "redirectUri": "window.location.origin",
+    "clientId": "DonateTo.WebAplication",
+    "responseType": "code",
+    "scope": "openid profile",
+    "showDebugInformation": true
+  },
+
   "debugging": false
 }
