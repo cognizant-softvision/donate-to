@@ -1,6 +1,7 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Interfaces.Services;
+using DonateTo.ApplicationCore.Models.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -59,6 +60,16 @@ namespace DonateTo.Services
         }
 
         public Task<User> GetAsync(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PagedResult<User> GetPaged(int page, int pageSize)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<PagedResult<User>> GetPagedAsync(int page, int pageSize)
         {
             throw new NotImplementedException();
         }

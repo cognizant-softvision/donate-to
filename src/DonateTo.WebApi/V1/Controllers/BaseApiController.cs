@@ -12,9 +12,12 @@ namespace DonateTo.WebApi.V1.Controllers
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [Authorize]
     public abstract class BaseApiController<T> : ControllerBase where T : class
     {
-        protected readonly IBaseService<T> _baseService;  
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1051:Do not declare visible instance fields", Justification = "<Pending>")]
+        protected readonly IBaseService<T> _baseService;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1051:Do not declare visible instance fields", Justification = "<Pending>")]
         protected readonly IUnitOfWork _unitOfWork; 
 
         public BaseApiController(IBaseService<T> baseService, IUnitOfWork unitOfWork)

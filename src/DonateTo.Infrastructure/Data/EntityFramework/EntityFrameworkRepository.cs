@@ -29,11 +29,13 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
             return DbContext.Set<TEntity>().FirstOrDefault(filter);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "<Pending>")]
         public virtual IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> filter)
         {
             return DbContext.Set<TEntity>().Where(filter);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "<Pending>")]
         public virtual IQueryable<TEntity> Get()
         {
             return DbContext.Set<TEntity>().AsQueryable();
@@ -49,6 +51,7 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
             return await Task.FromResult(DbContext.Set<TEntity>().AsQueryable()).ConfigureAwait(false);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "<Pending>")]
         public virtual TEntity Get(long id)
         {
             return DbContext.Set<TEntity>().Find(id);
