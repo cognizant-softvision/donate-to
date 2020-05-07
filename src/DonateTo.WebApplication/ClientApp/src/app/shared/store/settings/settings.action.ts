@@ -1,24 +1,4 @@
-import { Action } from '@ngrx/store';
-import { type } from '../../utility';
+import { Action, createAction, props } from '@ngrx/store';
 
-export const ActionTypes = {
-  SET_LANGUAGE: type('[Settings] SetLanguage'),
-  SET_CULTURE: type('[Settings] SetCulture'),
-};
-
-/**
- * Settings Actions
- */
-export class SetLanguageAction implements Action {
-  type = ActionTypes.SET_LANGUAGE;
-
-  constructor(public payload: string) {}
-}
-
-export class SetCultureAction implements Action {
-  type = ActionTypes.SET_CULTURE;
-
-  constructor(public payload: string) {}
-}
-
-export type Actions = SetLanguageAction | SetCultureAction;
+export const setLanguageAction = createAction('[Settings] SetLanguage', props<{ payload: string }>());
+export const setCultureAction = createAction('[Settings] SetCulture', props<{ payload: string }>());

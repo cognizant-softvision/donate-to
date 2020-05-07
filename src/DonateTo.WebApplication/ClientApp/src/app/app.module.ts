@@ -16,12 +16,10 @@ import { AuthModule } from './auth/auth.module';
 import { HomeModule } from './home/home.module';
 import { NotificationsModule } from './shared/notifications/notifications.module';
 
-// Third party libraries
-import { EffectsModule } from '@ngrx/effects';
 import { HttpErrorInterceptor } from 'src/app/shared/async-services/http/http-error.interceptor';
-import { SampleModule } from './home/sample.module';
 import { StoreModule } from '@ngrx/store';
 import { TranslateModule } from 'ng2-translate';
+import * as fromSettings from './shared/store/settings';
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,11 +39,10 @@ import { TranslateModule } from 'ng2-translate';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     RouterModule.forRoot([]),
-    StoreModule.forRoot([]),
-    EffectsModule.forRoot([]),
 
     // NgRx Store modules
-    SampleModule,
+    StoreModule.forRoot({}),
+    StoreModule.forFeature(fromSettings.settingsFeatureKey, fromSettings.reducer),
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }],
   bootstrap: [AppComponent],

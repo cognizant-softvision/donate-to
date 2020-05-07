@@ -1,14 +1,15 @@
 import '@ngrx/core/add/operator/select';
 import 'rxjs/add/operator/map';
 import * as settings from './settings.action';
+import { Action, createReducer, on } from '@ngrx/store';
 
-export interface State {
+export interface SettingsState {
   selectedLanguage: string;
   selectedCulture: string;
   availableLanguages: any[];
 }
 
-const INITIAL_STATE: State = {
+const INITIAL_STATE: SettingsState = {
   selectedLanguage: '',
   selectedCulture: '',
   availableLanguages: [
@@ -17,22 +18,16 @@ const INITIAL_STATE: State = {
   ],
 };
 
-export function reducer(state = INITIAL_STATE, action: settings.Actions): State {
-  switch (action.type) {
-    case settings.ActionTypes.SET_LANGUAGE: {
-      return Object.assign({}, state, { selectedLanguage: action.payload });
-    }
+const settingsReducer = createReducer(
+  INITIAL_STATE,
+  on(settings.setLanguageAction, (state, action) => ({ ...state, selectedLanguage: action.payload })),
+  on(settings.setCultureAction, (state, action) => ({ ...state, selectedCulture: action.payload }))
+);
 
-    case settings.ActionTypes.SET_CULTURE: {
-      return Object.assign({}, state, { selectedCulture: action.payload });
-    }
-
-    default: {
-      return state;
-    }
-  }
+export function reducer(state: SettingsState, action: Action) {
+  return settingsReducer(state, action);
 }
 
-export const getSelectedLanguage = (state: State) => state.selectedLanguage;
-export const getSelectedCulture = (state: State) => state.selectedCulture;
-export const getAvailableLanguages = (state: State) => state.availableLanguages;
+export const getSelectedLanguage = (state: SettingsState) => state.selectedLanguage;
+export const getSelectedCulture = (state: SettingsState) => state.selectedCulture;
+export const getAvailableLanguages = (state: SettingsState) => state.availableLanguages;

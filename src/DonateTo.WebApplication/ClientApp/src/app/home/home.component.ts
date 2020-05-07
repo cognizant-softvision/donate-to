@@ -1,30 +1,36 @@
 import { Component, OnInit } from '@angular/core';
-import { AddSample, LoadSamples } from '../shared/store/sample';
 import { SampleModel } from '../shared/models/sampleModel';
-import { select, Store } from '@ngrx/store';
 import { HomeSandbox } from './home.sandbox';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
-  constructor(private store: Store<{ items: SampleModel[] }>, public homeSandbox: HomeSandbox) {
-    store.pipe(select((state: any) => state.sample)).subscribe((data) => (this.samples = data.items));
-  }
+  constructor(public homeSandbox: HomeSandbox) {}
 
   samples: SampleModel[] = [];
-
+  subscriptions: Subscription[] = [];
   newSample: string;
 
   ngOnInit(): void {
-    this.store.dispatch(new LoadSamples());
+    this.registerEvents();
   }
 
   createSample(): void {
     const sample = new SampleModel();
     sample.id = 1;
     sample.name = this.newSample;
-    this.store.dispatch(new AddSample(sample));
+  }
+
+  registerEvents() {
+    this.subscriptions.push(
+      this.homeSandbox.culture$.subscribe((sample: any) => {
+        if (sample) {
+          this.samples = sample;
+        }
+      })
+    );
   }
 }

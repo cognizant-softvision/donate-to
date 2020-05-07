@@ -2,13 +2,12 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { Sandbox } from '../shared/sandbox/base.sandbox';
-import * as store from '../shared/store/settings';
+import * as store from '../shared/store';
 
 @Injectable()
 export class HomeSandbox extends Sandbox {
-  public culture$ = this.appState$.select(store.getSelectedCulture);
-  public language$ = this.appState$.select(store.getSelectedLanguage);
-  public availableLanguages$ = this.appState$.select(store.getAvailableLanguages);
+  samples$ = this.appState$.select(store.fromSample.getAllSamples);
+  samplesLoading$ = this.appState$.select(store.fromSample.getSamplesLoading);
 
   private subscriptions: Subscription[] = [];
 
@@ -25,7 +24,9 @@ export class HomeSandbox extends Sandbox {
   /**
    * Loads samples from the server
    */
-  public loadSamples(): void {}
+  public loadSamples(): void {
+    this.appState$.dispatch(store.fromSample.loadSamples());
+  }
 
   /**
    * Loads sample details from the server
