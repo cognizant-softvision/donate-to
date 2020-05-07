@@ -151,7 +151,8 @@ namespace DonateTo.IdentityServer.Controllers
 
             var user = _mapper.Map<User>(userRegistrationViewModel);
 
-            var result = await _userManager.CreateAsync(user, userRegistrationViewModel.Password);
+            var result = await _userManager.CreateAsync(user, userRegistrationViewModel.Password)
+                .ConfigureAwait(false);
 
             if (!result.Succeeded)
             {
