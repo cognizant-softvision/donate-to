@@ -22,8 +22,8 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/assets",
-              { "glob": "*/", "input": "../config", "output": "./config/" },
-              { "glob": "en.json", "input": "../i18n", "output": "./i18n/" }
+              { "glob": "**/*", "input": "config", "output": "config" },
+              { "glob": "en.json", "input": "i18n", "output": "i18n" }
             ],
             "styles": ["node_modules/bootstrap/dist/css/bootstrap.min.css", "src/styles.css"],
             "scripts": []
@@ -76,8 +76,8 @@
             "scripts": [],
             "assets": [
               "src/assets",
-              { "glob": "*/", "input": "../config", "output": "./config/" },
-              { "glob": "en.json", "input": "../i18n", "output": "./i18n/" }
+              { "glob": "*/", "input": "ClientApp/config", "output": "/config/" },
+              { "glob": "en.json", "input": "ClientApp/i18n", "output": "/i18n/" }
             ]
           }
         },
