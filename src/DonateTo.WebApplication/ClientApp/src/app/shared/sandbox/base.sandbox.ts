@@ -7,5 +7,6 @@ export abstract class Sandbox {
 
   constructor(protected appState$: Store<store.State>) {}
 
+  // TODO: Implement this after the issue 57 is merged
   public loadUser(): void {}
 }

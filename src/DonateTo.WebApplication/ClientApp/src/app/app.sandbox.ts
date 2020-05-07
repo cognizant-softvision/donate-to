@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Sandbox } from './shared/sandbox/base.sandbox';
 import { Store } from '@ngrx/store';
 import * as store from './shared/store';
-import * as settingsActions from './shared/store/actions/settings.action';
+import * as settingsActions from './shared/store/settings/actions/settings.action';
 import { TranslateService } from 'ng2-translate';
 import { ConfigService } from './app-config.service';
 
