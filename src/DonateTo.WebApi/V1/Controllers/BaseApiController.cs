@@ -12,9 +12,12 @@ namespace DonateTo.WebApi.V1.Controllers
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [Authorize]
     public abstract class BaseApiController<T> : ControllerBase where T : class
     {
-        protected readonly IBaseService<T> _baseService;  
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1051:Do not declare visible instance fields", Justification = "<Pending>")]
+        protected readonly IBaseService<T> _baseService;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1051:Do not declare visible instance fields", Justification = "<Pending>")]
         protected readonly IUnitOfWork _unitOfWork; 
 
         public BaseApiController(IBaseService<T> baseService, IUnitOfWork unitOfWork)
@@ -31,6 +34,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [HttpGet(Name = "[controller]_[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "<Pending>")]
         public virtual async Task<ActionResult<IEnumerable<T>>> Get()
         {
             var result = await _baseService.GetAsync().ConfigureAwait(false);
@@ -49,6 +53,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "<Pending>")]
         public virtual async Task<ActionResult<IEnumerable<T>>> Get(long id)
         {
             var result = await _baseService.GetAsync(id).ConfigureAwait(false);
