@@ -8,7 +8,7 @@ namespace DonateTo.IdentityServer.Mapping
     {
         public AutoMapping()
         {
-            CreateMap<UserRegistrationModel, User>();
+            CreateMap<UserRegistrationViewModel, User>();
         }
     }
 }

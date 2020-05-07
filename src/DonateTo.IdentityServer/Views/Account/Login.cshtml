@@ -1,9 +1,13 @@
 ﻿@model LoginViewModel
 
-<form class="form-signin" asp-route="Login" id="login-form">
+@{
+    ViewData["Title"] = "Login";
+}
+
+<form class="form-card" asp-route="Login" id="login-form">
     <input type="hidden" asp-for="ReturnUrl" />
 
-    <h1 class="h3 mb-3 font-weight-normal account-title">Donate</h1>
+    <h3 class="mb-3 font-weight-normal card-title">Donate</h3>
 
     <label asp-for="Email" class="sr-only">Email address</label>
     <input type="email" asp-for="Email" class="form-control" placeholder="E-mail" autofocus required>
@@ -16,7 +20,7 @@
         <div class="alert alert-danger">Incorrect user or password</div>
     }
 
-    <button class="btn btn-lg btn-primary btn-block submit-button" name="button" id="login-button" value="login">Log in</button>
+    <input class="btn btn-lg btn-primary btn-block submit-button" name="button" type="submit" value="Log in" />
 
     <div class="form-group">
         <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Register">Forgot Password?</a>
