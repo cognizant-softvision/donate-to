@@ -15,7 +15,7 @@ body {
   background-color: #f5f5f5;
 }
 
-.form-signin {
+.form-card {
   width: 100%;
   max-width: 50%;
   padding: 2%;
@@ -23,11 +23,11 @@ body {
   background-color: #f5f5f5;
 }
 
-.form-signin .checkbox {
+.form-card .checkbox {
   font-weight: 400;
 }
 
-.form-signin .form-control {
+.form-card .form-control {
   position: relative;
   box-sizing: border-box;
   height: auto;
@@ -35,16 +35,12 @@ body {
   font-size: 16px;
 }
 
-.form-signin .form-control:focus {
+.form-card .form-control:focus {
   z-index: 2;
 }
 
-.form-signin input[type="email"] {
-  margin-bottom: 1%;
-}
-
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
+.form-card input {
+  margin-top: 10px;
 }
 
 .footer {
@@ -62,9 +58,9 @@ a {
   color: #1da57a;
 }
 
-.account-title {
+.card-title {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  text-align: left;
+  text-align: center;
 }
 
 .submit-button {
@@ -81,4 +77,18 @@ a {
   color: #fff;
   background-color: #3db389;
   border-color: #3db389;
+}
+
+.field-validation-error {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-bottom-left-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+  display: flex;
+  justify-content: center;
 }
