@@ -14,7 +14,5 @@ namespace DonateTo.WebApi.V1.Controllers
          base(donationService, unitOfWork)
         {
         }
-
-
     }
 }

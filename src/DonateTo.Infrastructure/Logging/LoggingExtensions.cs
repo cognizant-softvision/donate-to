@@ -9,7 +9,7 @@ namespace DonateTo.Infrastructure.Logging
     public static class LoggingExtensions
     {
         /// <summary>
-        ///     Add a Logger to the logging pipeline.
+        /// Add a Logger to the logging pipeline.
         /// </summary>
         /// <param name="services">IServiceCollection.</param>
         /// <param name="configuration">IConfiguration.</param>

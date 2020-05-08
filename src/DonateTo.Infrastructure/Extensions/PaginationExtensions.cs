@@ -9,7 +9,7 @@ namespace DonateTo.Infrastructure.Data.Extensions
     public static class PaginationExtensions
     {
         /// <summary>
-        ///     Gets paged of query based on the number of page and page size.
+        /// Gets paged of query based on the number of page and page size.
         /// </summary>
         /// <typeparam name="T"> Type of class. </typeparam>
         /// <param name="query">An System.Linq.IQueryable`1 to get paged from.</param>
@@ -37,7 +37,7 @@ namespace DonateTo.Infrastructure.Data.Extensions
         }
 
         /// <summary>
-        ///     Asynchronously gets paged of query based on the number of page and page size.
+        /// Asynchronously gets paged of query based on the number of page and page size.
         /// </summary>
         /// <typeparam name="T">Type of class.</typeparam>
         /// <param name="query">An System.Linq.IQueryable`1 to get paged from.</param>

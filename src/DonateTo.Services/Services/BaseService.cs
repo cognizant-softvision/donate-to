@@ -39,7 +39,7 @@ namespace DonateTo.Services
             return _entityRequestRepository.Get(id);
         }
 
-         ///<inheritdoc cref="IBaseService{TEntity}"/>
+        ///<inheritdoc cref="IBaseService{TEntity}"/>
         public virtual async Task<TEntity> GetAsync(long id)
         {
             return await _entityRequestRepository.GetAsync(id).ConfigureAwait(false);

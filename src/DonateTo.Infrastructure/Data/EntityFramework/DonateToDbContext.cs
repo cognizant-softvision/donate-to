@@ -18,10 +18,8 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
         public DbSet<DonationItem> DonationItems { get; set; }
         public DbSet<DonationRequest> DonationRequests { get; set; }
         public DbSet<DonationRequestItem> DonationRequestItems { get; set; }
-
         public DbSet<DonationRequestCategory> DonationRequestCategories { get; set; }
         public DbSet<DonationRequestItemCategory> DonationRequestItemCategories { get; set; }
-
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Status> Status { get; set; }
@@ -32,7 +30,6 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
         public DbSet<IdentityUserLogin<long>> UserLogins { get; set; }
         public DbSet<IdentityUserRole<long>> UserRoles { get; set; }
         public DbSet<IdentityUserToken<long>> UserTokens { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -76,6 +73,5 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
             #endregion
             }
         }
-
     }
 }

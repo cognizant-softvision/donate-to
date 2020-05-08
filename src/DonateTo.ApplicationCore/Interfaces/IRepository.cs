@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace DonateTo.ApplicationCore.Interfaces
 {
     /// <summary>
-    ///     Interface to implement the Repository Pattern.
+    /// Interface to implement the Repository Pattern.
     /// </summary>
     /// <typeparam name="TEntity">Entity.</typeparam>
     public interface IRepository<TEntity> where TEntity : class
@@ -34,7 +34,6 @@ namespace DonateTo.ApplicationCore.Interfaces
         /// <returns>IQueryable of TEntity.</returns>
         TEntity FirstOrDefault(Expression<Func<TEntity, bool>> filter);
 
-
         /// <summary>
         /// Get an entity by id.
         /// </summary>
@@ -44,14 +43,14 @@ namespace DonateTo.ApplicationCore.Interfaces
         TEntity Get(long id);
 
         /// <summary>
-        ///     Get an entity by id async.
+        /// Get an entity by id async.
         /// </summary>
         /// <param name="id">Entity id.</param>
         /// <returns>Task of TEntity.</returns>
         Task<TEntity> GetAsync(long id);
         
         /// <summary>
-        ///     Gets a list of paged entities by page and page size. 
+        /// Gets a list of paged entities by page and page size. 
         /// </summary>
         /// <param name="page">Number of the page to be obtained.</param>
         /// <param name="pageSize">Max number of rows in a specific page.</param>
@@ -59,7 +58,7 @@ namespace DonateTo.ApplicationCore.Interfaces
         PagedResult<TEntity> GetPaged(int page, int pageSize);
 
         /// <summary>
-        ///     Gets a list of paged entities by page and page size async.
+        /// Gets a list of paged entities by page and page size async.
         /// </summary>
         /// <param name="page">Number of the page to be obtained.</param>
         /// <param name="pageSize">Max number of rows in a specific page.</param>
@@ -67,54 +66,54 @@ namespace DonateTo.ApplicationCore.Interfaces
         Task<PagedResult<TEntity>> GetPagedAsync(int page, int pageSize);
 
         /// <summary>
-        ///     Add an entity.
+        /// Add an entity.
         /// </summary>
         /// <param name="entity">Entity.</param>
         /// <returns>Task of TEntity.</returns>
         TEntity Add(TEntity entity);
 
         /// <summary>
-        ///     Add en entity async.
+        /// Add en entity async.
         /// </summary>
         /// <param name="entity">Entity.</param>
         /// <returns>TEntity.</returns>
         Task<TEntity> AddAsync(TEntity entity);
 
         /// <summary>
-        ///     Update an entity.
+        /// Update an entity.
         /// </summary>
         /// <param name="entity">Entity.</param>
         /// <returns>Task of TEntity.</returns>
         TEntity Update(TEntity entity);
 
         /// <summary>
-        ///     Update an entity async.
+        /// Update an entity async.
         /// </summary>
         /// <param name="entity">Entity.</param>
         /// <returns>TEntity.</returns>
         Task<TEntity> UpdateAsync(TEntity entity);
 
         /// <summary>
-        ///     Delete an entity.
+        /// Delete an entity.
         /// </summary>
         /// <param name="entity">Entity.</param>
         void Delete(TEntity entity);
 
         /// <summary>
-        ///     Delete an entity async.
+        /// Delete an entity async.
         /// </summary>
         /// <param name="entity">Entity.</param>
         /// <returns>Task.</returns>
         Task DeleteAsync(TEntity entity);
 
         /// <summary>
-        ///     Delete an entity.
+        /// Delete an entity.
         /// </summary>
         /// <param name="id">Id of Entity.</param>
         void Delete(long id);
 
         /// <summary>
-        ///     Delete an entity async.
+        /// Delete an entity async.
         /// </summary>
         /// <param name="id">Id of Entity.</param>
         /// <returns>Task.</returns>
