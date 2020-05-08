@@ -1,5 +1,3 @@
-import { environment } from './../environments/environment.prod';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -40,16 +38,23 @@ export class ConfigService {
     },
 
     debugging: false,
-  };
 
-  constructor(private http: HttpClient) {}
+    authConfig: {
+      issuer: 'https://localhost:44392',
+      redirectUri: 'https://localhost:44372',
+      clientId: 'DonateTo.WebAplication',
+      responseType: 'code',
+      scope: 'openid profile',
+      showDebugInformation: true,
+    },
+  };
 
   /**
    * Loads the environment config file first. Reads the environment variable from the file
    * and based on that loads the appropriate configuration file - development or production
    */
   load() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       // TODO: retrieve configuration from config files.
       this.config = this.productionConfig;
       resolve(true);

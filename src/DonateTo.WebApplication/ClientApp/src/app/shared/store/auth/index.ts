@@ -1,4 +1,6 @@
 export * from './actions';
 export { AuthEffects } from './effects';
-export { AuthReducer } from './reducer';
-export { AuthSelectors } from './selectors';
+export * from './reducer';
+export * from './selectors';
+
+export const authFeatureKey = 'auth';

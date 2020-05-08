@@ -21,6 +21,7 @@ import { StoreModule } from '@ngrx/store';
 import * as fromSettings from './shared/store/settings';
 import { ConfigService } from './app-config.service';
 import { EffectsModule } from '@ngrx/effects';
+import { OAuthModule } from 'angular-oauth2-oidc';
 
 export function configServiceFactory(config: ConfigService) {
   return () => config.load();
@@ -38,6 +39,7 @@ export function configServiceFactory(config: ConfigService) {
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     RouterModule.forRoot([]),
+    OAuthModule.forRoot(),
 
     // NgRx Store modules
     StoreModule.forRoot({}),

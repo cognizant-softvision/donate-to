@@ -3,20 +3,18 @@ import { Injectable } from '@angular/core';
 import { AuthState } from './reducer';
 
 // selectors
-const getAuthState = createFeatureSelector<AuthState>('authCache');
-
-const getUserData = createSelector(getAuthState, (state: AuthState) => {
-  // state.email, state.name;
-});
-
-const getAccessToken = createSelector(getAuthState, (state: AuthState) => {
-  // state.access_token;
-});
+export const getAuthState = createFeatureSelector<AuthState>('auth');
+export const getUserName = createSelector(getAuthState, (state: AuthState) => state.name);
+export const getUserEmail = createSelector(getAuthState, (state: AuthState) => state.email);
+export const getAccessToken = createSelector(getAuthState, (state: AuthState) => state.access_token);
+export const isAuthenticated = createSelector(getAuthState, (state: AuthState) => state.isAuthenticated);
 
 @Injectable()
 export class AuthSelectors {
   constructor(private store: Store<AuthState>) {}
   // selectors$
-  userData$ = this.store.select(getUserData);
+  userName$ = this.store.select(getUserName);
+  userEmail$ = this.store.select(getUserEmail);
   accessToken$ = this.store.select(getAccessToken);
+  isAuthenticated = this.store.select(isAuthenticated);
 }

@@ -61,7 +61,7 @@ namespace DonateTo.IdentityServer.Controllers
             var context = await _interactionService.GetAuthorizationContextAsync(model.ReturnUrl);
 
             // the user clicked the "cancel" button
-            if (button != "login")
+            if (button != "Log in")
             {
                 if (context != null)
                 {
@@ -174,6 +174,12 @@ namespace DonateTo.IdentityServer.Controllers
             await _signInManager.SignOutAsync();
 
             return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
+
+        [HttpGet]
+        public IActionResult Logout(string logoutId)
+        {
+            return View();
         }
 
         [HttpGet]

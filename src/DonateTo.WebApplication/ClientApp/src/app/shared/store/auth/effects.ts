@@ -1,7 +1,16 @@
-import { ActionTypes, DoLoginFailAction, DoLoginSuccessAction, DoLogoutActionSuccess } from './actions';
+import {
+  doLogin,
+  doLoginFailed,
+  doLoginSuccess,
+  doLogout,
+  doLogoutSuccess,
+  loadUserProfile,
+  tryLogin,
+  userProfileLoaded,
+} from './actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { switchMap } from 'rxjs/operators';
-import { from, Observable, of } from 'rxjs';
+import { from, Observable, pipe } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 
@@ -9,46 +18,54 @@ import { OAuthService } from 'angular-oauth2-oidc';
 export class AuthEffects {
   @Effect()
   doLogin$: Observable<{}> = this.actions$.pipe(
-    ofType(ActionTypes.DO_LOGIN),
-    switchMap(() => this.authService.loadDiscoveryDocumentAndLogin().then(() => new DoLoginSuccessAction()))
+    ofType(doLogin),
+    switchMap(() => this.authService.loadDiscoveryDocumentAndLogin().then(() => doLoginSuccess()))
   );
 
   @Effect()
   doLogout$: Observable<{}> = this.actions$.pipe(
-    ofType(ActionTypes.DO_LOGOUT),
-    switchMap(() => this.authService.revokeTokenAndLogout().then(() => new DoLogoutActionSuccess()))
+    ofType(doLogout),
+    switchMap(() => this.authService.revokeTokenAndLogout().then(() => doLogoutSuccess()))
   );
 
   @Effect()
   tryLogin$: Observable<{}> = this.actions$.pipe(
-    ofType(ActionTypes.TRY_LOGIN),
+    ofType(tryLogin),
     switchMap(() =>
-      this.authService.loadDiscoveryDocument().then(
-        // This method just tries to parse the token(s) within the url when
-        // the auth-server redirects the user back to the web-app
-        // It doesn't send the user the the login page
-        () =>
-          this.authService
-            .tryLogin()
-            .then(() => new DoLoginSuccessAction())
-            .catch(() => of(new DoLoginFailAction()))
-      )
+      this.authService
+        .loadDiscoveryDocumentAndTryLogin()
+        .then(
+          // This method just tries to parse the token(s) within the url when
+          // the auth-server redirects the user back to the web-app
+          // It doesn't send the user the the login page
+          (value) => {
+            console.log(value);
+            return doLoginSuccess();
+          }
+          // this.authService
+          //   .tryLogin()
+          //   .then((value) => {
+          //     console.log(value);
+          //     return doLoginSuccess()
+          //   })
+          //   .catch(() => doLoginFailed())
+        )
+        .catch(() => doLoginFailed())
     )
   );
 
   @Effect()
-  userProfileLoaded$: Observable<{}> = this.actions$.pipe(
-    ofType(ActionTypes.LOAD_USER_PROFILE),
+  loadUserProfile$: Observable<{}> = this.actions$.pipe(
+    ofType(loadUserProfile),
     switchMap(() =>
       from(
         this.authService.loadUserProfile().then(() => {
           const claims = this.authService.getIdentityClaims();
-          return {
-            type: ActionTypes.USER_PROFILE_LOADED,
+          return userProfileLoaded({
             name: claims ? claims['name'] : '',
             email: claims ? claims['name'] : '',
-            access_token: this.authService.getAccessToken(),
-          };
+            accessToken: this.authService.getAccessToken(),
+          });
         })
       )
     )

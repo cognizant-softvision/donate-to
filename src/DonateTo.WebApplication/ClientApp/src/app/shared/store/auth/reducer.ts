@@ -1,46 +1,46 @@
-import { ActionsUnion, ActionTypes } from './actions';
+import * as authActions from './actions';
+import { Action, createReducer, on } from '@ngrx/store';
 
-class InitialState implements AuthState {
-  authenticated: boolean;
+export class AuthState {
+  isAuthenticated: boolean;
   name: string;
   email: string;
   access_token: string;
 }
 
-export function AuthReducer(state = InitialState, action: ActionsUnion) {
-  switch (action.type) {
-    case ActionTypes.USER_PROFILE_LOADED:
-      return {
-        ...state,
-        authenticated: true,
-        name: action.name,
-        email: action.email,
-        access_token: action.accessToken,
-      };
+const INITIAL_STATE: AuthState = {
+  isAuthenticated: false,
+  name: undefined,
+  email: undefined,
+  access_token: undefined,
+};
 
-    case ActionTypes.DO_LOGIN_FAIL:
-      return {
-        ...state,
-        authenticated: false,
-        name: undefined,
-        email: undefined,
-        access_token: undefined,
-      };
+const authReducer = createReducer(
+  INITIAL_STATE,
+  on(authActions.userProfileLoaded, (state, action) => ({
+    ...state,
+    isAuthenticated: true,
+    name: action.name,
+    email: action.email,
+    access_token: action.accessToken,
+  })),
+  on(authActions.doLoginFailed, (state) => ({
+    ...state,
+    isAuthenticated: false,
+    name: undefined,
+    email: undefined,
+    access_token: undefined,
+  })),
+  on(authActions.doLoginSuccess, (state) => ({
+    ...state,
+    isAuthenticated: true,
+  })),
+  on(authActions.doLogout, (state) => ({
+    ...state,
+    isAuthenticated: false,
+  }))
+);
 
-    case ActionTypes.DO_LOGIN_SUCCESS:
-      return {
-        ...state,
-        authenticated: true,
-      };
-
-    default:
-      return state;
-  }
-}
-
-export interface AuthState {
-  authenticated: boolean;
-  name: string;
-  email: string;
-  access_token: string;
+export function reducer(state: AuthState, action: Action) {
+  return authReducer(state, action);
 }

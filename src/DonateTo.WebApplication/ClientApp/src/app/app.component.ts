@@ -13,5 +13,6 @@ export class AppComponent {
 
   constructor(public appSandbox: AppSandbox) {
     this.appSandbox.setupLanguage();
+    this.appSandbox.setupAuth();
   }
 }
