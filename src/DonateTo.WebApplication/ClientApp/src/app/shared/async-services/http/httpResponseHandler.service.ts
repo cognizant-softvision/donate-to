@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
-import { TranslateService } from 'ng2-translate';
 import { Observable, throwError } from 'rxjs';
 import { ConfigService } from '../../../app-config.service';
 
@@ -9,7 +8,6 @@ import { ConfigService } from '../../../app-config.service';
 export class HttpResponseHandler {
   constructor(
     private router: Router,
-    private translateService: TranslateService,
     private notificationsService: NotificationsService,
     private configService: ConfigService
   ) {}
@@ -83,11 +81,7 @@ export class HttpResponseHandler {
     this.router.navigate(['/login']);
 
     if (unauthorizedEndpoints.length) {
-      this.notificationsService.info(
-        'Info',
-        this.translateService.instant('ServerError401'),
-        this.configService.get('notifications').options
-      );
+      this.notificationsService.info('Info', 'Server Error 401', this.configService.get('notifications').options);
     }
   }
 
@@ -95,11 +89,7 @@ export class HttpResponseHandler {
    * Shows notification errors when server response status is 403
    */
   private handleForbidden(): void {
-    this.notificationsService.error(
-      'error',
-      this.translateService.instant('ServerError403'),
-      this.configService.get('notifications').options
-    );
+    this.notificationsService.error('error', 'Server Error 403', this.configService.get('notifications').options);
     this.router.navigate(['/login']);
   }
 
@@ -114,8 +104,8 @@ export class HttpResponseHandler {
     notFoundEndpoints = notFoundEndpoints.filter((endpoint) => this.getRelativeUrl(responseBody.url) === endpoint);
 
     if (notFoundEndpoints.length) {
-      const message = this.translateService.instant('ServerError404');
-      const title = this.translateService.instant('ErrorNotificationTitle');
+      const message = 'Server Error 404';
+      const title = 'ErrorNotificationTitle';
 
       this.showNotificationError(title, message);
     }
@@ -125,8 +115,8 @@ export class HttpResponseHandler {
    * Shows notification errors when server response status is 500
    */
   private handleServerError(): void {
-    const message = this.translateService.instant('ServerError500');
-    const title = this.translateService.instant('ErrorNotificationTitle');
+    const message = 'Server Error';
+    const title = 'Internal server error';
 
     this.showNotificationError(title, message);
   }
@@ -159,7 +149,7 @@ export class HttpResponseHandler {
   private getTranslatedValue(value: string): string {
     if (value.indexOf('[') > -1) {
       const key = value.substring(value.lastIndexOf('[') + 1, value.lastIndexOf(']'));
-      value = this.translateService.instant(key);
+      value = 'value key'; // TODO: Change this for this.translateService.instant(key);
     }
 
     return value;
@@ -182,6 +172,7 @@ export class HttpResponseHandler {
    * @param message
    */
   private showNotificationError(title: string, message: string): void {
+    console.log('${title}: ${message}');
     this.notificationsService.error(title, message, this.configService.get('notifications').options);
   }
 }

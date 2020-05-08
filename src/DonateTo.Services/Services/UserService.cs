@@ -1,12 +1,13 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Interfaces.Services;
+using DonateTo.ApplicationCore.Models.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace DonateTo.Services.Services
+namespace DonateTo.Services
 {
     public class UserService : IUserService
     {
@@ -18,22 +19,22 @@ namespace DonateTo.Services.Services
             _userRepository = userRepository;
         }
 
-        public User Create(User user)
+        public User Create(User entity)
         {
             throw new NotImplementedException();
         }
 
-        public Task<User> CreateAsync(User user)
+        public Task<User> CreateAsync(User entity)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(int id)
+        public void Delete(long id)
         {
             throw new NotImplementedException();
         }
 
-        public Task DeleteAsync(int id)
+        public Task DeleteAsync(long id)
         {
             throw new NotImplementedException();
         }
@@ -43,17 +44,12 @@ namespace DonateTo.Services.Services
             return _userRepository.FirstOrDefault(filter);
         }
 
-        public User Get(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<User> Get(Expression<Func<User, bool>> filter)
         {
             throw new NotImplementedException();
         }
 
-        public Task<User> GetAsync(int id)
+        public User Get(long id)
         {
             throw new NotImplementedException();
         }
@@ -63,12 +59,27 @@ namespace DonateTo.Services.Services
             throw new NotImplementedException();
         }
 
-        public void Update(User user)
+        public Task<User> GetAsync(long id)
         {
             throw new NotImplementedException();
         }
 
-        public Task UpdateAsync(User user)
+        public PagedResult<User> GetPaged(int page, int pageSize)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<PagedResult<User>> GetPagedAsync(int page, int pageSize)
+        {
+            throw new NotImplementedException();
+        }
+
+        public User Update(User entity, long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<User> UpdateAsync(User entity, long id)
         {
             throw new NotImplementedException();
         }
