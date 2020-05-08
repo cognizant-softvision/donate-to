@@ -19,12 +19,12 @@
 *.sublime-workspace
 
 # IDE - VSCode
-angular.json
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+.angulardoc.json
 
 # misc
 /.sass-cache
