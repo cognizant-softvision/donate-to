@@ -3,11 +3,11 @@ import { Injectable } from '@angular/core';
 import { SampleState } from './reducer';
 
 // selectors
-const getEntityState = createFeatureSelector<SampleState>('entityCache');
+export const getEntityState = createFeatureSelector<SampleState>('entityCache');
 
-const getAllSamples = createSelector(getEntityState, (state: SampleState) => state.items);
+export const getAllSamples = createSelector(getEntityState, (state: SampleState) => state.items);
 
-const getSamplesLoading = createSelector(getEntityState, (state: SampleState) => state.loading);
+export const getSamplesLoading = createSelector(getEntityState, (state: SampleState) => state.loading);
 
 @Injectable()
 export class SampleSelectors {
