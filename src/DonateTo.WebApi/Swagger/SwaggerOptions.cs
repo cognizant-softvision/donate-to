@@ -16,8 +16,8 @@ namespace DonateTo.WebApi.Swagger
         }
 
         /// <summary>
-        ///     This method is used to generate the 
-        ///     SwaggerDoc Info for the API.
+        /// This method is used to generate the 
+        /// SwaggerDoc Info for the API.
         /// </summary>
         /// <param name="options">SwaggerGenOptions</param>
         public void Configure(SwaggerGenOptions options)

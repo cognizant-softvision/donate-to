@@ -9,7 +9,7 @@ namespace DonateTo.WebApi.Swagger
     public static class SwaggerExtensions
     {
         /// <summary>
-        ///     Add service API versioning to the collection.
+        /// Add service API versioning to the collection.
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
@@ -32,7 +32,7 @@ namespace DonateTo.WebApi.Swagger
         }
 
         /// <summary>
-        ///     Add Swagger to the collection.
+        /// Add Swagger to the collection.
         /// </summary>
         /// <param name="services">IServiceCollection.</param>
         /// <returns></returns>
@@ -46,8 +46,8 @@ namespace DonateTo.WebApi.Swagger
         }
 
         /// <summary>
-        ///     Add SwaggerUI to the ASP.NET Core pipeline. This method generate
-        ///     the SwaggerUI for each specified API version.
+        /// Add SwaggerUI to the ASP.NET Core pipeline. This method generate
+        /// the SwaggerUI for each specified API version.
         /// </summary>
         /// <param name="app">IApplicationBuilder.</param>
         /// <param name="provider">IApiVersionDescriptionProvider.</param>

@@ -26,20 +26,24 @@ namespace DonateTo.Infrastructure.Data.Repositories
             return GetHydratedDonations();
                 
         }
+
         ///<inheritdoc cref="IRepository{Donation}"/>
         public override async Task<IQueryable<Donation>> GetAsync()
         {
             return await Task.FromResult(GetHydratedDonations()).ConfigureAwait(false);
         }
+
         ///<inheritdoc cref="IRepository{Donation}"/>
         public override Donation Get(long id)
         {
             return GetHydratedDonations().FirstOrDefault(d => d.Id.Equals(id));
         }
+
         public override async Task<Donation> GetAsync(long id)
         {
             return await GetHydratedDonations().FirstOrDefaultAsync(d => d.Id.Equals(id)).ConfigureAwait(false);
         }
+
         ///<inheritdoc cref="IRepository{Donation}"/>
         public override PagedResult<Donation> GetPaged(int page, int pageSize)
         {
