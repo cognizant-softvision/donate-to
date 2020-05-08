@@ -20,7 +20,7 @@
 
   "authConfig": {
     "issuer": "https://localhost:44392",
-    "redirectUri": "window.location.origin",
+    "redirectUri": "https://localhost:44372",
     "clientId": "DonateTo.WebAplication",
     "responseType": "code",
     "scope": "openid profile",

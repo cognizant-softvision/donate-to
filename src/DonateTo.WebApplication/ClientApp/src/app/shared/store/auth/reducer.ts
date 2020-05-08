@@ -1,4 +1,4 @@
-import { Actions, ActionTypes } from './actions';
+import { ActionsUnion, ActionTypes } from './actions';
 
 class InitialState implements AuthState {
   authenticated: boolean;
@@ -7,24 +7,30 @@ class InitialState implements AuthState {
   access_token: string;
 }
 
-export function AuthReducer(state = InitialState, action: Actions) {
+export function AuthReducer(state = InitialState, action: ActionsUnion) {
   switch (action.type) {
-    case ActionTypes.DO_LOGIN_SUCCESS:
+    case ActionTypes.USER_PROFILE_LOADED:
       return {
         ...state,
         authenticated: true,
+        name: action.name,
+        email: action.email,
+        access_token: action.accessToken,
       };
 
     case ActionTypes.DO_LOGIN_FAIL:
       return {
         ...state,
         authenticated: false,
+        name: undefined,
+        email: undefined,
+        access_token: undefined,
       };
 
-    case ActionTypes.DO_LOGOUT:
+    case ActionTypes.DO_LOGIN_SUCCESS:
       return {
         ...state,
-        authenticated: false,
+        authenticated: true,
       };
 
     default:

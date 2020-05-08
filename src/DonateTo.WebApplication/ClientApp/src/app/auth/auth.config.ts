@@ -6,28 +6,10 @@ import { ConfigService } from '../app-config.service';
   providedIn: 'root',
 })
 export class AuthConfigService {
-  constructor(private config: ConfigService) {
-    config.load();
-  }
+  constructor(private config: ConfigService) {}
 
-  getConfig(): AuthConfig {
-    console.log(this.config.get('authConfig'));
-    return {
-      issuer: 'https://localhost:44392',
-      redirectUri: window.location.origin,
-      clientId: 'DonateTo.WebAplication',
-      responseType: 'code',
-      scope: 'openid profile',
-      showDebugInformation: true,
-    };
+  async getConfig(): Promise<AuthConfig> {
+    await this.config.load();
+    return this.config.get('authConfig');
   }
 }
-
-export const authCodeFlowConfig: AuthConfig = {
-  issuer: 'https://localhost:44392',
-  redirectUri: window.location.origin,
-  clientId: 'DonateTo.WebAplication',
-  responseType: 'code',
-  scope: 'openid profile',
-  showDebugInformation: true,
-};

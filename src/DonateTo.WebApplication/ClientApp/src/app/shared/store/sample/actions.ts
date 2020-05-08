@@ -20,7 +20,7 @@ export class AddSample implements Action {
 export class AddSampleSuccess implements Action {
   readonly type = ActionTypes.ADD_SAMPLE_SUCCESS;
 
-  constructor(public payload: SampleModel[]) {}
+  constructor(public payload: SampleModel) {}
 }
 
 export class LoadSamples implements Action {

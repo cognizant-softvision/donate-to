@@ -1,9 +1,10 @@
 import { ActionsUnion, ActionTypes } from './actions';
+import { SampleModel } from '../../models/sampleModel';
 
 class InitialState implements SampleState {
   loading: boolean;
   failed: boolean;
-  items: any;
+  items: SampleModel[];
 }
 
 export function SampleReducer(state = InitialState, action: ActionsUnion) {
@@ -55,5 +56,5 @@ export function SampleReducer(state = InitialState, action: ActionsUnion) {
 export interface SampleState {
   loading: boolean;
   failed: boolean;
-  items: [];
+  items: SampleModel[];
 }
