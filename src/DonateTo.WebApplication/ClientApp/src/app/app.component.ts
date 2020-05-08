@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { TranslateService } from 'ng2-translate';
 import { AppSandbox } from './app.sandbox';
 
 @Component({
@@ -12,7 +11,7 @@ export class AppComponent {
 
   param = { value: 'donate' };
 
-  constructor(translate: TranslateService, public appSandbox: AppSandbox) {
+  constructor(public appSandbox: AppSandbox) {
     this.appSandbox.setupLanguage();
   }
 }

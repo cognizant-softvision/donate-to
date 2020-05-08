@@ -2,7 +2,7 @@ import { createFeatureSelector, createSelector, Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { SettingsState } from './settings.reducer';
 
-export const getSettingsState = createFeatureSelector<SettingsState>('entityCache');
+export const getSettingsState = createFeatureSelector<SettingsState>('settings');
 export const getSelectedLanguage = createSelector(getSettingsState, (state: SettingsState) => state.selectedLanguage);
 export const getSelectedCulture = createSelector(getSettingsState, (state: SettingsState) => state.selectedCulture);
 export const getAvailableLanguages = createSelector(

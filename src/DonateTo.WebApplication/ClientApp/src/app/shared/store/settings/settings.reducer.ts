@@ -27,7 +27,3 @@ const settingsReducer = createReducer(
 export function reducer(state: SettingsState, action: Action) {
   return settingsReducer(state, action);
 }
-
-export const getSelectedLanguage = (state: SettingsState) => state.selectedLanguage;
-export const getSelectedCulture = (state: SettingsState) => state.selectedCulture;
-export const getAvailableLanguages = (state: SettingsState) => state.availableLanguages;

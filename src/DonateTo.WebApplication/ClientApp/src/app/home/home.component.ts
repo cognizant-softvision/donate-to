@@ -22,6 +22,7 @@ export class HomeComponent implements OnInit {
     const sample = new SampleModel();
     sample.id = 1;
     sample.name = this.newSample;
+    this.homeSandbox.createSample(sample);
   }
 
   registerEvents() {

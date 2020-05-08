@@ -1,8 +1,9 @@
-import { SettingsState } from './settings/settings.reducer';
+import * as settings from './settings';
+import * as sample from './sample';
 
 export interface State {
-  settings: SettingsState;
+  settings: settings.SettingsState;
 }
 
-export * as fromSettings from './settings';
-export * as fromSample from './sample';
+export const fromSettings = settings;
+export const fromSample = sample;

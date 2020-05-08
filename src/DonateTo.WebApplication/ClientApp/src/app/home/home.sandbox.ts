@@ -1,3 +1,4 @@
+import { SampleModel } from './../shared/models/sampleModel';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
@@ -19,7 +20,10 @@ export class HomeSandbox extends Sandbox {
   /**
    * Loads sample from the server
    */
-  public createSample(): void {}
+  public createSample(sample: SampleModel): void {
+    console.log('create');
+    this.appState$.dispatch(store.fromSample.addSample({ sample }));
+  }
 
   /**
    * Loads samples from the server

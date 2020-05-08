@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 // Angular core modules
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
@@ -18,24 +18,23 @@ import { NotificationsModule } from './shared/notifications/notifications.module
 
 import { HttpErrorInterceptor } from 'src/app/shared/async-services/http/http-error.interceptor';
 import { StoreModule } from '@ngrx/store';
-import { TranslateModule } from 'ng2-translate';
 import * as fromSettings from './shared/store/settings';
+import { ConfigService } from './app-config.service';
+import { EffectsModule } from '@ngrx/effects';
+
+export function configServiceFactory(config: ConfigService) {
+  return () => config.load();
+}
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    AppRoutingModule,
-    AuthModule,
-    NotificationsModule,
-    HomeModule,
     // Angular core dependencies
     BrowserModule,
     FormsModule,
     CommonModule,
 
     // Third party modules
-    TranslateModule.forRoot(),
-
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     RouterModule.forRoot([]),
@@ -43,8 +42,28 @@ import * as fromSettings from './shared/store/settings';
     // NgRx Store modules
     StoreModule.forRoot({}),
     StoreModule.forFeature(fromSettings.settingsFeatureKey, fromSettings.reducer),
+    EffectsModule.forRoot([]),
+
+    // Application modules
+    AuthModule,
+    NotificationsModule,
+    HomeModule,
+    AppRoutingModule,
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true,
+    },
+    ConfigService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: configServiceFactory,
+      deps: [ConfigService],
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
