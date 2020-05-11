@@ -32,7 +32,7 @@ export function configServiceFactory(config: ConfigService) {
 
 // AoT requires an exported function for factories. load translations from "/assets/i18n/[lang].json"
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, '../../../i18n/', '.json');
 }
 
 @NgModule({
