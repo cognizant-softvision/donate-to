@@ -3,7 +3,33 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  baseUrl: 'https://localhost:5001',
+  paths: {
+    imagesRoot: '/src/assets/images/',
+  },
+
+  localization: {
+    languages: [
+      {
+        code: 'en',
+        name: 'EN',
+        culture: 'en-EN',
+      },
+    ],
+    defaultLanguage: 'en',
+  },
+
+  debugging: true,
+
+  authConfig: {
+    issuer: 'https://localhost:44392',
+    redirectUri: 'https://localhost:44372',
+    clientId: 'DonateTo.WebAplication',
+    responseType: 'code',
+    scope: 'openid profile',
+    showDebugInformation: true,
+  },
 };
 
 /*
