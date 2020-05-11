@@ -31,7 +31,7 @@ const authReducer = createReducer(
     email: undefined,
     access_token: undefined,
   })),
-  on(authActions.doLogin, (state) => ({
+  on(authActions.loadUserProfileFailed, (state) => ({
     ...state,
     isAuthenticated: false,
     name: undefined,
@@ -42,7 +42,7 @@ const authReducer = createReducer(
     ...state,
     isAuthenticated: true,
   })),
-  on(authActions.doLogout, (state) => ({
+  on(authActions.doLogoutSuccess, (state) => ({
     ...state,
     isAuthenticated: false,
   })),

@@ -3,13 +3,10 @@ import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { Sandbox } from '../sandbox/base.sandbox';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
 import * as store from '../store';
 
 @Injectable()
 export class AuthSandbox extends Sandbox {
-  private subscriptions: Subscription[] = [];
-
   constructor(
     protected appState$: Store<store.State>,
     private authService: OAuthService,
@@ -19,7 +16,8 @@ export class AuthSandbox extends Sandbox {
   }
 
   /**
-   *
+   * Sets up Auth configuration
+   * Subscribes to service token event changes
    */
   public setupAuth(): void {
     this.authConfigService.getConfig().then((authConfig) => {
@@ -41,7 +39,7 @@ export class AuthSandbox extends Sandbox {
   }
 
   /**
-   *
+   * Dispatches a login action
    */
   public login(): void {
     this.appState$.dispatch(store.fromAuth.doLogin());

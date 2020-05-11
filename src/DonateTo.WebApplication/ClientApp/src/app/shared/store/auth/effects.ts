@@ -11,18 +11,17 @@ import {
   userProfileLoaded,
 } from './actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { catchError, switchMap } from 'rxjs/operators';
-import { from, Observable, of, pipe } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { Action } from '@ngrx/store';
 
 @Injectable()
 export class AuthEffects {
   @Effect()
   doLogin$: Observable<{}> = this.actions$.pipe(
     ofType(doLogin),
-    switchMap(() => this.authService.loadDiscoveryDocumentAndLogin())
+    switchMap(() => this.authService.loadDiscoveryDocumentAndLogin().then(() => doLoginSuccess()))
   );
 
   @Effect()
@@ -31,31 +30,8 @@ export class AuthEffects {
     switchMap(() => this.authService.revokeTokenAndLogout().then(() => doLogoutSuccess()))
   );
 
-  // @Effect()
-  // tryLogin$: Observable<{}> = this.actions$.pipe(
-  //   ofType(tryLogin),
-  //   switchMap(() =>
-  //     this.authService
-  //       .loadDiscoveryDocumentAndTryLogin()
-  //       .then(
-  //         // This method just tries to parse the token(s) within the url when
-  //         // the auth-server redirects the user back to the web-app
-  //         // It doesn't send the user the the login page
-  //       () => doLoginSuccess()
-  //         // this.authService
-  //         //   .tryLogin()
-  //         //   .then((value) => {
-  //         //     console.log(value);
-  //         //     return doLoginSuccess()
-  //         //   })
-  //         //   .catch(() => doLoginFailed())
-  //       )
-  //       .catch(() => doLoginFailed())
-  //   )
-  // );
-
   @Effect()
-  tryLogin$ = this.actions$.pipe(
+  tryLogin$: Observable<{}> = this.actions$.pipe(
     ofType(tryLogin),
     switchMap(() =>
       this.authService
@@ -67,35 +43,26 @@ export class AuthEffects {
             return tryLoginFailed();
           }
         })
-        .catch(() => of(doLoginFailed()))
-    ),
-    catchError(() => of(doLoginFailed()))
+        .catch(() => doLoginFailed())
+    )
   );
 
   @Effect()
   loadUserProfile$: Observable<{}> = this.actions$.pipe(
     ofType(loadUserProfile),
-    switchMap(() => {
-      if (this.authService.hasValidAccessToken()) {
-        console.log('Valid Access token');
-        this.authService
-          .loadUserProfile()
-          .then(() => {
-            console.log('loadUserProfile THEN');
-            const claims = this.authService.getIdentityClaims();
-            return of(
-              userProfileLoaded({
-                name: claims ? claims['name'] : '',
-                email: claims ? claims['name'] : '',
-                accessToken: this.authService.getAccessToken(),
-              })
-            );
-          })
-          .catch(() => of(loadUserProfileFailed()));
-      } else {
-        return of(doLoginFailed());
-      }
-    })
+    switchMap(() =>
+      this.authService
+        .loadUserProfile()
+        .then(() => {
+          const claims = this.authService.getIdentityClaims();
+          return userProfileLoaded({
+            name: claims ? claims['name'] : '',
+            email: claims ? claims['name'] : '',
+            accessToken: this.authService.getAccessToken(),
+          });
+        })
+        .catch(() => loadUserProfileFailed())
+    )
   );
 
   constructor(private actions$: Actions, private authService: OAuthService) {}

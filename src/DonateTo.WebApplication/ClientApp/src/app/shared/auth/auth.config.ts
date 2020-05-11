@@ -8,6 +8,9 @@ import { ConfigService } from '../../app-config.service';
 export class AuthConfigService {
   constructor(private config: ConfigService) {}
 
+  /**
+   * Gets AuthConfig from env configuration
+   */
   async getConfig(): Promise<AuthConfig> {
     await this.config.load();
     return this.config.get('authConfig');

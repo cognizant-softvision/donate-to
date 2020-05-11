@@ -27,7 +27,10 @@ export class AppSandbox extends Sandbox {
     return this.configService.get('notifications').options;
   }
 
-  // public setupAuth(): void {
-  //   this.authSandbox.setupAuth();
-  // }
+  /**
+   * Sets up the Auth Service
+   */
+  public setupAuth(): void {
+    this.authSandbox.setupAuth();
+  }
 }

@@ -42,6 +42,7 @@ export class HomeSandbox extends Sandbox {
     // Subscribes to culture
     this.subscriptions.push(this.culture$.subscribe((culture: string) => (this.culture = culture)));
 
+    // Subscribes to auth properties
     this.subscriptions.push(
       this.isAuthenticated$.subscribe((isAuthenticated: boolean) => (this.isAuthenticated = isAuthenticated))
     );
