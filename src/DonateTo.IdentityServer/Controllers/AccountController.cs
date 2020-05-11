@@ -207,15 +207,12 @@ namespace DonateTo.IdentityServer.Controllers
 
             foreach (var error in errors)
             {
-                if (error.Code == duplicatedEmailCode || error.Code == duplicatedUserNameCode)
+                if (error.Code == duplicatedEmailCode)
                 {
-                    if (error.Code != duplicatedUserNameCode)
-                    {
-                        error.Description = "Email registered - please enter another email or sign in.";
-                        ModelState.TryAddModelError(error.Code, error.Description);
-                    }
+                    error.Description = "Email registered - please enter another email or sign in.";
+                    ModelState.TryAddModelError(error.Code, error.Description);
                 }
-                else
+                else if(error.Code != duplicatedUserNameCode)
                 {
                     ModelState.TryAddModelError(error.Code, error.Description);
                 }
