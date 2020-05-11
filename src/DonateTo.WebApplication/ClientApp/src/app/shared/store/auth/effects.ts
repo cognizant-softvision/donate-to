@@ -5,14 +5,14 @@ import {
   doLogout,
   doLogoutSuccess,
   loadUserProfile,
-  tryLogin,
-  userProfileLoaded,
-  tryLoginFailed,
   loadUserProfileFailed,
+  tryLogin,
+  tryLoginFailed,
+  userProfileLoaded,
 } from './actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { switchMap, catchError } from 'rxjs/operators';
-import { from, Observable, pipe, of } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
+import { from, Observable, of, pipe } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { Action } from '@ngrx/store';
