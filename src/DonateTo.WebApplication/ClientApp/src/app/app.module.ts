@@ -26,10 +26,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-export function configServiceFactory(config: ConfigService) {
-  return () => config.load();
-}
-
 // AoT requires an exported function for factories. load translations from "/assets/i18n/[lang].json"
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '../../../i18n/', '.json');
@@ -74,12 +70,6 @@ export function HttpLoaderFactory(http: HttpClient) {
       multi: true,
     },
     ConfigService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: configServiceFactory,
-      deps: [ConfigService],
-      multi: true,
-    },
   ],
   bootstrap: [AppComponent],
 })
