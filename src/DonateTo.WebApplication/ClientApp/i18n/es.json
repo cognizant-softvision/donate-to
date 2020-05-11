@@ -3,9 +3,9 @@
     "HomeTitle": "Bienvenido",
     "NewSample": "Nueva Muestra"
   },
-  "ServerError401": "No encontrado. Por favor iniciar sesión",
-  "ServerError403": "No encontrado. ",
-  "ServerError404": "No encontrado. Recurso no encontrado.",
+  "ServerError401": "Acceso no permitido. Por favor iniciar sesión.",
+  "ServerError403": "Acceso prohibido. Por favor provea las credenciales correctas.",
+  "ServerError404": "Recurso no encontrado.",
   "ServerError500": "Ocurrió un error. Por favor contacte a su administrador.",
   "SuccessNotificationTitle": "Éxito",
   "ErrorNotificationTitle": "Error",

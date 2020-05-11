@@ -3,9 +3,9 @@
     "HomeTitle": "Welcome",
     "NewSample": "New Sample"
   },
-  "ServerError401": "Not found. Please login.",
-  "ServerError403": "Not found. Por favor provea las credenciales correctas.",
-  "ServerError404": "Not found. Resource not found.",
+  "ServerError401": "Access not allowed. Please login.",
+  "ServerError403": "Access forbidden. Please provide correct credentials.",
+  "ServerError404": "Resource not found.",
   "ServerError500": "An error occurred. Please contact your administrator",
   "SuccessNotificationTitle": "Success",
   "ErrorNotificationTitle": "Error",
