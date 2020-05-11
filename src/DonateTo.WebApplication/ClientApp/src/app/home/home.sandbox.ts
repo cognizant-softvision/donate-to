@@ -3,12 +3,13 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { Sandbox } from '../shared/sandbox/base.sandbox';
 import * as store from '../shared/store';
+import { AuthSandbox } from '../shared/auth/auth.sandbox';
 
 @Injectable()
 export class HomeSandbox extends Sandbox {
   private subscriptions: Subscription[] = [];
 
-  constructor(protected appState$: Store<store.State>) {
+  constructor(protected appState$: Store<store.State>, private authSandbox: AuthSandbox) {
     super(appState$);
     this.registerEvents();
   }
@@ -17,7 +18,7 @@ export class HomeSandbox extends Sandbox {
    * User logs in the application
    */
   public login(): void {
-    this.appState$.dispatch(store.fromAuth.doLogin());
+    this.authSandbox.login();
   }
 
   /**

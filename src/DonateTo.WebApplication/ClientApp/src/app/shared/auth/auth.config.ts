@@ -1,6 +1,6 @@
 import { AuthConfig } from 'angular-oauth2-oidc';
 import { Injectable } from '@angular/core';
-import { ConfigService } from '../app-config.service';
+import { ConfigService } from '../../app-config.service';
 
 @Injectable({
   providedIn: 'root',

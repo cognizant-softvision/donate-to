@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { AppSandbox } from './app.sandbox';
+import { AuthSandbox } from './shared/auth/auth.sandbox';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  providers: [AppSandbox],
+  providers: [AppSandbox, AuthSandbox],
 })
 export class AppComponent {
   title = 'app';
@@ -13,6 +14,6 @@ export class AppComponent {
 
   constructor(public appSandbox: AppSandbox) {
     this.appSandbox.setupLanguage();
-    this.appSandbox.setupAuth();
+    // this.appSandbox.setupAuth();
   }
 }
