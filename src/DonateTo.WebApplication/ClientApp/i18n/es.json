@@ -3,8 +3,8 @@
     "HomeTitle": "Bienvenido",
     "NewSample": "Nueva Muestra"
   },
-  "ServerError401": "No encontrado",
-  "ServerError403": "No encontrado",
+  "ServerError401": "No encontrado. Por favor iniciar sesión",
+  "ServerError403": "No encontrado. ",
   "ServerError404": "No encontrado. Recurso no encontrado.",
   "ServerError500": "Ocurrió un error. Por favor contacte a su administrador.",
   "SuccessNotificationTitle": "Éxito",
