@@ -12,7 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 // Modules
 import { AppComponent } from './app.component';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './shared/auth/auth.module';
 import { HomeModule } from './home/home.module';
 import { NotificationsModule } from './shared/notifications/notifications.module';
 

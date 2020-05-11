@@ -1,9 +1,10 @@
+import { AuthEffects } from '../store/auth';
+import { AuthSandbox } from './auth.sandbox';
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { AuthEffects } from '../shared/store/auth';
-import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { fromAuth } from '../shared/store';
+import { fromAuth } from '../store';
+import { NgModule } from '@angular/core';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [],
@@ -12,6 +13,6 @@ import { fromAuth } from '../shared/store';
     EffectsModule.forFeature([AuthEffects]),
     StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.reducer),
   ],
-  providers: [AuthEffects],
+  providers: [AuthSandbox, AuthEffects],
 })
 export class AuthModule {}

@@ -22,7 +22,7 @@ export class AuthEffects {
   @Effect()
   doLogin$: Observable<{}> = this.actions$.pipe(
     ofType(doLogin),
-    switchMap(() => this.authService.loadDiscoveryDocumentAndLogin().then(() => doLoginSuccess()))
+    switchMap(() => this.authService.loadDiscoveryDocumentAndLogin())
   );
 
   @Effect()
