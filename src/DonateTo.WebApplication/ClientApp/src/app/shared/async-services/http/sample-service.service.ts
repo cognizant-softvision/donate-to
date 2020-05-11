@@ -1,4 +1,4 @@
-import * as config from 'config/development.json';
+import { ConfigService } from './../../../app-config.service';
 import { BaseHttpClientService } from './base-http-client.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -8,8 +8,8 @@ import { SampleModel } from '../../models/sampleModel';
   providedIn: 'root',
 })
 export class SampleService extends BaseHttpClientService<SampleModel> {
-  constructor(httpClient: HttpClient) {
-    super(httpClient, config.api.baseUrl, 'api/v1/sample');
+  constructor(httpClient: HttpClient, configService: ConfigService) {
+    super(httpClient, configService.get('baseUrl'), 'api/v1/sample');
   }
 
   getSample() {

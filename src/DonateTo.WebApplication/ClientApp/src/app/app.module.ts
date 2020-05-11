@@ -22,10 +22,6 @@ import * as fromSettings from './shared/store/settings';
 import { ConfigService } from './app-config.service';
 import { EffectsModule } from '@ngrx/effects';
 
-export function configServiceFactory(config: ConfigService) {
-  return () => config.load();
-}
-
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -57,12 +53,6 @@ export function configServiceFactory(config: ConfigService) {
       multi: true,
     },
     ConfigService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: configServiceFactory,
-      deps: [ConfigService],
-      multi: true,
-    },
   ],
   bootstrap: [AppComponent],
 })
