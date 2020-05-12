@@ -1,46 +1,32 @@
-import { SampleModel } from './../shared/models/sampleModel';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { Sandbox } from '../shared/sandbox/base.sandbox';
 import * as store from '../shared/store';
+import { AuthSandbox } from '../shared/auth/auth.sandbox';
 
 @Injectable()
 export class HomeSandbox extends Sandbox {
-  samples$ = this.appState$.select(store.fromSample.getAllSamples);
-  samplesLoading$ = this.appState$.select(store.fromSample.getSamplesLoading);
-
   private subscriptions: Subscription[] = [];
 
-  constructor(protected appState$: Store<store.State>) {
+  constructor(protected appState$: Store<store.State>, private authSandbox: AuthSandbox) {
     super(appState$);
     this.registerEvents();
   }
 
   /**
-   * Loads sample from the server
+   * User logs in the application
    */
-  public createSample(sample: SampleModel): void {
-    console.log('create');
-    this.appState$.dispatch(store.fromSample.addSample({ sample }));
+  public login(): void {
+    this.authSandbox.login();
   }
 
   /**
-   * Loads samples from the server
+   * User logs out the application
    */
-  public loadSamples(): void {
-    this.appState$.dispatch(store.fromSample.loadSamples());
+  public logout(): void {
+    this.appState$.dispatch(store.fromAuth.doLogout());
   }
-
-  /**
-   * Loads sample details from the server
-   */
-  public loadSampleDetails(id: number): void {}
-
-  /**
-   * Dispatches an action to select sample details
-   */
-  public selectSample(): void {}
 
   /**
    * Unsubscribes from events
@@ -56,6 +42,10 @@ export class HomeSandbox extends Sandbox {
     // Subscribes to culture
     this.subscriptions.push(this.culture$.subscribe((culture: string) => (this.culture = culture)));
 
-    // If user is logged in, load samples
+    // Subscribes to auth properties
+    this.subscriptions.push(
+      this.isAuthenticated$.subscribe((isAuthenticated: boolean) => (this.isAuthenticated = isAuthenticated))
+    );
+    this.subscriptions.push(this.userName$.subscribe((userName: string) => (this.userName = userName)));
   }
 }

@@ -1,6 +1,6 @@
 export const environment = {
-  production: true,
-  baseUrl: '/',
+  production: false,
+  baseUrl: 'https://localhost:5001',
   paths: {
     imagesRoot: '/src/assets/images/',
   },
@@ -16,7 +16,7 @@ export const environment = {
     defaultLanguage: 'en',
   },
 
-  debugging: false,
+  debugging: true,
 
   authConfig: {
     issuer: 'https://localhost:44392',
