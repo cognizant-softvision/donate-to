@@ -1,0 +1,76 @@
+{
+  "Home": {
+    "HomeTitle": "Bienvenido",
+    "NewSample": "Nueva Muestra"
+  },
+  "ServerError401": "Acceso no permitido. Por favor iniciar sesión.",
+  "ServerError403": "Acceso prohibido. Por favor provea las credenciales correctas.",
+  "ServerError404": "Recurso no encontrado.",
+  "ServerError500": "Ocurrió un error. Por favor contacte a su administrador.",
+  "SuccessNotificationTitle": "Éxito",
+  "ErrorNotificationTitle": "Error",
+  "InfoNotificationTitle": "Info",
+  "WarningNotificationTitle": "Advertencia",
+  "SaveBtn": "Guardar",
+  "EditBtn": "Editar",
+  "CancelBtn": "Cancelar",
+  "BackBtn": "Volver",
+  "GridEmptyLabel": "No hay items disponibles",
+
+  "ConfirmDialog": {
+    "Title": "Por favor confirmar",
+    "Content": "¿Quieres salir sin guardar los cambios?",
+    "SubmitBtn": "Sí",
+    "CancelBtn": "No"
+  },
+  "Auth": {
+    "Email": "Email",
+    "Password": "Contraseña",
+    "ConfirmPassword": "Confirmar contraseña",
+    "EmailFormatError": "Email no tiene un formato válido",
+    "EmailRequiredError": "Email es requerido",
+    "PasswordRequiredError": "Contraseña es requerida",
+    "ConfirmPasswordError": "Las contraseñas no coinciden",
+    "PasswordLengthError": "La contraseña debe contener al menos 6 caracteres",
+
+    "Login": {
+      "Title": "Ingresar",
+      "Submit": "Ingresar",
+      "RegisterLink": "Registrarse"
+    },
+
+    "Register": {
+      "Title": "Registrarse",
+      "Submit": "Crear cuenta",
+      "Back": "Volver",
+      "SuccessMessage": "Su cuenta ha sido exitosamente creada"
+    }
+  },
+  "Products": {
+    "Title": "Productos"
+  },
+  "ProductDetails": {
+    "Title": "Detalle de Productos",
+    "Name": "Nombre",
+    "SerialNumber": "Número de Serie",
+    "Category": "Categoría",
+    "Description": "Descripción",
+    "WarrantyExpiration": "Expiración de Garantía",
+    "Price": "Precio",
+    "Currency": "Moneda"
+  },
+  "Sidebar": {
+    "Menu": "Menu",
+    "ProductsItem": "Productos"
+  },
+
+  "ProfileActionBar": {
+    "Logout": "Salir"
+  },
+
+  "PageNotFound": {
+    "Title": "Ooops, Página no encontrada",
+    "Subtitle": "Por favor, volver a la página anterior",
+    "Button": "Volver"
+  }
+}

@@ -7,6 +7,8 @@ import { Subscription } from 'rxjs';
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
+  param = { value: 'world' };
+
   constructor(public homeSandbox: HomeSandbox) {}
 
   subscriptions: Subscription[] = [];
@@ -19,5 +21,9 @@ export class HomeComponent implements OnInit {
 
   logout() {
     this.homeSandbox.logout();
+  }
+
+  switchLanguage(language: string) {
+    this.homeSandbox.switchLanguage(language);
   }
 }
