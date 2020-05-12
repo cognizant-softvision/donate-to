@@ -21,6 +21,15 @@ export const environment = {
   },
 
   debugging: true,
+
+  authConfig: {
+    issuer: 'https://localhost:44392',
+    redirectUri: 'http://localhost:4200',
+    clientId: 'DonateTo.WebAplication',
+    responseType: 'code',
+    scope: 'openid profile',
+    showDebugInformation: true,
+  },
 };
 
 /*

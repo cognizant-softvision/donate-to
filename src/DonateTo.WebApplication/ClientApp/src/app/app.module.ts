@@ -12,7 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 // Modules
 import { AppComponent } from './app.component';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './shared/auth/auth.module';
 import { HomeModule } from './home/home.module';
 import { NotificationsModule } from './shared/notifications/notifications.module';
 
@@ -21,6 +21,7 @@ import { StoreModule } from '@ngrx/store';
 import * as fromSettings from './shared/store/settings';
 import { ConfigService } from './app-config.service';
 import { EffectsModule } from '@ngrx/effects';
+import { OAuthModule } from 'angular-oauth2-oidc';
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,6 +35,7 @@ import { EffectsModule } from '@ngrx/effects';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     RouterModule.forRoot([]),
+    OAuthModule.forRoot(),
 
     // NgRx Store modules
     StoreModule.forRoot({}),
