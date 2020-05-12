@@ -40,7 +40,6 @@ export class AuthSandbox extends Sandbox {
    * is raised
    */
   public handleAuthEvents(event: OAuthEvent): void {
-    console.log(event.type);
     switch (event.type) {
       case 'token_received':
         this.appState$.dispatch(store.fromAuth.loadUserProfile());
