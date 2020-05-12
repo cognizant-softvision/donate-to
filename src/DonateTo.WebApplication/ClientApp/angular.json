@@ -23,7 +23,8 @@
             "assets": [
               "src/assets",
               { "glob": "**/*", "input": "config", "output": "config" },
-              { "glob": "en.json", "input": "i18n", "output": "i18n" }
+              { "glob": "en.json", "input": "i18n", "output": "i18n" },
+              { "glob": "es.json", "input": "i18n", "output": "i18n" }
             ],
             "styles": ["node_modules/bootstrap/dist/css/bootstrap.min.css", "src/styles.css"],
             "scripts": []
@@ -94,7 +95,8 @@
             "assets": [
               "src/assets",
               { "glob": "*/", "input": "ClientApp/config", "output": "/config/" },
-              { "glob": "en.json", "input": "ClientApp/i18n", "output": "/i18n/" }
+              { "glob": "en.json", "input": "ClientApp/i18n", "output": "/i18n/" },
+              { "glob": "es.json", "input": "ClientApp/i18n", "output": "/i18n/" }
             ]
           }
         },

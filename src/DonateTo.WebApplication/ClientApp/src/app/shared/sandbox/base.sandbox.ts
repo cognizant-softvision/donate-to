@@ -4,6 +4,7 @@ import * as store from '../store';
 export abstract class Sandbox {
   public language$ = this.appState$.select(store.fromSettings.getSelectedLanguage);
   public culture$ = this.appState$.select(store.fromSettings.getSelectedCulture);
+  public language = this.language$.subscribe((value) => (this.language = value));
   public culture: string;
 
   public userName$ = this.appState$.select(store.fromAuth.getUserName);

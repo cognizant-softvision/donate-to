@@ -1,3 +1,10 @@
+<div>
+  {{ 'Home.HomeTitle' | translate }}
+</div>
+
+<button (click)="switchLanguage('en')" ng>en</button>
+<button (click)="switchLanguage('es')">es</button>
+
 <div *ngIf="!homeSandbox.isAuthenticated">
   <button (click)="login()">Login</button>
 </div>
