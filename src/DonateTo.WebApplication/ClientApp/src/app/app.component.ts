@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AppSandbox } from './app.sandbox';
+import { AuthSandbox } from './shared/auth/auth.sandbox';
 
 @Component({
   selector: 'app-root',
@@ -13,5 +14,6 @@ export class AppComponent {
 
   constructor(public appSandbox: AppSandbox) {
     this.appSandbox.setupLanguage();
+    this.appSandbox.setupAuth();
   }
 }

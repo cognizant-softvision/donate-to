@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using DonateTo.ApplicationCore.Entities;
@@ -61,7 +62,7 @@ namespace DonateTo.IdentityServer.Controllers
             var context = await _interactionService.GetAuthorizationContextAsync(model.ReturnUrl);
 
             // the user clicked the "cancel" button
-            if (button != "login")
+            if (button != "Log in")
             {
                 if (context != null)
                 {
@@ -156,11 +157,7 @@ namespace DonateTo.IdentityServer.Controllers
 
             if (!result.Succeeded)
             {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.TryAddModelError(error.Code, error.Description);
-                }
-
+                ModelErrorsHandler(result.Errors);
                 return View(userRegistrationViewModel);
             }
 
@@ -174,6 +171,14 @@ namespace DonateTo.IdentityServer.Controllers
             await _signInManager.SignOutAsync();
 
             return RedirectToAction(nameof(HomeController.Index), "Home");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Logout(string logoutId)
+        {
+            await _signInManager.SignOutAsync().ConfigureAwait(false);
+
+            return RedirectToAction("Login");
         }
 
         [HttpGet]
@@ -201,6 +206,25 @@ namespace DonateTo.IdentityServer.Controllers
             vm.Email = model.Email;
             vm.RememberLogin = model.RememberLogin;
             return vm;
+        }
+
+        private void ModelErrorsHandler(IEnumerable<IdentityError> errors)
+        {
+            const string duplicatedEmailCode = "DuplicateEmail";
+            const string duplicatedUserNameCode = "DuplicateUserName";
+
+            foreach (var error in errors)
+            {
+                if (error.Code == duplicatedEmailCode)
+                {
+                    error.Description = "Email registered - please enter another email or sign in.";
+                    ModelState.TryAddModelError(error.Code, error.Description);
+                }
+                else if(error.Code != duplicatedUserNameCode)
+                {
+                    ModelState.TryAddModelError(error.Code, error.Description);
+                }
+            }
         }
 
         #endregion

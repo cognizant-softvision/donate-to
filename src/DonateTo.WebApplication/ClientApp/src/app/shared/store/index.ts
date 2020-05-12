@@ -1,9 +1,10 @@
 import * as settings from './settings';
-import * as sample from './sample';
+import * as auth from './auth';
 
 export interface State {
   settings: settings.SettingsState;
+  auth: auth.AuthState;
 }
 
 export const fromSettings = settings;
-export const fromSample = sample;
+export const fromAuth = auth;

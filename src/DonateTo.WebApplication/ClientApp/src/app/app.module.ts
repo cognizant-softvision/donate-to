@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 // Angular core modules
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
@@ -12,7 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 // Modules
 import { AppComponent } from './app.component';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './shared/auth/auth.module';
 import { HomeModule } from './home/home.module';
 import { NotificationsModule } from './shared/notifications/notifications.module';
 
@@ -21,6 +21,7 @@ import { StoreModule } from '@ngrx/store';
 import * as fromSettings from './shared/store/settings';
 import { ConfigService } from './app-config.service';
 import { EffectsModule } from '@ngrx/effects';
+import { OAuthModule } from 'angular-oauth2-oidc';
 
 // Translate
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -51,6 +52,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient],
       },
     }),
+    OAuthModule.forRoot(),
 
     // NgRx Store modules
     StoreModule.forRoot({}),

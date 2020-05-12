@@ -7,8 +7,15 @@ export abstract class Sandbox {
   public language = this.language$.subscribe((value) => (this.language = value));
   public culture: string;
 
-  constructor(protected appState$: Store<store.State>) {}
+  public userName$ = this.appState$.select(store.fromAuth.getUserName);
+  public userEmail$ = this.appState$.select(store.fromAuth.getUserEmail);
+  public accessToken$ = this.appState$.select(store.fromAuth.getAccessToken);
+  public isAuthenticated$ = this.appState$.select(store.fromAuth.isAuthenticated);
 
-  // TODO: Implement this after the issue 57 is merged
-  public loadUser(): void {}
+  public userName: string;
+  public userEmail: string;
+  public accessToken: string;
+  public isAuthenticated: boolean;
+
+  constructor(protected appState$: Store<store.State>) {}
 }

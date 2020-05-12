@@ -1,4 +1,3 @@
-import { SampleModule } from './sample.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
@@ -8,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-  imports: [CommonModule, BrowserModule, FormsModule, ReactiveFormsModule, SampleModule, SharedModule],
+  imports: [CommonModule, BrowserModule, FormsModule, ReactiveFormsModule, SharedModule],
   declarations: [HomeComponent],
   providers: [HomeSandbox],
 })
