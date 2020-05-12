@@ -32,6 +32,10 @@
     <ProjectReference Include="..\DonateTo.Services\DonateTo.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\Migrations\IdentityServer\" />
+  </ItemGroup>
+
 
 
 </Project>

@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using IdentityServer4.EntityFramework.DbContexts;
 using System.Linq;
 using IdentityServer4.EntityFramework.Mappers;
+using DonateTo.IdentityServer.Data.EntityFramework;
 
 namespace DonateTo.IdentityServer
 {
@@ -75,12 +76,12 @@ namespace DonateTo.IdentityServer
                     CookieSlidingExpiration = true
                 };
             })
-            .AddConfigurationStore(options =>
+            .AddConfigurationStore<CustomConfigurationDbContext>(options =>
             {
                 options.ConfigureDbContext = b => b.UseNpgsql(connectionString,
                     sql => sql.MigrationsAssembly(migrationsAssembly));
             })
-            .AddOperationalStore(options =>
+            .AddOperationalStore<CustomPersistedGrantDbContext>(options =>
             {
                 options.ConfigureDbContext = b => b.UseNpgsql(connectionString,
                     sql => sql.MigrationsAssembly(migrationsAssembly));
@@ -135,9 +136,9 @@ namespace DonateTo.IdentityServer
 
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-                serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
+                serviceScope.ServiceProvider.GetRequiredService<CustomPersistedGrantDbContext>().Database.Migrate();
 
-                var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
+                var context = serviceScope.ServiceProvider.GetRequiredService<CustomConfigurationDbContext>();
                 context.Database.Migrate();
                 if (!context.Clients.Any())
                 {
