@@ -1,6 +1,6 @@
 import { AuthConfigService } from 'src/app/shared/auth/auth.config';
 import { Injectable } from '@angular/core';
-import { OAuthService } from 'angular-oauth2-oidc';
+import { OAuthEvent, OAuthService } from 'angular-oauth2-oidc';
 import { Sandbox } from '../sandbox/base.sandbox';
 import { Store } from '@ngrx/store';
 import * as store from '../store';
@@ -20,22 +20,11 @@ export class AuthSandbox extends Sandbox {
    * Subscribes to service token event changes
    */
   public setupAuth(): void {
-    this.authConfigService.getConfig().then((authConfig) => {
-      this.authService.configure(authConfig);
-      this.appState$.dispatch(store.fromAuth.tryLogin());
-    });
+    const authConfig = this.authConfigService.getConfig();
+    this.authService.configure(authConfig);
+    this.appState$.dispatch(store.fromAuth.tryLogin());
 
-    this.authService.events.subscribe((event) => {
-      console.log(event);
-      switch (event.type) {
-        case 'token_received':
-          this.appState$.dispatch(store.fromAuth.loadUserProfile());
-          break;
-        case 'token_refreshed':
-          this.appState$.dispatch(store.fromAuth.loadUserProfile());
-          break;
-      }
-    });
+    this.authService.events.subscribe(this.handleAuthEvents.bind(this));
   }
 
   /**
@@ -43,5 +32,22 @@ export class AuthSandbox extends Sandbox {
    */
   public login(): void {
     this.appState$.dispatch(store.fromAuth.doLogin());
+  }
+
+  /**
+   * Dispatches a load user profile action when
+   * an token event of type received or refreshed
+   * is raised
+   */
+  public handleAuthEvents(event: OAuthEvent): void {
+    console.log(event.type);
+    switch (event.type) {
+      case 'token_received':
+        this.appState$.dispatch(store.fromAuth.loadUserProfile());
+        break;
+      case 'token_refreshed':
+        this.appState$.dispatch(store.fromAuth.loadUserProfile());
+        break;
+    }
   }
 }

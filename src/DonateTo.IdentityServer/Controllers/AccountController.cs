@@ -177,9 +177,11 @@ namespace DonateTo.IdentityServer.Controllers
         }
 
         [HttpGet]
-        public IActionResult Logout(string logoutId)
+        public async Task<IActionResult> Logout(string logoutId)
         {
-            return View();
+            await _signInManager.SignOutAsync().ConfigureAwait(false);
+
+            return RedirectToAction("Login");
         }
 
         [HttpGet]

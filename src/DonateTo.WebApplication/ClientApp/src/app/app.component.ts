@@ -5,7 +5,7 @@ import { AuthSandbox } from './shared/auth/auth.sandbox';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  providers: [AppSandbox, AuthSandbox],
+  providers: [AppSandbox],
 })
 export class AppComponent {
   title = 'app';

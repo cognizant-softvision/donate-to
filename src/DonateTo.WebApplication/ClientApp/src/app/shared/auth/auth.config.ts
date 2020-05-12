@@ -11,8 +11,7 @@ export class AuthConfigService {
   /**
    * Gets AuthConfig from env configuration
    */
-  async getConfig(): Promise<AuthConfig> {
-    await this.config.load();
+  getConfig(): AuthConfig {
     return this.config.get('authConfig');
   }
 }
