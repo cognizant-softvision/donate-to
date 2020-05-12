@@ -52,6 +52,18 @@ const authReducer = createReducer(
   on(authActions.tryLoginFailed, (state) => ({
     ...state,
     isAuthenticated: false,
+    access_token: undefined,
+  })),
+  on(authActions.validateAccessTokenSuccess, (state) => ({
+    ...state,
+    isAuthenticated: true,
+  })),
+  on(authActions.doLogin, (state) => ({
+    ...state,
+    isAuthenticated: false,
+    name: undefined,
+    email: undefined,
+    access_token: undefined,
   }))
 );
 

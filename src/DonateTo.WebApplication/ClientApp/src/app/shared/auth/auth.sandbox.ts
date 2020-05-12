@@ -4,15 +4,19 @@ import { OAuthEvent, OAuthService } from 'angular-oauth2-oidc';
 import { Sandbox } from '../sandbox/base.sandbox';
 import { Store } from '@ngrx/store';
 import * as store from '../store';
+import { Subscription } from 'rxjs';
 
 @Injectable()
 export class AuthSandbox extends Sandbox {
+  private subscriptions: Subscription[] = [];
+
   constructor(
     protected appState$: Store<store.State>,
     private authService: OAuthService,
     private authConfigService: AuthConfigService
   ) {
     super(appState$);
+    this.registerEvents();
   }
 
   /**
@@ -28,7 +32,7 @@ export class AuthSandbox extends Sandbox {
   }
 
   /**
-   * Dispatches a login action
+   * Dispatches a login action to redirect to the login page
    */
   public login(): void {
     this.appState$.dispatch(store.fromAuth.doLogin());
@@ -48,5 +52,27 @@ export class AuthSandbox extends Sandbox {
         this.appState$.dispatch(store.fromAuth.loadUserProfile());
         break;
     }
+  }
+
+  /**
+   * Validates the access token from the Identity Server
+   * is expired or invalid
+   */
+  public isAccessTokenValid(): boolean {
+    this.appState$.dispatch(store.fromAuth.validateAccessToken());
+
+    return this.isAuthenticated && this.accessToken !== undefined;
+  }
+
+  /**
+   * Subscribes to events
+   */
+  private registerEvents(): void {
+    // Subscribes to auth properties
+    this.subscriptions.push(
+      this.isAuthenticated$.subscribe((isAuthenticated: boolean) => (this.isAuthenticated = isAuthenticated))
+    );
+
+    this.subscriptions.push(this.accessToken$.subscribe((accessToken: string) => (this.accessToken = accessToken)));
   }
 }

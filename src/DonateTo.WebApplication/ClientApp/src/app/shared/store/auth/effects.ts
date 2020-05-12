@@ -1,7 +1,6 @@
 import {
   doLogin,
   doLoginFailed,
-  doLoginSuccess,
   doLogout,
   doLogoutSuccess,
   loadUserProfile,
@@ -9,9 +8,12 @@ import {
   tryLogin,
   tryLoginFailed,
   userProfileLoaded,
+  validateAccessToken,
+  validateAccessTokenFailed,
+  validateAccessTokenSuccess,
 } from './actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
@@ -63,6 +65,18 @@ export class AuthEffects {
         })
         .catch(() => loadUserProfileFailed())
     )
+  );
+
+  @Effect()
+  validateAccessToken$: Observable<{}> = this.actions$.pipe(
+    ofType(validateAccessToken),
+    map(() => {
+      if (this.authService.hasValidAccessToken()) {
+        return validateAccessTokenSuccess();
+      } else {
+        return validateAccessTokenFailed();
+      }
+    })
   );
 
   constructor(private actions$: Actions, private authService: OAuthService) {}

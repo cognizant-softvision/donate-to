@@ -17,3 +17,6 @@ export const userProfileLoaded = createAction(
 export const loadUserProfileFailed = createAction('[Auth] Load User Profile Failed');
 export const doLogout = createAction('[Auth] Do Logout');
 export const doLogoutSuccess = createAction('[Auth] Do Logout Success');
+export const validateAccessToken = createAction('[Auth] Validate Access Token');
+export const validateAccessTokenSuccess = createAction('[Auth] Validate Access Token Success');
+export const validateAccessTokenFailed = createAction('[Auth] Validate Access Token Failed');
