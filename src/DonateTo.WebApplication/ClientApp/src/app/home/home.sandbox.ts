@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { Sandbox } from '../shared/sandbox/base.sandbox';
 import * as store from '../shared/store';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class HomeSandbox extends Sandbox {
@@ -12,7 +13,7 @@ export class HomeSandbox extends Sandbox {
 
   private subscriptions: Subscription[] = [];
 
-  constructor(protected appState$: Store<store.State>) {
+  constructor(protected appState$: Store<store.State>, public translateService: TranslateService) {
     super(appState$);
     this.registerEvents();
   }
@@ -41,6 +42,10 @@ export class HomeSandbox extends Sandbox {
    * Dispatches an action to select sample details
    */
   public selectSample(): void {}
+
+  switchLanguage(language: string) {
+    this.translateService.use(language);
+  }
 
   /**
    * Unsubscribes from events

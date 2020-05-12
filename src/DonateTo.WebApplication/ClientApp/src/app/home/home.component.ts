@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { SampleModel } from '../shared/models/sampleModel';
 import { HomeSandbox } from './home.sandbox';
 import { Subscription } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +10,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class HomeComponent implements OnInit {
   param = { value: 'world' };
 
-  constructor(public homeSandbox: HomeSandbox, public translate: TranslateService) {}
+  constructor(public homeSandbox: HomeSandbox) {}
 
   samples: SampleModel[] = [];
   subscriptions: Subscription[] = [];
@@ -39,6 +38,6 @@ export class HomeComponent implements OnInit {
   }
 
   switchLanguage(language: string) {
-    this.translate.use(language);
+    this.homeSandbox.switchLanguage(language);
   }
 }

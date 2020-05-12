@@ -5,10 +5,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HomeComponent } from './home.component';
 import { HomeSandbox } from './home.sandbox';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-  imports: [CommonModule, BrowserModule, FormsModule, ReactiveFormsModule, SampleModule, TranslateModule.forRoot()],
+  imports: [CommonModule, BrowserModule, FormsModule, ReactiveFormsModule, SampleModule, SharedModule],
   declarations: [HomeComponent],
   providers: [HomeSandbox],
 })
