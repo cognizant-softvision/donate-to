@@ -2,8 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 
 // Angular core modules
 import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
@@ -23,6 +23,15 @@ import { ConfigService } from './app-config.service';
 import { EffectsModule } from '@ngrx/effects';
 import { OAuthModule } from 'angular-oauth2-oidc';
 
+// Translate
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+// AoT requires an exported function for factories. load translations from "/assets/i18n/[lang].json"
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, '../../../i18n/', '.json');
+}
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -35,6 +44,14 @@ import { OAuthModule } from 'angular-oauth2-oidc';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     RouterModule.forRoot([]),
+    TranslateModule.forRoot({
+      defaultLanguage: 'en',
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
     OAuthModule.forRoot(),
 
     // NgRx Store modules
