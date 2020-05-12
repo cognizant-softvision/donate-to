@@ -20,8 +20,12 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
-            "assets": ["src/assets"],
-            "styles": ["node_modules/ng-zorro-antd/ng-zorro-antd.min.css", "src/styles.css"],
+            "assets": [
+              "src/assets",
+              { "glob": "**/*", "input": "config", "output": "config" },
+              { "glob": "en.json", "input": "i18n", "output": "i18n" }
+            ],
+            "styles": ["node_modules/bootstrap/dist/css/bootstrap.min.css", "src/styles.css"],
             "scripts": []
           },
           "configurations": {
@@ -87,7 +91,11 @@
             "karmaConfig": "src/karma.conf.js",
             "styles": ["src/styles.css"],
             "scripts": [],
-            "assets": ["src/assets"]
+            "assets": [
+              "src/assets",
+              { "glob": "*/", "input": "ClientApp/config", "output": "/config/" },
+              { "glob": "en.json", "input": "ClientApp/i18n", "output": "/i18n/" }
+            ]
           }
         },
         "lint": {
