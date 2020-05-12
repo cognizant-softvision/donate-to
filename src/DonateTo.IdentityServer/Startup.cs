@@ -14,6 +14,9 @@ using System;
 using DonateTo.Services.Extensions;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using IdentityServer4.EntityFramework.DbContexts;
+using System.Linq;
+using IdentityServer4.EntityFramework.Mappers;
 
 namespace DonateTo.IdentityServer
 {
@@ -32,12 +35,13 @@ namespace DonateTo.IdentityServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Configuration.GetConnectionString("PostgreSQL");
             services.AddControllersWithViews();
 
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
-
+           
             services.AddDbContext<DonateToDbContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("PostgreSQL")));
+                options.UseNpgsql(connectionString));
 
             services.AddDonateToModule(Configuration);
             services.AddAutoMapper(typeof(Startup));
@@ -57,10 +61,6 @@ namespace DonateTo.IdentityServer
             .AddEntityFrameworkStores<DonateToDbContext>()
             .AddDefaultTokenProviders();
 
-            var apiResources = Configuration.GetSection("IdentityServer").GetSection("ApiResources").Get<IEnumerable<ApiResource>>();
-
-            var clients = Configuration.GetSection("IdentityServer").GetSection("Clients").Get<IEnumerable<Client>>();
-
             var builder = services.AddIdentityServer(options =>
             {
                 options.Events.RaiseErrorEvents = true;
@@ -75,14 +75,16 @@ namespace DonateTo.IdentityServer
                     CookieSlidingExpiration = true
                 };
             })
-            .AddInMemoryIdentityResources(
-                new List<IdentityResource>
-                {
-                    new IdentityResources.OpenId(),
-                    new IdentityResources.Profile(),
-                })
-            .AddInMemoryApiResources(apiResources)
-            .AddInMemoryClients(clients)
+            .AddConfigurationStore(options =>
+            {
+                options.ConfigureDbContext = b => b.UseNpgsql(connectionString,
+                    sql => sql.MigrationsAssembly(migrationsAssembly));
+            })
+            .AddOperationalStore(options =>
+            {
+                options.ConfigureDbContext = b => b.UseNpgsql(connectionString,
+                    sql => sql.MigrationsAssembly(migrationsAssembly));
+            })
             .AddAspNetIdentity<User>();
 
             //Need to handle credentials for production
@@ -92,6 +94,8 @@ namespace DonateTo.IdentityServer
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            InitializeDatabase(app);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -120,5 +124,49 @@ namespace DonateTo.IdentityServer
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
+        #region private methods
+        private void InitializeDatabase(IApplicationBuilder app)
+        {
+
+            var apiResources = Configuration.GetSection("IdentityServer").GetSection("ApiResources").Get<IEnumerable<ApiResource>>();
+
+            var clients = Configuration.GetSection("IdentityServer").GetSection("Clients").Get<IEnumerable<Client>>();
+
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
+
+                var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
+                context.Database.Migrate();
+                if (!context.Clients.Any())
+                {
+                    foreach (var client in clients)
+                    {
+                        context.Clients.Add(client.ToEntity());
+                    }
+                    context.SaveChanges();
+                }
+
+                if (!context.IdentityResources.Any())
+                {
+                    foreach (var resource in Config.IdentityResources)
+                    {
+                        context.IdentityResources.Add(resource.ToEntity());
+                    }
+                    context.SaveChanges();
+                }
+
+                if (!context.ApiResources.Any())
+                {
+                    foreach (var resource in apiResources)
+                    {
+                        context.ApiResources.Add(resource.ToEntity());
+                    }
+                    context.SaveChanges();
+                }
+            }
+        }
+        #endregion
     }
 }

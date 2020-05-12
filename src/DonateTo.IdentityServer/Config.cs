@@ -5,13 +5,11 @@ namespace DonateTo.IdentityServer
 {
     public static class Config
     {
-        public static IEnumerable<IdentityResource> GetIdentityResources()
+        public static IEnumerable<IdentityResource> IdentityResources => new List<IdentityResource>
         {
-            return new List<IdentityResource>
-            {
-                new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
-            };
-        }
+            new IdentityResources.OpenId(),
+            new IdentityResources.Profile()
+        };
+        
     }
 }
