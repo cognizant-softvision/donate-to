@@ -17,7 +17,7 @@ import { ComponentsModule } from './shared/components';
 import { ContainersModule } from './shared/containers';
 import { NotificationsModule } from './shared/notifications/notifications.module';
 
-import { NzLayoutModule, NzMenuModule } from 'ng-zorro-antd';
+import { NzLayoutModule, NzMenuModule, NzIconModule } from 'ng-zorro-antd';
 
 import { HttpErrorInterceptor } from 'src/app/shared/async-services/http/http-error.interceptor';
 import { StoreModule } from '@ngrx/store';
@@ -30,6 +30,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { RouterModule } from '@angular/router';
+import { AdminComponent } from './admin/admin.component';
 
 // AoT requires an exported function for factories. load translations from "/assets/i18n/[lang].json"
 export function HttpLoaderFactory(http: HttpClient) {
@@ -37,7 +38,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, AdminComponent],
   imports: [
     // Angular core dependencies
     BrowserModule,
@@ -59,6 +60,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     OAuthModule.forRoot(),
     NzLayoutModule,
     NzMenuModule,
+    NzIconModule,
 
     // NgRx Store modules
     StoreModule.forRoot({}),
