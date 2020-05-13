@@ -1,6 +1,7 @@
 import {
   doLogin,
   doLoginFailed,
+  doLoginSuccess,
   doLogout,
   doLogoutSuccess,
   loadUserProfile,
@@ -8,9 +9,6 @@ import {
   tryLogin,
   tryLoginFailed,
   userProfileLoaded,
-  validateAccessToken,
-  validateAccessTokenFailed,
-  validateAccessTokenSuccess,
 } from './actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { map, switchMap } from 'rxjs/operators';
@@ -23,7 +21,7 @@ export class AuthEffects {
   @Effect()
   doLogin$: Observable<{}> = this.actions$.pipe(
     ofType(doLogin),
-    switchMap(() => this.authService.loadDiscoveryDocumentAndLogin())
+    switchMap(() => this.authService.loadDiscoveryDocumentAndLogin().then(() => doLoginSuccess()))
   );
 
   @Effect()
@@ -65,12 +63,6 @@ export class AuthEffects {
         })
         .catch(() => loadUserProfileFailed())
     )
-  );
-
-  @Effect()
-  validateAccessToken$: Observable<{}> = this.actions$.pipe(
-    ofType(validateAccessToken),
-    map(() => (this.authService.hasValidAccessToken() ? validateAccessTokenSuccess() : validateAccessTokenFailed()))
   );
 
   constructor(private actions$: Actions, private authService: OAuthService) {}

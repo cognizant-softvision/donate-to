@@ -6,6 +6,7 @@ export class AuthState {
   name: string;
   email: string;
   access_token: string;
+  isLoginProcessed: boolean;
 }
 
 const INITIAL_STATE: AuthState = {
@@ -13,6 +14,7 @@ const INITIAL_STATE: AuthState = {
   name: undefined,
   email: undefined,
   access_token: undefined,
+  isLoginProcessed: false,
 };
 
 const authReducer = createReducer(
@@ -23,6 +25,7 @@ const authReducer = createReducer(
     name: action.name,
     email: action.email,
     access_token: action.accessToken,
+    isLoginProcessed: true,
   })),
   on(authActions.doLoginFailed, (state) => ({
     ...state,
@@ -30,17 +33,13 @@ const authReducer = createReducer(
     name: undefined,
     email: undefined,
     access_token: undefined,
+    isLoginProcessed: true,
   })),
   on(authActions.loadUserProfileFailed, (state) => ({
     ...state,
-    isAuthenticated: false,
     name: undefined,
     email: undefined,
     access_token: undefined,
-  })),
-  on(authActions.doLoginSuccess, (state) => ({
-    ...state,
-    isAuthenticated: true,
   })),
   on(authActions.doLogoutSuccess, (state) => ({
     ...state,
@@ -48,22 +47,13 @@ const authReducer = createReducer(
     name: undefined,
     email: undefined,
     access_token: undefined,
+    isLoginProcessed: false,
   })),
   on(authActions.tryLoginFailed, (state) => ({
     ...state,
     isAuthenticated: false,
     access_token: undefined,
-  })),
-  on(authActions.validateAccessTokenSuccess, (state) => ({
-    ...state,
-    isAuthenticated: true,
-  })),
-  on(authActions.doLogin, (state) => ({
-    ...state,
-    isAuthenticated: false,
-    name: undefined,
-    email: undefined,
-    access_token: undefined,
+    isLoginProcessed: true,
   }))
 );
 
