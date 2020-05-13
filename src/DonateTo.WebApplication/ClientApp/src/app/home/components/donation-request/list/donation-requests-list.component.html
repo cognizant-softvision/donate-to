@@ -1,0 +1,27 @@
+<nz-list
+  [nzDataSource]="donationRequests"
+  [nzRenderItem]="item"
+  [nzGrid]="{ gutter: 16, span: 8 }"
+  [nzPagination]="pagination"
+  [nzLoading]="loading"
+>
+  <ng-template #item let-item>
+    <nz-list-item [nzContent]="nzContent">
+      <ng-template #nzContent>
+        <app-donation-requests-list-item
+          [item]="item"
+          [loading]="loading"
+          (showDetail)="showDetail($event)"
+        ></app-donation-requests-list-item>
+      </ng-template>
+    </nz-list-item>
+  </ng-template>
+  <ng-template #pagination>
+    <nz-pagination
+      [nzPageIndex]="currPage"
+      [nzPageSize]="pageSize"
+      [nzTotal]="totalItems"
+      (nzPageIndexChange)="onPageChange($event)"
+    ></nz-pagination>
+  </ng-template> </nz-list
+>`

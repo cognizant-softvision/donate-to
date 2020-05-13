@@ -1,0 +1,28 @@
+<nz-card hoverable [nzSize]="'small'" [nzLoading]="loading" [nzActions]="[actions]">
+  <nz-card-meta [nzTitle]="item.title" [nzDescription]="item.organization.name"> </nz-card-meta>
+  <p class="item.observation">{{ item.observation }}</p>
+  <span>
+    {{ 'RequestDonation.Priority' | translate }}:
+    <nz-rate [ngModel]="item.priority" nzAllowHalf [nzCharacter]="heartIcon" disabled></nz-rate>
+    <ng-template #heartIcon><i nz-icon nzType="heart" nzTheme="fill" className="rate-icon"></i></ng-template>
+  </span>
+  <br />
+  <span>{{ 'RequestDonation.CreatedOn' | translate }}: {{ item.createdDate | date: 'fullDate' }}</span
+  ><br />
+  <span>{{ 'RequestDonation.Finisheson' | translate }}: {{ item.finishDate | date: 'fullDate' }}</span>
+  <div class="tags">
+    <div *ngFor="let category of getCategories(item)">
+      <nz-tag>{{ category }}</nz-tag>
+    </div>
+  </div>
+
+  <ng-template #actions class="ant-card-actions">
+    <div class="action-buttons">
+      <button nz-button ghost type="primary" [disabled]="loading" (click)="sendItem()">
+        {{ 'MoreDetail' | translate }}
+      </button>
+    </div>
+  </ng-template>
+</nz-card>
+
+<nz-card hoverable *ngIf="loading" [nzLoading]="true" [nzActions]="[actions]"> </nz-card>

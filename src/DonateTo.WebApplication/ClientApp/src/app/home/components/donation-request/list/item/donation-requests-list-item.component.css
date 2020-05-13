@@ -1,0 +1,9 @@
+.description {
+  margin-top: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tags {
+  margin-top: 15px;
+}

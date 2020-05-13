@@ -2,10 +2,8 @@ import { BaseModel } from 'src/app/shared/models/baseModel';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { PageModel } from '../../models';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class BaseHttpClientService<T extends BaseModel> {
   constructor(private httpClient: HttpClient, private url: string, private endpoint: string) {}
 
@@ -20,6 +18,15 @@ export class BaseHttpClientService<T extends BaseModel> {
    */
   get(): Observable<T[]> {
     return this.httpClient.get<T[]>(`${this.url}/${this.endpoint}`);
+  }
+
+  /**
+   * Makes a HTTP GET request for a page of items.
+   *
+   * @returns Observable PagedModel of T
+   */
+  getPaged(pageNumber: number, pageSize: number): Observable<PageModel<T>> {
+    return this.httpClient.get<PageModel<T>>(`${this.url}/${this.endpoint}/paged/${pageNumber}/${pageSize}`);
   }
 
   /**

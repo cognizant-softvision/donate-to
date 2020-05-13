@@ -3,6 +3,13 @@
     "HomeTitle": "Welcome",
     "NewSample": "New Sample"
   },
+  "RequestDonation": {
+    "Donate": "Donate",
+    "ResourcesNeeded": "Resources needed",
+    "Priority": "Priority",
+    "CreatedOn": "Created on",
+    "Finisheson": "Finishes on"
+  },
   "ServerError401": "Access not allowed. Please login.",
   "ServerError403": "Access forbidden. Please provide correct credentials.",
   "ServerError404": "Resource not found.",
@@ -16,6 +23,8 @@
   "CancelBtn": "Cancel",
   "BackBtn": "Back",
   "GridEmptyLabel": "No available items",
+  "MoreDetail": "More detail",
+  "SearchPlaceHolder": "input search text",
 
   "ConfirmDialog": {
     "Title": "Please confirm",
@@ -26,6 +35,7 @@
   "Auth": {
     "Email": "Email",
     "Password": "Password",
+    "UserName": "User name",
     "ConfirmPassword": "Confirm Password",
     "EmailFormatError": "Email is not in valid format",
     "EmailRequiredError": "Email is required",

@@ -1,0 +1,9 @@
+@import '~ng-zorro-antd/ng-zorro-antd.min.css';
+
+#main-layout .list {
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 50px;
+  margin-top: 64px;
+  background: #fff;
+}

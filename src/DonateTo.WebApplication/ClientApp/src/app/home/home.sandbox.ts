@@ -1,3 +1,4 @@
+import { DonationRequestModel } from '../shared/models/donationRequestModel';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
@@ -8,13 +9,14 @@ import { AuthSandbox } from '../shared/auth/auth.sandbox';
 
 @Injectable()
 export class HomeSandbox extends Sandbox {
+  donationRequests$ = this.appState$.select(store.fromDonationRequest.getAllDonationRequests);
+  donationRequestsLoading$ = this.appState$.select(store.fromDonationRequest.getDonationRequestsLoading);
+  donationRequestsPaged$ = this.appState$.select(store.fromDonationRequest.getAllDonationRequestsPaged);
+  donationRequestsSearchPaged$ = this.appState$.select(store.fromDonationRequest.getAllDonationRequestsSearchPaged);
+
   private subscriptions: Subscription[] = [];
 
-  constructor(
-    protected appState$: Store<store.State>,
-    public translateService: TranslateService,
-    private authSandbox: AuthSandbox
-  ) {
+  constructor(protected appState$: Store<store.State>, public authSandbox: AuthSandbox) {
     super(appState$);
     this.registerEvents();
   }
@@ -27,18 +29,42 @@ export class HomeSandbox extends Sandbox {
   }
 
   /**
-   * User logs out the application
+   * Loads donationRequest from the server
    */
-  public logout(): void {
-    this.appState$.dispatch(store.fromAuth.doLogout());
+  public createDonationRequest(donationRequest: DonationRequestModel): void {
+    this.appState$.dispatch(store.fromDonationRequest.addDonationRequest({ donationRequest }));
   }
 
   /**
-   * Change the language
+   * Loads donationRequests from the server
    */
-  switchLanguage(language: string) {
-    this.translateService.use(language);
+  public loadDonationRequests(): void {
+    this.appState$.dispatch(store.fromDonationRequest.loadDonationRequests());
   }
+
+  /**
+   * Loads donationRequests paged from the server
+   */
+  public loadDonationRequestsPaged(pageSize: number, pageNumber: number): void {
+    this.appState$.dispatch(store.fromDonationRequest.loadDonationRequestsPaged({ pageSize, pageNumber }));
+  }
+
+  /**
+   * Searches and Loads donationRequests paged from the server
+   */
+  public loadDonationRequestsSearchPaged(pageSize: number, pageNumber: number, query: string): void {
+    this.appState$.dispatch(store.fromDonationRequest.loadDonationRequestsSearchPaged({ pageSize, pageNumber, query }));
+  }
+
+  /**
+   * Loads donationRequest details from the server
+   */
+  public loadDonationRequestDetails(id: number): void {}
+
+  /**
+   * Dispatches an action to select donationRequest details
+   */
+  public selectDonationRequest(): void {}
 
   /**
    * Unsubscribes from events
@@ -50,14 +76,5 @@ export class HomeSandbox extends Sandbox {
   /**
    * Subscribes to events
    */
-  private registerEvents(): void {
-    // Subscribes to culture
-    this.subscriptions.push(this.culture$.subscribe((culture: string) => (this.culture = culture)));
-
-    // Subscribes to auth properties
-    this.subscriptions.push(
-      this.isAuthenticated$.subscribe((isAuthenticated: boolean) => (this.isAuthenticated = isAuthenticated))
-    );
-    this.subscriptions.push(this.userName$.subscribe((userName: string) => (this.userName = userName)));
-  }
+  private registerEvents(): void {}
 }

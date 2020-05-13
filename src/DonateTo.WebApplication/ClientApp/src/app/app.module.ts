@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 
 // Routes
 import { AppRoutingModule } from './app-routing.module';
@@ -14,7 +13,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './shared/auth/auth.module';
 import { HomeModule } from './home/home.module';
+import { ComponentsModule } from './shared/components';
+import { ContainersModule } from './shared/containers';
 import { NotificationsModule } from './shared/notifications/notifications.module';
+
+import { NzLayoutModule, NzMenuModule } from 'ng-zorro-antd';
 
 import { HttpErrorInterceptor } from 'src/app/shared/async-services/http/http-error.interceptor';
 import { StoreModule } from '@ngrx/store';
@@ -26,6 +29,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 // Translate
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { RouterModule } from '@angular/router';
 
 // AoT requires an exported function for factories. load translations from "/assets/i18n/[lang].json"
 export function HttpLoaderFactory(http: HttpClient) {
@@ -53,6 +57,8 @@ export function HttpLoaderFactory(http: HttpClient) {
       },
     }),
     OAuthModule.forRoot(),
+    NzLayoutModule,
+    NzMenuModule,
 
     // NgRx Store modules
     StoreModule.forRoot({}),
@@ -61,9 +67,11 @@ export function HttpLoaderFactory(http: HttpClient) {
 
     // Application modules
     AuthModule,
+    ContainersModule,
     NotificationsModule,
     HomeModule,
     AppRoutingModule,
+    ComponentsModule,
   ],
   providers: [
     {
