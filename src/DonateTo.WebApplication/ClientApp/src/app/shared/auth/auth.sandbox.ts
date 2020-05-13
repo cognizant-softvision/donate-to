@@ -61,7 +61,7 @@ export class AuthSandbox extends Sandbox {
   public isAccessTokenValid(): boolean {
     this.appState$.dispatch(store.fromAuth.validateAccessToken());
 
-    return this.isAuthenticated && this.accessToken !== undefined;
+    return this.isAuthenticated && Boolean(this.accessToken);
   }
 
   /**

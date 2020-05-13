@@ -70,13 +70,7 @@ export class AuthEffects {
   @Effect()
   validateAccessToken$: Observable<{}> = this.actions$.pipe(
     ofType(validateAccessToken),
-    map(() => {
-      if (this.authService.hasValidAccessToken()) {
-        return validateAccessTokenSuccess();
-      } else {
-        return validateAccessTokenFailed();
-      }
-    })
+    map(() => (this.authService.hasValidAccessToken() ? validateAccessTokenSuccess() : validateAccessTokenFailed()))
   );
 
   constructor(private actions$: Actions, private authService: OAuthService) {}
