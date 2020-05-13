@@ -17,7 +17,7 @@ import { ComponentsModule } from './shared/components';
 import { ContainersModule } from './shared/containers';
 import { NotificationsModule } from './shared/notifications/notifications.module';
 
-import { NzLayoutModule, NzMenuModule, NzIconModule } from 'ng-zorro-antd';
+import { NzLayoutModule, NzMenuModule } from 'ng-zorro-antd';
 
 import { HttpErrorInterceptor } from 'src/app/shared/async-services/http/http-error.interceptor';
 import { StoreModule } from '@ngrx/store';
