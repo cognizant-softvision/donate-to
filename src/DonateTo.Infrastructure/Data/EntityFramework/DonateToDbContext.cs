@@ -30,6 +30,7 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
         public DbSet<IdentityUserLogin<long>> UserLogins { get; set; }
         public DbSet<IdentityUserRole<long>> UserRoles { get; set; }
         public DbSet<IdentityUserToken<long>> UserTokens { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
