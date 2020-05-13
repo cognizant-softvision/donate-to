@@ -29,6 +29,7 @@ export const environment = {
     responseType: 'code',
     scope: 'openid profile',
     showDebugInformation: true,
+    postLogoutRedirectUri: 'http://localhost:4200',
   },
 };
 

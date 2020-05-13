@@ -12,7 +12,7 @@ import {
 } from './actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { switchMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 
@@ -27,7 +27,10 @@ export class AuthEffects {
   @Effect()
   doLogout$: Observable<{}> = this.actions$.pipe(
     ofType(doLogout),
-    switchMap(() => this.authService.revokeTokenAndLogout().then(() => doLogoutSuccess()))
+    switchMap(() => {
+      this.authService.logOut();
+      return of(true);
+    })
   );
 
   @Effect()

@@ -6,6 +6,7 @@ using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.IdentityServer.Models;
 using IdentityServer4.Events;
+using IdentityServer4.Extensions;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authentication;
@@ -176,9 +177,17 @@ namespace DonateTo.IdentityServer.Controllers
         [HttpGet]
         public async Task<IActionResult> Logout(string logoutId)
         {
-            await _signInManager.SignOutAsync().ConfigureAwait(false);
+            var logout = await _interactionService.GetLogoutContextAsync(logoutId);
 
-            return RedirectToAction("Login");
+            if (User?.Identity.IsAuthenticated == true)
+            {
+                // delete local authentication cookie
+                await _signInManager.SignOutAsync().ConfigureAwait(false);
+
+                // raise the logout event
+                await _eventsService.RaiseAsync(new UserLogoutSuccessEvent(User.GetSubjectId(), User.GetDisplayName()));
+            }
+            return Redirect(logout?.PostLogoutRedirectUri);
         }
 
         [HttpGet]
