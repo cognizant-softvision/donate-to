@@ -14,5 +14,5 @@
     "typeRoots": ["node_modules/@types"],
     "lib": ["es2017", "dom"]
   },
-  "angularCompilerOptions": { "enableIvy": false }
+  "angularCompilerOptions": { "enableIvy": true }
 }
