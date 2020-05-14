@@ -4,7 +4,6 @@ import { OAuthEvent, OAuthService } from 'angular-oauth2-oidc';
 import { Sandbox } from '../sandbox/base.sandbox';
 import { Store } from '@ngrx/store';
 import * as store from '../store';
-import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable()
 export class AuthSandbox extends Sandbox {
@@ -32,7 +31,7 @@ export class AuthSandbox extends Sandbox {
    * Dispatches a login action to redirect to the login page
    */
   public login(): void {
-    this.appState$.dispatch(store.fromAuth.doLogin());
+    this.authService.initCodeFlow();
   }
 
   /**

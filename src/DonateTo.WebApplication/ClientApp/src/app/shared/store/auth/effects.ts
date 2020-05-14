@@ -1,7 +1,5 @@
 import {
-  doLogin,
   doLoginFailed,
-  doLoginSuccess,
   doLogout,
   doLogoutSuccess,
   loadUserProfile,
@@ -11,19 +9,13 @@ import {
   userProfileLoaded,
 } from './actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { map, switchMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 
 @Injectable()
 export class AuthEffects {
-  @Effect()
-  doLogin$: Observable<{}> = this.actions$.pipe(
-    ofType(doLogin),
-    switchMap(() => this.authService.loadDiscoveryDocumentAndLogin().then(() => doLoginSuccess()))
-  );
-
   @Effect()
   doLogout$: Observable<{}> = this.actions$.pipe(
     ofType(doLogout),

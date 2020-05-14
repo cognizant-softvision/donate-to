@@ -1,7 +1,5 @@
 import { createAction, props } from '@ngrx/store';
 
-export const doLogin = createAction('[Auth] Do Login');
-export const doLoginSuccess = createAction('[Auth] Do Login Success');
 export const doLoginFailed = createAction('[Auth] Do Login Failed');
 export const tryLogin = createAction('[Auth] Try Login');
 export const tryLoginFailed = createAction('[Auth] Try Login Failed');
