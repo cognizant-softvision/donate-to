@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { NzButtonModule, NzLayoutModule, NzMenuModule } from 'ng-zorro-antd';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { DonatorLayoutComponent } from './donator-layout.component';
 import { ComponentsModule } from 'src/app/shared/components';
 import { DonatorLayoutRoutingModule } from './donator-layout-routing.module';
@@ -23,13 +23,12 @@ export const COMPONENTS = [DonatorLayoutComponent];
     NzSpaceModule,
     NzMenuModule,
     TranslateModule.forChild({
-      defaultLanguage: 'en',      
-     
+      defaultLanguage: 'en',
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
         deps: [HttpClient],
-       
+
       },
       extend: true,
     }),
