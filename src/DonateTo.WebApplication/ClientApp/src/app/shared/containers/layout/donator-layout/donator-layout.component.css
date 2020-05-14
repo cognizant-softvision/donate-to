@@ -2,6 +2,9 @@
 #main-layout .list {
   overflow-y: auto;
   overflow-x: hidden;
+  padding: 0 50px;
+  background: #fff;
+  margin-top: 64px;
   height: 100%;
   background: #fff;
 }
@@ -12,6 +15,9 @@
 
 #main-layout .header {
   padding: 0 20px;
+  position: fixed;
+  z-index: 1;
+  width: 100%;
 }
 
 #main-layout .header .logo {
@@ -19,6 +25,6 @@
   height: 31px;
   margin: 0px 24px 16px 0;
   float: left;
-  color: white;
+  color: #1da57a;
   font-size: 30px;
 }

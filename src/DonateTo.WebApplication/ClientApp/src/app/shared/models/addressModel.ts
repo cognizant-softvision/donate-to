@@ -1,6 +1,6 @@
 import { BaseModel } from './baseModel';
 
-export class AddressModel implements BaseModel {
+export class AddressModel extends BaseModel {
   street: string;
   state: string;
   postalCode: string;
@@ -11,9 +11,4 @@ export class AddressModel implements BaseModel {
   responsableInformation: string;
   responsableIdentityNumber: string;
   isDefault: boolean;
-  id: number;
-  createdBy: string;
-  createdDate: string;
-  updateBy: string;
-  updateDate: string;
 }

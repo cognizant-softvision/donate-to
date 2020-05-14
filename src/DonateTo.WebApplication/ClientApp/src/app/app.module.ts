@@ -12,16 +12,8 @@ import { AppRoutingModule } from './app-routing.module';
 // Modules
 import { AppComponent } from './app.component';
 import { AuthModule } from './shared/auth/auth.module';
-import { HomeModule } from './home/home.module';
-import { ComponentsModule } from './shared/components';
 import { ContainersModule } from './shared/containers';
 import { NotificationsModule } from './shared/notifications/notifications.module';
-import { IconDefinition } from '@ant-design/icons-angular';
-
-// NZ admin Application modules
-import { NzIconModule, NzLayoutModule, NzMenuModule } from 'ng-zorro-antd';
-import { HeartOutline, ProfileOutline, TeamOutline } from '@ant-design/icons-angular/icons';
-const icons: IconDefinition[] = [TeamOutline, ProfileOutline, HeartOutline];
 
 import { HttpErrorInterceptor } from 'src/app/shared/async-services/http/http-error.interceptor';
 import { StoreModule } from '@ngrx/store';
@@ -33,8 +25,6 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 // Translate
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { RouterModule } from '@angular/router';
-import { AdminComponent } from './admin/admin.component';
 
 // AoT requires an exported function for factories. load translations from "/assets/i18n/[lang].json"
 export function HttpLoaderFactory(http: HttpClient) {
@@ -42,7 +32,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [AppComponent, AdminComponent],
+  declarations: [AppComponent],
   imports: [
     // Angular core dependencies
     BrowserModule,
@@ -52,7 +42,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     // Third party modules
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
-    RouterModule.forRoot([]),
     TranslateModule.forRoot({
       defaultLanguage: 'en',
       loader: {
@@ -63,11 +52,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     OAuthModule.forRoot(),
 
-    // NZ admin Application modules
-    NzLayoutModule,
-    NzMenuModule,
-    NzIconModule.forRoot(icons),
-
     // NgRx Store modules
     StoreModule.forRoot({}),
     StoreModule.forFeature(fromSettings.settingsFeatureKey, fromSettings.reducer),
@@ -77,9 +61,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AuthModule,
     ContainersModule,
     NotificationsModule,
-    HomeModule,
     AppRoutingModule,
-    ComponentsModule,
   ],
   providers: [
     {

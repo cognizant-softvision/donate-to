@@ -6,8 +6,7 @@ import { StatusModel } from './statusModel';
 import { DonationRequestItemModel } from './donationRequestItemModel';
 import { DonationRequestCategoryModel } from './donationRequestCategoryModel';
 
-export class DonationRequestModel implements BaseModel {
-  id: number;
+export class DonationRequestModel extends BaseModel {
   name: string;
   title: string;
   nullable: true;
@@ -24,8 +23,4 @@ export class DonationRequestModel implements BaseModel {
   donationRequestItems: DonationRequestItemModel[];
   finishDate: Date;
   donationRequestCategories: DonationRequestCategoryModel[];
-  createdBy: string;
-  createdDate: Date;
-  updateBy: string;
-  updateDate: Date;
 }

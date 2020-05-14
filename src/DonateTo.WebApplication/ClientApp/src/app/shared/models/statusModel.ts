@@ -1,11 +1,6 @@
 import { BaseModel } from './baseModel';
 
-export class StatusModel implements BaseModel {
+export class StatusModel extends BaseModel {
   name: string;
   description: string;
-  id: number;
-  createdBy: string;
-  createdDate: string;
-  updateBy: string;
-  updateDate: string;
 }
