@@ -5,7 +5,6 @@ import { DonationRequestsListComponent } from './components/donation-request/lis
 import { CommonModule } from '@angular/common';
 import { DonationRequestDetailComponent } from './components/donation-request/detail/donation-request-detail.component';
 import {
-  NZ_ICONS,
   NzButtonModule,
   NzCardModule,
   NzDividerModule,
@@ -25,13 +24,14 @@ import { DonationRequestModule } from './donation-request.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
+const icons = [HeartFill, SearchOutline];
 @NgModule({
   imports: [
     NzInputModule,
     NzModalModule,
     NzCardModule,
     NzListModule,
-    NzIconModule,
+    NzIconModule.forChild(icons),
     NzRateModule,
     NzTagModule,
     NzGridModule,
@@ -51,11 +51,7 @@ import { TranslateModule } from '@ngx-translate/core';
     DonationRequestDetailComponent,
   ],
   providers: [
-    HomeSandbox,
-    {
-      provide: NZ_ICONS,
-      useValue: [HeartFill, SearchOutline],
-    },
+    HomeSandbox
   ],
 })
 export class HomeModule {}

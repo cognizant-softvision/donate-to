@@ -25,12 +25,12 @@
     (pageChange)="onPageChange($event)"
     [totalItems]="totalItems"
     [pageSize]="pageSize"
-    [loading]="loading"
+    [loading]="homeSandbox.donationRequestsLoading$ | async"
     (showModal)="showModal($event)"
   ></app-donation-requests-list>
 </div>
 <nz-modal
-  style="top: 20px;"
+  style="top: 2em;"
   width="80%"
   [(nzVisible)]="modalVisible"
   [nzContent]="modalContent"

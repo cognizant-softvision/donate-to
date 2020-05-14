@@ -2,13 +2,13 @@
 #main-layout .list {
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 0 50px;
+  padding: 0 5em;
   background: #fff;  
-  margin-top: 64px;
+  margin-top: 4.4em;
 }
 
 #main-layout .header {
-  padding: 0 20px;
+  padding: 0 2.5em;
   position: fixed;
   z-index: 1;
   width: 100%;
@@ -16,10 +16,10 @@
 
 #main-layout .header .logo {
   width: auto;
-  height: 31px;
-  margin: 0px 24px 16px 0;
+  height: 3em;
+  margin: 0em 2em 1em 0;
   float: left;
   color: #1da57a;
-  font-size: 30px;
+  font-size: 2.5em;
 }
 

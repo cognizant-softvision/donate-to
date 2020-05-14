@@ -12,7 +12,6 @@ import { ConfigService } from '../app-config.service';
 export class HomeComponent implements OnInit {
   param = { value: 'world' };
   requests: any[];
-  loading = true;
   modalVisible = false;
   item: any = null;
   searchValue: string = null;
@@ -41,7 +40,6 @@ export class HomeComponent implements OnInit {
   refreshPagedItems(pagedItems) {
     this.requests = pagedItems.results;
     this.totalItems = pagedItems.rowCount;
-    this.loading = false;
   }
 
   onPageChange(pageNumber) {

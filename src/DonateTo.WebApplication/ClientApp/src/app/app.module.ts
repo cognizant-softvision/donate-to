@@ -12,7 +12,6 @@ import { AppRoutingModule } from './app-routing.module';
 // Modules
 import { AppComponent } from './app.component';
 import { AuthModule } from './shared/auth/auth.module';
-import { ContainersModule } from './shared/containers';
 import { NotificationsModule } from './shared/notifications/notifications.module';
 
 import { HttpErrorInterceptor } from 'src/app/shared/async-services/http/http-error.interceptor';
@@ -59,7 +58,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 
     // Application modules
     AuthModule,
-    ContainersModule,
     NotificationsModule,
     AppRoutingModule,
   ],
