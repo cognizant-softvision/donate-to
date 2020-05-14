@@ -1,19 +1,7 @@
-nz-sider {
-  background: #3ba0e9;
-  color: #fff;
+.admin-layout {
+  height: 100%;
 }
-
-nz-content {
-  background: rgba(16, 142, 233, 1);
-  color: #fff;
-  min-height: 120px;
-  line-height: 120px;
-}
-
-nz-layout {
-  margin-bottom: 48px;
-}
-
-nz-layout:last-child {
-  margin: 0;
+[nz-icon] {
+  margin-right: 6px;
+  font-size: 24px;
 }

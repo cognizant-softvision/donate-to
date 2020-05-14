@@ -2,8 +2,12 @@
 #main-layout .list {
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 0 50px;
+  height: 100%;
   background: #fff;
+}
+
+#main-layout {
+  height: 100%;
 }
 
 #main-layout .header {

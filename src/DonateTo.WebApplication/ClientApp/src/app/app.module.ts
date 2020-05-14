@@ -16,8 +16,12 @@ import { HomeModule } from './home/home.module';
 import { ComponentsModule } from './shared/components';
 import { ContainersModule } from './shared/containers';
 import { NotificationsModule } from './shared/notifications/notifications.module';
+import { IconDefinition } from '@ant-design/icons-angular';
 
-import { NzLayoutModule, NzMenuModule } from 'ng-zorro-antd';
+// NZ admin Application modules
+import { NzIconModule, NzLayoutModule, NzMenuModule } from 'ng-zorro-antd';
+import { HeartOutline, ProfileOutline, TeamOutline } from '@ant-design/icons-angular/icons';
+const icons: IconDefinition[] = [TeamOutline, ProfileOutline, HeartOutline];
 
 import { HttpErrorInterceptor } from 'src/app/shared/async-services/http/http-error.interceptor';
 import { StoreModule } from '@ngrx/store';
@@ -58,9 +62,11 @@ export function HttpLoaderFactory(http: HttpClient) {
       },
     }),
     OAuthModule.forRoot(),
+
+    // NZ admin Application modules
     NzLayoutModule,
     NzMenuModule,
-    NzIconModule,
+    NzIconModule.forRoot(icons),
 
     // NgRx Store modules
     StoreModule.forRoot({}),
