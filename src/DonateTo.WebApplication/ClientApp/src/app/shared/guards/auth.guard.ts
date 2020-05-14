@@ -12,9 +12,10 @@ export class AuthGuard implements CanActivate {
   }
 
   public canActivate() {
-    return this.authSandbox.isLoginProcessed$
-      .pipe(filter((isDone) => isDone))
-      .pipe(tap((_) => this.isAuthenticated || this.authSandbox.login()))
-      .pipe(map((_) => this.isAuthenticated));
+    return this.authSandbox.isLoginProcessed$.pipe(
+      filter((isDone) => isDone),
+      tap((_) => this.isAuthenticated || this.authSandbox.login()),
+      map((_) => this.isAuthenticated)
+    );
   }
 }
