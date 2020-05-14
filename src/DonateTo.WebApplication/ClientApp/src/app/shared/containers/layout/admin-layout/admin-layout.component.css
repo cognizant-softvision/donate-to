@@ -1,0 +1,21 @@
+@import '~ng-zorro-antd/ng-zorro-antd.min.css';
+#main-layout .content {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  background: #fff;
+}
+#main-layout {
+  height: 100%;
+}
+#main-layout .header {
+  padding: 0 20px;
+}
+#main-layout .header .logo {
+  width: auto;
+  height: 31px;
+  margin: 0px 24px 16px 0;
+  float: left;
+  color: white;
+  font-size: 30px;
+}
