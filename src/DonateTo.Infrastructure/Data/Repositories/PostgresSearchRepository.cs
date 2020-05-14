@@ -20,7 +20,7 @@ namespace DonateTo.Infrastructure.Data.Repositories
 
         private IQueryable<DonationRequest> GetHydratedDonationRequests() {
             return _dbContext.Set<DonationRequest>().Include( d => d.Address).Include( d => d.Status).Include( d => d.DonationRequestItems)
-                .Include( d => d.DonationRequestItems).Include( d => d.DonationRequestCategories)
+                .Include( d => d.DonationRequestItems).Include( d => d.DonationRequestCategories).ThenInclude( drc => drc.Category)
                 .Include( d => d.Organization).Include( d => d.Status);
         }
 
