@@ -1,17 +1,16 @@
 import { BaseModel } from './baseModel';
 
-export class UserModel implements BaseModel {
+export class UserModel extends BaseModel {
   firstName: string;
   lastName: string;
   identityNumber: string;
   isEnabled: boolean;
   createdBy: string;
-  createdDate: string;
+  createdDate: Date;
   updateBy: string;
-  updateDate: string;
+  updateDate: Date;
   fullName: string;
   readOnly: true;
-  id: number;
   userName: string;
   normalizedUserName: string;
   email: string;

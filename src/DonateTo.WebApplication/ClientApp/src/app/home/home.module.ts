@@ -1,6 +1,5 @@
 import { DonationRequestsListItemComponent } from './components/donation-request/list/item/donation-requests-list-item.component';
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { HomeComponent } from './home.component';
 import { DonationRequestsListComponent } from './components/donation-request/list/donation-requests-list.component';
 import { CommonModule } from '@angular/common';
@@ -42,7 +41,6 @@ import { TranslateModule } from '@ngx-translate/core';
     DonationRequestModule,
     TranslateModule,
     CommonModule,
-    BrowserModule,
     FormsModule,
     ReactiveFormsModule,
   ],
