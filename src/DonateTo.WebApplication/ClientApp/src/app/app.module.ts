@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 
 // Routes
 import { AppRoutingModule } from './app-routing.module';
@@ -13,7 +12,6 @@ import { AppRoutingModule } from './app-routing.module';
 // Modules
 import { AppComponent } from './app.component';
 import { AuthModule } from './shared/auth/auth.module';
-import { HomeModule } from './home/home.module';
 import { NotificationsModule } from './shared/notifications/notifications.module';
 
 import { HttpErrorInterceptor } from 'src/app/shared/async-services/http/http-error.interceptor';
@@ -43,7 +41,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     // Third party modules
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
-    RouterModule.forRoot([]),
     TranslateModule.forRoot({
       defaultLanguage: 'en',
       loader: {
@@ -62,7 +59,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     // Application modules
     AuthModule,
     NotificationsModule,
-    HomeModule,
     AppRoutingModule,
   ],
   providers: [

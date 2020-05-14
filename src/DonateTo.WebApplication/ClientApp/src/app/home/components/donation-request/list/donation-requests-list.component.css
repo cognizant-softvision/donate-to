@@ -1,0 +1,7 @@
+#donation-requests .action-buttons {
+  text-align: right;
+  padding-right: 1.25em;
+}
+#donation-requests .ant-list-pagination {
+  text-align: center;
+}

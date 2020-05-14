@@ -18,12 +18,12 @@ namespace DonateTo.WebApi.V1.Controllers
             _searchService = searchService;
         }        
 
-        [HttpGet("/:queryString/:pageNumber/:pageSize")]
+        [HttpGet("{queryString}/{pageNumber}/{pageSize}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedResult<DonationRequest>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<PagedResult<DonationRequest>>> SearchDonation(string queryString,int page, int pageSize)
+        public async Task<ActionResult<PagedResult<DonationRequest>>> SearchDonation(string queryString,int pageNumber, int pageSize)
         {
-            return await _searchService.SearchDonationRequestAsync(queryString, page, pageSize).ConfigureAwait(false);
+            return await _searchService.SearchDonationRequestAsync(queryString, pageNumber, pageSize).ConfigureAwait(false);
         }         
     }
 }
