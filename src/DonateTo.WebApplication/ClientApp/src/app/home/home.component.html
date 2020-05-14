@@ -2,15 +2,51 @@
   {{ 'Home.HomeTitle' | translate }}
 </div>
 
-<button (click)="switchLanguage('en')" ng>en</button>
-<button (click)="switchLanguage('es')">es</button>
-
-<div *ngIf="!homeSandbox.isAuthenticated">
-  <button (click)="login()">Login</button>
+<div *ngIf="homeSandbox.isAuthenticated">{{ 'Auth.Username' || translate }}: {{ homeSandbox.userName }}</div>
+<div class="search">
+  <nz-input-group [nzSuffix]="suffixIconSearch">
+    <input
+      type="text"
+      [(ngModel)]="searchValue"
+      (input)="onSearch()"
+      size="large"
+      nz-input
+      placeholder="{{ 'SearchPlaceHolder' | translate }}"
+    />
+  </nz-input-group>
+  <ng-template #suffixIconSearch>
+    <i nz-icon nzType="search"></i>
+  </ng-template>
 </div>
-<div *ngIf="homeSandbox.isAuthenticated">
-  <button (click)="logout()">Logout</button>
-</div>
 
-<div *ngIf="homeSandbox.isAuthenticated">Username: {{ homeSandbox.userName }}</div>
-<div>Is Authenticated: {{ homeSandbox.isAuthenticated }}</div>
+<div class="donations-list">
+  <app-donation-requests-list
+    [donationRequests]="requests"
+    (pageChange)="onPageChange($event)"
+    [totalItems]="totalItems"
+    [pageSize]="pageSize"
+    [loading]="homeSandbox.donationRequestsLoading$ | async"
+    (showModal)="showModal($event)"
+  ></app-donation-requests-list>
+</div>
+<nz-modal
+  style="top: 2em;"
+  width="80%"
+  [(nzVisible)]="modalVisible"
+  [nzContent]="modalContent"
+  [nzFooter]="modalFooter"
+  (nzOnOk)="goToDonate()"
+  (nzOnCancel)="hideModal()"
+>
+  <ng-template #modalContent>
+    <div *ngIf="item">
+      <app-donation-request-detail [item]="item"></app-donation-request-detail>
+    </div>
+  </ng-template>
+  <ng-template #modalFooter>
+    <button nz-button key="back" (click)="hideModal()">{{ 'CancelBtn' | translate }}</button>
+    <button nz-button key="submit" type="primary" (click)="goToDonate()">
+      {{ 'RequestDonation.Donate' | translate }}
+    </button>
+  </ng-template>
+</nz-modal>

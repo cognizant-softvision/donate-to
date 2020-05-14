@@ -3,6 +3,13 @@
     "HomeTitle": "Bienvenido",
     "NewSample": "Nueva Muestra"
   },
+  "RequestDonation": {
+    "Donate": "Donar",
+    "ResourcesNeeded": "Recursos necesitados",
+    "Priority": "Prioridad",
+    "CreatedOn": "Creado",
+    "Finisheson": "Termina"
+  },
   "ServerError401": "Acceso no permitido. Por favor iniciar sesión.",
   "ServerError403": "Acceso prohibido. Por favor provea las credenciales correctas.",
   "ServerError404": "Recurso no encontrado.",
@@ -16,6 +23,8 @@
   "CancelBtn": "Cancelar",
   "BackBtn": "Volver",
   "GridEmptyLabel": "No hay items disponibles",
+  "MoreDetail": "Más detalles",
+  "SearchPlaceHolder": "escriba texto para buscar",
 
   "ConfirmDialog": {
     "Title": "Por favor confirmar",
@@ -26,6 +35,7 @@
   "Auth": {
     "Email": "Email",
     "Password": "Contraseña",
+    "UserName": "Nombre de usuario",
     "ConfirmPassword": "Confirmar contraseña",
     "EmailFormatError": "Email no tiene un formato válido",
     "EmailRequiredError": "Email es requerido",

@@ -29,6 +29,8 @@ export const environment = {
     responseType: 'code',
     scope: 'openid profile',
     showDebugInformation: true,
+    clearHashAfterLogin: true,
+    nonceStateSeparator: 'semicolon',
   },
 };
 

@@ -306,6 +306,9 @@ namespace DonateTo.Infrastructure.Migrations
                     b.Property<string>("Observation")
                         .HasColumnType("text");
 
+                    b.Property<string>("Unit")
+                        .HasColumnType("text");
+
                     b.Property<string>("UpdateBy")
                         .HasColumnType("text");
 

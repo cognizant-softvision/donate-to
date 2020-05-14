@@ -1,0 +1,33 @@
+<div id="request-detail">
+  <span class="ant-card-metnz-title resources-title">{{ item.title }}</span>
+  <div class="ant-card-metnz-description">{{ item.organization.name }}</div>
+  <nz-divider></nz-divider>
+  <div class="ant-card-metnz-description">{{ item.observation }}</div>
+  <div>
+    <span class="resources-title"> {{ 'RequestDonation.ResourcesNeeded' | translate }}:</span>
+    <nz-list
+      class="demo-loadmore-list"
+      [nzLoading]="loading"
+      itemLayout="horizontal"
+      [nzDataSource]="items"
+      [nzPagination]="requestPagination"
+      [nzRenderItem]="requestItem"
+    >
+      <ng-template #requestItem let-requestItem>
+        <nz-list-item>
+          <nz-list-item-meta [nzDescription]="requestItem.observation" [nzTitle]="requestItem.name">
+          </nz-list-item-meta>
+          <span>{{ requestItem.currentQuantity }} {{ requestItem.unit }}</span>
+        </nz-list-item>
+      </ng-template>
+      <ng-template #requestPagination>
+        <nz-pagination
+          [nzPageIndex]="1"
+          [nzPageSize]="pageSize"
+          [nzTotal]="totalItems"
+          (nzPageIndexChange)="onPageChange($event)"
+        ></nz-pagination>
+      </ng-template>
+    </nz-list>
+  </div>
+</div>

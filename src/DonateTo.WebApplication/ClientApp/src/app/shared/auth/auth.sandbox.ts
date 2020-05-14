@@ -29,10 +29,10 @@ export class AuthSandbox extends Sandbox {
   }
 
   /**
-   * Dispatches a login action
+   * Dispatches a login action to redirect to the login page
    */
   public login(): void {
-    this.appState$.dispatch(store.fromAuth.doLogin());
+    this.authService.initCodeFlow();
   }
 
   /**
