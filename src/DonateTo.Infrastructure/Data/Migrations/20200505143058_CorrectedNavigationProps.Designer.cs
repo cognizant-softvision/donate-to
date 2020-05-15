@@ -280,6 +280,21 @@ namespace DonateTo.Infrastructure.Migrations
                     b.ToTable("DonationRequestCategory");
                 });
 
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.UserOrganization", b =>
+            {
+                b.Property<long>("UserId")
+                    .HasColumnType("bigint");
+
+                b.Property<long>("OrganizationId")
+                    .HasColumnType("bigint");
+
+                b.HasKey("UserId", "OrganizationId");
+
+                b.HasIndex("OrganizationId");
+
+                b.ToTable("UserOrganization");
+            });
+
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.DonationRequestItem", b =>
                 {
                     b.Property<long>("Id")
@@ -715,20 +730,35 @@ namespace DonateTo.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.DonationRequestCategory", b =>
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.UserOrganization", b =>
                 {
-                    b.HasOne("DonateTo.ApplicationCore.Entities.Category", "Category")
-                        .WithMany("DonationRequestCategories")
-                        .HasForeignKey("CategoryId")
+                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "User")
+                        .WithMany("UserOrganizations")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DonateTo.ApplicationCore.Entities.DonationRequest", "DonationRequest")
-                        .WithMany("DonationRequestCategories")
-                        .HasForeignKey("DonationRequestId")
+                    b.HasOne("DonateTo.ApplicationCore.Entities.Organization", "Organization")
+                        .WithMany("UserOrganizations")
+                        .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
+
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.DonationRequestCategory", b =>
+            {
+                b.HasOne("DonateTo.ApplicationCore.Entities.Category", "Category")
+                    .WithMany("DonationRequestCategories")
+                    .HasForeignKey("CategoryId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+
+                b.HasOne("DonateTo.ApplicationCore.Entities.DonationRequest", "DonationRequest")
+                    .WithMany("DonationRequestCategories")
+                    .HasForeignKey("DonationRequestId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
+            });
 
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.DonationRequestItem", b =>
                 {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DonateTo.ApplicationCore.Entities
@@ -48,6 +49,8 @@ namespace DonateTo.ApplicationCore.Entities
         /// Updated Date
         /// </summary>
         public DateTime UpdateDate { get; set; }
+
+        public IEnumerable<UserOrganization> UserOrganizations { get; set; }
 
         [NotMapped]
         public string FullName { get => FirstName + " " + LastName; }

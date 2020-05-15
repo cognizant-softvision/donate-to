@@ -20,6 +20,7 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
         public DbSet<DonationRequestItem> DonationRequestItems { get; set; }
         public DbSet<DonationRequestCategory> DonationRequestCategories { get; set; }
         public DbSet<DonationRequestItemCategory> DonationRequestItemCategories { get; set; }
+        public DbSet<UserOrganization> UserOrganizations { get; set; }
         public DbSet<Organization> Organizations { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Status> Status { get; set; }
@@ -66,10 +67,22 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
                     .WithMany(drc => drc.DonationRequestItemCategories)
                     .HasForeignKey(c => c.DonationRequestItemId);
 
+                modelBuilder.Entity<UserOrganization>()
+                    .HasOne<User>(u => u.User)
+                    .WithMany(o => o.UserOrganizations)
+                    .HasForeignKey(u => u.UserId);
+                modelBuilder.Entity<UserOrganization>()
+                    .HasOne<Organization>(o => o.Organization)
+                    .WithMany(u => u.UserOrganizations)
+                    .HasForeignKey(o => o.OrganizationId);
+                
+                // ???
                 modelBuilder.Entity<DonationRequestCategory>().HasKey
                     (drc => new { drc.CategoryId, drc.DonationRequestId});
                 modelBuilder.Entity<DonationRequestItemCategory>().HasKey
                     (drc => new { drc.CategoryId, drc.DonationRequestItemId});
+                modelBuilder.Entity<UserOrganization>().HasKey
+                    (uo => new { uo.UserId, uo.OrganizationId });
 
             #endregion
             }

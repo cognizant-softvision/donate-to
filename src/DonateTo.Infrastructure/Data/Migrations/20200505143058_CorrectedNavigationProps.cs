@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using DonateTo.ApplicationCore.Entities;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DonateTo.Infrastructure.Migrations
 {
@@ -160,6 +161,30 @@ namespace DonateTo.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserOrganization",
+                columns: table => new
+                {
+                    UserId = table.Column<long>(nullable: false),
+                    OrganizationId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserOrganization", x => new { x.UserId, x.OrganizationId });
+                    table.ForeignKey(
+                        name: "FK_UserOrganization_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserOrganization_Organization_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Organization",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DonationRequestItemCategory",
                 columns: table => new
                 {
@@ -187,6 +212,11 @@ namespace DonateTo.Infrastructure.Migrations
                 name: "IX_DonationRequestCategory_DonationRequestId",
                 table: "DonationRequestCategory",
                 column: "DonationRequestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserOrganization_OrganizationId",
+                table: "UserOrganization",
+                column: "OrganizationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DonationRequestItemCategory_DonationRequestItemId",
@@ -321,6 +351,9 @@ namespace DonateTo.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "DonationRequestItemCategory");
+
+            migrationBuilder.DropTable(
+                name: "UserOrganization");
 
             migrationBuilder.DropColumn(
                 name: "Name",
