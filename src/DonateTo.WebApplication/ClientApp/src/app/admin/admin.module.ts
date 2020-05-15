@@ -18,7 +18,7 @@ const ICONS: IconDefinition[] = [HeartOutline, TeamOutline, ProfileOutline];
 
 @NgModule({
   imports: [
-    NzIconModule.forRoot(ICONS),
+    NzIconModule.forChild(ICONS),
     AdminRoutingModule,
     CommonModule,
     NzLayoutModule,

@@ -20,7 +20,12 @@
   font-size: 30px;
 }
 
-[nz-icon] {
+.menu-link {
+  display: flex;
+  align-items: center;
+}
+
+svg {
   margin-right: 6px;
   font-size: 24px;
 }
