@@ -1,0 +1,33 @@
+<div class="table-operations">
+  <h4 class="section-title">Users of my organizations</h4>
+  <div class="create-button">
+    <button nz-button nzType="primary" class="ant-btn-primary">
+      Associate
+    </button>
+  </div>
+  <nz-divider></nz-divider>
+  <button class="ant-btn">Clear filters</button>
+  <button class="ant-btn">Clear filters and sorters</button>
+</div>
+<nz-table #basicTable [nzData]="listOfData">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Address</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{ data.name }}</td>
+      <td>{{ data.age }}</td>
+      <td>{{ data.address }}</td>
+      <td>
+        <a>Action 一 {{ data.name }}</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a>Delete</a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
