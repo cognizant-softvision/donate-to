@@ -1,7 +1,6 @@
 import {
   doLoginFailed,
   doLogout,
-  doLogoutSuccess,
   loadUserProfile,
   loadUserProfileFailed,
   tryLogin,

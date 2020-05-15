@@ -14,4 +14,3 @@ export const userProfileLoaded = createAction(
 );
 export const loadUserProfileFailed = createAction('[Auth] Load User Profile Failed');
 export const doLogout = createAction('[Auth] Do Logout');
-export const doLogoutSuccess = createAction('[Auth] Do Logout Success');

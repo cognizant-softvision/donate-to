@@ -177,7 +177,7 @@ namespace DonateTo.IdentityServer.Controllers
         [HttpGet]
         public async Task<IActionResult> Logout(string logoutId)
         {
-            var logout = await _interactionService.GetLogoutContextAsync(logoutId);
+            var logout = await _interactionService.GetLogoutContextAsync(logoutId).ConfigureAwait(false);
 
             if (User?.Identity.IsAuthenticated == true)
             {
@@ -185,9 +185,17 @@ namespace DonateTo.IdentityServer.Controllers
                 await _signInManager.SignOutAsync().ConfigureAwait(false);
 
                 // raise the logout event
-                await _eventsService.RaiseAsync(new UserLogoutSuccessEvent(User.GetSubjectId(), User.GetDisplayName()));
+                await _eventsService.RaiseAsync(new UserLogoutSuccessEvent(User.GetSubjectId(), User.GetDisplayName())).ConfigureAwait(false);
             }
-            return Redirect(logout?.PostLogoutRedirectUri);
+
+            if (logout != null)
+            {
+                return Redirect(logout.PostLogoutRedirectUri);
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
         }
 
         [HttpGet]
