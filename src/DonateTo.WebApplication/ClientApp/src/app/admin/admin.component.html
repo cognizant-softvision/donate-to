@@ -1,21 +1,27 @@
-<nz-layout class="admin-layout">
-  <nz-sider nzTheme="light">
-    <ul nz-menu>
-      <li nz-menu-item nzSelected>
-        <i nz-icon [nzTheme]="'outline'" [nzType]="'heart'"></i>
-        Donations
-      </li>
-      <li nz-menu-item>
-        <i nz-icon [nzTheme]="'outline'" [nzType]="'team'"></i>
-        Users
-      </li>
-      <li nz-menu-item>
-        <i nz-icon [nzTheme]="'outline'" [nzType]="'profile'"></i>
-        Organizations
-      </li>
-    </ul>
-  </nz-sider>
-  <nz-layout>
-    <nz-content>Content</nz-content>
+<nz-layout id="main-layout">
+  <app-nav-menu></app-nav-menu>
+  <nz-layout class="admin-layout">
+    <nz-sider nzTheme="light">
+      <ul nz-menu>
+        <li nz-menu-item nzSelected>
+          <a html="/donation">
+            Donations
+          </a>
+        </li>
+        <li nz-menu-item>
+          <a routerLink="/user">
+            Users
+          </a>
+        </li>
+        <li nz-menu-item>
+          <a routerLink="/organization">
+            Organizations
+          </a>
+        </li>
+      </ul>
+    </nz-sider>
+    <nz-layout>
+      <router-outlet></router-outlet>
+    </nz-layout>
   </nz-layout>
 </nz-layout>

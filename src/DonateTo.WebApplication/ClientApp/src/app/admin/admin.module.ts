@@ -1,31 +1,17 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AdminComponent } from './admin.component';
-import { NZ_ICONS, NzIconModule, NzLayoutModule, NzMenuModule } from 'ng-zorro-antd';
+import { NgModule } from '@angular/core';
 
-import { HeartOutline, ProfileOutline, TeamOutline } from '@ant-design/icons-angular/icons';
-import { AdminSandbox } from './admin.sandbox';
-
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NzLayoutModule, NzMenuModule } from 'ng-zorro-antd';
 import { TranslateModule } from '@ngx-translate/core';
+import { ComponentsModule } from 'src/app/shared/components';
+import { AdminRoutingModule } from './admin-rounting.module';
+import { AdminComponent } from './admin.component';
+import { DonationComponent } from './donation/donation.component';
+import { UserComponent } from './user/user.component';
+import { OrganizationComponent } from './organization/organization.component';
 
 @NgModule({
-  imports: [
-    NzIconModule,
-    NzMenuModule,
-    NzLayoutModule,
-    TranslateModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-  ],
-  declarations: [AdminComponent],
-  providers: [
-    AdminSandbox,
-    {
-      provide: NZ_ICONS,
-      useValue: [HeartOutline, ProfileOutline, TeamOutline],
-    },
-  ],
+  imports: [AdminRoutingModule, CommonModule, NzLayoutModule, NzMenuModule, TranslateModule, ComponentsModule],
+  declarations: [AdminComponent, DonationComponent, UserComponent, OrganizationComponent],
 })
 export class AdminModule {}
