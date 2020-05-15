@@ -30,7 +30,7 @@ export class NavMenuSandBox extends Sandbox {
    * User logs out the application
    */
   public logout(): void {
-    this.appState$.dispatch(store.fromAuth.doLogout());
+    this.authSandbox.logout();
   }
 
   /**

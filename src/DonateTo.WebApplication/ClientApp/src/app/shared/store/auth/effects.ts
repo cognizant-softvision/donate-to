@@ -1,7 +1,5 @@
 import {
   doLoginFailed,
-  doLogout,
-  doLogoutSuccess,
   loadUserProfile,
   loadUserProfileFailed,
   tryLogin,
@@ -16,12 +14,6 @@ import { OAuthService } from 'angular-oauth2-oidc';
 
 @Injectable()
 export class AuthEffects {
-  @Effect()
-  doLogout$: Observable<{}> = this.actions$.pipe(
-    ofType(doLogout),
-    switchMap(() => this.authService.revokeTokenAndLogout().then(() => doLogoutSuccess()))
-  );
-
   @Effect()
   tryLogin$: Observable<{}> = this.actions$.pipe(
     ofType(tryLogin),

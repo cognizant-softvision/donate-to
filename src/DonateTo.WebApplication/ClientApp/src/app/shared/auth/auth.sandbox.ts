@@ -35,6 +35,13 @@ export class AuthSandbox extends Sandbox {
   }
 
   /**
+   * Dispatches a logout action to redirect to identity provider logout page
+   */
+  public logout(): void {
+    this.authService.logOut();
+  }
+
+  /**
    * Dispatches a load user profile action when
    * an token event of type received or refreshed
    * is raised
