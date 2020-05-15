@@ -8,6 +8,11 @@
 #main-layout {
   height: 100%;
 }
+
+.admin-layout {
+  margin-top: 4.4em;
+}
+
 #main-layout .header {
   padding: 0 20px;
 }
@@ -37,7 +42,6 @@ svg {
 .main-layout-content {
   background: rgb(255, 255, 255);
   padding: 24px;
-  margin: 0px;
   min-height: 280px;
 }
 
