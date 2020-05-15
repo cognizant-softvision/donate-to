@@ -6,8 +6,8 @@
 trigger:
   - develop
 
-pool:
-  vmImage: "DiegoLocalMachine"
+pool: DiegoLocalMachine
+#  vmImage: "DiegoLocalMachine"
 
 steps:
   - task: DotNetCoreCLI@2
