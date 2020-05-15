@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { IconDefinition } from '@ant-design/icons-angular';
 
-import { HeartOutline, TeamOutline, ProfileOutline } from '@ant-design/icons-angular/icons';
+import { HeartOutline, ProfileOutline, TeamOutline } from '@ant-design/icons-angular/icons';
 
 import { NzIconModule, NzLayoutModule, NzMenuModule } from 'ng-zorro-antd';
 
