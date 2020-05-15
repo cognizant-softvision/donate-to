@@ -4,18 +4,20 @@
     <nz-sider nzTheme="light">
       <ul nz-menu>
         <li nz-menu-item nzSelected>
-          <a routerLink="./donation" routerLinkActive="active">
+          <a class="menu-link" routerLink="./donation">
             <i nz-icon [nzTheme]="'outline'" [nzType]="'heart'"></i>
             Donations
           </a>
         </li>
-        <li nz-menu-item>
+        <li class="menu-link" nz-menu-item>
           <a routerLink="./user">
+            <i nz-icon [nzTheme]="'outline'" [nzType]="'team'"></i>
             Users
           </a>
         </li>
-        <li nz-menu-item>
+        <li class="menu-link" nz-menu-item>
           <a routerLink="./organization">
+            <i nz-icon [nzTheme]="'outline'" [nzType]="'profile'"></i>
             Organizations
           </a>
         </li>
