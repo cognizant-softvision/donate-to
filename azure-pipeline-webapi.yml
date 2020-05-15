@@ -7,7 +7,7 @@ trigger:
   - develop
 
 pool:
-  vmImage: "ubuntu-latest"
+  vmImage: "DiegoLocalMachine"
 
 steps:
   - task: DotNetCoreCLI@2
