@@ -19,3 +19,8 @@
   color: white;
   font-size: 30px;
 }
+
+[nz-icon] {
+  margin-right: 6px;
+  font-size: 24px;
+}

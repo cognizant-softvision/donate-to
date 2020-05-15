@@ -10,7 +10,7 @@ const routes: Routes = [
     path: '',
     component: AdminComponent,
     children: [
-      { path: '', component: DonationComponent },
+      { path: '', redirectTo: 'donation', pathMatch: 'prefix' },
       { path: 'user', component: UserComponent },
       { path: 'donation', component: DonationComponent },
       { path: 'organization', component: OrganizationComponent },
