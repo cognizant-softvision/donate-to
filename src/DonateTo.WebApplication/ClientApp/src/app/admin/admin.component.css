@@ -24,3 +24,14 @@
   margin-right: 6px;
   font-size: 24px;
 }
+
+.section-layout {
+  padding: 24px;
+}
+
+.main-layout-content {
+  background: rgb(255, 255, 255);
+  padding: 24px;
+  margin: 0px;
+  min-height: 280px;
+}
