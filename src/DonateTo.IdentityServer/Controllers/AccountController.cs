@@ -188,14 +188,7 @@ namespace DonateTo.IdentityServer.Controllers
                 await _eventsService.RaiseAsync(new UserLogoutSuccessEvent(User.GetSubjectId(), User.GetDisplayName())).ConfigureAwait(false);
             }
 
-            if (logout != null)
-            {
-                return Redirect(logout.PostLogoutRedirectUri);
-            }
-            else
-            {
-                return RedirectToAction("Login");
-            }
+            return logout != null ? (IActionResult) Redirect(logout.PostLogoutRedirectUri) : RedirectToAction("Login");
         }
 
         [HttpGet]

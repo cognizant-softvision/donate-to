@@ -1,6 +1,5 @@
 import {
   doLoginFailed,
-  doLogout,
   loadUserProfile,
   loadUserProfileFailed,
   tryLogin,
@@ -9,21 +8,12 @@ import {
 } from './actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { switchMap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 
 @Injectable()
 export class AuthEffects {
-  @Effect()
-  doLogout$: Observable<{}> = this.actions$.pipe(
-    ofType(doLogout),
-    switchMap(() => {
-      this.authService.logOut();
-      return of(true);
-    })
-  );
-
   @Effect()
   tryLogin$: Observable<{}> = this.actions$.pipe(
     ofType(tryLogin),
