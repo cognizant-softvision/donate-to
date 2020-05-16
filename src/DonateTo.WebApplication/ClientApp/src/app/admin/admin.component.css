@@ -5,6 +5,7 @@
   height: 100%;
   background: #fff;
 }
+
 #main-layout {
   height: 100%;
 }
@@ -13,26 +14,20 @@
   margin-top: 4.4em;
 }
 
-#main-layout .header {
-  padding: 0 20px;
-}
 #main-layout .header .logo {
-  width: auto;
-  height: 31px;
-  margin: 0px 24px 16px 0;
-  float: left;
+  width: 100%;
+  padding-left: 1.4em;
   color: white;
   font-size: 30px;
 }
 
 .menu-link {
-  display: flex;
+  display: flex !important;
   align-items: center;
 }
 
 svg {
-  margin-right: 6px;
-  font-size: 24px;
+  font-size: 2em;
 }
 
 .section-layout {
@@ -46,7 +41,7 @@ svg {
 }
 
 .table-operations {
-  margin-bottom: 16px;
+  margin-bottom: 1.5em;
 }
 
 .create-button {
@@ -58,5 +53,5 @@ svg {
 }
 
 .ant-btn {
-  margin-right: 8px;
+  margin-right: 1em;
 }

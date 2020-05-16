@@ -6,10 +6,7 @@ import { AuthSandbox } from '../shared/auth/auth.sandbox';
 
 @Injectable()
 export class AdminSandbox extends Sandbox {
-  constructor(protected appState$: Store<store.State>, public authSandbox: AuthSandbox) {
+  constructor(protected appState$: Store<store.State>, private authSandbox: AuthSandbox) {
     super(appState$);
-    this.registerEvents();
   }
-
-  private registerEvents(): void {}
 }
