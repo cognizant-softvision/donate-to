@@ -9,7 +9,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'admin',
-    loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule),
+    loadChildren: () => import('./shared/containers/admin-layout/admin-layout.module').then((m) => m.AdminLayoutModule),
   },
 ];
 

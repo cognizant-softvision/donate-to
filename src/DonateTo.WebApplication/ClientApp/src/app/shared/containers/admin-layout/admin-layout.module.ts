@@ -11,18 +11,18 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { ComponentsModule } from 'src/app/shared/components';
-import { AdminRoutingModule } from './admin-rounting.module';
-import { AdminComponent } from './admin.component';
-import { DonationComponent } from './donation/donation.component';
-import { UserComponent } from './user/user.component';
-import { OrganizationComponent } from './organization/organization.component';
+import { AdminLayoutRoutingModule } from './admin-layout-rounting.module';
+import { AdminLayoutComponent } from './admin-layout.component';
+import { DonationComponent } from '../../../admin/donation/donation.component';
+import { UserComponent } from '../../../admin/user/user.component';
+import { OrganizationComponent } from '../../../admin/organization/organization.component';
 
 const ICONS: IconDefinition[] = [HeartOutline, TeamOutline, ProfileOutline];
 
 @NgModule({
   imports: [
     NzIconModule.forChild(ICONS),
-    AdminRoutingModule,
+    AdminLayoutRoutingModule,
     CommonModule,
     NzLayoutModule,
     NzMenuModule,
@@ -32,6 +32,6 @@ const ICONS: IconDefinition[] = [HeartOutline, TeamOutline, ProfileOutline];
     NzDividerModule,
     NzTableModule,
   ],
-  declarations: [AdminComponent, DonationComponent, UserComponent, OrganizationComponent],
+  declarations: [AdminLayoutComponent, DonationComponent, UserComponent, OrganizationComponent],
 })
-export class AdminModule {}
+export class AdminLayoutModule {}
