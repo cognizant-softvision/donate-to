@@ -4,6 +4,13 @@ a.navbar-brand {
   word-break: break-all;
 }
 
+.logo {
+  width: 100%;
+  padding-left: 1.4em;
+  color: white;
+  font-size: 30px;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
