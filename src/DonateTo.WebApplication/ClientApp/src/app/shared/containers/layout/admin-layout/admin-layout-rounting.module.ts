@@ -1,9 +1,9 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { AdminLayoutComponent } from './admin-layout.component';
-import { UserComponent } from '../../../admin/user/user.component';
-import { DonationComponent } from '../../../admin/donation/donation.component';
-import { OrganizationComponent } from '../../../admin/organization/organization.component';
+import { UserComponent } from '../../../../admin/user/user.component';
+import { DonationComponent } from '../../../../admin/donation/donation.component';
+import { OrganizationComponent } from '../../../../admin/organization/organization.component';
 
 const routes: Routes = [
   {

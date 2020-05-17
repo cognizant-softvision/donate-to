@@ -13,9 +13,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ComponentsModule } from 'src/app/shared/components';
 import { AdminLayoutRoutingModule } from './admin-layout-rounting.module';
 import { AdminLayoutComponent } from './admin-layout.component';
-import { DonationComponent } from '../../../admin/donation/donation.component';
-import { UserComponent } from '../../../admin/user/user.component';
-import { OrganizationComponent } from '../../../admin/organization/organization.component';
+import { DonationComponent } from '../../../../admin/donation/donation.component';
+import { UserComponent } from '../../../../admin/user/user.component';
+import { OrganizationComponent } from '../../../../admin/organization/organization.component';
 
 const ICONS: IconDefinition[] = [HeartOutline, TeamOutline, ProfileOutline];
 
