@@ -24,12 +24,12 @@ svg {
 }
 
 .section-layout {
-  padding: 24px;
+  padding: 1.5em;
 }
 
 .main-layout-content {
   background: rgb(255, 255, 255);
-  padding: 24px;
+  padding: 1.5em;
   min-height: 280px;
 }
 
