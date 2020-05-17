@@ -2,20 +2,20 @@
   <h4 class="section-title">{{ 'Donation.Title' | translate }}</h4>
   <div class="create-button">
     <button nz-button nzType="primary" class="ant-btn-primary">
-      {{ 'Donation.Create' | translate }}
+      {{ 'Admin.Create' | translate }}
     </button>
   </div>
   <nz-divider></nz-divider>
-  <button class="ant-btn">{{ 'Donation.ClearFilter' | translate }}</button>
-  <button class="ant-btn">{{ 'Donation.ClearFilterAndSorted' | translate }}</button>
+  <button class="ant-btn">{{ 'Admin.ClearFilter' | translate }}</button>
+  <button class="ant-btn">{{ 'Admin.ClearFilterAndSorted' | translate }}</button>
 </div>
 <nz-table #basicTable [nzData]="listOfData">
   <thead>
     <tr>
-      <th>{{ 'Donation.Name' | translate }}</th>
-      <th>{{ 'Donation.Age' | translate }}</th>
-      <th>{{ 'Donation.Address' | translate }}</th>
-      <th>{{ 'Donation.Action' | translate }}</th>
+      <th>{{ 'Admin.Name' | translate }}</th>
+      <th>{{ 'Admin.Age' | translate }}</th>
+      <th>{{ 'Admin.Address' | translate }}</th>
+      <th>{{ 'Admin.Action' | translate }}</th>
     </tr>
   </thead>
   <tbody>
@@ -24,9 +24,9 @@
       <td>{{ data.age }}</td>
       <td>{{ data.address }}</td>
       <td>
-        <a>{{ 'Donation.Action' | translate }} 一 {{ data.name }}</a>
+        <a>{{ 'Admin.Action' | translate }} 一 {{ data.name }}</a>
         <nz-divider nzType="vertical"></nz-divider>
-        <a>{{ 'Donation.Delete' | translate }}</a>
+        <a>{{ 'Admin.Delete' | translate }}</a>
       </td>
     </tr>
   </tbody>
