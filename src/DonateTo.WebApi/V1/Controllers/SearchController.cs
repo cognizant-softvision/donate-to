@@ -4,12 +4,14 @@ using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models.Pagination;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class SearchController: Controller
     {
         private readonly ISearchService _searchService;
@@ -18,12 +20,13 @@ namespace DonateTo.WebApi.V1.Controllers
             _searchService = searchService;
         }        
 
-        [HttpGet("{queryString}/{pageNumber}/{pageSize}")]
+        [AllowAnonymous]
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedResult<DonationRequest>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<PagedResult<DonationRequest>>> SearchDonation(string queryString,int pageNumber, int pageSize)
+        public async Task<ActionResult<PagedResult<DonationRequest>>> SearchDonation(string query,int pageNumber, int pageSize)
         {
-            return await _searchService.SearchDonationRequestAsync(queryString, pageNumber, pageSize).ConfigureAwait(false);
+            return await _searchService.SearchDonationRequestAsync(query, pageNumber, pageSize).ConfigureAwait(false);
         }         
     }
 }
