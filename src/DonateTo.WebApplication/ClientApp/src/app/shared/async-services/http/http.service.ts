@@ -1,7 +1,7 @@
 import { HttpClient, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService } from '../../../app-config.service';
-import { HttpResponseHandler } from './httpResponseHandler.service';
+import { HttpResponseHandler } from './http-response-handler.service';
 
 /**
  * Supported @Produces media types
