@@ -48,5 +48,5 @@ steps:
     displayName: "Publish Artifact"
     inputs:
       PathtoPublish: "$(build.artifactstagingdirectory)"
-      ArtifactName: webapidrop
+      ArtifactName: webapplicationdrop
     condition: succeededOrFailed()
