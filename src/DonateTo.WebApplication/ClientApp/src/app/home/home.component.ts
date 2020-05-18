@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
     this.totalItems = pagedItems.rowCount;
   }
 
-  onPageChange(pageNumber) {
+  onPageChange(pageNumber: any) {
     this.pageChange({ pageNumber });
   }
 
@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit {
     this.pageChange({ pageNumber: 1 });
   }
 
-  showModal(item) {
+  showModal(item: any) {
     this.item = item;
     this.modalVisible = true;
   }
@@ -71,7 +71,11 @@ export class HomeComponent implements OnInit {
     this.modalVisible = false;
   }
 
-  goToDonate() {
-    this.homeSandbox.login();
+  goToDonate(donationRequestId: any) {
+    if (this.homeSandbox.isAuthenticated) {
+      this.router.navigate(['donation', donationRequestId]);
+    } else {
+      this.homeSandbox.login();
+    }
   }
 }
