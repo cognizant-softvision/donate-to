@@ -1,0 +1,33 @@
+<div class="table-operations">
+  <h4 class="section-title">{{ 'Admin.User.Title' | translate }}</h4>
+  <div class="create-button">
+    <button nz-button nzType="primary">
+      {{ 'Admin.User.Associate' | translate }}
+    </button>
+  </div>
+  <nz-divider></nz-divider>
+  <button nz-button nzType="secondary">{{ 'Admin.ClearFilter' | translate }}</button>
+  <button nz-button nzType="secondary">{{ 'Admin.ClearFilterAndSorted' | translate }}</button>
+</div>
+<nz-table #userTable [nzData]="listOfData">
+  <thead>
+    <tr>
+      <th>{{ 'Admin.Name' | translate }}</th>
+      <th>{{ 'Admin.Age' | translate }}</th>
+      <th>{{ 'Admin.Address' | translate }}</th>
+      <th>{{ 'Admin.Action' | translate }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of userTable.data">
+      <td>{{ data.name }}</td>
+      <td>{{ data.age }}</td>
+      <td>{{ data.address }}</td>
+      <td>
+        <a>{{ 'Admin.Details' | translate }}</a>
+        <nz-divider nzType="vertical"></nz-divider>
+        <a>{{ 'Admin.Delete' | translate }}</a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
