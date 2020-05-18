@@ -21,6 +21,11 @@ steps:
       command: restore
       projects: "src/DonateTo.WebApplication/*.csproj"
 
+- task: Npm@1
+  inputs:
+    command: 'install'
+    workingDir: 'src/DonateTo.WebApplication/ClientApp'
+
   - task: DotNetCoreCLI@2
     displayName: Build
     inputs:
