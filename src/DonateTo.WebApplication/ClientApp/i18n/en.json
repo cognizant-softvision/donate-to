@@ -79,6 +79,13 @@
     "Button": "Go back"
   },
   "Admin": {
+    "Menu": {
+      "Title": {
+        "Donation": "Donations",
+        "User": "Users",
+        "Organization": "Organization"
+      }
+    },
     "Donation": {
       "Title": "Donations"
     },

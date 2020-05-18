@@ -79,11 +79,17 @@
     "Button": "Volver"
   },
   "Admin": {
+    "Menu": {
+      "Title": {
+        "Donation": "Donaciones",
+        "User": "Usuarios",
+        "Organization": "Organizacion"
+      }
+    },
     "Donation": {
       "Title": "Donaciones"
     },
     "User": {
-      "Title": "Usuarios",
       "Associate": "Asociate"
     },
     "Organization": {
