@@ -25,7 +25,6 @@
   "GridEmptyLabel": "No available items",
   "MoreDetail": "More details",
   "SearchPlaceHolder": "input search text",
-
   "ConfirmDialog": {
     "Title": "Please confirm",
     "Content": "Do you want to leave without saving the changes?",
@@ -42,13 +41,11 @@
     "PasswordRequiredError": "Password is required",
     "ConfirmPasswordError": "Passwords mismatch",
     "PasswordLengthError": "Passwords must contain at least 6 characters",
-
     "Login": {
       "Title": "Login",
       "Submit": "Login",
       "RegisterLink": "Sign Up"
     },
-
     "Register": {
       "Title": "Sign Up",
       "Submit": "Create account",
@@ -73,14 +70,42 @@
     "Menu": "Menu",
     "ProductsItem": "Products"
   },
-
   "ProfileActionBar": {
     "Logout": "Logout"
   },
-
   "PageNotFound": {
     "Title": "Ooops, Page Not Found",
     "Subtitle": "Please, return to the previous page",
     "Button": "Go back"
+  },
+  "Admin": {
+    "Menu": {
+      "Title": {
+        "Donation": "Donations",
+        "User": "Users",
+        "Organization": "Organization"
+      }
+    },
+    "Donation": {
+      "Title": "Donations"
+    },
+    "User": {
+      "Title": "Users",
+      "Associate": "Associate"
+    },
+    "Organization": {
+      "Title": "Organization"
+    },
+    "ClearFilter": "Clear Filter",
+    "ClearFilterAndSorted": "Clear Filter and Sorted",
+    "Name": "Name",
+    "Age": "Age",
+    "Address": "Address",
+    "Action": "Action",
+    "Delete": "Delete",
+    "Create": "Create",
+    "Details": "Details",
+    "Edit": "Edit",
+    "View": "View"
   }
 }
