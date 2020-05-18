@@ -1,10 +1,10 @@
-import { BaseModel } from './baseModel';
-import { OrganizationModel } from './organizationModel';
-import { AddressModel } from './addressModel';
-import { UserModel } from './userModel';
-import { StatusModel } from './statusModel';
-import { DonationRequestItemModel } from './donationRequestItemModel';
-import { DonationRequestCategoryModel } from './donationRequestCategoryModel';
+import { BaseModel } from './base.model';
+import { OrganizationModel } from './organization.model';
+import { AddressModel } from './address.model';
+import { UserModel } from './user.model';
+import { StatusModel } from './status.model';
+import { DonationRequestItemModel } from './donation-request-item.model';
+import { DonationRequestCategoryModel } from './donation-request-category.model';
 
 export class DonationRequestModel extends BaseModel {
   name: string;
