@@ -9,6 +9,11 @@
 pool: DiegoLocalMachine
 #  vmImage: "DiegoLocalMachine"
 
+variables:
+#  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
 steps:
   - task: DotNetCoreCLI@2
     displayName: Restore
@@ -43,5 +48,5 @@ steps:
     displayName: "Publish Artifact"
     inputs:
       PathtoPublish: "$(build.artifactstagingdirectory)"
-      ArtifactName: webapidrop
+      ArtifactName: identityserverdrop
     condition: succeededOrFailed()
