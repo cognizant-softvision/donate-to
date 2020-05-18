@@ -90,7 +90,8 @@
       "Title": "Donaciones"
     },
     "User": {
-      "Associate": "Asociate"
+      "Title": "Usuarios",
+      "Associate": "Asociar"
     },
     "Organization": {
       "Title": "Organizacion"

@@ -10,7 +10,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'admin',
-    canActivate: [AuthGuard],
+    canLoad: [AuthGuard],
     loadChildren: () =>
       import('./shared/containers/layout/admin-layout/admin-layout.module').then((m) => m.AdminLayoutModule),
   },
