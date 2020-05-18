@@ -1,5 +1,5 @@
-import { BaseModel } from './baseModel';
-import { DonationRequestItemCategoryModel } from './donationRequestItemCategoryModel';
+import { BaseModel } from './base.model';
+import { DonationRequestItemCategoryModel } from './donation-request-item-category.model';
 
 export class DonationRequestItemModel extends BaseModel {
   name: string;
