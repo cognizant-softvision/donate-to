@@ -25,7 +25,6 @@
   "GridEmptyLabel": "No hay items disponibles",
   "MoreDetail": "Más detalles",
   "SearchPlaceHolder": "escriba texto para buscar",
-
   "ConfirmDialog": {
     "Title": "Por favor confirmar",
     "Content": "¿Quieres salir sin guardar los cambios?",
@@ -42,13 +41,11 @@
     "PasswordRequiredError": "Contraseña es requerida",
     "ConfirmPasswordError": "Las contraseñas no coinciden",
     "PasswordLengthError": "La contraseña debe contener al menos 6 caracteres",
-
     "Login": {
       "Title": "Ingresar",
       "Submit": "Ingresar",
       "RegisterLink": "Registrarse"
     },
-
     "Register": {
       "Title": "Registrarse",
       "Submit": "Crear cuenta",
@@ -73,14 +70,42 @@
     "Menu": "Menu",
     "ProductsItem": "Productos"
   },
-
   "ProfileActionBar": {
     "Logout": "Salir"
   },
-
   "PageNotFound": {
     "Title": "Ooops, Página no encontrada",
     "Subtitle": "Por favor, volver a la página anterior",
     "Button": "Volver"
+  },
+  "Admin": {
+    "Menu": {
+      "Title": {
+        "Donation": "Donaciones",
+        "User": "Usuarios",
+        "Organization": "Organizacion"
+      }
+    },
+    "Donation": {
+      "Title": "Donaciones"
+    },
+    "User": {
+      "Title": "Usuarios",
+      "Associate": "Asociar"
+    },
+    "Organization": {
+      "Title": "Organizacion"
+    },
+    "ClearFilter": "Limpiar Filtro",
+    "ClearFilterAndSorted": "Limpiar Filtro y Orden",
+    "Name": "Nombre",
+    "Age": "Edad",
+    "Address": "Dirección",
+    "Action": "Acción",
+    "Delete": "Eliminar",
+    "Create": "Crear",
+    "Details": "Detalles",
+    "Edit": "Editar",
+    "View": "Vista"
   }
 }
