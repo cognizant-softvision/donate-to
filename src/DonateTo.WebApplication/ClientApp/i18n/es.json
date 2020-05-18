@@ -79,9 +79,16 @@
     "Button": "Volver"
   },
   "Admin": {
-    "Donations": "Donaciones",
-    "Users": "Usuarios",
-    "Organization": "Organización",
+    "Donation": {
+      "Title": "Donaciones"
+    },
+    "User": {
+      "Title": "Usuarios",
+      "Associate": "Asociate"
+    },
+    "Organization": {
+      "Title": "Organizacion"
+    },
     "ClearFilter": "Limpiar Filtro",
     "ClearFilterAndSorted": "Limpiar Filtro y Orden",
     "Name": "Nombre",
@@ -90,15 +97,5 @@
     "Action": "Acción",
     "Delete": "Eliminar",
     "Create": "Crear"
-  },
-  "User": {
-    "Title": "Usuarios",
-    "Associate": "Asociate"
-  },
-  "Donation": {
-    "Title": "Donation"
-  },
-  "Organization": {
-    "Title": "Organizacion"
   }
 }

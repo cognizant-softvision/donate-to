@@ -8,9 +8,9 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class AdminLayoutComponent implements OnInit {
   menus = [
-    { title: 'Admin.Donations', url: './donation', iconType: 'heart' },
-    { title: 'Admin.Users', url: './user', iconType: 'team' },
-    { title: 'Admin.Organization', url: './organization', iconType: 'profile' },
+    { title: 'Admin.Donation.Title', url: './donation', iconType: 'heart' },
+    { title: 'Admin.User.Title', url: './user', iconType: 'team' },
+    { title: 'Admin.Organization.Title', url: './organization', iconType: 'profile' },
   ];
 
   ngOnInit(): void {}
