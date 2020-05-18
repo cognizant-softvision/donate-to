@@ -31,23 +31,20 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "<Pending>")]
         public virtual IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> filter)
         {
-            return DbContext.Set<TEntity>().Where(filter);
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "<Pending>")]
-        public virtual IQueryable<TEntity> Get()
-        {
-            return DbContext.Set<TEntity>().AsQueryable();
+            var query = DbContext.Set<TEntity>().AsQueryable();
+            if(filter != null) {
+                query = query.Where(filter);
+            }
+            return query;
         }
 
         public virtual async Task<IQueryable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter)
         {
-            return await Task.FromResult(DbContext.Set<TEntity>().Where(filter)).ConfigureAwait(false);
-        }
-
-        public virtual async Task<IQueryable<TEntity>> GetAsync()
-        {
-            return await Task.FromResult(DbContext.Set<TEntity>().AsQueryable()).ConfigureAwait(false);
+            var query = DbContext.Set<TEntity>().AsQueryable();
+            if(filter != null) {
+                query = query.Where(filter);
+            }
+            return await Task.FromResult(query).ConfigureAwait(false);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "<Pending>")]

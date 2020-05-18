@@ -21,19 +21,6 @@ namespace DonateTo.Infrastructure.Data.Repositories
         }
 
         ///<inheritdoc cref="IRepository{Donation}"/>
-        public override IQueryable<Donation> Get()
-        {
-            return GetHydratedDonations();
-                
-        }
-
-        ///<inheritdoc cref="IRepository{Donation}"/>
-        public override async Task<IQueryable<Donation>> GetAsync()
-        {
-            return await Task.FromResult(GetHydratedDonations()).ConfigureAwait(false);
-        }
-
-        ///<inheritdoc cref="IRepository{Donation}"/>
         public override Donation Get(long id)
         {
             return GetHydratedDonations().FirstOrDefault(d => d.Id.Equals(id));

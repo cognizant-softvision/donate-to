@@ -117,13 +117,14 @@ namespace DonateTo.WebApi.V1.Controllers
             return Ok();
         }
 
-        [HttpGet("paged/:page/:pageSize",Name = "[controller]_[action]")]
+        [AllowAnonymous]
+        [HttpGet("paged", Name = "[controller]_[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public virtual async Task<ActionResult<PagedResult<T>>> GetPaged(int page, int pageSize)
+        public virtual async Task<ActionResult<PagedResult<T>>> GetPaged(int pageNumber, int pageSize)
         {
-            return await _baseService.GetPagedAsync(page, pageSize).ConfigureAwait(false);
+            return await _baseService.GetPagedAsync(pageNumber, pageSize).ConfigureAwait(false);
         }
     }
 }

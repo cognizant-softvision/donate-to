@@ -15,8 +15,9 @@ export class SearchHttpClientService {
    * @returns Observable PagedModel of T
    */
   getSearch(pageNumber: number, pageSize: number, query: string): Observable<PageModel<DonationRequestModel>> {
-    return this.httpClient.get<PageModel<DonationRequestModel>>(
-      `${this.url}/${this.endpoint}/${query}/${pageNumber}/${pageSize}`
-    );
+    const queryString = { pageNumber: pageNumber.toString(), pageSize: pageSize.toString(), query };
+    return this.httpClient.get<PageModel<DonationRequestModel>>(`${this.url}/${this.endpoint}`, {
+      params: queryString,
+    });
   }
 }
