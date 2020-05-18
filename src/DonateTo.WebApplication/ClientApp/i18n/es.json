@@ -96,6 +96,9 @@
     "Address": "Dirección",
     "Action": "Acción",
     "Delete": "Eliminar",
-    "Create": "Crear"
+    "Create": "Crear",
+    "Details": "Detalles",
+    "Edit": "Editar",
+    "View": "Vista"
   }
 }

@@ -96,6 +96,9 @@
     "Address": "Address",
     "Action": "Action",
     "Delete": "Delete",
-    "Create": "Create"
+    "Create": "Create",
+    "Details": "Details",
+    "Edit": "Edit",
+    "View": "View"
   }
 }

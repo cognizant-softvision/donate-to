@@ -24,10 +24,13 @@ const ICONS: IconDefinition[] = [HeartOutline, TeamOutline, ProfileOutline];
 @NgModule({
   imports: [
     NzIconModule.forChild(ICONS),
-    AdminLayoutRoutingModule,
-    CommonModule,
     NzLayoutModule,
     NzMenuModule,
+    NzButtonModule,
+    NzDividerModule,
+    NzTableModule,
+    AdminLayoutRoutingModule,
+    CommonModule,
     TranslateModule.forChild({
       defaultLanguage: 'en',
       loader: {
@@ -38,9 +41,6 @@ const ICONS: IconDefinition[] = [HeartOutline, TeamOutline, ProfileOutline];
       extend: true,
     }),
     ComponentsModule,
-    NzButtonModule,
-    NzDividerModule,
-    NzTableModule,
   ],
   declarations: [AdminLayoutComponent, DonationComponent, UserComponent, OrganizationComponent],
 })
