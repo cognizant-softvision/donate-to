@@ -26,7 +26,8 @@ export class BaseHttpClientService<T extends BaseModel> {
    * @returns Observable PagedModel of T
    */
   getPaged(pageNumber: number, pageSize: number): Observable<PageModel<T>> {
-    return this.httpClient.get<PageModel<T>>(`${this.url}/${this.endpoint}/paged/${pageNumber}/${pageSize}`);
+    const queryString = { pageNumber: pageNumber.toString(), pageSize: pageSize.toString() };
+    return this.httpClient.get<PageModel<T>>(`${this.url}/${this.endpoint}/paged`, { params: queryString });
   }
 
   /**

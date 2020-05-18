@@ -20,17 +20,6 @@ namespace DonateTo.Infrastructure.Data.Repositories
                 .ThenInclude( drc => drc.Category).Include( d => d.Organization);
         }
 
-        ///<inheritdoc cref="IRepository{DonationRequest}"/>
-        public override IQueryable<DonationRequest> Get()
-        {
-            return GetHydratedDonationRequests();                
-        }
-
-        ///<inheritdoc cref="IRepository{DonationRequest}"/>
-        public override async Task<IQueryable<DonationRequest>> GetAsync()
-        {
-            return await Task.FromResult(GetHydratedDonationRequests()).ConfigureAwait(false);
-        }
 
         ///<inheritdoc cref="IRepository{DonationRequest}"/>
         public override DonationRequest Get(long id)
