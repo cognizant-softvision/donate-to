@@ -1,12 +1,12 @@
 <nz-layout id="main-layout">
   <app-nav-menu></app-nav-menu>
   <nz-layout class="admin-layout">
-    <nz-sider nzTheme="light">
-      <ul nz-menu>
+    <nz-sider nzCollapsible nzTheme="light">
+      <ul nz-menu nzMode="inline">
         <li *ngFor="let menu of menus" nz-menu-item>
           <a class="menu-link" routerLink="{{ menu.url }}">
             <i nz-icon [nzTheme]="'outline'" nzType="{{ menu.iconType }}"></i>
-            {{ menu.title | translate }}
+            <span>{{ menu.title | translate }}</span>
           </a>
         </li>
       </ul>
