@@ -12,11 +12,31 @@ namespace DonateTo.Services
     public class UserService : IUserService
     {
         private readonly IRepository<User> _userRepository;
+        private readonly IRepository<Organization> _organizationRepository;
 
-        public UserService (
-            IRepository<User> userRepository)
+        public UserService(
+            IRepository<User> userRepository,
+            IRepository<Organization> organizationRepository
+            )
         {
             _userRepository = userRepository;
+            _organizationRepository = organizationRepository;
+        }
+
+        public Task<User> AssociateUserToOrganization(long userId, long organizationId)
+        {
+            var user = _userRepository.GetAsync(userId);
+            var organization = _organizationRepository.GetAsync(organizationId);
+
+            if (user == null || organization == null)
+            {
+                throw new ArgumentException("The user or organization does not exist.");
+            }
+
+            user.Result.Organization = organization.Result;
+            user.Result.OrganizationId = organization.Result.Id;
+            return _userRepository.UpdateAsync(user.Result);
+            // Save
         }
 
         public User Create(User entity)

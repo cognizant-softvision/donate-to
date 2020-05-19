@@ -49,6 +49,16 @@ namespace DonateTo.ApplicationCore.Entities
         /// </summary>
         public DateTime UpdateDate { get; set; }
 
+        /// <summary>
+        /// Organization Id
+        /// </summary>
+        public long OrganizationId { get; set; }
+
+        /// <summary>
+        /// Organization
+        /// </summary>
+        public Organization Organization { get; set; }
+
         [NotMapped]
         public string FullName { get => FirstName + " " + LastName; }
     }
