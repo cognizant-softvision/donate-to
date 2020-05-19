@@ -1,0 +1,26 @@
+nz-layout {
+  height: 100%;
+  display: flex;
+}
+
+nz-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
+i {
+  font-size: 20em;
+}
+
+h1 {
+  font-weight: bold;
+  font-size: 10em;
+  margin-bottom: 0em;
+}
+
+h4 {
+  font-weight: lighter;
+}
