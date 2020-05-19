@@ -3,11 +3,9 @@
     <i nz-icon [nzTheme]="'outline'" nzType="frown"></i>
     <h1>404</h1>
     <h4>{{ 'PageNotFound.Title' | translate }}</h4>
-    <span
-      ><em
-        ><b>{{ 'PageNotFound.Subtitle' | translate }}</b></em
-      ></span
-    >
+    <span>
+      {{ 'PageNotFound.Subtitle' | translate }}
+    </span>
     <br />
     <button nz-button ghost type="primary" onclick="history.back()">{{ 'PageNotFound.Button' | translate }}</button>
   </nz-content>

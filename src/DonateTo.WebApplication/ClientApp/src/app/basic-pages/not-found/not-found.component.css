@@ -23,3 +23,9 @@ h1 {
 h4 {
   font-weight: lighter;
 }
+
+button,
+span {
+  font-weight: bold;
+  font-style: italic;
+}
