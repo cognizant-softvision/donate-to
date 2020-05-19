@@ -9,5 +9,5 @@ export * from './organization.model';
 export * from './page.model';
 export * from './status.model';
 export * from './user.model';
-export * from './data-item.interface.model';
-export * from './column-item.interface.model';
+export * from './admin-table-item.model';
+export * from './admin-column-item.model';
