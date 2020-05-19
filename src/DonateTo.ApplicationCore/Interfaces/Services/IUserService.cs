@@ -1,4 +1,6 @@
 ﻿using DonateTo.ApplicationCore.Entities;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace DonateTo.ApplicationCore.Interfaces.Services
 {
@@ -10,7 +12,7 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// <param name="userId"> Long user Id <param>
         /// <param name="organizationId"> Long organization Id <param>
         /// <returns>Action Result of UserOrganization</returns>
-        User AssociateUserToOrganization(long userId, long organizationId);
+        Task<ActionResult<User>> AssociateUserToOrganization(long userId, long organizationId);
     }
 
 }

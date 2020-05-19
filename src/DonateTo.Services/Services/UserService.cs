@@ -2,6 +2,7 @@
 using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models.Pagination;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -12,16 +13,32 @@ namespace DonateTo.Services
     public class UserService : IUserService
     {
         private readonly IRepository<User> _userRepository;
+        private readonly IRepository<Organization> _organizationRepository;
 
         public UserService (
-            IRepository<User> userRepository)
+            IRepository<User> userRepository,
+            IRepository<Organization> organizationRepository
+            )
         {
             _userRepository = userRepository;
+            _organizationRepository = organizationRepository;
         }
 
-        public User AssociateUserToOrganization(long userId, long organizationId)
+        public async Task<ActionResult<User>> AssociateUserToOrganization(long userId, long organizationId)
         {
-            throw new NotImplementedException();
+            var user = _userRepository.Get(userId);
+            var organization = _organizationRepository.Get(organizationId);
+
+            if (user == null || organization == null)
+            {
+                throw new ArgumentException("User is null or Organization doesn't exists.");
+            }
+
+            user.Organization = organization;
+            user.OrganizationId = organization.Id;
+            user.
+            return _userRepository.Update(user);
+            // Save
         }
 
         public User Create(User entity)
