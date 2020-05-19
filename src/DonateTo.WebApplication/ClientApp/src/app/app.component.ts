@@ -1,12 +1,11 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { AppSandbox } from './app.sandbox';
-import { AuthSandbox } from './shared/auth/auth.sandbox';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   providers: [AppSandbox],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent {
   title = 'app';
