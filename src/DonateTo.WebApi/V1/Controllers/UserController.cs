@@ -1,6 +1,7 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Interfaces.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -11,7 +12,7 @@ namespace DonateTo.WebApi.V1.Controllers
     [ApiController]
     public class UserController : BaseApiController<User>
     {
-        IUserService _userService;
+        private readonly IUserService _userService;
 
         public UserController(IUserService userService, IUnitOfWork unitOfWork) : base(userService, unitOfWork)
         {
@@ -19,16 +20,15 @@ namespace DonateTo.WebApi.V1.Controllers
         }
 
         [HttpPost]
-        public Task<User> AssociateUserToOrganization(long userId, long organizationId)
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ActionResult<User>))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<User>> AssociateUserToOrganization(long userId, long organizationId)
         {
             // TDOO: Verify user is an administrator
-            /* Yo - admin de organización- solo puedo asociar a usuarios de mis organizaciones.
-               Yo - admin de todo el sistema-puedo asociar cualquier usuario a cualquier organización. */
 
-            // Associate user
-            return _userService.AssociateUserToOrganization(userId, organizationId);
-            // Once associated, user permissions must be administrator
-
+            await _userService.AssociateUserToOrganization(userId, organizationId).ConfigureAwait(false);
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
+            return NoContent();
         }
     }
 

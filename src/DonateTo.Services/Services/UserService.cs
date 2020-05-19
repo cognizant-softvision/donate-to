@@ -23,20 +23,19 @@ namespace DonateTo.Services
             _organizationRepository = organizationRepository;
         }
 
-        public Task<User> AssociateUserToOrganization(long userId, long organizationId)
+        public async Task<User> AssociateUserToOrganization(long userId, long organizationId)
         {
-            var user = _userRepository.GetAsync(userId);
-            var organization = _organizationRepository.GetAsync(organizationId);
+            var user = await _userRepository.GetAsync(userId).ConfigureAwait(false);
+            var organization = await _organizationRepository.GetAsync(organizationId).ConfigureAwait(false);
 
             if (user == null || organization == null)
             {
                 throw new ArgumentException("The user or organization does not exist.");
             }
 
-            user.Result.Organization = organization.Result;
-            user.Result.OrganizationId = organization.Result.Id;
-            return _userRepository.UpdateAsync(user.Result);
-            // Save
+            user.Organization = organization;
+            user.OrganizationId = organization.Id;
+            return await _userRepository.UpdateAsync(user).ConfigureAwait(false);
         }
 
         public User Create(User entity)

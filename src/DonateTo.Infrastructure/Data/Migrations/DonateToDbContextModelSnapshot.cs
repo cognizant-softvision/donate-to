@@ -763,7 +763,7 @@ namespace DonateTo.Infrastructure.Migrations
                     b.HasOne("DonateTo.ApplicationCore.Entities.Organization", "Organization")
                         .WithMany()
                         .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618
