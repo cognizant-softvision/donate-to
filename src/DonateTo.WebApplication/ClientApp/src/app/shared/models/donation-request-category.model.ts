@@ -1,6 +1,5 @@
-import { BaseModel } from './baseModel';
-import { DonationRequestModel } from './donationRequestModel';
-import { CategoryModel } from './categoryModel';
+import { DonationRequestModel } from './donation-request.model';
+import { CategoryModel } from './category.model';
 
 export class DonationRequestCategoryModel {
   donationRequestId: number;

@@ -1,4 +1,4 @@
-import { DonationRequestModel } from '../shared/models/donationRequestModel';
+import { DonationRequestModel } from '../shared/models';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
