@@ -2,7 +2,6 @@
 using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models.Pagination;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -24,19 +23,19 @@ namespace DonateTo.Services
             _organizationRepository = organizationRepository;
         }
 
-        public async Task<ActionResult<User>> AssociateUserToOrganization(long userId, long organizationId)
+        public Task<User> AssociateUserToOrganization(long userId, long organizationId)
         {
-            var user = _userRepository.Get(userId);
-            var organization = _organizationRepository.Get(organizationId);
+            var user = _userRepository.GetAsync(userId);
+            var organization = _organizationRepository.GetAsync(organizationId);
 
             if (user == null || organization == null)
             {
-                throw new ArgumentException("User is null or Organization doesn't exists.");
+                throw new ArgumentException("The user or organization does not exist.");
             }
 
-            user.Organization = organization;
-            user.OrganizationId = organization.Id;
-            return _userRepository.Update(user);
+            user.Result.Organization = organization.Result;
+            user.Result.OrganizationId = organization.Result.Id;
+            return _userRepository.UpdateAsync(user.Result);
             // Save
         }
 
