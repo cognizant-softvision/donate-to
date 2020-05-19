@@ -3,7 +3,7 @@ import { IconDefinition } from '@ant-design/icons-angular';
 
 import { FrownOutline } from '@ant-design/icons-angular/icons';
 
-import { NzIconModule, NzLayoutModule, NzButtonModule } from 'ng-zorro-antd';
+import { NzButtonModule, NzIconModule, NzLayoutModule } from 'ng-zorro-antd';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpLoaderFactory } from 'src/app/app.module';
