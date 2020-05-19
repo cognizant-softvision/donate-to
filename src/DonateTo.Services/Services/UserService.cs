@@ -36,7 +36,6 @@ namespace DonateTo.Services
 
             user.Organization = organization;
             user.OrganizationId = organization.Id;
-            user.
             return _userRepository.Update(user);
             // Save
         }
