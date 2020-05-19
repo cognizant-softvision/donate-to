@@ -46,6 +46,10 @@ namespace DonateTo.Infrastructure.Migrations
                 name: "FK_DonationRequest_User_UserId",
                 table: "DonationRequest");
 
+            migrationBuilder.DropForeignKey(
+                name: "FK_User_Organization_OrganizationId",
+                table: "User");
+
             migrationBuilder.DropColumn(
                 name: "Title",
                 table: "DonationRequestItem");
@@ -272,6 +276,14 @@ namespace DonateTo.Infrastructure.Migrations
                 principalTable: "User",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_User_Organization_OrganizationId",
+                table: "User",
+                column: "OrganizationId",
+                principalTable: "Organization",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -315,6 +327,10 @@ namespace DonateTo.Infrastructure.Migrations
             migrationBuilder.DropForeignKey(
                 name: "FK_DonationRequest_User_UserId",
                 table: "DonationRequest");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_User_Organization_OrganizationId",
+                table: "User");
 
             migrationBuilder.DropTable(
                 name: "DonationRequestCategory");
@@ -479,6 +495,14 @@ namespace DonateTo.Infrastructure.Migrations
                 table: "DonationRequest",
                 column: "UserId",
                 principalTable: "User",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_User_Organization_OrganizationId",
+                table: "User",
+                column: "OrganizationId",
+                principalTable: "Organization",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
         }

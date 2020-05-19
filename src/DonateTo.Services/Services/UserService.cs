@@ -19,6 +19,11 @@ namespace DonateTo.Services
             _userRepository = userRepository;
         }
 
+        public User AssociateUserToOrganization(long userId, long organizationId)
+        {
+            throw new NotImplementedException();
+        }
+
         public User Create(User entity)
         {
             throw new NotImplementedException();

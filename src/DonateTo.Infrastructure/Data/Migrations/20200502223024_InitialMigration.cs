@@ -225,11 +225,19 @@ namespace DonateTo.Infrastructure.Migrations
                     CreatedBy = table.Column<string>(nullable: true),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     UpdateBy = table.Column<string>(nullable: true),
-                    UpdateDate = table.Column<DateTime>(nullable: false)
+                    UpdateDate = table.Column<DateTime>(nullable: false),
+                    OrganizationId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_User_Organization_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Organization",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict
+                        );
                 });
 
             migrationBuilder.CreateTable(
