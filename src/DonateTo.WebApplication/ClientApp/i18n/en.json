@@ -75,8 +75,8 @@
   },
   "PageNotFound": {
     "Title": "Ooops, Page Not Found",
-    "Subtitle": "Please, return to the previous page",
-    "Button": "Go back"
+    "Subtitle": "The page you are looking for does not exist.",
+    "Button": "Go Back"
   },
   "Admin": {
     "Menu": {
