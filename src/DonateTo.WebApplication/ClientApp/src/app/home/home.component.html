@@ -45,7 +45,7 @@
   </ng-template>
   <ng-template #modalFooter>
     <button nz-button key="back" (click)="hideModal()">{{ 'CancelBtn' | translate }}</button>
-    <button nz-button key="submit" type="primary" (click)="goToDonate()">
+    <button nz-button key="submit" type="primary" (click)="goToDonate(item.id)">
       {{ 'RequestDonation.Donate' | translate }}
     </button>
   </ng-template>

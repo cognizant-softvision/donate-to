@@ -20,6 +20,10 @@ export class DonationRequestService extends BaseHttpClientService<DonationReques
     return this.get();
   }
 
+  getDonationRequest(id: number) {
+    return this.getById(id);
+  }
+
   getDonationRequestsSearchPaged(pageNumber: number, pageSize: number, query: string) {
     return this.searchService.getSearch(pageNumber, pageSize, query);
   }

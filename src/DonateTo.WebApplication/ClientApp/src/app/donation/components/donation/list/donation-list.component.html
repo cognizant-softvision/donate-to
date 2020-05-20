@@ -1,0 +1,49 @@
+<!-- <template>
+    <nz-table
+        :columns="columns" 
+        :data-source="items"
+        bordered
+        :loading="loading"
+    >
+        <template
+            v-for="col in ['quantity']"
+            :slot="col"
+            slot-scope="text, record, index"
+        >
+            <div :key="col" :aria-colindex="index">
+                <nz-input
+                    v-if="record.editable"
+                    style="margin: -5px 0"
+                    :value="text"
+                    type="number"
+                    @change="e => handleChange(e.target.value, record.key, col)"
+                />
+                <template v-else>
+                    {{ text }}
+                </template>
+            </div>
+        </template>
+        <template slot="operation" slot-scope="text, record, index">
+            <div class="editable-row-operations" :aria-colindex="index">
+                <span v-if="record.editable">
+                    <a @click="() => save(record.key)">Save</a>
+                    <a-divider type="vertical"></a-divider>
+                    <a-popconfirm title="Sure to cancel?" @confirm="() => cancel(record.key)">
+                        <a>Cancel</a>
+                    </a-popconfirm>
+                </span>
+                <span v-else>
+                    <a :disabled="editingKey !== ''" @click="() => edit(record.key)">Donate item</a>
+                </span>
+            </div>
+        </template>                    
+        <template slot="footer" slot-scope="currentPageData">
+            <div :_="currentPageData" :style="{ textAlign: 'right' }">
+                <a-button 
+                    type="primary"
+                    @click="doDonation"
+                >Donate!</a-button>
+            </div>
+        </template>
+    </a-table>
+</template> -->
