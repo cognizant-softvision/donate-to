@@ -53,22 +53,8 @@
       "SuccessMessage": "Your account has been successfully created"
     }
   },
-  "Products": {
-    "Title": "Products"
-  },
-  "ProductDetails": {
-    "Title": "Product details",
-    "Name": "Name",
-    "SerialNumber": "Serial Number",
-    "Category": "Category",
-    "Description": "Description",
-    "WarrantyExpiration": "Warranty Expiration",
-    "Price": "Price",
-    "Currency": "Currency"
-  },
   "Sidebar": {
-    "Menu": "Menu",
-    "ProductsItem": "Products"
+    "Menu": "Menu"
   },
   "ProfileActionBar": {
     "Logout": "Logout"

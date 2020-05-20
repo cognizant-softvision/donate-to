@@ -24,7 +24,7 @@
   "BackBtn": "Volver",
   "GridEmptyLabel": "No hay items disponibles",
   "MoreDetail": "Más detalles",
-  "SearchPlaceHolder": "escriba texto para buscar",
+  "SearchPlaceHolder": "Escriba texto para buscar",
   "ConfirmDialog": {
     "Title": "Por favor confirmar",
     "Content": "¿Quieres salir sin guardar los cambios?",
@@ -53,22 +53,8 @@
       "SuccessMessage": "Su cuenta ha sido exitosamente creada"
     }
   },
-  "Products": {
-    "Title": "Productos"
-  },
-  "ProductDetails": {
-    "Title": "Detalle de Productos",
-    "Name": "Nombre",
-    "SerialNumber": "Número de Serie",
-    "Category": "Categoría",
-    "Description": "Descripción",
-    "WarrantyExpiration": "Expiración de Garantía",
-    "Price": "Precio",
-    "Currency": "Moneda"
-  },
   "Sidebar": {
-    "Menu": "Menu",
-    "ProductsItem": "Productos"
+    "Menu": "Menu"
   },
   "ProfileActionBar": {
     "Logout": "Salir"
@@ -83,7 +69,7 @@
       "Title": {
         "Donation": "Donaciones",
         "User": "Usuarios",
-        "Organization": "Organizacion"
+        "Organization": "Organización"
       }
     },
     "Donation": {
@@ -94,7 +80,7 @@
       "Associate": "Asociar"
     },
     "Organization": {
-      "Title": "Organizacion"
+      "Title": "Organización"
     },
     "ClearFilter": "Limpiar Filtro",
     "ClearFilterAndSorted": "Limpiar Filtro y Orden",
