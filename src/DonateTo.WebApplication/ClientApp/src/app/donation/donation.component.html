@@ -1,0 +1,40 @@
+<div class="donations-container">
+  <nz-skeleton [nzLoading]="isLoading" [nzActive]="true">
+    <div>
+      <nz-row>
+        <nz-col>
+          <h2>
+            {{ donation.title }}<span class="subtitle"> - {{ donation.organization?.name }}</span>
+          </h2>
+        </nz-col>
+      </nz-row>
+      <nz-row>
+        <span>
+          {{ 'RequestDonation.Priority' | translate }}:
+          <nz-rate [ngModel]="donation.priority" nzAllowHalf [nzCharacter]="heartIcon" disabled></nz-rate>
+          <ng-template #heartIcon><i nz-icon nzType="heart" nzTheme="fill" className="rate-icon"></i></ng-template>
+        </span>
+      </nz-row>
+      <nz-row>
+        <nz-col>
+          <p>{{ donation.observation }}</p>
+        </nz-col>
+      </nz-row>
+      <nz-row>
+        <nz-col>
+          <span class="resources-title"> {{ 'RequestDonation.ResourcesNeeded' | translate }}:</span>
+        </nz-col>
+      </nz-row>
+    </div>
+  </nz-skeleton>
+  <nz-row>
+    <nz-col>
+      <!-- <DonationItems
+                @doDonation="doDonation"
+            /> -->
+    </nz-col>
+  </nz-row>
+  <!-- <DonationConfirm
+        :showConfirmation="showConfirmation"
+    /> -->
+</div>

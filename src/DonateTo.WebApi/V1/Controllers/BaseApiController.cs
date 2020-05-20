@@ -49,6 +49,7 @@ namespace DonateTo.WebApi.V1.Controllers
         /// <returns>Status 200 if the request has succeeded,
         /// Status 404 if not found the request or
         /// Status 500 if that have an error</returns>
+        [AllowAnonymous]
         [HttpGet("{id}",Name = "[controller]_[action]_Id")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

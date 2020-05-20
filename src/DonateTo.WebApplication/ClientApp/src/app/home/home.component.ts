@@ -72,10 +72,12 @@ export class HomeComponent implements OnInit {
   }
 
   goToDonate(donationRequestId: any) {
-    if (this.homeSandbox.isAuthenticated) {
-      this.router.navigate(['donation', donationRequestId]);
-    } else {
-      this.homeSandbox.login();
-    }
+    this.hideModal();
+    this.router.navigate(['donation', donationRequestId]);
+    // if (this.homeSandbox.isAuthenticated) {
+    //   this.router.navigate(['donation', donationRequestId]);
+    // } else {
+    //   this.homeSandbox.login();
+    // }
   }
 }
