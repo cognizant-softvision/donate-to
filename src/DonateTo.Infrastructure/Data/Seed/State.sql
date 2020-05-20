@@ -1,4 +1,5 @@
-INSERT INTO [State] VALUES (
+INSERT INTO public."State" ("Id", "Name", "CountryId", "CreatedBy", "CreatedDate", "UpdateBy", "UpdateDate")
+VALUES
 (1, 'Andaman and Nicobar Islands', 101, 'DataSeed', (SELECT now() at time zone 'utc'), 'DataSeed', (SELECT now() at time zone 'utc')),
 (2, 'Andhra Pradesh', 101, 'DataSeed', (SELECT now() at time zone 'utc'), 'DataSeed', (SELECT now() at time zone 'utc')),
 (3, 'Arunachal Pradesh', 101, 'DataSeed', (SELECT now() at time zone 'utc'), 'DataSeed', (SELECT now() at time zone 'utc')),
@@ -2170,8 +2171,7 @@ INSERT INTO [State] VALUES (
 (2178, 'Nimba', 123, 'DataSeed', (SELECT now() at time zone 'utc'), 'DataSeed', (SELECT now() at time zone 'utc')),
 (2179, 'Rivercess', 123, 'DataSeed', (SELECT now() at time zone 'utc'), 'DataSeed', (SELECT now() at time zone 'utc')),
 (2180, 'Sinoe', 123, 'DataSeed', (SELECT now() at time zone 'utc'), 'DataSeed', (SELECT now() at time zone 'utc')),
-(2181, 'Ajdabiya', 124);
-INSERT INTO `states` (`id`, `name`, `country_id`) VALUES
+(2181, 'Ajdabiya', 124, 'DataSeed', (SELECT now() at time zone 'utc'), 'DataSeed', (SELECT now() at time zone 'utc')),
 (2182, 'Fezzan', 124, 'DataSeed', (SELECT now() at time zone 'utc'), 'DataSeed', (SELECT now() at time zone 'utc')),
 (2183, 'Banghazi', 124, 'DataSeed', (SELECT now() at time zone 'utc'), 'DataSeed', (SELECT now() at time zone 'utc')),
 (2184, 'Darnah', 124, 'DataSeed', (SELECT now() at time zone 'utc'), 'DataSeed', (SELECT now() at time zone 'utc')),
@@ -4091,4 +4091,4 @@ INSERT INTO `states` (`id`, `name`, `country_id`) VALUES
 (4118, 'Matabeleland North', 246, 'DataSeed', (SELECT now() at time zone 'utc'), 'DataSeed', (SELECT now() at time zone 'utc')),
 (4119, 'Matabeleland South', 246, 'DataSeed', (SELECT now() at time zone 'utc'), 'DataSeed', (SELECT now() at time zone 'utc')),
 (4120, 'Midlands', 246, 'DataSeed', (SELECT now() at time zone 'utc'), 'DataSeed', (SELECT now() at time zone 'utc'))
-) ON CONFLICT DO NOTHING
+ON CONFLICT DO NOTHING;

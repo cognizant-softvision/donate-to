@@ -1,5 +1,5 @@
-INSERT INTO Country
-VALUES(
+INSERT INTO public."Country" ("Id", "SortName", "Name", "PhoneCode", "CreatedBy", "CreatedDate", "UpdateBy", "UpdateDate")
+VALUES
 (1, 'AF', 'Afghanistan', 93, 'DataSeed', (SELECT now() at time zone 'utc'), 'DataSeed', (SELECT now() at time zone 'utc')),
 (2, 'AL', 'Albania', 355, 'DataSeed', (SELECT now() at time zone 'utc'), 'DataSeed', (SELECT now() at time zone 'utc')),
 (3, 'DZ', 'Algeria', 213, 'DataSeed', (SELECT now() at time zone 'utc'), 'DataSeed', (SELECT now() at time zone 'utc')),
@@ -248,4 +248,4 @@ VALUES(
 (246, 'ZW', 'Zimbabwe', 263, 'DataSeed', (SELECT now() at time zone 'utc'), 'DataSeed', (SELECT now() at time zone 'utc')),
 (247, 'ME', 'Montenegro', 382, 'DataSeed', (SELECT now() at time zone 'utc'), 'DataSeed', (SELECT now() at time zone 'utc')),
 (248, 'XK', 'Kosovo', 383, 'DataSeed', (SELECT now() at time zone 'utc'), 'DataSeed', (SELECT now() at time zone 'utc'))
-) ON CONFLICT DO NOTHING
+ON CONFLICT DO NOTHING;
