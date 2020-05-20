@@ -12,6 +12,7 @@ nz-content {
 
 i {
   font-size: 20em;
+  color: #001529;
 }
 
 h1 {
@@ -24,7 +25,6 @@ h4 {
   font-weight: lighter;
 }
 
-button,
 span {
   font-weight: bold;
   font-style: italic;

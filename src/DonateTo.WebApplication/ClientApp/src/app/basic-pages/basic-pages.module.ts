@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { BasicPagesRoutingModule } from './basic-pages-routing.module';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ComponentsModule } from '../shared/components';
 
 const ICONS: IconDefinition[] = [FrownOutline];
 
@@ -21,6 +22,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   imports: [
     NzIconModule.forChild(ICONS),
     NzLayoutModule,
+    ComponentsModule,
     NzButtonModule,
     BasicPagesRoutingModule,
     TranslateModule.forChild({

@@ -75,7 +75,7 @@
   },
   "PageNotFound": {
     "Title": "Ooops, Página no encontrada",
-    "Subtitle": "La página que buscas no existe u otro error se produjo",
+    "Subtitle": "La página que buscas no existe.",
     "Button": "Volver"
   },
   "Admin": {
