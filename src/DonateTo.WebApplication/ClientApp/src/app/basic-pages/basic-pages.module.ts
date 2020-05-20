@@ -6,12 +6,16 @@ import { FrownOutline } from '@ant-design/icons-angular/icons';
 import { NzButtonModule, NzIconModule, NzLayoutModule } from 'ng-zorro-antd';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { HttpLoaderFactory } from 'src/app/app.module';
 import { HttpClient } from '@angular/common/http';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { BasicPagesRoutingModule } from './basic-pages-routing.module';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 const ICONS: IconDefinition[] = [FrownOutline];
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, '../../../i18n/', '.json');
+}
 
 @NgModule({
   imports: [
