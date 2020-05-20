@@ -19,7 +19,7 @@ import {
 } from 'ng-zorro-antd';
 import { HeartFill, SearchOutline } from '@ant-design/icons-angular/icons';
 import { HomeSandbox } from './home.sandbox';
-import { DonationRequestModule } from './donation-request.module';
+import { DonationRequestModule } from './components/donation-request/donation-request.module';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
@@ -50,8 +50,6 @@ const icons = [HeartFill, SearchOutline];
     DonationRequestsListItemComponent,
     DonationRequestDetailComponent,
   ],
-  providers: [
-    HomeSandbox
-  ],
+  providers: [HomeSandbox],
 })
 export class HomeModule {}
