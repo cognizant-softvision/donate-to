@@ -1,21 +1,24 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
+import { CanActivate, CanLoad, Route } from '@angular/router';
 import { AuthSandbox } from '../auth/auth.sandbox';
-import { filter, map, tap } from 'rxjs/operators';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
-  private isAuthenticated: boolean;
-
-  constructor(private authSandbox: AuthSandbox) {
-    this.authSandbox.isAuthenticated$.subscribe((isAuthenticated: boolean) => (this.isAuthenticated = isAuthenticated));
-  }
+export class AuthGuard implements CanActivate, CanLoad {
+  constructor(private authSandbox: AuthSandbox) {}
 
   public canActivate() {
-    return this.authSandbox.isLoginProcessed$.pipe(
-      filter((isDone) => isDone),
-      tap((_) => this.isAuthenticated || this.authSandbox.login()),
-      map((_) => this.isAuthenticated)
-    );
+    return this.checkIsAuthenticated();
+  }
+
+  public canLoad() {
+    return this.checkIsAuthenticated();
+  }
+
+  private checkIsAuthenticated() {
+    if (this.authSandbox.validateToken()) {
+      return true;
+    }
+
+    this.authSandbox.login();
   }
 }

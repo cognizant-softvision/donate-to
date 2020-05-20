@@ -13,3 +13,5 @@ export const userProfileLoaded = createAction(
   }>()
 );
 export const loadUserProfileFailed = createAction('[Auth] Load User Profile Failed');
+export const validateTokenSucess = createAction('[Auth] Validate Token Success');
+export const validateTokenFailed = createAction('[Auth] Validate Token Failed');

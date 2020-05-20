@@ -12,10 +12,17 @@
 <nz-table #organizationTable [nzData]="listOfData">
   <thead>
     <tr>
-      <th>{{ 'Admin.Name' | translate }}</th>
-      <th>{{ 'Admin.Age' | translate }}</th>
-      <th>{{ 'Admin.Address' | translate }}</th>
-      <th>{{ 'Admin.Action' | translate }}</th>
+      <th
+        *ngFor="let column of listOfColumns"
+        [nzSortOrder]="column.sortOrder"
+        [nzSortFn]="column.sortFn"
+        [nzSortDirections]="column.sortDirections"
+        [nzFilterMultiple]="column.filterMultiple"
+        [nzFilters]="column.listOfFilter"
+        [nzFilterFn]="column.filterFn"
+      >
+        {{ column.name | translate }}
+      </th>
     </tr>
   </thead>
   <tbody>
