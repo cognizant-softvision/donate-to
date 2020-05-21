@@ -20,7 +20,7 @@ namespace DonateTo.WebApi.V1.Controllers
             _userService = userService;
         }
 
-        [HttpGet("paged", Name = "[controller]_[action]")]
+        [HttpGet("byorganization")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

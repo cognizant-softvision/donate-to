@@ -129,7 +129,7 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
             {
                 query = query.Where(filter);
             }
-            return await query.GetPagedAsync(page, pageSize).ConfigureAwait(false); ;
+            return await query.GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
     }
 }
