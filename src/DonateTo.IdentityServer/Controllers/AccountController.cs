@@ -23,6 +23,7 @@ namespace DonateTo.IdentityServer.Controllers
         private readonly IEventService _eventsService;
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
         private readonly IMapper _mapper;
 
         public AccountController(
@@ -31,6 +32,7 @@ namespace DonateTo.IdentityServer.Controllers
             IEventService eventsService,
             SignInManager<User> signInManager,
             UserManager<User> userManager,
+            RoleManager<Role> roleManager,
             IMapper mapper)
         {
             _userService = userService;
@@ -38,6 +40,7 @@ namespace DonateTo.IdentityServer.Controllers
             _eventsService = eventsService;
             _signInManager = signInManager;
             _userManager = userManager;
+            _roleManager = roleManager;
             _mapper = mapper;
         }
 
@@ -155,6 +158,13 @@ namespace DonateTo.IdentityServer.Controllers
 
             var result = await _userManager.CreateAsync(user, userRegistrationViewModel.Password)
                 .ConfigureAwait(false);
+
+            if (result.Succeeded) 
+            {
+                var role = await _roleManager.FindByNameAsync("Donor").ConfigureAwait(false);
+
+                result = await _userManager.AddToRoleAsync(user, role.Name).ConfigureAwait(false);
+            }
 
             if (!result.Succeeded)
             {
