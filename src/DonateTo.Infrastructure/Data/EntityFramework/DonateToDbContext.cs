@@ -107,7 +107,7 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
                 modelBuilder.Entity<DonationRequestItemCategory>().HasKey
                     (drc => new { drc.CategoryId, drc.DonationRequestItemId});
 
-            #endregion
+                #endregion
             }
         }
     }
