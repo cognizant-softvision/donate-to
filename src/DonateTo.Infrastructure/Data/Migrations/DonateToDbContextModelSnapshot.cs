@@ -32,8 +32,14 @@ namespace DonateTo.Infrastructure.Migrations
                     b.Property<string>("Appartment")
                         .HasColumnType("text");
 
-                    b.Property<string>("Country")
-                        .HasColumnType("text");
+                    b.Property<long>("CityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ContactId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("CountryId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
@@ -41,23 +47,20 @@ namespace DonateTo.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("Email")
+                    b.Property<string>("Floor")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsDefault")
                         .HasColumnType("boolean");
 
+                    b.Property<long?>("OrganizationId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("PostalCode")
                         .HasColumnType("text");
 
-                    b.Property<string>("ResponsableIdentityNumber")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ResponsableInformation")
-                        .HasColumnType("text");
-
-                    b.Property<string>("State")
-                        .HasColumnType("text");
+                    b.Property<long>("StateId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Street")
                         .HasColumnType("text");
@@ -69,6 +72,16 @@ namespace DonateTo.Infrastructure.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.HasIndex("StateId");
 
                     b.ToTable("Address");
                 });
@@ -101,6 +114,113 @@ namespace DonateTo.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Category");
+                });
+
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.City", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<long>("StateId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StateId");
+
+                    b.ToTable("City");
+                });
+
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Contact", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("IdentityNumber")
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Position")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Contact");
+                });
+
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Country", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<int>("PhoneCode")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("SortName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Country");
                 });
 
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Donation", b =>
@@ -344,17 +464,8 @@ namespace DonateTo.Infrastructure.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("ContactEmail")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ContactName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ContactPhone")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ContactPosition")
-                        .HasColumnType("text");
+                    b.Property<long>("ContactId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
@@ -375,6 +486,8 @@ namespace DonateTo.Infrastructure.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ContactId");
 
                     b.ToTable("Organization");
                 });
@@ -413,6 +526,38 @@ namespace DonateTo.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Role");
+                });
+
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.State", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<long>("CountryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.ToTable("State");
                 });
 
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Status", b =>
@@ -467,6 +612,9 @@ namespace DonateTo.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<long>("UnitTypeId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("UpdateBy")
                         .HasColumnType("text");
 
@@ -475,7 +623,36 @@ namespace DonateTo.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UnitTypeId");
+
                     b.ToTable("Unit");
+                });
+
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.UnitType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UnitType");
                 });
 
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.User", b =>
@@ -643,6 +820,46 @@ namespace DonateTo.Infrastructure.Migrations
                     b.ToTable("IdentityUserToken<long>");
                 });
 
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Address", b =>
+                {
+                    b.HasOne("DonateTo.ApplicationCore.Entities.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DonateTo.ApplicationCore.Entities.Contact", "Contact")
+                        .WithMany()
+                        .HasForeignKey("ContactId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DonateTo.ApplicationCore.Entities.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DonateTo.ApplicationCore.Entities.Organization", null)
+                        .WithMany("Addresses")
+                        .HasForeignKey("OrganizationId");
+
+                    b.HasOne("DonateTo.ApplicationCore.Entities.State", "State")
+                        .WithMany()
+                        .HasForeignKey("StateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.City", b =>
+                {
+                    b.HasOne("DonateTo.ApplicationCore.Entities.State", null)
+                        .WithMany("Cities")
+                        .HasForeignKey("StateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Donation", b =>
                 {
                     b.HasOne("DonateTo.ApplicationCore.Entities.Address", "Address")
@@ -749,6 +966,33 @@ namespace DonateTo.Infrastructure.Migrations
                     b.HasOne("DonateTo.ApplicationCore.Entities.DonationRequestItem", "DonationRequestItem")
                         .WithMany("DonationRequestItemCategories")
                         .HasForeignKey("DonationRequestItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Organization", b =>
+                {
+                    b.HasOne("DonateTo.ApplicationCore.Entities.Contact", "Contact")
+                        .WithMany()
+                        .HasForeignKey("ContactId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.State", b =>
+                {
+                    b.HasOne("DonateTo.ApplicationCore.Entities.Country", null)
+                        .WithMany("States")
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Unit", b =>
+                {
+                    b.HasOne("DonateTo.ApplicationCore.Entities.UnitType", "UnitType")
+                        .WithMany()
+                        .HasForeignKey("UnitTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
