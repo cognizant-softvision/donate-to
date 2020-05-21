@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections.Generic;
 
 namespace DonateTo.ApplicationCore.Entities
 {
@@ -32,5 +33,7 @@ namespace DonateTo.ApplicationCore.Entities
         /// Updated Date
         /// </summary>
         public DateTime UpdateDate { get; set; }
+        
+        public virtual ICollection<UserRole> UserRoles { get; set; }
     }
 }

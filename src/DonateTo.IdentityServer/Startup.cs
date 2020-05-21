@@ -14,7 +14,6 @@ using System;
 using DonateTo.Services.Extensions;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using IdentityServer4.EntityFramework.DbContexts;
 using System.Linq;
 using IdentityServer4.EntityFramework.Mappers;
 using DonateTo.IdentityServer.Data.EntityFramework;
@@ -49,7 +48,8 @@ namespace DonateTo.IdentityServer
 
             var identityOptions = Configuration.GetSection("Identity").GetSection("Options");
 
-            services.AddIdentity<User, Role>(options =>
+            services.AddDefaultIdentity<User>()
+            .AddIdentity<User, Role>(options =>
             {
                 options.Password.RequiredLength = identityOptions.GetSection("Password").GetValue<int>("RequiredLength");
                 options.Password.RequireDigit = identityOptions.GetSection("Password").GetValue<bool>("RequireDigit");

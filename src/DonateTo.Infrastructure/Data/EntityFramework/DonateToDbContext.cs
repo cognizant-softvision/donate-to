@@ -28,7 +28,7 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
         public DbSet<IdentityUserClaim<long>> UserClaims { get; set; }
         public DbSet<IdentityRoleClaim<long>> RoleClaims { get; set; }
         public DbSet<IdentityUserLogin<long>> UserLogins { get; set; }
-        public DbSet<IdentityUserRole<long>> UserRoles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<IdentityUserToken<long>> UserTokens { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -45,9 +45,45 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
                 {
                     entityType.SetTableName(entityType.DisplayName());
                 }
-            
-            #region many to many relationships
-            // Code to set up many to many relationships
+
+                modelBuilder.Entity<User>(b =>
+                {
+                    // Each User can have many UserClaims
+                    b.HasMany(e => e.Claims)
+                        .WithOne()
+                        .HasForeignKey(uc => uc.UserId)
+                        .IsRequired();
+
+                    // Each User can have many UserLogins
+                    b.HasMany(e => e.Logins)
+                        .WithOne()
+                        .HasForeignKey(ul => ul.UserId)
+                        .IsRequired();
+
+                    // Each User can have many UserTokens
+                    b.HasMany(e => e.Tokens)
+                        .WithOne()
+                        .HasForeignKey(ut => ut.UserId)
+                        .IsRequired();
+
+                    // Each User can have many entries in the UserRole join table
+                    b.HasMany(e => e.UserRoles)
+                        .WithOne(e => e.User)
+                        .HasForeignKey(ur => ur.UserId)
+                        .IsRequired();
+                });
+
+                modelBuilder.Entity<Role>(b =>
+                {
+                    // Each Role can have many entries in the UserRole join table
+                    b.HasMany(e => e.UserRoles)
+                        .WithOne(e => e.Role)
+                        .HasForeignKey(ur => ur.RoleId)
+                        .IsRequired();
+                });
+
+                #region many to many relationships
+                // Code to set up many to many relationships
                 modelBuilder.Entity<DonationRequestCategory>()
                     .HasOne<Category>(c => c.Category)
                     .WithMany(drc => drc.DonationRequestCategories)
