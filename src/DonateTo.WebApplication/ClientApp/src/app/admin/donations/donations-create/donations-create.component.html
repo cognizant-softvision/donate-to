@@ -1,0 +1,34 @@
+<div>
+  <div class="create-donation-title">
+    <h4 class="section-title">{{ 'Admin.Donation.Create.Title' | translate }}</h4>
+    <button routerLink=".." nz-button nzType="primary">
+      Volver
+    </button>
+  </div>
+  <br />
+  <form nz-form (ngSubmit)="CreateDonationRequest()">
+    <nz-form-item>
+      <nz-form-label nzRequired nzFor="title">Title</nz-form-label>
+      <nz-form-control>
+        <input nz-input name="title" type="text" id="title" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzRequired nzFor="title">Title</nz-form-label>
+      <nz-form-control>
+        <input nz-input name="title" type="text" id="title" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzRequired nzFor="observations">Observations</nz-form-label>
+      <nz-form-control>
+        <input nz-input name="observations" type="text" id="observations" />
+      </nz-form-control>
+    </nz-form-item>
+    <br />
+    <br />
+    <button nz-button nzType="primary" type="submit">
+      Create Request
+    </button>
+  </form>
+</div>

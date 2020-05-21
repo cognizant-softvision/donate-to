@@ -87,7 +87,10 @@
       }
     },
     "Donation": {
-      "Title": "Donaciones"
+      "Title": "Donaciones",
+      "Create": {
+        "Title": "Crear Donación"
+      }
     },
     "User": {
       "Title": "Usuarios",

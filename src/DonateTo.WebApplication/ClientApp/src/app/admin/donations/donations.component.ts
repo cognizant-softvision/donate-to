@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { ColumnItem, DataItem } from './../../shared/models';
+import { ColumnItem, DataItem } from '../../shared/models';
 
 @Component({
-  selector: 'app-donation-admin',
-  templateUrl: './donation.component.html',
-  styleUrls: ['./donation.component.css'],
+  selector: 'app-donations-admin',
+  templateUrl: './donations.component.html',
+  styleUrls: ['./donations.component.css'],
 })
-export class DonationComponent {
+export class DonationsComponent {
   constructor() {}
 
   listOfColumns: ColumnItem[] = [
