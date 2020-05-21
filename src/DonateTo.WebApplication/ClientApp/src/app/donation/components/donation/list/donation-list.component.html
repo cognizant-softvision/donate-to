@@ -1,49 +1,41 @@
-<!-- <template>
-    <nz-table
-        :columns="columns" 
-        :data-source="items"
-        bordered
-        :loading="loading"
-    >
-        <template
-            v-for="col in ['quantity']"
-            :slot="col"
-            slot-scope="text, record, index"
-        >
-            <div :key="col" :aria-colindex="index">
-                <nz-input
-                    v-if="record.editable"
-                    style="margin: -5px 0"
-                    :value="text"
-                    type="number"
-                    @change="e => handleChange(e.target.value, record.key, col)"
-                />
-                <template v-else>
-                    {{ text }}
-                </template>
-            </div>
-        </template>
-        <template slot="operation" slot-scope="text, record, index">
-            <div class="editable-row-operations" :aria-colindex="index">
-                <span v-if="record.editable">
-                    <a @click="() => save(record.key)">Save</a>
-                    <a-divider type="vertical"></a-divider>
-                    <a-popconfirm title="Sure to cancel?" @confirm="() => cancel(record.key)">
-                        <a>Cancel</a>
-                    </a-popconfirm>
-                </span>
-                <span v-else>
-                    <a :disabled="editingKey !== ''" @click="() => edit(record.key)">Donate item</a>
-                </span>
-            </div>
-        </template>                    
-        <template slot="footer" slot-scope="currentPageData">
-            <div :_="currentPageData" :style="{ textAlign: 'right' }">
-                <a-button 
-                    type="primary"
-                    @click="doDonation"
-                >Donate!</a-button>
-            </div>
-        </template>
-    </a-table>
-</template> -->
+<nz-table [nzData]="editCache" [nzLoading]="isLoading">
+  <thead>
+    <tr>
+      <th nzColumnKey="itemName" nzWidth="25%">Item</th>
+      <th nzColumnKey="quantity" nzWidth="10%">Quantity requested</th>
+      <th nzColumnKey="description" nzWidth="40%">Description</th>
+      <th nzColumnKey="quantityToDonate" nzWidth="10%">Quantity to donate</th>
+      <th nzColumnKey="operation">operation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of editCache">
+      <td>{{ data.item.name }}</td>
+      <td>{{ data.item.finishQuantity - data.item.currentQuantity }} {{ data.item.unit }}</td>
+      <td>{{ data.item.observation }}</td>
+      <ng-container *ngIf="!data.edit; else editTemplate">
+        <td>{{ data.quantityToDonate }}</td>
+        <td><a (click)="startEdit(data.id)">Edit</a></td>
+      </ng-container>
+      <ng-template #editTemplate>
+        <td>
+          <nz-input-number
+            [(ngModel)]="data.quantityToDonate"
+            [nzMin]="0"
+            [nzMax]="data.item.finishQuantity - data.item.currentQuantity"
+          ></nz-input-number>
+        </td>
+        <td>
+          <a (click)="saveEdit(data.id)" class="save">Save</a>
+          <a
+            nz-popconfirm
+            nzPopconfirmTitle="Sure to cancel?"
+            nzPopconfirmPlacement="top"
+            (nzOnConfirm)="cancelEdit(data.id)"
+            >Cancel</a
+          >
+        </td>
+      </ng-template>
+    </tr>
+  </tbody>
+</nz-table>
