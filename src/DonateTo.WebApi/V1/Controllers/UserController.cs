@@ -24,7 +24,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public virtual async Task<ActionResult<PagedResult<User>>> GetPagedOrganization(long organizationId, int pageNumber, int pageSize)
+        public virtual async Task<ActionResult<PagedResult<User>>> GetPagedUsersByOrganizationAsync(long organizationId, int pageNumber, int pageSize)
         {
             return await _userService.GetPagedUsersByOrganizationAsync(organizationId, pageNumber, pageSize).ConfigureAwait(false);
         }
