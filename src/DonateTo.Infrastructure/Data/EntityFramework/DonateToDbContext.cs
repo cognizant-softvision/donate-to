@@ -46,8 +46,8 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
                     entityType.SetTableName(entityType.DisplayName());
                 }
             
-            #region many to many relationships
-            // Code to set up many to many relationships
+                #region Many to many relationships
+                // Code to set up many to many relationships
                 modelBuilder.Entity<DonationRequestCategory>()
                     .HasOne<Category>(c => c.Category)
                     .WithMany(drc => drc.DonationRequestCategories)
@@ -71,7 +71,7 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
                 modelBuilder.Entity<DonationRequestItemCategory>().HasKey
                     (drc => new { drc.CategoryId, drc.DonationRequestItemId});
 
-            #endregion
+                #endregion
             }
         }
     }
