@@ -9,13 +9,20 @@
   <button nz-button nzType="secondary">{{ 'Admin.ClearFilter' | translate }}</button>
   <button nz-button nzType="secondary">{{ 'Admin.ClearFilterAndSorted' | translate }}</button>
 </div>
-<nz-table #userTable [nzData]="listOfData">
+<nz-table #userTable [nzData]="listOfData" nzTableLayout="fixed">
   <thead>
     <tr>
-      <th>{{ 'Admin.Name' | translate }}</th>
-      <th>{{ 'Admin.Age' | translate }}</th>
-      <th>{{ 'Admin.Address' | translate }}</th>
-      <th>{{ 'Admin.Action' | translate }}</th>
+      <th
+        *ngFor="let column of listOfColumns"
+        [nzSortOrder]="column.sortOrder"
+        [nzSortFn]="column.sortFn"
+        [nzSortDirections]="column.sortDirections"
+        [nzFilterMultiple]="column.filterMultiple"
+        [nzFilters]="column.listOfFilter"
+        [nzFilterFn]="column.filterFn"
+      >
+        {{ column.name | translate }}
+      </th>
     </tr>
   </thead>
   <tbody>
