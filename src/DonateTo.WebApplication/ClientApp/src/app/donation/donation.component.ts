@@ -20,11 +20,6 @@ export class DonationComponent implements OnInit {
 
   donation: DonationRequestModel;
 
-  title: string;
-  organization: string;
-  priority: number;
-  observation: string;
-
   subscriptions: Subscription[] = [];
 
   ngOnInit(): void {

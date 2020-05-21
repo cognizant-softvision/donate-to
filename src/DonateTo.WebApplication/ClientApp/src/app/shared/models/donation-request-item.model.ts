@@ -6,5 +6,6 @@ export class DonationRequestItemModel extends BaseModel {
   observation: string;
   currentQuantity: number;
   finishQuantity: number;
+  unit: string;
   donationRequestItemCategories: DonationRequestItemCategoryModel[];
 }

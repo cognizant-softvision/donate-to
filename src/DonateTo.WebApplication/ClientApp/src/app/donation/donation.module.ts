@@ -8,11 +8,14 @@ import {
   NzGridModule,
   NzIconModule,
   NzInputModule,
+  NzInputNumberModule,
   NzListModule,
   NzModalModule,
   NzPaginationModule,
+  NzPopconfirmModule,
   NzRateModule,
   NzSkeletonModule,
+  NzTableModule,
   NzTagModule,
 } from 'ng-zorro-antd';
 import { HeartFill, SearchOutline } from '@ant-design/icons-angular/icons';
@@ -21,6 +24,7 @@ import { DonationRequestModule } from './donation-request.module';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { DonationListComponent } from './components/donation/list/donation-list.component';
 
 const icons = [HeartFill, SearchOutline];
 @NgModule({
@@ -37,13 +41,16 @@ const icons = [HeartFill, SearchOutline];
     NzPaginationModule,
     NzSkeletonModule,
     NzButtonModule,
+    NzPopconfirmModule,
     DonationRequestModule,
+    NzTableModule,
+    NzInputNumberModule,
     TranslateModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
   ],
-  declarations: [DonationComponent],
+  declarations: [DonationComponent, DonationListComponent],
   providers: [DonationSandbox],
 })
 export class DonationModule {}

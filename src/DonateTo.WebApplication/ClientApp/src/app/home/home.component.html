@@ -25,24 +25,15 @@
     (showModal)="showModal($event)"
   ></app-donation-requests-list>
 </div>
-<nz-modal
-  style="top: 2em;"
-  width="80%"
-  [(nzVisible)]="modalVisible"
-  [nzContent]="modalContent"
-  [nzFooter]="modalFooter"
-  (nzOnOk)="goToDonate()"
-  (nzOnCancel)="hideModal()"
->
-  <ng-template #modalContent>
-    <div *ngIf="item">
-      <app-donation-request-detail [item]="item"></app-donation-request-detail>
-    </div>
-  </ng-template>
-  <ng-template #modalFooter>
-    <button nz-button key="back" (click)="hideModal()">{{ 'CancelBtn' | translate }}</button>
-    <button nz-button key="submit" type="primary" (click)="goToDonate(item.id)">
-      {{ 'RequestDonation.Donate' | translate }}
-    </button>
-  </ng-template>
-</nz-modal>
+
+<ng-template #modalContent>
+  <div *ngIf="item">
+    <app-donation-request-detail [item]="item"></app-donation-request-detail>
+  </div>
+</ng-template>
+<ng-template #modalFooter>
+  <button nz-button key="back" (click)="hideModal()">{{ 'CancelBtn' | translate }}</button>
+  <button nz-button key="submit" type="primary" (click)="goToDonate(item.id)">
+    {{ 'RequestDonation.Donate' | translate }}
+  </button>
+</ng-template>
