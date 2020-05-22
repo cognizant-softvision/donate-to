@@ -18,6 +18,7 @@ import { DonationsComponent } from './donations.component';
 import { DonationsCreateComponent } from './donations-create/donations-create.component';
 import { DonationsEditComponent } from './donations-edit/donations-edit.component';
 import { DonationsRoutingModule } from './donations-routing.module';
+import { DonationsSandbox } from './donations-sandbox';
 import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { IconDefinition } from '@ant-design/icons-angular';
@@ -57,5 +58,6 @@ const ICONS: IconDefinition[] = [PlusOutline];
     }),
   ],
   declarations: [DonationsComponent, DonationsCreateComponent, DonationsEditComponent],
+  providers: [DonationsSandbox],
 })
 export class DonationsModule {}

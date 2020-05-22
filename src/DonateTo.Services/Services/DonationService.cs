@@ -1,13 +1,7 @@
-﻿using DonateTo.ApplicationCore.Models.Pagination;
-using System.Threading.Tasks;
-using DonateTo.ApplicationCore.Entities;
-using DonateTo.ApplicationCore.Interfaces.Services;
-using DonateTo.Infrastructure.Data.Repositories;
+﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces;
-using System;
-using System.Collections.Generic;
 
-namespace DonateTo.Services
+namespace DonateTo.Services.Services
 {
     public class DonationService: BaseService<Donation>
     {

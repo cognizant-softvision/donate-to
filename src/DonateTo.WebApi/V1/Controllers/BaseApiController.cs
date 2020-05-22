@@ -34,6 +34,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [HttpGet(Name = "[controller]_[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [AllowAnonymous]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "<Pending>")]
         public virtual async Task<ActionResult<IEnumerable<T>>> Get()
         {

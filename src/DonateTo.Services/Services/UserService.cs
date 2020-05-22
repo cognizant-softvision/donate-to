@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace DonateTo.Services
+namespace DonateTo.Services.Services
 {
     public class UserService : IUserService
     {

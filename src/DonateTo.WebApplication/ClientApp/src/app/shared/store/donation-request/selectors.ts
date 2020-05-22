@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector, Store } from '@ngrx/store';
-import { Injectable } from '@angular/core';
 import { DonationRequestState } from './reducer';
+import { Injectable } from '@angular/core';
 
 export const donationRequestFeatureKey = 'donation-request';
 // selectors

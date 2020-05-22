@@ -2,6 +2,8 @@ import { ColumnItem, DonationRequestItemModel } from 'src/app/shared/models';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+import { DonationsSandbox } from '../donations-sandbox';
+
 @Component({
   selector: 'app-donations-create',
   templateUrl: './donations-create.component.html',
@@ -33,15 +35,13 @@ export class DonationsCreateComponent implements OnInit {
     new DonationRequestItemModel(),
   ];
 
-  constructor() {}
+  constructor(public donationSandbox: DonationsSandbox) {}
 
   ngOnInit(): void {
     this.GetOrganizations();
   }
 
-  GetOrganizations() {
-    this.organizations = ['Organization1', 'Organization2', 'Organization3'];
-  }
+  GetOrganizations() {}
 
   GetAddresses(event) {
     console.log('address');

@@ -1,7 +1,7 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces;
 
-namespace DonateTo.Services
+namespace DonateTo.Services.Services
 {
     public class DonationRequestService: BaseService<DonationRequest>
     {

@@ -1,6 +1,7 @@
 using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.Infrastructure.Extensions;
+using DonateTo.Services.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -16,11 +17,12 @@ namespace DonateTo.Services.Extensions
         public static void AddDonateToModule(this IServiceCollection service, IConfiguration configuration)
         {
             service.AddEntityFramework(configuration);
-            
+
             service.AddScoped<IUserService, UserService>();
             service.AddTransient<IBaseService<Donation>, DonationService>();
             service.AddTransient<IBaseService<DonationRequest>, DonationRequestService>();
             service.AddTransient<ISearchService, SearchService>();
+            service.AddTransient<IBaseService<Organization>, OrganizationService>();
         }
     }
 }
