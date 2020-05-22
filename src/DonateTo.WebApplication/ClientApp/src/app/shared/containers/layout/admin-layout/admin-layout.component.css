@@ -19,7 +19,7 @@
   align-items: center;
 }
 
-svg {
+.menu-link i svg {
   font-size: 2em;
 }
 
@@ -30,7 +30,6 @@ svg {
 .main-layout-content {
   background: rgb(255, 255, 255);
   padding: 1.5em;
-  min-height: 280px;
 }
 
 .table-operations {

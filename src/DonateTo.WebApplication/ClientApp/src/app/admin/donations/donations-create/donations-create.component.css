@@ -2,3 +2,12 @@
   display: flex;
   justify-content: space-between;
 }
+
+.create-donation-form-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.donation-request-item-add {
+  margin: 1em;
+}

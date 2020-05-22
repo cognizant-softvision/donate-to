@@ -1,34 +1,99 @@
 <div>
   <div class="create-donation-title">
     <h4 class="section-title">{{ 'Admin.Donation.Create.Title' | translate }}</h4>
-    <button routerLink=".." nz-button nzType="primary">
-      Volver
-    </button>
   </div>
   <br />
   <form nz-form (ngSubmit)="CreateDonationRequest()">
     <nz-form-item>
       <nz-form-label nzRequired nzFor="title">Title</nz-form-label>
       <nz-form-control>
-        <input nz-input name="title" type="text" id="title" />
+        <input nz-input formControlName="titleFormControl" name="title" type="text" id="title" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label nzRequired nzFor="title">Title</nz-form-label>
+      <nz-form-label nzRequired nzFor="priority">Priority</nz-form-label>
       <nz-form-control>
-        <input nz-input name="title" type="text" id="title" />
+        <nz-rate formControlName="priorityFormControl" nzCount="5" [nzTooltips]="priorityTooltips"></nz-rate>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label nzRequired nzFor="observations">Observations</nz-form-label>
+      <nz-form-label nzRequired nzFor="organization">Organization</nz-form-label>
       <nz-form-control>
-        <input nz-input name="observations" type="text" id="observations" />
+        <nz-select ngModelChange="GetAddresses($event)" formControlName="organizationFormControl">
+          <nz-option
+            *ngFor="let organization of organizations"
+            nzValue="{{ organization }}"
+            nzLabel="{{ organization }}"
+          >
+          </nz-option>
+        </nz-select>
       </nz-form-control>
     </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzRequired nzFor="address">Address</nz-form-label>
+      <nz-form-control>
+        <nz-select nzDisabled="{{ addresses.length == 0 }}">
+          <nz-option *ngFor="let address of addresses" nzValue="{{ address }}" nzLabel="{{ address }}"> </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzRequired nzFor="finishDate">Finish Date</nz-form-label>
+      <nz-form-control>
+        <nz-date-picker></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzRequired nzFor="donationCategories">Categories</nz-form-label>
+      <nz-form-control>
+        <nz-tag *ngFor="let category of donationCategories" nzMode="checkable" [nzChecked]="false">{{
+          category
+        }}</nz-tag>
+      </nz-form-control>
+    </nz-form-item>
+    <button class="donation-request-item-add" nz-button nzType="primary">Add Item</button>
+    <nz-table
+      #donationRequestItemTable
+      [nzData]="donationRequestItems"
+      [nzShowPagination]="false"
+      [nzFrontPagination]="false"
+      [nzShowPagination]="false"
+      [nzScroll]="{ y: '240px' }"
+    >
+      <thead>
+        <tr>
+          <th *ngFor="let column of listOfColumns">
+            {{ column.name | translate }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of donationRequestItemTable.data">
+          <td>{{ item.name }}</td>
+          <td>{{ item.finishQuantity }}</td>
+          <td>{{ item.observation }}</td>
+          <td>
+            <a>{{ 'Admin.Edit' | translate }}</a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a>{{ 'Admin.Delete' | translate }}</a>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
     <br />
-    <br />
-    <button nz-button nzType="primary" type="submit">
-      Create Request
-    </button>
+    <nz-form-item>
+      <nz-form-label nzFor="observations">Observations</nz-form-label>
+      <nz-form-control>
+        <textarea nz-input formControlName="observationFormControl" name="observations" id="observations"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+    <div class="create-donation-form-buttons">
+      <button nz-button nzType="primary" type="submit">
+        Create Request
+      </button>
+      <button routerLink=".." nz-button nzType="primary">
+        Volver
+      </button>
+    </div>
   </form>
 </div>
