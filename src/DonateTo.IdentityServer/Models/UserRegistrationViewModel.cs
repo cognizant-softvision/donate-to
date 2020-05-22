@@ -28,5 +28,7 @@ namespace DonateTo.IdentityServer.Models
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Password entries do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public string ReturnUrl { get; set; }
     }
 }
