@@ -140,9 +140,11 @@ namespace DonateTo.IdentityServer.Controllers
         }
 
         [HttpGet]
-        public IActionResult Register()
+        public IActionResult Register(string returnUrl)
         {
-            return View();
+            var model = new UserRegistrationViewModel();
+            model.ReturnUrl = returnUrl;
+            return View(model);
         }
 
         [HttpPost]
@@ -162,7 +164,6 @@ namespace DonateTo.IdentityServer.Controllers
             if (result.Succeeded) 
             {
                 var role = await _roleManager.FindByNameAsync("Donor").ConfigureAwait(false);
-
                 result = await _userManager.AddToRoleAsync(user, role.Name).ConfigureAwait(false);
             }
 
@@ -172,7 +173,9 @@ namespace DonateTo.IdentityServer.Controllers
                 return View(userRegistrationViewModel);
             }
 
-            return RedirectToAction("Login");
+            var vm = await BuildLoginViewModelAsync(userRegistrationViewModel.ReturnUrl).ConfigureAwait(false);
+
+            return RedirectToAction("Login", vm);
         }
 
         [HttpPost]
