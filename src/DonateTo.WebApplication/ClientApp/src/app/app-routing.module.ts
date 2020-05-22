@@ -14,6 +14,10 @@ const appRoutes: Routes = [
       import('./shared/containers/layout/admin-layout/admin-layout.module').then((m) => m.AdminLayoutModule),
     canLoad: [AuthGuard],
   },
+  {
+    path: '**',
+    loadChildren: () => import('./basic-pages/basic-pages.module').then((m) => m.BasicPagesModule),
+  },
 ];
 
 @NgModule({
