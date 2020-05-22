@@ -53,9 +53,9 @@ namespace DonateTo.ApplicationCore.Entities
         [NotMapped]
         public string FullName { get => FirstName + " " + LastName; }
 
-        public virtual ICollection<IdentityUserClaim<long>> Claims { get; set; }
-        public virtual ICollection<IdentityUserLogin<long>> Logins { get; set; }
-        public virtual ICollection<IdentityUserToken<long>> Tokens { get; set; }
+        public virtual ICollection<UserClaim> Claims { get; set; }
+        public virtual ICollection<UserLogin> Logins { get; set; }
+        public virtual ICollection<UserToken> Tokens { get; set; }
         public virtual ICollection<UserRole> UserRoles { get; set; }
     }
 }

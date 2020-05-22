@@ -35,5 +35,6 @@ namespace DonateTo.ApplicationCore.Entities
         public DateTime UpdateDate { get; set; }
         
         public virtual ICollection<UserRole> UserRoles { get; set; }
+        public virtual ICollection<RoleClaim> RoleClaims { get; set; }
     }
 }

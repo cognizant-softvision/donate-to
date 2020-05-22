@@ -25,44 +25,37 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
         public DbSet<Status> Status { get; set; }
         public DbSet<Unit> Units { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<IdentityUserClaim<long>> UserClaims { get; set; }
-        public DbSet<IdentityRoleClaim<long>> RoleClaims { get; set; }
-        public DbSet<IdentityUserLogin<long>> UserLogins { get; set; }
+        public DbSet<UserClaim> UserClaims { get; set; }
+        public DbSet<RoleClaim> RoleClaims { get; set; }
+        public DbSet<UserLogin> UserLogins { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
-        public DbSet<IdentityUserToken<long>> UserTokens { get; set; }
+        public DbSet<UserToken> UserTokens { get; set; }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
 
             if (modelBuilder != null)
             {
                 modelBuilder.Ignore<EntityBase>();
-                modelBuilder.Entity<IdentityUserLogin<long>>().HasNoKey();
-                modelBuilder.Entity<IdentityUserRole<long>>().HasNoKey();
-                modelBuilder.Entity<IdentityUserToken<long>>().HasNoKey();
-
-                foreach (IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes())
-                {
-                    entityType.SetTableName(entityType.DisplayName());
-                }
 
                 modelBuilder.Entity<User>(b =>
                 {
                     // Each User can have many UserClaims
                     b.HasMany(e => e.Claims)
-                        .WithOne()
+                        .WithOne(e => e.User)
                         .HasForeignKey(uc => uc.UserId)
                         .IsRequired();
 
                     // Each User can have many UserLogins
                     b.HasMany(e => e.Logins)
-                        .WithOne()
+                        .WithOne(e => e.User)
                         .HasForeignKey(ul => ul.UserId)
                         .IsRequired();
 
                     // Each User can have many UserTokens
                     b.HasMany(e => e.Tokens)
-                        .WithOne()
+                        .WithOne(e => e.User)
                         .HasForeignKey(ut => ut.UserId)
                         .IsRequired();
 
@@ -80,14 +73,57 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
                         .WithOne(e => e.Role)
                         .HasForeignKey(ur => ur.RoleId)
                         .IsRequired();
+
+                    // Each Role can have many associated RoleClaims
+                    b.HasMany(e => e.RoleClaims)
+                        .WithOne(e => e.Role)
+                        .HasForeignKey(rc => rc.RoleId)
+                        .IsRequired();
                 });
 
-                #region many to many relationships
+                modelBuilder.Entity<UserClaim>(b =>
+                {
+                    b.HasKey(uc => uc.Id);
+                    b.ToTable("UserClaim");
+                });
+
+                modelBuilder.Entity<RoleClaim>(b =>
+                {
+                    b.HasKey(rc => rc.Id);
+                    b.ToTable("RoleClaim");
+                });
+
+                modelBuilder.Entity<UserRole>(b =>
+                {
+                    b.HasKey(r => new { r.UserId, r.RoleId });
+                    b.ToTable("UserRole");
+                });
+
+                modelBuilder.Entity<UserLogin>(b =>
+                {
+                    b.HasKey(l => new { l.LoginProvider, l.ProviderKey });
+                    b.ToTable("UserLogin");
+                });
+
+                modelBuilder.Entity<UserToken>(b =>
+                {
+                    b.HasKey(l => new { l.UserId, l.LoginProvider, l.Name });
+                    b.ToTable("UserToken");
+                });
+
+                foreach (IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes())
+                {
+                    entityType.SetTableName(entityType.DisplayName());
+                }
+
+                #region Many to many relationships
+
                 // Code to set up many to many relationships
                 modelBuilder.Entity<DonationRequestCategory>()
                     .HasOne<Category>(c => c.Category)
                     .WithMany(drc => drc.DonationRequestCategories)
                     .HasForeignKey(c => c.CategoryId);
+
                 modelBuilder.Entity<DonationRequestCategory>()
                     .HasOne<DonationRequest>(dr => dr.DonationRequest)
                     .WithMany(drc => drc.DonationRequestCategories)
@@ -97,6 +133,7 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
                     .HasOne<Category>(c => c.Category)
                     .WithMany(drc => drc.DonationRequestItemCategories)
                     .HasForeignKey(c => c.CategoryId);
+
                 modelBuilder.Entity<DonationRequestItemCategory>()
                     .HasOne<DonationRequestItem>(dr => dr.DonationRequestItem)
                     .WithMany(drc => drc.DonationRequestItemCategories)
@@ -104,6 +141,7 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
 
                 modelBuilder.Entity<DonationRequestCategory>().HasKey
                     (drc => new { drc.CategoryId, drc.DonationRequestId});
+
                 modelBuilder.Entity<DonationRequestItemCategory>().HasKey
                     (drc => new { drc.CategoryId, drc.DonationRequestItemId});
 

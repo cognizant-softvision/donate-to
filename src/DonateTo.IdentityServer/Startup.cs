@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
 using System.Reflection;
-using DonateTo.Infrastructure.Data.EntityFramework;
 using DonateTo.ApplicationCore.Entities;
 using Microsoft.AspNetCore.Identity;
 using IdentityServer4.Configuration;
@@ -40,7 +39,7 @@ namespace DonateTo.IdentityServer
 
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
            
-            services.AddDbContext<DonateToDbContext>(options =>
+            services.AddDbContext<DonateIdentityDbContext>(options =>
                 options.UseNpgsql(connectionString));
 
             services.AddDonateToModule(Configuration);
@@ -48,8 +47,7 @@ namespace DonateTo.IdentityServer
 
             var identityOptions = Configuration.GetSection("Identity").GetSection("Options");
 
-            services.AddDefaultIdentity<User>()
-            .AddIdentity<User, Role>(options =>
+            services.AddIdentity<User, Role>(options =>
             {
                 options.Password.RequiredLength = identityOptions.GetSection("Password").GetValue<int>("RequiredLength");
                 options.Password.RequireDigit = identityOptions.GetSection("Password").GetValue<bool>("RequireDigit");
@@ -59,7 +57,7 @@ namespace DonateTo.IdentityServer
                 options.User.RequireUniqueEmail = identityOptions.GetSection("User").GetValue<bool>("RequireUniqueEmail");
                 options.SignIn.RequireConfirmedEmail = identityOptions.GetSection("SignIn").GetValue<bool>("RequireConfirmedEmail");
             })
-            .AddEntityFrameworkStores<DonateToDbContext>()
+            .AddEntityFrameworkStores<DonateIdentityDbContext>()
             .AddDefaultTokenProviders();
 
             var builder = services.AddIdentityServer(options =>
