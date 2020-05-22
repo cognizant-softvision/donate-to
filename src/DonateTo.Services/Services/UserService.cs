@@ -2,6 +2,7 @@
 using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models.Pagination;
+using DonateTo.Infrastructure.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -13,14 +14,17 @@ namespace DonateTo.Services
     {
         private readonly IRepository<User> _userRepository;
         private readonly IRepository<Organization> _organizationRepository;
+        //private readonly RoleRepository _roleRepository;
 
         public UserService(
             IRepository<User> userRepository,
             IRepository<Organization> organizationRepository
+            //RoleRepository roleRepository
             )
         {
             _userRepository = userRepository;
             _organizationRepository = organizationRepository;
+            //_roleRepository = roleRepository;
         }
 
         public async Task<User> AssociateUserToOrganization(long userId, long organizationId)
@@ -37,6 +41,11 @@ namespace DonateTo.Services
             user.OrganizationId = organization.Id;
             return await _userRepository.UpdateAsync(user).ConfigureAwait(false);
         }
+
+        //public async void AddToRoleAsync(User user, Role role)
+        //{
+        //    await _roleRepository.AddAsync(role).ConfigureAwait(false);
+        //}
 
         public User Create(User entity)
         {

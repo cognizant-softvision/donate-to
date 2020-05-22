@@ -28,6 +28,12 @@ namespace DonateTo.WebApi
         {
             var bearerOptions = Configuration.GetSection("Bearer").GetSection("Options");
 
+            services
+                .AddAuthorization(options => options.AddPolicy("Superadmin", policy => policy.RequireClaim("Role", "Superadmin")))
+                .AddAuthorization(options => options.AddPolicy("Admin", policy => policy.RequireClaim("Role", "Admin")))
+                .AddAuthorization(options => options.AddPolicy("Organization", policy => policy.RequireClaim("Role", "Organization")))
+                .AddAuthorization(options => options.AddPolicy("Donor", policy => policy.RequireClaim("Role", "Donor")));
+
             services.AddControllers().AddNewtonsoftJson(options => {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
