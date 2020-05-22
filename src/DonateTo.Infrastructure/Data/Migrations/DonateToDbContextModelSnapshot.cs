@@ -528,6 +528,29 @@ namespace DonateTo.Infrastructure.Migrations
                     b.ToTable("Role");
                 });
 
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.RoleClaim", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("text");
+
+                    b.Property<long>("RoleId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("RoleClaim");
+                });
+
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.State", b =>
                 {
                     b.Property<long>("Id")
@@ -733,28 +756,7 @@ namespace DonateTo.Infrastructure.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("text");
-
-                    b.Property<long>("RoleId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("IdentityRoleClaim<long>");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<long>", b =>
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.UserClaim", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -772,52 +774,64 @@ namespace DonateTo.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("IdentityUserClaim<long>");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserClaim");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<long>", b =>
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.UserLogin", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ProviderDisplayName")
                         .HasColumnType("text");
 
                     b.Property<string>("ProviderKey")
                         .HasColumnType("text");
 
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("text");
+
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
-                    b.ToTable("IdentityUserLogin<long>");
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserLogin");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<long>", b =>
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.UserRole", b =>
                 {
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("RoleId")
                         .HasColumnType("bigint");
 
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("UserRole");
+                });
+
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.UserToken", b =>
+                {
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
-                    b.ToTable("IdentityUserRole<long>");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<long>", b =>
-                {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Value")
                         .HasColumnType("text");
 
-                    b.ToTable("IdentityUserToken<long>");
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("UserToken");
                 });
 
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Address", b =>
@@ -979,6 +993,15 @@ namespace DonateTo.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.RoleClaim", b =>
+                {
+                    b.HasOne("DonateTo.ApplicationCore.Entities.Role", "Role")
+                        .WithMany("RoleClaims")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.State", b =>
                 {
                     b.HasOne("DonateTo.ApplicationCore.Entities.Country", null)
@@ -993,6 +1016,48 @@ namespace DonateTo.Infrastructure.Migrations
                     b.HasOne("DonateTo.ApplicationCore.Entities.UnitType", "UnitType")
                         .WithMany()
                         .HasForeignKey("UnitTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.UserClaim", b =>
+                {
+                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "User")
+                        .WithMany("Claims")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.UserLogin", b =>
+                {
+                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "User")
+                        .WithMany("Logins")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.UserRole", b =>
+                {
+                    b.HasOne("DonateTo.ApplicationCore.Entities.Role", "Role")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "User")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.UserToken", b =>
+                {
+                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "User")
+                        .WithMany("Tokens")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
