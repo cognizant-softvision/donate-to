@@ -2,6 +2,11 @@
 
 @{
     ViewData["Title"] = "Login";
+
+    var parms = new Dictionary<string, string>
+    {
+            { "returnUrl", Model.ReturnUrl}
+    };
 }
 
 <form class="form-card" asp-route="Login" id="login-form">
@@ -26,6 +31,6 @@
         <a class="nav-link" asp-area="" asp-controller="Account" asp-action="Register">Forgot Password?</a>
     </div>
     <div class="form-group">
-        Don't have an account? <a asp-area="" asp-controller="Account" asp-action="Register">Join Now</a>
+        Don't have an account? <a asp-area="" asp-controller="Account" asp-action="Register" asp-all-route-data="parms">Join Now</a>
     </div>
 </form>
