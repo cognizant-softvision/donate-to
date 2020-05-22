@@ -77,8 +77,9 @@ namespace DonateTo.Services
 
         public async Task<PagedResult<User>> GetPagedUsersByOrganizationAsync(long organizationId, int page, int pageSize)
         {
-            //TODO: Change x.Id for x.organizationId when it is implemented
-            return await _userRepository.GetPagedAsync(x => x.Id == organizationId, page, pageSize).ConfigureAwait(false);
+            throw new NotImplementedException();
+            //TODO: Uncomment the return line when x.organizationId is implemented
+            //return await _userRepository.GetPagedAsync(x => x.organizationId == organizationId, page, pageSize).ConfigureAwait(false);
         }
 
         public User Update(User entity, long id)
