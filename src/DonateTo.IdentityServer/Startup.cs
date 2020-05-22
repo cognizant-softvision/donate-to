@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
 using System.Reflection;
-using DonateTo.Infrastructure.Data.EntityFramework;
 using DonateTo.ApplicationCore.Entities;
 using Microsoft.AspNetCore.Identity;
 using IdentityServer4.Configuration;
@@ -14,7 +13,6 @@ using System;
 using DonateTo.Services.Extensions;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using IdentityServer4.EntityFramework.DbContexts;
 using System.Linq;
 using IdentityServer4.EntityFramework.Mappers;
 using DonateTo.IdentityServer.Data.EntityFramework;
@@ -41,7 +39,7 @@ namespace DonateTo.IdentityServer
 
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
            
-            services.AddDbContext<DonateToDbContext>(options =>
+            services.AddDbContext<DonateIdentityDbContext>(options =>
                 options.UseNpgsql(connectionString));
 
             services.AddDonateToModule(Configuration);
@@ -59,7 +57,7 @@ namespace DonateTo.IdentityServer
                 options.User.RequireUniqueEmail = identityOptions.GetSection("User").GetValue<bool>("RequireUniqueEmail");
                 options.SignIn.RequireConfirmedEmail = identityOptions.GetSection("SignIn").GetValue<bool>("RequireConfirmedEmail");
             })
-            .AddEntityFrameworkStores<DonateToDbContext>()
+            .AddEntityFrameworkStores<DonateIdentityDbContext>()
             .AddDefaultTokenProviders();
 
             var builder = services.AddIdentityServer(options =>

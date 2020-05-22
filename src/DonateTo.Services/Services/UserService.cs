@@ -2,50 +2,23 @@
 using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models.Pagination;
-using DonateTo.Infrastructure.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using DonateTo.Infrastructure.Data.Extensions;
 
 namespace DonateTo.Services
 {
     public class UserService : IUserService
     {
         private readonly IRepository<User> _userRepository;
-        private readonly IRepository<Organization> _organizationRepository;
-        //private readonly RoleRepository _roleRepository;
 
-        public UserService(
-            IRepository<User> userRepository,
-            IRepository<Organization> organizationRepository
-            //RoleRepository roleRepository
-            )
+        public UserService (
+            IRepository<User> userRepository)
         {
             _userRepository = userRepository;
-            _organizationRepository = organizationRepository;
-            //_roleRepository = roleRepository;
         }
-
-        public async Task<User> AssociateUserToOrganization(long userId, long organizationId)
-        {
-            var user = await _userRepository.GetAsync(userId).ConfigureAwait(false);
-            var organization = await _organizationRepository.GetAsync(organizationId).ConfigureAwait(false);
-
-            if (user == null || organization == null)
-            {
-                throw new ArgumentException("The user or organization does not exist.");
-            }
-
-            user.Organization = organization;
-            user.OrganizationId = organization.Id;
-            return await _userRepository.UpdateAsync(user).ConfigureAwait(false);
-        }
-
-        //public async void AddToRoleAsync(User user, Role role)
-        //{
-        //    await _roleRepository.AddAsync(role).ConfigureAwait(false);
-        //}
 
         public User Create(User entity)
         {
@@ -79,7 +52,7 @@ namespace DonateTo.Services
 
         public User Get(long id)
         {
-            throw new NotImplementedException();
+            return _userRepository.Get(id);
         }
 
         public Task<IEnumerable<User>> GetAsync(Expression<Func<User, bool>> filter)
@@ -87,19 +60,26 @@ namespace DonateTo.Services
             throw new NotImplementedException();
         }
 
-        public Task<User> GetAsync(long id)
+        public async Task<User> GetAsync(long id)
         {
-            throw new NotImplementedException();
+            return await _userRepository.GetAsync(id).ConfigureAwait(false);
         }
 
         public PagedResult<User> GetPaged(int page, int pageSize)
         {
-            throw new NotImplementedException();
+            return _userRepository.GetPaged(page, pageSize);
         }
 
-        public Task<PagedResult<User>> GetPagedAsync(int page, int pageSize)
+        public async Task<PagedResult<User>> GetPagedAsync(int page, int pageSize)
+        {
+            return await _userRepository.GetPagedAsync(page, pageSize).ConfigureAwait(false);
+        }
+
+        public async Task<PagedResult<User>> GetPagedUsersByOrganizationAsync(long organizationId, int page, int pageSize)
         {
             throw new NotImplementedException();
+            //TODO: Uncomment the return line when x.organizationId is implemented
+            //return await _userRepository.GetPagedAsync(x => x.organizationId == organizationId, page, pageSize).ConfigureAwait(false);
         }
 
         public User Update(User entity, long id)

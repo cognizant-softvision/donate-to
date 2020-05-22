@@ -1,7 +1,7 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Interfaces.Services;
-using Microsoft.AspNetCore.Authorization;
+using DonateTo.ApplicationCore.Models.Pagination;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -20,17 +20,13 @@ namespace DonateTo.WebApi.V1.Controllers
             _userService = userService;
         }
 
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(ActionResult<User>))]
+        [HttpGet("byorganization")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<User>> AssociateUserToOrganization(long userId, long organizationId)
+        public virtual async Task<ActionResult<PagedResult<User>>> GetPagedUsersByOrganizationAsync(long organizationId, int pageNumber, int pageSize)
         {
-            // TDOO: Verify user is an administrator
-
-            await _userService.AssociateUserToOrganization(userId, organizationId).ConfigureAwait(false);
-            await _unitOfWork.SaveAsync().ConfigureAwait(false);
-            return NoContent();
+            return await _userService.GetPagedUsersByOrganizationAsync(organizationId, pageNumber, pageSize).ConfigureAwait(false);
         }
     }
 
