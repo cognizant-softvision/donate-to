@@ -3,4 +3,4 @@ export * from './effects';
 export * from './reducer';
 export * from './selectors';
 
-export const organizationFeatureKey = 'organization';
+export const addressFeatureKey = 'address';

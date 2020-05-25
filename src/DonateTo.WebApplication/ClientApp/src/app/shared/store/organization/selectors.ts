@@ -1,20 +1,22 @@
 import { createFeatureSelector, createSelector, Store } from '@ngrx/store';
-import { Injectable } from '@angular/core';
 import { OrganizationState } from './reducer';
+import { Injectable } from '@angular/core';
 
-export const organizationFeatureKey = 'organization';
 // selectors
-export const getEntityState = createFeatureSelector<OrganizationState>(organizationFeatureKey);
+export const getOrganizationState = createFeatureSelector<OrganizationState>('organization');
 
-export const getAllOrganizations = createSelector(getEntityState, (state: OrganizationState) => state.items);
+export const getAllOrganizations = createSelector(getOrganizationState, (state: OrganizationState) => state.items);
 
-export const getOrganizationLoading = createSelector(getEntityState, (state: OrganizationState) => state.loading);
+export const getOrganizationsLoading = createSelector(
+  getOrganizationState,
+  (state: OrganizationState) => state.loading
+);
 
 @Injectable()
 export class OrganizationSelectors {
   constructor(private store: Store<OrganizationState>) {}
   // selectors$
   organizations$ = this.store.select(getAllOrganizations);
-
-  loading$ = this.store.select(getOrganizationLoading);
+  organizationState$ = this.store.select(getOrganizationState);
+  loading$ = this.store.select(getOrganizationsLoading);
 }

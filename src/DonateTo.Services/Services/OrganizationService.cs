@@ -5,11 +5,11 @@ namespace DonateTo.Services.Services
 {
     public class OrganizationService : BaseService<Organization>
     {
-        private readonly IRepository<Organization> _organizationRequestRepository;
+        private readonly IRepository<Organization> _organizationRepository;
 
         public OrganizationService(IRepository<Organization> organizationRepository) : base(organizationRepository)
         {
-            _organizationRequestRepository = organizationRepository;
+            _organizationRepository = organizationRepository;
         }
     }
 }

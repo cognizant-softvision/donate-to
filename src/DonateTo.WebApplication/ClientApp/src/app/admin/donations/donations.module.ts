@@ -26,6 +26,14 @@ import { NgModule } from '@angular/core';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { PlusOutline } from '@ant-design/icons-angular/icons';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import * as fromOrganization from 'src/app/shared/store/organization';
+import { OrganizationEffects } from 'src/app/shared/store/organization';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AddressEffects } from 'src/app/shared/store/address';
+import * as fromAddress from 'src/app/shared/store/address';
 
 const ICONS: IconDefinition[] = [PlusOutline];
 
@@ -36,15 +44,20 @@ const ICONS: IconDefinition[] = [PlusOutline];
     NzMenuModule,
     NzRateModule,
     NzFormModule,
+    EffectsModule.forFeature([OrganizationEffects, AddressEffects]),
+    StoreModule.forFeature(fromOrganization.organizationFeatureKey, fromOrganization.reducer),
+    StoreModule.forFeature(fromAddress.addressFeatureKey, fromAddress.reducer),
     NzTableModule,
     NzTagModule,
     NzRadioModule,
     NzDatePickerModule,
     NzButtonModule,
+    ReactiveFormsModule,
     NzSelectModule,
     NzInputModule,
     NzDividerModule,
     NzTableModule,
+    FormsModule,
     CommonModule,
     DonationsRoutingModule,
     TranslateModule.forChild({

@@ -3,7 +3,7 @@
     <h4 class="section-title">{{ 'Admin.Donation.Create.Title' | translate }}</h4>
   </div>
   <br />
-  <form nz-form (ngSubmit)="CreateDonationRequest()">
+  <form [formGroup]="donationRequestFormGroup" nz-form (ngSubmit)="CreateDonationRequest()">
     <nz-form-item>
       <nz-form-label nzRequired nzFor="title">Title</nz-form-label>
       <nz-form-control>
@@ -19,12 +19,12 @@
     <nz-form-item>
       <nz-form-label nzRequired nzFor="organization">Organization</nz-form-label>
       <nz-form-control>
-        <nz-select ngModelChange="GetAddresses($event)" formControlName="organizationFormControl">
-          <nz-option
-            *ngFor="let organization of organizations"
-            nzValue="{{ organization }}"
-            nzLabel="{{ organization }}"
-          >
+        <nz-select
+          [(ngModel)]="donationRequest.organization"
+          (ngModelChange)="SetOrganization()"
+          formControlName="organizationFormControl"
+        >
+          <nz-option *ngFor="let organization of organizations" [nzValue]="organization" [nzLabel]="organization.name">
           </nz-option>
         </nz-select>
       </nz-form-control>
@@ -32,8 +32,13 @@
     <nz-form-item>
       <nz-form-label nzRequired nzFor="address">Address</nz-form-label>
       <nz-form-control>
-        <nz-select nzDisabled="{{ addresses.length == 0 }}">
-          <nz-option *ngFor="let address of addresses" nzValue="{{ address }}" nzLabel="{{ address }}"> </nz-option>
+        <nz-select
+          [(ngModel)]="donationRequest.address"
+          (ngModelChange)="SetAddress()"
+          formControlName="addressFormControl"
+          nzDisabled="{{ addresses.length == 0 }}"
+        >
+          <nz-option *ngFor="let address of addresses" [nzValue]="address" [nzLabel]="address.street"> </nz-option>
         </nz-select>
       </nz-form-control>
     </nz-form-item>
@@ -46,9 +51,9 @@
     <nz-form-item>
       <nz-form-label nzRequired nzFor="donationCategories">Categories</nz-form-label>
       <nz-form-control>
-        <nz-tag *ngFor="let category of donationCategories" nzMode="checkable" [nzChecked]="false">{{
-          category
-        }}</nz-tag>
+        <nz-tag *ngFor="let category of donationCategories" nzMode="checkable" [nzChecked]="false">
+          {{ category }}
+        </nz-tag>
       </nz-form-control>
     </nz-form-item>
     <button class="donation-request-item-add" nz-button nzType="primary">Add Item</button>

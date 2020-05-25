@@ -1,8 +1,13 @@
-import { ColumnItem, DonationRequestItemModel } from 'src/app/shared/models';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-
 import { DonationsSandbox } from '../donations-sandbox';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AddressModel,
+  ColumnItem,
+  DonationRequestItemModel,
+  DonationRequestModel,
+  OrganizationModel,
+} from 'src/app/shared/models';
 
 @Component({
   selector: 'app-donations-create',
@@ -14,13 +19,15 @@ export class DonationsCreateComponent implements OnInit {
     titleFormControl: new FormControl('', Validators.required),
     priorityFormControl: new FormControl('', Validators.required),
     organizationFormControl: new FormControl('', Validators.required),
+    addressFormControl: new FormControl('', Validators.required),
     observationFormControl: new FormControl(),
   });
+  donationRequest: DonationRequestModel;
+  donationCategories = ['Category1', 'Category2', 'Category3'];
 
   priorityTooltips = ['low', 'low-medium', 'normal', 'medium', 'high'];
-  addresses: string[] = [];
-  organizations: string[];
-  donationCategories = ['Category1', 'Category2', 'Category3'];
+  addresses: AddressModel[] = [];
+  organizations: OrganizationModel[] = [];
 
   listOfColumns: ColumnItem[] = [
     { name: 'Item' },
@@ -35,18 +42,29 @@ export class DonationsCreateComponent implements OnInit {
     new DonationRequestItemModel(),
   ];
 
-  constructor(public donationSandbox: DonationsSandbox) {}
-
-  ngOnInit(): void {
-    this.GetOrganizations();
+  constructor(public donationSandbox: DonationsSandbox) {
+    this.donationRequest = new DonationRequestModel();
   }
 
-  GetOrganizations() {}
+  ngOnInit(): void {
+    this.donationSandbox.organizations$.subscribe((organizations) => {
+      this.organizations = organizations;
+    });
 
-  GetAddresses(event) {
-    console.log('address');
-    this.addresses = [];
-    this.addresses = ['Address1', 'Address2', 'Address3'];
+    this.donationSandbox.addressesByOrganization$.subscribe((addresses) => {
+      this.addresses = addresses;
+    });
+
+    this.donationSandbox.LoadOrganizations();
+  }
+
+  SetOrganization() {
+    this.donationRequest.organizationId = this.donationRequest.organization.id;
+    this.donationSandbox.LoadAddressesByOrganization(this.donationRequest.organization.id);
+  }
+
+  SetAddress() {
+    this.donationRequest.addressId = this.donationRequest.address.id;
   }
 
   CreateDonationRequest() {

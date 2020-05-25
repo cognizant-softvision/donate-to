@@ -17,6 +17,7 @@ import { UserComponent } from '../../../../admin/user/user.component';
 import { OrganizationComponent } from '../../../../admin/organization/organization.component';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { HttpClient } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const ICONS: IconDefinition[] = [HeartOutline, TeamOutline, ProfileOutline];
 
@@ -40,6 +41,7 @@ const ICONS: IconDefinition[] = [HeartOutline, TeamOutline, ProfileOutline];
       extend: true,
     }),
     ComponentsModule,
+    ReactiveFormsModule,
   ],
   declarations: [AdminLayoutComponent, UserComponent, OrganizationComponent],
 })

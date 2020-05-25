@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 export class DonationsSandbox extends Sandbox {
   donationRequests$ = this.appState$.select(store.fromDonationRequest.getAllDonationRequests);
   organizations$ = this.appState$.select(store.fromOrganization.getAllOrganizations);
+  addressesByOrganization$ = this.appState$.select(store.fromAddress.getAddressesByOrganizationId);
 
   constructor(protected appState$: Store<store.State>) {
     super(appState$);
@@ -24,5 +25,12 @@ export class DonationsSandbox extends Sandbox {
    */
   public LoadOrganizations(): void {
     this.appState$.dispatch(store.fromOrganization.loadOrganizations());
+  }
+
+  /**
+   * Loads Addresses of an Organization from the server
+   */
+  public LoadAddressesByOrganization(organizationId: number) {
+    this.appState$.dispatch(store.fromAddress.loadAddressesByOrganizationId({ organizationId }));
   }
 }

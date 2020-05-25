@@ -1,10 +1,9 @@
 import { createAction, props } from '@ngrx/store';
-
 import { OrganizationModel } from '../../models';
 
-export const loadOrganizations = createAction('[Organizations] Load items from server');
+export const loadOrganizations = createAction('[Organization] Load items from server');
 export const loadOrganizationsSuccess = createAction(
-  '[Organizations] Load success',
+  '[Organization] Load success',
   props<{ organizations: OrganizationModel[] }>()
 );
-export const loadOrganizationsFailed = createAction('[Organizations] Load failed');
+export const loadOrganizationsFailed = createAction('[Organization] Load failed');
