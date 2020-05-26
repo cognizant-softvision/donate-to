@@ -1,11 +1,18 @@
-<nz-table [nzData]="editCache" [nzLoading]="isLoading">
+<nz-table
+  [nzData]="donationRequest?.donationRequestItems"
+  [nzLoading]="this.donationSandbox.donationRequestLoading$ | async"
+>
   <thead>
     <tr>
-      <th nzColumnKey="itemName" nzWidth="25%">Item</th>
-      <th nzColumnKey="quantity" nzWidth="10%">Quantity requested</th>
-      <th nzColumnKey="description" nzWidth="40%">Description</th>
-      <th nzColumnKey="quantityToDonate" nzWidth="10%">Quantity to donate</th>
-      <th nzColumnKey="operation">operation</th>
+      <th nzColumnKey="itemName" nzWidth="25%">{{ 'RequestDonation.DonationItemList.Item' | translate }}</th>
+      <th nzColumnKey="quantity" nzWidth="10%">
+        {{ 'RequestDonation.DonationItemList.QuantityRequested' | translate }}
+      </th>
+      <th nzColumnKey="description" nzWidth="40%">{{ 'RequestDonation.DonationItemList.Description' | translate }}</th>
+      <th nzColumnKey="quantityToDonate" nzWidth="10%">
+        {{ 'RequestDonation.DonationItemList.QuantityToDonate' | translate }}
+      </th>
+      <th nzColumnKey="operation">{{ 'RequestDonation.DonationItemList.Operation' | translate }}</th>
     </tr>
   </thead>
   <tbody>
@@ -15,7 +22,9 @@
       <td>{{ data.item.observation }}</td>
       <ng-container *ngIf="!data.edit; else editTemplate">
         <td>{{ data.quantityToDonate }}</td>
-        <td><a (click)="startEdit(data.id)">Edit</a></td>
+        <td>
+          <a (click)="startEdit(data.id)">{{ 'RequestDonation.DonationItemList.EditButton' | translate }}</a>
+        </td>
       </ng-container>
       <ng-template #editTemplate>
         <td>
@@ -26,16 +35,25 @@
           ></nz-input-number>
         </td>
         <td>
-          <a (click)="saveEdit(data.id)" class="save">Save</a>
+          <a (click)="saveEdit(data.id)" class="save">{{
+            'RequestDonation.DonationItemList.SaveButton' | translate
+          }}</a>
           <a
             nz-popconfirm
             nzPopconfirmTitle="Sure to cancel?"
             nzPopconfirmPlacement="top"
             (nzOnConfirm)="cancelEdit(data.id)"
-            >Cancel</a
+            >{{ 'RequestDonation.DonationItemList.CancelButton' | translate }}</a
           >
         </td>
       </ng-template>
     </tr>
+    <div nz-row>
+      <div nz-col class="donate">
+        <button nz-button nzType="primary" (click)="donationConfirm()">
+          {{ 'RequestDonation.DonationItemList.DonateButton' | translate }}!
+        </button>
+      </div>
+    </div>
   </tbody>
 </nz-table>

@@ -7,7 +7,7 @@ import { DonationRequestModel } from '../shared/models';
 @Component({
   selector: 'app-donation',
   templateUrl: './donation.component.html',
-  styleUrls: ['./donation.component.less'],
+  styleUrls: ['./donation.component.css'],
 })
 export class DonationComponent implements OnInit {
   constructor(protected router: ActivatedRoute, public donationSandbox: DonationSandbox) {
@@ -17,6 +17,8 @@ export class DonationComponent implements OnInit {
   donationRequestId: number;
 
   isLoading: boolean;
+
+  showDonationConfirm = false;
 
   donation: DonationRequestModel;
 
@@ -35,5 +37,9 @@ export class DonationComponent implements OnInit {
     this.donationSandbox.donationRequestLoading$.subscribe((state) => {
       this.isLoading = state;
     });
+  }
+
+  showDonationConfirmModal(state: boolean): void {
+    this.showDonationConfirm = state;
   }
 }

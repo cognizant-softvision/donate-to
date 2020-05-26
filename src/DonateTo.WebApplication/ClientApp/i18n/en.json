@@ -8,7 +8,29 @@
     "ResourcesNeeded": "Resources needed",
     "Priority": "Priority",
     "CreatedOn": "Created on",
-    "Finisheson": "Finishes on"
+    "Finisheson": "Finishes on",
+    "DonationDialog": {
+      "SaveButton": "Save",
+      "CancelButton": "Cancel",
+      "EditButton": "Edit"
+    },
+    "DonationSteps": {
+      "NextButton": "Next",
+      "CancelButton": "Cancel",
+      "DoneButton": "Done",
+      "PreviousButton": "Previous"
+    },
+    "DonationItemList": {
+      "EditButton": "Edit",
+      "SaveButton": "Save",
+      "CancelButton": "Cancel",
+      "DonateButton": "Donate",
+      "Item": "Item",
+      "QuantityRequested": "Quantity requested",
+      "Description": "Description",
+      "QuantityToDonate": "Quantity to donate",
+      "Operation": "Operation"
+    }
   },
   "ServerError401": "Access not allowed. Please login.",
   "ServerError403": "Access forbidden. Please provide correct credentials.",
