@@ -1,5 +1,5 @@
 <nz-list
-  [nzDataSource]="isLoading ? mockData : (homeSandbox.donationRequests$ | async)"
+  [nzDataSource]="isLoading ? mockData : donationRequests"
   [nzRenderItem]="item"
   [nzGrid]="{ gutter: 16, span: 8 }"
   [nzPagination]="pagination"
@@ -28,6 +28,6 @@
 <ng-template #customTpl let-name>
   <div style="text-align: center;">
     <nz-empty [nzNotFoundContent]="null"></nz-empty>
-    <p>{{ 'NoEntries' | translate }}</p>
+    <p>{{ 'RequestDonation.NoEntries' | translate }}</p>
   </div>
 </ng-template>

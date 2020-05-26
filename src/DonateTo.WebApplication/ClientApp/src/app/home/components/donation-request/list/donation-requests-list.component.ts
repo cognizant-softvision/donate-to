@@ -1,4 +1,4 @@
-import { DonationRequestModel } from './../../../../shared/models/donation-request.model';
+import { DonationRequestModel } from './../../../../shared/models';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { Component, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { EventEmitter } from '@angular/core';
