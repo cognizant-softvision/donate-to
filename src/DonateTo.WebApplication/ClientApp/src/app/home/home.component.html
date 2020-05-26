@@ -1,4 +1,4 @@
-<div *ngIf="homeSandbox.isAuthenticated">{{ 'Auth.Username' || translate }}: {{ homeSandbox.userName }}</div>
+<div *ngIf="homeSandbox.isAuthenticated">{{ 'Auth.Username' | translate }}: {{ homeSandbox.userName }}</div>
 <div class="search">
   <nz-input-group [nzSuffix]="suffixIconSearch">
     <input
@@ -17,11 +17,8 @@
 
 <div class="donations-list">
   <app-donation-requests-list
-    [donationRequests]="requests"
-    (pageChange)="onPageChange($event)"
     [totalItems]="totalItems"
     [pageSize]="pageSize"
-    [loading]="homeSandbox.donationRequestsLoading$ | async"
     (showModal)="showModal($event)"
   ></app-donation-requests-list>
 </div>

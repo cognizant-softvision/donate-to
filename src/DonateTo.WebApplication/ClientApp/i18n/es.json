@@ -25,6 +25,7 @@
   "GridEmptyLabel": "No hay items disponibles",
   "MoreDetail": "Más detalles",
   "SearchPlaceHolder": "Escriba texto para buscar",
+  "NoEntries": "No hay datos",
   "ConfirmDialog": {
     "Title": "Por favor confirmar",
     "Content": "¿Quieres salir sin guardar los cambios?",

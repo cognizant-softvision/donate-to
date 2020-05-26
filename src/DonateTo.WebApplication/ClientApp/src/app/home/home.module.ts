@@ -8,6 +8,7 @@ import {
   NzButtonModule,
   NzCardModule,
   NzDividerModule,
+  NzEmptyModule,
   NzGridModule,
   NzIconModule,
   NzInputModule,
@@ -15,6 +16,7 @@ import {
   NzModalModule,
   NzPaginationModule,
   NzRateModule,
+  NzSkeletonModule,
   NzTagModule,
 } from 'ng-zorro-antd';
 import { HeartFill, SearchOutline } from '@ant-design/icons-angular/icons';
@@ -38,6 +40,8 @@ const icons = [HeartFill, SearchOutline];
     NzDividerModule,
     NzPaginationModule,
     NzButtonModule,
+    NzSkeletonModule,
+    NzEmptyModule,
     DonationRequestModule,
     TranslateModule,
     CommonModule,
