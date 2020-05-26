@@ -1,4 +1,5 @@
-﻿using DonateTo.ApplicationCore.Interfaces;
+﻿using DonateTo.ApplicationCore.Entities;
+using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Models.Pagination;
 using DonateTo.Infrastructure.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -118,6 +119,17 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
         public virtual async Task<PagedResult<TEntity>> GetPagedAsync(int page, int pageSize)
         {
             return await DbContext.Set<TEntity>().GetPagedAsync(page, pageSize).ConfigureAwait(false);
+        }
+
+        ///<inheritdoc cref="IRepository{TEntity}"/>
+        public virtual async Task<PagedResult<TEntity>> GetPagedAsync(Expression<Func<TEntity, bool>> filter, int page, int pageSize)
+        {
+            var query = DbContext.Set<TEntity>().AsQueryable();
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+            return await query.GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
     }
 }
