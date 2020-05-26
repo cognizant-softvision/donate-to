@@ -1,33 +1,37 @@
 <div class="donations-container">
   <nz-skeleton [nzLoading]="isLoading" [nzActive]="true">
     <div>
-      <nz-row>
-        <nz-col>
+      <div nz-row>
+        <div nz-col>
           <h2>
             {{ donation.title }}<span class="subtitle"> - {{ donation.organization?.name }}</span>
           </h2>
-        </nz-col>
-      </nz-row>
-      <nz-row>
+        </div>
+      </div>
+      <div nz-row>
         <span>
           {{ 'RequestDonation.Priority' | translate }}:
           <nz-rate [ngModel]="donation.priority" nzAllowHalf [nzCharacter]="heartIcon" disabled></nz-rate>
           <ng-template #heartIcon><i nz-icon nzType="heart" nzTheme="fill" className="rate-icon"></i></ng-template>
         </span>
-      </nz-row>
-      <nz-row>
-        <nz-col>
+      </div>
+      <div nz-row>
+        <div nz-col>
           <p>{{ donation.observation }}</p>
-        </nz-col>
-      </nz-row>
-      <nz-row>
-        <nz-col>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col>
           <span class="resources-title"> {{ 'RequestDonation.ResourcesNeeded' | translate }}:</span>
-        </nz-col>
-      </nz-row>
+        </div>
+      </div>
     </div>
     <div>
-      <app-donation-list></app-donation-list>
+      <app-donation-list (showDonationConfirmModal)="showDonationConfirmModal($event)"></app-donation-list>
     </div>
   </nz-skeleton>
 </div>
+
+<nz-modal nzClosable="false" [(nzVisible)]="showDonationConfirm" nzTitle="Confirmation of Donation" [nzFooter]="null">
+  <app-donation-confirm (showDonationConfirmModal)="showDonationConfirmModal($event)"></app-donation-confirm>
+</nz-modal>

@@ -8,7 +8,29 @@
     "ResourcesNeeded": "Recursos necesitados",
     "Priority": "Prioridad",
     "CreatedOn": "Creado",
-    "Finisheson": "Termina"
+    "Finisheson": "Termina",
+    "DonationDialog": {
+      "SaveButton": "Guardar",
+      "CancelButton": "Cancelar",
+      "EditButton": "Editar"
+    },
+    "DonationSteps": {
+      "NextButton": "Siguiente",
+      "CancelButton": "Cancelar",
+      "DoneButton": "Listo",
+      "PreviousButton": "Anterior"
+    },
+    "DonationItemList": {
+      "EditButton": "Editar",
+      "SaveButton": "Guardar",
+      "CancelButton": "Cancelar",
+      "DonateButton": "Doná",
+      "Item": "Item",
+      "QuantityRequested": "Cantidad requerida",
+      "Description": "Descripción",
+      "QuantityToDonate": "Cantidad a donar",
+      "Operation": "Operación"
+    }
   },
   "ServerError401": "Acceso no permitido. Por favor iniciar sesión.",
   "ServerError403": "Acceso prohibido. Por favor provea las credenciales correctas.",
