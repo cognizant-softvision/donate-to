@@ -53,7 +53,7 @@ namespace DonateTo.ApplicationCore.Entities
         /// <summary>
         /// Organization Id
         /// </summary>
-        public long OrganizationId { get; set; }
+        public long? OrganizationId { get; set; }
 
         /// <summary>
         /// Organization

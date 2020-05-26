@@ -727,6 +727,9 @@ namespace DonateTo.Infrastructure.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasColumnType("text");
 
+                    b.Property<long?>("OrganizationId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("PasswordHash")
                         .HasColumnType("text");
 
@@ -752,6 +755,8 @@ namespace DonateTo.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OrganizationId");
 
                     b.ToTable("User");
                 });
@@ -1018,6 +1023,13 @@ namespace DonateTo.Infrastructure.Migrations
                         .HasForeignKey("UnitTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.User", b =>
+                {
+                    b.HasOne("DonateTo.ApplicationCore.Entities.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId");
                 });
 
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.UserClaim", b =>
