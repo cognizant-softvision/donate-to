@@ -50,6 +50,8 @@ namespace DonateTo.ApplicationCore.Entities
         /// </summary>
         public DateTime UpdateDate { get; set; }
 
+        public long? OrganizationId { get; set; }
+
         [NotMapped]
         public string FullName { get => FirstName + " " + LastName; }
 
