@@ -11,6 +11,10 @@ a.navbar-brand {
   font-size: 2.5em;
 }
 
+.logo a:visited {
+  color: white;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -20,6 +24,7 @@ a.navbar-brand {
 html {
   font-size: 1.4em;
 }
+
 @media (min-width: 768px) {
   html {
     font-size: 1.6em;
