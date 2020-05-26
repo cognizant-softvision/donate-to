@@ -45,15 +45,33 @@
     <nz-form-item>
       <nz-form-label nzRequired nzFor="finishDate">Finish Date</nz-form-label>
       <nz-form-control>
-        <nz-date-picker></nz-date-picker>
+        <nz-date-picker
+          [(ngModel)]="donationRequest.finishDate"
+          formControlName="finishDateFormControl"
+        ></nz-date-picker>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-label nzRequired nzFor="donationCategories">Categories</nz-form-label>
       <nz-form-control>
-        <nz-tag *ngFor="let category of donationCategories" nzMode="checkable" [nzChecked]="false">
-          {{ category }}
-        </nz-tag>
+        <nz-select
+          [nzMaxTagCount]="2"
+          formControlName="categoryFormControl"
+          [(ngModel)]="selectedCategories"
+          [nzMaxTagPlaceholder]="categoryTagPlaceHolder"
+          nzMode="multiple"
+          nzPlaceHolder="Please select a Category"
+        >
+          <nz-option
+            *ngFor="let category of categories"
+            [nzLabel]="category.name"
+            [nzValue]="category"
+            [nzHide]="!IsCategorySelected(category)"
+          ></nz-option>
+        </nz-select>
+        <ng-template #categoryTagPlaceHolder let-selectedList>
+          and {{ selectedList.length }} more selected
+        </ng-template>
       </nz-form-control>
     </nz-form-item>
     <button class="donation-request-item-add" nz-button nzType="primary">Add Item</button>

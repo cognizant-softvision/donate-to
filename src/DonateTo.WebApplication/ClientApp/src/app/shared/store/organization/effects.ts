@@ -11,7 +11,7 @@ export class OrganizationEffects {
   loadOrganizations$: Observable<{}> = this.actions$.pipe(
     ofType(loadOrganizations),
     switchMap(() =>
-      this.organizationService.getOrganization().pipe(
+      this.organizationService.getOrganizations().pipe(
         map((organizations) => loadOrganizationsSuccess({ organizations })),
         catchError(() => of(loadOrganizationsFailed()))
       )

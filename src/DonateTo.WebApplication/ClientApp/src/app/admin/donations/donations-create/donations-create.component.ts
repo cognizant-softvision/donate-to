@@ -3,7 +3,9 @@ import { DonationsSandbox } from '../donations-sandbox';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   AddressModel,
+  CategoryModel,
   ColumnItem,
+  DonationRequestCategoryModel,
   DonationRequestItemModel,
   DonationRequestModel,
   OrganizationModel,
@@ -15,19 +17,23 @@ import {
   styleUrls: ['./donations-create.component.css'],
 })
 export class DonationsCreateComponent implements OnInit {
+  addresses: AddressModel[] = [];
+  categories: CategoryModel[] = [];
+  selectedCategories: CategoryModel[] = [];
+  donationRequest: DonationRequestModel;
+
   donationRequestFormGroup = new FormGroup({
     titleFormControl: new FormControl('', Validators.required),
     priorityFormControl: new FormControl('', Validators.required),
     organizationFormControl: new FormControl('', Validators.required),
     addressFormControl: new FormControl('', Validators.required),
+    categoryFormControl: new FormControl(this.selectedCategories, Validators.required),
     observationFormControl: new FormControl(),
+    finishDateFormControl: new FormControl(),
   });
-  donationRequest: DonationRequestModel;
-  donationCategories = ['Category1', 'Category2', 'Category3'];
-
-  priorityTooltips = ['low', 'low-medium', 'normal', 'medium', 'high'];
-  addresses: AddressModel[] = [];
+  // validation form required categories wont work
   organizations: OrganizationModel[] = [];
+  priorityTooltips = ['low', 'low-medium', 'normal', 'medium', 'high'];
 
   listOfColumns: ColumnItem[] = [
     { name: 'Item' },
@@ -47,15 +53,24 @@ export class DonationsCreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.SandBoxSubscriptionInit();
+
+    this.donationSandbox.LoadOrganizations();
+    this.donationSandbox.LoadCategories();
+  }
+
+  SandBoxSubscriptionInit() {
     this.donationSandbox.organizations$.subscribe((organizations) => {
       this.organizations = organizations;
+    });
+
+    this.donationSandbox.categories$.subscribe((categories) => {
+      this.categories = categories;
     });
 
     this.donationSandbox.addressesByOrganization$.subscribe((addresses) => {
       this.addresses = addresses;
     });
-
-    this.donationSandbox.LoadOrganizations();
   }
 
   SetOrganization() {
@@ -68,6 +83,24 @@ export class DonationsCreateComponent implements OnInit {
   }
 
   CreateDonationRequest() {
+    this.MapCategoriesToDonationRequestCategories();
     console.log('submit');
+  }
+
+  IsCategorySelected(category: CategoryModel) {
+    return this.selectedCategories.indexOf(category) === -1;
+  }
+
+  MapCategoriesToDonationRequestCategories() {
+    this.selectedCategories.forEach((category) => {
+      const donationRequestCategory = new DonationRequestCategoryModel();
+
+      donationRequestCategory.category = category;
+      donationRequestCategory.category.id = category.id;
+      donationRequestCategory.donationRequest = this.donationRequest;
+      donationRequestCategory.donationRequestId = this.donationRequest.id;
+
+      this.donationRequest.donationRequestCategories.push(donationRequestCategory);
+    });
   }
 }
