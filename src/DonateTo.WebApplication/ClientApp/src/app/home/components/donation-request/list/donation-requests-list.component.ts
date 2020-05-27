@@ -1,39 +1,43 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { DonationRequestModel } from './../../../../shared/models';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { Component, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { HomeSandbox } from 'src/app/home/home.sandbox';
+import { NzConfigService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-donation-requests-list',
   templateUrl: './donation-requests-list.component.html',
   styleUrls: ['./donation-requests-list.component.css'],
 })
-export class DonationRequestsListComponent implements OnInit {
-
-  constructor(public homeSandbox: HomeSandbox) {}
-  @Input() totalItems = 0;
-  @Input() currPage = 1;
-  @Input() pageSize = 6;
+export class DonationRequestsListComponent implements OnInit, OnDestroy {
+  private subscriptions: Subscription[] = [];
+  mockData = new Array(3).fill({});
+  donationRequests: DonationRequestModel[] = [];
+  isLoading = true;
 
   gutter = [8, 8];
   headStyle = {
     textAlign: 'left',
   };
 
+  @Input() totalItems = 0;
+  @Input() currentPage = 1;
+  @Input() pageSize = 6;
+
   @Output() showModal = new EventEmitter();
-  @Output() pageChange = new EventEmitter<number>();
+  @ViewChild('customTpl', { static: false }) customTpl?: TemplateRef<any>;
 
-  @Input() donationRequests = [];
-  @Input() loading = true;
-
-  dataSource = this.donationRequests;
-
-  onPageChange(page) {
-    this.currPage = page;
-    this.pageChange.emit(page);
-  }
+  constructor(public homeSandbox: HomeSandbox, private nzConfigService: NzConfigService) {}
 
   ngOnInit(): void {
-    this.dataSource = this.donationRequests;
+    this.getDonationRequests({ pageNumber: 1 });
+    this.registerEvents();
+    this.nzConfigService.set('empty', { nzDefaultEmptyContent: this.customTpl });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   showDetail(id) {
@@ -41,7 +45,26 @@ export class DonationRequestsListComponent implements OnInit {
     this.showModal.emit(item);
   }
 
-  onChange(newValue) {
-    this.dataSource = newValue;
+  refreshPagedItems(pagedItems) {
+    if (pagedItems) {
+      this.totalItems = pagedItems.rowCount;
+    }
+  }
+
+  getDonationRequests({ pageSize = this.pageSize, pageNumber }) {
+    this.pageSize = pageSize;
+    this.currentPage = pageNumber;
+    this.homeSandbox.loadDonationRequestsPaged(pageSize, pageNumber);
+  }
+
+  registerEvents() {
+    this.subscriptions.push(this.homeSandbox.donationRequestsPaged$.subscribe(this.refreshPagedItems.bind(this)));
+    this.subscriptions.push(this.homeSandbox.donationRequestsSearchPaged$.subscribe(this.refreshPagedItems.bind(this)));
+    this.subscriptions.push(
+      this.homeSandbox.donationRequests$.subscribe((donationRequests) => (this.donationRequests = donationRequests))
+    );
+    this.subscriptions.push(
+      this.homeSandbox.donationRequestsLoading$.subscribe((isLoading) => (this.isLoading = isLoading))
+    );
   }
 }
