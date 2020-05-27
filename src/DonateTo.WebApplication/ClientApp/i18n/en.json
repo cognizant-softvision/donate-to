@@ -9,6 +9,7 @@
     "Priority": "Priority",
     "CreatedOn": "Created on",
     "Finisheson": "Finishes on",
+    "NoEntries": "No new donation requests",
     "DonationDialog": {
       "SaveButton": "Save",
       "CancelButton": "Cancel",
@@ -47,6 +48,7 @@
   "GridEmptyLabel": "No available items",
   "MoreDetail": "More details",
   "SearchPlaceHolder": "input search text",
+  "NoEntries": "No entries",
   "ConfirmDialog": {
     "Title": "Please confirm",
     "Content": "Do you want to leave without saving the changes?",

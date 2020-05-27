@@ -37,39 +37,10 @@ export class HomeComponent implements OnInit {
 
   subscriptions: Subscription[] = [];
 
-  ngOnInit(): void {
-    this.homeSandbox.donationRequestsPaged$.subscribe((paged) => {
-      this.refreshPagedItems(paged);
-    });
-    this.homeSandbox.donationRequestsSearchPaged$.subscribe((paged) => {
-      this.refreshPagedItems(paged);
-    });
-
-    this.pageChange({ pageNumber: 1 });
-  }
-
-  refreshPagedItems(pagedItems) {
-    this.requests = pagedItems.results;
-    this.totalItems = pagedItems.rowCount;
-  }
-
-  onPageChange(pageNumber: any) {
-    this.pageChange({ pageNumber });
-  }
-
-  pageChange({ pageSize = this.pageSize, pageNumber }) {
-    this.pageSize = pageSize;
-    this.currentPage = pageNumber;
-
-    if (!this.searchValue) {
-      this.homeSandbox.loadDonationRequestsPaged(pageSize, pageNumber);
-    } else {
-      this.homeSandbox.loadDonationRequestsSearchPaged(pageSize, pageNumber, this.searchValue);
-    }
-  }
+  ngOnInit(): void {}
 
   onSearch() {
-    this.pageChange({ pageNumber: 1 });
+    this.homeSandbox.loadDonationRequestsSearchPaged(this.pageSize, this.currentPage, this.searchValue);
   }
 
   showModal(item: any) {
