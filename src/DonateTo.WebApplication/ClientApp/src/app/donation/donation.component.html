@@ -1,5 +1,5 @@
 <div class="donations-container">
-  <nz-skeleton [nzLoading]="isLoading" [nzActive]="true">
+  <nz-skeleton [nzLoading]="this.donationSandbox.donationRequestLoading$ | async" [nzActive]="true">
     <div>
       <div nz-row>
         <div nz-col>

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'https://localhost:44328',
+  baseUrl: 'https://localhost:5001',
   paths: {
     imagesRoot: '/src/assets/images/',
   },
