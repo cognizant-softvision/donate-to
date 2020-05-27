@@ -94,13 +94,11 @@ export class HomeComponent implements OnInit {
   }
 
   goToDonate(donationRequestId: any) {
-    this.hideModal();
-    this.router.navigate(['donation', donationRequestId]);
-    // if (this.homeSandbox.isAuthenticated) {
-    //   this.hideModal();
-    //   this.router.navigate(['donation', donationRequestId]);
-    // } else {
-    //   this.homeSandbox.login();
-    // }
+    if (this.homeSandbox.isAuthenticated) {
+      this.hideModal();
+      this.router.navigate(['donation', donationRequestId]);
+    } else {
+      this.homeSandbox.login();
+    }
   }
 }
