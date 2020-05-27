@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { DonationSandbox } from './donation.sandbox';
@@ -9,34 +9,48 @@ import { DonationRequestModel } from '../shared/models';
   templateUrl: './donation.component.html',
   styleUrls: ['./donation.component.css'],
 })
-export class DonationComponent implements OnInit {
-  constructor(protected router: ActivatedRoute, public donationSandbox: DonationSandbox) {
-    this.isLoading = true;
-  }
+export class DonationComponent implements OnInit, OnDestroy {
+  constructor(protected router: ActivatedRoute, public donationSandbox: DonationSandbox) {}
 
   donationRequestId: number;
 
-  isLoading: boolean;
-
   showDonationConfirm = false;
-
-  donation: DonationRequestModel;
 
   subscriptions: Subscription[] = [];
 
+  donation: DonationRequestModel;
+
   ngOnInit(): void {
-    this.router.params.subscribe((params: Params) => {
-      this.donationRequestId = params['donationRequestId'];
-      this.donationSandbox.loadDonationRequest(params['donationRequestId']);
-    });
+    this.registerEvents();
+  }
 
-    this.donationSandbox.donationRequest$.subscribe((donationRequest) => {
-      this.donation = donationRequest;
-    });
+  ngOnDestroy(): void {
+    this.unregisterEvents();
+  }
 
-    this.donationSandbox.donationRequestLoading$.subscribe((state) => {
-      this.isLoading = state;
-    });
+  /**
+   * Unsubscribes from events
+   */
+  unregisterEvents() {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+  /**
+   * Subscribes to events
+   */
+  registerEvents(): void {
+    this.subscriptions.push(
+      this.router.params.subscribe((params: Params) => {
+        this.donationRequestId = params['donationRequestId'];
+        this.donationSandbox.loadDonationRequest(params['donationRequestId']);
+      })
+    );
+
+    this.subscriptions.push(
+      this.donationSandbox.donationRequest$.subscribe((donationRequest) => {
+        this.donation = donationRequest;
+      })
+    );
   }
 
   showDonationConfirmModal(state: boolean): void {

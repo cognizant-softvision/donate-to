@@ -1,19 +1,22 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { DonationRequestItemModel, DonationRequestModel } from 'src/app/shared/models';
 import { DonationSandbox } from 'src/app/donation/donation.sandbox';
 import { NotificationsService } from 'src/app/shared/notifications/notifications.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-donation-list',
   templateUrl: './donation-list.component.html',
   styleUrls: ['./donation-list.component.css'],
 })
-export class DonationListComponent implements OnInit {
+export class DonationListComponent implements OnInit, OnDestroy {
   constructor(public donationSandbox: DonationSandbox, private notifiactionsService: NotificationsService) {}
 
   donationRequest: DonationRequestModel = new DonationRequestModel();
 
   @Output() showDonationConfirmModal = new EventEmitter();
+
+  subscriptions: Subscription[] = [];
 
   editCache: Array<{ edit: boolean; id: number; item: DonationRequestItemModel; quantityToDonate: number }> = [];
 
@@ -29,10 +32,30 @@ export class DonationListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.donationSandbox.donationRequest$.subscribe((donationRequest) => {
-      this.donationRequest = donationRequest;
-      this.updateEditCache();
-    });
+    this.registerEvents();
+  }
+
+  ngOnDestroy(): void {
+    this.unregisterEvents();
+  }
+
+  /**
+   * Unsubscribes from events
+   */
+  unregisterEvents() {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+  /**
+   * Subscribes to events
+   */
+  registerEvents(): void {
+    this.subscriptions.push(
+      this.donationSandbox.donationRequest$.subscribe((donationRequest) => {
+        this.donationRequest = donationRequest;
+        this.updateEditCache();
+      })
+    );
   }
 
   startEdit(id: number): void {
