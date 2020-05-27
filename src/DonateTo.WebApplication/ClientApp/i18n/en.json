@@ -9,6 +9,7 @@
     "Priority": "Priority",
     "CreatedOn": "Created on",
     "Finisheson": "Finishes on",
+    "NoEntries": "No new donation requests",
     "DonationDialog": {
       "SaveButton": "Save",
       "CancelButton": "Cancel",
@@ -31,8 +32,6 @@
       "QuantityToDonate": "Quantity to donate",
       "Operation": "Operation"
     }
-    "Finisheson": "Finishes on",
-    "NoEntries": "No new donation requests"
   },
   "ServerError401": "Access not allowed. Please login.",
   "ServerError403": "Access forbidden. Please provide correct credentials.",

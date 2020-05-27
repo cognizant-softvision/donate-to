@@ -8,7 +8,8 @@
     "ResourcesNeeded": "Recursos necesitados",
     "Priority": "Prioridad",
     "CreatedOn": "Creado",
-    "Finisheson": "Termina",
+    "Finisheson": "Termina el",
+    "NoEntries": "No hay nuevas solicitudes de donación",
     "DonationDialog": {
       "SaveButton": "Guardar",
       "CancelButton": "Cancelar",
@@ -31,8 +32,6 @@
       "QuantityToDonate": "Cantidad a donar",
       "Operation": "Operación"
     }
-    "Finisheson": "Termina el",
-    "NoEntries": "No hay nuevas solicitudes de donación"
   },
   "ServerError401": "Acceso no permitido. Por favor iniciar sesión.",
   "ServerError403": "Acceso prohibido. Por favor provea las credenciales correctas.",
