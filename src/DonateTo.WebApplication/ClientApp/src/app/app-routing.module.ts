@@ -15,6 +15,12 @@ const appRoutes: Routes = [
     canLoad: [AuthGuard],
   },
   {
+    path: 'donation',
+    loadChildren: () =>
+      import('./shared/containers/layout/donation-layout/donation-layout.module').then((m) => m.DonationLayoutModule),
+    canLoad: [AuthGuard],
+  },
+  {
     path: '**',
     loadChildren: () => import('./basic-pages/basic-pages.module').then((m) => m.BasicPagesModule),
   },
