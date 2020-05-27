@@ -1,27 +1,33 @@
 <nz-list
-  [nzDataSource]="donationRequests"
+  [nzDataSource]="isLoading ? mockData : donationRequests"
   [nzRenderItem]="item"
   [nzGrid]="{ gutter: 16, span: 8 }"
   [nzPagination]="pagination"
-  [nzLoading]="loading"
+  [nzNoResult]="customTpl"
 >
   <ng-template #item let-item>
-    <nz-list-item [nzContent]="nzContent">
-      <ng-template #nzContent>
+    <nz-list-item [nzContent]="isLoading ? '' : item">
+      <nz-skeleton [nzLoading]="isLoading" [nzActive]="true">
         <app-donation-requests-list-item
           [item]="item"
-          [loading]="loading"
+          [loading]="isLoading"
           (showDetail)="showDetail($event)"
         ></app-donation-requests-list-item>
-      </ng-template>
+      </nz-skeleton>
     </nz-list-item>
   </ng-template>
   <ng-template #pagination>
     <nz-pagination
-      [nzPageIndex]="currPage"
+      [nzPageIndex]="currentPage"
       [nzPageSize]="pageSize"
       [nzTotal]="totalItems"
-      (nzPageIndexChange)="onPageChange($event)"
+      (nzPageIndexChange)="getDonationRequests($event)"
     ></nz-pagination>
-  </ng-template> </nz-list
->`
+  </ng-template>
+</nz-list>
+<ng-template #customTpl let-name>
+  <div style="text-align: center;">
+    <nz-empty [nzNotFoundContent]="null"></nz-empty>
+    <p>{{ 'RequestDonation.NoEntries' | translate }}</p>
+  </div>
+</ng-template>

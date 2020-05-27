@@ -31,6 +31,8 @@
       "QuantityToDonate": "Cantidad a donar",
       "Operation": "Operación"
     }
+    "Finisheson": "Termina el",
+    "NoEntries": "No hay nuevas solicitudes de donación"
   },
   "ServerError401": "Acceso no permitido. Por favor iniciar sesión.",
   "ServerError403": "Acceso prohibido. Por favor provea las credenciales correctas.",
@@ -47,6 +49,7 @@
   "GridEmptyLabel": "No hay items disponibles",
   "MoreDetail": "Más detalles",
   "SearchPlaceHolder": "Escriba texto para buscar",
+  "NoEntries": "No hay datos",
   "ConfirmDialog": {
     "Title": "Por favor confirmar",
     "Content": "¿Quieres salir sin guardar los cambios?",
