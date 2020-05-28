@@ -14,5 +14,21 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// <param name="pageSize">Max number of rows in a specific page</param>
         /// <returns></returns>
         Task<PagedResult<User>> GetPagedUsersByOrganizationAsync(long organizationId, int page, int pageSize);
+
+        /// <summary>
+        /// Associates user to an Organization.
+        /// </summary>
+        /// <param name="userId"> Long user Id <param>
+        /// <param name="organizationId"> Long organization Id <param>
+        /// <returns>Task of User</returns>
+        Task<User> AssociateUserToOrganization(long userId, long organizationId);
+
+        /// <summary>
+        /// Change the role of an user to Admin.
+        /// </summary>
+        /// <param name="user"> User <param>
+        /// <param name="userId"> Long user Id <param>
+        /// <returns>Task of User Role</returns>
+        Task<User> ChangeRoleToAdmin(User user, long userId);
     }
 }

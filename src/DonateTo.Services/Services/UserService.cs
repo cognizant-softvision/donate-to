@@ -6,21 +6,55 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using DonateTo.Infrastructure.Data.Extensions;
+using DonateTo.Infrastructure.Data.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace DonateTo.Services
 {
     public class UserService : IUserService
     {
         private readonly IRepository<User> _userRepository;
+        private readonly IRepository<Organization> _organizationRepository;
+        private readonly IRepository<Role> _roleRepository;
 
         public UserService (
-            IRepository<User> userRepository)
+            IRepository<User> userRepository,
+            IRepository<Organization> organizationRepository,
+            IRepository<Role> roleRepository)
         {
             _userRepository = userRepository;
+            _organizationRepository = organizationRepository;
+            _roleRepository = roleRepository;
         }
 
-        public User Create(User entity)
+        public async Task<User> AssociateUserToOrganization(long userId, long organizationId)
+        {
+            var user = await _userRepository.Get(u => u.Id == userId).Include(u => u.UserRoles).FirstOrDefaultAsync().ConfigureAwait(false);
+            var organization = await _organizationRepository.GetAsync(organizationId).ConfigureAwait(false);
+
+            if (user == null || organization == null)
+            {
+                throw new ArgumentException("The user or organization does not exist.");
+            }
+
+            user.OrganizationId = organization.Id;
+            await _userRepository.UpdateAsync(user).ConfigureAwait(false);
+            return await ChangeRoleToAdmin(user, userId).ConfigureAwait(false);
+        }
+
+        public async Task<User> ChangeRoleToAdmin(User user, long userId)
+        {
+            var adminRole = await _roleRepository.Get(r => r.Name == "Admin").FirstOrDefaultAsync().ConfigureAwait(false);
+
+            user.UserRoles.Add(new UserRole(){
+                UserId = user.Id,
+                RoleId = adminRole.Id
+            });
+
+            return await _userRepository.UpdateAsync(user).ConfigureAwait(false);
+        }
+
+            public User Create(User entity)
         {
             throw new NotImplementedException();
         }
