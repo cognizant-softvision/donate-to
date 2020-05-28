@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import * as store from '../../../shared/store';
 import { AuthSandbox } from '../../auth/auth.sandbox';
 import { TranslateService } from '@ngx-translate/core';
+import { en_US, es_ES, NzI18nService } from 'ng-zorro-antd';
 
 @Injectable()
 export class NavMenuSandBox extends Sandbox {
@@ -13,7 +14,8 @@ export class NavMenuSandBox extends Sandbox {
   constructor(
     protected appState$: Store<store.State>,
     public authSandbox: AuthSandbox,
-    public translateService: TranslateService
+    public translateService: TranslateService,
+    protected i18n: NzI18nService
   ) {
     super(appState$);
     this.registerEvents();
@@ -38,6 +40,21 @@ export class NavMenuSandBox extends Sandbox {
    */
   switchLanguage(language: string) {
     this.translateService.use(language);
+
+    this.SetCurrentLocale(language);
+  }
+
+  // FIX the update of the i18n service should be place in an upper lvl
+  SetCurrentLocale(locale) {
+    switch (locale) {
+      case 'es':
+        this.i18n.setLocale(es_ES);
+        break;
+
+      default:
+        this.i18n.setLocale(en_US);
+        break;
+    }
   }
 
   /**

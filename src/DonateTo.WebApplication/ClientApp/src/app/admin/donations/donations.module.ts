@@ -3,7 +3,7 @@ import * as fromCategory from 'src/app/shared/store/category';
 import * as fromOrganization from 'src/app/shared/store/organization';
 import { AddressEffects } from 'src/app/shared/store/address';
 import { CategoryEffects } from 'src/app/shared/store/category';
-import { CommonModule } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { DonationsComponent } from './donations.component';
 import { DonationsCreateComponent } from './donations-create/donations-create.component';
 import { DonationsEditComponent } from './donations-edit/donations-edit.component';
@@ -35,6 +35,10 @@ import {
   NzTableModule,
   NzTagModule,
 } from 'ng-zorro-antd';
+
+// FIX this should be moved to an upper level.
+import es from '@angular/common/locales/es';
+registerLocaleData(es);
 
 const ICONS: IconDefinition[] = [PlusOutline];
 

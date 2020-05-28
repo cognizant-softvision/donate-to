@@ -3,9 +3,12 @@ import * as store from 'src/app/shared/store';
 import { Injectable } from '@angular/core';
 import { Sandbox } from 'src/app/shared/sandbox/base.sandbox';
 import { Store } from '@ngrx/store';
+import { CategorySerializer } from 'src/app/shared/utility/serializers/category-serializer';
+import { DonationRequestCategoryModel, DonationRequestItemCategoryModel } from 'src/app/shared/models';
 
 @Injectable()
 export class DonationsSandbox extends Sandbox {
+  private categorySerializer: CategorySerializer = new CategorySerializer();
   donationRequests$ = this.appState$.select(store.fromDonationRequest.getAllDonationRequests);
   organizations$ = this.appState$.select(store.fromOrganization.getAllOrganizations);
   categories$ = this.appState$.select(store.fromCategory.getAllCategories);
@@ -14,6 +17,24 @@ export class DonationsSandbox extends Sandbox {
   constructor(protected appState$: Store<store.State>) {
     super(appState$);
   }
+
+  /**
+   * Serialize CategoryModels to DonationRequestCategories
+   */
+  public MapCategoriesToDonationRequestCategories(donationRequest, categories): DonationRequestCategoryModel[] {
+    return this.categorySerializer.ToDonationRequestCategories(donationRequest, categories);
+  }
+
+  /**
+   * Serialize CategoryModels to DonationRequestItemCategories
+   */
+  public MapCategoriesToDonationRequestItemCategories(
+    donationRequestItem,
+    categories
+  ): DonationRequestItemCategoryModel[] {
+    return this.categorySerializer.ToDonationRequestItemCategories(donationRequestItem, categories);
+  }
+
   /**
    * Loads donationRequests from the server
    */

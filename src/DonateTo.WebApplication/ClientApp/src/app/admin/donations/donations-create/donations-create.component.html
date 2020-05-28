@@ -6,19 +6,25 @@
   <form [formGroup]="donationRequestFormGroup" nz-form (ngSubmit)="CreateDonationRequest()">
     <nz-form-item>
       <nz-form-label nzRequired nzFor="title">Title</nz-form-label>
-      <nz-form-control>
+      <nz-form-control nzErrorTip="Required Field">
         <input nz-input formControlName="titleFormControl" name="title" type="text" id="title" />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label nzRequired nzFor="priority">Priority</nz-form-label>
+      <nz-form-label nzFor="observations">Observations</nz-form-label>
       <nz-form-control>
+        <textarea nz-input formControlName="observationFormControl" name="observations" id="observations"></textarea>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzRequired nzFor="priority">Priority</nz-form-label>
+      <nz-form-control nzErrorTip="Required Field">
         <nz-rate formControlName="priorityFormControl" nzCount="5" [nzTooltips]="priorityTooltips"></nz-rate>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-label nzRequired nzFor="organization">Organization</nz-form-label>
-      <nz-form-control>
+      <nz-form-control nzErrorTip="Required Field">
         <nz-select
           [(ngModel)]="donationRequest.organization"
           (ngModelChange)="SetOrganization()"
@@ -31,9 +37,9 @@
     </nz-form-item>
     <nz-form-item>
       <nz-form-label nzRequired nzFor="address">Address</nz-form-label>
-      <nz-form-control>
+      <nz-form-control nzErrorTip="Required Field">
         <nz-select
-          [(ngModel)]="donationRequest.address"
+          [(ngModel)]="donationRequest.addressId"
           (ngModelChange)="SetAddress()"
           formControlName="addressFormControl"
           nzDisabled="{{ addresses.length == 0 }}"
@@ -44,16 +50,14 @@
     </nz-form-item>
     <nz-form-item>
       <nz-form-label nzRequired nzFor="finishDate">Finish Date</nz-form-label>
-      <nz-form-control>
-        <nz-date-picker
-          [(ngModel)]="donationRequest.finishDate"
-          formControlName="finishDateFormControl"
-        ></nz-date-picker>
+      <nz-form-control nzErrorTip="Required Field">
+        <nz-date-picker [(ngModel)]="donationRequest.finishDate" formControlName="finishDateFormControl">
+        </nz-date-picker>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
       <nz-form-label nzRequired nzFor="donationCategories">Categories</nz-form-label>
-      <nz-form-control>
+      <nz-form-control nzErrorTip="Required Field">
         <nz-select
           [nzMaxTagCount]="2"
           formControlName="categoryFormControl"
@@ -74,42 +78,119 @@
         </ng-template>
       </nz-form-control>
     </nz-form-item>
-    <button class="donation-request-item-add" nz-button nzType="primary">Add Item</button>
-    <nz-table
-      #donationRequestItemTable
-      [nzData]="donationRequestItems"
-      [nzShowPagination]="false"
-      [nzFrontPagination]="false"
-      [nzShowPagination]="false"
-      [nzScroll]="{ y: '240px' }"
-    >
-      <thead>
-        <tr>
-          <th *ngFor="let column of listOfColumns">
-            {{ column.name | translate }}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of donationRequestItemTable.data">
-          <td>{{ item.name }}</td>
-          <td>{{ item.finishQuantity }}</td>
-          <td>{{ item.observation }}</td>
-          <td>
-            <a>{{ 'Admin.Edit' | translate }}</a>
-            <nz-divider nzType="vertical"></nz-divider>
-            <a>{{ 'Admin.Delete' | translate }}</a>
-          </td>
-        </tr>
-      </tbody>
-    </nz-table>
+    <div [formGroup]="donationRequestItemFormGroup" class="create-donation-add-item-container">
+      <div class="create-donation-add-item-box-first">
+        <div>
+          <nz-form-label class="donatio-item" nzRequired>Name</nz-form-label>
+          <nz-form-label nzRequired>Observation</nz-form-label>
+        </div>
+        <div class="create-donation-add-item-input">
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Required Field">
+              <input nz-input formControlName="nameFormControl" name="itemName" type="text" id="itemName" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Required Field">
+              <input
+                nz-input
+                formControlName="observationFormControl"
+                name="itemObservation"
+                type="text"
+                id="itemObservation"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <div class="create-donation-add-item-box-second">
+        <div>
+          <nz-form-label class="donatio-item" nzRequired>Quantity</nz-form-label>
+          <nz-form-label nzRequired>Category</nz-form-label>
+        </div>
+        <div class="create-donation-add-item-input">
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Required Field">
+              <input
+                formControlName="quantityFormControl"
+                nz-input
+                name="itemQuantity"
+                type="number"
+                id="itemQuantity"
+              />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Required Field">
+              <nz-select
+                [nzMaxTagCount]="2"
+                [(ngModel)]="selectedItemCategories"
+                formControlName="itemCategoryFormControl"
+                [nzMaxTagPlaceholder]="categoryTagPlaceHolder"
+                nzMode="multiple"
+                nzPlaceHolder="Please select a Category"
+              >
+                <nz-option
+                  *ngFor="let category of categories"
+                  [nzLabel]="category.name"
+                  [nzValue]="category"
+                  [nzHide]="!IsItemCategorySelected(category)"
+                ></nz-option>
+              </nz-select>
+              <ng-template #categoryItemTagPlaceHolder let-selectedItemList>
+                and {{ selectedItemList.length }} more selected
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <button
+        type="button"
+        class="donation-request-item-add"
+        (click)="AddDonationRequestItem()"
+        nz-button
+        nzType="primary"
+      >
+        Add Item
+      </button>
+    </div>
     <br />
     <nz-form-item>
-      <nz-form-label nzFor="observations">Observations</nz-form-label>
-      <nz-form-control>
-        <textarea nz-input formControlName="observationFormControl" name="observations" id="observations"></textarea>
+      <nz-form-control nzErrorTip="Required Field">
+        <div [(ngModel)]="donationRequest.donationRequestItems" ngDefaultControl formControlName="itemsFormControl">
+          <nz-table
+            [nzData]="donationRequest.donationRequestItems"
+            [nzShowPagination]="false"
+            [nzFrontPagination]="false"
+            [nzShowPagination]="false"
+          >
+            <thead>
+              <tr>
+                <th *ngFor="let column of listOfColumns">
+                  {{ column.name | translate }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of donationRequest.donationRequestItems">
+                <td>{{ item.name }}</td>
+                <td>{{ item.finishQuantity }}</td>
+                <td>{{ item.observation }}</td>
+                <td>
+                  <nz-tag *ngFor="let category of item.donationRequestItemCategories">{{
+                    category.category.name
+                  }}</nz-tag>
+                </td>
+                <td>
+                  <a (click)="RemoveDonationRequestItem(item)">{{ 'Admin.Delete' | translate }}</a>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
       </nz-form-control>
     </nz-form-item>
+    <br />
     <div class="create-donation-form-buttons">
       <button nz-button nzType="primary" type="submit">
         Create Request

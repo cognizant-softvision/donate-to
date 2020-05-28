@@ -20,4 +20,6 @@ export abstract class Sandbox {
   public isLoginProcessed: boolean;
 
   constructor(protected appState$: Store<store.State>) {}
+
+  SetLanguage() {}
 }
