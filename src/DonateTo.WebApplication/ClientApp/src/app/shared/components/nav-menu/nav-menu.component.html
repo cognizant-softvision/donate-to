@@ -10,6 +10,9 @@
   </div>
   <ul nz-menu nzTheme="dark" nzMode="horizontal" class="float-right">
     <li nz-menu-item *ngIf="!navMenuSandbox.isAuthenticated">
+      <a (click)="register()"> {{ 'Auth.Register.Title' | translate }} </a>
+    </li>
+    <li nz-menu-item *ngIf="!navMenuSandbox.isAuthenticated">
       <a (click)="login()"> {{ 'Auth.Login.Title' | translate }} </a>
     </li>
     <li nz-menu-item *ngIf="navMenuSandbox.isAuthenticated">
