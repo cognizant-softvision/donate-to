@@ -17,6 +17,10 @@ export class NavMenuComponent {
     this.navMenuSandbox.login();
   }
 
+  register() {
+    this.navMenuSandbox.register();
+  }
+
   logout() {
     this.navMenuSandbox.logout();
   }
