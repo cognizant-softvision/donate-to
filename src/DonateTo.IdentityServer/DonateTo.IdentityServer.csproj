@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\DonateTo.Mailer\DonateTo.Mailer.csproj" />
     <ProjectReference Include="..\DonateTo.ApplicationCore\DonateTo.ApplicationCore.csproj" />
     <ProjectReference Include="..\DonateTo.Infrastructure\DonateTo.Infrastructure.csproj" />
     <ProjectReference Include="..\DonateTo.Services\DonateTo.Services.csproj" />
