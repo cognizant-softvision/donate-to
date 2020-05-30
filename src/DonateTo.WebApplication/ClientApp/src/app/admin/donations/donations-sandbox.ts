@@ -4,7 +4,11 @@ import { Injectable } from '@angular/core';
 import { Sandbox } from 'src/app/shared/sandbox/base.sandbox';
 import { Store } from '@ngrx/store';
 import { CategorySerializer } from 'src/app/shared/utility/serializers/category-serializer';
-import { DonationRequestCategoryModel, DonationRequestItemCategoryModel } from 'src/app/shared/models';
+import {
+  DonationRequestCategoryModel,
+  DonationRequestItemCategoryModel,
+  DonationRequestModel,
+} from 'src/app/shared/models';
 
 @Injectable()
 export class DonationsSandbox extends Sandbox {
@@ -40,6 +44,13 @@ export class DonationsSandbox extends Sandbox {
    */
   public loadDonationRequests(): void {
     this.appState$.dispatch(store.fromDonationRequest.loadDonationRequests());
+  }
+
+  /**
+   * Loads donationRequests from the server
+   */
+  public createDonationRequest(donationRequest: DonationRequestModel): void {
+    this.appState$.dispatch(store.fromDonationRequest.addDonationRequest({ donationRequest }));
   }
 
   /**

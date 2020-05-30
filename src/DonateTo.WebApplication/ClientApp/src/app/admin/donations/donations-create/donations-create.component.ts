@@ -19,14 +19,22 @@ import {
 export class DonationsCreateComponent implements OnInit {
   addresses: AddressModel[] = [];
   categories: CategoryModel[] = [];
+  donationRequest: DonationRequestModel;
+  listOfColumns: ColumnItem[] = [
+    { name: 'Item' },
+    { name: 'Quantity' },
+    { name: 'Observation' },
+    { name: 'Category' },
+    { name: 'Admin.Action' },
+  ];
+  organizations: OrganizationModel[] = [];
+  priorityTooltips = ['low', 'low-medium', 'normal', 'medium', 'high'];
   selectedCategories: CategoryModel[] = [];
   selectedItemCategories: CategoryModel[] = [];
-  donationRequest: DonationRequestModel;
-  organizations: OrganizationModel[] = [];
 
   donationRequestFormGroup = new FormGroup({
     titleFormControl: new FormControl('', Validators.required),
-    priorityFormControl: new FormControl('', Validators.required),
+    priorityFormControl: new FormControl('number', Validators.required),
     organizationFormControl: new FormControl('', [Validators.required]),
     addressFormControl: new FormControl('', Validators.required),
     categoryFormControl: new FormControl(this.selectedCategories, Validators.required),
@@ -41,16 +49,6 @@ export class DonationsCreateComponent implements OnInit {
     observationFormControl: new FormControl(),
     quantityFormControl: new FormControl('', Validators.required),
   });
-
-  priorityTooltips = ['low', 'low-medium', 'normal', 'medium', 'high'];
-
-  listOfColumns: ColumnItem[] = [
-    { name: 'Item' },
-    { name: 'Quantity' },
-    { name: 'Observation' },
-    { name: 'Category' },
-    { name: 'Admin.Action' },
-  ];
 
   constructor(public donationSandbox: DonationsSandbox, protected i18n: NzI18nService) {
     this.donationRequest = new DonationRequestModel();
@@ -82,6 +80,10 @@ export class DonationsCreateComponent implements OnInit {
 
     this.donationSandbox.addressesByOrganization$.subscribe((addresses) => {
       this.addresses = addresses;
+    });
+
+    this.donationSandbox.userId$.subscribe((id) => {
+      this.donationRequest.userId = id;
     });
   }
 
@@ -115,7 +117,7 @@ export class DonationsCreateComponent implements OnInit {
 
   AddDonationRequestItem() {
     this.ValidateFormGroup(this.donationRequestItemFormGroup);
-    if (this.donationRequestItemFormGroup.hasError) {
+    if (this.donationRequestItemFormGroup.valid) {
       const donationRequestItem = new DonationRequestItemModel();
       donationRequestItem.id = -1;
       donationRequestItem.name = this.donationRequestItemFormGroup.controls.nameFormControl.value;
@@ -139,5 +141,9 @@ export class DonationsCreateComponent implements OnInit {
 
   CreateDonationRequest() {
     this.ValidateFormGroup(this.donationRequestFormGroup);
+
+    if (this.donationRequestFormGroup.valid) {
+      this.donationSandbox.createDonationRequest(this.donationRequest);
+    }
   }
 }

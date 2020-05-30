@@ -19,7 +19,12 @@
     <nz-form-item>
       <nz-form-label nzRequired nzFor="priority">Priority</nz-form-label>
       <nz-form-control nzErrorTip="Required Field">
-        <nz-rate formControlName="priorityFormControl" nzCount="5" [nzTooltips]="priorityTooltips"></nz-rate>
+        <nz-rate
+          [(ngModel)]="donationRequest.priority"
+          formControlName="priorityFormControl"
+          nzCount="5"
+          [nzTooltips]="priorityTooltips"
+        ></nz-rate>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
@@ -39,7 +44,7 @@
       <nz-form-label nzRequired nzFor="address">Address</nz-form-label>
       <nz-form-control nzErrorTip="Required Field">
         <nz-select
-          [(ngModel)]="donationRequest.addressId"
+          [(ngModel)]="donationRequest.address"
           (ngModelChange)="SetAddress()"
           formControlName="addressFormControl"
           nzDisabled="{{ addresses.length == 0 }}"

@@ -40,7 +40,6 @@ export class NavMenuSandBox extends Sandbox {
    */
   switchLanguage(language: string) {
     this.translateService.use(language);
-
     this.SetCurrentLocale(language);
   }
 

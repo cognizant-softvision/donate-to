@@ -57,7 +57,7 @@ export class DonationRequestEffects {
   addDonationRequest$: Observable<{}> = this.actions$.pipe(
     ofType(addDonationRequest),
     switchMap((data: any) =>
-      this.donationRequestService.createDonationRequest(data.payload).pipe(
+      this.donationRequestService.createDonationRequest(data.donationRequest).pipe(
         map((donationRequest) => addDonationRequestSuccess({ donationRequest })),
         catchError(() => of(addDonationRequestFailed()))
       )
