@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using DonateTo.Infrastructure.Data.Extensions;
 
 namespace DonateTo.Services.Services
 {
@@ -51,7 +52,7 @@ namespace DonateTo.Services.Services
 
         public User Get(long id)
         {
-            throw new NotImplementedException();
+            return _userRepository.Get(id);
         }
 
         public Task<IEnumerable<User>> GetAsync(Expression<Func<User, bool>> filter)
@@ -59,19 +60,26 @@ namespace DonateTo.Services.Services
             throw new NotImplementedException();
         }
 
-        public Task<User> GetAsync(long id)
+        public async Task<User> GetAsync(long id)
         {
-            throw new NotImplementedException();
+            return await _userRepository.GetAsync(id).ConfigureAwait(false);
         }
 
         public PagedResult<User> GetPaged(int page, int pageSize)
         {
-            throw new NotImplementedException();
+            return _userRepository.GetPaged(page, pageSize);
         }
 
-        public Task<PagedResult<User>> GetPagedAsync(int page, int pageSize)
+        public async Task<PagedResult<User>> GetPagedAsync(int page, int pageSize)
+        {
+            return await _userRepository.GetPagedAsync(page, pageSize).ConfigureAwait(false);
+        }
+
+        public async Task<PagedResult<User>> GetPagedUsersByOrganizationAsync(long organizationId, int page, int pageSize)
         {
             throw new NotImplementedException();
+            //TODO: Uncomment the return line when x.organizationId is implemented
+            //return await _userRepository.GetPagedAsync(x => x.organizationId == organizationId, page, pageSize).ConfigureAwait(false);
         }
 
         public User Update(User entity, long id)

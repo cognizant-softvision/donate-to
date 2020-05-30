@@ -29,6 +29,13 @@ export class NavMenuSandBox extends Sandbox {
   }
 
   /**
+   * User register on the application
+   */
+  public register(): void {
+    this.authSandbox.register();
+  }
+
+  /**
    * User logs out the application
    */
   public logout(): void {
