@@ -141,8 +141,6 @@ export class DonationsCreateComponent implements OnInit {
         this.selectedCategories
       );
       this.donationSandbox.createDonationRequest(this.donationRequest);
-      //add Notification
-      this.router.navigate['donations'];
     }
   }
 }

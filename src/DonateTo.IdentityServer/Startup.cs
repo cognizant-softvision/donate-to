@@ -16,6 +16,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using IdentityServer4.EntityFramework.Mappers;
 using DonateTo.IdentityServer.Data.EntityFramework;
+using DonateTo.IdentityServer.Extensions;
+using DonateTo.IdentityServer.Services;
 
 namespace DonateTo.IdentityServer
 {
@@ -58,6 +60,7 @@ namespace DonateTo.IdentityServer
                 options.SignIn.RequireConfirmedEmail = identityOptions.GetSection("SignIn").GetValue<bool>("RequireConfirmedEmail");
             })
             .AddEntityFrameworkStores<DonateIdentityDbContext>()
+            .AddClaimsPrincipalFactory<ProfileService>()
             .AddDefaultTokenProviders();
 
             var builder = services.AddIdentityServer(options =>

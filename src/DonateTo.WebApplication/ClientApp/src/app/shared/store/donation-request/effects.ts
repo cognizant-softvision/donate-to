@@ -2,9 +2,6 @@ import {
   addDonationRequest,
   addDonationRequestFailed,
   addDonationRequestSuccess,
-  removeDonationRequest,
-  removeDonationRequestFailed,
-  removeDonationRequestSuccess,
   loadDonationRequests,
   loadDonationRequestsFailed,
   loadDonationRequestsPaged,
@@ -14,6 +11,9 @@ import {
   loadDonationRequestsSearchPagedFailed,
   loadDonationRequestsSearchPagedSuccess,
   loadDonationRequestsSuccess,
+  removeDonationRequest,
+  removeDonationRequestFailed,
+  removeDonationRequestSuccess,
 } from './actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { catchError, map, switchMap } from 'rxjs/operators';
