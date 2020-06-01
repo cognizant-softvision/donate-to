@@ -25,18 +25,15 @@ export class DonationsSandbox extends Sandbox {
   /**
    * Serialize CategoryModels to DonationRequestCategories
    */
-  public MapCategoriesToDonationRequestCategories(donationRequest, categories): DonationRequestCategoryModel[] {
-    return this.categorySerializer.ToDonationRequestCategories(donationRequest, categories);
+  public mapCategoriesToDonationRequestCategories(categories): DonationRequestCategoryModel[] {
+    return this.categorySerializer.ToDonationRequestCategories(categories);
   }
 
   /**
    * Serialize CategoryModels to DonationRequestItemCategories
    */
-  public MapCategoriesToDonationRequestItemCategories(
-    donationRequestItem,
-    categories
-  ): DonationRequestItemCategoryModel[] {
-    return this.categorySerializer.ToDonationRequestItemCategories(donationRequestItem, categories);
+  public mapCategoriesToDonationRequestItemCategories(categories): DonationRequestItemCategoryModel[] {
+    return this.categorySerializer.ToDonationRequestItemCategories(categories);
   }
 
   /**
@@ -56,21 +53,25 @@ export class DonationsSandbox extends Sandbox {
   /**
    * Loads organizations from the server
    */
-  public LoadOrganizations(): void {
+  public loadOrganizations(): void {
     this.appState$.dispatch(store.fromOrganization.loadOrganizations());
+  }
+
+  public deleteDonationRequest(donationRequest: DonationRequestModel) {
+    this.appState$.dispatch(store.fromDonationRequest.removeDonationRequest({ donationRequest }));
   }
 
   /**
    * Loads Categories from the server
    */
-  public LoadCategories(): void {
+  public loadCategories(): void {
     this.appState$.dispatch(store.fromCategory.loadCategories());
   }
 
   /**
    * Loads Addresses of an Organization from the server
    */
-  public LoadAddressesByOrganization(organizationId: number) {
+  public loadAddressesByOrganization(organizationId: number) {
     this.appState$.dispatch(store.fromAddress.loadAddressesByOrganizationId({ organizationId }));
   }
 }

@@ -2,6 +2,9 @@ import {
   addDonationRequest,
   addDonationRequestFailed,
   addDonationRequestSuccess,
+  removeDonationRequest,
+  removeDonationRequestFailed,
+  removeDonationRequestSuccess,
   loadDonationRequests,
   loadDonationRequestsFailed,
   loadDonationRequestsPaged,
@@ -60,6 +63,17 @@ export class DonationRequestEffects {
       this.donationRequestService.createDonationRequest(data.donationRequest).pipe(
         map((donationRequest) => addDonationRequestSuccess({ donationRequest })),
         catchError(() => of(addDonationRequestFailed()))
+      )
+    )
+  );
+
+  @Effect()
+  removeDonationRequest$: Observable<{}> = this.actions$.pipe(
+    ofType(removeDonationRequest),
+    switchMap((data: any) =>
+      this.donationRequestService.delete(data.donationRequest).pipe(
+        map((donationRequest) => removeDonationRequestSuccess({ donationRequest })),
+        catchError(() => of(removeDonationRequestFailed()))
       )
     )
   );

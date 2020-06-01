@@ -7,7 +7,14 @@
     <nz-form-item>
       <nz-form-label nzRequired nzFor="title">Title</nz-form-label>
       <nz-form-control nzErrorTip="Required Field">
-        <input nz-input formControlName="titleFormControl" name="title" type="text" id="title" />
+        <input
+          nz-input
+          [(ngModel)]="donationRequest.title"
+          formControlName="titleFormControl"
+          name="title"
+          type="text"
+          id="title"
+        />
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
@@ -31,11 +38,15 @@
       <nz-form-label nzRequired nzFor="organization">Organization</nz-form-label>
       <nz-form-control nzErrorTip="Required Field">
         <nz-select
-          [(ngModel)]="donationRequest.organization"
+          [(ngModel)]="donationRequest.organizationId"
           (ngModelChange)="SetOrganization()"
           formControlName="organizationFormControl"
         >
-          <nz-option *ngFor="let organization of organizations" [nzValue]="organization" [nzLabel]="organization.name">
+          <nz-option
+            *ngFor="let organization of organizations"
+            [nzValue]="organization.id"
+            [nzLabel]="organization.name"
+          >
           </nz-option>
         </nz-select>
       </nz-form-control>
@@ -44,12 +55,11 @@
       <nz-form-label nzRequired nzFor="address">Address</nz-form-label>
       <nz-form-control nzErrorTip="Required Field">
         <nz-select
-          [(ngModel)]="donationRequest.address"
-          (ngModelChange)="SetAddress()"
+          [(ngModel)]="donationRequest.addressId"
           formControlName="addressFormControl"
           nzDisabled="{{ addresses.length == 0 }}"
         >
-          <nz-option *ngFor="let address of addresses" [nzValue]="address" [nzLabel]="address.street"> </nz-option>
+          <nz-option *ngFor="let address of addresses" [nzValue]="address.id" [nzLabel]="address.street"> </nz-option>
         </nz-select>
       </nz-form-control>
     </nz-form-item>
@@ -121,6 +131,7 @@
                 nz-input
                 name="itemQuantity"
                 type="number"
+                min="0"
                 id="itemQuantity"
               />
             </nz-form-control>
@@ -182,9 +193,9 @@
                 <td>{{ item.finishQuantity }}</td>
                 <td>{{ item.observation }}</td>
                 <td>
-                  <nz-tag *ngFor="let category of item.donationRequestItemCategories">{{
-                    category.category.name
-                  }}</nz-tag>
+                  <nz-tag *ngFor="let itemCategory of item.donationRequestItemCategories">
+                    {{ GetCategoryName(itemCategory.categoryId) }}
+                  </nz-tag>
                 </td>
                 <td>
                   <a (click)="RemoveDonationRequestItem(item)">{{ 'Admin.Delete' | translate }}</a>

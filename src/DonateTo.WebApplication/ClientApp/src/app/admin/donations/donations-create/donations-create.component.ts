@@ -10,6 +10,7 @@ import {
   DonationRequestModel,
   OrganizationModel,
 } from 'src/app/shared/models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-donations-create',
@@ -34,8 +35,8 @@ export class DonationsCreateComponent implements OnInit {
 
   donationRequestFormGroup = new FormGroup({
     titleFormControl: new FormControl('', Validators.required),
-    priorityFormControl: new FormControl('number', Validators.required),
-    organizationFormControl: new FormControl('', [Validators.required]),
+    priorityFormControl: new FormControl('', Validators.required),
+    organizationFormControl: new FormControl('', Validators.required),
     addressFormControl: new FormControl('', Validators.required),
     categoryFormControl: new FormControl(this.selectedCategories, Validators.required),
     observationFormControl: new FormControl(),
@@ -44,19 +45,16 @@ export class DonationsCreateComponent implements OnInit {
   });
 
   donationRequestItemFormGroup = new FormGroup({
-    nameFormControl: new FormControl('', [Validators.required]),
+    nameFormControl: new FormControl('', Validators.required),
     itemCategoryFormControl: new FormControl(this.selectedItemCategories, Validators.required),
     observationFormControl: new FormControl(),
     quantityFormControl: new FormControl('', Validators.required),
   });
 
-  constructor(public donationSandbox: DonationsSandbox, protected i18n: NzI18nService) {
+  constructor(public donationSandbox: DonationsSandbox, protected i18n: NzI18nService, private router: Router) {
     this.donationRequest = new DonationRequestModel();
-    this.donationRequest.addressId = -1;
-    this.donationRequest.organizationId = -1;
-    this.donationRequest.priority = 0;
+    this.donationRequest.statusId = 2;
     this.donationRequest.donationRequestItems = [];
-    this.donationRequest.address = new AddressModel();
   }
 
   ngOnInit(): void {
@@ -65,8 +63,12 @@ export class DonationsCreateComponent implements OnInit {
     this.donationRequestFormGroup.controls.itemsFormControl.setValue(this.donationRequest.donationRequestItems);
     this.donationRequestFormGroup.controls.itemsFormControl.setValidators(Validators.required);
 
-    this.donationSandbox.LoadOrganizations();
-    this.donationSandbox.LoadCategories();
+    this.donationSandbox.loadOrganizations();
+    this.donationSandbox.loadCategories();
+  }
+
+  GetCategoryName(categoryId) {
+    return this.categories.find((w) => w.id === categoryId).name;
   }
 
   SandBoxSubscriptionInit() {
@@ -88,14 +90,9 @@ export class DonationsCreateComponent implements OnInit {
   }
 
   SetOrganization() {
-    if (this.donationRequest.organization !== undefined) {
-      this.donationRequest.organizationId = this.donationRequest.organization.id;
-      this.donationSandbox.LoadAddressesByOrganization(this.donationRequest.organization.id);
+    if (this.donationRequest.organizationId >= 0) {
+      this.donationSandbox.loadAddressesByOrganization(this.donationRequest.organizationId);
     }
-  }
-
-  SetAddress() {
-    this.donationRequest.addressId = this.donationRequest.address.id;
   }
 
   IsCategorySelected(category: CategoryModel) {
@@ -119,13 +116,10 @@ export class DonationsCreateComponent implements OnInit {
     this.ValidateFormGroup(this.donationRequestItemFormGroup);
     if (this.donationRequestItemFormGroup.valid) {
       const donationRequestItem = new DonationRequestItemModel();
-      donationRequestItem.id = -1;
       donationRequestItem.name = this.donationRequestItemFormGroup.controls.nameFormControl.value;
       donationRequestItem.observation = this.donationRequestItemFormGroup.controls.observationFormControl.value;
       donationRequestItem.finishQuantity = this.donationRequestItemFormGroup.controls.quantityFormControl.value;
-      donationRequestItem.donationRequestItemCategories = [];
-      donationRequestItem.donationRequestItemCategories = this.donationSandbox.MapCategoriesToDonationRequestItemCategories(
-        donationRequestItem,
+      donationRequestItem.donationRequestItemCategories = this.donationSandbox.mapCategoriesToDonationRequestItemCategories(
         this.selectedItemCategories
       );
 
@@ -143,7 +137,12 @@ export class DonationsCreateComponent implements OnInit {
     this.ValidateFormGroup(this.donationRequestFormGroup);
 
     if (this.donationRequestFormGroup.valid) {
+      this.donationRequest.donationRequestCategories = this.donationSandbox.mapCategoriesToDonationRequestCategories(
+        this.selectedCategories
+      );
       this.donationSandbox.createDonationRequest(this.donationRequest);
+      //add Notification
+      this.router.navigate['donations'];
     }
   }
 }

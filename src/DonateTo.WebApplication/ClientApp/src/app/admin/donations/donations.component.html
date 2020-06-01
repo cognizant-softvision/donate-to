@@ -10,7 +10,7 @@
     <button nz-button nzType="secondary">{{ 'Admin.ClearFilter' | translate }}</button>
     <button nz-button nzType="secondary">{{ 'Admin.ClearFilterAndSorted' | translate }}</button>
   </div>
-  <nz-table #donationTable [nzData]="donationsRequest">
+  <nz-table #donationTable [nzData]="donationRequests">
     <thead>
       <tr>
         <th
@@ -36,7 +36,7 @@
           <nz-divider nzType="vertical"></nz-divider>
           <a>{{ 'Admin.Edit' | translate }}</a>
           <nz-divider nzType="vertical"></nz-divider>
-          <a>{{ 'Admin.Delete' | translate }}</a>
+          <a (click)="DeleteDonationRequest(data)">{{ 'Admin.Delete' | translate }}</a>
         </td>
       </tr>
     </tbody>

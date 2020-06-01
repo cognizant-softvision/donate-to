@@ -73,6 +73,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [AllowAnonymous]
         public virtual async Task<IActionResult> Post([FromBody] T value)
         {
             var result = await _baseService.CreateAsync(value).ConfigureAwait(false);
@@ -110,6 +111,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [AllowAnonymous]
         public virtual async Task<IActionResult> Delete(long id)
         {
             await _baseService.DeleteAsync(id).ConfigureAwait(false);

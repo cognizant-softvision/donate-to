@@ -10,6 +10,17 @@ export const addDonationRequestSuccess = createAction(
   props<{ donationRequest: DonationRequestModel }>()
 );
 export const addDonationRequestFailed = createAction('[Donation Request] Add failed');
+
+export const removeDonationRequest = createAction(
+  '[Donation Request] Remove Donation Request',
+  props<{ donationRequest: DonationRequestModel }>()
+);
+export const removeDonationRequestSuccess = createAction(
+  '[Donation Request] Remove success',
+  props<{ donationRequest: DonationRequestModel }>()
+);
+export const removeDonationRequestFailed = createAction('[Donation Request] Remove failed');
+
 export const loadDonationRequests = createAction('[Donation Request] Load items from server');
 export const loadDonationRequestsSuccess = createAction(
   '[Donation Request] Load success',

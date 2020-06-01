@@ -10,6 +10,6 @@ namespace DonateTo.Services.Services
         public DonationRequestService(IRepository<DonationRequest> donationRequestRepository): base(donationRequestRepository)
         {
             _donationRequestRepository = donationRequestRepository;
-        }        
+        }
     }
 }

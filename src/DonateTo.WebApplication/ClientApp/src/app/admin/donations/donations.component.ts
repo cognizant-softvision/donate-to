@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class DonationsComponent implements OnInit {
   constructor(public donationSandBox: DonationsSandbox, protected router: Router) {}
 
-  donationsRequest: DonationRequestModel[] = [];
+  donationRequests: DonationRequestModel[] = [];
   listOfColumns: ColumnItem[] = [
     {
       name: 'Item',
@@ -30,9 +30,14 @@ export class DonationsComponent implements OnInit {
 
   ngOnInit(): void {
     this.donationSandBox.donationRequests$.subscribe((donations) => {
-      this.donationsRequest = donations;
+      this.donationRequests = donations;
     });
 
     this.donationSandBox.loadDonationRequests();
+  }
+
+  DeleteDonationRequest(donationRequest: DonationRequestModel) {
+    this.donationSandBox.deleteDonationRequest(donationRequest);
+    this.donationRequests = this.donationRequests.filter((item) => item !== donationRequest);
   }
 }
