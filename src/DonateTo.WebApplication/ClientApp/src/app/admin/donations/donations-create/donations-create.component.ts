@@ -1,7 +1,9 @@
+import differenceInCalendarDays from 'date-fns/differenceInCalendarDays';
 import { Component, OnInit } from '@angular/core';
 import { DonationsSandbox } from '../donations-sandbox';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NzI18nService } from 'ng-zorro-antd';
+import { Router } from '@angular/router';
 import {
   AddressModel,
   CategoryModel,
@@ -10,7 +12,6 @@ import {
   DonationRequestModel,
   OrganizationModel,
 } from 'src/app/shared/models';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-donations-create',
@@ -22,14 +23,13 @@ export class DonationsCreateComponent implements OnInit {
   categories: CategoryModel[] = [];
   donationRequest: DonationRequestModel;
   listOfColumns: ColumnItem[] = [
-    { name: 'Item' },
-    { name: 'Quantity' },
-    { name: 'Observation' },
-    { name: 'Category' },
+    { name: 'Admin.Donation.Table.ItemColumn' },
+    { name: 'Admin.Donation.Table.QuantityColumn' },
+    { name: 'Admin.Donation.Table.ObservationColumn' },
+    { name: 'Admin.Donation.Table.CategoryColumn' },
     { name: 'Admin.Action' },
   ];
   organizations: OrganizationModel[] = [];
-  priorityTooltips = ['low', 'low-medium', 'normal', 'medium', 'high'];
   selectedCategories: CategoryModel[] = [];
   selectedItemCategories: CategoryModel[] = [];
 
@@ -135,12 +135,13 @@ export class DonationsCreateComponent implements OnInit {
 
   CreateDonationRequest() {
     this.ValidateFormGroup(this.donationRequestFormGroup);
-
     if (this.donationRequestFormGroup.valid) {
       this.donationRequest.donationRequestCategories = this.donationSandbox.mapCategoriesToDonationRequestCategories(
         this.selectedCategories
       );
       this.donationSandbox.createDonationRequest(this.donationRequest);
+
+      this.router.navigate(['admin/donations']);
     }
   }
 }

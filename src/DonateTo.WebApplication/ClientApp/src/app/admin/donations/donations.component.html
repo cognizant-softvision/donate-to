@@ -36,7 +36,13 @@
           <nz-divider nzType="vertical"></nz-divider>
           <a>{{ 'Admin.Edit' | translate }}</a>
           <nz-divider nzType="vertical"></nz-divider>
-          <a (click)="DeleteDonationRequest(data)">{{ 'Admin.Delete' | translate }}</a>
+          <a
+            nz-popconfirm
+            nzPopconfirmTitle="{{ 'Admin.Donation.DeleteConfirmation' | translate }}"
+            nzPopconfirmPlacement="bottom"
+            (nzOnConfirm)="DeleteDonationRequest(data)"
+            >{{ 'Admin.Delete' | translate }}</a
+          >
         </td>
       </tr>
     </tbody>

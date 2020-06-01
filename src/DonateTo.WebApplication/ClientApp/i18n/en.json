@@ -77,7 +77,50 @@
     "Donation": {
       "Title": "Donations",
       "Create": {
-        "Title": "Create Donation"
+        "Title": "Create Donation",
+        "Form": {
+          "Title": "Title",
+          "TitleRequiredError": "Title is Required",
+          "TitlePlaceholder": "Please enter a Title",
+          "Observations": "Observations",
+          "ObservationsPlaceholder": "Request Observations",
+          "Priority": "Priority",
+          "PriorityRequiredError": "Priority is Required",
+          "Organization": "Organization",
+          "OrganizationRequiredError": "Organization is Required",
+          "OrganizationPlaceholder": "Please select a Organization",
+          "Address": "Address",
+          "AddressRequiredError": "Address is Required",
+          "AddressPlaceholder": "Please select a Address",
+          "FinishDate": "Finish Date",
+          "FinishDateRequiredError": "Finish Date is Required",
+          "Category": "Categories",
+          "CategoryRequiredError": "At least 1 Category is Required",
+          "CategoryPlaceholder": "Please select at least 1 Category",
+          "DonationItem": {
+            "Name": "Name",
+            "NameRequiredError": "Name is Required",
+            "NamePlaceholder": "Please enter a Name",
+            "Observation": "Observation",
+            "ObservationPlaceholder": "Item Request Observations",
+            "Quantity": "Quantity",
+            "QuantityRequiredError": "Quantity is Required",
+            "QuantityPlaceholder": "Please enter the Required Quantity"
+          },
+          "OverflowTag": "+ More Selected",
+          "DonationItemRequiredError": "At least 1 Item Request is Required",
+          "DeleteItemConfirmation": "Are you sure delete this Item Request?"
+        },
+        "AddItem": "Add Item",
+        "CreateRequest": "Create Request"
+      },
+      "DeleteConfirmation": "Are you shure you want to delete this Donation Request?",
+      "Table": {
+        "ItemColumn": "Item",
+        "FinishColumn": "Finish Date",
+        "ObservationColumn": "Observation",
+        "QuantityColumn": "Quantity",
+        "CategoryColumn": "Category"
       }
     },
     "User": {

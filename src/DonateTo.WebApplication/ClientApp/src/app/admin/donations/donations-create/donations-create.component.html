@@ -3,12 +3,13 @@
     <h4 class="section-title">{{ 'Admin.Donation.Create.Title' | translate }}</h4>
   </div>
   <br />
-  <form [formGroup]="donationRequestFormGroup" nz-form (ngSubmit)="CreateDonationRequest()">
+  <form [formGroup]="donationRequestFormGroup" nz-form>
     <nz-form-item>
-      <nz-form-label nzRequired nzFor="title">Title</nz-form-label>
-      <nz-form-control nzErrorTip="Required Field">
+      <nz-form-label nzRequired nzFor="title">{{ 'Admin.Donation.Create.Form.Title' | translate }}</nz-form-label>
+      <nz-form-control nzErrorTip="{{ 'Admin.Donation.Create.Form.TitleRequiredError' | translate }}">
         <input
           nz-input
+          placeholder="{{ 'Admin.Donation.Create.Form.TitlePlaceholder' | translate }}"
           [(ngModel)]="donationRequest.title"
           formControlName="titleFormControl"
           name="title"
@@ -18,26 +19,30 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label nzFor="observations">Observations</nz-form-label>
+      <nz-form-label nzFor="observations">{{ 'Admin.Donation.Create.Form.Observations' | translate }}</nz-form-label>
       <nz-form-control>
-        <textarea nz-input formControlName="observationFormControl" name="observations" id="observations"></textarea>
+        <textarea
+          nz-input
+          placeholder="{{ 'Admin.Donation.Create.Form.ObservationsPlaceholder' | translate }}"
+          formControlName="observationFormControl"
+          name="observations"
+          id="observations"
+        ></textarea>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label nzRequired nzFor="priority">Priority</nz-form-label>
-      <nz-form-control nzErrorTip="Required Field">
-        <nz-rate
-          [(ngModel)]="donationRequest.priority"
-          formControlName="priorityFormControl"
-          nzCount="5"
-          [nzTooltips]="priorityTooltips"
-        ></nz-rate>
+      <nz-form-label nzRequired nzFor="priority">{{ 'Admin.Donation.Create.Form.Priority' | translate }}</nz-form-label>
+      <nz-form-control nzErrorTip="{{ 'Admin.Donation.Create.Form.PriorityRequiredError' | translate }}">
+        <nz-rate [(ngModel)]="donationRequest.priority" formControlName="priorityFormControl" nzCount="5"></nz-rate>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label nzRequired nzFor="organization">Organization</nz-form-label>
-      <nz-form-control nzErrorTip="Required Field">
+      <nz-form-label nzRequired nzFor="organization">{{
+        'Admin.Donation.Create.Form.Organization' | translate
+      }}</nz-form-label>
+      <nz-form-control nzErrorTip="{{ 'Admin.Donation.Create.Form.OrganizationRequiredError' | translate }}">
         <nz-select
+          nzPlaceHolder="{{ 'Admin.Donation.Create.Form.OrganizationPlaceholder' | translate }}"
           [(ngModel)]="donationRequest.organizationId"
           (ngModelChange)="SetOrganization()"
           formControlName="organizationFormControl"
@@ -52,9 +57,10 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label nzRequired nzFor="address">Address</nz-form-label>
-      <nz-form-control nzErrorTip="Required Field">
+      <nz-form-label nzRequired nzFor="address">{{ 'Admin.Donation.Create.Form.Address' | translate }}</nz-form-label>
+      <nz-form-control nzErrorTip="{{ 'Admin.Donation.Create.Form.AddressRequiredError' | translate }}">
         <nz-select
+          nzPlaceHolder="{{ 'Admin.Donation.Create.Form.AddressPlaceholder' | translate }}"
           [(ngModel)]="donationRequest.addressId"
           formControlName="addressFormControl"
           nzDisabled="{{ addresses.length == 0 }}"
@@ -64,22 +70,26 @@
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label nzRequired nzFor="finishDate">Finish Date</nz-form-label>
-      <nz-form-control nzErrorTip="Required Field">
+      <nz-form-label nzRequired nzFor="finishDate">{{
+        'Admin.Donation.Create.Form.FinishDate' | translate
+      }}</nz-form-label>
+      <nz-form-control nzErrorTip="{{ 'Admin.Donation.Create.Form.FinishDateRequiredError' | translate }}">
         <nz-date-picker [(ngModel)]="donationRequest.finishDate" formControlName="finishDateFormControl">
         </nz-date-picker>
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label nzRequired nzFor="donationCategories">Categories</nz-form-label>
-      <nz-form-control nzErrorTip="Required Field">
+      <nz-form-label nzRequired nzFor="donationCategories">{{
+        'Admin.Donation.Create.Form.Category' | translate
+      }}</nz-form-label>
+      <nz-form-control nzErrorTip="{{ 'Admin.Donation.Create.Form.CategoryRequiredError' | translate }}">
         <nz-select
           [nzMaxTagCount]="2"
+          nzPlaceHolder="{{ 'Admin.Donation.Create.Form.CategoryPlaceholder' | translate }}"
           formControlName="categoryFormControl"
           [(ngModel)]="selectedCategories"
           [nzMaxTagPlaceholder]="categoryTagPlaceHolder"
           nzMode="multiple"
-          nzPlaceHolder="Please select a Category"
         >
           <nz-option
             *ngFor="let category of categories"
@@ -89,26 +99,36 @@
           ></nz-option>
         </nz-select>
         <ng-template #categoryTagPlaceHolder let-selectedList>
-          and {{ selectedList.length }} more selected
+          {{ selectedList.length }} {{ 'Admin.Donation.Create.Form.OverflowTag' | translate }}
         </ng-template>
       </nz-form-control>
     </nz-form-item>
     <div [formGroup]="donationRequestItemFormGroup" class="create-donation-add-item-container">
       <div class="create-donation-add-item-box-first">
         <div>
-          <nz-form-label class="donatio-item" nzRequired>Name</nz-form-label>
-          <nz-form-label nzRequired>Observation</nz-form-label>
+          <nz-form-label class="donatio-item" nzRequired>{{
+            'Admin.Donation.Create.Form.DonationItem.Name' | translate
+          }}</nz-form-label>
+          <nz-form-label>{{ 'Admin.Donation.Create.Form.DonationItem.Observation' | translate }}</nz-form-label>
         </div>
         <div class="create-donation-add-item-input">
           <nz-form-item>
-            <nz-form-control nzErrorTip="Required Field">
-              <input nz-input formControlName="nameFormControl" name="itemName" type="text" id="itemName" />
+            <nz-form-control nzErrorTip="{{ 'Admin.Donation.Create.Form.DonationItem.NameRequiredError' | translate }}">
+              <input
+                nz-input
+                placeholder="{{ 'Admin.Donation.Create.Form.DonationItem.NamePlaceholder' | translate }}"
+                formControlName="nameFormControl"
+                name="itemName"
+                type="text"
+                id="itemName"
+              />
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
-            <nz-form-control nzErrorTip="Required Field">
+            <nz-form-control>
               <input
                 nz-input
+                placeholder="{{ 'Admin.Donation.Create.Form.DonationItem.ObservationPlaceholder' | translate }}"
                 formControlName="observationFormControl"
                 name="itemObservation"
                 type="text"
@@ -120,15 +140,20 @@
       </div>
       <div class="create-donation-add-item-box-second">
         <div>
-          <nz-form-label class="donatio-item" nzRequired>Quantity</nz-form-label>
-          <nz-form-label nzRequired>Category</nz-form-label>
+          <nz-form-label class="donatio-item" nzRequired>{{
+            'Admin.Donation.Create.Form.DonationItem.Quantity' | translate
+          }}</nz-form-label>
+          <nz-form-label nzRequired>{{ 'Admin.Donation.Create.Form.Category' | translate }}</nz-form-label>
         </div>
         <div class="create-donation-add-item-input">
           <nz-form-item>
-            <nz-form-control nzErrorTip="Required Field">
+            <nz-form-control
+              nzErrorTip="{{ 'Admin.Donation.Create.Form.DonationItem.QuantityRequiredError' | translate }}"
+            >
               <input
-                formControlName="quantityFormControl"
                 nz-input
+                placeholder="{{ 'Admin.Donation.Create.Form.DonationItem.QuantityPlaceholder' | translate }}"
+                formControlName="quantityFormControl"
                 name="itemQuantity"
                 type="number"
                 min="1"
@@ -137,14 +162,14 @@
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
-            <nz-form-control nzErrorTip="Required Field">
+            <nz-form-control nzErrorTip="{{ 'Admin.Donation.Create.Form.CategoryRequiredError' | translate }}">
               <nz-select
                 [nzMaxTagCount]="2"
                 [(ngModel)]="selectedItemCategories"
                 formControlName="itemCategoryFormControl"
                 [nzMaxTagPlaceholder]="categoryTagPlaceHolder"
                 nzMode="multiple"
-                nzPlaceHolder="Please select a Category"
+                nzPlaceHolder="{{ 'Admin.Donation.Create.Form.CategoryPlaceholder' | translate }}"
               >
                 <nz-option
                   *ngFor="let category of categories"
@@ -154,7 +179,7 @@
                 ></nz-option>
               </nz-select>
               <ng-template #categoryItemTagPlaceHolder let-selectedItemList>
-                and {{ selectedItemList.length }} more selected
+                {{ selectedItemList.length }} {{ 'Admin.Donation.Create.Form.OverflowTag' | translate }}
               </ng-template>
             </nz-form-control>
           </nz-form-item>
@@ -167,12 +192,12 @@
         nz-button
         nzType="primary"
       >
-        Add Item
+        {{ 'Admin.Donation.Create.AddItem' | translate }}
       </button>
     </div>
     <br />
     <nz-form-item>
-      <nz-form-control nzErrorTip="Required Field">
+      <nz-form-control nzErrorTip="{{ 'Admin.Donation.Create.Form.DonationItemRequiredError' | translate }}">
         <div [(ngModel)]="donationRequest.donationRequestItems" ngDefaultControl formControlName="itemsFormControl">
           <nz-table
             [nzData]="donationRequest.donationRequestItems"
@@ -208,11 +233,19 @@
     </nz-form-item>
     <br />
     <div class="create-donation-form-buttons">
-      <button nz-button nzType="primary" type="submit">
-        Create Request
+      <button
+        nz-popconfirm
+        nzPopconfirmTitle="{{ 'Admin.Donation.Create.Form.DeleteItemConfirmation' | translate }}"
+        nzPopconfirmPlacement="bottom"
+        (nzOnConfirm)="CreateDonationRequest()"
+        nz-button
+        nzType="primary"
+        type="submit"
+      >
+        {{ 'Admin.Donation.Create.CreateRequest' | translate }}
       </button>
       <button routerLink=".." nz-button nzType="primary">
-        Volver
+        {{ 'BackBtn' | translate }}
       </button>
     </div>
   </form>

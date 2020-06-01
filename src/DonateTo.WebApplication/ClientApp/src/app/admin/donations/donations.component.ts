@@ -14,18 +14,10 @@ export class DonationsComponent implements OnInit {
 
   donationRequests: DonationRequestModel[] = [];
   listOfColumns: ColumnItem[] = [
-    {
-      name: 'Item',
-    },
-    {
-      name: 'Finish Date',
-    },
-    {
-      name: 'Observation',
-    },
-    {
-      name: 'Admin.Action',
-    },
+    { name: 'Admin.Donation.Table.ItemColumn' },
+    { name: 'Admin.Donation.Table.FinishColumn' },
+    { name: 'Admin.Donation.Table.ObservationColumn' },
+    { name: 'Admin.Action' },
   ];
 
   ngOnInit(): void {

@@ -1,6 +1,7 @@
 import * as fromAddress from 'src/app/shared/store/address';
 import * as fromCategory from 'src/app/shared/store/category';
 import * as fromOrganization from 'src/app/shared/store/organization';
+import es from '@angular/common/locales/es';
 import { AddressEffects } from 'src/app/shared/store/address';
 import { CategoryEffects } from 'src/app/shared/store/category';
 import { CommonModule, registerLocaleData } from '@angular/common';
@@ -29,6 +30,7 @@ import {
   NzInputModule,
   NzLayoutModule,
   NzMenuModule,
+  NzPopconfirmModule,
   NzRadioModule,
   NzRateModule,
   NzSelectModule,
@@ -37,7 +39,6 @@ import {
 } from 'ng-zorro-antd';
 
 // FIX this should be moved to an upper level.
-import es from '@angular/common/locales/es';
 registerLocaleData(es);
 
 const ICONS: IconDefinition[] = [PlusOutline];
@@ -48,6 +49,7 @@ const ICONS: IconDefinition[] = [PlusOutline];
     NzLayoutModule,
     NzMenuModule,
     NzRateModule,
+    NzPopconfirmModule,
     NzFormModule,
     NzTableModule,
     NzTagModule,
