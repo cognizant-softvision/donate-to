@@ -16,8 +16,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using IdentityServer4.EntityFramework.Mappers;
 using DonateTo.IdentityServer.Data.EntityFramework;
-using DonateTo.IdentityServer.Extensions;
 using DonateTo.IdentityServer.Services;
+using IdentityServer4.Services;
 
 namespace DonateTo.IdentityServer
 {
@@ -26,7 +26,7 @@ namespace DonateTo.IdentityServer
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment Environment { get; set; }
 
-        public Startup(IConfiguration configuration, 
+        public Startup(IConfiguration configuration,
             IWebHostEnvironment env)
         {
             Configuration = configuration;
@@ -40,54 +40,66 @@ namespace DonateTo.IdentityServer
             services.AddControllersWithViews();
 
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
-           
+
             services.AddDbContext<DonateIdentityDbContext>(options =>
                 options.UseNpgsql(connectionString));
 
             services.AddDonateToModule(Configuration);
+
             services.AddAutoMapper(typeof(Startup));
 
+            services.AddTransient<IProfileService, ProfileService>();
+
             var identityOptions = Configuration.GetSection("Identity").GetSection("Options");
+            
 
             services.AddIdentity<User, Role>(options =>
-            {
-                options.Password.RequiredLength = identityOptions.GetSection("Password").GetValue<int>("RequiredLength");
-                options.Password.RequireDigit = identityOptions.GetSection("Password").GetValue<bool>("RequireDigit");
-                options.Password.RequireUppercase = identityOptions.GetSection("Password").GetValue<bool>("RequireUppercase");
-                options.Password.RequireLowercase = identityOptions.GetSection("Password").GetValue<bool>("RequireLowercase");
-                options.Password.RequireNonAlphanumeric = identityOptions.GetSection("Password").GetValue<bool>("RequireNonAlphanumeric");
-                options.User.RequireUniqueEmail = identityOptions.GetSection("User").GetValue<bool>("RequireUniqueEmail");
-                options.SignIn.RequireConfirmedEmail = identityOptions.GetSection("SignIn").GetValue<bool>("RequireConfirmedEmail");
-            })
-            .AddEntityFrameworkStores<DonateIdentityDbContext>()
-            .AddClaimsPrincipalFactory<ProfileService>()
-            .AddDefaultTokenProviders();
+                {
+                    options.Password.RequiredLength =
+                        identityOptions.GetSection("Password").GetValue<int>("RequiredLength");
+                    options.Password.RequireDigit =
+                        identityOptions.GetSection("Password").GetValue<bool>("RequireDigit");
+                    options.Password.RequireUppercase =
+                        identityOptions.GetSection("Password").GetValue<bool>("RequireUppercase");
+                    options.Password.RequireLowercase =
+                        identityOptions.GetSection("Password").GetValue<bool>("RequireLowercase");
+                    options.Password.RequireNonAlphanumeric = identityOptions.GetSection("Password")
+                        .GetValue<bool>("RequireNonAlphanumeric");
+                    options.User.RequireUniqueEmail =
+                        identityOptions.GetSection("User").GetValue<bool>("RequireUniqueEmail");
+                    options.SignIn.RequireConfirmedEmail =
+                        identityOptions.GetSection("SignIn").GetValue<bool>("RequireConfirmedEmail");
+                })
+                .AddEntityFrameworkStores<DonateIdentityDbContext>()
+                .AddDefaultTokenProviders();
 
             var builder = services.AddIdentityServer(options =>
-            {
-                options.Events.RaiseErrorEvents = true;
-                options.Events.RaiseInformationEvents = true;
-                options.Events.RaiseFailureEvents = true;
-                options.Events.RaiseSuccessEvents = true;
-                options.UserInteraction.LoginUrl = "/Account/Login";
-                options.UserInteraction.LogoutUrl = "/Account/Logout";
-                options.Authentication = new AuthenticationOptions()
                 {
-                    CookieLifetime = TimeSpan.FromHours(10), // ID server cookie timeout set to 10 hours
-                    CookieSlidingExpiration = true
-                };
-            })
-            .AddConfigurationStore<CustomConfigurationDbContext>(options =>
-            {
-                options.ConfigureDbContext = b => b.UseNpgsql(connectionString,
-                    sql => sql.MigrationsAssembly(migrationsAssembly));
-            })
-            .AddOperationalStore<CustomPersistedGrantDbContext>(options =>
-            {
-                options.ConfigureDbContext = b => b.UseNpgsql(connectionString,
-                    sql => sql.MigrationsAssembly(migrationsAssembly));
-            })
-            .AddAspNetIdentity<User>();
+                    options.Events.RaiseErrorEvents = true;
+                    options.Events.RaiseInformationEvents = true;
+                    options.Events.RaiseFailureEvents = true;
+                    options.Events.RaiseSuccessEvents = true;
+                    options.UserInteraction.LoginUrl = "/Account/Login";
+                    options.UserInteraction.LogoutUrl = "/Account/Logout";
+                    options.Authentication = new AuthenticationOptions()
+                    {
+                        CookieLifetime = TimeSpan.FromHours(10), // ID server cookie timeout set to 10 hours
+                        CookieSlidingExpiration = true
+                    };
+                })
+
+                .AddConfigurationStore<CustomConfigurationDbContext>(options =>
+                {
+                    options.ConfigureDbContext = b => b.UseNpgsql(connectionString,
+                        sql => sql.MigrationsAssembly(migrationsAssembly));
+                })
+                .AddOperationalStore<CustomPersistedGrantDbContext>(options =>
+                {
+                    options.ConfigureDbContext = b => b.UseNpgsql(connectionString,
+                        sql => sql.MigrationsAssembly(migrationsAssembly));
+                })
+                .AddAspNetIdentity<User>()
+                .AddProfileService<ProfileService>();
 
             //Need to handle credentials for production
             builder.AddDeveloperSigningCredential();
