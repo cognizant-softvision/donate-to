@@ -16,6 +16,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using IdentityServer4.EntityFramework.Mappers;
 using DonateTo.IdentityServer.Data.EntityFramework;
+using DonateTo.IdentityServer.Services;
+using DonateTo.IdentityServer.Data.Repositories.Interfaces;
+using DonateTo.IdentityServer.Data.Repositories;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace DonateTo.IdentityServer
 {
@@ -44,6 +48,10 @@ namespace DonateTo.IdentityServer
 
             services.AddDonateToModule(Configuration);
             services.AddAutoMapper(typeof(Startup));
+
+            services.AddTransient<IClientService, ClientService>();
+            services.AddTransient<IClientRepository, ClientRepository>();
+
 
             var identityOptions = Configuration.GetSection("Identity").GetSection("Options");
 
