@@ -34,6 +34,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DonateTo.Mailer", "DonateTo.Mailer\DonateTo.Mailer.csproj", "{6E0A9AD5-5B4B-466A-A900-F007506683F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,10 @@ Global
 		{636155F7-16E6-45F5-85C9-1E529B06817B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{636155F7-16E6-45F5-85C9-1E529B06817B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{636155F7-16E6-45F5-85C9-1E529B06817B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E0A9AD5-5B4B-466A-A900-F007506683F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E0A9AD5-5B4B-466A-A900-F007506683F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E0A9AD5-5B4B-466A-A900-F007506683F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E0A9AD5-5B4B-466A-A900-F007506683F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,6 +86,7 @@ Global
 		{B7CDD2F4-0141-4478-BF99-84364CD6096B} = {C1117B7E-E65B-475F-AAE2-BE600492E1B4}
 		{AB756B53-F64D-4687-B759-58DBCD3EC9DF} = {2DE916E0-E9D1-4544-9ED4-75757F2AA26E}
 		{636155F7-16E6-45F5-85C9-1E529B06817B} = {C1117B7E-E65B-475F-AAE2-BE600492E1B4}
+		{6E0A9AD5-5B4B-466A-A900-F007506683F8} = {C1117B7E-E65B-475F-AAE2-BE600492E1B4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {85DEEDE1-5E8B-4F35-B52D-9517F3EA260B}

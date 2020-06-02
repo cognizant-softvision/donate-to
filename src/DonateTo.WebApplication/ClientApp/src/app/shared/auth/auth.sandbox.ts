@@ -34,6 +34,10 @@ export class AuthSandbox extends Sandbox {
     this.authService.initCodeFlow();
   }
 
+  public register(): void {
+    document.location.href = this.authService.issuer + '/Account/Register';
+  }
+
   /**
    * Dispatches a logout action to redirect to identity provider logout page
    */
