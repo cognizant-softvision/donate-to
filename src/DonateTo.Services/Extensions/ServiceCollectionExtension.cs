@@ -22,7 +22,7 @@ namespace DonateTo.Services.Extensions
             service.AddTransient<IBaseService<DonationRequest>, DonationRequestService>();
             service.AddTransient<ISearchService, SearchService>();
             service.AddTransient<IBaseService<Organization>, OrganizationService>();
-            service.AddTransient<IAddressService, AddressService>();
+            service.AddTransient<IBaseService<Address>, AddressService>();
             service.AddTransient<IBaseService<Category>, CategoryService>();
         }
     }

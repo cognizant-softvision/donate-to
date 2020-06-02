@@ -17,7 +17,7 @@ export class AddressService extends BaseHttpClientService<AddressModel> {
 
   getAddressesByOrganizationId(organizationId: number): Observable<AddressModel[]> {
     return this.httpClient.get<AddressModel[]>(
-      `${this.url}/${this.endpoint}/GetByOrganizationId?organizationId=${organizationId.toString()}`
+      `${this.url}/${this.endpoint}/GetByOrganization?organizationId=${organizationId.toString()}`
     );
   }
 }
