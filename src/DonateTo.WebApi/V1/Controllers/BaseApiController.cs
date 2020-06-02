@@ -31,10 +31,10 @@ namespace DonateTo.WebApi.V1.Controllers
         /// </summary>
         /// <returns>Status 200 if the request has succeeded or
         ///  Status 500 if that have an error</returns>
+        [AllowAnonymous]
         [HttpGet(Name = "[controller]_[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [AllowAnonymous]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "<Pending>")]
         public virtual async Task<ActionResult<IEnumerable<T>>> Get()
         {
@@ -73,7 +73,6 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [AllowAnonymous]
         public virtual async Task<IActionResult> Post([FromBody] T value)
         {
             var result = await _baseService.CreateAsync(value).ConfigureAwait(false);
@@ -111,7 +110,6 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [AllowAnonymous]
         public virtual async Task<IActionResult> Delete(long id)
         {
             await _baseService.DeleteAsync(id).ConfigureAwait(false);
@@ -120,7 +118,6 @@ namespace DonateTo.WebApi.V1.Controllers
             return Ok();
         }
 
-        [AllowAnonymous]
         [HttpGet("paged", Name = "[controller]_[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
