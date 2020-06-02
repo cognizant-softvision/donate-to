@@ -7,7 +7,7 @@ using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models.Pagination;
 
-namespace DonateTo.Services.Services
+namespace DonateTo.Services
 {
     public class AddressService : IAddressService
     {

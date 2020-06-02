@@ -4,7 +4,7 @@ using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Interfaces;
 
-namespace DonateTo.Services.Services
+namespace DonateTo.Services
 {
     public class SearchService: ISearchService
     {

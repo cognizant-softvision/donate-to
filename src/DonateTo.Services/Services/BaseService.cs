@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace DonateTo.Services.Services
+namespace DonateTo.Services
 {
     public abstract class BaseService<TEntity>: IBaseService<TEntity> where TEntity: EntityBase
     {

@@ -1,9 +1,7 @@
 using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.Infrastructure.Extensions;
-using DonateTo.Services.Services;
 using Microsoft.Extensions.Configuration;
-using DonateTo.Services.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DonateTo.Services.Extensions
