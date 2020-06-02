@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'https://localhost:5001',
+  baseUrl: 'https://localhost:44328',
   paths: {
     imagesRoot: '/src/assets/images/',
   },
@@ -27,7 +27,7 @@ export const environment = {
     redirectUri: 'http://localhost:4200',
     clientId: 'DonateTo.WebAplication',
     responseType: 'code',
-    scope: 'openid profile',
+    scope: 'openid profile DonateTo.WebApi',
     showDebugInformation: true,
     clearHashAfterLogin: true,
     nonceStateSeparator: 'semicolon',

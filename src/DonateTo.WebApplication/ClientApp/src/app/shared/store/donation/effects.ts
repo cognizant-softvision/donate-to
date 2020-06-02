@@ -1,4 +1,11 @@
-import { loadDonationRequest, loadDonationRequestFailed, loadDonationRequestSuccess } from './actions';
+import {
+  addDonation,
+  addDonationFailed,
+  addDonationSuccess,
+  loadDonationRequest,
+  loadDonationRequestFailed,
+  loadDonationRequestSuccess,
+} from './actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
@@ -14,6 +21,17 @@ export class DonationRequestEffects {
       this.donationRequestService.getDonationRequest(id).pipe(
         map((donationRequest) => loadDonationRequestSuccess({ donationRequest })),
         catchError(() => of(loadDonationRequestFailed()))
+      )
+    )
+  );
+
+  @Effect()
+  addDonation$: Observable<{}> = this.actions$.pipe(
+    ofType(addDonation),
+    switchMap(({ id }) =>
+      this.donationRequestService.getDonationRequests().pipe(
+        // map((donationRequest) => addDonationSuccess({ donationRequest })),
+        catchError(() => of(addDonationFailed()))
       )
     )
   );
