@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DonateTo.ApplicationCore.Entities;
@@ -27,7 +25,6 @@ namespace DonateTo.WebApi.V1.Controllers
         /// </summary>
         /// <param name="organizationId">ID of the Organization resource to be search.</param>
         /// <returns>Status 200 if the request has succeeded,
-        /// Status 404 if not found the request or
         /// Status 500 if that have an error</returns>
         [HttpGet("[action]", Name = "[controller]_[action]")]
         [AllowAnonymous]
