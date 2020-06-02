@@ -1,9 +1,9 @@
-import differenceInCalendarDays from 'date-fns/differenceInCalendarDays';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DonationsSandbox } from '../donations-sandbox';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NzI18nService } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import {
   AddressModel,
   CategoryModel,
@@ -18,7 +18,8 @@ import {
   templateUrl: './donations-create.component.html',
   styleUrls: ['./donations-create.component.css'],
 })
-export class DonationsCreateComponent implements OnInit {
+export class DonationsCreateComponent implements OnInit, OnDestroy {
+  private subscriptions: Subscription[] = [];
   addresses: AddressModel[] = [];
   categories: CategoryModel[] = [];
   donationRequest: DonationRequestModel;
@@ -58,7 +59,7 @@ export class DonationsCreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.SandBoxSubscriptionInit();
+    this.sandBoxSubscriptionInit();
 
     this.donationRequestFormGroup.controls.itemsFormControl.setValue(this.donationRequest.donationRequestItems);
     this.donationRequestFormGroup.controls.itemsFormControl.setValidators(Validators.required);
@@ -67,39 +68,51 @@ export class DonationsCreateComponent implements OnInit {
     this.donationSandbox.loadCategories();
   }
 
-  GetCategoryName(categoryId) {
+  ngOnDestroy(): void {
+    this.unregisterEvents();
+  }
+
+  getCategoryName(categoryId) {
     return this.categories.find((w) => w.id === categoryId).name;
   }
 
-  SandBoxSubscriptionInit() {
-    this.donationSandbox.organizations$.subscribe((organizations) => {
-      this.organizations = organizations;
-    });
+  private sandBoxSubscriptionInit() {
+    this.subscriptions.push(
+      this.donationSandbox.organizations$.subscribe((organizations) => {
+        this.organizations = organizations;
+      })
+    );
 
-    this.donationSandbox.categories$.subscribe((categories) => {
-      this.categories = categories;
-    });
+    this.subscriptions.push(
+      this.donationSandbox.categories$.subscribe((categories) => {
+        this.categories = categories;
+      })
+    );
 
-    this.donationSandbox.addressesByOrganization$.subscribe((addresses) => {
-      this.addresses = addresses;
-    });
+    this.subscriptions.push(
+      this.donationSandbox.addressesByOrganization$.subscribe((addresses) => {
+        this.addresses = addresses;
+      })
+    );
 
-    this.donationSandbox.userId$.subscribe((id) => {
-      this.donationRequest.userId = id;
-    });
+    this.subscriptions.push(
+      this.donationSandbox.userId$.subscribe((id) => {
+        this.donationRequest.userId = id;
+      })
+    );
   }
 
-  SetOrganization() {
+  setOrganization() {
     if (this.donationRequest.organizationId >= 0) {
       this.donationSandbox.loadAddressesByOrganization(this.donationRequest.organizationId);
     }
   }
 
-  IsCategorySelected(category: CategoryModel) {
+  isCategorySelected(category: CategoryModel) {
     return this.selectedCategories.indexOf(category) === -1;
   }
 
-  ValidateFormGroup(formGroup: FormGroup) {
+  validateFormGroup(formGroup: FormGroup) {
     for (const i in formGroup.controls) {
       if (formGroup.controls.hasOwnProperty(i)) {
         formGroup.controls[i].markAsDirty();
@@ -108,12 +121,12 @@ export class DonationsCreateComponent implements OnInit {
     }
   }
 
-  IsItemCategorySelected(category: CategoryModel) {
+  isItemCategorySelected(category: CategoryModel) {
     return this.selectedItemCategories.indexOf(category) === -1;
   }
 
-  AddDonationRequestItem() {
-    this.ValidateFormGroup(this.donationRequestItemFormGroup);
+  addDonationRequestItem() {
+    this.validateFormGroup(this.donationRequestItemFormGroup);
     if (this.donationRequestItemFormGroup.valid) {
       const donationRequestItem = new DonationRequestItemModel();
       donationRequestItem.name = this.donationRequestItemFormGroup.controls.nameFormControl.value;
@@ -127,14 +140,14 @@ export class DonationsCreateComponent implements OnInit {
     }
   }
 
-  RemoveDonationRequestItem(donationRequestItemTarget: DonationRequestItemModel) {
+  removeDonationRequestItem(donationRequestItemTarget: DonationRequestItemModel) {
     this.donationRequest.donationRequestItems = this.donationRequest.donationRequestItems.filter(
       (item) => item !== donationRequestItemTarget
     );
   }
 
-  CreateDonationRequest() {
-    this.ValidateFormGroup(this.donationRequestFormGroup);
+  createDonationRequest() {
+    this.validateFormGroup(this.donationRequestFormGroup);
     if (this.donationRequestFormGroup.valid) {
       this.donationRequest.donationRequestCategories = this.donationSandbox.mapCategoriesToDonationRequestCategories(
         this.selectedCategories
@@ -143,5 +156,9 @@ export class DonationsCreateComponent implements OnInit {
 
       this.router.navigate(['admin/donations']);
     }
+  }
+
+  private unregisterEvents() {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 }

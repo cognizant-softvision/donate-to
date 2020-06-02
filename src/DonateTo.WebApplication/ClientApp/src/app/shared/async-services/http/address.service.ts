@@ -3,7 +3,6 @@ import { ConfigService } from 'src/app/app-config.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AddressModel } from '../../models';
-import { SearchHttpClientService } from './search-http-client.service';
 import { Observable } from 'rxjs';
 
 @Injectable({

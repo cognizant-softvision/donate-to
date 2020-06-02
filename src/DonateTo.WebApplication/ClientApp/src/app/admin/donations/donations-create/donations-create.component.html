@@ -44,7 +44,7 @@
         <nz-select
           nzPlaceHolder="{{ 'Admin.Donation.Create.Form.OrganizationPlaceholder' | translate }}"
           [(ngModel)]="donationRequest.organizationId"
-          (ngModelChange)="SetOrganization()"
+          (ngModelChange)="setOrganization()"
           formControlName="organizationFormControl"
         >
           <nz-option
@@ -95,7 +95,7 @@
             *ngFor="let category of categories"
             [nzLabel]="category.name"
             [nzValue]="category"
-            [nzHide]="!IsCategorySelected(category)"
+            [nzHide]="!isCategorySelected(category)"
           ></nz-option>
         </nz-select>
         <ng-template #categoryTagPlaceHolder let-selectedList>
@@ -175,7 +175,7 @@
                   *ngFor="let category of categories"
                   [nzLabel]="category.name"
                   [nzValue]="category"
-                  [nzHide]="!IsItemCategorySelected(category)"
+                  [nzHide]="!isItemCategorySelected(category)"
                 ></nz-option>
               </nz-select>
               <ng-template #categoryItemTagPlaceHolder let-selectedItemList>
@@ -188,7 +188,7 @@
       <button
         type="button"
         class="donation-request-item-add"
-        (click)="AddDonationRequestItem()"
+        (click)="addDonationRequestItem()"
         nz-button
         nzType="primary"
       >
@@ -219,11 +219,11 @@
                 <td>{{ item.observation }}</td>
                 <td>
                   <nz-tag *ngFor="let itemCategory of item.donationRequestItemCategories">
-                    {{ GetCategoryName(itemCategory.categoryId) }}
+                    {{ getCategoryName(itemCategory.categoryId) }}
                   </nz-tag>
                 </td>
                 <td>
-                  <a (click)="RemoveDonationRequestItem(item)">{{ 'Admin.Delete' | translate }}</a>
+                  <a (click)="removeDonationRequestItem(item)">{{ 'Admin.Delete' | translate }}</a>
                 </td>
               </tr>
             </tbody>
@@ -237,7 +237,7 @@
         nz-popconfirm
         nzPopconfirmTitle="{{ 'Admin.Donation.Create.Form.DeleteItemConfirmation' | translate }}"
         nzPopconfirmPlacement="bottom"
-        (nzOnConfirm)="CreateDonationRequest()"
+        (nzOnConfirm)="createDonationRequest()"
         nz-button
         nzType="primary"
         type="submit"
