@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DonateTo.ApplicationCore.Entities;
@@ -36,11 +37,16 @@ namespace DonateTo.WebApi.V1.Controllers
             {
                 var result = await _baseService.GetAsync(x => x.OrganizationId == organizationId).ConfigureAwait(false);
 
+                if(!result.Any())
+                {
+                    return NotFound();
+                }
+
                 return Ok(result);
             }
             catch (Exception exc)
             {
-                return StatusCode(500);
+                return BadRequest();
             }
         }
     }
