@@ -12,7 +12,7 @@ export class AuthState {
 
 const INITIAL_STATE: AuthState = {
   isAuthenticated: false,
-  id: 1,
+  id: undefined,
   name: undefined,
   email: undefined,
   access_token: undefined,
@@ -24,7 +24,7 @@ const authReducer = createReducer(
   on(authActions.userProfileLoaded, (state, action) => ({
     ...state,
     isAuthenticated: true,
-    id: 1,
+    id: action.id,
     name: action.name,
     email: action.email,
     access_token: action.accessToken,
@@ -33,7 +33,7 @@ const authReducer = createReducer(
   on(authActions.doLoginFailed, (state) => ({
     ...state,
     isAuthenticated: false,
-    id: 1,
+    id: undefined,
     name: undefined,
     email: undefined,
     access_token: undefined,
@@ -41,7 +41,7 @@ const authReducer = createReducer(
   })),
   on(authActions.loadUserProfileFailed, (state) => ({
     ...state,
-    id: 1,
+    id: undefined,
     name: undefined,
     email: undefined,
     access_token: undefined,
