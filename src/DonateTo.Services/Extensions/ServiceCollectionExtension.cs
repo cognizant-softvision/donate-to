@@ -1,9 +1,7 @@
 using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.Infrastructure.Extensions;
-using DonateTo.Services.Services;
 using Microsoft.Extensions.Configuration;
-using DonateTo.Services.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DonateTo.Services.Extensions
@@ -24,7 +22,7 @@ namespace DonateTo.Services.Extensions
             service.AddTransient<IBaseService<DonationRequest>, DonationRequestService>();
             service.AddTransient<ISearchService, SearchService>();
             service.AddTransient<IBaseService<Organization>, OrganizationService>();
-            service.AddTransient<IAddressService, AddressService>();
+            service.AddTransient<IBaseService<Address>, AddressService>();
             service.AddTransient<IBaseService<Category>, CategoryService>();
         }
     }

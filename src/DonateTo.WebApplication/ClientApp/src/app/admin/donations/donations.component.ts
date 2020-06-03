@@ -28,7 +28,7 @@ export class DonationsComponent implements OnInit {
     this.donationSandBox.loadDonationRequests();
   }
 
-  DeleteDonationRequest(donationRequest: DonationRequestModel) {
+  deleteDonationRequest(donationRequest: DonationRequestModel) {
     this.donationSandBox.deleteDonationRequest(donationRequest);
     this.donationRequests = this.donationRequests.filter((item) => item !== donationRequest);
   }

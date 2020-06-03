@@ -22,7 +22,7 @@ namespace DonateTo.Infrastructure.Extensions
             );
 
             services.AddScoped<IUnitOfWork, EntityFrameworkUnitOfWork<DonateToDbContext>>();
-            services.AddScoped<IAddressRepository, AddressRepository>();
+            services.AddScoped<IRepository<Address>, AddressRepository>();
             services.AddScoped<IRepository<Category>, CategoryRepository>();
             services.AddScoped<IRepository<Donation>, DonationRepository>();
             services.AddScoped<IRepository<DonationItem>, DonationItemRepository>();

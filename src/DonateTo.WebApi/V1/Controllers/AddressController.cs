@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DonateTo.ApplicationCore.Entities;
@@ -14,12 +16,9 @@ namespace DonateTo.WebApi.V1.Controllers
     [ApiController]
     public class AddressController : BaseApiController<Address>
     {
-        private readonly IAddressService _addressService;
-
-        public AddressController(IAddressService addressService, IUnitOfWork unitOfWork) :
+        public AddressController(IBaseService<Address> addressService, IUnitOfWork unitOfWork) :
             base(addressService, unitOfWork)
         {
-            _addressService = addressService;
         }
 
         /// <summary>
@@ -27,19 +26,28 @@ namespace DonateTo.WebApi.V1.Controllers
         /// </summary>
         /// <param name="organizationId">ID of the Organization resource to be search.</param>
         /// <returns>Status 200 if the request has succeeded,
-        /// Status 404 if not found the request or
         /// Status 500 if that have an error</returns>
         [HttpGet("[action]", Name = "[controller]_[action]")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<Address>>> GetByOrganizationId(long organizationId)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<IEnumerable<Address>>> GetByOrganization(long organizationId)
         {
-            var result = await _addressService.GetByOrganizationIdAsync(organizationId).ConfigureAwait(false);
+            try
+            {
+                var result = await _baseService.GetAsync(x => x.OrganizationId == organizationId).ConfigureAwait(false);
 
-            return Ok(result);
+                if(!result.Any())
+                {
+                    return NotFound();
+                }
+
+                return Ok(result);
+            }
+            catch (Exception exc)
+            {
+                return BadRequest();
+            }
         }
-
     }
 }

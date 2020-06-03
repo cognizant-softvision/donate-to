@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
 using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.IdentityServer.Models;
+using DonateTo.Mailer.Entities;
+using DonateTo.Mailer.Interfaces;
 using IdentityServer4.Events;
 using IdentityServer4.Extensions;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +28,8 @@ namespace DonateTo.IdentityServer.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
+        private readonly IMailSender _mailSender;
+        private readonly IWebHostEnvironment _environment;
         private readonly IMapper _mapper;
 
         public AccountController(
@@ -33,6 +39,8 @@ namespace DonateTo.IdentityServer.Controllers
             SignInManager<User> signInManager,
             UserManager<User> userManager,
             RoleManager<Role> roleManager,
+            IMailSender mailSender,
+            IWebHostEnvironment environment,
             IMapper mapper)
         {
             _userService = userService;
@@ -41,6 +49,8 @@ namespace DonateTo.IdentityServer.Controllers
             _signInManager = signInManager;
             _userManager = userManager;
             _roleManager = roleManager;
+            _mailSender = mailSender;
+            _environment = environment;
             _mapper = mapper;
         }
 
@@ -163,8 +173,22 @@ namespace DonateTo.IdentityServer.Controllers
 
             if (result.Succeeded) 
             {
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", new { token, email = user.Email }, Request.Scheme);
+
+                var bodyMessage = new MessageBody()
+                {
+                    HtmlBody = $"<p>Please confirm your email clicking <a href='{ confirmationLink }' target='_blank'>here</a></p>"
+                };
+
+                var message = new Message(user.Email,"Activate your account", bodyMessage);
+
+                await _mailSender.SendAsync(message);
+
                 var role = await _roleManager.FindByNameAsync("Donor").ConfigureAwait(false);
                 result = await _userManager.AddToRoleAsync(user, role.Name).ConfigureAwait(false);
+
+                return RedirectToAction(nameof(SuccessRegistration));
             }
 
             if (!result.Succeeded)
@@ -206,6 +230,103 @@ namespace DonateTo.IdentityServer.Controllers
 
         [HttpGet]
         public IActionResult SignedUp()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel forgotPasswordViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(forgotPasswordViewModel);
+            }
+
+            var user = await _userManager.FindByEmailAsync(forgotPasswordViewModel.Email);
+
+            if (user == null)
+            {
+                return RedirectToAction(nameof(ForgotPasswordConfirmation));
+            }
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var resetLink = Url.Action(nameof(ResetPassword), "Account", new { token, email = user.Email }, Request.Scheme);
+
+            var bodyMessage = new MessageBody()
+            {
+                HtmlBody = $"<p>Please click <a href='{ resetLink }' target='_blank'>here</a> to reset your password.</p>"
+            };
+            
+            var message = new Message(user.Email, "Reset your password", bodyMessage);
+
+            await _mailSender.SendAsync(message);
+
+            return RedirectToAction(nameof(ForgotPasswordConfirmation));
+        }
+
+        public IActionResult ForgotPasswordConfirmation()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult ResetPassword(string token, string email)
+        {
+            var model = new ResetPasswordViewModel { Token = token, Email = email };
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel resetPasswordModel)
+        {
+            if (!ModelState.IsValid)
+                return View(resetPasswordModel);
+
+            var user = await _userManager.FindByEmailAsync(resetPasswordModel.Email);
+            if (user == null)
+                RedirectToAction(nameof(ResetPasswordConfirmation));
+
+            var resetPassResult = await _userManager.ResetPasswordAsync(user, resetPasswordModel.Token, resetPasswordModel.Password);
+            if (!resetPassResult.Succeeded)
+            {
+                foreach (var error in resetPassResult.Errors)
+                {
+                    ModelState.TryAddModelError(error.Code, error.Description);
+                }
+
+                return View();
+            }
+
+            return RedirectToAction(nameof(ResetPasswordConfirmation));
+        }
+
+        [HttpGet]
+        public IActionResult ResetPasswordConfirmation()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ConfirmEmail(string token, string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                return View("Error");
+
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+            return View(result.Succeeded ? nameof(ConfirmEmail) : "Error");
+        }
+
+        [HttpGet]
+        public IActionResult SuccessRegistration()
         {
             return View();
         }

@@ -3,7 +3,6 @@ import { ConfigService } from 'src/app/app-config.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AddressModel } from '../../models';
-import { SearchHttpClientService } from './search-http-client.service';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -17,7 +16,7 @@ export class AddressService extends BaseHttpClientService<AddressModel> {
 
   getAddressesByOrganizationId(organizationId: number): Observable<AddressModel[]> {
     return this.httpClient.get<AddressModel[]>(
-      `${this.url}/${this.endpoint}/GetByOrganizationId?organizationId=${organizationId.toString()}`
+      `${this.url}/${this.endpoint}/GetByOrganization?organizationId=${organizationId.toString()}`
     );
   }
 }

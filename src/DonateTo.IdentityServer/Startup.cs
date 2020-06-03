@@ -16,6 +16,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using IdentityServer4.EntityFramework.Mappers;
 using DonateTo.IdentityServer.Data.EntityFramework;
+using DonateTo.Mailer.Entities;
+using DonateTo.Mailer.Interfaces;
+using DonateTo.Mailer;
 using DonateTo.IdentityServer.Services;
 using IdentityServer4.Services;
 
@@ -100,6 +103,12 @@ namespace DonateTo.IdentityServer
                 })
                 .AddAspNetIdentity<User>()
                 .AddProfileService<ProfileService>();
+
+            var mailConfig = Configuration.GetSection("MailSettings")
+                .Get<MailServerSettings>();
+            
+            services.AddSingleton(mailConfig);
+            services.AddScoped<IMailSender, MailSender>();
 
             //Need to handle credentials for production
             builder.AddDeveloperSigningCredential();
