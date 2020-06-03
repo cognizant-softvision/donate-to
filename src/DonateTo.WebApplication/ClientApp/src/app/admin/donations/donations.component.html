@@ -32,7 +32,7 @@
         <td>{{ data.finishDate }}</td>
         <td>{{ data.observation }}</td>
         <td>
-          <a>{{ 'Admin.Edit' | translate }}</a>
+          <a [routerLink]="['./edit', data.id]">{{ 'Admin.Edit' | translate }} </a>
           <nz-divider nzType="vertical"></nz-divider>
           <a
             nz-popconfirm

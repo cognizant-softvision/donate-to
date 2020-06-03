@@ -37,6 +37,7 @@ import {
   NzTableModule,
   NzTagModule,
 } from 'ng-zorro-antd';
+import { DonationsFormComponent } from './donations-form/donations-form.component';
 
 // FIX this should be moved to an upper level.
 registerLocaleData(es);
@@ -78,7 +79,7 @@ const ICONS: IconDefinition[] = [PlusOutline];
       extend: true,
     }),
   ],
-  declarations: [DonationsComponent, DonationsCreateComponent, DonationsEditComponent],
+  declarations: [DonationsComponent, DonationsCreateComponent, DonationsEditComponent, DonationsFormComponent],
   providers: [DonationsSandbox],
 })
 export class DonationsModule {}

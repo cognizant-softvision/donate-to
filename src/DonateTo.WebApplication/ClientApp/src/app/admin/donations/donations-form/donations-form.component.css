@@ -1,0 +1,42 @@
+.donation-request-item-add {
+  margin: 1em;
+  align-self: center;
+  margin-bottom: 2em;
+}
+
+.create-donation-add-item-container {
+  display: flex;
+}
+
+.create-donation-add-item-container div {
+  display: flex;
+  align-items: baseline;
+  margin-left: 1em;
+}
+
+.create-donation-add-item-container div div {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-donation-add-item-box-first {
+  width: 60%;
+}
+
+.create-donation-add-item-box-second {
+  width: 30%;
+}
+
+.create-donation-add-item-input nz-form-item,
+.create-donation-add-item-box-second nz-select {
+  width: 100%;
+}
+
+.create-donation-add-item-input {
+  width: 100%;
+  margin-left: 1em;
+}
+
+.donatio-item {
+  margin-bottom: 1em;
+}

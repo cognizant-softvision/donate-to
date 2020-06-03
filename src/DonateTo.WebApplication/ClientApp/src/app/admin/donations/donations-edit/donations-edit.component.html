@@ -1,1 +1,23 @@
-<p>edit works!</p>
+<div>
+  <div class="create-donation-title">
+    <h4 class="section-title">Edit Donation</h4>
+  </div>
+  <br />
+  <br />
+  <div class="create-donation-form-buttons">
+    <button
+      nz-popconfirm
+      nzPopconfirmTitle="{{ 'Admin.Donation.Create.Form.DeleteItemConfirmation' | translate }}"
+      nzPopconfirmPlacement="bottom"
+      (nzOnConfirm)="updateDonationRequest()"
+      nz-button
+      nzType="primary"
+      type="submit"
+    >
+      Save
+    </button>
+    <button routerLink=".." nz-button nzType="primary">
+      {{ 'BackBtn' | translate }}
+    </button>
+  </div>
+</div>
