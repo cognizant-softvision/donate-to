@@ -3,6 +3,7 @@
     <h4 class="section-title">Edit Donation</h4>
   </div>
   <br />
+  <app-donations-form *ngIf="this.donationRequest" [donationRequest]="this.donationRequest"></app-donations-form>
   <br />
   <div class="create-donation-form-buttons">
     <button

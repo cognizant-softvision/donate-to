@@ -13,6 +13,8 @@ export const getDonationRequestsLoading = createSelector(
   (state: DonationRequestState) => state.loading
 );
 
+export const getLoadedDonationRequests = createSelector(getEntityState, (state: DonationRequestState) => state.items);
+
 export const getAllDonationRequestsPaged = createSelector(
   getEntityState,
   (state: DonationRequestState) => state.pagedItems
@@ -32,4 +34,5 @@ export class DonationRequestSelectors {
   donationRequestsSearchPaged$ = this.store.select(getAllDonationRequestsSearchPaged);
   donationRequestState$ = this.store.select(getEntityState);
   loading$ = this.store.select(getDonationRequestsLoading);
+  loadedDonationRequests$ = this.store.select(getLoadedDonationRequests);
 }

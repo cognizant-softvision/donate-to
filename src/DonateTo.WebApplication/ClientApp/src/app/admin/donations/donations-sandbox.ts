@@ -17,6 +17,7 @@ export class DonationsSandbox extends Sandbox {
   organizations$ = this.appState$.select(store.fromOrganization.getAllOrganizations);
   categories$ = this.appState$.select(store.fromCategory.getAllCategories);
   addressesByOrganization$ = this.appState$.select(store.fromAddress.getAddressesByOrganizationId);
+  loadedDonationRequests$ = this.appState$.select(store.fromDonationRequest.getLoadedDonationRequests);
 
   constructor(protected appState$: Store<store.State>) {
     super(appState$);

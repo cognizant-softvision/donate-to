@@ -19,9 +19,13 @@ import {
   styleUrls: ['./donations-form.component.css'],
 })
 export class DonationsFormComponent implements OnInit, OnDestroy {
-  private subscriptions: Subscription[] = [];
   addresses: AddressModel[] = [];
   categories: CategoryModel[] = [];
+  organizations: OrganizationModel[] = [];
+  selectedItemCategories: CategoryModel[] = [];
+  selectedCategories: CategoryModel[] = [];
+
+  private subscriptions: Subscription[] = [];
   @Input() donationRequest: DonationRequestModel;
   listOfColumns: ColumnItem[] = [
     { name: 'Admin.Donation.Table.ItemColumn' },
@@ -30,9 +34,6 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
     { name: 'Admin.Donation.Table.CategoryColumn' },
     { name: 'Admin.Action' },
   ];
-  organizations: OrganizationModel[] = [];
-  selectedCategories: CategoryModel[] = [];
-  selectedItemCategories: CategoryModel[] = [];
 
   donationRequestFormGroup = new FormGroup({
     titleFormControl: new FormControl('', Validators.required),
@@ -52,15 +53,17 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
     quantityFormControl: new FormControl('', Validators.required),
   });
 
-  constructor(public donationSandbox: DonationsSandbox, protected i18n: NzI18nService, private router: Router) {
-    if (!this.donationRequest) {
-      this.donationRequest = new DonationRequestModel();
-      this.donationRequest.statusId = 2;
-      this.donationRequest.donationRequestItems = [];
-    }
-  }
+  constructor(public donationSandbox: DonationsSandbox, protected i18n: NzI18nService, private router: Router) {}
 
   ngOnInit(): void {
+    if (!this.donationRequest) {
+      // this.donationRequest = new DonationRequestModel();
+      // this.donationRequest.statusId = 2;
+      // this.donationRequest.donationRequestItems = [];
+    } else {
+      // debugger;
+    }
+
     this.sandBoxSubscriptionInit();
 
     this.donationRequestFormGroup.controls.itemsFormControl.setValue(this.donationRequest.donationRequestItems);
