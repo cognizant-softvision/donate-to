@@ -232,21 +232,21 @@
       </nz-form-control>
     </nz-form-item>
     <br />
-    <div class="create-donation-form-buttons">
-      <button
-        nz-popconfirm
-        nzPopconfirmTitle="{{ 'Admin.Donation.Create.Form.DeleteItemConfirmation' | translate }}"
-        nzPopconfirmPlacement="bottom"
-        (nzOnConfirm)="CreateDonationRequest()"
-        nz-button
-        nzType="primary"
-        type="submit"
-      >
-        {{ 'Admin.Donation.Create.CreateRequest' | translate }}
-      </button>
-      <button routerLink=".." nz-button nzType="primary">
-        {{ 'BackBtn' | translate }}
-      </button>
-    </div>
   </form>
+  <div class="create-donation-form-buttons">
+    <button
+      nz-popconfirm
+      nzPopconfirmTitle="{{ 'Admin.Donation.Create.Form.DeleteItemConfirmation' | translate }}"
+      nzPopconfirmPlacement="bottom"
+      (nzOnConfirm)="CreateDonationRequest()"
+      nz-button
+      nzType="primary"
+      type="submit"
+    >
+      {{ 'Admin.Donation.Create.CreateRequest' | translate }}
+    </button>
+    <button routerLink=".." nz-button nzType="primary">
+      {{ 'BackBtn' | translate }}
+    </button>
+  </div>
 </div>
