@@ -12,24 +12,35 @@ namespace DonateTo.Services
     public abstract class BaseService<TEntity>: IBaseService<TEntity> where TEntity: EntityBase
     {
         private readonly IRepository<TEntity> _entityRequestRepository;
+        private readonly IUnitOfWork _unitOfWork;
+
         private const string _nullEntityException = "Entity is null.";
         private const string _matchingIdException = "Entity id and id parameter does not match.";
+        private const string _keyNotFoundException = "Given key does not match any Entity.";
 
-        public BaseService(IRepository<TEntity> entityRequestRepository)
+        public BaseService(IRepository<TEntity> entityRequestRepository,
+            IUnitOfWork unitOfWork)
         {
             _entityRequestRepository = entityRequestRepository;
+            _unitOfWork = unitOfWork;
         }
 
         ///<inheritdoc cref="IBaseService{TEntity}"/>
         public virtual async Task<TEntity> CreateAsync(TEntity entity)
         {
-            return await _entityRequestRepository.AddAsync(entity).ConfigureAwait(false);
+            entity = await _entityRequestRepository.AddAsync(entity).ConfigureAwait(false);
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
+
+            return entity;
         }
 
         ///<inheritdoc cref="IBaseService{TEntity}"/>
         public virtual TEntity Create(TEntity entity)
         {
-            return _entityRequestRepository.Add(entity);
+            entity = _entityRequestRepository.Add(entity);
+            _unitOfWork.Save();
+
+            return entity;
         }
 
         ///<inheritdoc cref="IBaseService{TEntity}"/>
@@ -56,7 +67,11 @@ namespace DonateTo.Services
             {
                 throw new InvalidOperationException(_matchingIdException);
             }
-            return await _entityRequestRepository.UpdateAsync(entity).ConfigureAwait(false);
+
+            entity =  await _entityRequestRepository.UpdateAsync(entity).ConfigureAwait(false);
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
+
+            return entity;
         }
         
         ///<inheritdoc cref="IBaseService{TEntity}"/>
@@ -71,19 +86,38 @@ namespace DonateTo.Services
                 throw new InvalidOperationException(_matchingIdException);
             }
 
-            return _entityRequestRepository.Update(entity);
+            entity = _entityRequestRepository.Update(entity);
+            _unitOfWork.Save();
+
+            return entity;
         }
         
         ///<inheritdoc cref="IBaseService{TEntity}"/>
         public virtual async Task DeleteAsync(long id)
         {
-            await _entityRequestRepository.DeleteAsync(id).ConfigureAwait(false);
+            if (await _entityRequestRepository.GetAsync(id).ConfigureAwait(false) != null)
+            {
+                await _entityRequestRepository.DeleteAsync(id).ConfigureAwait(false);
+                await _unitOfWork.SaveAsync().ConfigureAwait(false);
+            }
+            else
+            {
+                throw new KeyNotFoundException(_keyNotFoundException);
+            }
         }
         
         ///<inheritdoc cref="IBaseService{TEntity}"/>
         public virtual void Delete(long id)
         {
-            _entityRequestRepository.Delete(id);
+            if (_entityRequestRepository.Get(id) != null)
+            {
+                _entityRequestRepository.Delete(id);
+                _unitOfWork.Save();
+            }
+            else
+            {
+                throw new KeyNotFoundException(_keyNotFoundException);
+            }            
         }
         
         ///<inheritdoc cref="IBaseService{TEntity}"/>
