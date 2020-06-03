@@ -5,7 +5,6 @@ import { DonationRequestModel, PageModel } from '../../models';
 import { SearchHttpClientService } from './search-http-client.service';
 import { ConfigService } from 'src/app/app-config.service';
 import { Observable } from 'rxjs';
-import { AuthSandbox } from '../../auth/auth.sandbox';
 
 @Injectable({
   providedIn: 'root',
@@ -24,14 +23,6 @@ export class DonationService extends BaseHttpClientService<DonationRequestModel>
 
   getDonationRequest(id: number): Observable<DonationRequestModel> {
     return this.getById(id);
-  }
-
-  getDonationRequestsSearchPaged(
-    pageNumber: number,
-    pageSize: number,
-    query: string
-  ): Observable<PageModel<DonationRequestModel>> {
-    return this.searchService.getSearch(pageNumber, pageSize, query);
   }
 
   getDonationRequestsPaged(pageNumber: number, pageSize: number): Observable<PageModel<DonationRequestModel>> {

@@ -11,12 +11,39 @@ export class DonationConfirmComponent implements OnInit {
 
   currentStep = 0;
 
+  _isResponsableStepReady = false;
+  _isAddressStepReady = false;
+  _isFinishStepReady = false;
+
+  stepsData: boolean[] = [];
+
   @Output() showDonationConfirmModal = new EventEmitter<boolean>();
+
+  isResponsableStepReady(value: boolean) {
+    this._isResponsableStepReady = value;
+    this.updateStepsData();
+  }
+
+  isAddressStepReady(value: boolean) {
+    this._isAddressStepReady = value;
+    this.updateStepsData();
+  }
+
+  isFinishStepReady(value: boolean) {
+    this._isFinishStepReady = value;
+    this.updateStepsData();
+  }
 
   ngOnInit(): void {}
 
+  updateStepsData(): void {
+    this.stepsData = [this._isResponsableStepReady, this._isAddressStepReady, this._isFinishStepReady];
+  }
+
   next() {
-    this.currentStep += 1;
+    if (this.stepsData[this.currentStep]) {
+      this.currentStep += 1;
+    }
   }
 
   prev() {

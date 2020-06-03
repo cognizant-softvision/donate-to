@@ -1,0 +1,73 @@
+<form nz-form [formGroup]="responsableStepForm">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>First Name</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="firstNameErrorTpl">
+      <input nz-input formControlName="firstName" placeholder="First Name" />
+      <ng-template #firstNameErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input your first name!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>Last Name</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="lastNameErrorTpl">
+      <input nz-input formControlName="lastName" placeholder="Last Name" />
+      <ng-template #lastNameErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input your Last Name!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>Identity Number</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="identityNumberErrorTpl">
+      <input nz-input formControlName="identityNumber" placeholder="Identity Number" />
+      <ng-template #identityNumberErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input your Identity Number!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>E-mail</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="emailErrorTpl">
+      <input nz-input formControlName="email" placeholder="Email" type="email" />
+      <ng-template #emailErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input your Email!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>Phone Number</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="phoneNumberErrorTpl">
+      <input nz-input formControlName="phoneNumber" placeholder="Phone Number" />
+      <ng-template #phoneNumberErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input your Phone Number!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>Position</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="positionErrorTpl">
+      <input nz-input formControlName="position" placeholder="Position" />
+      <ng-template #positionErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input your Position!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+</form>

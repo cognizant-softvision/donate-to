@@ -5,6 +5,7 @@ namespace DonateTo.ApplicationCore.Entities
 {
     public class Donation : EntityBase
     {
+        public Contact Contact { get; set; }
         public string Observation { get; set; }
         public int DayOfWeek { get; set; }
         public int TimeStart { get; set; }

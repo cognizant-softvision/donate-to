@@ -6,9 +6,18 @@
   </nz-steps>
 
   <div class="steps-content">
-    <app-donation-step-responsable *ngIf="currentStep === 0"></app-donation-step-responsable>
-    <app-donation-step-address *ngIf="currentStep === 1"></app-donation-step-address>
-    <app-donation-step-finish *ngIf="currentStep === 2"></app-donation-step-finish>
+    <app-donation-step-responsable
+      (isFormValid)="isResponsableStepReady($event)"
+      *ngIf="currentStep === 0"
+    ></app-donation-step-responsable>
+    <app-donation-step-address
+      (isFormValid)="isAddressStepReady($event)"
+      *ngIf="currentStep === 1"
+    ></app-donation-step-address>
+    <app-donation-step-finish
+      (isFormValid)="isFinishStepReady($event)"
+      *ngIf="currentStep === 2"
+    ></app-donation-step-finish>
   </div>
 
   <div class="steps-action">

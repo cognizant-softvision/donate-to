@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { Observable, Observer } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-donation-step-address',
@@ -8,35 +7,23 @@ import { Observable, Observer } from 'rxjs';
   styleUrls: ['./donation-step-address.component.css'],
 })
 export class DonationStepAddressComponent implements OnInit {
-  validateForm: FormGroup;
+  addressStepForm: FormGroup;
 
-  submitForm(value: { userName: string; email: string; password: string; confirm: string; comment: string }): void {
-    for (const key in this.validateForm.controls) {
+  validateForm(): void {
+    for (const key in this.addressStepForm.controls) {
       if (key) {
-        this.validateForm.controls[key].markAsDirty();
-        this.validateForm.controls[key].updateValueAndValidity();
-      }
-    }
-    console.log(value);
-  }
-
-  resetForm(e: MouseEvent): void {
-    e.preventDefault();
-    this.validateForm.reset();
-    for (const key in this.validateForm.controls) {
-      if (key) {
-        this.validateForm.controls[key].markAsPristine();
-        this.validateForm.controls[key].updateValueAndValidity();
+        this.addressStepForm.controls[key].markAsDirty();
+        this.addressStepForm.controls[key].updateValueAndValidity();
       }
     }
   }
 
-  validateConfirmPassword(): void {
-    setTimeout(() => this.validateForm.controls.confirm.updateValueAndValidity());
+  isValidForm(): boolean {
+    return this.addressStepForm.valid;
   }
 
   constructor(private fb: FormBuilder) {
-    this.validateForm = this.fb.group({
+    this.addressStepForm = this.fb.group({
       street: ['', [Validators.required]],
       postalCode: ['', [Validators.required]],
       password: ['', [Validators.required]],
@@ -44,5 +31,6 @@ export class DonationStepAddressComponent implements OnInit {
       comment: ['', [Validators.required]],
     });
   }
+
   ngOnInit(): void {}
 }
