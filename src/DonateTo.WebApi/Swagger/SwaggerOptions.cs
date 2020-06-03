@@ -3,6 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace DonateTo.WebApi.Swagger
 {
@@ -29,6 +32,10 @@ namespace DonateTo.WebApi.Swagger
                     Title = "DonateTo API",
                     Version = description.ApiVersion.ToString(),
                 });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                options.IncludeXmlComments(xmlPath);
             }
         }
     }

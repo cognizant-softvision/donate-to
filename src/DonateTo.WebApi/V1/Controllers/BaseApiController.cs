@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using DonateTo.ApplicationCore.Interfaces.Services;
-using DonateTo.ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +9,10 @@ using System;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
+    /// <summary>
+    /// Base api controller
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -19,15 +22,15 @@ namespace DonateTo.WebApi.V1.Controllers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1051:Do not declare visible instance fields", Justification = "<Pending>")]
         protected readonly IBaseService<T> _baseService;
 
-        public BaseApiController(IBaseService<T> baseService, IUnitOfWork unitOfWork)
+        public BaseApiController(IBaseService<T> baseService)
         {
             _baseService = baseService;
         }
 
         /// <summary>
-        /// Get a list of <typeparamref name="T"/>.
+        /// Get an entity list.
         /// </summary>
-        /// <returns>List of <typeparamref name="T"/> entities.</returns>
+        /// <returns>List of entities.</returns>
         [HttpGet(Name = "[controller]_[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -56,10 +59,10 @@ namespace DonateTo.WebApi.V1.Controllers
         }
 
         /// <summary>
-        /// Get a single <typeparamref name="T"/> by <paramref name="id"/>.
+        /// Get an Entity by id.
         /// </summary>
-        /// <param name="id"><typeparamref name="T"/> Id</param>
-        /// <returns><typeparamref name="T"/> entity.</returns>
+        /// <param name="id">Id</param>
+        /// <returns>Entity.</returns>
         [HttpGet("{id}",Name = "[controller]_[action]_Id")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -88,10 +91,10 @@ namespace DonateTo.WebApi.V1.Controllers
         }
 
         /// <summary>
-        /// Creates a new <typeparamref name="T"/> entity.
+        /// Creates a new entity.
         /// </summary>
-        /// <param name="value"><typeparamref name="T"/> to create.</param>
-        /// <returns><typeparamref name="T"/> created entity.</returns>
+        /// <param name="value">Entity to create.</param>
+        /// <returns>Created entity.</returns>
         [HttpPost(Name = "[controller]_[action]")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -111,11 +114,11 @@ namespace DonateTo.WebApi.V1.Controllers
         }
 
         /// <summary>
-        /// Updates a <typeparamref name="T"/>
+        /// Updates an entity
         /// </summary>
-        /// <param name="id"><paramref name="id"/> of the <typeparamref name="T"/> to update.</param>
-        /// <param name="value"><paramref name="value"/> of the <typeparamref name="T"/>.</param>
-        /// <returns><typeparamref name="T"/> updated entity.</returns>
+        /// <param name="id">Id of the entity to update.</param>
+        /// <param name="value">Entity to update.</param>
+        /// <returns>Updated entity.</returns>
         [HttpPut("{id}",Name = "[controller]_[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -147,9 +150,9 @@ namespace DonateTo.WebApi.V1.Controllers
         }
 
         /// <summary>
-        /// Deletes a <typeparamref name="T"/>
+        /// Deletes an entity
         /// </summary>
-        /// <param name="id"><paramref name="id"/> of the <typeparamref name="T"/> to delete.</param>
+        /// <param name="id">Id of the entity to delete.</param>
         [HttpDelete("{id}",Name = "[controller]_[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -176,11 +179,11 @@ namespace DonateTo.WebApi.V1.Controllers
         }
 
         /// <summary>
-        /// Gets a paged <typeparamref name="T"/> paged result matching given <paramref name="pageNumber"/> and <paramref name="pageSize"/>
+        /// Gets a paged entity list starting with given <paramref name="pageNumber"/> and with <paramref name="pageSize"/>
         /// </summary>
-        /// <param name="pageNumber"><paramref name="pageNumber"/> page number.</param>
-        /// <param name="pageSize"><paramref name="pageSize"/> page size.</param>
-        /// <returns><typeparamref name="T"/> paged result.</returns>
+        /// <param name="pageNumber">Page number.</param>
+        /// <param name="pageSize">Page size.</param>
+        /// <returns>Entity paged result.</returns>
         [AllowAnonymous]
         [HttpGet("paged", Name = "[controller]_[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
