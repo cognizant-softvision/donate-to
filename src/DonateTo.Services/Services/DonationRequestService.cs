@@ -5,11 +5,10 @@ namespace DonateTo.Services
 {
     public class DonationRequestService: BaseService<DonationRequest>
     {
-        private readonly IRepository<DonationRequest> _donationRequestRepository;
-
-        public DonationRequestService(IRepository<DonationRequest> donationRequestRepository): base(donationRequestRepository)
+        public DonationRequestService(
+            IRepository<DonationRequest> donationRequestRepository, 
+            IUnitOfWork unitOfWork) : base(donationRequestRepository, unitOfWork)
         {
-            _donationRequestRepository = donationRequestRepository;
         }        
     }
 }
