@@ -5,6 +5,8 @@
     <UserSecretsId>97240a5c-2c9d-46e9-a23b-955a2c8046ef</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	<NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,6 +28,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DonateTo.ApplicationCore\DonateTo.ApplicationCore.csproj" />
+    <ProjectReference Include="..\DonateTo.Mailer\DonateTo.Mailer.csproj" />
     <ProjectReference Include="..\DonateTo.Services\DonateTo.Services.csproj" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
