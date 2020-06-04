@@ -95,5 +95,21 @@
     "Details": "Details",
     "Edit": "Edit",
     "View": "View"
+  },
+  "UserProfile": {
+    "MyProfile": "My Profile",
+    "GeneralInformation": "General Information",
+    "ChangePassword": "Change Password",
+    "Name": "Name",
+    "Phone": "Phone",
+    "Country": "Country",
+    "State": "State",
+    "Appartment": "Appartment",
+    "Street": "Street",
+    "PostalCode": "Postal Code",
+    "AdditionalInformation": "Additional Information",
+    "OldPassword": "Old Password",
+    "NewPassword": "New Password",
+    "RepeatPassword": "Repeat New Password"
   }
 }

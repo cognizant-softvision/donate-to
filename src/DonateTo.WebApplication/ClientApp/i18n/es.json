@@ -95,5 +95,21 @@
     "Details": "Detalles",
     "Edit": "Editar",
     "View": "Vista"
+  },
+  "UserProfile": {
+    "MyProfile": "Mi Perfil",
+    "GeneralInformation": "Información General",
+    "ChangePassword": "Cambiar Contraseña",
+    "Name": "Nombre",
+    "Phone": "Teléfono",
+    "Country": "País",
+    "State": "Provincia",
+    "Appartment": "Localidad",
+    "Street": "Dirección",
+    "PostalCode": "Código Postal",
+    "AdditionalInformation": "Información Adicional",
+    "OldPassword": "Vieja Contraseña",
+    "NewPassword": "Nueva Contraseña",
+    "RepeatPassword": "Repetir Nueva Contraseña"
   }
 }
