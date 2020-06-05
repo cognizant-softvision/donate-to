@@ -19,7 +19,7 @@ export class DonationStepResponsableComponent implements OnInit {
       identityNumber: ['', [required]],
       phoneNumber: ['', [required]],
       email: ['', [required, email]],
-      position: ['', [required]],
+      position: [''],
     });
   }
 

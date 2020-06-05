@@ -1,10 +1,6 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-
 export const environment = {
   production: false,
-  baseUrl: 'https://localhost:44328',
+  baseUrl: 'https://localhost:5001',
   paths: {
     imagesRoot: '/src/assets/images/',
   },
@@ -27,7 +23,7 @@ export const environment = {
     redirectUri: 'http://localhost:4200',
     clientId: 'DonateTo.WebAplication',
     responseType: 'code',
-    scope: 'openid profile DonateTo.WebApi',
+    scope: 'openid profile',
     showDebugInformation: true,
     clearHashAfterLogin: true,
     nonceStateSeparator: 'semicolon',

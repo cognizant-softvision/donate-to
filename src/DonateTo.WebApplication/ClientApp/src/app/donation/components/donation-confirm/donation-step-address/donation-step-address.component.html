@@ -24,31 +24,21 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>Floor</nz-form-label>
-    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="floorErrorTpl">
+    <nz-form-label [nzSpan]="7">Floor</nz-form-label>
+    <nz-form-control [nzSpan]="12">
       <input nz-input type="number" formControlName="floor" placeholder="Floor number" />
-      <ng-template #floorErrorTpl let-control>
-        <ng-container *ngIf="control.hasError('required')">
-          Please input your Floor number!
-        </ng-container>
-      </ng-template>
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>Appartment</nz-form-label>
-    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="appartmentErrorTpl">
+    <nz-form-label [nzSpan]="7">Appartment</nz-form-label>
+    <nz-form-control [nzSpan]="12">
       <input nz-input formControlName="appartment" placeholder="Appartment" />
-      <ng-template #appartmentErrorTpl let-control>
-        <ng-container *ngIf="control.hasError('required')">
-          Please input your appartment!
-        </ng-container>
-      </ng-template>
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>Additional Information</nz-form-label>
+    <nz-form-label [nzSpan]="7">Additional Information</nz-form-label>
     <nz-form-control [nzSpan]="12">
       <textarea formControlName="comment" nz-input rows="2" placeholder="Additional information"></textarea>
     </nz-form-control>

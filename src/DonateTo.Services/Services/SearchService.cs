@@ -16,12 +16,14 @@ namespace DonateTo.Services
         }
 
         ///<inheritdoc cref="ISearchService"/>
-        public PagedResult<DonationRequest> SearchDonationRequest(string queryString, int page, int pageSize) {
+        public PagedResult<DonationRequest> SearchDonationRequest(string queryString, int page, int pageSize)
+        {
             return _searchRepository.SearchDonationRequest(queryString, page, pageSize);
         }
 
         ///<inheritdoc cref="ISearchService"/>
-        public async Task<PagedResult<DonationRequest>> SearchDonationRequestAsync(string queryString, int page, int pageSize) {
+        public async Task<PagedResult<DonationRequest>> SearchDonationRequestAsync(string queryString, int page, int pageSize)
+        {
              return await _searchRepository.SearchDonationRequestAsync(queryString, page, pageSize).ConfigureAwait(false);
         }
     }

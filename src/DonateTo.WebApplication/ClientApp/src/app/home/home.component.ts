@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
   currentPage = 1;
   pageSize = 6;
   totalItems = 0;
+  searchLength = 2;
 
   constructor(
     public homeSandbox: HomeSandbox,
@@ -40,7 +41,9 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {}
 
   onSearch() {
-    this.homeSandbox.loadDonationRequestsSearchPaged(this.pageSize, this.currentPage, this.searchValue);
+    if (this.searchValue.length >= this.searchLength) {
+      this.homeSandbox.loadDonationRequestsSearchPaged(this.pageSize, this.currentPage, this.searchValue);
+    }
   }
 
   showModal(item: any) {

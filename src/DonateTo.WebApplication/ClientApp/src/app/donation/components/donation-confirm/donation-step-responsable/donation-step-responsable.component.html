@@ -60,14 +60,9 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>Position</nz-form-label>
-    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="positionErrorTpl">
+    <nz-form-label [nzSpan]="7">Position</nz-form-label>
+    <nz-form-control [nzSpan]="12">
       <input nz-input formControlName="position" placeholder="Position" />
-      <ng-template #positionErrorTpl let-control>
-        <ng-container *ngIf="control.hasError('required')">
-          Please input your Position!
-        </ng-container>
-      </ng-template>
     </nz-form-control>
   </nz-form-item>
 </form>
