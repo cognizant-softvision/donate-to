@@ -48,7 +48,7 @@
           formControlName="organizationFormControl"
         >
           <nz-option
-            *ngFor="let organization of organizations"
+            *ngFor="let organization of this.donationSandbox.organizations$ | async"
             [nzValue]="organization.id"
             [nzLabel]="organization.name"
           >
@@ -63,9 +63,14 @@
           nzPlaceHolder="{{ 'Admin.Donation.Create.Form.AddressPlaceholder' | translate }}"
           [(ngModel)]="donationRequest.addressId"
           formControlName="addressFormControl"
-          nzDisabled="{{ addresses.length == 0 }}"
+          nzDisabled="{{ (this.donationSandbox.addressesByOrganization$ | async).length == 0 }}"
         >
-          <nz-option *ngFor="let address of addresses" [nzValue]="address.id" [nzLabel]="address.street"> </nz-option>
+          <nz-option
+            *ngFor="let address of this.donationSandbox.addressesByOrganization$ | async"
+            [nzValue]="address.id"
+            [nzLabel]="address.street"
+          >
+          </nz-option>
         </nz-select>
       </nz-form-control>
     </nz-form-item>
@@ -92,7 +97,7 @@
           nzMode="multiple"
         >
           <nz-option
-            *ngFor="let category of categories"
+            *ngFor="let category of this.donationSandbox.categories$ | async"
             [nzLabel]="category.name"
             [nzValue]="category"
             [nzHide]="!isCategorySelected(category)"
@@ -105,13 +110,13 @@
     </nz-form-item>
     <div [formGroup]="donationRequestItemFormGroup" class="create-donation-add-item-container">
       <div class="create-donation-add-item-box-first">
-        <div>
-          <nz-form-label class="donatio-item" nzRequired>{{
+        <div class="donation-item-container">
+          <nz-form-label class="donation-item" nzRequired>{{
             'Admin.Donation.Create.Form.DonationItem.Name' | translate
           }}</nz-form-label>
           <nz-form-label>{{ 'Admin.Donation.Create.Form.DonationItem.Observation' | translate }}</nz-form-label>
         </div>
-        <div class="create-donation-add-item-input">
+        <div class="donation-item-container create-donation-add-item-input">
           <nz-form-item>
             <nz-form-control nzErrorTip="{{ 'Admin.Donation.Create.Form.DonationItem.NameRequiredError' | translate }}">
               <input
@@ -139,13 +144,13 @@
         </div>
       </div>
       <div class="create-donation-add-item-box-second">
-        <div>
-          <nz-form-label class="donatio-item" nzRequired>{{
+        <div class="donation-item-container">
+          <nz-form-label class="donation-item" nzRequired>{{
             'Admin.Donation.Create.Form.DonationItem.Quantity' | translate
           }}</nz-form-label>
           <nz-form-label nzRequired>{{ 'Admin.Donation.Create.Form.Category' | translate }}</nz-form-label>
         </div>
-        <div class="create-donation-add-item-input">
+        <div class="donation-item-container create-donation-add-item-input">
           <nz-form-item>
             <nz-form-control
               nzErrorTip="{{ 'Admin.Donation.Create.Form.DonationItem.QuantityRequiredError' | translate }}"
@@ -172,7 +177,7 @@
                 nzPlaceHolder="{{ 'Admin.Donation.Create.Form.CategoryPlaceholder' | translate }}"
               >
                 <nz-option
-                  *ngFor="let category of categories"
+                  *ngFor="let category of this.donationSandbox.categories$ | async"
                   [nzLabel]="category.name"
                   [nzValue]="category"
                   [nzHide]="!isItemCategorySelected(category)"

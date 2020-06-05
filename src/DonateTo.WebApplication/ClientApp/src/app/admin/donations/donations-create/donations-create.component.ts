@@ -10,7 +10,6 @@ import {
   ColumnItem,
   DonationRequestItemModel,
   DonationRequestModel,
-  OrganizationModel,
 } from 'src/app/shared/models';
 
 @Component({
@@ -20,17 +19,15 @@ import {
 })
 export class DonationsCreateComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
-  addresses: AddressModel[] = [];
   categories: CategoryModel[] = [];
   donationRequest: DonationRequestModel;
   listOfColumns: ColumnItem[] = [
-    { name: 'Admin.Donation.Table.ItemColumn' },
-    { name: 'Admin.Donation.Table.QuantityColumn' },
-    { name: 'Admin.Donation.Table.ObservationColumn' },
-    { name: 'Admin.Donation.Table.CategoryColumn' },
+    { name: 'Admin.Donation.Table.Itemcolumn' },
+    { name: 'Admin.Donation.Table.Quantitycolumn' },
+    { name: 'Admin.Donation.Table.Observationcolumn' },
+    { name: 'Admin.Donation.Table.Categorycolumn' },
     { name: 'Admin.Action' },
   ];
-  organizations: OrganizationModel[] = [];
   selectedCategories: CategoryModel[] = [];
   selectedItemCategories: CategoryModel[] = [];
 
@@ -78,26 +75,14 @@ export class DonationsCreateComponent implements OnInit, OnDestroy {
 
   private sandBoxSubscriptionInit() {
     this.subscriptions.push(
-      this.donationSandbox.organizations$.subscribe((organizations) => {
-        this.organizations = organizations;
+      this.donationSandbox.userId$.subscribe((id) => {
+        this.donationRequest.userId = id;
       })
     );
 
     this.subscriptions.push(
       this.donationSandbox.categories$.subscribe((categories) => {
         this.categories = categories;
-      })
-    );
-
-    this.subscriptions.push(
-      this.donationSandbox.addressesByOrganization$.subscribe((addresses) => {
-        this.addresses = addresses;
-      })
-    );
-
-    this.subscriptions.push(
-      this.donationSandbox.userId$.subscribe((id) => {
-        this.donationRequest.userId = id;
       })
     );
   }
