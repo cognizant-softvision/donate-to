@@ -4,10 +4,14 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DonateTo.Infrastructure.Migrations
 {
-    public partial class ModifyDonateAndRequestItem : Migration
+    public partial class ChangedDonationRequestAndnItemsRelations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_DonationItem_Unit_UnitId",
+                table: "DonationItem");
+
             migrationBuilder.DropColumn(
                 name: "Unit",
                 table: "DonationRequestItem");
@@ -37,11 +41,13 @@ namespace DonateTo.Infrastructure.Migrations
                 oldClrType: typeof(DateTime),
                 oldType: "timestamp without time zone");
 
-            migrationBuilder.AddColumn<long>(
-                name: "ContactId",
-                table: "Donation",
+            migrationBuilder.AlterColumn<long>(
+                name: "UnitId",
+                table: "DonationItem",
                 nullable: false,
-                defaultValue: 0L);
+                oldClrType: typeof(long),
+                oldType: "bigint",
+                oldNullable: true);
 
             migrationBuilder.CreateTable(
                 name: "Availability",
@@ -75,20 +81,15 @@ namespace DonateTo.Infrastructure.Migrations
                 column: "UnitId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Donation_ContactId",
-                table: "Donation",
-                column: "ContactId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Availability_DonationId",
                 table: "Availability",
                 column: "DonationId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Donation_Contact_ContactId",
-                table: "Donation",
-                column: "ContactId",
-                principalTable: "Contact",
+                name: "FK_DonationItem_Unit_UnitId",
+                table: "DonationItem",
+                column: "UnitId",
+                principalTable: "Unit",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
 
@@ -104,8 +105,8 @@ namespace DonateTo.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Donation_Contact_ContactId",
-                table: "Donation");
+                name: "FK_DonationItem_Unit_UnitId",
+                table: "DonationItem");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_DonationRequestItem_Unit_UnitId",
@@ -118,17 +119,9 @@ namespace DonateTo.Infrastructure.Migrations
                 name: "IX_DonationRequestItem_UnitId",
                 table: "DonationRequestItem");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Donation_ContactId",
-                table: "Donation");
-
             migrationBuilder.DropColumn(
                 name: "UnitId",
                 table: "DonationRequestItem");
-
-            migrationBuilder.DropColumn(
-                name: "ContactId",
-                table: "Donation");
 
             migrationBuilder.AddColumn<string>(
                 name: "Unit",
@@ -143,6 +136,13 @@ namespace DonateTo.Infrastructure.Migrations
                 nullable: false,
                 oldClrType: typeof(DateTime),
                 oldNullable: true);
+
+            migrationBuilder.AlterColumn<long>(
+                name: "UnitId",
+                table: "DonationItem",
+                type: "bigint",
+                nullable: true,
+                oldClrType: typeof(long));
 
             migrationBuilder.AddColumn<int>(
                 name: "DayOfWeek",
@@ -164,6 +164,14 @@ namespace DonateTo.Infrastructure.Migrations
                 type: "integer",
                 nullable: false,
                 defaultValue: 0);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_DonationItem_Unit_UnitId",
+                table: "DonationItem",
+                column: "UnitId",
+                principalTable: "Unit",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
     }
 }
