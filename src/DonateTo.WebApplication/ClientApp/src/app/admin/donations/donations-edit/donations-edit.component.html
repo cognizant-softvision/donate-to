@@ -1,6 +1,6 @@
 <div>
   <div class="create-donation-title">
-    <h4 class="section-title">Edit Donation</h4>
+    <h4 class="section-title">{{ 'Admin.Donation.Edit.Title' | translate }}</h4>
   </div>
   <br />
   <app-donations-form *ngIf="this.donationRequest" [donationRequest]="this.donationRequest"></app-donations-form>
@@ -8,16 +8,16 @@
   <div class="create-donation-form-buttons">
     <button
       nz-popconfirm
-      nzPopconfirmTitle="{{ 'Admin.Donation.Create.Form.DeleteItemConfirmation' | translate }}"
+      nzPopconfirmTitle="{{ 'Admin.Donation.Form.DeleteItemConfirmation' | translate }}"
       nzPopconfirmPlacement="bottom"
       (nzOnConfirm)="updateDonationRequest()"
       nz-button
       nzType="primary"
       type="submit"
     >
-      Save
+      {{ 'Admin.Donation.Edit.Save' | translate }}
     </button>
-    <button routerLink=".." nz-button nzType="primary">
+    <button routerLink="../.." nz-button nzType="primary">
       {{ 'BackBtn' | translate }}
     </button>
   </div>

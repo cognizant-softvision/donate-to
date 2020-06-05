@@ -38,6 +38,8 @@ import {
   NzTagModule,
 } from 'ng-zorro-antd';
 import { DonationsFormComponent } from './donations-form/donations-form.component';
+import { StatusEffects } from 'src/app/shared/store/status';
+import { fromStatus } from 'src/app/shared/store';
 
 // FIX this should be moved to an upper level.
 registerLocaleData(es);
@@ -61,8 +63,9 @@ const ICONS: IconDefinition[] = [PlusOutline];
     NzInputModule,
     NzDividerModule,
     NzTableModule,
-    EffectsModule.forFeature([OrganizationEffects, AddressEffects, CategoryEffects]),
+    EffectsModule.forFeature([OrganizationEffects, AddressEffects, CategoryEffects, StatusEffects]),
     StoreModule.forFeature(fromOrganization.organizationFeatureKey, fromOrganization.reducer),
+    StoreModule.forFeature(fromStatus.statusFeatureKey, fromStatus.reducer),
     StoreModule.forFeature(fromAddress.addressFeatureKey, fromAddress.reducer),
     StoreModule.forFeature(fromCategory.categoryFeatureKey, fromCategory.reducer),
     FormsModule,

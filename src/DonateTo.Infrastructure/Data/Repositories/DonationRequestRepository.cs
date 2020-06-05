@@ -17,10 +17,9 @@ namespace DonateTo.Infrastructure.Data.Repositories
         private IQueryable<DonationRequest> GetHydratedDonationRequests()
         {
             return DbContext.Set<DonationRequest>().Include(d => d.Address).Include(d => d.Status)
-                .Include(d => d.DonationRequestItems).Include(d => d.DonationRequestCategories)
+                .Include(d => d.DonationRequestItems).ThenInclude(w => w.DonationRequestItemCategories).Include(d => d.DonationRequestCategories)
                 .ThenInclude(drc => drc.Category).Include(d => d.Organization);
         }
-
 
         ///<inheritdoc cref="IRepository{DonationRequest}"/>
         public override DonationRequest Get(long id)

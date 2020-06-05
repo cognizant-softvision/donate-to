@@ -5,6 +5,7 @@ import { DonationRequestModel, PageModel } from '../../models';
 export interface DonationRequestState {
   loading: boolean;
   failed: boolean;
+  item: DonationRequestModel;
   items: DonationRequestModel[];
   pagedItems: PageModel<DonationRequestModel>;
 }
@@ -12,6 +13,7 @@ export interface DonationRequestState {
 const INITIAL_STATE: DonationRequestState = {
   loading: false,
   failed: false,
+  item: undefined,
   items: [],
   pagedItems: new PageModel<DonationRequestModel>(),
 };
@@ -76,6 +78,17 @@ const donationRequestReducer = createReducer(
     items: [...state.items, donationRequest],
   })),
   on(donationRequestActions.addDonationRequestFailed, (state) => ({
+    ...state,
+    loading: false,
+    failed: true,
+  })),
+  on(donationRequestActions.loadDonationRequestSuccess, (state, { donationRequest }) => ({
+    ...state,
+    loading: false,
+    failed: false,
+    item: donationRequest,
+  })),
+  on(donationRequestActions.loadDonationRequestFailed, (state) => ({
     ...state,
     loading: false,
     failed: true,

@@ -11,6 +11,13 @@ export const addDonationRequestSuccess = createAction(
 );
 export const addDonationRequestFailed = createAction('[Donation Request] Add failed');
 
+export const loadDonationRequest = createAction('[Donation Request] Load', props<{ donationRequestId: number }>());
+export const loadDonationRequestSuccess = createAction(
+  '[Donation Request] Load success',
+  props<{ donationRequest: DonationRequestModel }>()
+);
+export const loadDonationRequestFailed = createAction('[Donation Request] Load failed');
+
 export const removeDonationRequest = createAction(
   '[Donation Request] Remove Donation Request',
   props<{ donationRequest: DonationRequestModel }>()
@@ -27,6 +34,7 @@ export const loadDonationRequestsSuccess = createAction(
   props<{ donationRequests: DonationRequestModel[] }>()
 );
 export const loadDonationRequestsFailed = createAction('[Donation Request] Load failed');
+
 export const loadDonationRequestsPaged = createAction(
   '[Donation Request] Load paged items from server',
   props<{ pageSize: number; pageNumber: number }>()
@@ -36,6 +44,7 @@ export const loadDonationRequestsPagedSuccess = createAction(
   props<{ donationRequests: PageModel<DonationRequestModel> }>()
 );
 export const loadDonationRequestsPagedFailed = createAction('[Donation Request] Load paged failed');
+
 export const loadDonationRequestsSearchPaged = createAction(
   '[Donation Request] Load paged search result items from server',
   props<{ pageSize: number; pageNumber: number; query: string }>()
@@ -45,3 +54,5 @@ export const loadDonationRequestsSearchPagedSuccess = createAction(
   props<{ donationRequests: PageModel<DonationRequestModel> }>()
 );
 export const loadDonationRequestsSearchPagedFailed = createAction('[Donation Request] Load paged search result failed');
+
+export const validateDonateionRequestForm = createAction('[Donation Request] validates the Donation Request Form');

@@ -1,7 +1,14 @@
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { DonationRequestService } from '../../async-services/http/donation-request.service';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import {
   addDonationRequest,
   addDonationRequestFailed,
   addDonationRequestSuccess,
+  loadDonationRequest,
+  loadDonationRequestFailed,
   loadDonationRequests,
   loadDonationRequestsFailed,
   loadDonationRequestsPaged,
@@ -11,15 +18,11 @@ import {
   loadDonationRequestsSearchPagedFailed,
   loadDonationRequestsSearchPagedSuccess,
   loadDonationRequestsSuccess,
+  loadDonationRequestSuccess,
   removeDonationRequest,
   removeDonationRequestFailed,
   removeDonationRequestSuccess,
 } from './actions';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import { catchError, map, switchMap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
-import { Injectable } from '@angular/core';
-import { DonationRequestService } from '../../async-services/http/donation-request.service';
 
 @Injectable()
 export class DonationRequestEffects {
@@ -63,6 +66,17 @@ export class DonationRequestEffects {
       this.donationRequestService.createDonationRequest(data.donationRequest).pipe(
         map((donationRequest) => addDonationRequestSuccess({ donationRequest })),
         catchError(() => of(addDonationRequestFailed()))
+      )
+    )
+  );
+
+  @Effect()
+  loadDonationRequest$: Observable<{}> = this.actions$.pipe(
+    ofType(loadDonationRequest),
+    switchMap((data: any) =>
+      this.donationRequestService.getDonationRequest(data.donationRequestId).pipe(
+        map((donationRequest) => loadDonationRequestSuccess({ donationRequest })),
+        catchError(() => of(loadDonationRequestFailed()))
       )
     )
   );

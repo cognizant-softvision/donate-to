@@ -11,20 +11,19 @@ import { DonationsSandbox } from '../donations-sandbox';
 export class DonationsEditComponent implements OnInit {
   donationRequest: DonationRequestModel;
   id: number;
-  constructor(private route: ActivatedRoute, public donationSandbox: DonationsSandbox) {}
+  constructor(private route: ActivatedRoute, public donationSandbox: DonationsSandbox) {
+    this.route.params.subscribe((param) => {
+      this.id = parseInt(param['Id'], 10);
+    });
+  }
 
   ngOnInit(): void {
-    // this.route.params.subscribe((param) => {
-    // this.id = parseInt(param['Id']);
-    // });
-    // this.donationSandbox.loadedDonationRequests$.subscribe((donationsRequests) => {
-    // if (donationsRequests.length != 0) {
-    // this.donationRequest = donationsRequests.find((dr) => dr.id === this.id);
-    // }
-    // });
+    this.donationSandbox.donationRequest$.subscribe((donationRequest) => {
+      this.donationRequest = donationRequest;
+    });
+
+    this.donationSandbox.loadDonationRequest(this.id);
   }
 
-  updateDonationRequest() {
-    console.log(this.donationRequest);
-  }
+  updateDonationRequest() {}
 }

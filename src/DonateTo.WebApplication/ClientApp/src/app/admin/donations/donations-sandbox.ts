@@ -15,9 +15,10 @@ export class DonationsSandbox extends Sandbox {
   private categorySerializer: CategorySerializer = new CategorySerializer();
   donationRequests$ = this.appState$.select(store.fromDonationRequest.getAllDonationRequests);
   organizations$ = this.appState$.select(store.fromOrganization.getAllOrganizations);
+  status$ = this.appState$.select(store.fromStatus.getAllStatus);
   categories$ = this.appState$.select(store.fromCategory.getAllCategories);
   addressesByOrganization$ = this.appState$.select(store.fromAddress.getAddressesByOrganizationId);
-  loadedDonationRequests$ = this.appState$.select(store.fromDonationRequest.getLoadedDonationRequests);
+  donationRequest$ = this.appState$.select(store.fromDonationRequest.getDonationRequest);
 
   constructor(protected appState$: Store<store.State>) {
     super(appState$);
@@ -45,10 +46,24 @@ export class DonationsSandbox extends Sandbox {
   }
 
   /**
+   * Load donationRequest by Id from the server
+   */
+  public loadDonationRequest(donationRequestId: number): void {
+    this.appState$.dispatch(store.fromDonationRequest.loadDonationRequest({ donationRequestId }));
+  }
+
+  /**
    * Loads donationRequests from the server
    */
   public createDonationRequest(donationRequest: DonationRequestModel): void {
     this.appState$.dispatch(store.fromDonationRequest.addDonationRequest({ donationRequest }));
+  }
+
+  /**
+   * Loads Categories from the server
+   */
+  public loadStatus(): void {
+    this.appState$.dispatch(store.fromStatus.loadStatus());
   }
 
   /**

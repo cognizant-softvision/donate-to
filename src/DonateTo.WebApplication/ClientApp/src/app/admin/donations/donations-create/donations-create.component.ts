@@ -12,9 +12,5 @@ export class DonationsCreateComponent {
 
   constructor(public donationSandbox: DonationsSandbox) {}
 
-  createDonationRequest() {
-    // this.validateFormGroup(this.donationRequestFormGroup);
-    console.log(this.donationRequest);
-    // this.router.navigate(['admin/donations']);
-  }
+  createDonationRequest() {}
 }

@@ -6,7 +6,6 @@ export class CategorySerializer {
 
     categories.forEach((category) => {
       const donationRequestCategory = new DonationRequestCategoryModel();
-
       donationRequestCategory.categoryId = category.id;
 
       donationRequestCategories.push(donationRequestCategory);
