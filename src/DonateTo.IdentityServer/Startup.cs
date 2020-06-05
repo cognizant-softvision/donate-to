@@ -19,6 +19,9 @@ using DonateTo.IdentityServer.Data.EntityFramework;
 using DonateTo.Mailer.Entities;
 using DonateTo.Mailer.Interfaces;
 using DonateTo.Mailer;
+using Microsoft.CodeAnalysis.Options;
+using IdentityModel;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace DonateTo.IdentityServer
 {
@@ -49,9 +52,12 @@ namespace DonateTo.IdentityServer
             services.AddAutoMapper(typeof(Startup));
 
             var identityOptions = Configuration.GetSection("Identity").GetSection("Options");
-
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             services.AddIdentity<User, Role>(options =>
             {
+                options.ClaimsIdentity.RoleClaimType = JwtClaimTypes.Role;
+                options.ClaimsIdentity.UserIdClaimType = JwtClaimTypes.Id;
+                options.ClaimsIdentity.UserNameClaimType = JwtClaimTypes.Name;
                 options.Password.RequiredLength = identityOptions.GetSection("Password").GetValue<int>("RequiredLength");
                 options.Password.RequireDigit = identityOptions.GetSection("Password").GetValue<bool>("RequireDigit");
                 options.Password.RequireUppercase = identityOptions.GetSection("Password").GetValue<bool>("RequireUppercase");
@@ -88,6 +94,10 @@ namespace DonateTo.IdentityServer
                     sql => sql.MigrationsAssembly(migrationsAssembly));
             })
             .AddAspNetIdentity<User>();
+
+            builder.Services.ConfigureApplicationCookie(opt => { 
+                opt.AccessDeniedPath = opt.LoginPath;
+            });
 
             var mailConfig = Configuration.GetSection("MailSettings")
                 .Get<MailServerSettings>();
