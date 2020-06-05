@@ -8,6 +8,8 @@ export * from './donation-request.model';
 export * from './organization.model';
 export * from './page.model';
 export * from './status.model';
+export * from './unit.model';
+export * from './unit-type.model';
 export * from './user.model';
 export * from './admin-table-item.model';
 export * from './admin-column-item.model';
