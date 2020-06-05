@@ -305,7 +305,7 @@ namespace DonateTo.Infrastructure.Migrations
                     b.Property<long>("StatusId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("UnitId")
+                    b.Property<long>("UnitId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("UpdateBy")
@@ -854,7 +854,7 @@ namespace DonateTo.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DonateTo.ApplicationCore.Entities.Organization", null)
+                    b.HasOne("DonateTo.ApplicationCore.Entities.Organization", "Organization")
                         .WithMany("Addresses")
                         .HasForeignKey("OrganizationId");
 
@@ -917,7 +917,9 @@ namespace DonateTo.Infrastructure.Migrations
 
                     b.HasOne("DonateTo.ApplicationCore.Entities.Unit", "Unit")
                         .WithMany()
-                        .HasForeignKey("UnitId");
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.DonationRequest", b =>

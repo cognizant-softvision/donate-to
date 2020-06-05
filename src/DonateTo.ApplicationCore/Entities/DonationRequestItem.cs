@@ -7,6 +7,9 @@ namespace DonateTo.ApplicationCore.Entities
         public string Name { get; set; }
         public string Observation { get; set; }
         public decimal CurrentQuantity { get; set; }
+        /// <summary>
+        /// Requested quantity
+        /// </summary>
         public decimal FinishQuantity { get; set; }
         public long UnitId { get; set; }
         public Unit Unit { get; set; }       
