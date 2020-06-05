@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces.Services;
-using DonateTo.ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 
@@ -16,8 +15,7 @@ namespace DonateTo.WebApi.V1.Controllers
     [ApiController]
     public class AddressController : BaseApiController<Address>
     {
-        public AddressController(IBaseService<Address> addressService, IUnitOfWork unitOfWork) :
-            base(addressService, unitOfWork)
+        public AddressController(IBaseService<Address> addressService) : base(addressService)
         {
         }
 
@@ -44,7 +42,7 @@ namespace DonateTo.WebApi.V1.Controllers
 
                 return Ok(result);
             }
-            catch (Exception exc)
+            catch (Exception ex)
             {
                 return BadRequest();
             }

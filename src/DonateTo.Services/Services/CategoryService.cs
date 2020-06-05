@@ -5,7 +5,10 @@ namespace DonateTo.Services
 {
     public class CategoryService : BaseService<Category>
     {
-        public CategoryService(IRepository<Category> categoryRepository) : base(categoryRepository)
-        { }
+        public CategoryService(
+            IRepository<Category> categoryRepository,
+            IUnitOfWork unitOfWork) : base(categoryRepository, unitOfWork) 
+        {
+        }
     }
 }
