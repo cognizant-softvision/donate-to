@@ -1,17 +1,14 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { DonationsSandbox } from '../donations-sandbox';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NzI18nService } from 'ng-zorro-antd';
 import { Subscription } from 'rxjs';
 import {
-  AddressModel,
   CategoryModel,
   ColumnItem,
   DonationRequestCategoryModel,
   DonationRequestItemModel,
   DonationRequestModel,
-  OrganizationModel,
-  StatusModel,
 } from 'src/app/shared/models';
 
 @Component({
@@ -21,37 +18,36 @@ import {
 })
 export class DonationsFormComponent implements OnInit, OnDestroy {
   @Input() donationRequest: DonationRequestModel;
+  @Output() validationResult = new EventEmitter<DonationRequestModel>();
+
   private subscriptions: Subscription[] = [];
 
   addressId: number;
-  addresses: AddressModel[] = [];
   categories: CategoryModel[] = [];
   donationRequestItems: DonationRequestItemModel[] = [];
   finishDate: Date;
   observations: string;
-  organizations: OrganizationModel[] = [];
   organizationId: number;
   priority: number;
   statusId: number;
   defaultStatus: 2;
-  status: StatusModel[] = [];
   selectedCategories: CategoryModel[] = [];
   selectedItemCategories: CategoryModel[] = [];
   title: string;
   userId: number;
 
   listOfColumns: ColumnItem[] = [
-    { name: 'Admin.Donation.Table.ItemColumn' },
-    { name: 'Admin.Donation.Table.QuantityColumn' },
-    { name: 'Admin.Donation.Table.ObservationColumn' },
-    { name: 'Admin.Donation.Table.CategoryColumn' },
+    { name: 'Admin.Donation.Table.Itemcolumn' },
+    { name: 'Admin.Donation.Table.Quantitycolumn' },
+    { name: 'Admin.Donation.Table.Observationcolumn' },
+    { name: 'Admin.Donation.Table.Categorycolumn' },
     { name: 'Admin.Action' },
   ];
 
   donationRequestFormGroup = new FormGroup({
     titleFormControl: new FormControl('', Validators.required),
     priorityFormControl: new FormControl('', Validators.required),
-    statusFormControl: new FormControl('', Validators.required),
+    statusFormControl: new FormControl(''),
     organizationFormControl: new FormControl('', Validators.required),
     addressFormControl: new FormControl('', Validators.required),
     categoryFormControl: new FormControl(this.selectedCategories, Validators.required),
@@ -67,13 +63,7 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
     quantityFormControl: new FormControl('', Validators.required),
   });
 
-  constructor(public donationSandbox: DonationsSandbox, protected i18n: NzI18nService) {
-    this.sandBoxSubscriptionInit();
-
-    this.donationSandbox.loadOrganizations();
-    this.donationSandbox.loadCategories();
-    this.donationSandbox.loadStatus();
-  }
+  constructor(public donationSandbox: DonationsSandbox, protected i18n: NzI18nService) {}
 
   ngOnInit(): void {
     if (this.donationRequest) {
@@ -86,8 +76,15 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
       this.addressId = this.donationRequest.addressId;
       this.donationRequestItems = this.donationRequest.donationRequestItems;
     } else {
+      this.donationRequest = new DonationRequestModel();
       this.statusId = this.defaultStatus;
     }
+
+    this.sandBoxSubscriptionInit();
+
+    this.donationSandbox.loadOrganizations();
+    this.donationSandbox.loadCategories();
+    this.donationSandbox.loadStatus();
 
     this.donationRequestFormGroup.controls.itemsFormControl.setValue(this.donationRequestItems);
     this.donationRequestFormGroup.controls.itemsFormControl.setValidators(Validators.required);
@@ -99,31 +96,13 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
 
   private sandBoxSubscriptionInit() {
     this.subscriptions.push(
-      this.donationSandbox.organizations$.subscribe((organizations) => {
-        this.organizations = organizations;
-      })
-    );
-
-    this.subscriptions.push(
-      this.donationSandbox.status$.subscribe((status) => {
-        this.status = status;
-      })
-    );
-
-    this.subscriptions.push(
       this.donationSandbox.categories$.subscribe((categories) => {
         this.categories = categories;
-        if (this.donationRequest) {
+        if (this.donationRequest.id) {
           this.selectedCategories = this.categories.filter((sc) =>
             this.donationRequest.donationRequestCategories.some((dr) => sc.id === dr.categoryId)
           );
         }
-      })
-    );
-
-    this.subscriptions.push(
-      this.donationSandbox.addressesByOrganization$.subscribe((addresses) => {
-        this.addresses = addresses;
       })
     );
 
@@ -158,10 +137,11 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
     this.donationRequestItems = this.donationRequestItems.filter((item) => item !== donationRequestItemTarget);
   }
 
-  private validateDonationRequest() {
+  validateDonationRequest() {
     this.validateFormGroup(this.donationRequestFormGroup);
     if (this.donationRequestFormGroup.valid) {
       this.buildDonationRequest();
+      this.validationResult.emit(this.donationRequest);
     }
   }
 
@@ -221,6 +201,7 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
     updatedCategories = this.donationRequest.donationRequestCategories.filter((drc) =>
       this.selectedCategories.some((sc) => drc.categoryId !== sc.id)
     );
+
     updatedCategories.push(
       ...this.donationSandbox.mapCategoriesToDonationRequestCategories(
         this.selectedCategories.filter((sc) => !updatedCategories.some((uc) => uc.categoryId === sc.id))

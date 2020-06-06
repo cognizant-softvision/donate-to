@@ -12,5 +12,6 @@ export class DonationsCreateComponent {
 
   constructor(public donationSandbox: DonationsSandbox) {}
 
-  createDonationRequest() {}
+  createDonationRequest(data: any) {}
+  goBack() {}
 }

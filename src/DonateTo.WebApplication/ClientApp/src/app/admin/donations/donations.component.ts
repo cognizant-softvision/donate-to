@@ -14,9 +14,9 @@ export class DonationsComponent implements OnInit {
 
   donationRequests: DonationRequestModel[] = [];
   listOfColumns: ColumnItem[] = [
-    { name: 'Admin.Donation.Table.ItemColumn' },
-    { name: 'Admin.Donation.Table.FinishColumn' },
-    { name: 'Admin.Donation.Table.ObservationColumn' },
+    { name: 'Admin.Donation.Table.Itemcolumn' },
+    { name: 'Admin.Donation.Table.Finishcolumn' },
+    { name: 'Admin.Donation.Table.Observationcolumn' },
     { name: 'Admin.Action' },
   ];
 

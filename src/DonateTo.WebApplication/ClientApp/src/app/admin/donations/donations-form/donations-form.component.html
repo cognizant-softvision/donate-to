@@ -36,7 +36,12 @@
     <nz-form-label nzRequired nzFor="status">{{ 'Admin.Donation.Form.Status' | translate }}</nz-form-label>
     <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.Status' | translate }}">
       <nz-select [(ngModel)]="statusId" formControlName="statusFormControl">
-        <nz-option *ngFor="let state of status" [nzValue]="state.id" [nzLabel]="state.name"> </nz-option>
+        <nz-option
+          *ngFor="let state of this.donationSandbox.status$ | async"
+          [nzValue]="state.id"
+          [nzLabel]="state.name"
+        >
+        </nz-option>
       </nz-select>
     </nz-form-control>
   </nz-form-item>
@@ -49,7 +54,11 @@
         (ngModelChange)="setOrganization()"
         formControlName="organizationFormControl"
       >
-        <nz-option *ngFor="let organization of organizations" [nzValue]="organization.id" [nzLabel]="organization.name">
+        <nz-option
+          *ngFor="let organization of this.donationSandbox.organizations$ | async"
+          [nzValue]="organization.id"
+          [nzLabel]="organization.name"
+        >
         </nz-option>
       </nz-select>
     </nz-form-control>
@@ -61,9 +70,14 @@
         nzPlaceHolder="{{ 'Admin.Donation.Form.AddressPlaceholder' | translate }}"
         [(ngModel)]="addressId"
         formControlName="addressFormControl"
-        nzDisabled="{{ addresses.length == 0 }}"
+        nzDisabled="{{ (this.donationSandbox.addressesByOrganization$ | async).length == 0 }}"
       >
-        <nz-option *ngFor="let address of addresses" [nzValue]="address.id" [nzLabel]="address.street"> </nz-option>
+        <nz-option
+          *ngFor="let address of this.donationSandbox.addressesByOrganization$ | async"
+          [nzValue]="address.id"
+          [nzLabel]="address.street"
+        >
+        </nz-option>
       </nz-select>
     </nz-form-control>
   </nz-form-item>
@@ -87,7 +101,7 @@
         nzMode="multiple"
       >
         <nz-option
-          *ngFor="let category of categories"
+          *ngFor="let category of this.donationSandbox.categories$ | async"
           [nzLabel]="category.name"
           [nzValue]="category"
           [nzHide]="!isCategorySelected(category)"
@@ -100,13 +114,13 @@
   </nz-form-item>
   <div [formGroup]="donationRequestItemFormGroup" class="create-donation-add-item-container">
     <div class="create-donation-add-item-box-first">
-      <div>
-        <nz-form-label class="donatio-item" nzRequired>{{
+      <div class="create-item-container">
+        <nz-form-label class="donation-item" nzRequired>{{
           'Admin.Donation.Form.DonationItem.Name' | translate
         }}</nz-form-label>
         <nz-form-label>{{ 'Admin.Donation.Form.DonationItem.Observation' | translate }}</nz-form-label>
       </div>
-      <div class="create-donation-add-item-input">
+      <div class="create-item-container create-donation-add-item-input">
         <nz-form-item>
           <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.DonationItem.NameRequiredError' | translate }}">
             <input
@@ -134,13 +148,13 @@
       </div>
     </div>
     <div class="create-donation-add-item-box-second">
-      <div>
-        <nz-form-label class="donatio-item" nzRequired>{{
+      <div class="create-item-container">
+        <nz-form-label class="donation-item" nzRequired>{{
           'Admin.Donation.Form.DonationItem.Quantity' | translate
         }}</nz-form-label>
         <nz-form-label nzRequired>{{ 'Admin.Donation.Form.Category' | translate }}</nz-form-label>
       </div>
-      <div class="create-donation-add-item-input">
+      <div class="create-item-container create-donation-add-item-input">
         <nz-form-item>
           <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.DonationItem.QuantityRequiredError' | translate }}">
             <input
@@ -165,7 +179,7 @@
               nzPlaceHolder="{{ 'Admin.Donation.Form.CategoryPlaceholder' | translate }}"
             >
               <nz-option
-                *ngFor="let category of categories"
+                *ngFor="let category of this.donationSandbox.categories$ | async"
                 [nzLabel]="category.name"
                 [nzValue]="category"
                 [nzHide]="!isItemCategorySelected(category)"

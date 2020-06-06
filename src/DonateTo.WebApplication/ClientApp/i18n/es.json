@@ -120,13 +120,14 @@
         "DonationItemRequiredError": "Al menos 1 Item es Requerido",
         "DeleteItemConfirmation": "Está seguro que desea eliminar este Item?"
       },
+      "BackConfirm": "Estas seguro que quieres volver?",
       "DeleteConfirmation": "Está seguro que desea eliminar esta Solicitud de Donación?",
       "Table": {
-        "ItemColumn": "Item",
-        "FinishColumn": "Fecha Fin",
-        "ObservationColumn": "Observación",
-        "QuantityColumn": "Cantidad",
-        "CategoryColumn": "Categorías"
+        "Itemcolumn": "Item",
+        "Finishcolumn": "Fecha Fin",
+        "Observationcolumn": "Observación",
+        "Quantitycolumn": "Cantidad",
+        "Categorycolumn": "Categorías"
       }
     },
     "User": {

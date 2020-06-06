@@ -14,7 +14,7 @@
   margin-left: 1em;
 }
 
-.create-donation-add-item-container div div {
+.create-item-container {
   display: flex;
   flex-direction: column;
 }
@@ -37,6 +37,6 @@
   margin-left: 1em;
 }
 
-.donatio-item {
+.donatios-item {
   margin-bottom: 1em;
 }

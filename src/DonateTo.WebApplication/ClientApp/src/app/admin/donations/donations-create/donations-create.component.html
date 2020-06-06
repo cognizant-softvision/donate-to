@@ -3,7 +3,7 @@
     <h4 class="section-title">{{ 'Admin.Donation.Create.Title' | translate }}</h4>
   </div>
   <br />
-  <app-donations-form></app-donations-form>
+  <app-donations-form (validationResult)="createDonationRequest($event)"></app-donations-form>
   <br />
   <div class="create-donation-form-buttons">
     <button
@@ -17,7 +17,14 @@
     >
       {{ 'Admin.Donation.Create.CreateRequest' | translate }}
     </button>
-    <button routerLink="../.." nz-button nzType="primary">
+    <button
+      nz-popconfirm
+      nzPopconfirmTitle="{{ 'Admin.Donation.BackConfirm' | translate }}"
+      nzPopconfirmPlacement="bottom"
+      (nzOnConfirm)="goBack()"
+      nz-button
+      nzType="primary"
+    >
       {{ 'BackBtn' | translate }}
     </button>
   </div>

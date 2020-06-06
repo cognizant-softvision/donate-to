@@ -26,4 +26,5 @@ export class DonationsEditComponent implements OnInit {
   }
 
   updateDonationRequest() {}
+  goBack() {}
 }
