@@ -1,7 +1,8 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DonationRequestModel } from 'src/app/shared/models';
 import { DonationsSandbox } from '../donations-sandbox';
+import { DonationsFormComponent } from '../donations-form/donations-form.component';
 
 @Component({
   selector: 'app-donations-edit',
@@ -9,6 +10,8 @@ import { DonationsSandbox } from '../donations-sandbox';
   styleUrls: ['./donations-edit.component.css'],
 })
 export class DonationsEditComponent implements OnInit {
+  @ViewChild(DonationsFormComponent)
+  private formComponent: DonationsFormComponent;
   donationRequest: DonationRequestModel;
   id: number;
 
@@ -24,6 +27,10 @@ export class DonationsEditComponent implements OnInit {
     });
 
     this.donationSandbox.loadDonationRequest(this.id);
+  }
+
+  validateDonationRequest() {
+    this.formComponent.validateDonationRequest();
   }
 
   updateDonationRequest(data: any) {
