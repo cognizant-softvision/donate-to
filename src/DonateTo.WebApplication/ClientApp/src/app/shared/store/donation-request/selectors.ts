@@ -3,6 +3,7 @@ import { DonationRequestState } from './reducer';
 import { Injectable } from '@angular/core';
 
 export const donationRequestFeatureKey = 'donation-request';
+
 // selectors
 export const getEntityState = createFeatureSelector<DonationRequestState>(donationRequestFeatureKey);
 

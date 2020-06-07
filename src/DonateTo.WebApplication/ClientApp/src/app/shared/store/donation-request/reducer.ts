@@ -99,7 +99,18 @@ const donationRequestReducer = createReducer(
     failed: false,
     items: [...state.items, state.items.filter((item) => item !== donationRequest)],
   })),
-  on(donationRequestActions.addDonationRequestFailed, (state) => ({
+  on(donationRequestActions.removeDonationRequestFailed, (state) => ({
+    ...state,
+    loading: false,
+    failed: true,
+  })),
+  on(donationRequestActions.updateDonationRequestSuccess, (state, { donationRequest }) => ({
+    ...state,
+    loading: false,
+    failed: false,
+    items: [...state.items.filter((i) => i.id !== donationRequest.id), donationRequest],
+  })),
+  on(donationRequestActions.updateDonationRequestFailed, (state) => ({
     ...state,
     loading: false,
     failed: true,

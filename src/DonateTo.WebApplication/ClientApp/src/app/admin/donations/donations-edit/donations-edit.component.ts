@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { DonationRequestModel } from 'src/app/shared/models';
 import { DonationsSandbox } from '../donations-sandbox';
@@ -11,8 +11,9 @@ import { DonationsSandbox } from '../donations-sandbox';
 export class DonationsEditComponent implements OnInit {
   donationRequest: DonationRequestModel;
   id: number;
-  constructor(private route: ActivatedRoute, public donationSandbox: DonationsSandbox) {
-    this.route.params.subscribe((param) => {
+
+  constructor(private activeRoute: ActivatedRoute, private router: Router, public donationSandbox: DonationsSandbox) {
+    this.activeRoute.params.subscribe((param) => {
       this.id = parseInt(param['Id'], 10);
     });
   }
@@ -25,6 +26,12 @@ export class DonationsEditComponent implements OnInit {
     this.donationSandbox.loadDonationRequest(this.id);
   }
 
-  updateDonationRequest() {}
-  goBack() {}
+  updateDonationRequest(data: any) {
+    this.donationSandbox.updateDonationRequest(data);
+    this.goBack();
+  }
+
+  goBack() {
+    this.router.navigateByUrl('/admin/donations');
+  }
 }

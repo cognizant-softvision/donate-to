@@ -11,6 +11,16 @@ export const addDonationRequestSuccess = createAction(
 );
 export const addDonationRequestFailed = createAction('[Donation Request] Add failed');
 
+export const updateDonationRequest = createAction(
+  '[Donation Request] Update Donation Request',
+  props<{ donationRequest: DonationRequestModel }>()
+);
+export const updateDonationRequestSuccess = createAction(
+  '[Donation Request] Update success',
+  props<{ donationRequest: DonationRequestModel }>()
+);
+export const updateDonationRequestFailed = createAction('[Donation Request] Update failed');
+
 export const loadDonationRequest = createAction('[Donation Request] Load', props<{ donationRequestId: number }>());
 export const loadDonationRequestSuccess = createAction(
   '[Donation Request] Load success',

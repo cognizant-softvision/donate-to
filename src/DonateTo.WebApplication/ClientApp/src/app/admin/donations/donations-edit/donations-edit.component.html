@@ -3,7 +3,11 @@
     <h4 class="section-title">{{ 'Admin.Donation.Edit.Title' | translate }}</h4>
   </div>
   <br />
-  <app-donations-form *ngIf="this.donationRequest" [donationRequest]="this.donationRequest"></app-donations-form>
+  <app-donations-form
+    *ngIf="this.donationRequest"
+    (validationResult)="updateDonationRequest($event)"
+    [donationRequest]="this.donationRequest"
+  ></app-donations-form>
   <br />
   <div class="create-donation-form-buttons">
     <button

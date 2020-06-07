@@ -29,8 +29,7 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
   observations: string;
   organizationId: number;
   priority: number;
-  statusId: number;
-  defaultStatus: 2;
+  statusId = 2;
   selectedCategories: CategoryModel[] = [];
   selectedItemCategories: CategoryModel[] = [];
   title: string;
@@ -77,7 +76,6 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
       this.donationRequestItems = this.donationRequest.donationRequestItems;
     } else {
       this.donationRequest = new DonationRequestModel();
-      this.statusId = this.defaultStatus;
     }
 
     this.sandBoxSubscriptionInit();
@@ -124,7 +122,7 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
   }
 
   getCategoryName(categoryId) {
-    if (this.categories) {
+    if (this.categories && this.categories.length > 0) {
       return this.categories.find((c) => c.id === categoryId).name;
     }
   }
@@ -174,7 +172,8 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
 
     donationRequestForm.title = this.title;
     donationRequestForm.observation = this.observations;
-    donationRequestForm.priority = this.priority;
+    donationRequestForm.organizationId = this.organizationId;
+    donationRequestForm.addressId = this.addressId;
     donationRequestForm.priority = this.priority;
     donationRequestForm.finishDate = this.finishDate;
     donationRequestForm.userId = this.userId;

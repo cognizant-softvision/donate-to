@@ -53,10 +53,17 @@ export class DonationsSandbox extends Sandbox {
   }
 
   /**
-   * Loads donationRequests from the server
+   * Adds donationRequests to the server
    */
   public createDonationRequest(donationRequest: DonationRequestModel): void {
     this.appState$.dispatch(store.fromDonationRequest.addDonationRequest({ donationRequest }));
+  }
+
+  /**
+   * Update donationRequests in the server
+   */
+  public updateDonationRequest(donationRequest: DonationRequestModel): void {
+    this.appState$.dispatch(store.fromDonationRequest.updateDonationRequest({ donationRequest }));
   }
 
   /**

@@ -22,6 +22,9 @@ import {
   removeDonationRequest,
   removeDonationRequestFailed,
   removeDonationRequestSuccess,
+  updateDonationRequest,
+  updateDonationRequestFailed,
+  updateDonationRequestSuccess,
 } from './actions';
 
 @Injectable()
@@ -66,6 +69,17 @@ export class DonationRequestEffects {
       this.donationRequestService.createDonationRequest(data.donationRequest).pipe(
         map((donationRequest) => addDonationRequestSuccess({ donationRequest })),
         catchError(() => of(addDonationRequestFailed()))
+      )
+    )
+  );
+
+  @Effect()
+  updateDonationRequest$: Observable<{}> = this.actions$.pipe(
+    ofType(updateDonationRequest),
+    switchMap((data: any) =>
+      this.donationRequestService.update(data.donationRequest).pipe(
+        map((donationRequest) => updateDonationRequestSuccess({ donationRequest })),
+        catchError(() => of(updateDonationRequestFailed()))
       )
     )
   );

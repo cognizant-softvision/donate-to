@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DonationsSandbox } from '../donations-sandbox';
-import { DonationRequestModel } from 'src/app/shared/models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-donations-create',
@@ -8,10 +8,13 @@ import { DonationRequestModel } from 'src/app/shared/models';
   styleUrls: ['./donations-create.component.css'],
 })
 export class DonationsCreateComponent {
-  donationRequest: DonationRequestModel;
+  constructor(public donationSandbox: DonationsSandbox, private router: Router) {}
+  createDonationRequest(data: any) {
+    this.donationSandbox.createDonationRequest(data);
+    this.goBack();
+  }
 
-  constructor(public donationSandbox: DonationsSandbox) {}
-
-  createDonationRequest(data: any) {}
-  goBack() {}
+  goBack() {
+    this.router.navigateByUrl('/admin/donations');
+  }
 }
