@@ -97,7 +97,7 @@ const donationRequestReducer = createReducer(
     ...state,
     loading: false,
     failed: false,
-    items: [...state.items, state.items.filter((item) => item !== donationRequest)],
+    items: state.items.filter((item) => item !== donationRequest),
   })),
   on(donationRequestActions.removeDonationRequestFailed, (state) => ({
     ...state,

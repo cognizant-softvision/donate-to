@@ -10,12 +10,12 @@ import { DonationsFormComponent } from '../donations-form/donations-form.compone
 })
 export class DonationsCreateComponent {
   @ViewChild(DonationsFormComponent)
-  private formComponent: DonationsFormComponent;
+  private donationsFormComponent: DonationsFormComponent;
 
   constructor(public donationSandbox: DonationsSandbox, private router: Router) {}
 
-  validateDonationRequest() {
-    this.formComponent.validateDonationRequest();
+  validateDonationRequestForm() {
+    this.donationsFormComponent.validateForm();
   }
 
   createDonationRequest(data: any) {

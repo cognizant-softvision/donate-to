@@ -11,7 +11,7 @@ import { DonationsFormComponent } from '../donations-form/donations-form.compone
 })
 export class DonationsEditComponent implements OnInit {
   @ViewChild(DonationsFormComponent)
-  private formComponent: DonationsFormComponent;
+  private donationsFormComponent: DonationsFormComponent;
   donationRequest: DonationRequestModel;
   id: number;
 
@@ -29,8 +29,8 @@ export class DonationsEditComponent implements OnInit {
     this.donationSandbox.loadDonationRequest(this.id);
   }
 
-  validateDonationRequest() {
-    this.formComponent.validateDonationRequest();
+  validateDonationRequestForm() {
+    this.donationsFormComponent.validateForm();
   }
 
   updateDonationRequest(data: any) {

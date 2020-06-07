@@ -135,7 +135,7 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
     this.donationRequestItems = this.donationRequestItems.filter((item) => item !== donationRequestItemTarget);
   }
 
-  validateDonationRequest() {
+  validateForm() {
     this.validateFormGroup(this.donationRequestFormGroup);
     if (this.donationRequestFormGroup.valid) {
       this.buildDonationRequest();
