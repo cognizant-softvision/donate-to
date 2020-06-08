@@ -18,49 +18,40 @@ namespace DonateTo.IdentityServer.Services
             _clientsRepository = clientsRepository;
         }
 
-        public async Task<Client> CreateAsync(Client entity)
+        ///<inheritdoc cref="IClientService"/>
+        public async Task<Client> CreateAsync(Client client)
         {
-            var result = await _clientsRepository.CreateAsync(entity).ConfigureAwait(false);
+            var result = await _clientsRepository.CreateAsync(client).ConfigureAwait(false);
             await _clientsRepository.SaveChanges();
             return result;
         }
 
+        ///<inheritdoc cref="IClientService"/>
         public async Task DeleteAsync(int id)
         {
              await _clientsRepository.DeleteAsync(id).ConfigureAwait(false);
             await _clientsRepository.SaveChanges();
         }
 
-
+        ///<inheritdoc cref="IClientService"/>
         public async Task<IEnumerable<Client>> GetAsync(Expression<Func<Client, bool>> filter)
         {
              return await _clientsRepository.GetAsync(filter).ConfigureAwait(false);
         }
 
+        ///<inheritdoc cref="IClientService"/>
         public async Task<Client> GetAsync(int id)
         {
            return await _clientsRepository.GetAsync(id).ConfigureAwait(false);
         }
 
-        public async Task<Client> UpdateAsync(Client entity, int id)
+        ///<inheritdoc cref="IClientService"/>
+        public async Task<Client> UpdateAsync(Client client, int id)
         {
-            var result = await _clientsRepository.UpdateAsync(entity, id).ConfigureAwait(false);
+            var result = await _clientsRepository.UpdateAsync(client, id).ConfigureAwait(false);
             await _clientsRepository.SaveChanges();
             return result;
         }
-        public async Task<IQueryable<ClientGrantType>> GetGrantTypesAsync()
-        {
-             return await _clientsRepository.GetGrantTypesAsync().ConfigureAwait(false);
-        }
 
-        public async Task<IQueryable<ClientScope>> GetScopesAsync()
-        {
-             return await _clientsRepository.GetScopesAsync().ConfigureAwait(false);
-        }
-
-        public async Task<IQueryable<ClientClaim>> GetClaimsAsync()
-        {
-             return await _clientsRepository.GetClaimsAsync().ConfigureAwait(false);
-        }
     }
 }

@@ -10,8 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace DonateTo.IdentityServer.Controllers
 {
-    //[Authorize(Roles = "Superadmin")]
-    [AllowAnonymous]
+    [Authorize(Roles = "Superadmin")]
     public class ClientController : Controller
     {
         private readonly IClientService _clientService;

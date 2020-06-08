@@ -18,22 +18,26 @@ namespace DonateTo.IdentityServer.Data.Repositories
             _dbContext = dbContext;
         }
 
+        ///<inheritdoc cref="IClientRepository"/>
         public async Task<Client> CreateAsync(Client client)
         {
             var newEntity = await _dbContext.AddAsync(client).ConfigureAwait(false);
             return newEntity.Entity;
         }
 
+        ///<inheritdoc cref="IClientRepository"/>
         public async Task DeleteAsync(int id)
         {
             await Task.FromResult(_dbContext.Clients.Remove(new Client { Id = id })).ConfigureAwait(false);
         }
 
+        ///<inheritdoc cref="IClientRepository"/>
         public async Task<IQueryable<Client>> GetAsync(Expression<Func<Client, bool>> filter)
         {
             return await Task.FromResult(_dbContext.Clients.Where(filter)).ConfigureAwait(false);
         }
 
+        ///<inheritdoc cref="IClientRepository"/>
         public async Task<Client> GetAsync(int id)
         {
             return await _dbContext.Clients.Include(c => c.AllowedCorsOrigins).
@@ -43,6 +47,7 @@ namespace DonateTo.IdentityServer.Data.Repositories
                 FirstOrDefaultAsync(c => c.Id == id).ConfigureAwait(false);
         }
 
+        ///<inheritdoc cref="IClientRepository"/>
         public async Task<Client> UpdateAsync(Client client, int id)
         {
 
@@ -66,6 +71,11 @@ namespace DonateTo.IdentityServer.Data.Repositories
             return await Task.FromResult(client).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Gets the original client hydrated and without changes from the Database
+        /// </summary>
+        /// <param name="id">The Id of the client to retrieve</param>
+        /// <returns>The original client</returns>
         private async Task<Client> GetUnmodifiedAsync(int id)
         {
             return await _dbContext.Clients.AsNoTracking().Include(c => c.AllowedCorsOrigins).
@@ -75,6 +85,13 @@ namespace DonateTo.IdentityServer.Data.Repositories
                 FirstOrDefaultAsync(c => c.Id == id).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Sets for removal related entities that are no longer associated with the client
+        /// </summary>
+        /// <typeparam name="TId">Type of the entity's Id</typeparam>
+        /// <typeparam name="TEntity">Type of the entity</typeparam>
+        /// <param name="originalListIds">The list of Ids that where associated</param>
+        /// <param name="newListIds">The list of current related entities</param>
         private void RefreshRelatedEntity<TId, TEntity>(TId[] originalListIds, TId[] newListIds) where TEntity : class
         {
             var removedList = originalListIds.Except(newListIds);
@@ -85,21 +102,7 @@ namespace DonateTo.IdentityServer.Data.Repositories
             }
         }
 
-        public async Task<IQueryable<ClientClaim>> GetClaimsAsync()
-        {
-            return await Task.FromResult(_dbContext.Set<ClientClaim>()).ConfigureAwait(false);
-        }
-
-        public async Task<IQueryable<ClientScope>> GetScopesAsync()
-        {
-            return await Task.FromResult(_dbContext.Set<ClientScope>()).ConfigureAwait(false);
-        }
-
-        public async Task<IQueryable<ClientGrantType>> GetGrantTypesAsync()
-        {
-            return await Task.FromResult(_dbContext.Set<ClientGrantType>()).ConfigureAwait(false);
-        }
-
+        ///<inheritdoc cref="IClientRepository"/>
         public async Task SaveChanges()
         {
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
