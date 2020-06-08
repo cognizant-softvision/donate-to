@@ -5,11 +5,10 @@ namespace DonateTo.Services
 {
     public class StatusService : BaseService<Status>
     {
-        private readonly IRepository<Status> _statusRepository;
-
-        public StatusService(IRepository<Status> statusRepository) : base(statusRepository)
+        public StatusService(
+            IRepository<Status> statusRepository,
+            IUnitOfWork unitOfWork) : base(statusRepository, unitOfWork)
         {
-            _statusRepository = statusRepository;
         }
     }
 }
