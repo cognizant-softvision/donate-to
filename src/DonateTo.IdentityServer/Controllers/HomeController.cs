@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DonateTo.IdentityServer.Common;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace DonateTo.IdentityServer.Controllers
@@ -14,6 +15,9 @@ namespace DonateTo.IdentityServer.Controllers
 
         public IActionResult Index()
         {
+            if (User?.Identity?.IsAuthenticated == true && User.IsInRole(Roles.Superadmin)) {
+                return View();
+            }
             return RedirectToAction("Login", "Account", new { returnUrl = "~/Account/SignedUp" });
         }
 
