@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces.Services;
-using DonateTo.ApplicationCore.Interfaces;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -10,8 +9,7 @@ namespace DonateTo.WebApi.V1.Controllers
     [ApiController]
     public class CategoryController : BaseApiController<Category>
     {
-        public CategoryController(IBaseService<Category> categoryService, IUnitOfWork unitOfWork) :
-            base(categoryService, unitOfWork)
+        public CategoryController(IBaseService<Category> categoryService) : base(categoryService)
         {
         }
     }

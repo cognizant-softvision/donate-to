@@ -1,5 +1,4 @@
-﻿using DonateTo.ApplicationCore.Entities;
-using DonateTo.ApplicationCore.Interfaces;
+﻿using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Models.Pagination;
 using DonateTo.Infrastructure.Data.Extensions;
 using Microsoft.EntityFrameworkCore;

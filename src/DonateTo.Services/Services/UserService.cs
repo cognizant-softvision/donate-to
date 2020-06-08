@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using DonateTo.Infrastructure.Data.Extensions;
 
 namespace DonateTo.Services
 {
