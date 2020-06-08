@@ -20,6 +20,13 @@ using DonateTo.IdentityServer.Services;
 using DonateTo.IdentityServer.Data.Repositories.Interfaces;
 using DonateTo.IdentityServer.Data.Repositories;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using DonateTo.Mailer.Entities;
+using DonateTo.Mailer.Interfaces;
+using DonateTo.Mailer;
+using IdentityModel;
+using System.IdentityModel.Tokens.Jwt;
+using DonateTo.IdentityServer.Services;
+using IdentityServer4.Services;
 
 namespace DonateTo.IdentityServer
 {
@@ -28,7 +35,7 @@ namespace DonateTo.IdentityServer
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment Environment { get; set; }
 
-        public Startup(IConfiguration configuration, 
+        public Startup(IConfiguration configuration,
             IWebHostEnvironment env)
         {
             Configuration = configuration;
@@ -42,21 +49,24 @@ namespace DonateTo.IdentityServer
             services.AddControllersWithViews();
 
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
-           
+
             services.AddDbContext<DonateIdentityDbContext>(options =>
                 options.UseNpgsql(connectionString));
 
             services.AddDonateToModule(Configuration);
+
             services.AddAutoMapper(typeof(Startup));
 
             services.AddTransient<IClientService, ClientService>();
             services.AddTransient<IClientRepository, ClientRepository>();
 
-
             var identityOptions = Configuration.GetSection("Identity").GetSection("Options");
-
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             services.AddIdentity<User, Role>(options =>
             {
+                options.ClaimsIdentity.RoleClaimType = JwtClaimTypes.Role;
+                options.ClaimsIdentity.UserIdClaimType = JwtClaimTypes.Id;
+                options.ClaimsIdentity.UserNameClaimType = JwtClaimTypes.Name;
                 options.Password.RequiredLength = identityOptions.GetSection("Password").GetValue<int>("RequiredLength");
                 options.Password.RequireDigit = identityOptions.GetSection("Password").GetValue<bool>("RequireDigit");
                 options.Password.RequireUppercase = identityOptions.GetSection("Password").GetValue<bool>("RequireUppercase");
@@ -69,30 +79,42 @@ namespace DonateTo.IdentityServer
             .AddDefaultTokenProviders();
 
             var builder = services.AddIdentityServer(options =>
-            {
-                options.Events.RaiseErrorEvents = true;
-                options.Events.RaiseInformationEvents = true;
-                options.Events.RaiseFailureEvents = true;
-                options.Events.RaiseSuccessEvents = true;
-                options.UserInteraction.LoginUrl = "/Account/Login";
-                options.UserInteraction.LogoutUrl = "/Account/Logout";
-                options.Authentication = new AuthenticationOptions()
                 {
-                    CookieLifetime = TimeSpan.FromHours(10), // ID server cookie timeout set to 10 hours
-                    CookieSlidingExpiration = true
-                };
-            })
-            .AddConfigurationStore<CustomConfigurationDbContext>(options =>
-            {
-                options.ConfigureDbContext = b => b.UseNpgsql(connectionString,
-                    sql => sql.MigrationsAssembly(migrationsAssembly));
-            })
-            .AddOperationalStore<CustomPersistedGrantDbContext>(options =>
-            {
-                options.ConfigureDbContext = b => b.UseNpgsql(connectionString,
-                    sql => sql.MigrationsAssembly(migrationsAssembly));
-            })
-            .AddAspNetIdentity<User>();
+                    options.Events.RaiseErrorEvents = true;
+                    options.Events.RaiseInformationEvents = true;
+                    options.Events.RaiseFailureEvents = true;
+                    options.Events.RaiseSuccessEvents = true;
+                    options.UserInteraction.LoginUrl = "/Account/Login";
+                    options.UserInteraction.LogoutUrl = "/Account/Logout";
+                    options.Authentication = new AuthenticationOptions()
+                    {
+                        CookieLifetime = TimeSpan.FromHours(10), // ID server cookie timeout set to 10 hours
+                        CookieSlidingExpiration = true
+                    };
+                })
+
+                .AddConfigurationStore<CustomConfigurationDbContext>(options =>
+                {
+                    options.ConfigureDbContext = b => b.UseNpgsql(connectionString,
+                        sql => sql.MigrationsAssembly(migrationsAssembly));
+                })
+                .AddOperationalStore<CustomPersistedGrantDbContext>(options =>
+                {
+                    options.ConfigureDbContext = b => b.UseNpgsql(connectionString,
+                        sql => sql.MigrationsAssembly(migrationsAssembly));
+                })
+                .AddAspNetIdentity<User>()
+                .AddProfileService<ProfileService>();
+
+            builder.Services.ConfigureApplicationCookie(opt => { 
+                opt.AccessDeniedPath = opt.LoginPath;
+            });
+
+            var mailConfig = Configuration.GetSection("MailSettings")
+                .Get<MailServerSettings>();
+            
+            services.AddSingleton(mailConfig);
+            services.AddScoped<IMailSender, MailSender>();
 
             //Need to handle credentials for production
             builder.AddDeveloperSigningCredential();

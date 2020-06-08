@@ -11,7 +11,9 @@ namespace DonateTo.Services
 {
     public class DonationService: BaseService<Donation>
     {
-        public DonationService(IRepository<Donation> donationRepository):base(donationRepository)
+        public DonationService(
+            IRepository<Donation> donationRepository, 
+            IUnitOfWork unitOfWork) : base(donationRepository, unitOfWork)
         {
         }
     }
