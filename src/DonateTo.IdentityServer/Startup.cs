@@ -16,6 +16,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using IdentityServer4.EntityFramework.Mappers;
 using DonateTo.IdentityServer.Data.EntityFramework;
+using DonateTo.IdentityServer.Services;
+using DonateTo.IdentityServer.Data.Repositories.Interfaces;
+using DonateTo.IdentityServer.Data.Repositories;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using DonateTo.Mailer.Entities;
 using DonateTo.Mailer.Interfaces;
 using DonateTo.Mailer;
@@ -53,7 +57,8 @@ namespace DonateTo.IdentityServer
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddTransient<IProfileService, ProfileService>();
+            services.AddTransient<IClientService, ClientService>();
+            services.AddTransient<IClientRepository, ClientRepository>();
 
             var identityOptions = Configuration.GetSection("Identity").GetSection("Options");
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();

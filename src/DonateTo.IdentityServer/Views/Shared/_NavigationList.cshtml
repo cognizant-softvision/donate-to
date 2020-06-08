@@ -1,0 +1,61 @@
+﻿@model NavigationListViewModel
+@if (Model.Dict == null)
+{
+    Model.Dict = new Dictionary<string, string>[0];
+}
+
+<div id="@(Model.FieldName)_table">
+    <table class="table table-responsive table">
+        <thead>
+            <tr>
+                @foreach (var key in Model.FieldNames)
+                {
+                    <td>
+                        @key
+                    </td>
+
+                }
+            </tr>
+        </thead>
+        @{
+            var index = 0;
+        }
+        <tbody class="table-bordered">
+
+            @foreach (var dataItems in Model.Dict)
+            {
+                <tr>
+                    @foreach (var item in dataItems.Where(fn => !Model.FieldNames.Contains(fn.Key)))
+                    {
+                        <td hidden>
+                            <input type="hidden" class="@(item.Key)" id="@(Model.FieldName)_@(index)__@(item.Key)" name="@(Model.FieldName)[@(index)][@(item.Key)]" value=" @(item.Value)">
+                        </td>
+                    }
+                    @foreach (var key in Model.FieldNames)
+                    {
+                        <td>
+                            <input type="hidden" class="@(key)" id="@(Model.FieldName)_@(index)__@(key)" name="@(Model.FieldName)[@(index)][@(key)]" value=" @(dataItems[key])">
+                            @dataItems[key]
+                        </td>
+                    }
+                    <td>
+                        <input type="button" onclick="removeItem(this)" value="Remove" class="btn btn-primary" />
+                    </td>
+                </tr>
+                index++;
+            }
+            <tr>
+                @foreach (var key in Model.FieldNames)
+                {
+                    <td>
+                        <input type="text" name="@(Model.FieldName)-navigation-inner__@key" />
+                    </td>
+                }
+                <td>
+                    <input type="button" onclick="addItem('@(Model.FieldName)' ,this, @Json.Serialize(Model.FieldNames).ToString(), '@Url.Action("RefreshList")' )" value="Add" class="btn btn-primary" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <span class="text-danger field-validation-valid" data-valmsg-for="@Model.FieldName" data-valmsg-replace="true"></span>
+</div>
