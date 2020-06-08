@@ -74,14 +74,15 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
 
         public virtual TEntity Update(TEntity entity)
         {
-            DbContext.Entry(entity).State = EntityState.Modified;
+            DbContext.Set<TEntity>().Update(entity);
 
             return entity;
         }
 
         public virtual async Task<TEntity> UpdateAsync(TEntity entity)
         {
-            DbContext.Entry(entity).State = EntityState.Modified;
+            DbContext.Set<TEntity>().Update(entity);
+
 
             return await Task.FromResult(entity).ConfigureAwait(false);
         }

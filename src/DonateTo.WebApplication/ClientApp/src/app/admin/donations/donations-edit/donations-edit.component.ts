@@ -33,8 +33,8 @@ export class DonationsEditComponent implements OnInit {
     this.donationsFormComponent.validateForm();
   }
 
-  updateDonationRequest(data: any) {
-    this.donationSandbox.updateDonationRequest(data);
+  updateDonationRequest(updatedDonationRequest: DonationRequestModel) {
+    this.donationSandbox.updateDonationRequest(updatedDonationRequest);
     this.goBack();
   }
 
