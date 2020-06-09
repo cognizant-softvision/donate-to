@@ -62,7 +62,7 @@ export class DonationRequestEffects {
     switchMap((data: any) =>
       this.donationRequestService.createDonationRequest(data.donationRequest).pipe(
         map((donationRequest) => addDonationRequestSuccess({ donationRequest })),
-        catchError(() => of(addDonationRequestFailed()))
+        catchError(ofType(addDonationRequestFailed))
       )
     )
   );
@@ -73,7 +73,7 @@ export class DonationRequestEffects {
     switchMap((data: any) =>
       this.donationRequestService.delete(data.donationRequest).pipe(
         map((donationRequest) => removeDonationRequestSuccess({ donationRequest })),
-        catchError(() => of(removeDonationRequestFailed()))
+        catchError(() => of(addDonationRequestFailed))
       )
     )
   );

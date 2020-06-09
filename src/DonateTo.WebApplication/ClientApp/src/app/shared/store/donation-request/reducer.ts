@@ -75,10 +75,20 @@ const donationRequestReducer = createReducer(
     failed: false,
     items: [...state.items, donationRequest],
   })),
+  on(donationRequestActions.addDonationRequest, (state) => ({
+    ...state,
+    failed: false,
+    loading: true,
+  })),
   on(donationRequestActions.addDonationRequestFailed, (state) => ({
     ...state,
     loading: false,
     failed: true,
+  })),
+  on(donationRequestActions.removeDonationRequest, (state) => ({
+    ...state,
+    failed: false,
+    loading: true,
   })),
   on(donationRequestActions.removeDonationRequestSuccess, (state, { donationRequest }) => ({
     ...state,

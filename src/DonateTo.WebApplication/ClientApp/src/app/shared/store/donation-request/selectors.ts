@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 export const donationRequestFeatureKey = 'donation-request';
 // selectors
 export const getEntityState = createFeatureSelector<DonationRequestState>(donationRequestFeatureKey);
+export const getFailStatus = createSelector(getEntityState, (state: DonationRequestState) => state.failed);
 
 export const getAllDonationRequests = createSelector(getEntityState, (state: DonationRequestState) => state.items);
 
@@ -32,4 +33,5 @@ export class DonationRequestSelectors {
   donationRequestsSearchPaged$ = this.store.select(getAllDonationRequestsSearchPaged);
   donationRequestState$ = this.store.select(getEntityState);
   loading$ = this.store.select(getDonationRequestsLoading);
+  failStatus$ = this.store.select(getFailStatus);
 }

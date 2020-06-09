@@ -4,13 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NzI18nService } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import {
-  AddressModel,
-  CategoryModel,
-  ColumnItem,
-  DonationRequestItemModel,
-  DonationRequestModel,
-} from 'src/app/shared/models';
+import { CategoryModel, ColumnItem, DonationRequestItemModel, DonationRequestModel } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-donations-create',
@@ -19,6 +13,7 @@ import {
 })
 export class DonationsCreateComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
+  private isSubmited = false;
   categories: CategoryModel[] = [];
   donationRequest: DonationRequestModel;
   listOfColumns: ColumnItem[] = [
@@ -85,6 +80,17 @@ export class DonationsCreateComponent implements OnInit, OnDestroy {
         this.categories = categories;
       })
     );
+
+    this.subscriptions.push(
+      this.donationSandbox.loadAction$.subscribe((_) => {
+        if (this.donationSandbox.failAction && this.isSubmited) {
+          // Fail Pop up
+        }
+        if (this.isSubmited) {
+          this.router.navigateByUrl('/admin/donations');
+        }
+      })
+    );
   }
 
   setOrganization() {
@@ -137,9 +143,8 @@ export class DonationsCreateComponent implements OnInit, OnDestroy {
       this.donationRequest.donationRequestCategories = this.donationSandbox.mapCategoriesToDonationRequestCategories(
         this.selectedCategories
       );
+      this.isSubmited = true;
       this.donationSandbox.createDonationRequest(this.donationRequest);
-
-      this.router.navigate(['admin/donations']);
     }
   }
 

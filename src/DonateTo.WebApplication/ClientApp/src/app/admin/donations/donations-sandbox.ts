@@ -18,8 +18,17 @@ export class DonationsSandbox extends Sandbox {
   categories$ = this.appState$.select(store.fromCategory.getAllCategories);
   addressesByOrganization$ = this.appState$.select(store.fromAddress.getAddressesByOrganizationId);
 
+  failAction$ = this.appState$.select(store.fromDonationRequest.getFailStatus);
+  loadAction$ = this.appState$.select(store.fromDonationRequest.getDonationRequestsLoading);
+
+  public failAction: boolean;
+
   constructor(protected appState$: Store<store.State>) {
     super(appState$);
+
+    this.failAction$.subscribe((status) => {
+      this.failAction = status;
+    });
   }
 
   /**
