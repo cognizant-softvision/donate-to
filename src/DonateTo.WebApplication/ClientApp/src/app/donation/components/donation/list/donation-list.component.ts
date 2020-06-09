@@ -79,7 +79,11 @@ export class DonationListComponent implements OnInit, OnDestroy {
   }
 
   donationConfirm(): void {
-    this.isSomethingToDonate() ? this.showDonationConfirmModal.emit(true) : this.alertMessage();
+    if (this.isSomethingToDonate()) {
+      this.showDonationConfirmModal.emit(true);
+    } else {
+      this.alertMessage();
+    }
   }
 
   alertMessage(): void {

@@ -1,28 +1,22 @@
 import { BaseModel } from './base.model';
 import { OrganizationModel } from './organization.model';
 import { AddressModel } from './address.model';
-import { UserModel } from './user.model';
 import { StatusModel } from './status.model';
 import { DonationRequestItemModel } from './donation-request-item.model';
-import { DonationRequestCategoryModel } from './donation-request-category.model';
 import { AvailabilityModel } from './availability.model';
+import { DonationRequestModel } from './donation-request.model';
 
 export class DonationModel extends BaseModel {
-  name: string;
-  title: string;
-  nullable: true;
-  observation: string;
-  priority: number;
-  organizationId: number;
-  organization: OrganizationModel;
+  observation?: string;
+  organizationId?: number;
+  organization?: OrganizationModel;
+  donationRequestId: number;
+  donationRequest?: DonationRequestModel;
   addressId: number;
-  address: AddressModel;
+  address?: AddressModel;
   statusId: number;
-  status: StatusModel;
-  userId: number;
-  user: UserModel;
-  donationRequestItems: DonationRequestItemModel[];
-  finishDate: Date;
-  donationRequestCategories: DonationRequestCategoryModel[];
-  availability: AvailabilityModel[];
+  status?: StatusModel;
+  pickUpDate?: Date;
+  donationItems?: DonationRequestItemModel[];
+  availability?: AvailabilityModel[];
 }
