@@ -86,6 +86,7 @@ export class DonationsCreateComponent implements OnInit, OnDestroy {
       this.donationSandbox.loadAction$.subscribe((_) => {
         if (this.donationSandbox.failAction && this.isSubmited) {
           this.switchErrorModal();
+          this.isSubmited = false;
         }
         if (this.isSubmited) {
           this.router.navigateByUrl('/admin/donations');
