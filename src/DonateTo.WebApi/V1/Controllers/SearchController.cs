@@ -33,7 +33,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<PagedResult<DonationRequest>>> SearchDonation(string query,int pageNumber, int pageSize)
+        public async Task<ActionResult<PagedResult<DonationRequest>>> SearchDonation(string query, int pageNumber, int pageSize)
         {
             if (ModelState.IsValid)
             {
