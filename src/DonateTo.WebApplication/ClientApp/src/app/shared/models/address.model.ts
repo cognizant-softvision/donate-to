@@ -6,7 +6,6 @@ import { CityModel } from './city.model';
 
 export class AddressModel extends BaseModel {
   street: string;
-  state: string;
   postalCode: string;
   floor: string;
   appartment: string;

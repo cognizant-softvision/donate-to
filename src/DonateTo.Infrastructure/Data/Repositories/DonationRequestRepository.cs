@@ -49,17 +49,5 @@ namespace DonateTo.Infrastructure.Data.Repositories
         {
             return await GetHydratedDonationRequests().GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
-
-        #region private
-        private IQueryable<DonationRequest> GetHydratedDonationRequests()
-        {
-            return DbContext.Set<DonationRequest>()
-                .Include(d => d.Address)
-                .Include(d => d.Status)
-                .Include(d => d.DonationRequestItems).ThenInclude(dri => dri.Unit)
-                .Include(d => d.DonationRequestCategories).ThenInclude(drc => drc.Category)
-                .Include(d => d.Organization);
-        }
-        #endregion
     }
 }
