@@ -10,8 +10,8 @@ import { DonationSandbox } from 'src/app/donation/donation.sandbox';
 export class DonationStepFinishComponent implements OnInit {
   @Input() donationItems: DonationItemModel[];
 
+  observation: string;
+
   constructor(public donationSandbox: DonationSandbox) {}
-  ngOnInit(): void {
-    // throw new Error("Method not implemented.");
-  }
+  ngOnInit(): void {}
 }

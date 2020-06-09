@@ -47,18 +47,7 @@ export class DonationStepAddressComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(private fb: FormBuilder, public donationSandbox: DonationSandbox) {
-    this.addressStepForm = this.fb.group({
-      street: [this.addressModel?.street, [Validators.required]],
-      postalCode: [this.addressModel?.postalCode, [Validators.required]],
-      floor: [this.addressModel?.floor],
-      appartment: [this.addressModel?.appartment],
-      additionalInformation: [this.addressModel?.additionalInformation],
-      countryId: [this.addressModel?.countryId],
-      stateId: [this.addressModel?.stateId],
-      cityId: [this.addressModel?.cityId],
-    });
-  }
+  constructor(private fb: FormBuilder, public donationSandbox: DonationSandbox) {}
 
   getAddressFormModel(): AddressModel {
     const addressModel: AddressModel = new AddressModel();
@@ -75,6 +64,17 @@ export class DonationStepAddressComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.addressStepForm = this.fb.group({
+      street: [this.addressModel?.street, [Validators.required]],
+      postalCode: [this.addressModel?.postalCode, [Validators.required]],
+      floor: [this.addressModel?.floor],
+      appartment: [this.addressModel?.appartment],
+      additionalInformation: [this.addressModel?.additionalInformation],
+      countryId: [this.addressModel?.countryId, [Validators.required]],
+      stateId: [this.addressModel?.stateId, [Validators.required]],
+      cityId: [this.addressModel?.cityId, [Validators.required]],
+    });
+
     this.registerEvents();
     this.donationSandbox.loadCountries();
   }
@@ -82,6 +82,7 @@ export class DonationStepAddressComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.unregisterEvents();
   }
+
   /**
    * Unsubscribes from events
    */

@@ -2,9 +2,10 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { DonationSandbox } from './donation.sandbox';
-import { DonationRequestItemModel, DonationRequestModel } from '../shared/models';
+import { DonationRequestModel } from '../shared/models';
 import { DonationListComponent } from './components/donation/list/donation-list.component';
 import { DonationItemModel } from '../shared/models/donation-item.model';
+import { DonationConfirmComponent } from './components/donation-confirm/donation-confirm.component';
 
 @Component({
   selector: 'app-donation',
@@ -22,10 +23,11 @@ export class DonationComponent implements OnInit, OnDestroy {
 
   donation: DonationRequestModel;
 
-  donationItems: DonationItemModel[];
-
   @ViewChild(DonationListComponent)
   private donationListComponent: DonationListComponent;
+
+  @ViewChild(DonationConfirmComponent)
+  private donationConfirmComponent: DonationConfirmComponent;
 
   ngOnInit(): void {
     this.registerEvents();
@@ -61,7 +63,7 @@ export class DonationComponent implements OnInit, OnDestroy {
   }
 
   showDonationConfirmModal(state: boolean): void {
-    this.donationItems = this.donationListComponent.editCache
+    this.donationConfirmComponent.donationItems = this.donationListComponent.editCache
       .filter((item) => item.quantityToDonate > 0)
       .map((item) => {
         const donationItem: DonationItemModel = new DonationItemModel();

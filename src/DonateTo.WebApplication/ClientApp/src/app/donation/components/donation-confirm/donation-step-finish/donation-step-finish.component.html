@@ -4,9 +4,6 @@
       <th nzColumnKey="itemName" nzWidth="25%">
         {{ 'RequestDonation.DonationItemList.Item' | translate }}
       </th>
-      <th nzColumnKey="quantity" nzWidth="10%">
-        {{ 'RequestDonation.DonationItemList.QuantityRequested' | translate }}
-      </th>
       <th nzColumnKey="description" nzWidth="40%">
         {{ 'RequestDonation.DonationItemList.Description' | translate }}
       </th>
@@ -18,9 +15,15 @@
   <tbody>
     <tr *ngFor="let data of donationItems">
       <td>{{ data.item.name }}</td>
-      <td>{{ data.item.finishQuantity - data.item.currentQuantity }} {{ data.item.unit?.code }}</td>
       <td>{{ data.item.observation }}</td>
       <td>{{ data.quantityToDonate }}</td>
     </tr>
   </tbody>
 </nz-table>
+
+<nz-form-item>
+  <nz-form-label [nzSpan]="7">Observation</nz-form-label>
+  <nz-form-control [nzSpan]="12">
+    <textarea [(ngModel)]="observation" nz-input rows="2" placeholder="Observation"></textarea>
+  </nz-form-control>
+</nz-form-item>
