@@ -1,4 +1,9 @@
-﻿@{
+﻿@using DonateTo.IdentityServer.Common
+@{
     ViewData["Title"] = "Signed Up!";
 }
 <h1>Signed Up!!!</h1>
+
+@if(User.IsInRole(Roles.Superadmin)) {
+    <h2><a href="@Url.Action("Index","Home")" >Go to home page </a></h2>
+}

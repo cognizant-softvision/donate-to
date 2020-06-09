@@ -16,9 +16,15 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using IdentityServer4.EntityFramework.Mappers;
 using DonateTo.IdentityServer.Data.EntityFramework;
+using DonateTo.IdentityServer.Services;
+using DonateTo.IdentityServer.Data.Repositories.Interfaces;
+using DonateTo.IdentityServer.Data.Repositories;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using DonateTo.Mailer.Entities;
 using DonateTo.Mailer.Interfaces;
 using DonateTo.Mailer;
+using IdentityModel;
+using System.IdentityModel.Tokens.Jwt;
 using DonateTo.IdentityServer.Services;
 using IdentityServer4.Services;
 
@@ -51,30 +57,26 @@ namespace DonateTo.IdentityServer
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddTransient<IProfileService, ProfileService>();
+            services.AddTransient<IClientService, ClientService>();
+            services.AddTransient<IClientRepository, ClientRepository>();
 
             var identityOptions = Configuration.GetSection("Identity").GetSection("Options");
-            
-
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             services.AddIdentity<User, Role>(options =>
-                {
-                    options.Password.RequiredLength =
-                        identityOptions.GetSection("Password").GetValue<int>("RequiredLength");
-                    options.Password.RequireDigit =
-                        identityOptions.GetSection("Password").GetValue<bool>("RequireDigit");
-                    options.Password.RequireUppercase =
-                        identityOptions.GetSection("Password").GetValue<bool>("RequireUppercase");
-                    options.Password.RequireLowercase =
-                        identityOptions.GetSection("Password").GetValue<bool>("RequireLowercase");
-                    options.Password.RequireNonAlphanumeric = identityOptions.GetSection("Password")
-                        .GetValue<bool>("RequireNonAlphanumeric");
-                    options.User.RequireUniqueEmail =
-                        identityOptions.GetSection("User").GetValue<bool>("RequireUniqueEmail");
-                    options.SignIn.RequireConfirmedEmail =
-                        identityOptions.GetSection("SignIn").GetValue<bool>("RequireConfirmedEmail");
-                })
-                .AddEntityFrameworkStores<DonateIdentityDbContext>()
-                .AddDefaultTokenProviders();
+            {
+                options.ClaimsIdentity.RoleClaimType = JwtClaimTypes.Role;
+                options.ClaimsIdentity.UserIdClaimType = JwtClaimTypes.Id;
+                options.ClaimsIdentity.UserNameClaimType = JwtClaimTypes.Name;
+                options.Password.RequiredLength = identityOptions.GetSection("Password").GetValue<int>("RequiredLength");
+                options.Password.RequireDigit = identityOptions.GetSection("Password").GetValue<bool>("RequireDigit");
+                options.Password.RequireUppercase = identityOptions.GetSection("Password").GetValue<bool>("RequireUppercase");
+                options.Password.RequireLowercase = identityOptions.GetSection("Password").GetValue<bool>("RequireLowercase");
+                options.Password.RequireNonAlphanumeric = identityOptions.GetSection("Password").GetValue<bool>("RequireNonAlphanumeric");
+                options.User.RequireUniqueEmail = identityOptions.GetSection("User").GetValue<bool>("RequireUniqueEmail");
+                options.SignIn.RequireConfirmedEmail = identityOptions.GetSection("SignIn").GetValue<bool>("RequireConfirmedEmail");
+            })
+            .AddEntityFrameworkStores<DonateIdentityDbContext>()
+            .AddDefaultTokenProviders();
 
             var builder = services.AddIdentityServer(options =>
                 {
@@ -103,6 +105,10 @@ namespace DonateTo.IdentityServer
                 })
                 .AddAspNetIdentity<User>()
                 .AddProfileService<ProfileService>();
+
+            builder.Services.ConfigureApplicationCookie(opt => { 
+                opt.AccessDeniedPath = opt.LoginPath;
+            });
 
             var mailConfig = Configuration.GetSection("MailSettings")
                 .Get<MailServerSettings>();

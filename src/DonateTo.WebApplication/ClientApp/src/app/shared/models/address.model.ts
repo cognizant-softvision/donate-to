@@ -1,14 +1,22 @@
 import { BaseModel } from './base.model';
+import { ContactModel } from './contact.model';
+import { CountryModel } from './country.model';
+import { StateModel } from './state.model';
+import { CityModel } from './city.model';
 
 export class AddressModel extends BaseModel {
   street: string;
-  state: string;
   postalCode: string;
-  country: string;
+  floor: string;
   appartment: string;
-  email: string;
   additionalInformation: string;
-  responsableInformation: string;
-  responsableIdentityNumber: string;
   isDefault: boolean;
+  countryId: number;
+  country: CountryModel;
+  stateId: number;
+  state: StateModel;
+  cityId: number;
+  city: CityModel;
+  contactId: number;
+  contact: ContactModel;
 }

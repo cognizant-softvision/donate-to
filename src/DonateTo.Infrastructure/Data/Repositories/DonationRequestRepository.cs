@@ -13,12 +13,17 @@ namespace DonateTo.Infrastructure.Data.Repositories
         public DonationRequestRepository(DonateToDbContext dbContext) : base(dbContext)
         {
         }
-
+        
         private IQueryable<DonationRequest> GetHydratedDonationRequests()
         {
-            return DbContext.Set<DonationRequest>().Include(d => d.Address).Include(d => d.Status)
-                .Include(d => d.DonationRequestItems).ThenInclude(w => w.DonationRequestItemCategories).Include(d => d.DonationRequestCategories)
-                .ThenInclude(drc => drc.Category).Include(d => d.Organization);
+            return DbContext.Set<DonationRequest>()
+                .Include(d => d.Address).ThenInclude(a => a.Country)
+                .Include(d => d.Address).ThenInclude(a => a.State)
+                .Include(d => d.Address).ThenInclude(a => a.City)
+                .Include(d => d.Status)
+                .Include(d => d.DonationRequestItems).ThenInclude(dri => dri.Unit)
+                .Include(d => d.DonationRequestCategories).ThenInclude(drc => drc.Category)
+                .Include(d => d.Organization).ThenInclude(o => o.Contact);
         }
 
         ///<inheritdoc cref="IRepository{DonationRequest}"/>

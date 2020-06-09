@@ -1,7 +1,11 @@
-﻿using IdentityServer4.EntityFramework.DbContexts;
+﻿using DonateTo.ApplicationCore.Entities;
+using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Options;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using System;
+using System.Linq;
 
 namespace DonateTo.IdentityServer.Data.EntityFramework
 {
