@@ -1,3 +1,18 @@
+<nz-form-item>
+  <nz-form-label [nzSpan]="7">
+    {{ 'RequestDonation.DonationSteps.FinishStep.Observation' | translate }}
+  </nz-form-label>
+  <nz-form-control [nzSpan]="12">
+    <textarea
+      [(ngModel)]="observation"
+      nz-input
+      rows="2"
+      placeholder="{{ 'RequestDonation.DonationSteps.FinishStep.ObservationPlaceHolder' | translate }}"
+    >
+    </textarea>
+  </nz-form-control>
+</nz-form-item>
+
 <nz-table [nzData]="donationItems" [nzLoading]="this.donationSandbox.donationRequestLoading$ | async">
   <thead>
     <tr>
@@ -20,10 +35,3 @@
     </tr>
   </tbody>
 </nz-table>
-
-<nz-form-item>
-  <nz-form-label [nzSpan]="7">Observation</nz-form-label>
-  <nz-form-control [nzSpan]="12">
-    <textarea [(ngModel)]="observation" nz-input rows="2" placeholder="Observation"></textarea>
-  </nz-form-control>
-</nz-form-item>

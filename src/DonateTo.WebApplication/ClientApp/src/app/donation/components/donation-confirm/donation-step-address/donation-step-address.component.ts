@@ -19,7 +19,7 @@ export class DonationStepAddressComponent implements OnInit, OnDestroy {
 
   validateForm(): void {
     for (const key in this.addressStepForm.controls) {
-      if (key) {
+      if (this.addressStepForm.controls.hasOwnProperty(key)) {
         this.addressStepForm.controls[key].markAsDirty();
         this.addressStepForm.controls[key].updateValueAndValidity();
       }
@@ -31,7 +31,7 @@ export class DonationStepAddressComponent implements OnInit, OnDestroy {
   }
 
   setStates(): void {
-    if (this.addressStepForm.value.countryId === null) {
+    if (!this.addressStepForm.value.countryId) {
       this.addressStepForm.value.cityId = null;
       this.addressStepForm.value.stateId = null;
     } else {
@@ -40,7 +40,7 @@ export class DonationStepAddressComponent implements OnInit, OnDestroy {
   }
 
   setCities(): void {
-    if (this.addressStepForm.value.stateId === null) {
+    if (!this.addressStepForm.value.stateId) {
       this.addressStepForm.value.cityId = null;
     } else {
       this.donationSandbox.loadCitiesByState(this.addressStepForm.value.stateId);
