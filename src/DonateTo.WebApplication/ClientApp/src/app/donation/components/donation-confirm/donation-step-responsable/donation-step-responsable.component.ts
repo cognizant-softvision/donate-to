@@ -30,7 +30,7 @@ export class DonationStepResponsableComponent implements OnInit {
 
   validateForm(): void {
     for (const key in this.responsableStepForm.controls) {
-      if (key) {
+      if (this.responsableStepForm.controls.hasOwnProperty(key)) {
         this.responsableStepForm.controls[key].markAsDirty();
         this.responsableStepForm.controls[key].updateValueAndValidity();
       }

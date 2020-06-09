@@ -36,7 +36,13 @@
         <span>{{ 'RequestDonation.DonationSteps.NextButton' | translate }}</span>
       </button>
 
-      <button nz-button nzType="primary" (click)="done()" *ngIf="currentStep == 2" [disabled]="!stepsData[currentStep]">
+      <button
+        nz-button
+        nzType="primary"
+        (click)="done()"
+        *ngIf="currentStep === 2"
+        [disabled]="!stepsData[currentStep]"
+      >
         <span>{{ 'RequestDonation.DonationSteps.DoneButton' | translate }}</span>
       </button>
     </div>
