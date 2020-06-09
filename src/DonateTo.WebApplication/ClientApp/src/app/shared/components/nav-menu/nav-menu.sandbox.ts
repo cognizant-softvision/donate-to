@@ -41,13 +41,6 @@ export class NavMenuSandBox extends Sandbox {
   }
 
   /**
-   * Allows User go to their profile
-   */
-  public myProfile(): void {
-    this.authSandbox.myProfile();
-  }
-
-  /**
    * Change the language
    */
   switchLanguage(language: string) {

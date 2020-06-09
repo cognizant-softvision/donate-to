@@ -1,0 +1,48 @@
+<nz-layout id="main-layout">
+  <app-nav-menu></app-nav-menu>
+  <nz-layout class="profile-layout">
+    <div class="title">
+      <h3>{{ 'UserProfile.MyProfile' | translate }}</h3>
+    </div>
+    <nz-table #editRowTable nzBordered [nzData]="listOfRow" [nzFrontPagination]="false">
+      <thead>
+        <tr>
+          <th>{{ 'UserProfile.GeneralInformation' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of editRowTable.data" class="editable-row">
+          <td>
+            <div class="editable-cell" [hidden]="isEnable == true" (click)="toggleEdit()">
+              {{ data.row | translate }}: {{ data.value }}
+            </div>
+            <input [hidden]="isEnable == false" type="text" nz-input [(ngModel)]="data.value" (blur)="toggleEdit()" />
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <div class="button-div">
+      <button nz-button nzType="primary" (click)="saveGeneralInformation()">{{ 'SaveBtn' | translate }}</button>
+    </div>
+    <nz-table #newPassRowTable nzBordered [nzData]="listChangePassword" [nzFrontPagination]="false">
+      <thead>
+        <tr>
+          <th>{{ 'UserProfile.ChangePassword' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of newPassRowTable.data" class="editable-row">
+          <td>
+            <div class="editable-cell" [hidden]="isEnable == true" (click)="toggleEdit()">
+              {{ data.row | translate }}: {{ data.value }}
+            </div>
+            <input [hidden]="isEnable == false" type="text" nz-input [(ngModel)]="data.value" (blur)="toggleEdit()" />
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <div class="button-div">
+      <button nz-button nzType="primary" (click)="saveNewPassword()">{{ 'SaveBtn' | translate }}</button>
+    </div>
+  </nz-layout>
+</nz-layout>

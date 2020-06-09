@@ -1,4 +1,3 @@
-import { MyProfileComponent } from './my-profile/my-profile/my-profile.component';
 import { DonationRequestsListItemComponent } from './components/donation-request/list/item/donation-requests-list-item.component';
 import { NgModule } from '@angular/core';
 import { HomeComponent } from './home.component';
@@ -18,7 +17,6 @@ import {
   NzPaginationModule,
   NzRateModule,
   NzSkeletonModule,
-  NzTableModule,
   NzTagModule,
 } from 'ng-zorro-antd';
 import { HeartFill, SearchOutline } from '@ant-design/icons-angular/icons';
@@ -49,14 +47,12 @@ const icons = [HeartFill, SearchOutline];
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NzTableModule,
   ],
   declarations: [
     HomeComponent,
     DonationRequestsListComponent,
     DonationRequestsListItemComponent,
     DonationRequestDetailComponent,
-    MyProfileComponent,
   ],
   providers: [HomeSandbox],
 })

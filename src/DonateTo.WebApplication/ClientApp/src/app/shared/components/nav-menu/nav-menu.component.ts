@@ -24,8 +24,4 @@ export class NavMenuComponent {
   logout() {
     this.navMenuSandbox.logout();
   }
-
-  myProfile() {
-    this.navMenuSandbox.myProfile();
-  }
 }

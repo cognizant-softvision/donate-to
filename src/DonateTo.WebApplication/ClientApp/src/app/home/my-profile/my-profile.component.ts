@@ -11,7 +11,7 @@ export class MyProfileComponent implements OnInit {
     { row: 'UserProfile.Phone', value: '5472323456' },
     { row: 'UserProfile.Country', value: 'United State' },
     { row: 'UserProfile.State', value: 'Ohio' },
-    { row: 'UserProfile.Appartment', value: 'Columbus' },
+    { row: 'UserProfile.Apartment', value: 'Columbus' },
     { row: 'UserProfile.Street', value: 'National Rd SE 32' },
     { row: 'UserProfile.PostalCode', value: '4212' },
     { row: 'UserProfile.AdditionalInformation', value: 'N/A' },
@@ -23,19 +23,15 @@ export class MyProfileComponent implements OnInit {
     { row: 'UserProfile.RepeatPassword', value: '' },
   ];
 
-  editId: number | null = null;
-
-  startEdit(id: number): void {
-    this.editId = id;
-  }
-
-  stopEdit(): void {
-    this.editId = null;
-  }
+  isEnable = false;
 
   constructor() {}
 
   ngOnInit(): void {}
+
+  toggleEdit() {
+    this.isEnable = !this.isEnable;
+  }
 
   saveGeneralInformation() {}
 

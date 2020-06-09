@@ -15,13 +15,18 @@ const appRoutes: Routes = [
     canLoad: [AuthGuard],
   },
   {
+    path: 'my-profile',
+    loadChildren: () => import('./home/my-profile/my-profile-layout.module').then((m) => m.ProfileLayoutModule),
+    canLoad: [AuthGuard],
+  },
+  {
     path: '**',
     loadChildren: () => import('./basic-pages/basic-pages.module').then((m) => m.BasicPagesModule),
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes)],
+  imports: [RouterModule.forRoot(appRoutes, { enableTracing: true })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

@@ -46,13 +46,6 @@ export class AuthSandbox extends Sandbox {
   }
 
   /**
-   * Dispatches to the user profile
-   */
-  public myProfile(): void {
-    document.location.href = this.authService.redirectUri + '/my-profile';
-  }
-
-  /**
    * Checks if the token in the session store is valid and updates the ngrx store
    */
   public validateToken(): boolean {
