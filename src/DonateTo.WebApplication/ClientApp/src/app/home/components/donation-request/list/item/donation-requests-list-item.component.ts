@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DonationRequestModel } from 'src/app/shared/models';
+import { DonationRequestModel } from '../../../../../shared/models';
 
 @Component({
   selector: 'app-donation-requests-list-item',
@@ -8,7 +8,7 @@ import { DonationRequestModel } from 'src/app/shared/models';
 })
 export class DonationRequestsListItemComponent implements OnInit {
   @Output() showDetail = new EventEmitter<number>();
-  @Input() item: any;
+  @Input() item: DonationRequestModel;
   @Input() loading = true;
 
   constructor() {}

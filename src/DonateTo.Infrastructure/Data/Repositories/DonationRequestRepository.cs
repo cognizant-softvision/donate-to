@@ -14,10 +14,16 @@ namespace DonateTo.Infrastructure.Data.Repositories
         {
         }
         
-        private IQueryable<DonationRequest> GetHydratedDonationRequests() {
-            return DbContext.Set<DonationRequest>().Include( d => d.Address).Include( d => d.Status)
-                .Include( d => d.DonationRequestItems).Include( d => d.DonationRequestCategories)
-                .ThenInclude( drc => drc.Category).Include( d => d.Organization);
+        private IQueryable<DonationRequest> GetHydratedDonationRequests()
+        {
+            return DbContext.Set<DonationRequest>()
+                .Include(d => d.Address).ThenInclude(a => a.Country)
+                .Include(d => d.Address).ThenInclude(a => a.State)
+                .Include(d => d.Address).ThenInclude(a => a.City)
+                .Include(d => d.Status)
+                .Include(d => d.DonationRequestItems).ThenInclude(dri => dri.Unit)
+                .Include(d => d.DonationRequestCategories).ThenInclude(drc => drc.Category)
+                .Include(d => d.Organization).ThenInclude(o => o.Contact);
         }
 
 
