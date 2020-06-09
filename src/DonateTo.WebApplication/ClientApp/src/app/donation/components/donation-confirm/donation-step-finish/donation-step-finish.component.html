@@ -1,0 +1,26 @@
+<nz-table [nzData]="donationItems" [nzLoading]="this.donationSandbox.donationRequestLoading$ | async">
+  <thead>
+    <tr>
+      <th nzColumnKey="itemName" nzWidth="25%">
+        {{ 'RequestDonation.DonationItemList.Item' | translate }}
+      </th>
+      <th nzColumnKey="quantity" nzWidth="10%">
+        {{ 'RequestDonation.DonationItemList.QuantityRequested' | translate }}
+      </th>
+      <th nzColumnKey="description" nzWidth="40%">
+        {{ 'RequestDonation.DonationItemList.Description' | translate }}
+      </th>
+      <th nzColumnKey="quantityToDonate" nzWidth="10%">
+        {{ 'RequestDonation.DonationItemList.QuantityToDonate' | translate }}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of donationItems">
+      <td>{{ data.item.name }}</td>
+      <td>{{ data.item.finishQuantity - data.item.currentQuantity }} {{ data.item.unit?.code }}</td>
+      <td>{{ data.item.observation }}</td>
+      <td>{{ data.quantityToDonate }}</td>
+    </tr>
+  </tbody>
+</nz-table>

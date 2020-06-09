@@ -32,6 +32,16 @@ const donationRequestReducer = createReducer(
     ...state,
     loading: false,
     failed: true,
+  })),
+  on(donationRequestActions.addDonationSuccess, (state, { newDonation }) => ({
+    ...state,
+    loading: false,
+    failed: false,
+  })),
+  on(donationRequestActions.addDonationFailed, (state) => ({
+    ...state,
+    loading: false,
+    failed: true,
   }))
 );
 

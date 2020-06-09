@@ -8,14 +8,17 @@
   <div class="steps-content">
     <app-donation-step-responsable
       (isFormValid)="isResponsableStepReady($event)"
+      [contactModel]="contactModel"
       *ngIf="currentStep === 0"
     ></app-donation-step-responsable>
     <app-donation-step-address
       (isFormValid)="isAddressStepReady($event)"
+      [addressModel]="addressModel"
       *ngIf="currentStep === 1"
     ></app-donation-step-address>
     <app-donation-step-finish
       (isFormValid)="isFinishStepReady($event)"
+      [donationItems]="donationItems"
       *ngIf="currentStep === 2"
     ></app-donation-step-finish>
   </div>
@@ -29,11 +32,11 @@
         }}</span>
       </button>
 
-      <button nz-button nzType="default" (click)="next()" *ngIf="currentStep < 2">
+      <button nz-button nzType="default" (click)="next()" *ngIf="currentStep < 2" [disabled]="!stepsData[currentStep]">
         <span>{{ 'RequestDonation.DonationSteps.NextButton' | translate }}</span>
       </button>
 
-      <button nz-button nzType="primary" (click)="done()" *ngIf="currentStep == 2">
+      <button nz-button nzType="primary" (click)="done()" *ngIf="currentStep == 2" [disabled]="!stepsData[currentStep]">
         <span>{{ 'RequestDonation.DonationSteps.DoneButton' | translate }}</span>
       </button>
     </div>

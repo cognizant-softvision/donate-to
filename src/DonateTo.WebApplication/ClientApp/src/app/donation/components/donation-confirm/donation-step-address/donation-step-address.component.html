@@ -40,7 +40,62 @@
   <nz-form-item>
     <nz-form-label [nzSpan]="7">Additional Information</nz-form-label>
     <nz-form-control [nzSpan]="12">
-      <textarea formControlName="comment" nz-input rows="2" placeholder="Additional information"></textarea>
+      <textarea
+        formControlName="additionalInformation"
+        nz-input
+        rows="2"
+        placeholder="Additional information"
+      ></textarea>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7">Country</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <nz-select
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="Select a Country"
+        formControlName="countryId"
+        (ngModelChange)="setStates()"
+      >
+        <nz-option
+          *ngFor="let country of this.donationSandbox.countries$ | async"
+          [nzValue]="country.id"
+          [nzLabel]="country.name"
+        >
+        </nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7">State</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <nz-select
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="Select a State"
+        formControlName="stateId"
+        (ngModelChange)="setCities()"
+      >
+        <nz-option
+          *ngFor="let state of this.donationSandbox.states$ | async"
+          [nzValue]="state.id"
+          [nzLabel]="state.name"
+        >
+        </nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7">City</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a City" formControlName="cityId">
+        <nz-option *ngFor="let city of this.donationSandbox.cities$ | async" [nzValue]="city.id" [nzLabel]="city.name">
+        </nz-option>
+      </nz-select>
     </nz-form-control>
   </nz-form-item>
 </form>

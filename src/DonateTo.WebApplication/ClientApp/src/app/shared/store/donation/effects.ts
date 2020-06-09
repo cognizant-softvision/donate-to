@@ -11,6 +11,7 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { DonationRequestService } from '../../async-services/http/donation-request.service';
+import { DonationService } from '../../async-services/http/donation.service';
 
 @Injectable()
 export class DonationRequestEffects {
@@ -28,13 +29,17 @@ export class DonationRequestEffects {
   @Effect()
   addDonation$: Observable<{}> = this.actions$.pipe(
     ofType(addDonation),
-    switchMap(({ id }) =>
-      this.donationRequestService.getDonationRequests().pipe(
-        // map((donationRequest) => addDonationSuccess({ donationRequest })),
+    switchMap(({ donation }) =>
+      this.donationService.createDonation(donation).pipe(
+        map((newDonation) => addDonationSuccess({ newDonation })),
         catchError(() => of(addDonationFailed()))
       )
     )
   );
 
-  constructor(private actions$: Actions, private donationRequestService: DonationRequestService) {}
+  constructor(
+    private actions$: Actions,
+    private donationRequestService: DonationRequestService,
+    private donationService: DonationService
+  ) {}
 }
