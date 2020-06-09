@@ -112,7 +112,9 @@
           "DeleteItemConfirmation": "Está seguro que desea eliminar este Item?"
         },
         "AddItem": "Agregar Item",
-        "CreateRequest": "Crear Solicitud"
+        "CreateRequest": "Crear Solicitud",
+        "ErrorTitle": "Crear Donation Request Falló",
+        "ErrorMessage": "Un problema surgió al intentar crear, impidiendo salvar los cambios."
       },
       "DeleteConfirmation": "Está seguro que desea eliminar esta Solicitud de Donación?",
       "Table": {

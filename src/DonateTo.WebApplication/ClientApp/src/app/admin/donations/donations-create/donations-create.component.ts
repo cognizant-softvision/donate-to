@@ -14,6 +14,7 @@ import { CategoryModel, ColumnItem, DonationRequestItemModel, DonationRequestMod
 export class DonationsCreateComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   private isSubmited = false;
+  isErrorModalActive = false;
   categories: CategoryModel[] = [];
   donationRequest: DonationRequestModel;
   listOfColumns: ColumnItem[] = [
@@ -84,13 +85,17 @@ export class DonationsCreateComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.donationSandbox.loadAction$.subscribe((_) => {
         if (this.donationSandbox.failAction && this.isSubmited) {
-          // Fail Pop up
+          this.switchErrorModal();
         }
         if (this.isSubmited) {
           this.router.navigateByUrl('/admin/donations');
         }
       })
     );
+  }
+
+  switchErrorModal() {
+    this.isErrorModalActive = !this.isErrorModalActive;
   }
 
   setOrganization() {

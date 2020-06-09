@@ -30,6 +30,7 @@ import {
   NzInputModule,
   NzLayoutModule,
   NzMenuModule,
+  NzModalModule,
   NzPopconfirmModule,
   NzRadioModule,
   NzRateModule,
@@ -47,6 +48,7 @@ const ICONS: IconDefinition[] = [PlusOutline];
   imports: [
     NzIconModule.forChild(ICONS),
     NzLayoutModule,
+    NzModalModule,
     NzMenuModule,
     NzRateModule,
     NzPopconfirmModule,
