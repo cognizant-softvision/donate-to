@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DonationItemModel } from 'src/app/shared/models/donation-item.model';
 
 @Component({

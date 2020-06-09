@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { DonationSandbox } from './donation.sandbox';
-import { DonationRequestModel, DonationRequestItemModel } from '../shared/models';
+import { DonationRequestItemModel, DonationRequestModel } from '../shared/models';
 import { DonationListComponent } from './components/donation/list/donation-list.component';
 import { DonationItemModel } from '../shared/models/donation-item.model';
 
@@ -64,7 +64,7 @@ export class DonationComponent implements OnInit, OnDestroy {
     this.donationItems = this.donationListComponent.editCache
       .filter((item) => item.quantityToDonate > 0)
       .map((item) => {
-        let donationItem: DonationItemModel = new DonationItemModel();
+        const donationItem: DonationItemModel = new DonationItemModel();
         donationItem.item = item.item;
         donationItem.quantityToDonate = item.quantityToDonate;
         return donationItem;
