@@ -14,6 +14,18 @@ namespace DonateTo.Infrastructure.Data.Repositories
         {
         }
 
+        private IQueryable<Donation> GetHydratedDonations()
+        {
+            return DbContext.Set<Donation>()
+                .Include(d => d.Address)
+                .Include(d => d.Status)
+                .Include(d => d.DonationItems).ThenInclude(di => di.Unit)
+                .Include(d => d.DonationRequest.DonationRequestItems).ThenInclude(dri => dri.Unit)
+                .Include(d => d.DonationRequest.DonationRequestCategories).ThenInclude(drc => drc.Category)
+                .Include(d => d.DonationRequest.Organization)
+                .Include(d => d.DonationRequest.Status);
+        }
+
         ///<inheritdoc cref="IRepository{Donation}"/>
         public override Donation Get(long id)
         {
@@ -36,17 +48,5 @@ namespace DonateTo.Infrastructure.Data.Repositories
         {
             return await GetHydratedDonations().GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
-
-        #region private
-        private IQueryable<Donation> GetHydratedDonations()
-        {
-            return DbContext.Set<Donation>().Include(d => d.Address)
-                .Include(d => d.Status).Include(d => d.DonationItems)
-                .Include(d => d.DonationRequest.DonationRequestItems).ThenInclude(di => di.Unit)
-                .Include(d => d.DonationRequest.DonationRequestCategories)
-                .Include(d => d.DonationRequest.Organization)
-                .Include(d => d.DonationRequest.Status);
-        }
-        #endregion
     }
 }
