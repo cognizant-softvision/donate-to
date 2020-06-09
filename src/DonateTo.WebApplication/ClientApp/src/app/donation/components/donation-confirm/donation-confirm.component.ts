@@ -101,7 +101,7 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
     Object.assign(donation.address.contact, this.contactModel);
 
     donation.donationItems = this.donationItems.map((item) => {
-      let donationItem: DonationRequestItemModel = new DonationRequestItemModel();
+      const donationItem: DonationRequestItemModel = new DonationRequestItemModel();
       Object.assign(donationItem, item.item);
       donationItem.unit = null;
       donationItem.currentQuantity += item.quantityToDonate;
