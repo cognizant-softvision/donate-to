@@ -30,7 +30,7 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
 
   _isResponsableStepReady = false;
   _isAddressStepReady = false;
-  _isFinishStepReady = false;
+  _isFinishStepReady = true;
 
   donationItems: DonationItemModel[] = [];
 
@@ -95,11 +95,15 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
     donation.observation = this.observation;
     donation.donationRequestId = this.donation.id;
     donation.statusId = 1;
-    donation.address = this.addressModel;
+    donation.address = new AddressModel();
+    Object.assign(donation.address, this.addressModel);
+    donation.address.contact = new ContactModel();
+    Object.assign(donation.address.contact, this.contactModel);
 
     donation.donationItems = this.donationItems.map((item) => {
       let donationItem: DonationRequestItemModel = new DonationRequestItemModel();
-      donationItem = item.item;
+      Object.assign(donationItem, item.item);
+      donationItem.unit = null;
       donationItem.currentQuantity += item.quantityToDonate;
       return donationItem;
     });
@@ -111,8 +115,12 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
     this.stepsData = [this._isResponsableStepReady, this._isAddressStepReady, this._isFinishStepReady];
   }
 
+  done(): void {
+    this.donate();
+  }
+
   next() {
-    if (this.stepsData[this.currentStep]) {
+    if (this.currentStep < 2 && this.stepsData[this.currentStep]) {
       this.currentStep += 1;
     }
   }
