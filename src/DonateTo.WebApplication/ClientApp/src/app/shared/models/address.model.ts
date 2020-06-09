@@ -1,4 +1,5 @@
 import { BaseModel } from './base.model';
+import { ContactModel } from './contact.model';
 
 export class AddressModel extends BaseModel {
   street: string;
@@ -14,4 +15,6 @@ export class AddressModel extends BaseModel {
   responsableInformation: string;
   responsableIdentityNumber: string;
   isDefault: boolean;
+  contactId: number;
+  contact: ContactModel;
 }
