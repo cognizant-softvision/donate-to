@@ -50,8 +50,8 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSpan]="7">Country</nz-form-label>
-    <nz-form-control [nzSpan]="12">
+    <nz-form-label [nzSpan]="7" nzRequired>Country</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="countryErrorTpl">
       <nz-select
         nzShowSearch
         nzAllowClear
@@ -66,12 +66,17 @@
         >
         </nz-option>
       </nz-select>
+      <ng-template #countryErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input your Country!
+        </ng-container>
+      </ng-template>
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSpan]="7">State</nz-form-label>
-    <nz-form-control [nzSpan]="12">
+    <nz-form-label [nzSpan]="7" nzRequired>State</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="stateErrorTpl">
       <nz-select
         nzShowSearch
         nzAllowClear
@@ -86,16 +91,26 @@
         >
         </nz-option>
       </nz-select>
+      <ng-template #stateErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input your State!
+        </ng-container>
+      </ng-template>
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSpan]="7">City</nz-form-label>
-    <nz-form-control [nzSpan]="12">
+    <nz-form-label [nzSpan]="7" nzRequired>City</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="cityErrorTpl">
       <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Select a City" formControlName="cityId">
         <nz-option *ngFor="let city of this.donationSandbox.cities$ | async" [nzValue]="city.id" [nzLabel]="city.name">
         </nz-option>
       </nz-select>
+      <ng-template #cityErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input your City!
+        </ng-container>
+      </ng-template>
     </nz-form-control>
   </nz-form-item>
 </form>

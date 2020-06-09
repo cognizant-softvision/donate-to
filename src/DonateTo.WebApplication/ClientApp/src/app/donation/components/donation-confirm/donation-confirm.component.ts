@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { DonationSandbox } from 'src/app/donation/donation.sandbox';
 import { ContactModel } from 'src/app/shared/models/contact.model';
-import { AddressModel, DonationRequestModel } from 'src/app/shared/models';
+import { AddressModel, DonationRequestItemModel, DonationRequestModel } from 'src/app/shared/models';
 import { DonationStepResponsableComponent } from './donation-step-responsable/donation-step-responsable.component';
 import { DonationModel } from 'src/app/shared/models/donation.model';
 import { Subscription } from 'rxjs';
@@ -32,12 +32,13 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
   _isAddressStepReady = false;
   _isFinishStepReady = false;
 
-  @Input() donationItems: DonationItemModel[];
+  donationItems: DonationItemModel[] = [];
 
   stepsData: boolean[] = [];
 
   contactModel: ContactModel = new ContactModel();
   addressModel: AddressModel = new AddressModel();
+  observation: string;
 
   subscriptions: Subscription[] = [];
 
@@ -59,6 +60,7 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
 
   isFinishStepReady(value: boolean) {
     this._isFinishStepReady = value;
+    this.observation = this.donationStepFinishComponent.observation;
     this.updateStepsData();
   }
 
@@ -90,10 +92,17 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
   donate(): void {
     const donation: DonationModel = new DonationModel();
 
-    donation.observation = '';
+    donation.observation = this.observation;
     donation.donationRequestId = this.donation.id;
     donation.statusId = 1;
     donation.address = this.addressModel;
+
+    donation.donationItems = this.donationItems.map((item) => {
+      let donationItem: DonationRequestItemModel = new DonationRequestItemModel();
+      donationItem = item.item;
+      donationItem.currentQuantity += item.quantityToDonate;
+      return donationItem;
+    });
 
     this.donationSandbox.addDonation(donation);
   }
