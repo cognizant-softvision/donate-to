@@ -35,7 +35,6 @@
 <nz-modal nzClosable="false" [(nzVisible)]="showDonationConfirm" nzTitle="Confirmation of Donation" [nzFooter]="null">
   <app-donation-confirm
     (showDonationConfirmModal)="showDonationConfirmModal($event)"
-    (donate)="donate($event)"
     (donationItems)="(donationItems)"
   ></app-donation-confirm>
 </nz-modal>

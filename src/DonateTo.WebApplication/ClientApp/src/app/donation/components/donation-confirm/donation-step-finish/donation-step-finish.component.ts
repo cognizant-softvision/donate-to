@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DonationItemModel } from 'src/app/shared/models/donation-item.model';
+import { DonationSandbox } from 'src/app/donation/donation.sandbox';
 
 @Component({
   selector: 'app-donation-step-finish',
@@ -9,7 +10,7 @@ import { DonationItemModel } from 'src/app/shared/models/donation-item.model';
 export class DonationStepFinishComponent implements OnInit {
   @Input() donationItems: DonationItemModel[];
 
-  constructor() {}
+  constructor(public donationSandbox: DonationSandbox) {}
   ngOnInit(): void {
     // throw new Error("Method not implemented.");
   }
