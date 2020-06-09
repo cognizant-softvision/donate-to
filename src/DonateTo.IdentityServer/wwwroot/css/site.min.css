@@ -4,6 +4,7 @@
 .navbar-header {
   position: relative;
   top: -4px;
+  padding-top: 10%;
 }
 .navbar-brand > .icon-banner {
   position: relative;
@@ -18,6 +19,10 @@
   display: none;
   width: 0;
   height: 0;
+}
+
+option[selected].donate-multiple-select:before {
+  content: "+ ";
 }
 .page-consent .client-logo {
   float: left;
