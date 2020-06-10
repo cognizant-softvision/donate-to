@@ -97,7 +97,7 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
 
     donation.observation = this.observation;
     donation.donationRequestId = this.donation.id;
-    donation.statusId = 1;
+    donation.statusId = 2;
     donation.address = new AddressModel();
     Object.assign(donation.address, this.addressModel);
     donation.address.contact = new ContactModel();
@@ -108,6 +108,7 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
       Object.assign(donationItem, item);
       donationItem.unit = null;
       donationItem.donationRequestItem = null;
+      donationItem.statusId = 2;
       return donationItem;
     });
 
