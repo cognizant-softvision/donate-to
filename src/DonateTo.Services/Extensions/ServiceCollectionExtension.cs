@@ -24,6 +24,7 @@ namespace DonateTo.Services.Extensions
             service.AddTransient<IBaseService<Organization>, OrganizationService>();
             service.AddTransient<IBaseService<Address>, AddressService>();
             service.AddTransient<IBaseService<Category>, CategoryService>();
+            service.AddTransient<IBaseService<Unit>, UnitService>();
             service.AddTransient<IBaseService<Status>, StatusService>();
         }
     }

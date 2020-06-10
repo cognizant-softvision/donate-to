@@ -3,11 +3,11 @@ using DonateTo.ApplicationCore.Interfaces;
 
 namespace DonateTo.Services
 {
-    public class CategoryService : BaseService<Category>
+    public class UnitService : BaseService<Unit>
     {
-        public CategoryService(
-            IRepository<Category> categoryRepository,
-            IUnitOfWork unitOfWork) : base(categoryRepository, unitOfWork) 
+        public UnitService(
+            IRepository<Unit> unitRepository,
+            IUnitOfWork unitOfWork) : base(unitRepository, unitOfWork) 
         {
         }
     }

@@ -112,6 +112,7 @@
           "Quantity": "Quantity",
           "QuantityRequiredError": "Quantity is required",
           "QuantityPlaceholder": "Please enter the required quantity",
+          "UnitRequiredError": "Unit is required",
           "Category": "Categories",
           "CategoryRequiredError": "At least 1 category is required",
           "CategoryPlaceholder": "Please select at least 1 category"

@@ -8,10 +8,12 @@ import { CommonModule, registerLocaleData } from '@angular/common';
 import { DonationsComponent } from './donations.component';
 import { DonationsCreateComponent } from './donations-create/donations-create.component';
 import { DonationsEditComponent } from './donations-edit/donations-edit.component';
+import { DonationsFormComponent } from './donations-form/donations-form.component';
 import { DonationsRoutingModule } from './donations-routing.module';
 import { DonationsSandbox } from './donations-sandbox';
 import { EffectsModule } from '@ngrx/effects';
 import { FormsModule } from '@angular/forms';
+import { fromStatus, fromUnit } from 'src/app/shared/store';
 import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { IconDefinition } from '@ant-design/icons-angular';
@@ -21,8 +23,10 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { OrganizationEffects } from 'src/app/shared/store/organization';
 import { PlusOutline } from '@ant-design/icons-angular/icons';
 import { ReactiveFormsModule } from '@angular/forms';
+import { StatusEffects } from 'src/app/shared/store/status';
 import { StoreModule } from '@ngrx/store';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { UnitEffects } from 'src/app/shared/store/unit';
 import {
   NzDatePickerModule,
   NzFormModule,
@@ -38,9 +42,6 @@ import {
   NzTableModule,
   NzTagModule,
 } from 'ng-zorro-antd';
-import { DonationsFormComponent } from './donations-form/donations-form.component';
-import { StatusEffects } from 'src/app/shared/store/status';
-import { fromStatus } from 'src/app/shared/store';
 
 // FIX this should be moved to an upper level.
 registerLocaleData(es);
@@ -65,11 +66,12 @@ const ICONS: IconDefinition[] = [PlusOutline];
     NzInputModule,
     NzDividerModule,
     NzTableModule,
-    EffectsModule.forFeature([OrganizationEffects, AddressEffects, CategoryEffects, StatusEffects]),
+    EffectsModule.forFeature([OrganizationEffects, AddressEffects, UnitEffects, CategoryEffects, StatusEffects]),
     StoreModule.forFeature(fromOrganization.organizationFeatureKey, fromOrganization.reducer),
     StoreModule.forFeature(fromStatus.statusFeatureKey, fromStatus.reducer),
     StoreModule.forFeature(fromAddress.addressFeatureKey, fromAddress.reducer),
     StoreModule.forFeature(fromCategory.categoryFeatureKey, fromCategory.reducer),
+    StoreModule.forFeature(fromUnit.unitFeatureKey, fromUnit.reducer),
     FormsModule,
     CommonModule,
     ReactiveFormsModule,

@@ -20,11 +20,11 @@
 }
 
 .create-donation-add-item-box-first {
-  width: 60%;
+  width: 50%;
 }
 
 .create-donation-add-item-box-second {
-  width: 30%;
+  width: 40%;
 }
 
 .create-donation-add-item-input nz-form-item,
@@ -35,6 +35,15 @@
 .create-donation-add-item-input {
   width: 100%;
   margin-left: 1em;
+}
+
+.item-unit {
+  width: 6em !important;
+}
+
+.item-quantity {
+  margin-left: 0 !important;
+  width: 100%;
 }
 
 .donatios-item {

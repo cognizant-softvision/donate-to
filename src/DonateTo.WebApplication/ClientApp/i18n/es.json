@@ -112,6 +112,7 @@
           "Quantity": "Cantidad",
           "QuantityRequiredError": "Cantidad es requerido",
           "QuantityPlaceholder": "Por favor ingrese la cantidad requerida",
+          "UnitRequiredError": "Unidad es requerido",
           "Category": "Categorías",
           "CategoryRequiredError": "Al menos 1 categoria es requerida",
           "CategoryPlaceholder": "Por favor seleccionar al menos 1 categoría"

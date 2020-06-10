@@ -19,6 +19,7 @@ export class DonationsSandbox extends Sandbox implements OnDestroy {
   organizations$ = this.appState$.select(store.fromOrganization.getAllOrganizations);
   status$ = this.appState$.select(store.fromStatus.getAllStatus);
   categories$ = this.appState$.select(store.fromCategory.getAllCategories);
+  units$ = this.appState$.select(store.fromUnit.getAllUnits);
   addressesByOrganization$ = this.appState$.select(store.fromAddress.getAddressesByOrganizationId);
   donationRequest$ = this.appState$.select(store.fromDonationRequest.getDonationRequest);
   failAction$ = this.appState$.select(store.fromDonationRequest.getFailedStatus);
@@ -100,6 +101,13 @@ export class DonationsSandbox extends Sandbox implements OnDestroy {
    */
   public loadCategories(): void {
     this.appState$.dispatch(store.fromCategory.loadCategories());
+  }
+
+  /**
+   * Loads Categories from the server
+   */
+  public loadUnits(): void {
+    this.appState$.dispatch(store.fromUnit.loadUnits());
   }
 
   /**

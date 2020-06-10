@@ -52,6 +52,7 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
     itemCategoryFormControl: new FormControl(this.selectedItemCategories, Validators.required),
     observationFormControl: new FormControl(),
     quantityFormControl: new FormControl('', Validators.required),
+    unitFormControl: new FormControl('', Validators.required),
   });
 
   constructor(public donationSandbox: DonationsSandbox, protected i18n: NzI18nService) {}
@@ -74,6 +75,7 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
 
     this.donationSandbox.loadOrganizations();
     this.donationSandbox.loadCategories();
+    this.donationSandbox.loadUnits();
     this.donationSandbox.loadStatus();
 
     this.donationRequestFormGroup.controls.itemsFormControl.setValue(this.donationRequestItems);
@@ -142,8 +144,7 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
       donationRequestItem.name = this.donationRequestItemFormGroup.controls.nameFormControl.value;
       donationRequestItem.observation = this.donationRequestItemFormGroup.controls.observationFormControl.value;
       donationRequestItem.finishQuantity = this.donationRequestItemFormGroup.controls.quantityFormControl.value;
-      // Add Select for units
-      donationRequestItem.unitId = 1;
+      donationRequestItem.unitId = this.donationRequestItemFormGroup.controls.unitFormControl.value;
       donationRequestItem.donationRequestItemCategories = this.donationSandbox.mapCategoriesToDonationRequestItemCategories(
         this.selectedItemCategories
       );
