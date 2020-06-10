@@ -135,6 +135,13 @@
     "Subtitle": "The page you are looking for does not exist.",
     "Button": "Go Back"
   },
+  "WeekDays": {
+    "Monday": "Monday",
+    "Tuesday": "Tuesday",
+    "Wednesday": "Wednesday",
+    "Thursday": "Thursday",
+    "Friday": "Friday"
+  },
   "Admin": {
     "Menu": {
       "Title": {
