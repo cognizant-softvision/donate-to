@@ -28,4 +28,13 @@
       {{ 'BackBtn' | translate }}
     </button>
   </div>
+  <nz-modal
+    [(nzVisible)]="isErrorModalActive"
+    [nzClosable]="false"
+    [nzCancelText]="null"
+    nzTitle="{{ 'Admin.Donation.Create.ErrorTitle' | translate }}"
+    (nzOnOk)="switchErrorModal()"
+  >
+    <div>{{ 'Admin.Donation.Create.ErrorMessage' | translate }}</div>
+  </nz-modal>
 </div>

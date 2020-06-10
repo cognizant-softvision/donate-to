@@ -3,13 +3,7 @@ import { DonationsSandbox } from '../donations-sandbox';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NzI18nService } from 'ng-zorro-antd';
 import { Subscription } from 'rxjs';
-import {
-  CategoryModel,
-  ColumnItem,
-  DonationRequestCategoryModel,
-  DonationRequestItemModel,
-  DonationRequestModel,
-} from 'src/app/shared/models';
+import { CategoryModel, ColumnItem, DonationRequestItemModel, DonationRequestModel } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-donations-form',
@@ -30,7 +24,6 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
   organizationId: number;
   priority: number;
   statusId = 2;
-  selectedCategories: CategoryModel[] = [];
   selectedItemCategories: CategoryModel[] = [];
   title: string;
   userId: number;
@@ -49,7 +42,6 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
     statusFormControl: new FormControl(''),
     organizationFormControl: new FormControl('', Validators.required),
     addressFormControl: new FormControl('', Validators.required),
-    categoryFormControl: new FormControl(this.selectedCategories, Validators.required),
     observationFormControl: new FormControl(),
     itemsFormControl: new FormControl(),
     finishDateFormControl: new FormControl('Date', Validators.required),
@@ -94,17 +86,6 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
 
   private sandBoxSubscriptionInit() {
     this.subscriptions.push(
-      this.donationSandbox.categories$.subscribe((categories) => {
-        this.categories = categories;
-        if (this.donationRequest.id) {
-          this.selectedCategories = this.categories.filter((sc) =>
-            this.donationRequest.donationRequestCategories.some((dr) => sc.id === dr.categoryId)
-          );
-        }
-      })
-    );
-
-    this.subscriptions.push(
       this.donationSandbox.userId$.subscribe((id) => {
         this.userId = id;
       })
@@ -115,10 +96,6 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
     if (this.organizationId >= 0) {
       this.donationSandbox.loadAddressesByOrganization(this.organizationId);
     }
-  }
-
-  isCategorySelected(category: CategoryModel) {
-    return this.selectedCategories.indexOf(category) === -1;
   }
 
   getCategoryName(categoryId) {
@@ -184,30 +161,8 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
       donationRequestForm.id = this.donationRequest.id;
       donationRequestForm.createdBy = this.donationRequest.createdBy;
       donationRequestForm.createdDate = this.donationRequest.createdDate;
-      donationRequestForm.donationRequestCategories = this.updateDonationRequestCategories();
-    } else {
-      donationRequestForm.donationRequestCategories = this.donationSandbox.mapCategoriesToDonationRequestCategories(
-        this.selectedCategories
-      );
     }
-
     this.donationRequest = donationRequestForm;
-  }
-
-  updateDonationRequestCategories(): DonationRequestCategoryModel[] {
-    let updatedCategories: DonationRequestCategoryModel[];
-
-    updatedCategories = this.donationRequest.donationRequestCategories.filter((drc) =>
-      this.selectedCategories.some((sc) => drc.categoryId !== sc.id)
-    );
-
-    updatedCategories.push(
-      ...this.donationSandbox.mapCategoriesToDonationRequestCategories(
-        this.selectedCategories.filter((sc) => !updatedCategories.some((uc) => uc.categoryId === sc.id))
-      )
-    );
-
-    return updatedCategories;
   }
 
   private unregisterEvents() {

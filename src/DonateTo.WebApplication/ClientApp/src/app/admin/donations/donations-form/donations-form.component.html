@@ -87,31 +87,6 @@
       <nz-date-picker [(ngModel)]="finishDate" formControlName="finishDateFormControl"> </nz-date-picker>
     </nz-form-control>
   </nz-form-item>
-  <nz-form-item>
-    <nz-form-label nzRequired nzFor="donationCategories">{{
-      'Admin.Donation.Form.Category' | translate
-    }}</nz-form-label>
-    <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.CategoryRequiredError' | translate }}">
-      <nz-select
-        [nzMaxTagCount]="2"
-        nzPlaceHolder="{{ 'Admin.Donation.Form.CategoryPlaceholder' | translate }}"
-        formControlName="categoryFormControl"
-        [(ngModel)]="selectedCategories"
-        [nzMaxTagPlaceholder]="categoryTagPlaceHolder"
-        nzMode="multiple"
-      >
-        <nz-option
-          *ngFor="let category of this.donationSandbox.categories$ | async"
-          [nzLabel]="category.name"
-          [nzValue]="category"
-          [nzHide]="!isCategorySelected(category)"
-        ></nz-option>
-      </nz-select>
-      <ng-template #categoryTagPlaceHolder let-selectedList>
-        {{ selectedList.length }} {{ 'Admin.Donation.Form.OverflowTag' | translate }}
-      </ng-template>
-    </nz-form-control>
-  </nz-form-item>
   <div [formGroup]="donationRequestItemFormGroup" class="create-donation-add-item-container">
     <div class="create-donation-add-item-box-first">
       <div class="create-item-container">
@@ -174,7 +149,7 @@
               [nzMaxTagCount]="2"
               [(ngModel)]="selectedItemCategories"
               formControlName="itemCategoryFormControl"
-              [nzMaxTagPlaceholder]="categoryTagPlaceHolder"
+              [nzMaxTagPlaceholder]="categoryItemTagPlaceHolder"
               nzMode="multiple"
               nzPlaceHolder="{{ 'Admin.Donation.Form.CategoryPlaceholder' | translate }}"
             >

@@ -9,10 +9,9 @@ export const getEntityState = createFeatureSelector<DonationRequestState>(donati
 
 export const getAllDonationRequests = createSelector(getEntityState, (state: DonationRequestState) => state.items);
 
-export const getDonationRequestsLoading = createSelector(
-  getEntityState,
-  (state: DonationRequestState) => state.loading
-);
+export const getLoadingStatus = createSelector(getEntityState, (state: DonationRequestState) => state.loading);
+
+export const getFailedStatus = createSelector(getEntityState, (state: DonationRequestState) => state.failed);
 
 export const getAllDonationRequestsPaged = createSelector(
   getEntityState,
@@ -34,6 +33,7 @@ export class DonationRequestSelectors {
   donationRequestsPaged$ = this.store.select(getAllDonationRequestsPaged);
   donationRequestsSearchPaged$ = this.store.select(getAllDonationRequestsSearchPaged);
   donationRequestState$ = this.store.select(getEntityState);
-  loading$ = this.store.select(getDonationRequestsLoading);
+  loading$ = this.store.select(getLoadingStatus);
+  failed$ = this.store.select(getFailedStatus);
   loadDonationRequest$ = this.store.select(getDonationRequest);
 }

@@ -1,6 +1,6 @@
 import * as store from 'src/app/shared/store';
-
-import { Injectable } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Sandbox } from 'src/app/shared/sandbox/base.sandbox';
 import { Store } from '@ngrx/store';
 import { CategorySerializer } from 'src/app/shared/utility/serializers/category-serializer';
@@ -11,17 +11,31 @@ import {
 } from 'src/app/shared/models';
 
 @Injectable()
-export class DonationsSandbox extends Sandbox {
+export class DonationsSandbox extends Sandbox implements OnDestroy {
   private categorySerializer: CategorySerializer = new CategorySerializer();
+  private subscriptions: Subscription[] = [];
+
   donationRequests$ = this.appState$.select(store.fromDonationRequest.getAllDonationRequests);
   organizations$ = this.appState$.select(store.fromOrganization.getAllOrganizations);
   status$ = this.appState$.select(store.fromStatus.getAllStatus);
   categories$ = this.appState$.select(store.fromCategory.getAllCategories);
   addressesByOrganization$ = this.appState$.select(store.fromAddress.getAddressesByOrganizationId);
   donationRequest$ = this.appState$.select(store.fromDonationRequest.getDonationRequest);
+  failAction$ = this.appState$.select(store.fromDonationRequest.getFailedStatus);
+  loadAction$ = this.appState$.select(store.fromDonationRequest.getLoadingStatus);
+
+  public failAction: boolean;
 
   constructor(protected appState$: Store<store.State>) {
     super(appState$);
+
+    this.failAction$.subscribe((status) => {
+      this.failAction = status;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.unregisterEvents();
   }
 
   /**
@@ -99,5 +113,9 @@ export class DonationsSandbox extends Sandbox {
    */
   public loadAddressesByOrganization(organizationId: number) {
     this.appState$.dispatch(store.fromAddress.loadAddressesByOrganizationId({ organizationId }));
+  }
+
+  private unregisterEvents() {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 }
