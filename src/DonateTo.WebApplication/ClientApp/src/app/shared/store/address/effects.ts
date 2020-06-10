@@ -7,7 +7,10 @@ import {
   loadCountriesSuccess,
   loadStates,
   loadStatesFailed,
-  loadStatesSuccess,
+    loadStatesSuccess,
+    loadAddressesByOrganizationId,
+    loadAddressesByOrganizationIdFailed,
+    loadAddressesByOrganizationIdSuccess,
 } from './actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { catchError, map, switchMap } from 'rxjs/operators';
@@ -16,6 +19,7 @@ import { Injectable } from '@angular/core';
 import { CityService } from '../../async-services/http/city.service';
 import { StateService } from '../../async-services/http/state.service';
 import { CountryService } from '../../async-services/http/country.service';
+import { AddressService } from '../../async-services/http/address.service';
 
 @Injectable()
 export class AddressEffects {
@@ -52,10 +56,22 @@ export class AddressEffects {
     )
   );
 
+    @Effect()
+    loadAddressesByOrganizationId$: Observable<{}> = this.actions$.pipe(
+        ofType(loadAddressesByOrganizationId),
+        switchMap((data) =>
+            this.addressService.getAddressesByOrganizationId(data.organizationId).pipe(
+                map((addresses) => loadAddressesByOrganizationIdSuccess({ addresses })),
+                catchError(() => of(loadAddressesByOrganizationIdFailed()))
+            )
+        )
+    );
+
   constructor(
     private actions$: Actions,
     private cityService: CityService,
     private stateService: StateService,
-    private countryService: CountryService
+      private countryService: CountryService,
+      private addressService: AddressService
   ) {}
 }

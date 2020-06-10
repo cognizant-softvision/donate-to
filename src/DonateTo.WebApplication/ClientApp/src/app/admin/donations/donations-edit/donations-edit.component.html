@@ -1,0 +1,37 @@
+<div>
+  <div class="create-donation-title">
+    <h4 class="section-title">{{ 'Admin.Donation.Edit.Title' | translate }}</h4>
+  </div>
+  <br />
+  <app-donations-form
+    *ngIf="this.donationRequest"
+    (validationResult)="updateDonationRequest($event)"
+    [donationRequest]="this.donationRequest"
+  ></app-donations-form>
+  <br />
+  <div class="create-donation-form-buttons">
+    <button
+      nz-popconfirm
+      nzPopconfirmTitle="{{ 'Admin.Donation.Form.DeleteItemConfirmation' | translate }}"
+      nzPopconfirmPlacement="bottom"
+      (nzOnConfirm)="validateDonationRequestForm()"
+      nz-button
+      nzType="primary"
+      type="submit"
+    >
+      {{ 'Admin.Donation.Edit.Save' | translate }}
+    </button>
+    <button
+      nz-popconfirm
+      nzPopconfirmTitle="{{ 'Admin.Donation.BackConfirm' | translate }}"
+      nzPopconfirmPlacement="bottom"
+      (nzOnConfirm)="goBack()"
+      nz-button
+      nzType="primary"
+      nz-button
+      nzType="primary"
+    >
+      {{ 'BackBtn' | translate }}
+    </button>
+  </div>
+</div>

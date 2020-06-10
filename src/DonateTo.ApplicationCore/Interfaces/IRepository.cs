@@ -1,5 +1,4 @@
-﻿using DonateTo.ApplicationCore.Entities;
-using DonateTo.ApplicationCore.Models.Pagination;
+﻿using DonateTo.ApplicationCore.Models.Pagination;
 using System;
 using System.Linq;
 using System.Linq.Expressions;

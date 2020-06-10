@@ -7,6 +7,7 @@ export const loadUserProfile = createAction('[Auth] Load User Profile');
 export const userProfileLoaded = createAction(
   '[Auth] User Profile Loaded',
   props<{
+    id: number;
     name: string;
     email: string;
     accessToken: string;

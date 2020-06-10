@@ -9,7 +9,7 @@ import { AuthSandbox } from '../shared/auth/auth.sandbox';
 @Injectable()
 export class HomeSandbox extends Sandbox {
   donationRequests$ = this.appState$.select(store.fromDonationRequest.getAllDonationRequests);
-  donationRequestsLoading$ = this.appState$.select(store.fromDonationRequest.getDonationRequestsLoading);
+  donationRequestsLoading$ = this.appState$.select(store.fromDonationRequest.getLoadingStatus);
   donationRequestsPaged$ = this.appState$.select(store.fromDonationRequest.getAllDonationRequestsPaged);
   donationRequestsSearchPaged$ = this.appState$.select(store.fromDonationRequest.getAllDonationRequestsSearchPaged);
 

@@ -1,4 +1,5 @@
 import { BaseHttpClientService } from './base-http-client.service';
+import { DonationRequestModel } from '../../models';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DonationRequestModel, PageModel } from '../../models';

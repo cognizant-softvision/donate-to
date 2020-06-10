@@ -17,7 +17,8 @@ const INITIAL_STATE: AddressState = {
   failed: false,
   countries: [],
   states: [],
-  cities: [],
+    cities: [],
+    items: AddressModel[]
 };
 
 const addressReducer = createReducer(
@@ -48,7 +49,8 @@ const addressReducer = createReducer(
     loading: true,
     failed: false,
     states: [],
-    cities: [],
+      cities: [],
+    items: []
   })),
   on(addressActions.loadStatesSuccess, (state, { states }) => ({
     ...state,
@@ -80,7 +82,24 @@ const addressReducer = createReducer(
     ...state,
     loading: false,
     failed: true,
-  }))
+  })),
+    on(addressActions.loadAddressesByOrganizationId, (state, action) => ({
+        ...state,
+        loading: true,
+        failed: false,
+    })),
+    on(addressActions.loadAddressesByOrganizationIdSuccess, (state, { addresses }) => ({
+        ...state,
+        loading: false,
+        failed: false,
+        items: addresses,
+    })),
+    on(addressActions.loadAddressesByOrganizationIdFailed, (state) => ({
+        ...state,
+        loading: false,
+        failed: true,
+        items: [],
+    }))
 );
 
 export function reducer(state: AddressState, action: Action) {

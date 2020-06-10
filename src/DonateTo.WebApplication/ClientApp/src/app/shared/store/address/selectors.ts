@@ -9,6 +9,8 @@ export const getCountries = createSelector(getEntityState, (state: AddressState)
 export const getStates = createSelector(getEntityState, (state: AddressState) => state.states);
 export const getCities = createSelector(getEntityState, (state: AddressState) => state.cities);
 export const getAddressLoading = createSelector(getEntityState, (state: AddressState) => state.loading);
+export const getAddressesByOrganizationId = createSelector(getEntityState, (state: AddressState) => state.items);
+export const getAddressesLoading = createSelector(getEntityState, (state: AddressState) => state.loading);
 
 @Injectable()
 export class DonationSelectors {
@@ -18,5 +20,7 @@ export class DonationSelectors {
   countries$ = this.store.select(getCountries);
   states$ = this.store.select(getStates);
   cities$ = this.store.select(getCities);
-  loading$ = this.store.select(getAddressLoading);
+    loading$ = this.store.select(getAddressLoading);
+    addresses$ = this.store.select(getAddressesByOrganizationId);
+
 }

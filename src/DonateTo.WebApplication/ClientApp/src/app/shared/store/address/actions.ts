@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { CityModel } from '../../models/city.model';
 import { StateModel } from '../../models/state.model';
 import { CountryModel } from '../../models/country.model';
+import { AddressModel } from '../../models';
 
 export const loadCountries = createAction('[Address Country] Loads countries from server');
 export const loadCountriesSuccess = createAction(
@@ -15,3 +16,13 @@ export const loadStatesFailed = createAction('[Address State] Load failed');
 export const loadCities = createAction('[Address City] Loads cities from server', props<{ stateId: number }>());
 export const loadCitiesSuccess = createAction('[Address City] Load success', props<{ cities: CityModel[] }>());
 export const loadCitiesFailed = createAction('[Address City] Load failed');
+export const loadAddressesByOrganizationId = createAction(
+    '[AddressesByOrganizationId] Load items from server',
+    props<{ organizationId: number }>()
+);
+
+export const loadAddressesByOrganizationIdSuccess = createAction(
+    '[AddressesByOrganizationId] Load success',
+    props<{ addresses: AddressModel[] }>()
+);
+export const loadAddressesByOrganizationIdFailed = createAction('[AddressesByOrganizationId] Load failed');
