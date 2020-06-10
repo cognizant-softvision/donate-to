@@ -27,7 +27,7 @@ namespace DonateTo.Infrastructure.Data.Repositories
         /// <returns>Paged DonationRequests of matching criteria.</returns>
         public PagedResult<DonationRequest> SearchDonationRequest(string queryString, int page, int pageSize)
         {
-          return SearchDonationRequestQuery(queryString).GetPaged(page, pageSize);
+            return SearchDonationRequestQuery(queryString).GetPaged(page, pageSize);
         }
         
         /// <summary>
@@ -39,10 +39,11 @@ namespace DonateTo.Infrastructure.Data.Repositories
         /// <returns>Task of Paged DonationRequests of matching criteria.</returns>
         public async Task<PagedResult<DonationRequest>> SearchDonationRequestAsync(string queryString, int page, int pageSize)
         {
-           return await SearchDonationRequestQuery(queryString).GetPagedAsync(page, pageSize).ConfigureAwait(false);
+            return await SearchDonationRequestQuery(queryString).GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
 
         #region private
+
         private IQueryable<DonationRequest> GetHydratedDonationRequests()
         {
             return _dbContext.Set<DonationRequest>().Include(d => d.Address).Include(d => d.Status).Include(d => d.DonationRequestItems)
@@ -54,17 +55,16 @@ namespace DonateTo.Infrastructure.Data.Repositories
         {
             var likeString = $"%{queryString}%";
             var query = GetHydratedDonationRequests().Where(donation =>
-                EF.Functions.ILike(donation.Title, likeString) ||
-                EF.Functions.ILike(donation.Organization.Name, likeString) ||
-                donation.DonationRequestCategories.Any(cdr => EF.Functions.ILike(cdr.Category.Name, likeString)) ||
-                donation.DonationRequestItems.Any(dri =>
-                       EF.Functions.ILike(dri.Name, likeString)) ||
-                donation.DonationRequestItems.Any(dri =>
-                       dri.DonationRequestItemCategories.Any(cdr => EF.Functions.ILike(cdr.Category.Name, likeString)))
+               EF.Functions.ILike(donation.Title, likeString) ||
+               EF.Functions.ILike(donation.Organization.Name, likeString) ||
+               donation.DonationRequestCategories.Any(cdr => EF.Functions.ILike(cdr.Category.Name, likeString)) ||
+               donation.DonationRequestItems.Any(dri =>
+                      EF.Functions.ILike(dri.Name, likeString)) ||
+               donation.DonationRequestItems.Any(dri =>
+                      dri.DonationRequestItemCategories.Any(cdr => EF.Functions.ILike(cdr.Category.Name, likeString)))
             );
             return query;
         }
-
         #endregion
     }
 }

@@ -27,13 +27,13 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// Get a paged list of entity.
         /// </summary>
         /// <returns>IEnumerable of entity.</returns>
-        PagedResult<T> GetPaged(int page, int pageSize);
+        PagedResult<T> GetPaged(int page, int pageSize, Expression<Func<T, bool>> filter = null);
 
         /// <summary>
         /// Get a paged list of entity async.
         /// </summary>
         /// <returns>IEnumerable of entity.</returns>
-        Task<PagedResult<T>> GetPagedAsync(int page, int pageSize);
+        Task<PagedResult<T>> GetPagedAsync(int page, int pageSize, Expression<Func<T, bool>> filter = null);
 
         /// <summary>
         /// Get an entity by id.
