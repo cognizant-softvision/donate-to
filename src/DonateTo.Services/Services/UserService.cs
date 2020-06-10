@@ -12,11 +12,13 @@ namespace DonateTo.Services
     public class UserService : IUserService
     {
         private readonly IRepository<User> _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
         public UserService (
-            IRepository<User> userRepository)
+            IRepository<User> userRepository, IUnitOfWork unitOfWork)
         {
             _userRepository = userRepository;
+
         }
 
         public User Create(User entity)
@@ -64,21 +66,14 @@ namespace DonateTo.Services
             return await _userRepository.GetAsync(id).ConfigureAwait(false);
         }
 
-        public PagedResult<User> GetPaged(int page, int pageSize)
+        public PagedResult<User> GetPaged(int page, int pageSize, Expression<Func<User, bool>> filter = null)
         {
-            return _userRepository.GetPaged(page, pageSize);
+            return _userRepository.GetPaged(page, pageSize, filter);
         }
 
-        public async Task<PagedResult<User>> GetPagedAsync(int page, int pageSize)
+        public async Task<PagedResult<User>> GetPagedAsync(int page, int pageSize, Expression<Func<User, bool>> filter = null)
         {
-            return await _userRepository.GetPagedAsync(page, pageSize).ConfigureAwait(false);
-        }
-
-        public async Task<PagedResult<User>> GetPagedUsersByOrganizationAsync(long organizationId, int page, int pageSize)
-        {
-            throw new NotImplementedException();
-            //TODO: Uncomment the return line when x.organizationId is implemented
-            //return await _userRepository.GetPagedAsync(x => x.organizationId == organizationId, page, pageSize).ConfigureAwait(false);
+            return await _userRepository.GetPagedAsync(page, pageSize, filter).ConfigureAwait(false);
         }
 
         public User Update(User entity, long id)

@@ -120,15 +120,15 @@ namespace DonateTo.Services
         }
         
         ///<inheritdoc cref="IBaseService{TEntity}"/>
-        public virtual PagedResult<TEntity> GetPaged(int page, int pageSize)
+        public virtual PagedResult<TEntity> GetPaged(int page, int pageSize, Expression<Func<TEntity, bool>> filter = null)
         {
-            return _entityRequestRepository.GetPaged(page, pageSize);
+            return _entityRequestRepository.GetPaged(page, pageSize, filter);
         }
 
         ///<inheritdoc cref="IBaseService{TEntity}"/>
-        public virtual async Task<PagedResult<TEntity>> GetPagedAsync(int page, int pageSize) 
+        public virtual async Task<PagedResult<TEntity>> GetPagedAsync(int page, int pageSize, Expression<Func<TEntity, bool>> filter = null) 
         {
-            return await _entityRequestRepository.GetPagedAsync(page, pageSize).ConfigureAwait(false);
+            return await _entityRequestRepository.GetPagedAsync(page, pageSize, filter).ConfigureAwait(false);
         }
 
 
