@@ -9,7 +9,8 @@ export interface AddressState {
   failed: boolean;
   countries: CountryModel[];
   states: StateModel[];
-  cities: CityModel[];
+    cities: CityModel[];
+    items: AddressModel[];
 }
 
 const INITIAL_STATE: AddressState = {
@@ -17,7 +18,8 @@ const INITIAL_STATE: AddressState = {
   failed: false,
   countries: [],
   states: [],
-  cities: [],
+    cities: [],
+    items: [];
 };
 
 const addressReducer = createReducer(

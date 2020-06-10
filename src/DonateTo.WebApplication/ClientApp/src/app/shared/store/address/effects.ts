@@ -52,6 +52,17 @@ export class AddressEffects {
     )
   );
 
+  @Effect()
+  loadAddressesByOrganizationId$: Observable<{}> = this.actions$.pipe(
+    ofType(loadAddressesByOrganizationId),
+    switchMap((data) =>
+      this.addressService.getAddressesByOrganizationId(data.organizationId).pipe(
+        map((addresses) => loadAddressesByOrganizationIdSuccess({ addresses })),
+        catchError(() => of(loadAddressesByOrganizationIdFailed()))
+      )
+    )
+  );
+
   constructor(
     private actions$: Actions,
     private cityService: CityService,

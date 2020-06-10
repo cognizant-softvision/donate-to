@@ -15,3 +15,13 @@ export const loadStatesFailed = createAction('[Address State] Load failed');
 export const loadCities = createAction('[Address City] Loads cities from server', props<{ stateId: number }>());
 export const loadCitiesSuccess = createAction('[Address City] Load success', props<{ cities: CityModel[] }>());
 export const loadCitiesFailed = createAction('[Address City] Load failed');
+export const loadAddressesByOrganizationId = createAction(
+  '[AddressesByOrganizationId] Load items from server',
+  props<{ organizationId: number }>()
+);
+
+export const loadAddressesByOrganizationIdSuccess = createAction(
+  '[AddressesByOrganizationId] Load success',
+  props<{ addresses: AddressModel[] }>()
+);
+export const loadAddressesByOrganizationIdFailed = createAction('[AddressesByOrganizationId] Load failed');
