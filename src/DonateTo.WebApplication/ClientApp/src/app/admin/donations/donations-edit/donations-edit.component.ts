@@ -73,7 +73,7 @@ export class DonationsEditComponent implements OnInit, OnDestroy {
   }
 
   goBack() {
-    this.router.navigateByUrl('/admin/donations');
+    this.router.navigate(['/admin/donations']);
   }
 
   switchErrorModal() {

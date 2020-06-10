@@ -56,7 +56,7 @@ export class DonationsCreateComponent implements OnDestroy {
   }
 
   goBack() {
-    this.router.navigateByUrl('/admin/donations');
+    this.router.navigate(['/admin/donations']);
   }
 
   switchErrorModal() {

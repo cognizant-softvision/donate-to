@@ -6,7 +6,7 @@
         nz-popconfirm
         nzPopconfirmTitle="{{ 'Admin.Donation.CreateConfirm' | translate }}"
         nzPopconfirmPlacement="bottom"
-        (nzOnConfirm)="router.navigateByUrl('admin/donations/create')"
+        (nzOnConfirm)="router.navigate(['admin/donations/create'])"
         nz-button
         nzType="primary"
       >
@@ -17,7 +17,7 @@
     <button nz-button nzType="secondary">{{ 'Admin.ClearFilter' | translate }}</button>
     <button nz-button nzType="secondary">{{ 'Admin.ClearFilterAndSorted' | translate }}</button>
   </div>
-  <nz-table #donationTable [nzData]="donationRequests">
+  <nz-table #donationTable [nzData]="this.donationSandBox.donationRequests$ | async">
     <thead>
       <tr>
         <th
