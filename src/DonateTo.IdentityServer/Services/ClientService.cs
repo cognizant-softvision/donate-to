@@ -1,17 +1,16 @@
 
 using DonateTo.IdentityServer.Data.Repositories.Interfaces;
 using IdentityServer4.EntityFramework.Entities;
-using IdentityServer4.Stores;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using System.Linq;
 
 namespace DonateTo.IdentityServer.Services
 {
     public class ClientService: IClientService
-    {        private readonly IClientRepository _clientsRepository;
+    {        
+        private readonly IClientRepository _clientsRepository;
 
         public ClientService (IClientRepository clientsRepository)
         {

@@ -10,7 +10,7 @@ namespace DonateTo.WebApi.V1.Controllers
     [ApiController]
     public class DonationRequestController : BaseApiController<DonationRequest>
     {
-        public DonationRequestController(IBaseService<DonationRequest> donationService) : base(donationService)
+        public DonationRequestController(IBaseService<DonationRequest> donationRequestService) : base(donationRequestService)
         {
         }
     }

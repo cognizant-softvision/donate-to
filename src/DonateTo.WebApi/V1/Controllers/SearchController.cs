@@ -12,7 +12,7 @@ namespace DonateTo.WebApi.V1.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [AllowAnonymous]
-    public class SearchController: Controller
+    public class SearchController: ControllerBase
     {
         private readonly ISearchService _searchService;
         public SearchController(ISearchService searchService)
