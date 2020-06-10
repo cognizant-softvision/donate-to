@@ -27,23 +27,10 @@ export class HomeComponent implements OnInit {
   }
 
   subscriptions: Subscription[] = [];
-  inputChange = new Subject();
 
   ngOnInit(): void {}
 
-  onSearch() {
-    this.homeSandbox.loadDonationRequestsSearchPaged(this.pageSize, this.currentPage, this.searchValue);
-  }
-
-  onChange(e) {
-    this.inputChange.next(e);
-    const valueSearch$ = fromEvent(e, 'input').pipe(
-      map((event) => event.target.value),
-      filter((query) => query),
-      debounceTime(1000),
-      distinctUntilChanged(),
-      tap((query) => console.log(`About to make an API call with query: ${query}`))
-    );
+  onSearchChange() {
     this.homeSandbox.loadDonationRequestsSearchPaged(this.pageSize, this.currentPage, this.searchValue);
   }
 

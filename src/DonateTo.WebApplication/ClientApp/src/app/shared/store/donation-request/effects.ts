@@ -13,7 +13,7 @@ import {
   loadDonationRequestsSuccess,
 } from './actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { DonationRequestService } from '../../async-services/http/donation-request.service';
@@ -45,6 +45,8 @@ export class DonationRequestEffects {
   @Effect()
   loadDonationRequestsSearchPaged$: Observable<{}> = this.actions$.pipe(
     ofType(loadDonationRequestsSearchPaged),
+    debounceTime(1000),
+    distinctUntilChanged(),
     switchMap(({ pageNumber, pageSize, query }) =>
       this.donationRequestService.getDonationRequestsSearchPaged(pageNumber, pageSize, query).pipe(
         map((donationRequests) => loadDonationRequestsSearchPagedSuccess({ donationRequests })),

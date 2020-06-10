@@ -4,8 +4,7 @@
     <input
       type="text"
       [(ngModel)]="searchValue"
-      (input
-      (change))="onChange($event.target.value)"
+      (input)="onSearchChange()"
       size="large"
       nz-input
       placeholder="{{ 'SearchPlaceHolder' | translate }}"
