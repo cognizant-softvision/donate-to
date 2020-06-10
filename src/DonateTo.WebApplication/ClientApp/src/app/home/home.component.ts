@@ -3,6 +3,9 @@ import { HomeSandbox } from './home.sandbox';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { ConfigService } from '../app-config.service';
+import { fromEvent, Subject } from 'rxjs';
+import { map } from 'rxjs-compat/operator/map';
+import { debounceTime, distinctUntilChanged, filter, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +30,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onSearch() {
+  onSearchChange() {
     this.homeSandbox.loadDonationRequestsSearchPaged(this.pageSize, this.currentPage, this.searchValue);
   }
 
