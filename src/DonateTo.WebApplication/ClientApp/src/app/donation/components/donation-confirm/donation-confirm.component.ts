@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { DonationSandbox } from 'src/app/donation/donation.sandbox';
 import { ContactModel } from 'src/app/shared/models/contact.model';
 import { AddressModel, DonationRequestModel } from 'src/app/shared/models';
@@ -33,22 +33,22 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
   _isAddressStepReady = false;
   _isFinishStepReady = true;
 
-  donationItems: DonationItemModel[] = [];
-
   stepsData: boolean[] = [];
-
-  isSubmited = false;
 
   contactModel: ContactModel = new ContactModel();
   addressModel: AddressModel = new AddressModel();
   observation: string;
-  availabilities: AvailabilityModel[] = [];
 
   subscriptions: Subscription[] = [];
+
+  availabilities: AvailabilityModel[] = [];
 
   donation: DonationRequestModel;
 
   @Output() showDonationConfirmModal = new EventEmitter<boolean>();
+
+  @Output() isSubmited = new EventEmitter<boolean>();
+  @Input() donationItems: DonationItemModel[];
 
   isResponsableStepReady(value: boolean) {
     this._isResponsableStepReady = value;
@@ -114,7 +114,7 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
       return donationItem;
     });
 
-    this.isSubmited = true;
+    this.isSubmited.emit(true);
 
     this.donationSandbox.addDonation(donation);
   }
