@@ -13,6 +13,7 @@ namespace DonateTo.IdentityServer.Data.Repositories
     public class ClientRepository : IClientRepository
     {
         private readonly CustomConfigurationDbContext _dbContext;
+
         public ClientRepository(CustomConfigurationDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -71,6 +72,13 @@ namespace DonateTo.IdentityServer.Data.Repositories
             return await Task.FromResult(client).ConfigureAwait(false);
         }
 
+        ///<inheritdoc cref="IClientRepository"/>
+        public async Task SaveChanges()
+        {
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        #region private
         /// <summary>
         /// Gets the original client hydrated and without changes from the Database
         /// </summary>
@@ -101,12 +109,7 @@ namespace DonateTo.IdentityServer.Data.Repositories
                 _dbContext.Remove(toRemove);
             }
         }
-
-        ///<inheritdoc cref="IClientRepository"/>
-        public async Task SaveChanges()
-        {
-            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
-        }
+        #endregion
 
     }
 }

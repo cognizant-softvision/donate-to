@@ -3,13 +3,8 @@ using DonateTo.ApplicationCore.Entities;
 using DonateTo.IdentityServer.Models;
 using System;
 using IdentityServer4.EntityFramework.Entities;
-using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
 using System.Linq;
-using System.ComponentModel;
-using Newtonsoft.Json;
-using Microsoft.Extensions.Options;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DonateTo.IdentityServer.Mapping
 {
