@@ -1,18 +1,20 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { AdminLayoutComponent } from './admin-layout.component';
-import { UserComponent } from '../../../../admin/user/user.component';
-import { DonationComponent } from '../../../../admin/donation/donation.component';
-import { OrganizationComponent } from '../../../../admin/organization/organization.component';
+import { UserComponent } from 'src/app/admin/user/user.component';
+import { OrganizationComponent } from 'src/app/admin/organization/organization.component';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminLayoutComponent,
     children: [
-      { path: '', redirectTo: 'donation', pathMatch: 'prefix' },
+      { path: '', redirectTo: 'donations', pathMatch: 'prefix' },
       { path: 'user', component: UserComponent },
-      { path: 'donation', component: DonationComponent },
+      {
+        path: 'donations',
+        loadChildren: () => import('src/app/admin/donations/donations.module').then((m) => m.DonationsModule),
+      },
       { path: 'organization', component: OrganizationComponent },
     ],
   },

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DonateTo.ApplicationCore.Entities
+﻿namespace DonateTo.ApplicationCore.Entities
 {
     public class City : EntityBase
     {
