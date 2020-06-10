@@ -67,8 +67,10 @@ export class DonationComponent implements OnInit, OnDestroy {
       .filter((item) => item.quantityToDonate > 0)
       .map((item) => {
         const donationItem: DonationItemModel = new DonationItemModel();
-        donationItem.item = item.item;
-        donationItem.quantityToDonate = item.quantityToDonate;
+        donationItem.donationRequestItemId = item.item.id;
+        donationItem.donationRequestItem = JSON.parse(JSON.stringify(item.item));
+        donationItem.unitId = item.item.unitId;
+        donationItem.quantity = item.quantityToDonate;
         return donationItem;
       });
     this.showDonationConfirm = state;
