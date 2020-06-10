@@ -1,19 +1,6 @@
-import { CategoryModel, DonationRequestCategoryModel, DonationRequestItemCategoryModel } from '../../models';
+import { CategoryModel, DonationRequestItemCategoryModel } from '../../models';
 
 export class CategorySerializer {
-  public ToDonationRequestCategories(categories: CategoryModel[]): DonationRequestCategoryModel[] {
-    const donationRequestCategories: DonationRequestCategoryModel[] = [];
-
-    categories.forEach((category) => {
-      const donationRequestCategory = new DonationRequestCategoryModel();
-      donationRequestCategory.categoryId = category.id;
-
-      donationRequestCategories.push(donationRequestCategory);
-    });
-
-    return donationRequestCategories;
-  }
-
   public ToDonationRequestItemCategories(categories: CategoryModel[]): DonationRequestItemCategoryModel[] {
     const donationRequestItemCategories: DonationRequestItemCategoryModel[] = [];
 

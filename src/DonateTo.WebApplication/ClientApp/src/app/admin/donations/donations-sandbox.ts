@@ -34,13 +34,6 @@ export class DonationsSandbox extends Sandbox implements OnDestroy {
   }
 
   /**
-   * Serialize CategoryModels to DonationRequestCategories
-   */
-  public mapCategoriesToDonationRequestCategories(categories): DonationRequestCategoryModel[] {
-    return this.categorySerializer.ToDonationRequestCategories(categories);
-  }
-
-  /**
    * Serialize CategoryModels to DonationRequestItemCategories
    */
   public mapCategoriesToDonationRequestItemCategories(categories): DonationRequestItemCategoryModel[] {
