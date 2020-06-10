@@ -5,6 +5,8 @@ using DonateTo.ApplicationCore.Models.Pagination;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Linq.Expressions;
+using System;
 
 namespace DonateTo.Infrastructure.Data.Repositories
 {
@@ -38,15 +40,15 @@ namespace DonateTo.Infrastructure.Data.Repositories
         }
 
         ///<inheritdoc cref="IRepository{Donation}"/>
-        public override PagedResult<Donation> GetPaged(int page, int pageSize)
+        public override PagedResult<Donation> GetPaged(int page, int pageSize, Expression<Func<Donation, bool>> filter = null)
         {
-            return GetHydratedDonations().GetPaged(page, pageSize);
+            return GetHydratedDonations().Where(filter).GetPaged(page, pageSize);
         }
 
         ///<inheritdoc cref="IRepository{Donation}"/>
-        public override async Task<PagedResult<Donation>> GetPagedAsync(int page, int pageSize)
+        public override async Task<PagedResult<Donation>> GetPagedAsync(int page, int pageSize, Expression<Func<Donation, bool>> filter = null)
         {
-            return await GetHydratedDonations().GetPagedAsync(page, pageSize).ConfigureAwait(false);
+            return await GetHydratedDonations().Where(filter).GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
     }
 }
