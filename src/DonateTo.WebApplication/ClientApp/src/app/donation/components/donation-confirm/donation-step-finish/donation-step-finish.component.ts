@@ -35,7 +35,9 @@ export class DonationStepFinishComponent implements OnInit, OnDestroy {
   });
 
   constructor(public donationSandbox: DonationSandbox) {}
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.registerEvents();
+  }
 
   dayOfWeekDescription(dayOfWeek: number): string {
     return this.weekDays.find((weekDay) => weekDay.dayOfWeek === dayOfWeek).description;
@@ -50,6 +52,7 @@ export class DonationStepFinishComponent implements OnInit, OnDestroy {
       availability.endTime = this.finishStepFormGroup.controls.finishTimeFormControl.value;
       this.availabilities = [...this.availabilities, availability];
       this.finishStepFormGroup.reset();
+      this.isFormValid.emit(true);
     }
   }
 
@@ -85,8 +88,8 @@ export class DonationStepFinishComponent implements OnInit, OnDestroy {
    * Subscribes to events
    */
   registerEvents(): void {
-    this.subscriptions.push(
-      this.finishStepFormGroup.valueChanges.subscribe(() => this.isFormValid.emit(this.isValidForm()))
-    );
+    this.subscriptions.push(this.finishStepFormGroup.valueChanges.subscribe(() => this.isFormValid.emit(true)));
+
+    this.subscriptions.push();
   }
 }

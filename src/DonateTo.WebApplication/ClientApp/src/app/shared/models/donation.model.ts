@@ -15,5 +15,5 @@ export class DonationModel extends BaseModel {
   status?: StatusModel;
   pickUpDate?: Date;
   donationItems?: DonationItemModel[];
-  availability?: AvailabilityModel[];
+  availabilities?: AvailabilityModel[];
 }

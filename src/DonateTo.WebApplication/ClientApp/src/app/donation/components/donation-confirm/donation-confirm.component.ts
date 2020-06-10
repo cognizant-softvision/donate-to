@@ -37,6 +37,8 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
 
   stepsData: boolean[] = [];
 
+  isSubmited = false;
+
   contactModel: ContactModel = new ContactModel();
   addressModel: AddressModel = new AddressModel();
   observation: string;
@@ -102,7 +104,7 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
     Object.assign(donation.address, this.addressModel);
     donation.address.contact = new ContactModel();
     Object.assign(donation.address.contact, this.contactModel);
-    donation.availability = this.availabilities;
+    donation.availabilities = this.availabilities;
     donation.donationItems = this.donationItems.map((item) => {
       const donationItem: DonationItemModel = new DonationItemModel();
       Object.assign(donationItem, item);
@@ -111,6 +113,8 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
       donationItem.statusId = 2;
       return donationItem;
     });
+
+    this.isSubmited = true;
 
     this.donationSandbox.addDonation(donation);
   }

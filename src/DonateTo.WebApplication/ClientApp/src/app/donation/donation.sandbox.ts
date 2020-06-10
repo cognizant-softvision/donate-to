@@ -12,6 +12,7 @@ export class DonationSandbox extends Sandbox {
   countries$ = this.appState$.select(store.fromAddress.getCountries);
   states$ = this.appState$.select(store.fromAddress.getStates);
   cities$ = this.appState$.select(store.fromAddress.getCities);
+  newDonationLoading$ = this.appState$.select(store.fromDonation.getNewDonationLoading);
 
   private subscriptions: Subscription[] = [];
 

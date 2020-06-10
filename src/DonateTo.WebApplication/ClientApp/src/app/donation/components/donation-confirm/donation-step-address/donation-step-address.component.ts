@@ -72,7 +72,7 @@ export class DonationStepAddressComponent implements OnInit, OnDestroy {
       additionalInformation: [this.addressModel?.additionalInformation],
       countryId: [this.addressModel?.countryId, [Validators.required]],
       stateId: [this.addressModel?.stateId, [Validators.required]],
-      cityId: [this.addressModel?.cityId, [Validators.required]],
+      cityId: [this.addressModel?.cityId],
     });
 
     this.registerEvents();

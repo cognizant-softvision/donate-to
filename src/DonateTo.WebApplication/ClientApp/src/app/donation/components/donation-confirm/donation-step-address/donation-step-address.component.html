@@ -61,20 +61,6 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSpan]="7">
-      {{ 'RequestDonation.DonationSteps.AddressStep.AdditionalInformation' | translate }}
-    </nz-form-label>
-    <nz-form-control [nzSpan]="12">
-      <textarea
-        formControlName="additionalInformation"
-        nz-input
-        rows="2"
-        placeholder="{{ 'RequestDonation.DonationSteps.AddressStep.AdditionalInformationPlaceHolder' | translate }}"
-      ></textarea>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item>
     <nz-form-label [nzSpan]="7" nzRequired>
       {{ 'RequestDonation.DonationSteps.AddressStep.Country' | translate }}
     </nz-form-label>
@@ -147,6 +133,20 @@
           {{ 'RequestDonation.DonationSteps.AddressStep.RequiredCity' | translate }}
         </ng-container>
       </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7">
+      {{ 'RequestDonation.DonationSteps.AddressStep.AdditionalInformation' | translate }}
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <textarea
+        formControlName="additionalInformation"
+        nz-input
+        rows="2"
+        placeholder="{{ 'RequestDonation.DonationSteps.AddressStep.AdditionalInformationPlaceHolder' | translate }}"
+      ></textarea>
     </nz-form-control>
   </nz-form-item>
 </form>
