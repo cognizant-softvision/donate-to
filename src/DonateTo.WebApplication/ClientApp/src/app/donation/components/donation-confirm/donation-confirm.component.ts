@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { DonationSandbox } from 'src/app/donation/donation.sandbox';
 import { ContactModel } from 'src/app/shared/models/contact.model';
-import { AddressModel, DonationRequestModel } from 'src/app/shared/models';
+import { AddressModel, DonationRequestModel, Status } from 'src/app/shared/models';
 import { DonationStepResponsableComponent } from './donation-step-responsable/donation-step-responsable.component';
 import { DonationModel } from 'src/app/shared/models/donation.model';
 import { Subscription } from 'rxjs';
@@ -99,7 +99,7 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
 
     donation.observation = this.observation;
     donation.donationRequestId = this.donation.id;
-    donation.statusId = 2;
+    donation.statusId = Status.Pending;
     donation.address = new AddressModel();
     Object.assign(donation.address, this.addressModel);
     donation.address.contact = new ContactModel();
@@ -110,7 +110,7 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
       Object.assign(donationItem, item);
       donationItem.unit = null;
       donationItem.donationRequestItem = null;
-      donationItem.statusId = 2;
+      donationItem.statusId = Status.Pending;
       return donationItem;
     });
 

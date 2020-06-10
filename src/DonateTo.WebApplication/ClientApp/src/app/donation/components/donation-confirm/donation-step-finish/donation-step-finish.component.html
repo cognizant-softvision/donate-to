@@ -1,39 +1,48 @@
 <form nz-form [formGroup]="finishStepFormGroup">
   <nz-form-item>
     <nz-form-label [nzSpan]="7" nzRequired>
-      Weekday
+      {{ 'RequestDonation.DonationSteps.FinishStep.WeekDay' | translate }}
     </nz-form-label>
     <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="weekDayErrorTpl">
-      <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Weekday" formControlName="weekDayFormControl">
+      <nz-select
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="{{ 'RequestDonation.DonationSteps.FinishStep.WeekDayPlaceHolder' | translate }}"
+        formControlName="weekDayFormControl"
+      >
         <nz-option *ngFor="let day of weekDays" [nzValue]="day.dayOfWeek" [nzLabel]="day.description"> </nz-option>
       </nz-select>
       <ng-template #weekDayErrorTpl let-control>
         <ng-container *ngIf="control.hasError('required')">
-          Please input a weekday!
+          {{ 'RequestDonation.DonationSteps.FinishStep.RequiredWeekDay' | translate }}
         </ng-container>
       </ng-template>
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired nzFor="startTime">Start Time</nz-form-label>
+    <nz-form-label [nzSpan]="7" nzRequired nzFor="startTime">
+      {{ 'RequestDonation.DonationSteps.FinishStep.StartTime' | translate }}
+    </nz-form-label>
     <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="startTimeErrorTpl">
       <nz-time-picker formControlName="startTimeFormControl" nzFormat="HH:mm"></nz-time-picker>
       <ng-template #startTimeErrorTpl let-control>
         <ng-container *ngIf="control.hasError('required')">
-          Please input a start time!
+          {{ 'RequestDonation.DonationSteps.FinishStep.RequiredStartTime' | translate }}
         </ng-container>
       </ng-template>
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired nzFor="finishTime">Finish Time</nz-form-label>
+    <nz-form-label [nzSpan]="7" nzRequired nzFor="finishTime">
+      {{ 'RequestDonation.DonationSteps.FinishStep.FinishTime' | translate }}
+    </nz-form-label>
     <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="finishTimeErrorTpl">
       <nz-time-picker formControlName="finishTimeFormControl" nzFormat="HH:mm"></nz-time-picker>
       <ng-template #finishTimeErrorTpl let-control>
         <ng-container *ngIf="control.hasError('required')">
-          Please input a finish time!
+          {{ 'RequestDonation.DonationSteps.FinishStep.RequiredFinishTime' | translate }}
         </ng-container>
       </ng-template>
     </nz-form-control>
@@ -41,7 +50,7 @@
 
   <div nz-row class="ant-row-end">
     <button nz-button nzType="primary" (click)="addAvailabilityToList()">
-      <span>Add Availability</span>
+      <span>{{ 'RequestDonation.DonationSteps.FinishStep.AddAvailabilityButton' | translate }}</span>
     </button>
   </div>
 </form>
@@ -57,10 +66,10 @@
       >
         <thead>
           <tr>
-            <th>WeekDay</th>
-            <th>Start Time</th>
-            <th>Finish Time</th>
-            <th>Operation</th>
+            <th>{{ 'RequestDonation.DonationSteps.FinishStep.WeekDayColumn' | translate }}</th>
+            <th>{{ 'RequestDonation.DonationSteps.FinishStep.StartTimeColumn' | translate }}</th>
+            <th>{{ 'RequestDonation.DonationSteps.FinishStep.FinishTimeColumn' | translate }}</th>
+            <th>{{ 'RequestDonation.DonationSteps.FinishStep.OperationColumn' | translate }}</th>
           </tr>
         </thead>
         <tbody>
