@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onSearch() {
+  onChange() {
     if (this.searchValue.length >= this.searchLength) {
       this.homeSandbox.loadDonationRequestsSearchPaged(this.pageSize, this.currentPage, this.searchValue);
     }
