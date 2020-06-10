@@ -18,8 +18,7 @@ namespace DonateTo.Services
         private const string _matchingIdException = "Entity id and id parameter does not match.";
         private const string _keyNotFoundException = "Given key does not match any Entity.";
 
-        public BaseService(IRepository<TEntity> entityRequestRepository,
-            IUnitOfWork unitOfWork)
+        protected BaseService(IRepository<TEntity> entityRequestRepository, IUnitOfWork unitOfWork)
         {
             _entityRequestRepository = entityRequestRepository;
             _unitOfWork = unitOfWork;

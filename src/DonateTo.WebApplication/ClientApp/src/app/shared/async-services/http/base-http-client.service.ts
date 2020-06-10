@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { PageModel } from '../../models';
 
 export class BaseHttpClientService<T extends BaseModel> {
-  constructor(private httpClient: HttpClient, private url: string, private endpoint: string) {}
+  constructor(protected httpClient: HttpClient, protected url: string, protected endpoint: string) {}
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),

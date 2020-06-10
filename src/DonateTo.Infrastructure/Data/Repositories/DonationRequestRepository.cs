@@ -62,6 +62,7 @@ namespace DonateTo.Infrastructure.Data.Repositories
                 .Include(d => d.Address).ThenInclude(a => a.City)
                 .Include(d => d.Status)
                 .Include(d => d.DonationRequestItems).ThenInclude(dri => dri.Unit)
+                .Include(d => d.DonationRequestItems).ThenInclude(dri => dri.DonationRequestItemCategories)
                 .Include(d => d.DonationRequestCategories).ThenInclude(drc => drc.Category)
                 .Include(d => d.Organization).ThenInclude(o => o.Contact);
         }
