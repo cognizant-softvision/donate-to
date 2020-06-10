@@ -1,4 +1,7 @@
 import {
+  loadAddressesByOrganizationId,
+  loadAddressesByOrganizationIdFailed,
+  loadAddressesByOrganizationIdSuccess,
   loadCities,
   loadCitiesFailed,
   loadCitiesSuccess,
@@ -8,9 +11,6 @@ import {
   loadStates,
   loadStatesFailed,
   loadStatesSuccess,
-  loadAddressesByOrganizationId,
-  loadAddressesByOrganizationIdSuccess,
-  loadAddressesByOrganizationIdFailed,
 } from './actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { catchError, map, switchMap } from 'rxjs/operators';

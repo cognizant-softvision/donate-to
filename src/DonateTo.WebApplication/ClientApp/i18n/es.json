@@ -65,7 +65,21 @@
       },
       "FinishStep": {
         "Observation": "Observación",
-        "ObservationPlaceHolder": "Observación"
+        "ObservationPlaceHolder": "Observación",
+        "WeekDay": "Día de semana",
+        "WeekDayPlaceHolder": "Día de semana",
+        "RequiredWeekDay": "Por favor ingrese un día de la semana!",
+        "StartTime": "Horario inicial",
+        "StartTimePlaceHolder": "Horario inicial",
+        "RequiredStartTime": "Por favor ingrese un horario inicial!",
+        "FinishTime": "Horario final",
+        "FinishTimePlaceHolder": "Horario final",
+        "RequiredFinishTime": "Por favor ingrese un horario final!",
+        "AddAvailabilityButton": "Agregar disponibilidad",
+        "WeekDayColumn": "Día de semana",
+        "StartTimeColumn": "Horario inicial",
+        "FinishTimeColumn": "Horario final",
+        "OperationColumn": "Operación"
       }
     },
     "DonationItemList": {
