@@ -32,15 +32,6 @@
   </nz-skeleton>
 </div>
 
-<!-- <nz-modal
-  nzClosable="false"
-  [(nzVisible)]="showDonationConfirm"
-  nzTitle="{{ 'RequestDonation.DonationSteps.ConfirmationTitle' | translate }}"
-  [nzFooter]="null"
->
-  <app-donation-confirm (showDonationConfirmModal)="showDonationConfirmModal($event)"></app-donation-confirm>
-</nz-modal> -->
-
 <ng-template #modalContent>
   <app-donation-confirm
     (showDonationConfirmModal)="showDonationConfirmModal($event)"

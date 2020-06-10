@@ -4,6 +4,8 @@ import { DonationSandbox } from 'src/app/donation/donation.sandbox';
 import { AvailabilityModel } from 'src/app/shared/models/availability.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+import { WeekDays } from 'src/app/shared/enum/weekdays';
 
 @Component({
   selector: 'app-donation-step-finish',
@@ -21,11 +23,11 @@ export class DonationStepFinishComponent implements OnInit, OnDestroy {
   availabilities: AvailabilityModel[] = [];
 
   weekDays = [
-    { dayOfWeek: 2, description: 'Monday' },
-    { dayOfWeek: 3, description: 'Tuesday' },
-    { dayOfWeek: 4, description: 'Wednesday' },
-    { dayOfWeek: 5, description: 'Thursday' },
-    { dayOfWeek: 6, description: 'Friday' },
+    { dayOfWeek: WeekDays.Monday, description: this.translateService.instant('WeekDays.Monday') },
+    { dayOfWeek: WeekDays.Tuesday, description: this.translateService.instant('WeekDays.Tuesday') },
+    { dayOfWeek: WeekDays.Wednesday, description: this.translateService.instant('WeekDays.Wednesday') },
+    { dayOfWeek: WeekDays.Thursday, description: this.translateService.instant('WeekDays.Thursday') },
+    { dayOfWeek: WeekDays.Friday, description: this.translateService.instant('WeekDays.Friday') },
   ];
 
   finishStepFormGroup = new FormGroup({
@@ -34,7 +36,7 @@ export class DonationStepFinishComponent implements OnInit, OnDestroy {
     finishTimeFormControl: new FormControl(null, Validators.required),
   });
 
-  constructor(public donationSandbox: DonationSandbox) {}
+  constructor(public donationSandbox: DonationSandbox, public translateService: TranslateService) {}
   ngOnInit(): void {
     this.registerEvents();
   }
