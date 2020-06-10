@@ -25,8 +25,8 @@ namespace DonateTo.Infrastructure.Data.Repositories
         }
 
         private IQueryable<DonationRequest> SearchDonationRequestQuery(string queryString) {
-           var likeString =  $"%{queryString}%";
-           var query = GetHydratedDonationRequests().Where( donation => 
+            var likeString =  $"%{queryString}%";
+            var query = GetHydratedDonationRequests().Where( donation => 
                 EF.Functions.ILike(donation.Title, likeString) ||
                 EF.Functions.ILike(donation.Organization.Name, likeString) ||                
                 donation.DonationRequestCategories.Any( cdr => EF.Functions.ILike(cdr.Category.Name, likeString)) ||
@@ -34,8 +34,8 @@ namespace DonateTo.Infrastructure.Data.Repositories
                         EF.Functions.ILike(dri.Name, likeString)) ||
                 donation.DonationRequestItems.Any( dri =>
                         dri.DonationRequestItemCategories.Any( cdr => EF.Functions.ILike(cdr.Category.Name, likeString)))
-           );
-           return query;
+            );
+            return query;
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace DonateTo.Infrastructure.Data.Repositories
         /// <returns>Paged DonationRequests of matching criteria.</returns>
         public PagedResult<DonationRequest> SearchDonationRequest(string queryString, int page, int pageSize)
         {
-          return SearchDonationRequestQuery(queryString).GetPaged(page, pageSize);
+            return SearchDonationRequestQuery(queryString).GetPaged(page, pageSize);
         }
         
         /// <summary>
@@ -57,8 +57,9 @@ namespace DonateTo.Infrastructure.Data.Repositories
         /// <param name="page"> Curent results page <param>
         /// <param name="pageSize"> Size of results page <param>
         /// <returns>Task of Paged DonationRequests of matching criteria.</returns>
-        public async Task<PagedResult<DonationRequest>> SearchDonationRequestAsync(string queryString, int page, int pageSize) {
-           return await SearchDonationRequestQuery(queryString).GetPagedAsync(page, pageSize).ConfigureAwait(false);
+        public async Task<PagedResult<DonationRequest>> SearchDonationRequestAsync(string queryString, int page, int pageSize)
+        {
+            return await SearchDonationRequestQuery(queryString).GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
     }   
 }

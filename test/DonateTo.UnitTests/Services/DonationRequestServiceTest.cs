@@ -8,20 +8,24 @@ namespace DonateTo.UnitTests.Services
 {
     public class DonationRequestServiceTest
     {
+        /// <summary>
+        /// Get Donation Test
+        /// </summary>
         [Fact]
-        public void GivenDonationService_WhenGet_ThenShouldGetDonation()
+        public void GivenDonationService_WhenGetMethodIsCalled_ThenShouldGetDonation()
         {
             // Arrange
-            var result = new AutoFaker<DonationRequest>().Generate();
+            long requestId = 1;
+            var result = new DonationRequest() { Id = requestId };
             var repository = new MockBaseRepository<DonationRequest>().MockGet(result);
-            var unitOfWork = new MockUnitOfWork().MockSaveOneRowAsync();
+            var unitOfWork = new MockUnitOfWork().MockSaveAsync(0);
             var service = new DonationRequestService(repository.Object, unitOfWork.Object);
 
             // Act
-            var requested = service.GetAsync(1);
+            var donationRequest = service.GetAsync(requestId);
 
             // Assert
-            Assert.NotNull(requested);
+            Assert.NotNull(donationRequest);
         }
     }
 }

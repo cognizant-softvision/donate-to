@@ -112,13 +112,27 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
         ///<inheritdoc cref="IRepository{TEntity}"/>
         public virtual PagedResult<TEntity> GetPaged(int page, int pageSize, Expression<Func<TEntity, bool>> filter)
         {
-            return DbContext.Set<TEntity>().Where(filter).GetPaged(page, pageSize);
+            var entities = DbContext.Set<TEntity>().AsQueryable();
+
+            if (filter != null)
+            {
+                entities = entities.Where(filter);
+            }
+
+            return entities.GetPaged(page, pageSize);
         }
 
         ///<inheritdoc cref="IRepository{TEntity}"/>
         public virtual async Task<PagedResult<TEntity>> GetPagedAsync(int page, int pageSize, Expression<Func<TEntity, bool>> filter)
         {
-            return await DbContext.Set<TEntity>().Where(filter).GetPagedAsync(page, pageSize).ConfigureAwait(false);
+            var entities = DbContext.Set<TEntity>().AsQueryable();
+
+            if (filter != null)
+            {
+                entities = entities.Where(filter);
+            }
+
+            return await entities.GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
 
         ///<inheritdoc cref="IRepository{TEntity}"/>

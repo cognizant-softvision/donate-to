@@ -16,18 +16,6 @@ namespace DonateTo.Infrastructure.Data.Repositories
         {
         }
 
-        private IQueryable<Donation> GetHydratedDonations()
-        {
-            return DbContext.Set<Donation>()
-                .Include(d => d.Address)
-                .Include(d => d.Status)
-                .Include(d => d.DonationItems).ThenInclude(di => di.Unit)
-                .Include(d => d.DonationRequest.DonationRequestItems).ThenInclude(dri => dri.Unit)
-                .Include(d => d.DonationRequest.DonationRequestCategories).ThenInclude(drc => drc.Category)
-                .Include(d => d.DonationRequest.Organization)
-                .Include(d => d.DonationRequest.Status);
-        }
-
         ///<inheritdoc cref="IRepository{Donation}"/>
         public override Donation Get(long id)
         {
@@ -42,13 +30,41 @@ namespace DonateTo.Infrastructure.Data.Repositories
         ///<inheritdoc cref="IRepository{Donation}"/>
         public override PagedResult<Donation> GetPaged(int page, int pageSize, Expression<Func<Donation, bool>> filter = null)
         {
-            return GetHydratedDonations().Where(filter).GetPaged(page, pageSize);
+            var donations = GetHydratedDonations();
+
+            if (filter != null) 
+            {
+                donations = donations.Where(filter);
+            }
+
+            return donations.GetPaged(page, pageSize);
         }
 
         ///<inheritdoc cref="IRepository{Donation}"/>
         public override async Task<PagedResult<Donation>> GetPagedAsync(int page, int pageSize, Expression<Func<Donation, bool>> filter = null)
         {
-            return await GetHydratedDonations().Where(filter).GetPagedAsync(page, pageSize).ConfigureAwait(false);
+            var donations = GetHydratedDonations();
+
+            if (filter != null)
+            {
+                donations = donations.Where(filter);
+            }
+
+            return await donations.GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
+
+        #region private
+        private IQueryable<Donation> GetHydratedDonations()
+        {
+            return DbContext.Set<Donation>()
+                .Include(d => d.Address)
+                .Include(d => d.Status)
+                .Include(d => d.DonationItems).ThenInclude(di => di.Unit)
+                .Include(d => d.DonationRequest.DonationRequestItems).ThenInclude(dri => dri.Unit)
+                .Include(d => d.DonationRequest.DonationRequestCategories).ThenInclude(drc => drc.Category)
+                .Include(d => d.DonationRequest.Organization)
+                .Include(d => d.DonationRequest.Status);
+        }
+        #endregion
     }
 }
