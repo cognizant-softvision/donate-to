@@ -1,3 +1,85 @@
+<div [formGroup]="finishStepFormGroup">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>
+      Weekday
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="weekDayErrorTpl">
+      <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Weekday" formControlName="weekDayFormControl">
+        <nz-option *ngFor="let day of weekDays" [nzValue]="day.dayOfWeek" [nzLabel]="day.description"> </nz-option>
+      </nz-select>
+      <ng-template #weekDayErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input a weekday!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired nzFor="startTime">Start Time</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="startTimeErrorTpl">
+      <nz-time-picker formControlName="startTimeFormControl" nzFormat="HH:mm"></nz-time-picker>
+      <ng-template #startTimeErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input a start time!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired nzFor="finishTime">Finish Time</nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="finishTimeErrorTpl">
+      <nz-time-picker formControlName="finishTimeFormControl" nzFormat="HH:mm"></nz-time-picker>
+      <ng-template #finishTimeErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          Please input a finish time!
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div nz-row class="ant-row-end">
+    <button nz-button nzType="primary" (click)="addAvailabilityToList()">
+      <span>Add Availability</span>
+    </button>
+  </div>
+</div>
+
+<nz-form-item>
+  <nz-form-control>
+    <div [(ngModel)]="availabilities" ngDefaultControl>
+      <nz-table
+        [nzData]="availabilities"
+        [nzShowPagination]="false"
+        [nzFrontPagination]="false"
+        [nzShowPagination]="false"
+      >
+        <thead>
+          <tr>
+            <th>WeekDay</th>
+            <th>Start Time</th>
+            <th>Finish Time</th>
+            <th>Operation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let availability of availabilities">
+            <td>{{ dayOfWeekDescription(availability.dayOfWeek) }}</td>
+            <td>{{ availability.startTime | date: 'HH:mm' }}</td>
+            <td>{{ availability.endTime | date: 'HH:mm' }}</td>
+            <td>
+              <a (click)="removeAvailability(availability)">{{ 'Admin.Delete' | translate }}</a>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </nz-form-control>
+</nz-form-item>
+
+<br />
+
 <nz-form-item>
   <nz-form-label [nzSpan]="7">
     {{ 'RequestDonation.DonationSteps.FinishStep.Observation' | translate }}
@@ -12,6 +94,8 @@
     </textarea>
   </nz-form-control>
 </nz-form-item>
+
+<br />
 
 <nz-table [nzData]="donationItems" [nzLoading]="this.donationSandbox.donationRequestLoading$ | async">
   <thead>
@@ -28,10 +112,10 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let data of donationItems">
-      <td>{{ data.item.name }}</td>
-      <td>{{ data.item.observation }}</td>
-      <td>{{ data.quantityToDonate }}</td>
+    <tr *ngFor="let item of donationItems">
+      <td>{{ item.donationRequestItem.name }}</td>
+      <td>{{ item.donationRequestItem.observation }}</td>
+      <td>{{ item.quantity }}</td>
     </tr>
   </tbody>
 </nz-table>

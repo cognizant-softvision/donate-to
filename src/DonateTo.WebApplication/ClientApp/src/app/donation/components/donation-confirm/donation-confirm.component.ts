@@ -1,13 +1,14 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { DonationSandbox } from 'src/app/donation/donation.sandbox';
 import { ContactModel } from 'src/app/shared/models/contact.model';
-import { AddressModel, DonationRequestItemModel, DonationRequestModel } from 'src/app/shared/models';
+import { AddressModel, DonationRequestModel } from 'src/app/shared/models';
 import { DonationStepResponsableComponent } from './donation-step-responsable/donation-step-responsable.component';
 import { DonationModel } from 'src/app/shared/models/donation.model';
 import { Subscription } from 'rxjs';
 import { DonationStepAddressComponent } from './donation-step-address/donation-step-address.component';
 import { DonationStepFinishComponent } from './donation-step-finish/donation-step-finish.component';
 import { DonationItemModel } from 'src/app/shared/models/donation-item.model';
+import { AvailabilityModel } from 'src/app/shared/models/availability.model';
 
 @Component({
   selector: 'app-donation-confirm',
@@ -39,6 +40,7 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
   contactModel: ContactModel = new ContactModel();
   addressModel: AddressModel = new AddressModel();
   observation: string;
+  availabilities: AvailabilityModel[] = [];
 
   subscriptions: Subscription[] = [];
 
@@ -61,6 +63,7 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
   isFinishStepReady(value: boolean) {
     this._isFinishStepReady = value;
     this.observation = this.donationStepFinishComponent.observation;
+    Object.assign(this.availabilities, this.donationStepFinishComponent.availabilities);
     this.updateStepsData();
   }
 
@@ -99,12 +102,12 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
     Object.assign(donation.address, this.addressModel);
     donation.address.contact = new ContactModel();
     Object.assign(donation.address.contact, this.contactModel);
-
+    donation.availability = this.availabilities;
     donation.donationItems = this.donationItems.map((item) => {
-      const donationItem: DonationRequestItemModel = new DonationRequestItemModel();
-      Object.assign(donationItem, item.item);
+      const donationItem: DonationItemModel = new DonationItemModel();
+      Object.assign(donationItem, item);
       donationItem.unit = null;
-      donationItem.currentQuantity += item.quantityToDonate;
+      donationItem.donationRequestItem = null;
       return donationItem;
     });
 
