@@ -14,7 +14,7 @@ namespace DonateTo.Infrastructure.Migrations
                 name: "UnitId",
                 table: "DonationRequestItem",
                 nullable: false,
-                defaultValue: 0L);
+                defaultValue: 1L);
 
             migrationBuilder.CreateIndex(
                 name: "IX_DonationRequestItem_UnitId",

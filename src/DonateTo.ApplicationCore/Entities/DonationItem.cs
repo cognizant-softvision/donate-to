@@ -8,7 +8,6 @@
         public Donation Donation { get; set; }
         public long DonationRequestItemId { get; set; }
         public DonationRequestItem DonationRequestItem { get; set; }
-        public long UnitId { get; set; }
         public Unit Unit { get; set; }
         public long StatusId { get; set; }
         public Status Status { get; set; }
