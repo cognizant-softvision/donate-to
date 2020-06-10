@@ -426,8 +426,8 @@ namespace DonateTo.Infrastructure.Migrations
                     b.Property<string>("Observation")
                         .HasColumnType("text");
 
-                    b.Property<long>("UnitId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("Unit")
+                        .HasColumnType("text");
 
                     b.Property<string>("UpdateBy")
                         .HasColumnType("text");
@@ -438,8 +438,6 @@ namespace DonateTo.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DonationRequestId");
-
-                    b.HasIndex("UnitId");
 
                     b.ToTable("DonationRequestItem");
                 });
@@ -969,12 +967,6 @@ namespace DonateTo.Infrastructure.Migrations
                     b.HasOne("DonateTo.ApplicationCore.Entities.DonationRequest", null)
                         .WithMany("DonationRequestItems")
                         .HasForeignKey("DonationRequestId");
-
-                    b.HasOne("DonateTo.ApplicationCore.Entities.Unit", "Unit")
-                        .WithMany()
-                        .HasForeignKey("UnitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.DonationRequestItemCategory", b =>
