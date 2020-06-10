@@ -7,10 +7,10 @@ import {
   loadCountriesSuccess,
   loadStates,
   loadStatesFailed,
-    loadStatesSuccess,
-    loadAddressesByOrganizationId,
-    loadAddressesByOrganizationIdFailed,
-    loadAddressesByOrganizationIdSuccess,
+  loadStatesSuccess,
+  loadAddressesByOrganizationId,
+  loadAddressesByOrganizationIdSuccess,
+  loadAddressesByOrganizationIdFailed,
 } from './actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { catchError, map, switchMap } from 'rxjs/operators';
@@ -71,7 +71,7 @@ export class AddressEffects {
     private actions$: Actions,
     private cityService: CityService,
     private stateService: StateService,
-      private countryService: CountryService,
-      private addressService: AddressService
+    private countryService: CountryService,
+    private addressService: AddressService
   ) {}
 }

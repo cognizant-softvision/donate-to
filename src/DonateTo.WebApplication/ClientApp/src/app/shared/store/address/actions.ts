@@ -20,7 +20,6 @@ export const loadAddressesByOrganizationId = createAction(
     '[AddressesByOrganizationId] Load items from server',
     props<{ organizationId: number }>()
 );
-
 export const loadAddressesByOrganizationIdSuccess = createAction(
     '[AddressesByOrganizationId] Load success',
     props<{ addresses: AddressModel[] }>()

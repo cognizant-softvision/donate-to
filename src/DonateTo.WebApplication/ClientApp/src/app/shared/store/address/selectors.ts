@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { AddressState } from './reducer';
 
 export const addressFeatureKey = 'address';
+
 // selectors
 export const getEntityState = createFeatureSelector<AddressState>(addressFeatureKey);
 export const getCountries = createSelector(getEntityState, (state: AddressState) => state.countries);
@@ -20,7 +21,6 @@ export class DonationSelectors {
   countries$ = this.store.select(getCountries);
   states$ = this.store.select(getStates);
   cities$ = this.store.select(getCities);
-    loading$ = this.store.select(getAddressLoading);
-    addresses$ = this.store.select(getAddressesByOrganizationId);
-
+  addresses$ = this.store.select(getAddressesByOrganizationId);
+  loading$ = this.store.select(getAddressesLoading);
 }
