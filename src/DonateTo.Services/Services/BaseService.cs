@@ -18,8 +18,7 @@ namespace DonateTo.Services
         private const string _matchingIdException = "Entity id and id parameter does not match.";
         private const string _keyNotFoundException = "Given key does not match any Entity.";
 
-        public BaseService(IRepository<TEntity> entityRequestRepository,
-            IUnitOfWork unitOfWork)
+        protected BaseService(IRepository<TEntity> entityRequestRepository, IUnitOfWork unitOfWork)
         {
             _entityRequestRepository = entityRequestRepository;
             _unitOfWork = unitOfWork;
@@ -121,15 +120,15 @@ namespace DonateTo.Services
         }
         
         ///<inheritdoc cref="IBaseService{TEntity}"/>
-        public virtual PagedResult<TEntity> GetPaged(int page, int pageSize)
+        public virtual PagedResult<TEntity> GetPaged(int page, int pageSize, Expression<Func<TEntity, bool>> filter = null)
         {
-            return _entityRequestRepository.GetPaged(page, pageSize);
+            return _entityRequestRepository.GetPaged(page, pageSize, filter);
         }
 
         ///<inheritdoc cref="IBaseService{TEntity}"/>
-        public virtual async Task<PagedResult<TEntity>> GetPagedAsync(int page, int pageSize) 
+        public virtual async Task<PagedResult<TEntity>> GetPagedAsync(int page, int pageSize, Expression<Func<TEntity, bool>> filter = null) 
         {
-            return await _entityRequestRepository.GetPagedAsync(page, pageSize).ConfigureAwait(false);
+            return await _entityRequestRepository.GetPagedAsync(page, pageSize, filter).ConfigureAwait(false);
         }
 
 

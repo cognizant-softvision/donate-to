@@ -5,6 +5,7 @@ import { DonationRequestModel, PageModel } from '../../models';
 export interface DonationRequestState {
   loading: boolean;
   failed: boolean;
+  item: DonationRequestModel;
   items: DonationRequestModel[];
   pagedItems: PageModel<DonationRequestModel>;
 }
@@ -12,6 +13,7 @@ export interface DonationRequestState {
 const INITIAL_STATE: DonationRequestState = {
   loading: false,
   failed: false,
+  item: undefined,
   items: [],
   pagedItems: new PageModel<DonationRequestModel>(),
 };
@@ -69,6 +71,11 @@ const donationRequestReducer = createReducer(
     failed: true,
     pagedItems: null,
   })),
+  on(donationRequestActions.addDonationRequest, (state) => ({
+    ...state,
+    loading: true,
+    failed: false,
+  })),
   on(donationRequestActions.addDonationRequestSuccess, (state, { donationRequest }) => ({
     ...state,
     loading: false,
@@ -76,6 +83,47 @@ const donationRequestReducer = createReducer(
     items: [...state.items, donationRequest],
   })),
   on(donationRequestActions.addDonationRequestFailed, (state) => ({
+    ...state,
+    loading: false,
+    failed: true,
+  })),
+  on(donationRequestActions.loadDonationRequestSuccess, (state, { donationRequest }) => ({
+    ...state,
+    loading: false,
+    failed: false,
+    item: donationRequest,
+  })),
+  on(donationRequestActions.loadDonationRequestFailed, (state) => ({
+    ...state,
+    loading: false,
+    failed: true,
+  })),
+  on(donationRequestActions.removeDonationRequest, (state) => ({
+    ...state,
+    loading: true,
+    failed: false,
+  })),
+  on(donationRequestActions.removeDonationRequestSuccess, (state) => ({
+    ...state,
+    loading: false,
+    failed: false,
+  })),
+  on(donationRequestActions.removeDonationRequestFailed, (state) => ({
+    ...state,
+    loading: false,
+    failed: true,
+  })),
+  on(donationRequestActions.updateDonationRequest, (state) => ({
+    ...state,
+    loading: true,
+    failed: false,
+  })),
+  on(donationRequestActions.updateDonationRequestSuccess, (state) => ({
+    ...state,
+    loading: false,
+    failed: false,
+  })),
+  on(donationRequestActions.updateDonationRequestFailed, (state) => ({
     ...state,
     loading: false,
     failed: true,

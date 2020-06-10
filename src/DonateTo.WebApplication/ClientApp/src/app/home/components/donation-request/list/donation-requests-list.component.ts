@@ -2,7 +2,7 @@ import { DonationRequestModel } from './../../../../shared/models';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { Component, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { EventEmitter } from '@angular/core';
-import { HomeSandbox } from 'src/app/home/home.sandbox';
+import { HomeSandbox } from './../../../home.sandbox';
 import { NzConfigService } from 'ng-zorro-antd';
 
 @Component({
@@ -12,7 +12,7 @@ import { NzConfigService } from 'ng-zorro-antd';
 })
 export class DonationRequestsListComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
-  mockData = new Array(3).fill({});
+  mockData = new Array(3).fill(new DonationRequestModel());
   donationRequests: DonationRequestModel[] = [];
   isLoading = true;
 
@@ -48,6 +48,7 @@ export class DonationRequestsListComponent implements OnInit, OnDestroy {
   refreshPagedItems(pagedItems) {
     if (pagedItems) {
       this.totalItems = pagedItems.rowCount;
+      this.donationRequests = pagedItems.results as DonationRequestModel[];
     }
   }
 

@@ -18,7 +18,9 @@ export class AppSandbox extends Sandbox {
   /**
    * Sets up default language for the application. Uses browser default language.
    */
-  public setupLanguage(): void {}
+  public setupLanguage(): void {
+    this.SetLanguage();
+  }
 
   /**
    * Returns global notification options
