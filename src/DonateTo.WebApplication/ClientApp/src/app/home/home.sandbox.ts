@@ -4,7 +4,6 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { Sandbox } from '../shared/sandbox/base.sandbox';
 import * as store from '../shared/store';
-import { TranslateService } from '@ngx-translate/core';
 import { AuthSandbox } from '../shared/auth/auth.sandbox';
 
 @Injectable()
@@ -76,5 +75,9 @@ export class HomeSandbox extends Sandbox {
   /**
    * Subscribes to events
    */
-  private registerEvents(): void {}
+  private registerEvents(): void {
+    this.subscriptions.push(
+      this.isAuthenticated$.subscribe((isAuthenticated) => (this.isAuthenticated = isAuthenticated))
+    );
+  }
 }

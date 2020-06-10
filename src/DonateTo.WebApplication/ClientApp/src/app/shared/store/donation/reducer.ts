@@ -6,12 +6,14 @@ export interface DonationRequestState {
   loading: boolean;
   failed: boolean;
   item: DonationRequestModel;
+  newDonationLoading: boolean;
 }
 
 const INITIAL_STATE: DonationRequestState = {
   loading: true,
   failed: false,
   item: new DonationRequestModel(),
+  newDonationLoading: false,
 };
 
 const donationRequestReducer = createReducer(
@@ -33,10 +35,17 @@ const donationRequestReducer = createReducer(
     loading: false,
     failed: true,
   })),
+  on(donationRequestActions.addDonation, (state) => ({
+    ...state,
+    loading: true,
+    failed: false,
+    newDonationLoading: true,
+  })),
   on(donationRequestActions.addDonationSuccess, (state, { newDonation }) => ({
     ...state,
     loading: false,
     failed: false,
+    newDonationLoading: false,
   })),
   on(donationRequestActions.addDonationFailed, (state) => ({
     ...state,

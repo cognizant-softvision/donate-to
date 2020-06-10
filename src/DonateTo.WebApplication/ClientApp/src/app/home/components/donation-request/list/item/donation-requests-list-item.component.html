@@ -1,5 +1,5 @@
 <nz-card hoverable [nzSize]="'small'" [nzActions]="[actions]" *ngIf="item">
-  <nz-card-meta [nzTitle]="item.title" [nzDescription]="item.organization.name"> </nz-card-meta>
+  <nz-card-meta [nzTitle]="item.title" [nzDescription]="item.organization?.name"> </nz-card-meta>
   <p class="item.observation">{{ item.observation }}</p>
   <span>
     {{ 'RequestDonation.Priority' | translate }}:

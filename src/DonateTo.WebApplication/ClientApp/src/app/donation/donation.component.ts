@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { DonationSandbox } from './donation.sandbox';
 import { DonationRequestModel } from '../shared/models';
@@ -13,7 +13,7 @@ import { DonationConfirmComponent } from './components/donation-confirm/donation
   styleUrls: ['./donation.component.css'],
 })
 export class DonationComponent implements OnInit, OnDestroy {
-  constructor(protected router: ActivatedRoute, public donationSandbox: DonationSandbox) {}
+  constructor(protected router: ActivatedRoute, public donationSandbox: DonationSandbox, protected route: Router) {}
 
   donationRequestId: number;
 
@@ -58,6 +58,15 @@ export class DonationComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.donationSandbox.donationRequest$.subscribe((donationRequest) => {
         this.donation = donationRequest;
+      })
+    );
+
+    this.subscriptions.push(
+      this.donationSandbox.newDonationLoading$.subscribe((value) => {
+        if (!value && this.donationConfirmComponent?.isSubmited) {
+          this.showDonationConfirm = false;
+          this.route.navigate(['']);
+        }
       })
     );
   }
