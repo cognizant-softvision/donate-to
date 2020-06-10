@@ -3,6 +3,7 @@ import { Action, createReducer, on } from '@ngrx/store';
 import { CountryModel } from '../../models/country.model';
 import { CityModel } from '../../models/city.model';
 import { StateModel } from '../../models/state.model';
+import { AddressModel } from '../../models';
 
 export interface AddressState {
   loading: boolean;
@@ -10,6 +11,7 @@ export interface AddressState {
   countries: CountryModel[];
   states: StateModel[];
   cities: CityModel[];
+  items: AddressModel[];
 }
 
 const INITIAL_STATE: AddressState = {
@@ -17,8 +19,8 @@ const INITIAL_STATE: AddressState = {
   failed: false,
   countries: [],
   states: [],
-    cities: [],
-    items: AddressModel[]
+  cities: [],
+  items: [],
 };
 
 const addressReducer = createReducer(
@@ -49,8 +51,7 @@ const addressReducer = createReducer(
     loading: true,
     failed: false,
     states: [],
-      cities: [],
-    items: []
+      cities: []
   })),
   on(addressActions.loadStatesSuccess, (state, { states }) => ({
     ...state,
