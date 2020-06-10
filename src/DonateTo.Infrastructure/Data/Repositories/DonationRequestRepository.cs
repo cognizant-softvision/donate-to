@@ -5,6 +5,8 @@ using DonateTo.ApplicationCore.Models.Pagination;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Linq.Expressions;
+using System;
 
 namespace DonateTo.Infrastructure.Data.Repositories
 {
@@ -13,19 +15,6 @@ namespace DonateTo.Infrastructure.Data.Repositories
         public DonationRequestRepository(DonateToDbContext dbContext) : base(dbContext)
         {
         }
-        
-        private IQueryable<DonationRequest> GetHydratedDonationRequests()
-        {
-            return DbContext.Set<DonationRequest>()
-                .Include(d => d.Address).ThenInclude(a => a.Country)
-                .Include(d => d.Address).ThenInclude(a => a.State)
-                .Include(d => d.Address).ThenInclude(a => a.City)
-                .Include(d => d.Status)
-                .Include(d => d.DonationRequestItems).ThenInclude(dri => dri.Unit)
-                .Include(d => d.DonationRequestCategories).ThenInclude(drc => drc.Category)
-                .Include(d => d.Organization).ThenInclude(o => o.Contact);
-        }
-
 
         ///<inheritdoc cref="IRepository{DonationRequest}"/>
         public override DonationRequest Get(long id)
@@ -39,15 +28,43 @@ namespace DonateTo.Infrastructure.Data.Repositories
         }
 
         ///<inheritdoc cref="IRepository{DonationRequest}"/>
-        public override PagedResult<DonationRequest> GetPaged(int page, int pageSize)
+        public override PagedResult<DonationRequest> GetPaged(int page, int pageSize, Expression<Func<DonationRequest, bool>> filter = null)
         {
-            return GetHydratedDonationRequests().GetPaged(page, pageSize);
+            var requests = GetHydratedDonationRequests();
+
+            if (filter != null)
+            {
+                requests = requests.Where(filter);
+            }
+
+            return requests.GetPaged(page, pageSize);
         }
 
         ///<inheritdoc cref="IRepository{DonationRequest}"/>
-        public override async Task<PagedResult<DonationRequest>> GetPagedAsync(int page, int pageSize)
+        public override async Task<PagedResult<DonationRequest>> GetPagedAsync(int page, int pageSize, Expression<Func<DonationRequest, bool>> filter = null)
         {
-            return await GetHydratedDonationRequests().GetPagedAsync(page, pageSize).ConfigureAwait(false);
+            var requests = GetHydratedDonationRequests();
+
+            if (filter != null) 
+            {
+                requests =  requests.Where(filter);
+            }
+
+            return await requests.GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
+
+        #region private
+        private IQueryable<DonationRequest> GetHydratedDonationRequests()
+        {
+            return DbContext.Set<DonationRequest>()
+                .Include(d => d.Address).ThenInclude(a => a.Country)
+                .Include(d => d.Address).ThenInclude(a => a.State)
+                .Include(d => d.Address).ThenInclude(a => a.City)
+                .Include(d => d.Status)
+                .Include(d => d.DonationRequestItems).ThenInclude(dri => dri.Unit)
+                .Include(d => d.DonationRequestCategories).ThenInclude(drc => drc.Category)
+                .Include(d => d.Organization).ThenInclude(o => o.Contact);
+        }
+        #endregion
     }
 }
