@@ -83,7 +83,6 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
         {
             DbContext.Set<TEntity>().Update(entity);
 
-
             return await Task.FromResult(entity).ConfigureAwait(false);
         }
 

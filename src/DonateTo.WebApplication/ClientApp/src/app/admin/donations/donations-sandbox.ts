@@ -24,14 +24,8 @@ export class DonationsSandbox extends Sandbox implements OnDestroy {
   failAction$ = this.appState$.select(store.fromDonationRequest.getFailedStatus);
   loadAction$ = this.appState$.select(store.fromDonationRequest.getLoadingStatus);
 
-  public failAction: boolean;
-
   constructor(protected appState$: Store<store.State>) {
     super(appState$);
-
-    this.failAction$.subscribe((status) => {
-      this.failAction = status;
-    });
   }
 
   ngOnDestroy(): void {

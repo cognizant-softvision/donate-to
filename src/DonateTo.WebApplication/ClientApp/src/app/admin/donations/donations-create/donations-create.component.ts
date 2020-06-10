@@ -14,17 +14,19 @@ export class DonationsCreateComponent implements OnDestroy {
   private donationsFormComponent: DonationsFormComponent;
   private subscriptions: Subscription[] = [];
   private isSubmited = false;
+  private failedStatus = false;
   isErrorModalActive = false;
 
   constructor(public donationSandbox: DonationsSandbox, private router: Router) {
     this.subscriptions.push(
+      this.donationSandbox.failAction$.subscribe((status) => {
+        this.failedStatus = status;
+      })
+    );
+
+    this.subscriptions.push(
       this.donationSandbox.loadAction$.subscribe((_) => {
-        if (this.donationSandbox.failAction && this.isSubmited) {
-          this.switchErrorModal();
-        }
-        if (this.isSubmited) {
-          this.goBack();
-        }
+        this.handleRequestResult();
       })
     );
   }
@@ -33,13 +35,24 @@ export class DonationsCreateComponent implements OnDestroy {
     this.unregisterEvents();
   }
 
+  handleRequestResult() {
+    if (this.isSubmited) {
+      if (this.failedStatus) {
+        this.isSubmited = false;
+        this.switchErrorModal();
+      } else {
+        this.goBack();
+      }
+    }
+  }
+
   validateDonationRequestForm() {
     this.donationsFormComponent.validateForm();
   }
 
   createDonationRequest(data: any) {
+    this.isSubmited = true;
     this.donationSandbox.createDonationRequest(data);
-    this.goBack();
   }
 
   goBack() {

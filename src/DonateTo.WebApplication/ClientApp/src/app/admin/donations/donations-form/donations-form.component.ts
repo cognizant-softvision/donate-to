@@ -86,6 +86,12 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
 
   private sandBoxSubscriptionInit() {
     this.subscriptions.push(
+      this.donationSandbox.categories$.subscribe((categories) => {
+        this.categories = categories;
+      })
+    );
+
+    this.subscriptions.push(
       this.donationSandbox.userId$.subscribe((id) => {
         this.userId = id;
       })
@@ -136,6 +142,8 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
       donationRequestItem.name = this.donationRequestItemFormGroup.controls.nameFormControl.value;
       donationRequestItem.observation = this.donationRequestItemFormGroup.controls.observationFormControl.value;
       donationRequestItem.finishQuantity = this.donationRequestItemFormGroup.controls.quantityFormControl.value;
+      // Add Select for units
+      donationRequestItem.unitId = 1;
       donationRequestItem.donationRequestItemCategories = this.donationSandbox.mapCategoriesToDonationRequestItemCategories(
         this.selectedItemCategories
       );

@@ -71,6 +71,11 @@ const donationRequestReducer = createReducer(
     failed: true,
     pagedItems: null,
   })),
+  on(donationRequestActions.addDonationRequest, (state) => ({
+    ...state,
+    loading: true,
+    failed: false,
+  })),
   on(donationRequestActions.addDonationRequestSuccess, (state, { donationRequest }) => ({
     ...state,
     loading: false,

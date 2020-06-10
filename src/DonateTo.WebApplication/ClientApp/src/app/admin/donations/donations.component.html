@@ -2,7 +2,14 @@
   <div class="table-operations">
     <h4 class="section-title">{{ 'Admin.Donation.Title' | translate }}</h4>
     <div class="create-button">
-      <button routerLink="./create" nz-button nzType="primary">
+      <button
+        nz-popconfirm
+        nzPopconfirmTitle="{{ 'Admin.Donation.CreateConfirm' | translate }}"
+        nzPopconfirmPlacement="bottom"
+        (nzOnConfirm)="router.navigateByUrl('admin/donations/create')"
+        nz-button
+        nzType="primary"
+      >
         {{ 'Admin.Create' | translate }}
       </button>
     </div>
