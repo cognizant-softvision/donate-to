@@ -2,7 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { CityModel } from '../../models/city.model';
 import { StateModel } from '../../models/state.model';
 import { CountryModel } from '../../models/country.model';
-import { AddressModel } from '../../models';
+import { AddressModel } from '../../models/address.model';
 
 export const loadCountries = createAction('[Address Country] Loads countries from server');
 export const loadCountriesSuccess = createAction(

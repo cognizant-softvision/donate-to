@@ -20,6 +20,6 @@ namespace DonateTo.ApplicationCore.Entities
         public IEnumerable<DonationRequestItem> DonationRequestItems { get; set; }
         public DateTime? FinishDate { get; set; }
         [NotMapped]
-        public IEnumerable<DonationRequestCategory> DonationRequestCategories { get; set; }
+        public IEnumerable<DonationRequestCategory> DonationRequestCategories { get; set; }        
     }
 }

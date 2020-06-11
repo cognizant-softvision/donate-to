@@ -1,5 +1,6 @@
 import * as auth from './auth';
 import * as donationRequest from './donation-request';
+import * as donation from './donation';
 import * as organization from './organization';
 import * as category from './category';
 import * as unit from './unit';
@@ -16,6 +17,7 @@ export interface State {
 export const fromSettings = settings;
 export const fromAuth = auth;
 export const fromDonationRequest = donationRequest;
+export const fromDonation = donation;
 export const fromOrganization = organization;
 export const fromCategory = category;
 export const fromStatus = status;
