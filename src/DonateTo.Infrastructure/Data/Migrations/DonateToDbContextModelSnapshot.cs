@@ -86,6 +86,44 @@ namespace DonateTo.Infrastructure.Migrations
                     b.ToTable("Address");
                 });
 
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Availability", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("DayOfWeek")
+                        .HasColumnType("integer");
+
+                    b.Property<long?>("DonationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DonationId");
+
+                    b.ToTable("Availability");
+                });
+
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Category", b =>
                 {
                     b.Property<long>("Id")
@@ -239,9 +277,6 @@ namespace DonateTo.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("DayOfWeek")
-                        .HasColumnType("integer");
-
                     b.Property<long>("DonationRequestId")
                         .HasColumnType("bigint");
 
@@ -253,12 +288,6 @@ namespace DonateTo.Infrastructure.Migrations
 
                     b.Property<long>("StatusId")
                         .HasColumnType("bigint");
-
-                    b.Property<int>("TimeEnd")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TimeStart")
-                        .HasColumnType("integer");
 
                     b.Property<string>("UpdateBy")
                         .HasColumnType("text");
@@ -343,7 +372,7 @@ namespace DonateTo.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateTime>("FinishDate")
+                    b.Property<DateTime?>("FinishDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Observation")
@@ -856,7 +885,7 @@ namespace DonateTo.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DonateTo.ApplicationCore.Entities.Organization", null)
+                    b.HasOne("DonateTo.ApplicationCore.Entities.Organization", "Organization")
                         .WithMany("Addresses")
                         .HasForeignKey("OrganizationId");
 
@@ -865,6 +894,13 @@ namespace DonateTo.Infrastructure.Migrations
                         .HasForeignKey("StateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Availability", b =>
+                {
+                    b.HasOne("DonateTo.ApplicationCore.Entities.Donation", null)
+                        .WithMany("Availabilities")
+                        .HasForeignKey("DonationId");
                 });
 
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.City", b =>

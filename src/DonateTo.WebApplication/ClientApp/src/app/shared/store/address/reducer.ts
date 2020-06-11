@@ -1,37 +1,88 @@
 import * as addressActions from './actions';
 import { Action, createReducer, on } from '@ngrx/store';
+import { CountryModel } from '../../models/country.model';
+import { CityModel } from '../../models/city.model';
+import { StateModel } from '../../models/state.model';
 import { AddressModel } from '../../models';
 
 export interface AddressState {
   loading: boolean;
   failed: boolean;
+  countries: CountryModel[];
+  states: StateModel[];
+  cities: CityModel[];
   items: AddressModel[];
 }
 
 const INITIAL_STATE: AddressState = {
-  loading: false,
+  loading: true,
   failed: false,
+  countries: [],
+  states: [],
+  cities: [],
   items: [],
 };
 
 const addressReducer = createReducer(
   INITIAL_STATE,
-  on(addressActions.loadAddressesByOrganizationId, (state, action) => ({
+  on(addressActions.loadCountries, (state) => ({
     ...state,
     loading: true,
     failed: false,
+    countries: [],
+    states: [],
+    cities: [],
   })),
-  on(addressActions.loadAddressesByOrganizationIdSuccess, (state, { addresses }) => ({
+  on(addressActions.loadCountriesSuccess, (state, { countries }) => ({
     ...state,
     loading: false,
     failed: false,
-    items: addresses,
+    countries,
+    states: [],
+    cities: [],
   })),
-  on(addressActions.loadAddressesByOrganizationIdFailed, (state) => ({
+  on(addressActions.loadCountriesFailed, (state) => ({
     ...state,
     loading: false,
     failed: true,
-    items: [],
+  })),
+  on(addressActions.loadStates, (state) => ({
+    ...state,
+    loading: true,
+    failed: false,
+    states: [],
+    cities: [],
+  })),
+  on(addressActions.loadStatesSuccess, (state, { states }) => ({
+    ...state,
+    loading: false,
+    failed: false,
+    states,
+    cities: [],
+  })),
+  on(addressActions.loadStatesFailed, (state) => ({
+    ...state,
+    loading: false,
+    failed: true,
+  })),
+  on(addressActions.loadCities, (state) => ({
+    ...state,
+    loading: true,
+    failed: false,
+    countries: [],
+    states: [],
+    cities: [],
+  })),
+  on(addressActions.loadCitiesSuccess, (state, { cities }) => ({
+    ...state,
+    loading: false,
+    failed: false,
+    cities,
+  })),
+  on(addressActions.loadCitiesFailed, (state) => ({
+    ...state,
+    loading: false,
+    failed: true,
   }))
 );
 
