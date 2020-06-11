@@ -18,8 +18,8 @@ namespace DonateTo.ApplicationCore.Entities
         public long UserId { get; set; }
         public User User { get; set; }
         public IEnumerable<DonationRequestItem> DonationRequestItems { get; set; }
-        public DateTime FinishDate { get; set; }
+        public DateTime? FinishDate { get; set; }
         [NotMapped]
-        public IEnumerable<DonationRequestCategory> DonationRequestCategories { get; set; }
+        public IEnumerable<DonationRequestCategory> DonationRequestCategories { get; set; }        
     }
 }
