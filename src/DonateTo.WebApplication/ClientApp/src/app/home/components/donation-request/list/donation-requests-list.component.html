@@ -5,19 +5,22 @@
   [nzPagination]="pagination"
   [nzNoResult]="customTpl"
 >
-  <ng-template #item let-item>
-    <nz-list-item [nzContent]="isLoading ? '' : item">
+  <ng-template #item let-itemData>
+    <nz-list-item [nzContent]="isLoading ? '' : donationItem">
       <nz-skeleton [nzLoading]="isLoading" [nzActive]="true">
-        <app-donation-requests-list-item
-          [item]="item"
-          [loading]="isLoading"
-          (showDetail)="showDetail($event)"
-        ></app-donation-requests-list-item>
+        <ng-template #donationItem>
+          <app-donation-requests-list-item
+            [item]="itemData"
+            [loading]="isLoading"
+            (showDetail)="showDetail($event)"
+          ></app-donation-requests-list-item>
+        </ng-template>
       </nz-skeleton>
     </nz-list-item>
   </ng-template>
   <ng-template #pagination>
     <nz-pagination
+      [nzHideOnSinglePage]="true"
       [nzPageIndex]="currentPage"
       [nzPageSize]="pageSize"
       [nzTotal]="totalItems"
@@ -25,6 +28,7 @@
     ></nz-pagination>
   </ng-template>
 </nz-list>
+
 <ng-template #customTpl let-name>
   <div style="text-align: center;">
     <nz-empty [nzNotFoundContent]="null"></nz-empty>

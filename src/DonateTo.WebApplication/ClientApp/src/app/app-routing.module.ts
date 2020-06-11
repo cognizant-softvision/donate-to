@@ -1,6 +1,7 @@
-import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { AuthGuard } from './shared/guards/auth.guard';
+import { NgModule } from '@angular/core';
 
 const appRoutes: Routes = [
   {
@@ -12,6 +13,12 @@ const appRoutes: Routes = [
     path: 'admin',
     loadChildren: () =>
       import('./shared/containers/layout/admin-layout/admin-layout.module').then((m) => m.AdminLayoutModule),
+    canLoad: [AuthGuard],
+  },
+  {
+    path: 'donation',
+    loadChildren: () =>
+      import('./shared/containers/layout/donation-layout/donation-layout.module').then((m) => m.DonationLayoutModule),
     canLoad: [AuthGuard],
   },
   {

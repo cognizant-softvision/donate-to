@@ -17,5 +17,6 @@
         public State State { get; set; }
         public Country Country { get; set; }
         public Contact Contact { get; set; }
+        public Organization Organization { get; set; }
     }
 }

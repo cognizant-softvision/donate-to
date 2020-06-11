@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DonateTo.ApplicationCore.Entities
 {
@@ -7,7 +8,7 @@ namespace DonateTo.ApplicationCore.Entities
     {
         public string Title { get; set; }
         public string Observation { get; set; }
-        public int Priority { get; set; }              
+        public int Priority { get; set; }
         public long OrganizationId { get; set; }
         public Organization Organization { get; set; }
         public long AddressId { get; set; }
@@ -17,7 +18,8 @@ namespace DonateTo.ApplicationCore.Entities
         public long UserId { get; set; }
         public User User { get; set; }
         public IEnumerable<DonationRequestItem> DonationRequestItems { get; set; }
-        public DateTime FinishDate { get; set; }
+        public DateTime? FinishDate { get; set; }
+        [NotMapped]
         public IEnumerable<DonationRequestCategory> DonationRequestCategories { get; set; }        
     }
 }

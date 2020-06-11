@@ -1,0 +1,41 @@
+<div class="donations-container">
+  <nz-skeleton [nzLoading]="this.donationSandbox.donationRequestLoading$ | async" [nzActive]="true">
+    <div>
+      <div nz-row>
+        <div nz-col>
+          <h2>
+            {{ donation.title }}<span class="subtitle"> - {{ donation.organization?.name }}</span>
+          </h2>
+        </div>
+      </div>
+      <div nz-row>
+        <span>
+          {{ 'RequestDonation.Priority' | translate }}:
+          <nz-rate [ngModel]="donation.priority" nzAllowHalf [nzCharacter]="heartIcon" disabled></nz-rate>
+          <ng-template #heartIcon><i nz-icon nzType="heart" nzTheme="fill" className="rate-icon"></i></ng-template>
+        </span>
+      </div>
+      <div nz-row>
+        <div nz-col>
+          <p>{{ donation.observation }}</p>
+        </div>
+      </div>
+      <div nz-row>
+        <div nz-col>
+          <span class="resources-title"> {{ 'RequestDonation.ResourcesNeeded' | translate }}:</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <app-donation-list (showDonationConfirmModal)="showDonationConfirmModal($event)"></app-donation-list>
+    </div>
+  </nz-skeleton>
+</div>
+
+<ng-template #modalContent>
+  <app-donation-confirm
+    (showDonationConfirmModal)="showDonationConfirmModal($event)"
+    (isSubmited)="submited($event)"
+    [donationItems]="donationItems"
+  ></app-donation-confirm>
+</ng-template>

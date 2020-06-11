@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { HomeSandbox } from './home.sandbox';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { ConfigService } from '../app-config.service';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-home',
@@ -11,15 +12,27 @@ import { ConfigService } from '../app-config.service';
 })
 export class HomeComponent implements OnInit {
   param = { value: 'world' };
-  modalVisible = false;
+  requests: any[];
+
+  tplModal?: NzModalRef;
   item: any = null;
+
+  @ViewChild('modalContent') public modalContent: TemplateRef<any>;
+  @ViewChild('modalFooter') public modalFooter: TemplateRef<any>;
+
   searchValue: string = null;
 
   currentPage = 1;
   pageSize = 6;
   totalItems = 0;
+  searchLength = 2;
 
-  constructor(public homeSandbox: HomeSandbox, protected router: Router, protected configService: ConfigService) {
+  constructor(
+    public homeSandbox: HomeSandbox,
+    protected router: Router,
+    protected configService: ConfigService,
+    private modal: NzModalService
+  ) {
     this.pageSize = this.configService.get('pageSize') || this.pageSize;
   }
 
@@ -27,21 +40,39 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onSearch() {
-    this.homeSandbox.loadDonationRequestsSearchPaged(this.pageSize, this.currentPage, this.searchValue);
+  onChange() {
+    if (this.searchValue.length >= this.searchLength) {
+      this.homeSandbox.loadDonationRequestsSearchPaged(this.pageSize, this.currentPage, this.searchValue);
+    }
   }
 
-  showModal(item) {
+  showModal(item: any) {
     this.item = item;
-    this.modalVisible = true;
+    this.createTplModal(this.modalContent, this.modalFooter);
   }
 
   hideModal() {
     this.item = null;
-    this.modalVisible = false;
+    this.tplModal?.destroy();
   }
 
-  goToDonate() {
-    this.homeSandbox.login();
+  createTplModal(tplContent: TemplateRef<{}>, tplFooter: TemplateRef<{}>): void {
+    this.tplModal = this.modal.create({
+      nzContent: tplContent,
+      nzFooter: tplFooter,
+      nzStyle: {
+        top: '2em;',
+      },
+      nzWidth: '80%',
+    });
+  }
+
+  goToDonate(donationRequestId: any) {
+    if (this.homeSandbox.isAuthenticated) {
+      this.hideModal();
+      this.router.navigate(['donation', donationRequestId]);
+    } else {
+      this.homeSandbox.login();
+    }
   }
 }

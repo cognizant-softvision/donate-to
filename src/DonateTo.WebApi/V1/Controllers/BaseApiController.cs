@@ -22,7 +22,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1051:Do not declare visible instance fields", Justification = "<Pending>")]
         protected readonly IBaseService<T> _baseService;
 
-        public BaseApiController(IBaseService<T> baseService)
+        protected BaseApiController(IBaseService<T> baseService)
         {
             _baseService = baseService;
         }
@@ -63,13 +63,13 @@ namespace DonateTo.WebApi.V1.Controllers
         /// </summary>
         /// <param name="id">Id</param>
         /// <returns>Entity.</returns>
-        [HttpGet("{id}",Name = "[controller]_[action]_Id")]
+        [HttpGet("{id}", Name = "[controller]_[action]_Id")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "<Pending>")]
-        public virtual async Task<ActionResult<IEnumerable<T>>> Get(long id)
+        public virtual async Task<ActionResult<T>> Get(long id)
         {
             if (!ModelState.IsValid)
             {
@@ -119,7 +119,7 @@ namespace DonateTo.WebApi.V1.Controllers
         /// <param name="id">Id of the entity to update.</param>
         /// <param name="value">Entity to update.</param>
         /// <returns>Updated entity.</returns>
-        [HttpPut("{id}",Name = "[controller]_[action]")]
+        [HttpPut("{id}", Name = "[controller]_[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -145,7 +145,7 @@ namespace DonateTo.WebApi.V1.Controllers
                 catch (InvalidOperationException ex)
                 {
                     return BadRequest(ex);
-                }                
+                }
             }
         }
 
@@ -153,7 +153,7 @@ namespace DonateTo.WebApi.V1.Controllers
         /// Deletes an entity
         /// </summary>
         /// <param name="id">Id of the entity to delete.</param>
-        [HttpDelete("{id}",Name = "[controller]_[action]")]
+        [HttpDelete("{id}", Name = "[controller]_[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

@@ -1,0 +1,9 @@
+.create-donation-title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.create-donation-form-buttons {
+  display: flex;
+  justify-content: flex-end;
+}

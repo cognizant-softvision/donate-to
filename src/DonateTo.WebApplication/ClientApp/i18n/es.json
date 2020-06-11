@@ -9,7 +9,91 @@
     "Priority": "Prioridad",
     "CreatedOn": "Creado",
     "Finisheson": "Termina el",
-    "NoEntries": "No hay nuevas solicitudes de donación"
+    "NoEntries": "No hay nuevas solicitudes de donación",
+    "DonationDialog": {
+      "SaveButton": "Guardar",
+      "CancelButton": "Cancelar",
+      "EditButton": "Editar"
+    },
+    "DonationSteps": {
+      "NextButton": "Siguiente",
+      "CancelButton": "Cancelar",
+      "DoneButton": "Listo",
+      "PreviousButton": "Anterior",
+      "ConfirmationTitle": "Confirmación de donación",
+      "AddressStep": {
+        "Street": "Calle",
+        "StreetPlaceholder": "Calle",
+        "RequiredStreet": "Por favor ingrese su calle!",
+        "PostalCode": "Código Postal",
+        "PostalCodePlaceHolder": "Código Postal",
+        "RequiredPostalCode": "Por favor ingrese su código postal!",
+        "Floor": "Piso",
+        "FloorPlaceHolder": "Piso",
+        "Appartment": "Departamento",
+        "AppartmentPlaceHolder": "Departamento",
+        "AdditionalInformation": "Información adicional",
+        "AdditionalInformationPlaceHolder": "Información adicional",
+        "Country": "País",
+        "CountryPlaceHolder": "Seleccione un país",
+        "RequiredCountry": "Por favor ingrese su país!",
+        "State": "Provincia",
+        "StatePlaceHolder": "Selecciona una provincia",
+        "RequiredState": "Por favor seleccione una provincia!",
+        "City": "Ciudad",
+        "CityPlaceHolder": "Seleccione una ciudad",
+        "RequiredCity": "Por favor seleccione una ciudad!"
+      },
+      "ResponsableStep": {
+        "FirstName": "Nombre",
+        "FirstNamePlaceHolder": "Nombre",
+        "RequiredFirstName": "Por favor ingrese su nombre!",
+        "LastName": "Apellido",
+        "LastNamePlaceHolder": "Apellido",
+        "RequiredLastName": "Por favor ingrese su apellido!",
+        "IdentityNumber": "Número de identidad",
+        "IdentityNumberPlaceHolder": "Número de identidad",
+        "RequiredIdentityNumber": "Por favor ingrese su número de identidad!",
+        "Email": "Email",
+        "EmailPlaceHolder": "Email",
+        "RequiredEmail": "Por favor ingrese su Email!",
+        "PhoneNumber": "Número de teléfono",
+        "PhoneNumberPlaceHolder": "Número de teléfono",
+        "RequiredPhoneNumber": "Por favor ingrese su número de teléfono!",
+        "Position": "Posición",
+        "PositionPlaceHolder": "Posición"
+      },
+      "FinishStep": {
+        "Observation": "Observación",
+        "ObservationPlaceHolder": "Observación",
+        "WeekDay": "Día de semana",
+        "WeekDayPlaceHolder": "Día de semana",
+        "RequiredWeekDay": "Por favor ingrese un día de la semana!",
+        "StartTime": "Horario inicial",
+        "StartTimePlaceHolder": "Horario inicial",
+        "RequiredStartTime": "Por favor ingrese un horario inicial!",
+        "FinishTime": "Horario final",
+        "FinishTimePlaceHolder": "Horario final",
+        "RequiredFinishTime": "Por favor ingrese un horario final!",
+        "AddAvailabilityButton": "Agregar disponibilidad",
+        "WeekDayColumn": "Día de semana",
+        "StartTimeColumn": "Horario inicial",
+        "FinishTimeColumn": "Horario final",
+        "OperationColumn": "Operación"
+      }
+    },
+    "DonationItemList": {
+      "EditButton": "Editar",
+      "SaveButton": "Guardar",
+      "CancelButton": "Cancelar",
+      "DonateButton": "Doná",
+      "Item": "Item",
+      "QuantityRequested": "Cantidad requerida",
+      "Description": "Descripción",
+      "QuantityToDonate": "Cantidad a donar",
+      "Operation": "Operación",
+      "PopUpConfirmTitle": "Sure to cancel?"
+    }
   },
   "ServerError401": "Acceso no permitido. Por favor iniciar sesión.",
   "ServerError403": "Acceso prohibido. Por favor provea las credenciales correctas.",
@@ -66,6 +150,13 @@
     "Subtitle": "La página que buscas no existe.",
     "Button": "Volver"
   },
+  "WeekDays": {
+    "Monday": "Lunes",
+    "Tuesday": "Martes",
+    "Wednesday": "Miércoles",
+    "Thursday": "Jueves",
+    "Friday": "Viernes"
+  },
   "Admin": {
     "Menu": {
       "Title": {
@@ -75,7 +166,62 @@
       }
     },
     "Donation": {
-      "Title": "Donaciones"
+      "Title": "Donaciones",
+      "Create": {
+        "Title": "Crear Donación",
+        "AddItem": "Agregar Item",
+        "CreateRequest": "Crear Solicitud"
+      },
+      "Edit": {
+        "Title": "Editar Solicitud",
+        "Save": "Guardar"
+      },
+      "Form": {
+        "Title": "Titulo",
+        "TitleRequiredError": "Título es requerido",
+        "TitlePlaceholder": "Por favor ingresar un título",
+        "Status": "Estado",
+        "StatusRequiredError": "Estado es requerido",
+        "Observations": "Observaciones",
+        "ObservationsPlaceholder": "Observaciones solicitudes",
+        "Priority": "Prioridad",
+        "PriorityRequiredError": "Prioridad es requerido",
+        "Organization": "Organización",
+        "OrganizationRequiredError": "Organización es requerido",
+        "OrganizationPlaceholder": "Por favor ingresar una organización",
+        "Address": "Dirección",
+        "AddressRequiredError": "Dirección es requerido",
+        "AddressPlaceholder": "Por favor ingresar una dirección",
+        "FinishDate": "Fecha fin",
+        "FinishDateRequiredError": "Fecha fin es requerido",
+        "DonationItem": {
+          "Name": "Nombre",
+          "NameRequiredError": "Nombre es requerido",
+          "NamePlaceholder": "Por favor ingresar un nombre",
+          "Observation": "Observaciones",
+          "ObservationPlaceholder": "Observaciones del item solicitado",
+          "Quantity": "Cantidad",
+          "QuantityRequiredError": "Cantidad es requerido",
+          "QuantityPlaceholder": "Por favor ingrese la cantidad requerida",
+          "UnitRequiredError": "Unidad es requerido",
+          "Category": "Categorías",
+          "CategoryRequiredError": "Al menos 1 categoria es requerida",
+          "CategoryPlaceholder": "Por favor seleccionar al menos 1 categoría"
+        },
+        "OverflowTag": "+ seleccionados",
+        "DonationItemRequiredError": "Al menos 1 item es requerido",
+        "DeleteItemConfirmation": "Está seguro que desea eliminar este item?"
+      },
+      "BackConfirm": "Estas seguro que quieres volver?",
+      "CreateConfirm": "Estas seguro que quieres crear una solicitud de donación?",
+      "DeleteConfirmation": "Está seguro que desea eliminar esta solicitud de donación?",
+      "Table": {
+        "Itemcolumn": "Item",
+        "Finishcolumn": "Fecha Fin",
+        "Observationcolumn": "Observación",
+        "Quantitycolumn": "Cantidad",
+        "Categorycolumn": "Categorías"
+      }
     },
     "User": {
       "Title": "Usuarios",

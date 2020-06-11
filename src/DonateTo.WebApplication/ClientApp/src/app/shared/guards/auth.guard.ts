@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, CanLoad, Route } from '@angular/router';
+import { CanActivate, CanLoad } from '@angular/router';
 import { AuthSandbox } from '../auth/auth.sandbox';
 
 @Injectable()

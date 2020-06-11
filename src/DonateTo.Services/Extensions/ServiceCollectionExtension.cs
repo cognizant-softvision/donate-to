@@ -16,11 +16,19 @@ namespace DonateTo.Services.Extensions
         public static void AddDonateToModule(this IServiceCollection service, IConfiguration configuration)
         {
             service.AddEntityFramework(configuration);
-            
+
             service.AddScoped<IUserService, UserService>();
+            service.AddScoped<IStateService, StateService>();
+            service.AddScoped<ICityService, CityService>();
             service.AddTransient<IBaseService<Donation>, DonationService>();
             service.AddTransient<IBaseService<DonationRequest>, DonationRequestService>();
+            service.AddTransient<IBaseService<Country>, CountryService>();
             service.AddTransient<ISearchService, SearchService>();
+            service.AddTransient<IBaseService<Organization>, OrganizationService>();
+            service.AddTransient<IBaseService<Address>, AddressService>();
+            service.AddTransient<IBaseService<Category>, CategoryService>();
+            service.AddTransient<IBaseService<Unit>, UnitService>();
+            service.AddTransient<IBaseService<Status>, StatusService>();
         }
     }
 }

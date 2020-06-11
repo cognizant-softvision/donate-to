@@ -1,6 +1,12 @@
-import * as settings from './settings';
 import * as auth from './auth';
 import * as donationRequest from './donation-request';
+import * as donation from './donation';
+import * as organization from './organization';
+import * as category from './category';
+import * as unit from './unit';
+import * as status from './status';
+import * as address from './address';
+import * as settings from './settings';
 
 export interface State {
   settings: settings.SettingsState;
@@ -10,3 +16,9 @@ export interface State {
 export const fromSettings = settings;
 export const fromAuth = auth;
 export const fromDonationRequest = donationRequest;
+export const fromDonation = donation;
+export const fromOrganization = organization;
+export const fromCategory = category;
+export const fromStatus = status;
+export const fromAddress = address;
+export const fromUnit = unit;

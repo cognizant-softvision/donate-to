@@ -25,6 +25,6 @@ namespace DonateTo.ApplicationCore.Interfaces
         /// <param name="page"> Curent results page <param>
         /// <param name="pageSize"> Size of results page <param>
         /// <returns>Task of Paged DonationRequests of matching criteria.</returns>
-        Task<PagedResult<DonationRequest>> SearchDonationRequestAsync(string queryString, int page, int pageSize);     
+        Task<PagedResult<DonationRequest>> SearchDonationRequestAsync(string queryString, int page, int pageSize);
     }
 }
