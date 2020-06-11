@@ -22,6 +22,11 @@ const appRoutes: Routes = [
     canLoad: [AuthGuard],
   },
   {
+    path: 'my-profile',
+    loadChildren: () => import('./home/my-profile/my-profile-layout.module').then((m) => m.ProfileLayoutModule),
+    canLoad: [AuthGuard],
+  },
+  {
     path: '**',
     loadChildren: () => import('./basic-pages/basic-pages.module').then((m) => m.BasicPagesModule),
   },
