@@ -91,7 +91,8 @@
       "QuantityRequested": "Quantity requested",
       "Description": "Description",
       "QuantityToDonate": "Quantity to donate",
-      "Operation": "Operation"
+      "Operation": "Operation",
+      "PopUpConfirmTitle": "Sure to cancel?"
     }
   },
   "ServerError401": "Access not allowed. Please login.",
