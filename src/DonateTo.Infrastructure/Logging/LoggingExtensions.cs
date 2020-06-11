@@ -22,7 +22,7 @@ namespace DonateTo.Infrastructure.Logging
             {
                 Log.Logger = new LoggerConfiguration()
                       .MinimumLevel.Debug()
-                      .WriteTo.PostgreSQL(connectionString, "Logs")
+                      .WriteTo.PostgreSQL(connectionString, "Logs", needAutoCreateTable: true)
                       .WriteTo.Providers(provider)
                       .CreateLogger();
 
