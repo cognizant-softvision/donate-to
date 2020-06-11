@@ -3,12 +3,12 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 
-
 import { NzButtonModule, NzLayoutModule, NzMenuModule } from 'ng-zorro-antd';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { NavMenuSandBox } from './nav-menu/nav-menu.sandbox';
+import { RouterModule } from '@angular/router';
 
 export const COMPONENTS = [NavMenuComponent];
 @NgModule({
@@ -20,9 +20,10 @@ export const COMPONENTS = [NavMenuComponent];
     NzSpaceModule,
     NzMenuModule,
     TranslateModule,
+    RouterModule,
   ],
   declarations: COMPONENTS,
   exports: COMPONENTS,
-  providers: [NavMenuSandBox]
+  providers: [NavMenuSandBox],
 })
 export class ComponentsModule {}
