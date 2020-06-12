@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavMenuSandBox } from './nav-menu.sandbox';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 
 @Component({
   selector: 'app-nav-menu',
@@ -9,8 +10,10 @@ import { NavMenuSandBox } from './nav-menu.sandbox';
 export class NavMenuComponent {
   constructor(public navMenuSandbox: NavMenuSandBox) {}
 
-  switchLanguage(language: string) {
-    this.navMenuSandbox.switchLanguage(language);
+  language = 'en';
+
+  switchLanguage() {
+    this.navMenuSandbox.switchLanguage(this.language);
   }
 
   login() {

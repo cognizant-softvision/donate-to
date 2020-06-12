@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 
-import { NzButtonModule, NzLayoutModule, NzMenuModule } from 'ng-zorro-antd';
+import { NzButtonModule, NzLayoutModule, NzMenuModule, NzRadioModule } from 'ng-zorro-antd';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 
 import { TranslateModule } from '@ngx-translate/core';
@@ -21,6 +21,7 @@ export const COMPONENTS = [NavMenuComponent];
     NzMenuModule,
     TranslateModule,
     RouterModule,
+    NzRadioModule,
   ],
   declarations: COMPONENTS,
   exports: COMPONENTS,
