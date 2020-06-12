@@ -193,7 +193,6 @@
         "AddressRequiredError": "Dirección es requerido",
         "AddressPlaceholder": "Por favor ingresar una dirección",
         "FinishDate": "Fecha fin",
-        "FinishDateRequiredError": "Fecha fin es requerido",
         "DonationItem": {
           "Name": "Nombre",
           "NameRequiredError": "Nombre es requerido",

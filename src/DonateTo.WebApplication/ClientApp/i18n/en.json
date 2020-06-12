@@ -193,7 +193,6 @@
         "AddressRequiredError": "Address is required",
         "AddressPlaceholder": "Please select a address",
         "FinishDate": "Finish date",
-        "FinishDateRequiredError": "Finish date is required",
         "DonationItem": {
           "Name": "Name",
           "NameRequiredError": "Name is required",
