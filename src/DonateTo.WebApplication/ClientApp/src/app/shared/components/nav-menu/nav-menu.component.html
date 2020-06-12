@@ -22,7 +22,7 @@
       <a (click)="logout()">{{ 'ProfileActionBar.Logout' | translate }}</a>
     </li>
     <li nz-menu-item>
-      <nz-radio-group [(ngModel)]="language" nzButtonStyle="solid" (ngModelChange)="switchLanguage($event)">
+      <nz-radio-group [(ngModel)]="language" nzButtonStyle="solid" (ngModelChange)="switchLanguage()">
         <label nz-radio-button nzValue="en">En</label>
         <label nz-radio-button nzValue="es">Es</label>
       </nz-radio-group>
