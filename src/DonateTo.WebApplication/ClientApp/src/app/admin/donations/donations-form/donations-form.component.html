@@ -82,8 +82,8 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label nzRequired nzFor="finishDate">{{ 'Admin.Donation.Form.FinishDate' | translate }}</nz-form-label>
-    <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.FinishDateRequiredError' | translate }}">
+    <nz-form-label nzFor="finishDate">{{ 'Admin.Donation.Form.FinishDate' | translate }}</nz-form-label>
+    <nz-form-control>
       <nz-date-picker [(ngModel)]="finishDate" formControlName="finishDateFormControl"> </nz-date-picker>
     </nz-form-control>
   </nz-form-item>

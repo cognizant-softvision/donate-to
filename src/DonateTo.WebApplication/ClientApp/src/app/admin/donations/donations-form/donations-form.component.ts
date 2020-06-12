@@ -44,7 +44,7 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
     addressFormControl: new FormControl('', Validators.required),
     observationFormControl: new FormControl(),
     itemsFormControl: new FormControl(),
-    finishDateFormControl: new FormControl('Date', Validators.required),
+    finishDateFormControl: new FormControl('Date'),
   });
 
   donationRequestItemFormGroup = new FormGroup({
