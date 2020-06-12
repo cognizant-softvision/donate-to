@@ -83,6 +83,23 @@ const addressReducer = createReducer(
     ...state,
     loading: false,
     failed: true,
+  })),
+  on(addressActions.loadAddressesByOrganizationId, (state, action) => ({
+    ...state,
+    loading: true,
+    failed: false,
+  })),
+  on(addressActions.loadAddressesByOrganizationIdSuccess, (state, { addresses }) => ({
+    ...state,
+    loading: false,
+    failed: false,
+    items: addresses,
+  })),
+  on(addressActions.loadAddressesByOrganizationIdFailed, (state) => ({
+    ...state,
+    loading: false,
+    failed: true,
+    items: [],
   }))
 );
 
