@@ -41,7 +41,6 @@ steps:
       command: test
       projects: "$(Parameters.TestProjects)"
       arguments: "--configuration $(BuildConfiguration)"
-    enabled: false
 
   - task: DotNetCoreCLI@2
     displayName: Publish
