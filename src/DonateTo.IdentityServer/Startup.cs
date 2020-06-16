@@ -19,14 +19,11 @@ using DonateTo.IdentityServer.Data.EntityFramework;
 using DonateTo.IdentityServer.Services;
 using DonateTo.IdentityServer.Data.Repositories.Interfaces;
 using DonateTo.IdentityServer.Data.Repositories;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using DonateTo.Mailer.Entities;
 using DonateTo.Mailer.Interfaces;
 using DonateTo.Mailer;
 using IdentityModel;
 using System.IdentityModel.Tokens.Jwt;
-using DonateTo.IdentityServer.Services;
-using IdentityServer4.Services;
 
 namespace DonateTo.IdentityServer
 {
@@ -168,6 +165,7 @@ namespace DonateTo.IdentityServer
 
                 var context = serviceScope.ServiceProvider.GetRequiredService<CustomConfigurationDbContext>();
                 context.Database.Migrate();
+
                 if (!context.Clients.Any())
                 {
                     foreach (var client in clients)
