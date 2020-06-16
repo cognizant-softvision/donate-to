@@ -5,9 +5,9 @@ import { DonationComponent } from 'src/app/donation/donation.component';
 
 const routes: Routes = [
   {
-    path: 'donation',
+    path: '',
     component: DonationLayoutComponent,
-    children: [{ path: 'donation/:donationRequestId', component: DonationComponent }],
+    children: [{ path: ':donationRequestId', component: DonationComponent }],
   },
 ];
 
@@ -15,4 +15,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class DonatorLayoutRoutingModule {}
+export class DonationLayoutRoutingModule {}
