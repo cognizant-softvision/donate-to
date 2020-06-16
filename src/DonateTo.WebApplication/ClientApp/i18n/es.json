@@ -92,7 +92,7 @@
       "Description": "Descripción",
       "QuantityToDonate": "Cantidad a donar",
       "Operation": "Operación",
-      "PopUpConfirmTitle": "Sure to cancel?",
+      "PopUpConfirmTitle": "Seguro que quiere cancelar?",
       "NoEntries": "No se encontraron items de la donación"
     }
   },
