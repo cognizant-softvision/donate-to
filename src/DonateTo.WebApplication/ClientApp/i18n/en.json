@@ -92,7 +92,8 @@
       "Description": "Description",
       "QuantityToDonate": "Quantity to donate",
       "Operation": "Operation",
-      "PopUpConfirmTitle": "Sure to cancel?"
+      "PopUpConfirmTitle": "Sure to cancel?",
+      "NoEntries": "No donation items were found"
     }
   },
   "ServerError401": "Access not allowed. Please login.",
@@ -194,9 +195,9 @@
         "AddressPlaceholder": "Please select a address",
         "FinishDate": "Finish date",
         "DonationItem": {
-          "Name": "Name",
-          "NameRequiredError": "Name is required",
-          "NamePlaceholder": "Please enter a name",
+          "Name": "Product",
+          "NameRequiredError": "Product is required",
+          "NamePlaceholder": "Please enter a product",
           "Observation": "Observation",
           "ObservationPlaceholder": "Item request observations",
           "Quantity": "Quantity",
