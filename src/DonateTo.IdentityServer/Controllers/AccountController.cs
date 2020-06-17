@@ -280,7 +280,8 @@ namespace DonateTo.IdentityServer.Controllers
 
         public IActionResult ForgotPasswordConfirmation()
         {
-            return View();
+            var model = new ForgotPasswordConfirmationViewModel();
+            return View(model);
         }
 
         [HttpGet]
