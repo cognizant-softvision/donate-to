@@ -2,7 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { DonationRequestModel, PageModel } from '../../models';
 
 export const addDonationRequest = createAction(
-  '[Donation Request] Add Donation Request',
+  '[Donation Request] Add',
   props<{ donationRequest: DonationRequestModel }>()
 );
 export const addDonationRequestSuccess = createAction(
@@ -12,7 +12,7 @@ export const addDonationRequestSuccess = createAction(
 export const addDonationRequestFailed = createAction('[Donation Request] Add failed');
 
 export const updateDonationRequest = createAction(
-  '[Donation Request] Update Donation Request',
+  '[Donation Request] Update',
   props<{ donationRequest: DonationRequestModel }>()
 );
 export const updateDonationRequestSuccess = createAction(
@@ -21,15 +21,18 @@ export const updateDonationRequestSuccess = createAction(
 );
 export const updateDonationRequestFailed = createAction('[Donation Request] Update failed');
 
-export const loadDonationRequest = createAction('[Donation Request] Load', props<{ donationRequestId: number }>());
+export const loadDonationRequest = createAction(
+  '[Donation Request] Load donationRequest from server',
+  props<{ donationRequestId: number }>()
+);
 export const loadDonationRequestSuccess = createAction(
-  '[Donation Request] Load success',
+  '[Donation Request] Load donationRequest success',
   props<{ donationRequest: DonationRequestModel }>()
 );
-export const loadDonationRequestFailed = createAction('[Donation Request] Load failed');
+export const loadDonationRequestFailed = createAction('[Donation Request] Load donationRequest failed');
 
 export const removeDonationRequest = createAction(
-  '[Donation Request] Remove Donation Request',
+  '[Donation Request] Remove',
   props<{ donationRequest: DonationRequestModel }>()
 );
 export const removeDonationRequestSuccess = createAction(
@@ -40,7 +43,7 @@ export const removeDonationRequestFailed = createAction('[Donation Request] Remo
 
 export const loadDonationRequests = createAction('[Donation Request] Load items from server');
 export const loadDonationRequestsSuccess = createAction(
-  '[Donation Request] Load success',
+  '[Donation Request] Load items success',
   props<{ donationRequests: DonationRequestModel[] }>()
 );
 export const loadDonationRequestsFailed = createAction('[Donation Request] Load failed');

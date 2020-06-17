@@ -5,7 +5,7 @@ import { DonationRequestModel, PageModel } from '../../models';
 export interface DonationRequestState {
   loading: boolean;
   failed: boolean;
-  item: DonationRequestModel;
+  donationRequest: DonationRequestModel;
   items: DonationRequestModel[];
   pagedItems: PageModel<DonationRequestModel>;
 }
@@ -13,24 +13,29 @@ export interface DonationRequestState {
 const INITIAL_STATE: DonationRequestState = {
   loading: false,
   failed: false,
-  item: undefined,
+  donationRequest: undefined,
   items: [],
   pagedItems: new PageModel<DonationRequestModel>(),
 };
 
 const donationRequestReducer = createReducer(
   INITIAL_STATE,
-  on(donationRequestActions.loadDonationRequests, (state, action) => ({
+  on(donationRequestActions.loadDonationRequest, (state) => ({
     ...state,
     loading: true,
     failed: false,
   })),
-  on(donationRequestActions.loadDonationRequestsPaged, (state, action) => ({
+  on(donationRequestActions.loadDonationRequests, (state) => ({
     ...state,
     loading: true,
     failed: false,
   })),
-  on(donationRequestActions.loadDonationRequestsSearchPaged, (state, action) => ({
+  on(donationRequestActions.loadDonationRequestsPaged, (state) => ({
+    ...state,
+    loading: true,
+    failed: false,
+  })),
+  on(donationRequestActions.loadDonationRequestsSearchPaged, (state) => ({
     ...state,
     loading: true,
     failed: false,
@@ -91,12 +96,13 @@ const donationRequestReducer = createReducer(
     ...state,
     loading: false,
     failed: false,
-    item: donationRequest,
+    donationRequest,
   })),
   on(donationRequestActions.loadDonationRequestFailed, (state) => ({
     ...state,
     loading: false,
     failed: true,
+    donationRequest: new DonationRequestModel(),
   })),
   on(donationRequestActions.removeDonationRequest, (state) => ({
     ...state,
