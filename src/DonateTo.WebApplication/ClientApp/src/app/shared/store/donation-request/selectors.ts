@@ -18,7 +18,10 @@ export const getAllDonationRequestsPaged = createSelector(
   (state: DonationRequestState) => state.pagedItems
 );
 
-export const getDonationRequest = createSelector(getEntityState, (state: DonationRequestState) => state.item);
+export const getDonationRequest = createSelector(
+  getEntityState,
+  (state: DonationRequestState) => state.donationRequest
+);
 
 export const getAllDonationRequestsSearchPaged = createSelector(
   getEntityState,
