@@ -21,7 +21,7 @@ export const environment = {
   authConfig: {
     issuer: 'https://localhost:44392',
     redirectUri: 'http://localhost:4200',
-    clientId: 'DonateTo.WebAplication',
+    clientId: 'DonateTo.WebApplication',
     responseType: 'code',
     scope: 'openid profile',
     showDebugInformation: true,
