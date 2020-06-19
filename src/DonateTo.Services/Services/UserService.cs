@@ -19,15 +19,15 @@ namespace DonateTo.Services
             IRepository<User> userRepository, IUnitOfWork unitOfWork)
         {
             _userRepository = userRepository;
-
+            _unitOfWork = unitOfWork;
         }
 
-        public User Create(User entity)
+        public User Create(User entity, string username)
         {
             throw new NotImplementedException();
         }
 
-        public Task<User> CreateAsync(User entity)
+        public Task<User> CreateAsync(User entity, string username)
         {
             throw new NotImplementedException();
         }
@@ -91,12 +91,12 @@ namespace DonateTo.Services
             .Equals(organizationId))).ConfigureAwait(false);
         }
 
-        public User Update(User entity, long id)
+        public User Update(User entity, long id, string username)
         {
             throw new NotImplementedException();
         }
 
-        public Task<User> UpdateAsync(User entity, long id)
+        public Task<User> UpdateAsync(User entity, long id, string username)
         {
             throw new NotImplementedException();
         }
