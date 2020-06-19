@@ -7,17 +7,17 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
     public interface IUserService : IBaseService<User>
     {
         /// <summary>
-        /// Get a list of UserOrganizations from an spesific user.
+        /// Get a list of User from an spesific Organization Id.
         /// </summary>
-        /// <param name="userId">User Id</param>
-        /// <returns>IEnumerable of UserOrganizations.</returns>
-        IEnumerable<UserOrganization> GetUserOrganizations(long userId);
+        /// <param name="organizationId">Organization Id</param>
+        /// <returns>IEnumerable of User.</returns>
+        IEnumerable<User> GetByOrganizationId(long organizationId);
 
         /// <summary>
-        /// Get a list of UserOrganizations from an spesific user async.
+        /// Get a list of User from an spesific Organization Id async.
         /// </summary>
-        /// <param name="userId">User Id</param>
-        /// <returns>IEnumerable of UserOrganizations.</returns>
-        Task<IEnumerable<UserOrganization>> GetUserOrganizationsAsync(long userId);
+        /// <param name="organizationId">Organization Id</param>
+        /// <returns>IEnumerable of User.</returns>
+        Task<IEnumerable<User>> GetByOrganizationIdAsync(long organizationId);
     }
 }

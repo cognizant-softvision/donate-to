@@ -77,16 +77,18 @@ namespace DonateTo.Services
             return await _userRepository.GetPagedAsync(page, pageSize, filter).ConfigureAwait(false);
         }
 
-        public IEnumerable<UserOrganization> GetUserOrganizations(long userId)
+        public IEnumerable<User> GetByOrganizationId(long organizationId)
         {
-            return _userRepository.Get(userId).UserOrganizations;
+            return _userRepository.Get(u => u.UserOrganizations
+            .Any(uo => uo.OrganizationId
+            .Equals(organizationId)));
         }
 
-        public async Task<IEnumerable<UserOrganization>> GetUserOrganizationsAsync(long userId)
+        public async Task<IEnumerable<User>> GetByOrganizationIdAsync(long organizationId)
         {
-            var user = await _userRepository.GetAsync(userId).ConfigureAwait(false);
-
-            return user.UserOrganizations;
+            return await _userRepository.GetAsync(u => u.UserOrganizations
+            .Any(uo => uo.OrganizationId
+            .Equals(organizationId))).ConfigureAwait(false);
         }
 
         public User Update(User entity, long id)
