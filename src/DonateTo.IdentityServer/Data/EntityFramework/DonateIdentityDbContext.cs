@@ -38,11 +38,14 @@ namespace DonateTo.IdentityServer.Data.EntityFramework
                     .HasForeignKey(ut => ut.UserId)
                     .IsRequired();
 
+
                 // Each User can have many entries in the UserRole join table
                 b.HasMany(e => e.UserRoles)
                     .WithOne(e => e.User)
                     .HasForeignKey(ur => ur.UserId)
                     .IsRequired();
+               
+                b.Ignore(w => w.UserOrganizations);
             });
 
             modelBuilder.Entity<Role>(b =>

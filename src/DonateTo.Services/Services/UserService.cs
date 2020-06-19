@@ -4,6 +4,7 @@ using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models.Pagination;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -14,7 +15,7 @@ namespace DonateTo.Services
         private readonly IRepository<User> _userRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public UserService (
+        public UserService(
             IRepository<User> userRepository, IUnitOfWork unitOfWork)
         {
             _userRepository = userRepository;
@@ -74,6 +75,20 @@ namespace DonateTo.Services
         public async Task<PagedResult<User>> GetPagedAsync(int page, int pageSize, Expression<Func<User, bool>> filter = null)
         {
             return await _userRepository.GetPagedAsync(page, pageSize, filter).ConfigureAwait(false);
+        }
+
+        public IEnumerable<User> GetByOrganizationId(long organizationId)
+        {
+            return _userRepository.Get(u => u.UserOrganizations
+            .Any(uo => uo.OrganizationId
+            .Equals(organizationId)));
+        }
+
+        public async Task<IEnumerable<User>> GetByOrganizationIdAsync(long organizationId)
+        {
+            return await _userRepository.GetAsync(u => u.UserOrganizations
+            .Any(uo => uo.OrganizationId
+            .Equals(organizationId))).ConfigureAwait(false);
         }
 
         public User Update(User entity, long id)
