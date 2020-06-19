@@ -41,6 +41,11 @@
   width: 6em !important;
 }
 
+.item-required {
+  color: lightgray;
+  font-style: italic;
+}
+
 .item-quantity {
   margin-left: 0 !important;
   width: 100%;
