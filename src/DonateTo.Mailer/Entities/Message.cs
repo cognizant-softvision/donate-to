@@ -1,4 +1,5 @@
 ﻿using MimeKit;
+using System.Collections.Generic;
 
 namespace DonateTo.Mailer.Entities
 {
@@ -7,13 +8,28 @@ namespace DonateTo.Mailer.Entities
         /// <summary>
         /// Creates a new message with an HTML body
         /// </summary>
-        /// <param name="to">To address</param>
         /// <param name="subject">Mail Subject</param>
         /// <param name="body">HTML body</param>
+        /// <param name="to">To address</param>
+        /// <param name="sendAsBcc">Send mail as BCC</param>
         /// <param name="from">From address</param>
-        public Message(string to, string subject, MessageBody body, string from = "")
+        public Message(string subject, MessageBody body, IEnumerable<string> to, bool sendAsBcc = false, string from = "")
         {
-            To.Add(new MailAddress(to));
+            if (sendAsBcc)
+            {
+                foreach (var mail in to)
+                {
+                    Bcc.Add(new MailAddress(mail));
+                }
+            }
+            else
+            {
+                foreach (var mail in to)
+                {
+                    To.Add(new MailAddress(mail));
+                }
+            }            
+
             Subject = subject;
             Body = body.ToMessageBody();
             
@@ -26,13 +42,28 @@ namespace DonateTo.Mailer.Entities
         /// <summary>
         /// Creates a new message with a text body
         /// </summary>
-        /// <param name="to">To address</param>
         /// <param name="subject">Mail Subject</param>
         /// <param name="text">Mail text</param>
+        /// <param name="to">To address</param>
+        /// <param name="sendAsBcc">Send mail as BCC</param>
         /// <param name="from">From address</param>
-        public Message(string to, string subject, string text, string from = "")
+        public Message(string subject, string text, IEnumerable<string> to, bool sendAsBcc = false, string from = "")
         {
-            To.Add(new MailAddress(to));
+            if (sendAsBcc)
+            {
+                foreach (var mail in to)
+                {
+                    Bcc.Add(new MailAddress(mail));
+                }
+            }
+            else
+            {
+                foreach (var mail in to)
+                {
+                    To.Add(new MailAddress(mail));
+                }
+            }
+
             Subject = subject;
             Body = new MessageText(text);
 
