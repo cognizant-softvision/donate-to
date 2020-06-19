@@ -178,7 +178,7 @@ namespace DonateTo.IdentityServer.Controllers
             var result = await _userManager.CreateAsync(user, userRegistrationViewModel.Password)
                 .ConfigureAwait(false);
 
-            if (result.Succeeded) 
+            if (result.Succeeded)
             {
                 var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", new { token, email = user.Email }, Request.Scheme);
@@ -188,14 +188,15 @@ namespace DonateTo.IdentityServer.Controllers
                     HtmlBody = $"<p>Please confirm your email clicking <a href='{ confirmationLink }' target='_blank'>here</a></p>"
                 };
 
-                var message = new Message(user.Email,"Activate your account", bodyMessage);
+                var message = new Message(user.Email, "Activate your account", bodyMessage);
 
                 await _mailSender.SendAsync(message);
 
                 var role = await _roleManager.FindByNameAsync("Donor").ConfigureAwait(false);
                 result = await _userManager.AddToRoleAsync(user, role.Name).ConfigureAwait(false);
 
-                return RedirectToAction(nameof(SuccessRegistration));
+                var rvm = BuildRedirectHomeViewModel(userRegistrationViewModel.ReturnUrl);
+                return RedirectToAction("SuccessRegistration", rvm);
             }
 
             if (!result.Succeeded)
@@ -242,9 +243,13 @@ namespace DonateTo.IdentityServer.Controllers
         }
 
         [HttpGet]
-        public IActionResult ForgotPassword()
+        public IActionResult ForgotPassword(string returnUrl)
         {
-            return View();
+            var model = new ForgotPasswordViewModel
+            {
+                ReturnUrl = returnUrl
+            };
+            return View(model);
         }
 
         [HttpPost]
@@ -260,7 +265,7 @@ namespace DonateTo.IdentityServer.Controllers
 
             if (user == null)
             {
-                return RedirectToAction(nameof(ForgotPasswordConfirmation));
+                return View("Error");
             }
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
@@ -275,12 +280,13 @@ namespace DonateTo.IdentityServer.Controllers
 
             await _mailSender.SendAsync(message);
 
-            return RedirectToAction(nameof(ForgotPasswordConfirmation));
+            var rvm = BuildRedirectHomeViewModel(forgotPasswordViewModel.ReturnUrl);
+            return RedirectToAction("ForgotPasswordConfirmation", rvm);
         }
 
-        public IActionResult ForgotPasswordConfirmation()
+        [HttpGet]
+        public IActionResult ForgotPasswordConfirmation(RedirectHomeViewModel model)
         {
-            var model = new ForgotPasswordConfirmationViewModel();
             return View(model);
         }
 
@@ -317,9 +323,9 @@ namespace DonateTo.IdentityServer.Controllers
         }
 
         [HttpGet]
-        public IActionResult ResetPasswordConfirmation()
+        public IActionResult ResetPasswordConfirmation(RedirectHomeViewModel model)
         {
-            return View();
+            return View(model);
         }
 
         [HttpGet]
@@ -334,12 +340,20 @@ namespace DonateTo.IdentityServer.Controllers
         }
 
         [HttpGet]
-        public IActionResult SuccessRegistration()
+        public IActionResult SuccessRegistration(RedirectHomeViewModel model)
         {
-            return View();
+            return View(model);
         }
 
         #region private
+        public RedirectHomeViewModel BuildRedirectHomeViewModel(string redirectUri)
+        {
+            return new RedirectHomeViewModel
+            {
+                RedirectUris = redirectUri
+            };
+        }
+
         private async Task<LoginViewModel> BuildLoginViewModelAsync(string returnUrl)
         {
             var context = await _interactionService.GetAuthorizationContextAsync(returnUrl);
