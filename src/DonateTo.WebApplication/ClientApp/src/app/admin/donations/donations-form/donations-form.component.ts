@@ -3,6 +3,7 @@ import { DonationsSandbox } from '../donations-sandbox';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NzI18nService } from 'ng-zorro-antd';
 import { Subscription } from 'rxjs';
+import differenceInCalendarDays from 'date-fns/differenceInCalendarDays';
 import { CategoryModel, ColumnItem, DonationRequestItemModel, DonationRequestModel } from 'src/app/shared/models';
 
 @Component({
@@ -15,7 +16,8 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
   @Output() validationResult = new EventEmitter<DonationRequestModel>();
 
   private subscriptions: Subscription[] = [];
-
+  today = new Date();
+  disabledDates: any;
   addressId: number;
   categories: CategoryModel[] = [];
   donationRequestItems: DonationRequestItemModel[] = [];
@@ -72,6 +74,10 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
     }
 
     this.sandBoxSubscriptionInit();
+
+    this.disabledDates = (current: Date): boolean => {
+      return differenceInCalendarDays(current, this.today) < 0;
+    };
 
     this.donationSandbox.loadOrganizations();
     this.donationSandbox.loadCategories();
