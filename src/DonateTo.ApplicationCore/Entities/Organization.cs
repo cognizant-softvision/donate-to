@@ -9,5 +9,6 @@ namespace DonateTo.ApplicationCore.Entities
         public long ContactId { get; set; }
         public Contact Contact { get; set; }
         public IEnumerable<Address> Addresses { get; set; }
+        public virtual IEnumerable<UserOrganization> UserOrganizations { get; set; }
     }
 }

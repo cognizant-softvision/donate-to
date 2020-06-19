@@ -7,18 +7,22 @@ using System.Threading.Tasks;
 using System.Linq;
 using IdentityModel;
 using IdentityServer4.Extensions;
+using DonateTo.ApplicationCore.Interfaces.Services;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace DonateTo.IdentityServer.Services
 {
     public class ProfileService : IProfileService
     {
         private readonly IUserClaimsPrincipalFactory<User> _claimFactory;
+        private readonly IOrganizationService _organizationService;
         private readonly UserManager<User> _userManager;
 
-        public ProfileService(IUserClaimsPrincipalFactory<User> claimFactory, UserManager<User> userManager)
+        public ProfileService(IOrganizationService organizationService, IUserClaimsPrincipalFactory<User> claimFactory, UserManager<User> userManager)
         {
             _claimFactory = claimFactory;
             _userManager = userManager;
+            _organizationService = organizationService;
         }
 
         /// <summary>
@@ -32,8 +36,14 @@ namespace DonateTo.IdentityServer.Services
             var user = await _userManager.FindByIdAsync(sub);
             var principal = await _claimFactory.CreateAsync(user);
 
+
             var claims = principal.Claims.ToList();
             claims = claims.Where(claim => context.RequestedClaimTypes.Contains(claim.Type)).ToList();
+
+            var userOrganizations = await _organizationService.GetByUserIdAsync(user.Id);
+            if (userOrganizations.Any())
+                claims.AddRange(userOrganizations.Select(o => new Claim("organization", o.Name)));
+
             var roleClaimName = JwtClaimTypes.Role;
             var existingRoles = context.IssuedClaims.Where(c => c.Type == roleClaimName).Select(c => c.Value);
             var roles = await _userManager.GetRolesAsync(user);

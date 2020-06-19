@@ -29,7 +29,8 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
         public DbSet<UserLogin> UserLogins { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<UserToken> UserTokens { get; set; }
-        
+        public DbSet<UserOrganization> UserOrganizations { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -138,11 +139,24 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
                     .WithMany(drc => drc.DonationRequestItemCategories)
                     .HasForeignKey(c => c.DonationRequestItemId);
 
+                modelBuilder.Entity<UserOrganization>()
+                    .HasOne<User>(u => u.User)
+                    .WithMany(uo => uo.UserOrganizations)
+                    .HasForeignKey(c => c.UserId);
+
+                modelBuilder.Entity<UserOrganization>()
+                    .HasOne<Organization>(o => o.Organization)
+                    .WithMany(uo => uo.UserOrganizations)
+                    .HasForeignKey(o => o.OrganizationId);
+
                 modelBuilder.Entity<DonationRequestCategory>().HasKey
-                    (drc => new { drc.CategoryId, drc.DonationRequestId});
+                    (drc => new { drc.CategoryId, drc.DonationRequestId });
 
                 modelBuilder.Entity<DonationRequestItemCategory>().HasKey
-                    (drc => new { drc.CategoryId, drc.DonationRequestItemId});
+                    (drc => new { drc.CategoryId, drc.DonationRequestItemId });
+
+                modelBuilder.Entity<UserOrganization>().HasKey
+                    (uo => new { uo.UserId, uo.OrganizationId });
 
                 #endregion
             }
