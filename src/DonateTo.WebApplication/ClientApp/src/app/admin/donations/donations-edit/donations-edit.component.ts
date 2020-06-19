@@ -45,9 +45,11 @@ export class DonationsEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.donationSandbox.donationRequest$.subscribe((donationRequest) => {
-      this.donationRequest = donationRequest;
-    });
+    this.subscriptions.push(
+      this.donationSandbox.donationRequest$.subscribe((donationRequest) => {
+        this.donationRequest = donationRequest;
+      })
+    );
 
     this.donationSandbox.loadDonationRequest(this.id);
   }

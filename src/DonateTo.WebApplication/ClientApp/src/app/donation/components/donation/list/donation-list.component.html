@@ -1,6 +1,7 @@
 <nz-table
   [nzData]="donationRequest?.donationRequestItems"
   [nzLoading]="this.donationSandbox.donationRequestLoading$ | async"
+  [nzNoResult]="customTpl"
 >
   <thead>
     <tr>
@@ -59,3 +60,10 @@
     </tr>
   </tbody>
 </nz-table>
+
+<ng-template #customTpl let-name>
+  <div style="text-align: center;">
+    <nz-empty [nzNotFoundContent]="null"></nz-empty>
+    <p>{{ 'RequestDonation.DonationItemList.NoEntries' | translate }}</p>
+  </div>
+</ng-template>

@@ -21,7 +21,7 @@ export const environment = {
   authConfig: {
     issuer: 'https://donatedevidentity.azurewebsites.net',
     redirectUri: 'https://donatedevwebapp.azurewebsites.net',
-    clientId: 'DonateTo.WebAplication',
+    clientId: 'DonateTo.WebApplication',
     responseType: 'code',
     scope: 'openid profile',
     showDebugInformation: true,

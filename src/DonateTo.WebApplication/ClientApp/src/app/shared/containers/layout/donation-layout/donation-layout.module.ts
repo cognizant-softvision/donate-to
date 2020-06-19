@@ -1,20 +1,45 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { NzButtonModule, NzLayoutModule, NzMenuModule, NzTableModule } from 'ng-zorro-antd';
+import {
+  NzButtonModule,
+  NzIconModule,
+  NzLayoutModule,
+  NzMenuModule,
+  NzModalService,
+  NzTableModule,
+} from 'ng-zorro-antd';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { DonationLayoutComponent } from './donation-layout.component';
 import { ComponentsModule } from 'src/app/shared/components';
-import { DonatorLayoutRoutingModule } from './donation-layout-routing.module';
-import { HomeModule } from 'src/app/home/home.module';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { HttpClient } from '@angular/common/http';
-import { DonationModule } from 'src/app/donation/donation.module';
+import { DonationLayoutRoutingModule } from './donation-layout-routing.module';
+import { DonationSandbox } from 'src/app/donation/donation.sandbox';
+import { IconDefinition } from '@ant-design/icons-angular';
+import {
+  HeartFill,
+  HeartOutline,
+  HomeOutline,
+  ProfileOutline,
+  SearchOutline,
+  TeamOutline,
+  UserOutline,
+} from '@ant-design/icons-angular/icons';
 
-export const COMPONENTS = [DonationLayoutComponent];
+const ICONS: IconDefinition[] = [
+  HeartOutline,
+  HeartFill,
+  TeamOutline,
+  ProfileOutline,
+  HomeOutline,
+  SearchOutline,
+  UserOutline,
+];
+
 @NgModule({
   imports: [
     FormsModule,
@@ -34,11 +59,11 @@ export const COMPONENTS = [DonationLayoutComponent];
       extend: true,
     }),
     ComponentsModule,
-    HomeModule,
-    DonationModule,
-    DonatorLayoutRoutingModule,
+    ReactiveFormsModule,
+    DonationLayoutRoutingModule,
+    NzIconModule.forChild(ICONS),
   ],
-  declarations: COMPONENTS,
-  exports: COMPONENTS,
+  declarations: [DonationLayoutComponent],
+  providers: [DonationSandbox, NzModalService],
 })
 export class DonationLayoutModule {}
