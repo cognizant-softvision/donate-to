@@ -28,15 +28,14 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public override async Task<IActionResult> Post([FromBody] DonationRequest value)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || value == null)
             {
                 return BadRequest();
             }
             else
             {
-                var userId = User.Claims.FirstOrDefault(claim => claim.Type == _userIdClaim)?.Value;
                 var username = User.Claims.FirstOrDefault(claim => claim.Type == _usernameClaim)?.Value;
-                value.UserId = Convert.ToInt64(userId);
+                value.UserId = Convert.ToInt64(User.Claims.FirstOrDefault(claim => claim.Type == _userIdClaim)?.Value);
                 var result = await _baseService.CreateAsync(value, username).ConfigureAwait(false);
 
                 return Ok(result);
