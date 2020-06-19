@@ -9,7 +9,7 @@ namespace DonateTo.WebApi.V1.Controllers
     [ApiController]
     public class OrganizationController : BaseApiController<Organization>
     {
-        public OrganizationController(IBaseService<Organization> organizationService) : base(organizationService)
+        public OrganizationController(IOrganizationService organizationService) : base(organizationService)
         {
         }
     }
