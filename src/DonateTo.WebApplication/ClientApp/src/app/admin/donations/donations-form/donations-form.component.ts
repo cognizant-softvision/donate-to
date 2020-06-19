@@ -16,7 +16,6 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
   @Output() validationResult = new EventEmitter<DonationRequestModel>();
 
   private subscriptions: Subscription[] = [];
-  today = new Date();
   disabledDates: any;
   addressId: number;
   categories: CategoryModel[] = [];
@@ -76,7 +75,7 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
     this.sandBoxSubscriptionInit();
 
     this.disabledDates = (current: Date): boolean => {
-      return differenceInCalendarDays(current, this.today) < 0;
+      return differenceInCalendarDays(current, new Date()) < 0;
     };
 
     this.donationSandbox.loadOrganizations();
