@@ -31,8 +31,11 @@ namespace DonateTo.Services
             {
                 throw new ArgumentNullException(typeof(TEntity).ToString(), _nullEntityException);
             }
-
-            entity = ConfigureAsNew(entity, username);
+            
+            entity.CreatedBy = username;
+            entity.CreatedDate = DateTime.UtcNow;
+            entity.UpdateBy = username;
+            entity.UpdateDate= DateTime.UtcNow;
 
             entity = await _entityRequestRepository.AddAsync(entity).ConfigureAwait(false);
             await _unitOfWork.SaveAsync().ConfigureAwait(false);
@@ -48,7 +51,10 @@ namespace DonateTo.Services
                 throw new ArgumentNullException(typeof(TEntity).ToString(), _nullEntityException);
             }
 
-            entity = ConfigureAsNew(entity, username);
+            entity.CreatedBy = username;
+            entity.CreatedDate = DateTime.UtcNow;
+            entity.UpdateBy = username;
+            entity.UpdateDate = DateTime.UtcNow;
 
             entity = _entityRequestRepository.Add(entity);
             _unitOfWork.Save();
@@ -81,7 +87,8 @@ namespace DonateTo.Services
                 throw new InvalidOperationException(_matchingIdException);
             }
 
-            entity = ConfigureAsUpdate(entity, username);
+            entity.UpdateBy = username;
+            entity.UpdateDate = DateTime.UtcNow;
 
             entity =  await _entityRequestRepository.UpdateAsync(entity).ConfigureAwait(false);
             await _unitOfWork.SaveAsync().ConfigureAwait(false);
@@ -101,7 +108,8 @@ namespace DonateTo.Services
                 throw new InvalidOperationException(_matchingIdException);
             }
 
-            entity = ConfigureAsUpdate(entity, username);
+            entity.UpdateBy = username;
+            entity.UpdateDate = DateTime.UtcNow;
 
             entity = _entityRequestRepository.Update(entity);
             _unitOfWork.Save();
@@ -167,23 +175,6 @@ namespace DonateTo.Services
         public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> filter = null)
         {
             return _entityRequestRepository.FirstOrDefault(filter);
-        }
-
-        private TEntity ConfigureAsNew(TEntity entity, string username)
-        {
-            entity.CreatedBy = username;
-            entity.CreatedDate = DateTime.UtcNow;
-            entity.UpdateBy = username;
-            entity.UpdateDate = DateTime.UtcNow;
-
-            return entity;
-        }        
-        private TEntity ConfigureAsUpdate(TEntity entity, string username)
-        {
-            entity.UpdateBy = username;
-            entity.UpdateDate = DateTime.UtcNow;
-
-            return entity;
         }
     }
 }
