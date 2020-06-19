@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using DonateTo.ApplicationCore.Models.Pagination;
 using System;
+using System.Linq;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -21,6 +22,8 @@ namespace DonateTo.WebApi.V1.Controllers
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1051:Do not declare visible instance fields", Justification = "<Pending>")]
         protected readonly IBaseService<T> _baseService;
+        protected const string _usernameClaim = "name";
+        protected const string _userIdClaim = "sub";
 
         protected BaseApiController(IBaseService<T> baseService)
         {
@@ -107,7 +110,8 @@ namespace DonateTo.WebApi.V1.Controllers
             }
             else
             {
-                var result = await _baseService.CreateAsync(value).ConfigureAwait(false);
+                var username = User.Claims.FirstOrDefault(claim => claim.Type == _usernameClaim)?.Value;
+                var result = await _baseService.CreateAsync(value, username).ConfigureAwait(false);
 
                 return Ok(result);
             }
@@ -134,7 +138,8 @@ namespace DonateTo.WebApi.V1.Controllers
             {
                 try
                 {
-                    var result = await _baseService.UpdateAsync(value, id).ConfigureAwait(false);
+                    var username = User.Claims.FirstOrDefault(claim => claim.Type == _usernameClaim)?.Value;
+                    var result = await _baseService.UpdateAsync(value, id, username).ConfigureAwait(false);
 
                     return Ok(result);
                 }

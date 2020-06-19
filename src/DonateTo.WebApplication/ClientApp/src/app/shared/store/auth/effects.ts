@@ -40,9 +40,6 @@ export class AuthEffects {
         .then(() => {
           const claims = this.authService.getIdentityClaims();
           return userProfileLoaded({
-            id: claims ? claims['user_Id'] : '',
-            name: claims ? claims['name'] : '',
-            email: claims ? claims['name'] : '',
             accessToken: this.authService.getAccessToken(),
           });
         })

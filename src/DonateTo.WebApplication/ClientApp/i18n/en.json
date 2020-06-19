@@ -79,7 +79,9 @@
         "WeekDayColumn": "WeekDay",
         "StartTimeColumn": "Start Time",
         "FinishTimeColumn": "Finish Time",
-        "OperationColumn": "Operation"
+        "OperationColumn": "Operation",
+        "StartTimeGreaterThanFinishTime": "Start Time is greater than Finish Time!",
+        "FinishTimeLessThanStartTime": "Finish Time is less than Start Time!"
       }
     },
     "DonationItemList": {
