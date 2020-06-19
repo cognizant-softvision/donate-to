@@ -21,7 +21,7 @@ namespace DonateTo.Services.Extensions
             service.AddScoped<IStateService, StateService>();
             service.AddScoped<ICityService, CityService>();
             service.AddTransient<IBaseService<Donation>, DonationService>();
-            service.AddTransient<IBaseService<DonationRequest>, DonationRequestService>();
+            service.AddTransient<IDonationRequestService, DonationRequestService>();
             service.AddTransient<IBaseService<Country>, CountryService>();
             service.AddTransient<ISearchService, SearchService>();
             service.AddTransient<IOrganizationService, OrganizationService>();

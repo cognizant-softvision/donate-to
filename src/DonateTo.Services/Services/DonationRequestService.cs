@@ -4,55 +4,53 @@ using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.Mailer.Entities;
 using DonateTo.Mailer.Interfaces;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace DonateTo.Services
 {
-    public class DonationRequestService: BaseService<DonationRequest>
+    public class DonationRequestService: BaseService<DonationRequest>, IDonationRequestService
     {
-        private readonly IBaseService<Organization> _organizationService;
+        private readonly IUserService _userService;
         private readonly IMailSender _mailSender;
 
         public DonationRequestService(
-            IBaseService<Organization> organizationService,
+            IUserService userService,
             IMailSender mailSender,
             IRepository<DonationRequest> donationRequestRepository, 
             IUnitOfWork unitOfWork) : base(donationRequestRepository, unitOfWork)
         {
-            _organizationService = organizationService;
+            _userService = userService;
             _mailSender = mailSender;
         }
 
-        public override async Task<DonationRequest> CreateAsync(DonationRequest request)
+        public async Task SendNewRequestMailToOrganizationUsersAsync(DonationRequest donationRequest, string client)
         {
-            var donationRequest = await base.CreateAsync(request).ConfigureAwait(false);
+            var organizationUsers = await _userService.GetByOrganizationIdAsync(donationRequest.OrganizationId).ConfigureAwait(false);
+            var messages = new List<Message>();
+            var body = @"<p>Hi {0}!</p>
+                            <p>A new Donation Request has been added to {1}</p>
+                            <p>Check it <a href='{2}'>here</a></p>";
 
-            if (donationRequest.Id != 0) 
+            foreach (var user in organizationUsers)
             {
-                SendMailToOrganizationUsers(donationRequest.Organization);
-            }
 
-            return donationRequest;
+                var bodyMessage = new MessageBody()
+                {
+                    HtmlBody = string.Format(CultureInfo.InvariantCulture, body,
+                                             user.FullName,
+                                             donationRequest.Organization.Name,
+                                             client)
+                };
+                
+                var to = new List<string>();
+                to.Add(user.Email);
+
+                messages.Add(new Message(to, "New donation request!", bodyMessage));
+            } 
+
+            await _mailSender.SendMultipleAsync(messages).ConfigureAwait(false);
         }
-
-        #region private
-        private void SendMailToOrganizationUsers(Organization organization)
-        {
-            var organizationUsers = _organizationService.Get(o => o.Id == organization.Id)
-                                .SelectMany(o => o.UserOrganizations
-                                    .Select(u => u.User)).ToList();
-
-            var bodyMessage = new MessageBody()
-            {
-                HtmlBody = $"<p>Hi!</p><p>A new Donation Request has been added to { organization.Name }</p>"
-            };
-
-            var message = new Message("New donation request!", bodyMessage, 
-
-            await _mailSender.SendAsync(message);
-        }
-
-        #endregion
     }
 }

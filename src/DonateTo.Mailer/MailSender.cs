@@ -1,6 +1,7 @@
 ﻿using DonateTo.Mailer.Entities;
 using DonateTo.Mailer.Interfaces;
 using MailKit.Net.Smtp;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DonateTo.Mailer
@@ -44,6 +45,15 @@ namespace DonateTo.Mailer
                 client.Authenticate(_mailSettings.Username, _mailSettings.Password);
                 await client.SendAsync(message);
                 client.Disconnect(true);
+            }
+        }
+
+        ///<inheritdoc cref="IMailSender"/>
+        public async Task SendMultipleAsync(IEnumerable<Message> messages)
+        {
+            foreach (var message in messages) 
+            {
+                await SendAsync(message);
             }
         }
     }
