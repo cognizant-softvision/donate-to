@@ -17,14 +17,17 @@ namespace DonateTo.WebApi.V1.Controllers
     public class DonationRequestController : BaseApiController<DonationRequest>
     {
         private readonly IDonationRequestService _donationRequestService;
+        private readonly IUserService _userService;
         private readonly IMailSender _mailSender;
         private const string _clientClaim = "client";
 
         public DonationRequestController(
             IDonationRequestService donationRequestService,
+            IUserService userService,
             IMailSender mailSender) : base(donationRequestService)
         {
             _donationRequestService = donationRequestService;
+            _userService = userService;
             _mailSender = mailSender;
         }
 
@@ -50,7 +53,8 @@ namespace DonateTo.WebApi.V1.Controllers
                 value.UserId = Convert.ToInt64(User.Claims.FirstOrDefault(claim => claim.Type == _userIdClaim)?.Value, CultureInfo.InvariantCulture);
 
                 var donationRequest = await _baseService.CreateAsync(value, username).ConfigureAwait(false);
-                await _donationRequestService.SendNewRequestMailToOrganizationUsersAsync(donationRequest, client).ConfigureAwait(false);
+                var users = await _userService.GetByOrganizationIdAsync(donationRequest.OrganizationId).ConfigureAwait(false);
+                await _donationRequestService.SendNewRequestMailToOrganizationUsersAsync(donationRequest, users, client).ConfigureAwait(false);
 
                 return Ok(donationRequest);
             }

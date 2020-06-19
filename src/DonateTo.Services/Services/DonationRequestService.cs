@@ -12,30 +12,25 @@ namespace DonateTo.Services
 {
     public class DonationRequestService: BaseService<DonationRequest>, IDonationRequestService
     {
-        private readonly IUserService _userService;
         private readonly IMailSender _mailSender;
 
         public DonationRequestService(
-            IUserService userService,
             IMailSender mailSender,
             IRepository<DonationRequest> donationRequestRepository, 
             IUnitOfWork unitOfWork) : base(donationRequestRepository, unitOfWork)
         {
-            _userService = userService;
             _mailSender = mailSender;
         }
 
-        public async Task SendNewRequestMailToOrganizationUsersAsync(DonationRequest donationRequest, string client)
+        public async Task SendNewRequestMailToOrganizationUsersAsync(DonationRequest donationRequest, IEnumerable<User> users, string client)
         {
-            var organizationUsers = await _userService.GetByOrganizationIdAsync(donationRequest.OrganizationId).ConfigureAwait(false);
             var messages = new List<Message>();
             var body = @"<p>Hi {0}!</p>
                             <p>A new Donation Request has been added to {1}</p>
                             <p>Check it <a href='{2}'>here</a></p>";
 
-            foreach (var user in organizationUsers)
+            foreach (var user in users)
             {
-
                 var bodyMessage = new MessageBody()
                 {
                     HtmlBody = string.Format(CultureInfo.InvariantCulture, body,

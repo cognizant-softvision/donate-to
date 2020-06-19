@@ -1,6 +1,8 @@
 using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.Infrastructure.Extensions;
+using DonateTo.Mailer;
+using DonateTo.Mailer.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -29,6 +31,7 @@ namespace DonateTo.Services.Extensions
             service.AddTransient<IBaseService<Category>, CategoryService>();
             service.AddTransient<IBaseService<Unit>, UnitService>();
             service.AddTransient<IBaseService<Status>, StatusService>();
+            service.AddTransient<IMailSender, MailSender>();
         }
     }
 }

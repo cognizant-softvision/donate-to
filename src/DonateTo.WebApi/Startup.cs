@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DonateTo.Services.Extensions;
 using Newtonsoft.Json;
+using DonateTo.Mailer.Entities;
 
 namespace DonateTo.WebApi
 {
@@ -47,6 +48,11 @@ namespace DonateTo.WebApi
             services.AddSwagger();
 
             services.AddLoggingToPipeline(Configuration);
+
+            var mailConfig = Configuration.GetSection("MailSettings")
+                .Get<MailServerSettings>();
+
+            services.AddSingleton(mailConfig);
 
             services.AddDonateToModule(Configuration);
         }
