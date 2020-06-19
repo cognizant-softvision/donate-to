@@ -25,8 +25,15 @@ namespace DonateTo.Services
         }
 
         ///<inheritdoc cref="IBaseService{TEntity}"/>
-        public virtual async Task<TEntity> CreateAsync(TEntity entity)
+        public virtual async Task<TEntity> CreateAsync(TEntity entity, string username = null)
         {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(typeof(TEntity).ToString(), _nullEntityException);
+            }
+
+            entity = ConfigureAsNew(entity, username);
+
             entity = await _entityRequestRepository.AddAsync(entity).ConfigureAwait(false);
             await _unitOfWork.SaveAsync().ConfigureAwait(false);
 
@@ -34,8 +41,15 @@ namespace DonateTo.Services
         }
 
         ///<inheritdoc cref="IBaseService{TEntity}"/>
-        public virtual TEntity Create(TEntity entity)
+        public virtual TEntity Create(TEntity entity, string username = null)
         {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(typeof(TEntity).ToString(), _nullEntityException);
+            }
+
+            entity = ConfigureAsNew(entity, username);
+
             entity = _entityRequestRepository.Add(entity);
             _unitOfWork.Save();
 
@@ -56,7 +70,7 @@ namespace DonateTo.Services
         }
 
         ///<inheritdoc cref="IBaseService{TEntity}"/>
-        public virtual async Task<TEntity> UpdateAsync(TEntity entity, long id)
+        public virtual async Task<TEntity> UpdateAsync(TEntity entity, long id, string username = null)
         {
             if (entity == null)
             {
@@ -67,6 +81,8 @@ namespace DonateTo.Services
                 throw new InvalidOperationException(_matchingIdException);
             }
 
+            entity = ConfigureAsUpdate(entity, username);
+
             entity =  await _entityRequestRepository.UpdateAsync(entity).ConfigureAwait(false);
             await _unitOfWork.SaveAsync().ConfigureAwait(false);
 
@@ -74,7 +90,7 @@ namespace DonateTo.Services
         }
         
         ///<inheritdoc cref="IBaseService{TEntity}"/>
-        public virtual TEntity Update(TEntity entity, long id)
+        public virtual TEntity Update(TEntity entity, long id, string username = null)
         {
             if (entity == null)
             {
@@ -84,6 +100,8 @@ namespace DonateTo.Services
             {
                 throw new InvalidOperationException(_matchingIdException);
             }
+
+            entity = ConfigureAsUpdate(entity, username);
 
             entity = _entityRequestRepository.Update(entity);
             _unitOfWork.Save();
@@ -149,6 +167,23 @@ namespace DonateTo.Services
         public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> filter = null)
         {
             return _entityRequestRepository.FirstOrDefault(filter);
+        }
+
+        private TEntity ConfigureAsNew(TEntity entity, string username)
+        {
+            entity.CreatedBy = username;
+            entity.CreatedDate = DateTime.UtcNow;
+            entity.UpdateBy = username;
+            entity.UpdateDate = DateTime.UtcNow;
+
+            return entity;
+        }        
+        private TEntity ConfigureAsUpdate(TEntity entity, string username)
+        {
+            entity.UpdateBy = username;
+            entity.UpdateDate = DateTime.UtcNow;
+
+            return entity;
         }
     }
 }

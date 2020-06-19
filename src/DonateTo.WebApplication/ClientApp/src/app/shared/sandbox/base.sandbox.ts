@@ -7,16 +7,10 @@ export abstract class Sandbox {
   public language = this.language$.subscribe((value) => (this.language = value));
   public culture: string;
 
-  public userId$ = this.appState$.select(store.fromAuth.getUserId);
-  public userName$ = this.appState$.select(store.fromAuth.getUserName);
-  public userEmail$ = this.appState$.select(store.fromAuth.getUserEmail);
   public accessToken$ = this.appState$.select(store.fromAuth.getAccessToken);
   public isAuthenticated$ = this.appState$.select(store.fromAuth.isAuthenticated);
   public isLoginProcessed$ = this.appState$.select(store.fromAuth.isLoginProcessed);
 
-  public userId: number;
-  public userName: string;
-  public userEmail: string;
   public accessToken: string;
   public isAuthenticated: boolean;
   public isLoginProcessed: boolean;

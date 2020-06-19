@@ -34,9 +34,6 @@ namespace DonateTo.IdentityServer.Services
 
             var claims = principal.Claims.ToList();
             claims = claims.Where(claim => context.RequestedClaimTypes.Contains(claim.Type)).ToList();
-            claims.Add(new Claim("user_Id", user.Id.ToString() ?? string.Empty));
-            claims.Add(new Claim("user_Email", user.Email.ToString() ?? string.Empty));
-
             var roleClaimName = JwtClaimTypes.Role;
             var existingRoles = context.IssuedClaims.Where(c => c.Type == roleClaimName).Select(c => c.Value);
             var roles = await _userManager.GetRolesAsync(user);
