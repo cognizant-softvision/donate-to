@@ -26,7 +26,6 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
   statusId = 2;
   selectedItemCategories: CategoryModel[] = [];
   title: string;
-  userId: number;
 
   listOfColumns: ColumnItem[] = [
     { name: 'Admin.Donation.Table.Itemcolumn' },
@@ -90,12 +89,6 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.donationSandbox.categories$.subscribe((categories) => {
         this.categories = categories;
-      })
-    );
-
-    this.subscriptions.push(
-      this.donationSandbox.userId$.subscribe((id) => {
-        this.userId = id;
       })
     );
   }
@@ -162,7 +155,6 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
     donationRequestForm.addressId = this.addressId;
     donationRequestForm.priority = this.priority;
     donationRequestForm.finishDate = this.finishDate;
-    donationRequestForm.userId = this.userId;
     donationRequestForm.donationRequestItems = this.donationRequestItems;
     donationRequestForm.statusId = this.statusId;
 

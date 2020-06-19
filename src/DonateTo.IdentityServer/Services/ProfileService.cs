@@ -39,7 +39,6 @@ namespace DonateTo.IdentityServer.Services
 
             var claims = principal.Claims.ToList();
             claims = claims.Where(claim => context.RequestedClaimTypes.Contains(claim.Type)).ToList();
-            claims.Add(new Claim("user_Id", user.Id.ToString() ?? string.Empty));
 
             var userOrganizations = await _organizationService.GetByUserIdAsync(user.Id);
             if (userOrganizations.Any())

@@ -55,27 +55,27 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// </summary>
         /// <param name="T">Entity.</param>
         /// <returns>Entity.</returns>
-        T Create(T entity);
+        T Create(T entity, string username);
 
         /// <summary>
         /// Create a entity async.
         /// </summary>
         /// <param name="T">Entity.</param>
         /// <returns>Entity.</returns>
-        Task<T> CreateAsync(T entity);
+        Task<T> CreateAsync(T entity, string username);
 
         /// <summary>
         /// Update an entity.
         /// </summary>
         /// <param name="T">Entity.</param>
-        T Update(T entity, long id);
+        T Update(T entity, long id, string username);
 
         /// <summary>
         /// Update an entity async.
         /// </summary>
         /// <param name="T">entity.</param>
         /// <returns>Task.</returns>
-        Task<T> UpdateAsync(T entity, long id);
+        Task<T> UpdateAsync(T entity, long id, string username);
 
         /// <summary>
         /// Delete an entity.

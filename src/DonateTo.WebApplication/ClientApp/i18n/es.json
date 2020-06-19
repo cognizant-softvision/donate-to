@@ -79,7 +79,9 @@
         "WeekDayColumn": "Día de semana",
         "StartTimeColumn": "Horario inicial",
         "FinishTimeColumn": "Horario final",
-        "OperationColumn": "Operación"
+        "OperationColumn": "Operación",
+        "StartTimeGreaterThanFinishTime": "El horario inicial es mayor al horario final!",
+        "FinishTimeLessThanStartTime": "El horario final es menor al inicial!"
       }
     },
     "DonationItemList": {
