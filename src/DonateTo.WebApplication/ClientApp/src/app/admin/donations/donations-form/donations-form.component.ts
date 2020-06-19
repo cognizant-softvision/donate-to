@@ -16,7 +16,7 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
   @Output() validationResult = new EventEmitter<DonationRequestModel>();
 
   private subscriptions: Subscription[] = [];
-  disabledDates: any;
+  disabledDates: (current: Date) => boolean;
   addressId: number;
   categories: CategoryModel[] = [];
   donationRequestItems: DonationRequestItemModel[] = [];
