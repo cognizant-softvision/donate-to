@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
 using System;
+using DonateTo.Mailer.Interfaces;
+using System.Globalization;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -14,11 +16,20 @@ namespace DonateTo.WebApi.V1.Controllers
     [ApiController]
     public class DonationRequestController : BaseApiController<DonationRequest>
     {
-        public DonationRequestController(IBaseService<DonationRequest> donationRequestService) : base(donationRequestService)
-        { }
+        private readonly IDonationRequestService _donationRequestService;
+        private readonly IMailSender _mailSender;
+        private const string _clientClaim = "client";
+
+        public DonationRequestController(
+            IDonationRequestService donationRequestService,
+            IMailSender mailSender) : base(donationRequestService)
+        {
+            _donationRequestService = donationRequestService;
+            _mailSender = mailSender;
+        }
 
         /// <summary>
-        /// Creates a new entity.
+        /// Creates a new DonationRequest.
         /// </summary>
         /// <param name="value">Entity to create.</param>
         /// <returns>Created entity.</returns>
@@ -35,49 +46,14 @@ namespace DonateTo.WebApi.V1.Controllers
             else
             {
                 var username = User.Claims.FirstOrDefault(claim => claim.Type == _usernameClaim)?.Value;
-                value.UserId = Convert.ToInt64(User.Claims.FirstOrDefault(claim => claim.Type == _userIdClaim)?.Value);
-                var result = await _baseService.CreateAsync(value, username).ConfigureAwait(false);
+                var client = User.Claims.FirstOrDefault(claim => claim.Type == _clientClaim)?.Value;
+                value.UserId = Convert.ToInt64(User.Claims.FirstOrDefault(claim => claim.Type == _userIdClaim)?.Value, CultureInfo.InvariantCulture);
 
-                return Ok(result);
+                var donationRequest = await _baseService.CreateAsync(value, username).ConfigureAwait(false);
+                await _donationRequestService.SendNewRequestMailToOrganizationUsersAsync(donationRequest, client).ConfigureAwait(false);
+
+                return Ok(donationRequest);
             }
-        }
-    }
-namespace DonateTo.WebApi.V1.Controllers
-{
-    ///<inheritdoc cref="BaseApiController{DonationRequest}"/>
-    [ApiVersion("1.0")]
-    [Route("api/v{version:apiVersion}/[controller]")]
-    [ApiController]
-    public class DonationRequestController : BaseApiController<DonationRequest>
-    {
-        private readonly IDonationRequestService _donationRequestService;
-        private const string _clientClaim = "client";
-
-        public DonationRequestController(
-            IDonationRequestService donationRequestService,
-            IMailSender mailSender) : base(donationRequestService)
-        {
-            _donationRequestService = donationRequestService;
-        }
-
-        public override async Task<IActionResult> Post([FromBody] DonationRequest value)
-        {
-            var client = User.Claims.FirstOrDefault(claim => claim.Type == _clientClaim)?.Value;
-            var request = await base.Post(value).ConfigureAwait(false);
-            
-            var code = (HttpStatusCode)request
-                .GetType()
-                .GetProperty("StatusCode")
-                .GetValue(request, null);
-
-            if (code == HttpStatusCode.OK)
-            {
-                await _donationRequestService.SendNewRequestMailToOrganizationUsersAsync(
-                    (DonationRequest)((OkObjectResult)request).Value, 
-                    client).ConfigureAwait(false);
-            }
-
-            return request;
         }
     }
 }
