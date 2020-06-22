@@ -100,5 +100,31 @@ namespace DonateTo.Services
         {
             throw new NotImplementedException();
         }
+
+        public void UpdateUserOrganizations(long userId, IEnumerable<long> organizationsId, string username = null)
+        {
+            var user = _userRepository.Get(userId);
+            user.UpdateBy = username;
+
+            user.UserOrganizations = organizationsId
+                .Select(o => new UserOrganization { UserId = userId, OrganizationId = o })
+                .ToList();
+
+            _userRepository.Update(user);
+            _unitOfWork.Save();
+        }
+
+        public async Task UpdateUserOrganizationsAsync(long userId, IEnumerable<long> organizationsId, string username = null)
+        {
+            var user = await _userRepository.GetAsync(userId).ConfigureAwait(false);
+            user.UpdateBy = username;
+
+            user.UserOrganizations = organizationsId
+                .Select(o => new UserOrganization { UserId = userId, OrganizationId = o })
+                .ToList();
+
+            await _userRepository.UpdateAsync(user).ConfigureAwait(false);
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
+        }
     }
 }

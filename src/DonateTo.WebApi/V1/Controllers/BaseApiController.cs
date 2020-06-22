@@ -24,6 +24,7 @@ namespace DonateTo.WebApi.V1.Controllers
         protected readonly IBaseService<T> _baseService;
         protected const string _usernameClaim = "name";
         protected const string _userIdClaim = "sub";
+        protected const string _roleClaim = "role";
 
         protected BaseApiController(IBaseService<T> baseService)
         {

@@ -1,6 +1,7 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models.Pagination;
+using DonateTo.WebApi.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -18,6 +19,7 @@ namespace DonateTo.WebApi.V1.Controllers
     {
         private readonly IUserService _userService;
         protected const string _usernameClaim = "name";
+        protected const string _roleClaim = "role";
 
         public UserController(IUserService userService)
         {
@@ -157,6 +159,7 @@ namespace DonateTo.WebApi.V1.Controllers
                 try
                 {
                     var username = User.Claims.FirstOrDefault(claim => claim.Type == _usernameClaim)?.Value;
+
                     var result = await _userService.UpdateAsync(value, id, username).ConfigureAwait(false);
 
                     return Ok(result);
@@ -171,6 +174,48 @@ namespace DonateTo.WebApi.V1.Controllers
                 }
             }
         }
-    }
 
+        /// <summary>
+        /// Update a User linked Organizations
+        /// </summary>
+        /// <param name="userId">User Id to update.</param>
+        /// <param name="value">Organizations Id list to update.</param>
+        /// <returns>Updated user.</returns>
+        [HttpPut(Name = "[controller]_[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> PutUserOrganizationsAsync(long userId, [FromBody] IEnumerable<long> value)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                try
+                {
+                    var userRole = User.Claims.FirstOrDefault(claim => claim.Type.Contains(_roleClaim))?.Value;
+                    if (userRole != UserRoles.Superadmin && userRole != UserRoles.Admin)
+                    {
+                        return Forbid();
+                    }
+
+                    var username = User.Claims.FirstOrDefault(claim => claim.Type == _usernameClaim)?.Value;
+                    await _userService.UpdateUserOrganizationsAsync(userId, value, username).ConfigureAwait(false);
+
+                    return Ok();
+                }
+                catch (ArgumentNullException ex)
+                {
+                    return NotFound(ex);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    return BadRequest(ex);
+                }
+            }
+        }
+    }
 }
