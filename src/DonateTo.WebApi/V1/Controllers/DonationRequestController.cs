@@ -48,8 +48,11 @@ namespace DonateTo.WebApi.V1.Controllers
             }
             else
             {
+                StringValues client;
+                Request.Headers.TryGetValue("Origin", out client);
+
                 var username = User.Claims.FirstOrDefault(claim => claim.Type == _usernameClaim)?.Value;
-                var client = User.Claims.FirstOrDefault(claim => claim.Type == _clientClaim)?.Value;
+
                 value.UserId = Convert.ToInt64(User.Claims.FirstOrDefault(claim => claim.Type == _userIdClaim)?.Value, CultureInfo.InvariantCulture);
 
                 var donationRequest = await _baseService.CreateAsync(value, username).ConfigureAwait(false);
