@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces.Services;
-using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
-using DonateTo.ApplicationCore;
 
 namespace DonateTo.WebApi.V1.Controllers
 {

@@ -102,7 +102,7 @@ namespace DonateTo.IdentityServer.Controllers
                     var user = _userService.FirstOrDefault(u => u.Email == model.Email);
                     await _eventsService.RaiseAsync(new UserLoginSuccessEvent(user.Email, user.Id.ToString(), user.FullName));
 
-                    await RegisterToken( user, model.RememberLogin);
+                    await RegisterToken(user, model.RememberLogin);
 
                     if (context != null || Url.IsLocalUrl(model.ReturnUrl))
                     {
@@ -126,28 +126,6 @@ namespace DonateTo.IdentityServer.Controllers
             // something went wrong, show form with error
             var vm = await BuildLoginViewModelAsync(model);
             return View(vm);
-        }
-
-
-        private async Task RegisterToken(User user,bool rememberLogin) {
-            // only set explicit expiration here if user chooses "remember me". 
-            // otherwise we rely upon expiration configured in cookie middleware.
-            AuthenticationProperties props = null;
-            if (AccountOptions.AllowRememberLogin && rememberLogin)
-            {
-                props = new AuthenticationProperties
-                {
-                    IsPersistent = true,
-                    ExpiresUtc = DateTimeOffset.UtcNow.Add(AccountOptions.RememberMeLoginDuration)
-                };
-            };
-
-            //assign roles as claims
-            var roles = await _userManager.GetRolesAsync(user);
-            var roleClaimName = JwtClaimTypes.Role;
-            var roleClaims = roles.Select(r => new Claim(roleClaimName, r)).ToArray();
-            await HttpContext.SignInAsync(user.Id.ToString(), user.Email, props, roleClaims);
-
         }
 
         [HttpGet]
@@ -346,6 +324,28 @@ namespace DonateTo.IdentityServer.Controllers
         }
 
         #region private
+        private async Task RegisterToken(User user, bool rememberLogin)
+        {
+            // only set explicit expiration here if user chooses "remember me". 
+            // otherwise we rely upon expiration configured in cookie middleware.
+            AuthenticationProperties props = null;
+            if (AccountOptions.AllowRememberLogin && rememberLogin)
+            {
+                props = new AuthenticationProperties
+                {
+                    IsPersistent = true,
+                    ExpiresUtc = DateTimeOffset.UtcNow.Add(AccountOptions.RememberMeLoginDuration)
+                };
+            };
+
+            //assign roles as claims
+            var roles = await _userManager.GetRolesAsync(user);
+            var roleClaimName = JwtClaimTypes.Role;
+            var roleClaims = roles.Select(r => new Claim(roleClaimName, r)).ToArray();
+            await HttpContext.SignInAsync(user.Id.ToString(), user.Email, props, roleClaims);
+
+        }
+
         public RedirectHomeViewModel BuildRedirectHomeViewModel(string redirectUri)
         {
             return new RedirectHomeViewModel

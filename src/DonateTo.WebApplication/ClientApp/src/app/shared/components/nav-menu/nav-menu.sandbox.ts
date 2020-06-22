@@ -73,7 +73,5 @@ export class NavMenuSandBox extends Sandbox {
     this.subscriptions.push(
       this.isAuthenticated$.subscribe((isAuthenticated: boolean) => (this.isAuthenticated = isAuthenticated))
     );
-    this.subscriptions.push(this.userName$.subscribe((userName: string) => (this.userName = userName)));
-    // If user is logged in, load donationRequests
   }
 }

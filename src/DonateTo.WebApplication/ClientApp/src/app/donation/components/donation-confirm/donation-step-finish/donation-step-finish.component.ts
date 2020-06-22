@@ -2,10 +2,11 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { DonationItemModel } from 'src/app/shared/models/donation-item.model';
 import { DonationSandbox } from 'src/app/donation/donation.sandbox';
 import { AvailabilityModel } from 'src/app/shared/models/availability.model';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { WeekDays } from 'src/app/shared/enum/weekdays';
+import { compareDate, CompareDateResult } from 'src/app/shared/utility/dates/compare-dates';
 
 @Component({
   selector: 'app-donation-step-finish',
@@ -13,6 +14,20 @@ import { WeekDays } from 'src/app/shared/enum/weekdays';
   styleUrls: ['./donation-step-finish.component.css'],
 })
 export class DonationStepFinishComponent implements OnInit, OnDestroy {
+  finishStepFormGroup: FormGroup;
+
+  constructor(
+    public donationSandbox: DonationSandbox,
+    public translateService: TranslateService,
+    private fb: FormBuilder
+  ) {
+    this.finishStepFormGroup = this.fb.group({
+      weekDayFormControl: new FormControl('', Validators.required),
+      startTimeFormControl: new FormControl(null, [Validators.required, this.startTimeValidator]),
+      finishTimeFormControl: new FormControl(null, [Validators.required, this.finishTimeValidator]),
+    });
+  }
+
   @Input() donationItems: DonationItemModel[];
   @Output() isFormValid = new EventEmitter<boolean>();
 
@@ -30,15 +45,32 @@ export class DonationStepFinishComponent implements OnInit, OnDestroy {
     { dayOfWeek: WeekDays.Friday, description: this.translateService.instant('WeekDays.Friday') },
   ];
 
-  finishStepFormGroup = new FormGroup({
-    weekDayFormControl: new FormControl('', Validators.required),
-    startTimeFormControl: new FormControl(null, Validators.required),
-    finishTimeFormControl: new FormControl(null, Validators.required),
-  });
-
-  constructor(public donationSandbox: DonationSandbox, public translateService: TranslateService) {}
   ngOnInit(): void {
     this.registerEvents();
+  }
+
+  startTimeValidator(control: FormControl): { [s: string]: boolean } {
+    if (!control.value) {
+      return { error: true, required: true };
+    } else if (
+      compareDate(control.value, this.finishStepFormGroup.controls.finishTimeFormControl.value) ===
+      CompareDateResult.Greater
+    ) {
+      return { greater: true, error: true };
+    }
+    return {};
+  }
+
+  finishTimeValidator(control: FormControl): { [s: string]: boolean } {
+    if (!control.value) {
+      return { error: true, required: true };
+    } else if (
+      compareDate(control.value, this.finishStepFormGroup.controls.startTimeFormControl.value) ===
+      CompareDateResult.Less
+    ) {
+      return { greater: true, error: true };
+    }
+    return {};
   }
 
   dayOfWeekDescription(dayOfWeek: number): string {

@@ -3,15 +3,17 @@ using System;
 using DonateTo.IdentityServer.Data.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DonateTo.IdentityServer.Data.Migrations.IdentityServer.ConfigurationDb
 {
     [DbContext(typeof(CustomConfigurationDbContext))]
-    partial class CustomConfigurationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200619135431_UpdateClientConfigForBugFix")]
+    partial class UpdateClientConfigForBugFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
