@@ -50,9 +50,9 @@
     </None>
   </ItemGroup>
 
-  <Target Name="MyPreCompileTarget" BeforeTargets="Build">
+  <Target Name="MyPreCompileTarget" Condition="Exists(npm)" BeforeTargets="Build">
     <Exec WorkingDirectory="$(ProjectDir)\Styles" Command="npm i" />
-    <Exec WorkingDirectory="$(ProjectDir)\Styles" Command="node_modules\.bin\gulp" />
+    <Exec WorkingDirectory="$(ProjectDir)\Styles\node_modules\.bin" Command="./gulp" />
   </Target>
 
 </Project>
