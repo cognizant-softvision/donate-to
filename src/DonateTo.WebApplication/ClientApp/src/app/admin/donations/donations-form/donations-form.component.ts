@@ -3,8 +3,8 @@ import { DonationsSandbox } from '../donations-sandbox';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NzI18nService } from 'ng-zorro-antd';
 import { Subscription } from 'rxjs';
-import differenceInCalendarDays from 'date-fns/differenceInCalendarDays';
 import { CategoryModel, ColumnItem, DonationRequestItemModel, DonationRequestModel } from 'src/app/shared/models';
+import { compareDate } from 'src/app/shared/utility/dates/compare-dates';
 
 @Component({
   selector: 'app-donations-form',
@@ -75,7 +75,7 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
     this.sandBoxSubscriptionInit();
 
     this.disabledDates = (current: Date): boolean => {
-      return differenceInCalendarDays(current, new Date()) < 0;
+      return compareDate(current, new Date()) < 0;
     };
 
     this.donationSandbox.loadOrganizations();
