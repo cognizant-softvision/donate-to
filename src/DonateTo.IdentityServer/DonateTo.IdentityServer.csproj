@@ -5,6 +5,11 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
+  <ItemGroup>    
+    <Content Include="Styles\site.less" />
+  </ItemGroup>
+  
+
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
@@ -12,6 +17,7 @@
     <PackageReference Include="IdentityServer4.AspNetIdentity" Version="3.1.3" />
     <PackageReference Include="IdentityServer4.EntityFramework" Version="3.1.3" />
     <PackageReference Include="IdentityServer4.Storage" Version="3.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="3.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.3">
@@ -22,7 +28,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.3" />
   </ItemGroup>
 
@@ -35,6 +41,7 @@
 
   <ItemGroup>
     <Folder Include="Data\Migrations\IdentityServer\" />
+    <Folder Include="wwwroot\css\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,6 +50,9 @@
     </None>
   </ItemGroup>
 
-
+  <Target Name="MyPreCompileTarget" BeforeTargets="Build">
+    <Exec WorkingDirectory="$(ProjectDir)\Styles" Command="npm i" />
+    <Exec WorkingDirectory="$(ProjectDir)\Styles" Command="node_modules\.bin\gulp" />
+  </Target>
 
 </Project>

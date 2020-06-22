@@ -334,7 +334,7 @@ namespace DonateTo.Infrastructure.Migrations
                     b.Property<long>("StatusId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("UnitId")
+                    b.Property<long>("UnitId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("UpdateBy")
@@ -831,6 +831,21 @@ namespace DonateTo.Infrastructure.Migrations
                     b.ToTable("UserLogin");
                 });
 
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.UserOrganization", b =>
+                {
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("OrganizationId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("UserId", "OrganizationId");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.ToTable("UserOrganization");
+                });
+
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.UserRole", b =>
                 {
                     b.Property<long>("UserId")
@@ -955,7 +970,9 @@ namespace DonateTo.Infrastructure.Migrations
 
                     b.HasOne("DonateTo.ApplicationCore.Entities.Unit", "Unit")
                         .WithMany()
-                        .HasForeignKey("UnitId");
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.DonationRequest", b =>
@@ -1077,6 +1094,21 @@ namespace DonateTo.Infrastructure.Migrations
                 {
                     b.HasOne("DonateTo.ApplicationCore.Entities.User", "User")
                         .WithMany("Logins")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.UserOrganization", b =>
+                {
+                    b.HasOne("DonateTo.ApplicationCore.Entities.Organization", "Organization")
+                        .WithMany("UserOrganizations")
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "User")
+                        .WithMany("UserOrganizations")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

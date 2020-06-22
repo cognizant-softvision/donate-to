@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DonateTo.WebApi.V1.Controllers
@@ -16,6 +17,7 @@ namespace DonateTo.WebApi.V1.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
+        protected const string _usernameClaim = "name";
 
         public UserController(IUserService userService)
         {
@@ -154,7 +156,8 @@ namespace DonateTo.WebApi.V1.Controllers
             {
                 try
                 {
-                    var result = await _userService.UpdateAsync(value, id).ConfigureAwait(false);
+                    var username = User.Claims.FirstOrDefault(claim => claim.Type == _usernameClaim)?.Value;
+                    var result = await _userService.UpdateAsync(value, id, username).ConfigureAwait(false);
 
                     return Ok(result);
                 }

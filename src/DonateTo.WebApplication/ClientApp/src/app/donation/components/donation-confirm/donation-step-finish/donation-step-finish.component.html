@@ -30,6 +30,9 @@
         <ng-container *ngIf="control.hasError('required')">
           {{ 'RequestDonation.DonationSteps.FinishStep.RequiredStartTime' | translate }}
         </ng-container>
+        <ng-container *ngIf="control.hasError('greater')">
+          {{ 'RequestDonation.DonationSteps.FinishStep.StartTimeGreaterThanFinishTime' | translate }}
+        </ng-container>
       </ng-template>
     </nz-form-control>
   </nz-form-item>
@@ -43,6 +46,9 @@
       <ng-template #finishTimeErrorTpl let-control>
         <ng-container *ngIf="control.hasError('required')">
           {{ 'RequestDonation.DonationSteps.FinishStep.RequiredFinishTime' | translate }}
+        </ng-container>
+        <ng-container *ngIf="control.hasError('greater')">
+          {{ 'RequestDonation.DonationSteps.FinishStep.FinishTimeLessThanStartTime' | translate }}
         </ng-container>
       </ng-template>
     </nz-form-control>

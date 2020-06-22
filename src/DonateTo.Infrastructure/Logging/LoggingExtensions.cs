@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using Serilog.Events;
 using Serilog.Extensions.Logging;
 using System;
 
@@ -23,10 +24,13 @@ namespace DonateTo.Infrastructure.Logging
             using (var provider = new LoggerProviderCollection())
             {
                 Log.Logger = new LoggerConfiguration()
-                      .MinimumLevel.Debug()
-                      .WriteTo.PostgreSQL(connectionString, "Logs", needAutoCreateTable: autoCreateTable)
-                      .WriteTo.Providers(provider)
-                      .CreateLogger();
+                    .Enrich.FromLogContext()
+                    .MinimumLevel.Debug()
+                    .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+                    .WriteTo.PostgreSQL(connectionString, "Logs", needAutoCreateTable: autoCreateTable)
+                    .WriteTo.Providers(provider)
+                    .WriteTo.Console()
+                    .CreateLogger();
 
                 var loggerFactory = services.BuildServiceProvider().GetRequiredService<ILoggerFactory>();
                 loggerFactory.AddSerilog(Log.Logger);

@@ -102,7 +102,7 @@ namespace DonateTo.IdentityServer.Controllers
                     var user = _userService.FirstOrDefault(u => u.Email == model.Email);
                     await _eventsService.RaiseAsync(new UserLoginSuccessEvent(user.Email, user.Id.ToString(), user.FullName));
 
-                    await RegisterToken( user, model.RememberLogin);
+                    await RegisterToken(user, model.RememberLogin);
 
                     if (context != null || Url.IsLocalUrl(model.ReturnUrl))
                     {
@@ -126,28 +126,6 @@ namespace DonateTo.IdentityServer.Controllers
             // something went wrong, show form with error
             var vm = await BuildLoginViewModelAsync(model);
             return View(vm);
-        }
-
-
-        private async Task RegisterToken(User user,bool rememberLogin) {
-            // only set explicit expiration here if user chooses "remember me". 
-            // otherwise we rely upon expiration configured in cookie middleware.
-            AuthenticationProperties props = null;
-            if (AccountOptions.AllowRememberLogin && rememberLogin)
-            {
-                props = new AuthenticationProperties
-                {
-                    IsPersistent = true,
-                    ExpiresUtc = DateTimeOffset.UtcNow.Add(AccountOptions.RememberMeLoginDuration)
-                };
-            };
-
-            //assign roles as claims
-            var roles = await _userManager.GetRolesAsync(user);
-            var roleClaimName = JwtClaimTypes.Role;
-            var roleClaims = roles.Select(r => new Claim(roleClaimName, r)).ToArray();
-            await HttpContext.SignInAsync(user.Id.ToString(), user.Email, props, roleClaims);
-
         }
 
         [HttpGet]
@@ -178,7 +156,7 @@ namespace DonateTo.IdentityServer.Controllers
             var result = await _userManager.CreateAsync(user, userRegistrationViewModel.Password)
                 .ConfigureAwait(false);
 
-            if (result.Succeeded) 
+            if (result.Succeeded)
             {
                 var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", new { token, email = user.Email }, Request.Scheme);
@@ -188,14 +166,15 @@ namespace DonateTo.IdentityServer.Controllers
                     HtmlBody = $"<p>Please confirm your email clicking <a href='{ confirmationLink }' target='_blank'>here</a></p>"
                 };
 
-                var message = new Message(user.Email,"Activate your account", bodyMessage);
+                var message = new Message(user.Email, "Activate your account", bodyMessage);
 
                 await _mailSender.SendAsync(message);
 
                 var role = await _roleManager.FindByNameAsync("Donor").ConfigureAwait(false);
                 result = await _userManager.AddToRoleAsync(user, role.Name).ConfigureAwait(false);
 
-                return RedirectToAction(nameof(SuccessRegistration));
+                var rvm = BuildRedirectHomeViewModel(userRegistrationViewModel.ReturnUrl);
+                return RedirectToAction("SuccessRegistration", rvm);
             }
 
             if (!result.Succeeded)
@@ -242,9 +221,13 @@ namespace DonateTo.IdentityServer.Controllers
         }
 
         [HttpGet]
-        public IActionResult ForgotPassword()
+        public IActionResult ForgotPassword(string returnUrl)
         {
-            return View();
+            var model = new ForgotPasswordViewModel
+            {
+                ReturnUrl = returnUrl
+            };
+            return View(model);
         }
 
         [HttpPost]
@@ -260,7 +243,7 @@ namespace DonateTo.IdentityServer.Controllers
 
             if (user == null)
             {
-                return RedirectToAction(nameof(ForgotPasswordConfirmation));
+                return View("Error");
             }
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
@@ -275,12 +258,14 @@ namespace DonateTo.IdentityServer.Controllers
 
             await _mailSender.SendAsync(message);
 
-            return RedirectToAction(nameof(ForgotPasswordConfirmation));
+            var rvm = BuildRedirectHomeViewModel(forgotPasswordViewModel.ReturnUrl);
+            return RedirectToAction("ForgotPasswordConfirmation", rvm);
         }
 
-        public IActionResult ForgotPasswordConfirmation()
+        [HttpGet]
+        public IActionResult ForgotPasswordConfirmation(RedirectHomeViewModel model)
         {
-            return View();
+            return View(model);
         }
 
         [HttpGet]
@@ -316,9 +301,9 @@ namespace DonateTo.IdentityServer.Controllers
         }
 
         [HttpGet]
-        public IActionResult ResetPasswordConfirmation()
+        public IActionResult ResetPasswordConfirmation(RedirectHomeViewModel model)
         {
-            return View();
+            return View(model);
         }
 
         [HttpGet]
@@ -333,12 +318,42 @@ namespace DonateTo.IdentityServer.Controllers
         }
 
         [HttpGet]
-        public IActionResult SuccessRegistration()
+        public IActionResult SuccessRegistration(RedirectHomeViewModel model)
         {
-            return View();
+            return View(model);
         }
 
         #region private
+        private async Task RegisterToken(User user, bool rememberLogin)
+        {
+            // only set explicit expiration here if user chooses "remember me". 
+            // otherwise we rely upon expiration configured in cookie middleware.
+            AuthenticationProperties props = null;
+            if (AccountOptions.AllowRememberLogin && rememberLogin)
+            {
+                props = new AuthenticationProperties
+                {
+                    IsPersistent = true,
+                    ExpiresUtc = DateTimeOffset.UtcNow.Add(AccountOptions.RememberMeLoginDuration)
+                };
+            };
+
+            //assign roles as claims
+            var roles = await _userManager.GetRolesAsync(user);
+            var roleClaimName = JwtClaimTypes.Role;
+            var roleClaims = roles.Select(r => new Claim(roleClaimName, r)).ToArray();
+            await HttpContext.SignInAsync(user.Id.ToString(), user.Email, props, roleClaims);
+
+        }
+
+        public RedirectHomeViewModel BuildRedirectHomeViewModel(string redirectUri)
+        {
+            return new RedirectHomeViewModel
+            {
+                RedirectUris = redirectUri
+            };
+        }
+
         private async Task<LoginViewModel> BuildLoginViewModelAsync(string returnUrl)
         {
             var context = await _interactionService.GetAuthorizationContextAsync(returnUrl);
