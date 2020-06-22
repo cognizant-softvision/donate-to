@@ -1,9 +1,12 @@
-﻿@{
+﻿@model RedirectHomeViewModel
+@{
     ViewData["Title"] = "Confirm Email";
 }
 
-<div class="form-card">
-    <p>
-        Please check your email to verify this account.
-    </p>
+<div class="container-message">
+    <div class="message-box">
+        <h6>Please check your email to verify this account.</h6>
+        <br>
+        <a href="@(Model.RedirectUris)">Go to home page </a>
+    </div>
 </div>
