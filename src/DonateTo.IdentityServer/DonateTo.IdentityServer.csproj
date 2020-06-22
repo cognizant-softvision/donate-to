@@ -5,6 +5,11 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
+  <ItemGroup>    
+    <Content Include="Styles\site.less" />
+  </ItemGroup>
+  
+
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
@@ -36,6 +41,7 @@
 
   <ItemGroup>
     <Folder Include="Data\Migrations\IdentityServer\" />
+    <Folder Include="wwwroot\css\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +50,9 @@
     </None>
   </ItemGroup>
 
-
+  <Target Name="MyPreCompileTarget" BeforeTargets="Build">
+    <Exec WorkingDirectory="$(ProjectDir)\Styles" Command="npm i" />
+    <Exec WorkingDirectory="$(ProjectDir)\Styles" Command="node_modules\.bin\gulp" />
+  </Target>
 
 </Project>
