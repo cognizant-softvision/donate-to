@@ -26,11 +26,9 @@ namespace DonateTo.UnitTests.Services
             // Arrange
             long requestId = 1;
             var result = new DonationRequest() { Id = requestId };
-            var userRepository = new MockBaseRepository<User>();
             var requestRepository = new MockBaseRepository<DonationRequest>().MockGet(result);
             var unitOfWork = new MockUnitOfWork().MockSaveAsync(0);
-            var userService = new UserService(userRepository.Object, unitOfWork.Object);
-            var requestService = new DonationRequestService(userService, new MailSender(_mailServerSettings), requestRepository.Object, unitOfWork.Object);
+            var requestService = new DonationRequestService(new MailSender(_mailServerSettings), requestRepository.Object, unitOfWork.Object);
 
             // Act
             var donationRequest = requestService.GetAsync(requestId);

@@ -10,6 +10,7 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// Send Created request info mail to all users of the organization
         /// </summary>
         /// <param name="donationRequest">DonationRequest</param>
+        /// <param name="users">IEnumerable<Users></Users></param>
         /// <param name="client">Client</param>
         /// <returns></returns>
         Task SendNewRequestMailToOrganizationUsersAsync(DonationRequest donationRequest, IEnumerable<User> users, string client);

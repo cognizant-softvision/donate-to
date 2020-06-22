@@ -19,17 +19,13 @@ namespace DonateTo.WebApi.V1.Controllers
     {
         private readonly IDonationRequestService _donationRequestService;
         private readonly IUserService _userService;
-        private readonly IMailSender _mailSender;
-        private const string _clientClaim = "client";
 
         public DonationRequestController(
             IDonationRequestService donationRequestService,
-            IUserService userService,
-            IMailSender mailSender) : base(donationRequestService)
+            IUserService userService) : base(donationRequestService)
         {
             _donationRequestService = donationRequestService;
             _userService = userService;
-            _mailSender = mailSender;
         }
 
         /// <summary>
