@@ -22,7 +22,12 @@
       </tbody>
     </nz-table>
     <div class="button-div">
-      <button nz-button nzType="primary" (click)="saveGeneralInformation()">{{ 'SaveBtn' | translate }}</button>
+      <button nz-button class="buttons" nzType="default" (click)="cancelGeneralInformation()">
+        {{ 'CancelBtn' | translate }}
+      </button>
+      <button nz-button class="buttons" nzType="primary" (click)="saveGeneralInformation()">
+        {{ 'SaveBtn' | translate }}
+      </button>
     </div>
     <nz-table #newPassRowTable nzBordered [nzData]="listChangePassword" [nzFrontPagination]="false">
       <thead>
@@ -42,7 +47,12 @@
       </tbody>
     </nz-table>
     <div class="button-div">
-      <button nz-button nzType="primary" (click)="saveNewPassword()">{{ 'SaveBtn' | translate }}</button>
+      <button nz-button class="buttons" nzType="default" (click)="cancelPassword()">
+        {{ 'CancelBtn' | translate }}
+      </button>
+      <button nz-button class="buttons" nzType="primary" (click)="saveNewPassword()">
+        {{ 'SaveBtn' | translate }}
+      </button>
     </div>
   </nz-layout>
 </nz-layout>

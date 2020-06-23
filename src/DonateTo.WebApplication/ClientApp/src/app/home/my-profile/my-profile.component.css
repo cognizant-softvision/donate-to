@@ -11,9 +11,13 @@
 }
 
 .button-div {
-  margin-left: 93%;
-  margin-right: 7%;
+  display: flex;
   margin-bottom: 2em;
+  justify-content: flex-end;
+}
+
+.buttons {
+  margin-left: 1em;
 }
 
 #main-layout {
