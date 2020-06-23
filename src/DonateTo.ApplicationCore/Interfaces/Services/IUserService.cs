@@ -21,7 +21,7 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         Task<IEnumerable<User>> GetByOrganizationIdAsync(long organizationId);
 
         /// <summary>
-        /// Update an user linked organizations async.
+        /// Update an user linked organizations.
         /// </summary>
         /// <param name="organizationId">Organization Id</param>
         /// <param name="userId">User Id.</param>

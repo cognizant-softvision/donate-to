@@ -77,6 +77,7 @@ namespace DonateTo.Services
             return await _userRepository.GetPagedAsync(page, pageSize, filter).ConfigureAwait(false);
         }
 
+        ///<inheritdoc cref="IUserService"/>
         public IEnumerable<User> GetByOrganizationId(long organizationId)
         {
             return _userRepository.Get(u => u.UserOrganizations
@@ -84,6 +85,7 @@ namespace DonateTo.Services
             .Equals(organizationId)));
         }
 
+        ///<inheritdoc cref="IUserService"/>
         public async Task<IEnumerable<User>> GetByOrganizationIdAsync(long organizationId)
         {
             return await _userRepository.GetAsync(u => u.UserOrganizations
@@ -101,30 +103,47 @@ namespace DonateTo.Services
             throw new NotImplementedException();
         }
 
-        public void UpdateUserOrganizations(long userId, IEnumerable<long> organizationsId, string username = null)
+        ///<inheritdoc cref="IUserService"/>
+        public void UpdateUserOrganizations(long userId, IEnumerable<long> organizationsId, string username)
         {
             var user = _userRepository.Get(userId);
             user.UpdateBy = username;
 
-            user.UserOrganizations = organizationsId
-                .Select(o => new UserOrganization { UserId = userId, OrganizationId = o })
-                .ToList();
+            FilterUserOrganizations(user, userId, organizationsId);
 
             _userRepository.Update(user);
             _unitOfWork.Save();
         }
 
-        public async Task UpdateUserOrganizationsAsync(long userId, IEnumerable<long> organizationsId, string username = null)
+        ///<inheritdoc cref="IUserService"/>
+        public async Task UpdateUserOrganizationsAsync(long userId, IEnumerable<long> organizationsId, string username)
         {
             var user = await _userRepository.GetAsync(userId).ConfigureAwait(false);
             user.UpdateBy = username;
 
-            user.UserOrganizations = organizationsId
-                .Select(o => new UserOrganization { UserId = userId, OrganizationId = o })
-                .ToList();
+            FilterUserOrganizations(user, userId, organizationsId);
 
             await _userRepository.UpdateAsync(user).ConfigureAwait(false);
             await _unitOfWork.SaveAsync().ConfigureAwait(false);
         }
+
+        #region private
+        private void FilterUserOrganizations(User user, long userId, IEnumerable<long> organizationsId)
+        {
+            var newOrganizations = new List<UserOrganization>();
+
+            newOrganizations = organizationsId
+           .Where(o => user.UserOrganizations.Any(uo => uo.OrganizationId != o))
+           .Select(o => new UserOrganization { UserId = userId, OrganizationId = o })
+           .ToList();
+
+            user.UserOrganizations.RemoveAll(uo => organizationsId.Any(o => o != uo.OrganizationId));
+
+            if (newOrganizations.Any())
+            {
+                user.UserOrganizations.AddRange(newOrganizations);
+            }
+        }
+        #endregion
     }
 }

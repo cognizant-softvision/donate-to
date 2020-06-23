@@ -1,7 +1,7 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models.Pagination;
-using DonateTo.WebApi.Common;
+using DonateTo.Infrastructure.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -197,7 +197,7 @@ namespace DonateTo.WebApi.V1.Controllers
                 try
                 {
                     var userRole = User.Claims.FirstOrDefault(claim => claim.Type.Contains(_roleClaim))?.Value;
-                    if (userRole != UserRoles.Superadmin && userRole != UserRoles.Admin)
+                    if (userRole != Roles.Superadmin && userRole != Roles.Admin)
                     {
                         return Forbid();
                     }

@@ -1,6 +1,6 @@
-﻿namespace DonateTo.WebApi.Common
+﻿namespace DonateTo.Infrastructure.Common
 {
-    public static class UserRoles
+    public static class Roles
     {
         public const string Superadmin = "Superadmin";
         public const string Admin = "Admin";
