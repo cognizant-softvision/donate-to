@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
 using System;
+using DonateTo.WebApi.Common;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -34,8 +35,8 @@ namespace DonateTo.WebApi.V1.Controllers
             }
             else
             {
-                var username = User.Claims.FirstOrDefault(claim => claim.Type == _usernameClaim)?.Value;
-                value.UserId = Convert.ToInt64(User.Claims.FirstOrDefault(claim => claim.Type == _userIdClaim)?.Value);
+                var username = User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserName)?.Value;
+                value.UserId = Convert.ToInt64(User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserId)?.Value);
                 var result = await _baseService.CreateAsync(value, username).ConfigureAwait(false);
 
                 return Ok(result);

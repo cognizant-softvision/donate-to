@@ -2,6 +2,7 @@
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models.Pagination;
 using DonateTo.Infrastructure.Common;
+using DonateTo.WebApi.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -18,8 +19,6 @@ namespace DonateTo.WebApi.V1.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-        protected const string _usernameClaim = "name";
-        protected const string _roleClaim = "role";
 
         public UserController(IUserService userService)
         {
@@ -158,7 +157,7 @@ namespace DonateTo.WebApi.V1.Controllers
             {
                 try
                 {
-                    var username = User.Claims.FirstOrDefault(claim => claim.Type == _usernameClaim)?.Value;
+                    var username = User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserName)?.Value;
 
                     var result = await _userService.UpdateAsync(value, id, username).ConfigureAwait(false);
 
@@ -196,13 +195,13 @@ namespace DonateTo.WebApi.V1.Controllers
             {
                 try
                 {
-                    var userRole = User.Claims.FirstOrDefault(claim => claim.Type.Contains(_roleClaim))?.Value;
+                    var userRole = User.Claims.FirstOrDefault(claim => claim.Type.Contains(Claims.Role))?.Value;
                     if (userRole != Roles.Superadmin && userRole != Roles.Admin)
                     {
                         return Forbid();
                     }
 
-                    var username = User.Claims.FirstOrDefault(claim => claim.Type == _usernameClaim)?.Value;
+                    var username = User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserName)?.Value;
                     await _userService.UpdateUserOrganizationsAsync(userId, value, username).ConfigureAwait(false);
 
                     return Ok();
