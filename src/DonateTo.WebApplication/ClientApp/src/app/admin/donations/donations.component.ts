@@ -1,6 +1,6 @@
 import { ColumnItem, DonationRequestModel } from '../../shared/models';
 import { Component, OnInit } from '@angular/core';
-import { compareDate, CompareDateResult } from 'src/app/shared/utility/dates/compare-dates';
+import { compareDate } from 'src/app/shared/utility/dates/compare-dates';
 
 import { DonationsSandbox } from './donations-sandbox';
 import { Router } from '@angular/router';

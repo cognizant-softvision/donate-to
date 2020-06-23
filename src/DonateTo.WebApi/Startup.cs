@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using DonateTo.Services.Extensions;
 using Newtonsoft.Json;
 using DonateTo.Mailer.Entities;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace DonateTo.WebApi
 {
@@ -32,6 +33,8 @@ namespace DonateTo.WebApi
             services.AddControllers().AddNewtonsoftJson(options => {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
+
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
