@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NzI18nService } from 'ng-zorro-antd';
 import { Subscription } from 'rxjs';
 import { CategoryModel, ColumnItem, DonationRequestItemModel, DonationRequestModel } from 'src/app/shared/models';
+import { compareDate } from 'src/app/shared/utility/dates/compare-dates';
 
 @Component({
   selector: 'app-donations-form',
@@ -15,7 +16,7 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
   @Output() validationResult = new EventEmitter<DonationRequestModel>();
 
   private subscriptions: Subscription[] = [];
-
+  disabledDates: (current: Date) => boolean;
   addressId: number;
   categories: CategoryModel[] = [];
   donationRequestItems: DonationRequestItemModel[] = [];
@@ -71,6 +72,10 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
     }
 
     this.sandBoxSubscriptionInit();
+
+    this.disabledDates = (current: Date): boolean => {
+      return compareDate(current, new Date()) < 0;
+    };
 
     this.donationSandbox.loadOrganizations();
     this.donationSandbox.loadCategories();
