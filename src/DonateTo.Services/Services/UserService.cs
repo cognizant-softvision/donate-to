@@ -109,7 +109,7 @@ namespace DonateTo.Services
             var user = _userRepository.Get(userId);
             user.UpdateBy = username;
 
-            FilterUserOrganizations(user, userId, organizationsId);
+            user.UserOrganizations = FilterUserOrganizations(user.UserOrganizations, userId, organizationsId);
 
             _userRepository.Update(user);
             _unitOfWork.Save();
@@ -121,28 +121,31 @@ namespace DonateTo.Services
             var user = await _userRepository.GetAsync(userId).ConfigureAwait(false);
             user.UpdateBy = username;
 
-            FilterUserOrganizations(user, userId, organizationsId);
+            user.UserOrganizations = FilterUserOrganizations(user.UserOrganizations, userId, organizationsId);
 
             await _userRepository.UpdateAsync(user).ConfigureAwait(false);
             await _unitOfWork.SaveAsync().ConfigureAwait(false);
         }
 
         #region private
-        private void FilterUserOrganizations(User user, long userId, IEnumerable<long> organizationsId)
+        private ICollection<UserOrganization> FilterUserOrganizations(ICollection<UserOrganization> userOrganizations, long userId, IEnumerable<long> organizationsId)
         {
             var newOrganizations = new List<UserOrganization>();
+            var currentOrganizations = userOrganizations.ToList();
 
             newOrganizations = organizationsId
-           .Where(o => user.UserOrganizations.Any(uo => uo.OrganizationId != o))
+           .Where(o => userOrganizations.Any(uo => uo.OrganizationId != o))
            .Select(o => new UserOrganization { UserId = userId, OrganizationId = o })
            .ToList();
 
-            user.UserOrganizations.RemoveAll(uo => organizationsId.Any(o => o != uo.OrganizationId));
+            currentOrganizations.RemoveAll(uo => organizationsId.Any(o => o != uo.OrganizationId));
 
             if (newOrganizations.Any())
             {
-                user.UserOrganizations.AddRange(newOrganizations);
+                currentOrganizations.AddRange(newOrganizations);
             }
+
+            return currentOrganizations;
         }
         #endregion
     }

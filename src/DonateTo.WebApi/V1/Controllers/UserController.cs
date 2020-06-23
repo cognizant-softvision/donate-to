@@ -196,13 +196,13 @@ namespace DonateTo.WebApi.V1.Controllers
             {
                 try
                 {
-                    var userRole = User.Claims.FirstOrDefault(claim => claim.Type.Contains(Claims.Role))?.Value;
-                    if (userRole != Roles.Superadmin && userRole != Roles.Admin)
-                    {
-                        return Forbid();
-                    }
+                    //var userRole = User.Claims.FirstOrDefault(claim => claim.Type.Contains(Claims.Role))?.Value;
+                    //if (userRole != Roles.Superadmin && userRole != Roles.Admin)
+                    //{
+                    //    return Forbid();
+                    //}
 
-                    var username = User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserName)?.Value;
+                    var username = "dawd";
                     await _userService.UpdateUserOrganizationsAsync(userId, value, username).ConfigureAwait(false);
 
                     return Ok();
