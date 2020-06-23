@@ -5,7 +5,6 @@ using DonateTo.Mailer.Entities;
 using DonateTo.Mailer.Interfaces;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace DonateTo.Services
@@ -22,6 +21,7 @@ namespace DonateTo.Services
             _mailSender = mailSender;
         }
 
+        ///<inheritdoc cref="IDonationService"/>
         public async Task SendNewRequestMailToOrganizationUsersAsync(DonationRequest donationRequest, IEnumerable<User> users, string client)
         {
             var messages = new List<Message>();
