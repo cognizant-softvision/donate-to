@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DonateTo.ApplicationCore\DonateTo.ApplicationCore.csproj" />
     <ProjectReference Include="..\DonateTo.Infrastructure\DonateTo.Infrastructure.csproj" />
+    <ProjectReference Include="..\DonateTo.Mailer\DonateTo.Mailer.csproj" />
   </ItemGroup>
 
 </Project>
