@@ -9,6 +9,8 @@ using System.Globalization;
 using Microsoft.Extensions.Primitives;
 using Microsoft.AspNetCore.Authorization;
 
+using DonateTo.WebApi.Common;
+
 namespace DonateTo.WebApi.V1.Controllers
 {
     ///<inheritdoc cref="BaseApiController{DonationRequest}"/>
@@ -52,9 +54,9 @@ namespace DonateTo.WebApi.V1.Controllers
                 StringValues client;
                 Request.Headers.TryGetValue("Origin", out client);
 
-                var username = User.Claims.FirstOrDefault(claim => claim.Type == _usernameClaim)?.Value;
+                var username = User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserName)?.Value;
 
-                value.UserId = Convert.ToInt64(User.Claims.FirstOrDefault(claim => claim.Type == _userIdClaim)?.Value, CultureInfo.InvariantCulture);
+                value.UserId = Convert.ToInt64(User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserId)?.Value, CultureInfo.InvariantCulture);
 
                 var donationRequest = await _baseService.CreateAsync(value, username).ConfigureAwait(false);
                 var users = await _userService.GetByOrganizationIdAsync(donationRequest.OrganizationId).ConfigureAwait(false);
