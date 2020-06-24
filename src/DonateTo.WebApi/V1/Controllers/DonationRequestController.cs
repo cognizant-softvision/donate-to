@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
 using System;
+using System.Globalization;
+using Microsoft.Extensions.Primitives;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -12,13 +15,22 @@ namespace DonateTo.WebApi.V1.Controllers
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [Authorize]
     public class DonationRequestController : BaseApiController<DonationRequest>
     {
-        public DonationRequestController(IBaseService<DonationRequest> donationRequestService) : base(donationRequestService)
-        { }
+        private readonly IDonationRequestService _donationRequestService;
+        private readonly IUserService _userService;
+
+        public DonationRequestController(
+            IDonationRequestService donationRequestService,
+            IUserService userService) : base(donationRequestService)
+        {
+            _donationRequestService = donationRequestService;
+            _userService = userService;
+        }
 
         /// <summary>
-        /// Creates a new entity.
+        /// Creates a new DonationRequest.
         /// </summary>
         /// <param name="value">Entity to create.</param>
         /// <returns>Created entity.</returns>
@@ -34,11 +46,18 @@ namespace DonateTo.WebApi.V1.Controllers
             }
             else
             {
-                var username = User.Claims.FirstOrDefault(claim => claim.Type == _usernameClaim)?.Value;
-                value.UserId = Convert.ToInt64(User.Claims.FirstOrDefault(claim => claim.Type == _userIdClaim)?.Value);
-                var result = await _baseService.CreateAsync(value, username).ConfigureAwait(false);
+                StringValues client;
+                Request.Headers.TryGetValue("Origin", out client);
 
-                return Ok(result);
+                var username = User.Claims.FirstOrDefault(claim => claim.Type == _usernameClaim)?.Value;
+
+                value.UserId = Convert.ToInt64(User.Claims.FirstOrDefault(claim => claim.Type == _userIdClaim)?.Value, CultureInfo.InvariantCulture);
+
+                var donationRequest = await _baseService.CreateAsync(value, username).ConfigureAwait(false);
+                var users = await _userService.GetByOrganizationIdAsync(donationRequest.OrganizationId).ConfigureAwait(false);
+                await _donationRequestService.SendNewRequestMailToOrganizationUsersAsync(donationRequest, users, client).ConfigureAwait(false);
+
+                return Ok(donationRequest);
             }
         }
     }

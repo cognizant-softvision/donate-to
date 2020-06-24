@@ -35,7 +35,7 @@ export class AuthSandbox extends Sandbox {
   }
 
   public register(): void {
-    document.location.href = this.authService.issuer + '/Account/Register';
+    document.location.href = this.authService.issuer + '/Account/Register?returnUrl=' + this.authService.redirectUri;
   }
 
   /**

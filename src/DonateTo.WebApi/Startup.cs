@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DonateTo.Services.Extensions;
 using Newtonsoft.Json;
+using DonateTo.Mailer.Entities;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace DonateTo.WebApi
 {
@@ -32,6 +34,8 @@ namespace DonateTo.WebApi
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
 
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
             services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
                 {
@@ -47,6 +51,11 @@ namespace DonateTo.WebApi
             services.AddSwagger();
 
             services.AddLoggingToPipeline(Configuration);
+
+            var mailConfig = Configuration.GetSection("MailSettings")
+                .Get<MailServerSettings>();
+
+            services.AddSingleton(mailConfig);
 
             services.AddDonateToModule(Configuration);
         }

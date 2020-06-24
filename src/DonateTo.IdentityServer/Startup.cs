@@ -59,6 +59,7 @@ namespace DonateTo.IdentityServer
 
             var identityOptions = Configuration.GetSection("Identity").GetSection("Options");
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
             services.AddIdentity<User, Role>(options =>
             {
                 options.ClaimsIdentity.RoleClaimType = JwtClaimTypes.Role;

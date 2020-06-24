@@ -219,6 +219,7 @@
       "DeleteConfirmation": "Está seguro que desea eliminar esta solicitud de donación?",
       "Table": {
         "Itemcolumn": "Item",
+        "CreatedColumn": "Fecha de Creación",
         "Finishcolumn": "Fecha Fin",
         "Observationcolumn": "Observación",
         "Quantitycolumn": "Cantidad",

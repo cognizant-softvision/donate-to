@@ -2,8 +2,14 @@
 @{
     ViewData["Title"] = "Signed Up!";
 }
-<h1>Signed Up!!!</h1>
 
-@if(User.IsInRole(Roles.Superadmin)) {
-    <h2><a href="@Url.Action("Index","Home")" >Go to home page </a></h2>
-}
+<div class="container-message">
+    <div class="message-box">
+        <h4>Signed Up!!!</h4>
+        @if (User.IsInRole(Roles.Superadmin))
+        {
+            <br>
+            <a href="@Url.Action("Index","Home")">Go to home page </a>
+        }
+    </div>
+</div>

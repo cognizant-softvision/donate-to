@@ -84,7 +84,8 @@
   <nz-form-item>
     <nz-form-label nzFor="finishDate">{{ 'Admin.Donation.Form.FinishDate' | translate }}</nz-form-label>
     <nz-form-control>
-      <nz-date-picker [(ngModel)]="finishDate" formControlName="finishDateFormControl"> </nz-date-picker>
+      <nz-date-picker [nzDisabledDate]="disabledDates" [(ngModel)]="finishDate" formControlName="finishDateFormControl">
+      </nz-date-picker>
     </nz-form-control>
   </nz-form-item>
   <div [formGroup]="donationRequestItemFormGroup" class="create-donation-add-item-container">

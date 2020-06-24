@@ -51,8 +51,8 @@
   </ItemGroup>
 
   <Target Name="MyPreCompileTarget" BeforeTargets="Build">
-    <Exec WorkingDirectory="$(ProjectDir)\Styles" Command="npm i" />
-    <Exec WorkingDirectory="$(ProjectDir)\Styles" Command="node_modules\.bin\gulp" />
+    <Exec WorkingDirectory="$(ProjectDir)\Styles" ContinueOnError="WarnAndContinue" Command="npm i" />
+    <Exec WorkingDirectory="$(ProjectDir)\Styles\node_modules\.bin" ContinueOnError="WarnAndContinue"  Command="./gulp" />
   </Target>
 
 </Project>
