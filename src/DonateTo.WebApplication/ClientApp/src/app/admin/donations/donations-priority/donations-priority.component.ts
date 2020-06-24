@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { QuestionBase } from 'src/app/shared/models/question-base.model';
+import { TextboxQuestion } from 'src/app/shared/models/question-textbox.model';
+import { DropdownQuestion } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-donations-priority',
@@ -7,59 +10,58 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./donations-priority.component.css'],
 })
 export class DonationPriorityComponent implements OnInit {
+  questions: Array<QuestionBase<any>>;
+  question: QuestionBase<string>;
   form: FormGroup;
   payLoad = '';
 
-  readonly questions = [
-    {
-      id: 1,
-      order: 0,
-      question: 'Dia?',
-      value: 'textbox',
-      required: true,
-      answerType: 'textbox',
-      answers: [
-        // numerico
-        {
-          value: 0,
-          max: 10,
-          min: 1,
-        },
-        // select & radio-buttons & checks
-        {
-          text: 'Opcion 1',
-          value: 1,
-          isDefault: true,
-        },
-        {
-          text: 'Opcion 2',
-          value: 2,
-          isDefault: false,
-        },
-        {
-          text: 'Opcion 3',
-          value: 3,
-          isDefault: false,
-        },
-      ],
-    },
-  ];
+  getQuestions() {
+    const questions: Array<QuestionBase<string>> = [
+      new DropdownQuestion({
+        key: 'brave',
+        label: 'Bravery Rating',
+        options: [
+          { key: 'solid', value: 'Solid' },
+          { key: 'great', value: 'Great' },
+          { key: 'good', value: 'Good' },
+          { key: 'unproven', value: 'Unproven' },
+        ],
+        order: 3,
+      }),
 
-  readonly questionResult = [{ id: 1, value: 0 }];
+      new TextboxQuestion({
+        key: 'firstName',
+        label: 'First name',
+        value: 'Bombasto',
+        required: true,
+        order: 1,
+      }),
+
+      new TextboxQuestion({
+        key: 'emailAddress',
+        label: 'Email',
+        type: 'email',
+        order: 2,
+      }),
+    ];
+
+    return questions.sort((a, b) => a.order - b.order);
+  }
 
   ngOnInit() {
-    this.form = this.toFormGroup();
+    this.questions = this.getQuestions();
+    this.form = this.toFormGroup(this.questions);
   }
 
   onSubmit() {
     this.payLoad = JSON.stringify(this.form.getRawValue());
   }
 
-  toFormGroup() {
+  toFormGroup(questions: Array<QuestionBase<string>>) {
     const group: any = {};
 
-    this.questions.forEach((question) => {
-      group[question.id] = question.required
+    questions.forEach((question) => {
+      group[question.key] = question.required
         ? new FormControl(question.value || '', Validators.required)
         : new FormControl(question.value || '');
     });
