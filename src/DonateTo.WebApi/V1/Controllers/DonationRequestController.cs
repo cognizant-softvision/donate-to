@@ -20,13 +20,16 @@ namespace DonateTo.WebApi.V1.Controllers
     {
         private readonly IDonationRequestService _donationRequestService;
         private readonly IUserService _userService;
+        private readonly IAuthorizationService _authorizationService;
 
         public DonationRequestController(
             IDonationRequestService donationRequestService,
-            IUserService userService) : base(donationRequestService)
+            IUserService userService,
+            IAuthorizationService authorizationService) : base(donationRequestService)
         {
             _donationRequestService = donationRequestService;
             _userService = userService;
+            _authorizationService = authorizationService;
         }
 
         /// <summary>
