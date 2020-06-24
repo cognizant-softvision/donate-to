@@ -5,7 +5,7 @@ import { OrganizationModel, UserModel } from '../../models';
 export interface UserState {
   loading: boolean;
   failed: boolean;
-  items: UserModel[];
+  items: OrganizationModel[];
 }
 
 const INITIAL_STATE: UserState = {
@@ -21,11 +21,11 @@ const userReducer = createReducer(
     loading: true,
     failed: false,
   })),
-  on(userActions.userOrganizationLinkSuccess, (state, { users, organization }) => ({
+  on(userActions.userOrganizationLinkSuccess, (state, { user, organizations }) => ({
     ...state,
     loading: false,
     failed: false,
-    items: users,
+    items: organizations,
   })),
   on(userActions.userOrganizationLinkFailed, (state) => ({
     ...state,

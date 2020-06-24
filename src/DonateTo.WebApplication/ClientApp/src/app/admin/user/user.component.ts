@@ -1,13 +1,14 @@
 import { ColumnItem, DataItem } from './../../shared/models';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { UserSandbox } from './user.sandbox';
 
 @Component({
   selector: 'app-user-admin',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css'],
 })
-export class UserComponent {
-  constructor() {}
+export class UserComponent implements OnInit, OnDestroy {
+  constructor(public userSandbox: UserSandbox) {}
 
   listOfColumns: ColumnItem[] = [
     {
@@ -60,4 +61,16 @@ export class UserComponent {
       address: 'Sidney No. 1 Lake Park',
     },
   ];
+
+  ngOnDestroy(): void {
+    throw new Error('Method not implemented.');
+  }
+  ngOnInit(): void {
+    this.registerEvents();
+  }
+
+  /**
+   * Subscribes to events
+   */
+  registerEvents(): void {}
 }

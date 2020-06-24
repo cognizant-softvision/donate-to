@@ -1,7 +1,10 @@
 import { createAction, props } from '@ngrx/store';
 import { OrganizationModel, UserModel } from '../../models';
 
-export const userOrganizationLink = createAction('[User] Link user to organization');
+export const userOrganizationLink = createAction(
+  '[User] Link user to organization',
+  props<{ user: UserModel; organizations: OrganizationModel[] }>()
+);
 export const userOrganizationLinkSuccess = createAction(
   '[User] Link user to organization success',
   props<{ user: UserModel; organizations: OrganizationModel[] }>()
@@ -18,6 +21,6 @@ export const userOrganizationUnlinkFailed = createAction('[User] Unlink user to 
 export const userOrganizationRetrieve = createAction('[User] Retrieve user organization');
 export const userOrganizationRetrieveSuccess = createAction(
   '[User] Retrieve user organization success',
-  props<{ users: UserModel }>()
+  props<{ users: UserModel[] }>()
 );
 export const userOrganizationRetrieveFailed = createAction('[User] Retrieve user organization failed');
