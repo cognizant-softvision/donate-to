@@ -1,7 +1,7 @@
 <div>
-  <form (ngSubmit)="onSubmit()" [formGroup]="form">
+  <form (ngSubmit)="onSubmit()">
     <div *ngFor="let question of questions" class="form-row">
-      <div [formGroup]="form">
+      <div>
         <label [attr.for]="question.id">{{ question.label }}</label>
 
         <div [ngSwitch]="question.controlType">
