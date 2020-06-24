@@ -12,12 +12,12 @@ import { UserOrganization } from '../../models/user-organization.model';
 export class UserService extends BaseHttpClientService<UserModel> {
   constructor(httpClient: HttpClient, configService: ConfigService) {
     const baseUrl = configService.get('baseUrl');
-    super(httpClient, baseUrl, 'api/v1/user');
+    super(httpClient, baseUrl, 'api/v1/User');
   }
 
   userOrganizationLink(user: number, organizations: number[]): Observable<UserModel> {
     return this.httpClient.post<UserModel>(
-      `${this.url}/${this.endpoint}/PutUserOrganizationsAsync/${user}`,
+      `${this.url}/${this.endpoint}?userId=${user}`,
       JSON.stringify(organizations),
       this.httpOptions
     );

@@ -10,7 +10,7 @@ export class UserEffects {
   @Effect()
   userOrganizationLink$: Observable<{}> = this.actions$.pipe(
     ofType(userOrganizationLink),
-    switchMap((userId: any, organizations: any) =>
+    switchMap(({ userId, organizations }) =>
       this.userService.userOrganizationLink(userId, organizations).pipe(
         map(() => userOrganizationLinkSuccess()),
         catchError(() => of(userOrganizationLinkFailed()))
