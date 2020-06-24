@@ -43,6 +43,9 @@ export class HomeComponent implements OnInit {
   onChange() {
     if (this.searchValue.length >= this.searchLength) {
       this.homeSandbox.loadDonationRequestsSearchPaged(this.pageSize, this.currentPage, this.searchValue);
+    } else if (this.searchValue.length === 0) {
+      this.currentPage = 1;
+      this.homeSandbox.loadDonationRequestsPaged(this.pageSize, this.currentPage);
     }
   }
 
