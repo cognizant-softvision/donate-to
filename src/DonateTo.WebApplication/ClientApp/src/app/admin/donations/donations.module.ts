@@ -1,3 +1,4 @@
+import { DynamicFormQuestionComponent } from './donations-priority/dynamic-form-question.component';
 import * as fromAddress from 'src/app/shared/store/address';
 import * as fromCategory from 'src/app/shared/store/category';
 import * as fromOrganization from 'src/app/shared/store/organization';
@@ -42,6 +43,7 @@ import {
   NzTableModule,
   NzTagModule,
 } from 'ng-zorro-antd';
+import { DonationPriorityComponent } from './donations-priority/donations-priority.component';
 
 // FIX this should be moved to an upper level.
 registerLocaleData(es);
@@ -86,7 +88,14 @@ const ICONS: IconDefinition[] = [PlusOutline];
       extend: true,
     }),
   ],
-  declarations: [DonationsComponent, DonationsCreateComponent, DonationsEditComponent, DonationsFormComponent],
+  declarations: [
+    DonationsComponent,
+    DonationsCreateComponent,
+    DonationsEditComponent,
+    DonationsFormComponent,
+    DynamicFormQuestionComponent,
+    DonationPriorityComponent,
+  ],
   providers: [DonationsSandbox],
 })
 export class DonationsModule {}
