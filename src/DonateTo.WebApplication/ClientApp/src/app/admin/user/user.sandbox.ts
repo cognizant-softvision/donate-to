@@ -7,8 +7,7 @@ import { OrganizationModel, UserModel } from 'src/app/shared/models';
 
 @Injectable()
 export class UserSandbox extends Sandbox {
-  // usersLinkedToOrganization$ = this.appState$.select(store.fromUser.getUsersLinkedToOrganizations);
-  // userOrganizationLink$ = this.appState$.select(store.fromUser.linkUserOrganization);
+  users$ = this.appState$.select(store.fromUser.getAllUsers);
 
   private subscriptions: Subscription[] = [];
 
@@ -29,6 +28,10 @@ export class UserSandbox extends Sandbox {
    */
   public loadUserLinkedToOrganization(organizationId: number): void {
     // this.appState$.dispatch(store.fromUser.getUsersLinkedToOrganizations({ organizationId }));
+  }
+
+  public loadUsers(): void {
+    this.appState$.dispatch(store.fromUser.loadUsers());
   }
 
   /**

@@ -228,7 +228,12 @@
     },
     "User": {
       "Title": "Users",
-      "Associate": "Associate"
+      "Associate": "Associate",
+      "Table": {
+        "Name": "Name",
+        "Organization": "Organization",
+        "Email": "Email"
+      }
     },
     "Organization": {
       "Title": "Organization"

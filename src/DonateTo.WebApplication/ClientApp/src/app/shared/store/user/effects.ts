@@ -3,7 +3,14 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { UserService } from '../../async-services/http/user.service';
-import { userOrganizationLink, userOrganizationLinkFailed, userOrganizationLinkSuccess } from './actions';
+import {
+  userOrganizationLink,
+  userOrganizationLinkFailed,
+  userOrganizationLinkSuccess,
+  loadUsersFailed,
+  loadUsers,
+  loadUsersSuccess,
+} from './actions';
 
 @Injectable()
 export class UserEffects {
@@ -14,6 +21,17 @@ export class UserEffects {
       this.userService.userOrganizationLink(userId, organizations).pipe(
         map(() => userOrganizationLinkSuccess()),
         catchError(() => of(userOrganizationLinkFailed()))
+      )
+    )
+  );
+
+  @Effect()
+  loadUsers$: Observable<{}> = this.actions$.pipe(
+    ofType(loadUsers),
+    switchMap(() =>
+      this.userService.getUsers().pipe(
+        map((users) => loadUsersSuccess({ users })),
+        catchError(() => of(loadUsersFailed()))
       )
     )
   );

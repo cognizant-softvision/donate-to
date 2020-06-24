@@ -31,6 +31,11 @@ const userReducer = createReducer(
     loading: false,
     failed: true,
     items: [],
+  })),
+  on(userActions.loadUsers, (state) => ({
+    ...state,
+    loading: true,
+    failed: false,
   }))
   /*
   on(userActions.userOrganizationRetrieve, (state, action) => ({

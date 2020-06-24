@@ -12,14 +12,18 @@ import { UserOrganization } from '../../models/user-organization.model';
 export class UserService extends BaseHttpClientService<UserModel> {
   constructor(httpClient: HttpClient, configService: ConfigService) {
     const baseUrl = configService.get('baseUrl');
-    super(httpClient, baseUrl, 'api/v1/User');
+    super(httpClient, baseUrl, 'api/v1/user');
   }
 
   userOrganizationLink(user: number, organizations: number[]): Observable<UserModel> {
-    return this.httpClient.post<UserModel>(
+    return this.httpClient.put<UserModel>(
       `${this.url}/${this.endpoint}?userId=${user}`,
       JSON.stringify(organizations),
       this.httpOptions
     );
+  }
+
+  getUsers(): Observable<UserModel[]> {
+    return this.get();
   }
 }

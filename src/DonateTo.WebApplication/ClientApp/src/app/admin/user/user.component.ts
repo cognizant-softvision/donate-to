@@ -1,4 +1,4 @@
-import { ColumnItem, DataItem } from './../../shared/models';
+import { ColumnItem, DataItem, UserModel } from './../../shared/models';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserSandbox } from './user.sandbox';
 
@@ -12,22 +12,18 @@ export class UserComponent implements OnInit, OnDestroy {
 
   listOfColumns: ColumnItem[] = [
     {
-      name: 'Admin.Name',
-      sortFn: (a: DataItem, b: DataItem) => a.name.localeCompare(b.name),
+      name: 'Admin.User.Table.Name',
+      sortFn: (a: UserModel, b: UserModel) => a.firstName.localeCompare(b.firstName),
       filterMultiple: true,
-      listOfFilter: [
-        { text: 'Joe', value: 'Joe' },
-        { text: 'Jim', value: 'Jim' },
-      ],
-      filterFn: (list: string[], item: DataItem) => list.some((name) => item.name.indexOf(name) !== -1),
+      filterFn: (list: string[], item: UserModel) => list.some((firstName) => item.firstName.indexOf(firstName) !== -1),
     },
     {
-      name: 'Admin.Age',
-      sortFn: (a: DataItem, b: DataItem) => a.age - b.age,
+      name: 'Admin.User.Table.Organization',
+      sortFn: (a: DataItem, b: DataItem) => a.organizations.localeCompare(b.organizations),
       sortDirections: ['descend', null],
     },
     {
-      name: 'Admin.Address',
+      name: 'Admin.User.Table.Email',
       sortFn: (a: DataItem, b: DataItem) => a.address.length - b.address.length,
       filterMultiple: false,
       listOfFilter: [
@@ -66,6 +62,7 @@ export class UserComponent implements OnInit, OnDestroy {
     throw new Error('Method not implemented.');
   }
   ngOnInit(): void {
+    this.userSandbox.loadUsers();
     this.registerEvents();
   }
 
@@ -75,6 +72,6 @@ export class UserComponent implements OnInit, OnDestroy {
   registerEvents(): void {}
 
   updateUserOrganization() {
-    this.userSandbox.userOrganizationLink(1, [1, 2, 4]);
+    this.userSandbox.userOrganizationLink(1, [3]);
   }
 }
