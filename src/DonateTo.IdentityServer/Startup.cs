@@ -24,6 +24,7 @@ using DonateTo.Mailer.Interfaces;
 using DonateTo.Mailer;
 using IdentityModel;
 using System.IdentityModel.Tokens.Jwt;
+using DonateTo.Infrastructure.Logging;
 
 namespace DonateTo.IdentityServer
 {
@@ -59,6 +60,7 @@ namespace DonateTo.IdentityServer
 
             var identityOptions = Configuration.GetSection("Identity").GetSection("Options");
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
             services.AddIdentity<User, Role>(options =>
             {
                 options.ClaimsIdentity.RoleClaimType = JwtClaimTypes.Role;
@@ -112,6 +114,8 @@ namespace DonateTo.IdentityServer
             
             services.AddSingleton(mailConfig);
             services.AddScoped<IMailSender, MailSender>();
+
+            services.AddLoggingToPipeline(Configuration);
 
             //Need to handle credentials for production
             builder.AddDeveloperSigningCredential();

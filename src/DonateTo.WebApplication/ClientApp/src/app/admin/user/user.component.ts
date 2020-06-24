@@ -21,19 +21,24 @@ export class UserComponent {
       filterFn: (list: string[], item: DataItem) => list.some((name) => item.name.indexOf(name) !== -1),
     },
     {
-      name: 'Admin.Age',
-      sortFn: (a: DataItem, b: DataItem) => a.age - b.age,
-      sortDirections: ['descend', null],
+      name: 'Admin.Organization.Title',
+      sortFn: (a: DataItem, b: DataItem) => a.organization.localeCompare(b.organization),
+      filterMultiple: true,
+      listOfFilter: [
+        { text: 'Cognizant Softvision', value: 'Cognizant Softvision' },
+        { text: 'Cognizant Softvision', value: 'Cognizant Softvision' },
+      ],
+      filterFn: (list: string[], item: DataItem) => list.some((organization) => item.name.indexOf(organization) !== -1),
     },
     {
-      name: 'Admin.Address',
-      sortFn: (a: DataItem, b: DataItem) => a.address.length - b.address.length,
+      name: 'Admin.Email',
+      sortFn: (a: DataItem, b: DataItem) => a.email.length - b.email.length,
       filterMultiple: false,
       listOfFilter: [
-        { text: 'London', value: 'London' },
-        { text: 'Sidney', value: 'Sidney' },
+        { text: 'user@donateto.com', value: 'user@donateto.com' },
+        { text: 'user2@donateto.com', value: 'user2@donateto.com' },
       ],
-      filterFn: (address: string, item: DataItem) => item.address.indexOf(address) !== -1,
+      filterFn: (list: string[], item: DataItem) => list.some((email) => item.name.indexOf(email) !== -1),
     },
     {
       name: 'Admin.Action',
@@ -44,20 +49,20 @@ export class UserComponent {
     {
       key: '1',
       name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
+      organization: 'Cognizant Softvision',
+      email: 'user@donateto.com',
     },
     {
       key: '2',
       name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
+      organization: 'Cognizant Softvision',
+      email: 'user2@donateto.com',
     },
     {
       key: '3',
       name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
+      organization: 'Cognizant Softvision',
+      email: 'user3@donateto.com',
     },
   ];
 }
