@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
 using System;
-using DonateTo.Mailer.Interfaces;
 using System.Globalization;
 using Microsoft.Extensions.Primitives;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -15,6 +15,7 @@ namespace DonateTo.WebApi.V1.Controllers
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [Authorize]
     public class DonationRequestController : BaseApiController<DonationRequest>
     {
         private readonly IDonationRequestService _donationRequestService;

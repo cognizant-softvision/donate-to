@@ -14,8 +14,7 @@
       </button>
     </div>
     <nz-divider></nz-divider>
-    <button nz-button nzType="secondary">{{ 'Admin.ClearFilter' | translate }}</button>
-    <button nz-button nzType="secondary">{{ 'Admin.ClearFilterAndSorted' | translate }}</button>
+    <button nz-button nzType="secondary" (click)="resetSortAndFilters()">{{ 'Admin.ClearFilter' | translate }}</button>
   </div>
   <nz-table #donationTable [nzData]="this.donationSandBox.donationRequests$ | async">
     <thead>
@@ -36,7 +35,8 @@
     <tbody>
       <tr *ngFor="let data of donationTable.data">
         <td>{{ data.title }}</td>
-        <td>{{ data.finishDate }}</td>
+        <td>{{ data.createdDate | date: 'medium' }}</td>
+        <td>{{ data.finishDate | date: 'medium' }}</td>
         <td>{{ data.observation }}</td>
         <td>
           <a [routerLink]="['./edit', data.id]">{{ 'Admin.Edit' | translate }} </a>
