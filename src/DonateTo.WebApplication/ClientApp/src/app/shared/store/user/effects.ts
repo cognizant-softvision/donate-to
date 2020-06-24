@@ -4,12 +4,12 @@ import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { UserService } from '../../async-services/http/user.service';
 import {
+  loadUsers,
+  loadUsersFailed,
+  loadUsersSuccess,
   userOrganizationLink,
   userOrganizationLinkFailed,
   userOrganizationLinkSuccess,
-  loadUsersFailed,
-  loadUsers,
-  loadUsersSuccess,
 } from './actions';
 
 @Injectable()
