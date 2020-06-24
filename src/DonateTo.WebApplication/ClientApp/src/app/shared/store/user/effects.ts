@@ -6,18 +6,17 @@ import { UserService } from '../../async-services/http/user.service';
 import { userOrganizationLink, userOrganizationLinkFailed, userOrganizationLinkSuccess } from './actions';
 
 @Injectable()
-export class OrganizationEffects {
-  /*@Effect()
-
+export class UserEffects {
+  @Effect()
   userOrganizationLink$: Observable<{}> = this.actions$.pipe(
     ofType(userOrganizationLink),
-    switchMap((data: any) =>
-      this.userService.userOrganizationLink(data.user, data.organizations).pipe(
-        map((user, organizations) => userOrganizationLinkSuccess({ user, organizations })),
+    switchMap((userId: any, organizations: any) =>
+      this.userService.userOrganizationLink(userId, organizations).pipe(
+        map(() => userOrganizationLinkSuccess()),
         catchError(() => of(userOrganizationLinkFailed()))
       )
     )
   );
-*/
+
   constructor(private actions$: Actions, private userService: UserService) {}
 }

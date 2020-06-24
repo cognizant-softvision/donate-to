@@ -21,18 +21,18 @@ const userReducer = createReducer(
     loading: true,
     failed: false,
   })),
-  on(userActions.userOrganizationLinkSuccess, (state, { user, organizations }) => ({
+  on(userActions.userOrganizationLinkSuccess, (state) => ({
     ...state,
     loading: false,
     failed: false,
-    items: organizations,
   })),
   on(userActions.userOrganizationLinkFailed, (state) => ({
     ...state,
     loading: false,
     failed: true,
     items: [],
-  })),
+  }))
+  /*
   on(userActions.userOrganizationRetrieve, (state, action) => ({
     ...state,
     loading: true,
@@ -65,6 +65,7 @@ const userReducer = createReducer(
     loading: true,
     failed: true,
   }))
+  */
 );
 
 export function reducer(state: UserState, action: Action) {

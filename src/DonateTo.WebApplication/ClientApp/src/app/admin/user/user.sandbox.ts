@@ -20,8 +20,8 @@ export class UserSandbox extends Sandbox {
   /**
    * Link user to organization
    */
-  public userOrganizationLink(user: UserModel, organizations: OrganizationModel[]): void {
-    this.appState$.dispatch(store.fromUser.userOrganizationLink({ user, organizations }));
+  public userOrganizationLink(userId: number, organizations: number[]): void {
+    this.appState$.dispatch(store.fromUser.userOrganizationLink({ userId, organizations }));
   }
 
   /**

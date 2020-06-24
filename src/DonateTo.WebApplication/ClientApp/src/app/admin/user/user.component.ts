@@ -73,4 +73,8 @@ export class UserComponent implements OnInit, OnDestroy {
    * Subscribes to events
    */
   registerEvents(): void {}
+
+  updateUserOrganization() {
+    this.userSandbox.userOrganizationLink(1, [1, 2, 4]);
+  }
 }
