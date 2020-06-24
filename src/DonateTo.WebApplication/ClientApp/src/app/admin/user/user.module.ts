@@ -31,6 +31,7 @@ import {
   NzTagModule,
 } from 'ng-zorro-antd';
 import { UserComponent } from './user.component';
+import { UserRoutingModule } from './user-routing.module';
 
 // FIX this should be moved to an upper level.
 registerLocaleData(es);
@@ -60,6 +61,7 @@ const ICONS: IconDefinition[] = [PlusOutline];
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
+    UserRoutingModule,
     TranslateModule.forChild({
       defaultLanguage: 'en',
       loader: {
