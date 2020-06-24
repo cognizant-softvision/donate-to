@@ -1,3 +1,4 @@
+import { DonationPriorityComponent } from './donations-priority/donations-priority.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { DonationsComponent } from './donations.component';
@@ -11,6 +12,7 @@ const routes: Routes = [
     children: [
       { path: 'create', component: DonationsCreateComponent },
       { path: 'edit/:Id', component: DonationsEditComponent },
+      { path: 'priority', component: DonationPriorityComponent },
     ],
   },
 ];
