@@ -9,6 +9,7 @@ using System;
 using System.Linq;
 using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
+using DonateTo.ApplicationCore.Models.Pagination;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -50,14 +51,52 @@ namespace DonateTo.WebApi.V1.Controllers
                 Request.Headers.TryGetValue("Origin", out client);
 
                 var username = User.Claims.FirstOrDefault(claim => claim.Type == _usernameClaim)?.Value;
-                var userId = Convert.ToInt64(User.Claims.FirstOrDefault(claim => claim.Type == _userIdClaim)?.Value, CultureInfo.InvariantCulture);
-
+                value.UserId = Convert.ToInt64(User.Claims.FirstOrDefault(claim => claim.Type == _userIdClaim)?.Value, CultureInfo.InvariantCulture);
+                
                 var donation = await _baseService.CreateAsync(value, username).ConfigureAwait(false);
 
-                var user = await _userService.GetAsync(userId).ConfigureAwait(false);
+                var user = await _userService.GetAsync(donation.UserId).ConfigureAwait(false);
                 await _donationService.SendNewDonationMailAsync(donation, user, client).ConfigureAwait(false);
 
                 return Ok(donation);
+            }
+        }
+
+        /// <summary>
+        /// Gets a paged donation list starting with given <paramref name="pageNumber"/> and with <paramref name="pageSize"/> filtered by user
+        /// </summary>
+        /// <param name="pageNumber">Page number.</param>
+        /// <param name="pageSize">Page size.</param>
+        /// <param name="userId">Status</param>
+        /// <param name="statusId">Status</param>
+        /// <returns>Entity paged result.</returns>
+        [AllowAnonymous]
+        [HttpGet("pagedByUser", Name = "[controller]_[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<PagedResult<Donation>>> GetPagedByUser(int pageNumber, int pageSize, long? userId = null, long? statusId = null)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                var result = await _donationService.GetPagedAsync(
+                                                        pageNumber, 
+                                                        pageSize, 
+                                                        (d => (userId == null || d.UserId == userId) && (statusId == null || d.StatusId == statusId)))
+                                                    .ConfigureAwait(false);
+
+                if (result != null)
+                {
+                    return Ok(result);
+                }
+                else
+                {
+                    return NotFound();
+                }
             }
         }
     }
