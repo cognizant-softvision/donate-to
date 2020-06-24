@@ -1,12 +1,4 @@
-﻿using DonateTo.IdentityServer.Common;
-using IdentityServer4.EntityFramework.Entities;
-using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DonateTo.IdentityServer.Data.Migrations.IdentityServer.ConfigurationDb
 {
