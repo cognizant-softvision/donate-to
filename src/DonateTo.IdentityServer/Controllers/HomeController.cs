@@ -1,4 +1,4 @@
-﻿using DonateTo.IdentityServer.Common;
+﻿using DonateTo.Infrastructure.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
