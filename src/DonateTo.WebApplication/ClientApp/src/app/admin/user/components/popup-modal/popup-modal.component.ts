@@ -22,7 +22,9 @@ export class PopupModalComponent implements OnInit {
   }
 
   ShowModal() {
-    this.selectedOrganizations = this.user.organizations.map((o) => o.id);
+    if (this.user.organizations) {
+      this.selectedOrganizations = this.user.organizations.map((o) => o.id);
+    }
     this.isVisible = true;
   }
 
