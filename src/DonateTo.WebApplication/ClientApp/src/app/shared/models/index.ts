@@ -17,6 +17,4 @@ export * from './unit.model';
 export * from './user.model';
 export * from './admin-table-item.model';
 export * from './admin-column-item.model';
-export * from './question-base.model';
-export * from './question-integrated.model';
-export * from './question-textbox.model';
+export * from './question.model';
