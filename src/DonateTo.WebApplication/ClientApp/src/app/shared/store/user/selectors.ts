@@ -7,10 +7,16 @@ import { userOrganizationLinkFailed } from './actions';
 export const getUserState = createFeatureSelector<UserState>('user');
 
 export const getAllUsers = createSelector(getUserState, (state: UserState) => state.items);
+export const getFailedStatus = createSelector(getUserState, (state: UserState) => state.failed);
+export const getLoadingStatus = createSelector(getUserState, (state: UserState) => state.loading);
+export const getUser = createSelector(getUserState, (state: UserState) => state.user);
 
 @Injectable()
-export class OrganizationSelectors {
+export class UserSelectors {
   constructor(private store: Store<UserState>) {}
   // selectors$
   users$ = this.store.select(getAllUsers);
+  failed$ = this.store.select(getFailedStatus);
+  loading$ = this.store.select(getLoadingStatus);
+  user$ = this.store.select(getUser);
 }

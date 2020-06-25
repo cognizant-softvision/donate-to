@@ -22,6 +22,14 @@ export const loadUsersPagedSuccess = createAction(
 );
 export const loadUsersPagedFailed = createAction('[User] Load paged failed');
 
+export const loadUser = createAction('[User] Load user from server', props<{ userId: number }>());
+export const loadUserSuccess = createAction('[User] Load user success', props<{ user: UserModel }>());
+export const loadUserFailed = createAction('[User] Load user failed');
+
+export const updateUser = createAction('[User] Update', props<{ user: UserModel }>());
+export const updateUserSuccess = createAction('[User] Update success', props<{ user: UserModel }>());
+export const updateUserFailed = createAction('[User] Update failed');
+
 /*
 export const userOrganizationUnlink = createAction('[User] Unlink user to organization');
 export const userOrganizationUnlinkSuccess = createAction(

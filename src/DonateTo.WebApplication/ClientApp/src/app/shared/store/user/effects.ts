@@ -4,9 +4,15 @@ import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { UserService } from '../../async-services/http/user.service';
 import {
+  loadUser,
+  loadUserFailed,
   loadUsers,
   loadUsersFailed,
   loadUsersSuccess,
+  loadUserSuccess,
+  updateUser,
+  updateUserFailed,
+  updateUserSuccess,
   userOrganizationLink,
   userOrganizationLinkFailed,
   userOrganizationLinkSuccess,
@@ -32,6 +38,28 @@ export class UserEffects {
       this.userService.getUsers().pipe(
         map((users) => loadUsersSuccess({ users })),
         catchError(() => of(loadUsersFailed()))
+      )
+    )
+  );
+
+  @Effect()
+  loadUser$: Observable<{}> = this.actions$.pipe(
+    ofType(loadUser),
+    switchMap((data: any) =>
+      this.userService.getUser(data.userId).pipe(
+        map((user) => loadUserSuccess({ user })),
+        catchError(() => of(loadUserFailed()))
+      )
+    )
+  );
+
+  @Effect()
+  updateUser$: Observable<{}> = this.actions$.pipe(
+    ofType(updateUser),
+    switchMap((data: any) =>
+      this.userService.update(data.user).pipe(
+        map((user) => updateUserSuccess({ user })),
+        catchError(() => of(updateUserFailed()))
       )
     )
   );

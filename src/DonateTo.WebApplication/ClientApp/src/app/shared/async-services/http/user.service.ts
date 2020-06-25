@@ -26,4 +26,8 @@ export class UserService extends BaseHttpClientService<UserModel> {
   getUsers(): Observable<UserModel[]> {
     return this.get();
   }
+
+  getUser(id: number): Observable<UserModel> {
+    return this.getById(id);
+  }
 }

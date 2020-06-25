@@ -9,7 +9,7 @@
   <button nz-button nzType="secondary">{{ 'Admin.ClearFilter' | translate }}</button>
   <button nz-button nzType="secondary">{{ 'Admin.ClearFilterAndSorted' | translate }}</button>
 </div>
-<nz-table #userTable [nzData]="this.userSandbox.users$" nzTableLayout="fixed">
+<nz-table #userTable [nzData]="this.userSandbox.users$ | async" nzTableLayout="fixed">
   <thead>
     <tr>
       <th
@@ -28,12 +28,12 @@
   <tbody>
     <tr *ngFor="let data of userTable.data">
       <td>{{ data.firstName }}</td>
-      <td>{{ data.age }}</td>
-      <td>{{ data.address }}</td>
+      <td>{{ data.organizations }}</td>
+      <td>{{ data.email }}</td>
       <td>
-        <a>{{ 'Admin.Details' | translate }}</a>
+        <a [routerLink]="['./edit', data.id]">{{ 'Admin.Edit' | translate }}</a>
         <nz-divider nzType="vertical"></nz-divider>
-        <a>{{ 'Admin.Delete' | translate }}</a>
+        <a>Associate</a>
       </td>
     </tr>
   </tbody>

@@ -1,19 +1,24 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import * as store from 'src/app/shared/store';
 import { Sandbox } from 'src/app/shared/sandbox/base.sandbox';
-import { OrganizationModel, UserModel } from 'src/app/shared/models';
+import { UserModel } from 'src/app/shared/models';
 
 @Injectable()
-export class UserSandbox extends Sandbox {
-  users$ = this.appState$.select(store.fromUser.getAllUsers);
-
+export class UserSandbox extends Sandbox implements OnDestroy {
   private subscriptions: Subscription[] = [];
+  users$ = this.appState$.select(store.fromUser.getAllUsers);
+  user$ = this.appState$.select(store.fromUser.getUser);
+  failAction$ = this.appState$.select(store.fromUser.getFailedStatus);
+  loadAction$ = this.appState$.select(store.fromUser.getLoadingStatus);
 
   constructor(protected appState$: Store<store.State>) {
     super(appState$);
-    this.registerEvents();
+  }
+
+  ngOnDestroy(): void {
+    this.unregisterEvents();
   }
 
   /**
@@ -35,7 +40,17 @@ export class UserSandbox extends Sandbox {
   }
 
   /**
-   * Subscribes to events
+   * Update user in the server
    */
-  private registerEvents(): void {}
+  public updateUser(user: UserModel): void {
+    this.appState$.dispatch(store.fromUser.updateUser({ user }));
+  }
+
+  private unregisterEvents() {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+  public loadUser(userId: number): void {
+    this.appState$.dispatch(store.fromUser.loadUser({ userId }));
+  }
 }
