@@ -1,8 +1,6 @@
 <div class="table-operations">
   <h4 class="section-title">{{ 'Admin.User.Title' | translate }}</h4>
   <nz-divider></nz-divider>
-  <button nz-button nzType="secondary">{{ 'Admin.ClearFilter' | translate }}</button>
-  <button nz-button nzType="secondary">{{ 'Admin.ClearFilterAndSorted' | translate }}</button>
 </div>
 <nz-table #userTable [nzData]="this.userSandbox.users$ | async" nzTableLayout="fixed">
   <thead>
@@ -33,4 +31,4 @@
     </tr>
   </tbody>
 </nz-table>
-<app-popup-modal [user]="this.user"></app-popup-modal>
+<app-popup-modal></app-popup-modal>

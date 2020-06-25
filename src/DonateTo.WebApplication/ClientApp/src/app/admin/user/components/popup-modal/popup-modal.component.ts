@@ -9,11 +9,10 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./popup-modal.component.css'],
 })
 export class PopupModalComponent implements OnInit {
-  @Input() user: UserModel;
+  user: UserModel;
   isVisible = false;
-  selectedOrganizations: number[];
+  selectedOrganizations: OrganizationModel[];
   organizations: OrganizationModel[];
-  subscriptions: Subscription[] = [];
 
   constructor(public userSandbox: UserSandbox) {}
 
@@ -21,19 +20,25 @@ export class PopupModalComponent implements OnInit {
     this.userSandbox.loadOrganizations();
   }
 
-  ShowModal() {
+  ShowModal(user) {
+    this.user = user;
+
     if (this.user.organizations) {
-      this.selectedOrganizations = this.user.organizations.map((o) => o.id);
+      this.selectedOrganizations = this.user.organizations;
+    } else {
+      this.selectedOrganizations = [];
     }
     this.isVisible = true;
   }
 
   handleOk(): void {
     this.userSandbox.userOrganizationLink(this.user.id, this.selectedOrganizations);
+    this.selectedOrganizations = [];
     this.isVisible = false;
   }
 
   handleCancel(): void {
+    this.selectedOrganizations = [];
     this.isVisible = false;
   }
 }

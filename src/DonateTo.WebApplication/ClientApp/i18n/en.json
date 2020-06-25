@@ -229,6 +229,7 @@
     "User": {
       "Title": "Users",
       "Associate": "Associate",
+      "SelectOrganization": "Select Organizations",
       "Table": {
         "Name": "Name",
         "Organization": "Organization",

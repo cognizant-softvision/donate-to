@@ -1,16 +1,14 @@
-import { ColumnItem, DataItem, UserModel } from './../../shared/models';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ColumnItem, UserModel } from './../../shared/models';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserSandbox } from './user.sandbox';
 import { PopupModalComponent } from './components/popup-modal/popup-modal.component';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user-admin',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css'],
 })
-export class UserComponent implements OnInit, OnDestroy {
+export class UserComponent implements OnInit {
   @ViewChild(PopupModalComponent) private popUpModalComponent: PopupModalComponent;
   user: UserModel;
 
@@ -35,19 +33,10 @@ export class UserComponent implements OnInit, OnDestroy {
   ];
 
   editUser(user: UserModel) {
-    this.user = user;
-    this.popUpModalComponent.ShowModal();
-  }
-
-  ngOnDestroy(): void {
-    // throw new Error('Method not implemented.');
+    this.popUpModalComponent.ShowModal(user);
   }
 
   ngOnInit(): void {
     this.userSandbox.loadUsers();
-  }
-
-  updateUserOrganization() {
-    this.userSandbox.userOrganizationLink(1, [3]);
   }
 }

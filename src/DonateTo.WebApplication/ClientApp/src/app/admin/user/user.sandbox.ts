@@ -25,7 +25,7 @@ export class UserSandbox extends Sandbox implements OnDestroy {
   /**
    * Link user to organization
    */
-  public userOrganizationLink(userId: number, organizations: number[]): void {
+  public userOrganizationLink(userId: number, organizations: any[]): void {
     this.appState$.dispatch(store.fromUser.userOrganizationLink({ userId, organizations }));
   }
 
