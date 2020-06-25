@@ -8,6 +8,8 @@ using DonateTo.Mailer.Interfaces;
 using System;
 using System.Linq;
 using System.Globalization;
+using Microsoft.AspNetCore.Authorization;
+
 using DonateTo.WebApi.Common;
 
 namespace DonateTo.WebApi.V1.Controllers
@@ -16,6 +18,7 @@ namespace DonateTo.WebApi.V1.Controllers
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [Authorize]
     public class DonationController : BaseApiController<Donation>
     {
         private readonly IDonationService _donationService;
