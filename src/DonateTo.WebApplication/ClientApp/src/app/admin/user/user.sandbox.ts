@@ -3,11 +3,11 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import * as store from 'src/app/shared/store';
 import { Sandbox } from 'src/app/shared/sandbox/base.sandbox';
-import { OrganizationModel, UserModel } from 'src/app/shared/models';
 
 @Injectable()
 export class UserSandbox extends Sandbox {
   users$ = this.appState$.select(store.fromUser.getAllUsers);
+  organizations$ = this.appState$.select(store.fromOrganization.getAllOrganizations);
 
   private subscriptions: Subscription[] = [];
 
@@ -23,15 +23,15 @@ export class UserSandbox extends Sandbox {
     this.appState$.dispatch(store.fromUser.userOrganizationLink({ userId, organizations }));
   }
 
-  /**
-   * Loads users linked to an organizations from the server
-   */
-  public loadUserLinkedToOrganization(organizationId: number): void {
-    // this.appState$.dispatch(store.fromUser.getUsersLinkedToOrganizations({ organizationId }));
-  }
-
   public loadUsers(): void {
     this.appState$.dispatch(store.fromUser.loadUsers());
+  }
+
+  /**
+   * Loads organizations from the server
+   */
+  public loadOrganizations(): void {
+    this.appState$.dispatch(store.fromOrganization.loadOrganizations());
   }
 
   /**

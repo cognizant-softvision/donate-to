@@ -32,6 +32,7 @@ import {
 } from 'ng-zorro-antd';
 import { UserComponent } from './user.component';
 import { UserRoutingModule } from './user-routing.module';
+import { PopupModalComponent } from './components/popup-modal/popup-modal.component';
 
 // FIX this should be moved to an upper level.
 registerLocaleData(es);
@@ -45,6 +46,7 @@ const ICONS: IconDefinition[] = [PlusOutline];
     NzMenuModule,
     NzModalModule,
     NzRateModule,
+    NzModalModule,
     NzPopconfirmModule,
     NzFormModule,
     NzTableModule,
@@ -72,7 +74,7 @@ const ICONS: IconDefinition[] = [PlusOutline];
       extend: true,
     }),
   ],
-  declarations: [UserComponent],
+  declarations: [UserComponent, PopupModalComponent],
   providers: [UserSandbox],
 })
 export class UserModule {}

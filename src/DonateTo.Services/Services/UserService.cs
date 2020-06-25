@@ -57,9 +57,9 @@ namespace DonateTo.Services
             return _userRepository.Get(id);
         }
 
-        public Task<IEnumerable<User>> GetAsync(Expression<Func<User, bool>> filter)
+        public async Task<IEnumerable<User>> GetAsync(Expression<Func<User, bool>> filter)
         {
-            throw new NotImplementedException();
+            return await _userRepository.GetAsync().ConfigureAwait(false);
         }
 
         public async Task<User> GetAsync(long id)

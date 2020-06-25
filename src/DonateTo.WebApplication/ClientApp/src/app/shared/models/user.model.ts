@@ -1,4 +1,5 @@
 import { BaseModel } from './base.model';
+import { UserOrganizationModel } from './user-organization.model';
 
 export class UserModel extends BaseModel {
   firstName: string;
@@ -25,4 +26,5 @@ export class UserModel extends BaseModel {
   lockoutEnd: string;
   lockoutEnabled: boolean;
   accessFailedCount: number;
+  userOrganizations: UserOrganizationModel[];
 }

@@ -18,22 +18,6 @@ export const loadUsersPaged = createAction(
 );
 export const loadUsersPagedSuccess = createAction(
   '[User] Load paged success',
-  props<{ donationRequests: PageModel<UserModel> }>()
+  props<{ users: PageModel<UserModel> }>()
 );
 export const loadUsersPagedFailed = createAction('[User] Load paged failed');
-
-/*
-export const userOrganizationUnlink = createAction('[User] Unlink user to organization');
-export const userOrganizationUnlinkSuccess = createAction(
-  '[User] Unlink user to organization success',
-  props<{ user: number; organizations: number[] }>()
-);
-export const userOrganizationUnlinkFailed = createAction('[User] Unlink user to organization failed');
-
-export const userOrganizationRetrieve = createAction('[User] Retrieve user organization');
-export const userOrganizationRetrieveSuccess = createAction(
-  '[User] Retrieve user organization success',
-  props<{ users: number[] }>()
-);
-export const userOrganizationRetrieveFailed = createAction('[User] Retrieve user organization failed');
-*/

@@ -6,12 +6,6 @@ const routes: Routes = [
   {
     path: '',
     component: UserComponent,
-    /*
-    children: [
-      { path: 'create', component: DonationsCreateComponent },
-      { path: 'edit/:Id', component: DonationsEditComponent },
-    ],
-    */
   },
 ];
 
