@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { QuestionBase } from 'src/app/shared/models/question-base.model';
 import { TextboxQuestion } from 'src/app/shared/models/question-textbox.model';
-import { DropdownQuestion } from 'src/app/shared/models';
+import { IntegratedQuestion } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-donations-priority',
@@ -17,9 +17,10 @@ export class DonationPriorityComponent implements OnInit {
 
   getQuestions() {
     const questions: Array<QuestionBase<string>> = [
-      new DropdownQuestion({
+      new IntegratedQuestion({
         key: 'brave',
         label: 'Bravery Rating',
+        controlType: 'dropdown',
         options: [
           { key: 'solid', value: 'Solid' },
           { key: 'great', value: 'Great' },
@@ -29,18 +30,41 @@ export class DonationPriorityComponent implements OnInit {
         order: 3,
       }),
 
+      new IntegratedQuestion({
+        key: 'gender',
+        label: 'Gender',
+        controlType: 'radiobutton',
+        options: [
+          { key: 'male', value: 'Male' },
+          { key: 'female', value: 'Female' },
+          { key: 'other', value: 'Other' },
+        ],
+        order: 4,
+      }),
+
+      new IntegratedQuestion({
+        key: 'vehicle',
+        label: 'Vehicle',
+        controlType: 'checkbox',
+        options: [
+          { key: 'bike', value: 'Bike' },
+          { key: 'car', value: 'Car' },
+          { key: 'boat', value: 'Boat' },
+        ],
+        order: 5,
+      }),
+
       new TextboxQuestion({
         key: 'firstName',
         label: 'First name',
-        value: 'Bombasto',
         required: true,
         order: 1,
       }),
 
       new TextboxQuestion({
-        key: 'emailAddress',
-        label: 'Email',
-        type: 'email',
+        key: 'age',
+        label: 'Age',
+        type: 'number',
         order: 2,
       }),
     ];
