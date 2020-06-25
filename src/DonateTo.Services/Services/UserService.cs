@@ -2,6 +2,7 @@
 using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models.Pagination;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -130,15 +131,30 @@ namespace DonateTo.Services
         #region private
         private ICollection<UserOrganization> FilterUserOrganizations(ICollection<UserOrganization> userOrganizations, long userId, IEnumerable<long> organizationsId)
         {
-            var newOrganizations = new List<UserOrganization>();
+            List<UserOrganization> newOrganizations = new List<UserOrganization>();
             var currentOrganizations = userOrganizations.ToList();
 
-            newOrganizations = organizationsId
-           .Where(o => userOrganizations.Any(uo => uo.OrganizationId != o))
-           .Select(o => new UserOrganization { UserId = userId, OrganizationId = o })
-           .ToList();
+            if (currentOrganizations.Any())
+            {
+                newOrganizations.AddRange(
+                    organizationsId.Where(id => !currentOrganizations
+                    .Any(co => co.OrganizationId == id))
+                    .Select(id => new UserOrganization { UserId = userId, OrganizationId = id }));
 
-            currentOrganizations.RemoveAll(uo => organizationsId.Any(o => o != uo.OrganizationId));
+                var removedOrganizations = userOrganizations
+                    .Where(userOrganization => !organizationsId
+                    .Contains(userOrganization.OrganizationId));
+
+                foreach (var userOrganization in removedOrganizations)
+                {
+                    currentOrganizations.Remove(userOrganization);
+                }
+            }
+            else
+            {
+                newOrganizations = organizationsId
+               .Select(o => new UserOrganization { UserId = userId, OrganizationId = o }).ToList();
+            }
 
             if (newOrganizations.Any())
             {
