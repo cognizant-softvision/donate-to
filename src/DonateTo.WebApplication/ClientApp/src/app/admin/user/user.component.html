@@ -26,9 +26,9 @@
       <td>{{ data.organizations }}</td>
       <td>{{ data.email }}</td>
       <td>
-        <a [routerLink]="['./edit', data.id]">{{ 'Admin.Edit' | translate }}</a>
+        <a>{{ 'Admin.Details' | translate }}</a>
         <nz-divider nzType="vertical"></nz-divider>
-        <a>Associate</a>
+        <a (click)="editUser(data)">{{ 'Admin.User.Associate' | translate }}</a>
       </td>
     </tr>
   </tbody>

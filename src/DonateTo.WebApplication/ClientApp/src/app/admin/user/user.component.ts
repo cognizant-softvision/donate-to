@@ -45,7 +45,6 @@ export class UserComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.userSandbox.loadUsers();
-    console.log(this.userSandbox.users$);
   }
 
   updateUserOrganization() {
