@@ -46,8 +46,9 @@ export class DonationsCreateComponent implements OnDestroy {
     }
   }
 
-  validateDonationRequestForm() {
+  openDonationPrioriry() {
     this.donationsFormComponent.validateForm();
+    this.router.navigate(['admin/donations/priority']);
   }
 
   createDonationRequest(data: any) {
