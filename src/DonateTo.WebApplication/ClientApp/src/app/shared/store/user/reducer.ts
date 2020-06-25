@@ -1,10 +1,12 @@
 import * as userActions from './actions';
 import { Action, createReducer, on } from '@ngrx/store';
-import { OrganizationModel, UserModel } from '../../models';
+import { PageModel, UserModel } from '../../models';
 
 export interface UserState {
   loading: boolean;
   failed: boolean;
+  items: UserModel[];
+  pagedItems: PageModel<UserModel>;
   items: UserModel[];
   user: UserModel;
 }
@@ -14,11 +16,12 @@ const INITIAL_STATE: UserState = {
   failed: false,
   items: [],
   user: undefined,
+  pagedItems: new PageModel<UserModel>(),
 };
 
 const userReducer = createReducer(
   INITIAL_STATE,
-  on(userActions.userOrganizationLink, (state, action) => ({
+  on(userActions.userOrganizationLink, (state) => ({
     ...state,
     loading: true,
     failed: false,
@@ -83,34 +86,35 @@ const userReducer = createReducer(
     loading: true,
     failed: false,
   })),
-  on(userActions.userOrganizationRetrieveSuccess, (state, { users }) => ({
+  on(userActions.loadUsersSuccess, (state, { users }) => ({
     ...state,
     loading: false,
     failed: false,
     items: users,
   })),
-  on(userActions.userOrganizationRetrieveFailed, (state, action) => ({
+  on(userActions.loadUsersFailed, (state) => ({
     ...state,
     loading: false,
-    failed: true,
+    failed: false,
     items: [],
   })),
-  on(userActions.userOrganizationUnlink, (state, action) => ({
+  on(userActions.loadUsersPaged, (state) => ({
     ...state,
     loading: true,
     failed: false,
   })),
-  on(userActions.userOrganizationUnlinkSuccess, (state, { user }) => ({
+  on(userActions.loadUsersPagedSuccess, (state, { users }) => ({
     ...state,
     loading: false,
     failed: false,
+    pagedItems: users,
   })),
-  on(userActions.userOrganizationUnlinkFailed, (state, action) => ({
+  on(userActions.loadUsersPagedFailed, (state) => ({
     ...state,
-    loading: true,
-    failed: true,
+    loading: false,
+    failed: false,
+    items: [],
   }))
-  */
 );
 
 export function reducer(state: UserState, action: Action) {

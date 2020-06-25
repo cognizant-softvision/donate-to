@@ -9,6 +9,7 @@ import { UserModel } from 'src/app/shared/models';
 export class UserSandbox extends Sandbox implements OnDestroy {
   private subscriptions: Subscription[] = [];
   users$ = this.appState$.select(store.fromUser.getAllUsers);
+  organizations$ = this.appState$.select(store.fromOrganization.getAllOrganizations);
   user$ = this.appState$.select(store.fromUser.getUser);
   failAction$ = this.appState$.select(store.fromUser.getFailedStatus);
   loadAction$ = this.appState$.select(store.fromUser.getLoadingStatus);
@@ -28,15 +29,15 @@ export class UserSandbox extends Sandbox implements OnDestroy {
     this.appState$.dispatch(store.fromUser.userOrganizationLink({ userId, organizations }));
   }
 
-  /**
-   * Loads users linked to an organizations from the server
-   */
-  public loadUserLinkedToOrganization(organizationId: number): void {
-    // this.appState$.dispatch(store.fromUser.getUsersLinkedToOrganizations({ organizationId }));
-  }
-
   public loadUsers(): void {
     this.appState$.dispatch(store.fromUser.loadUsers());
+  }
+
+  /**
+   * Loads organizations from the server
+   */
+  public loadOrganizations(): void {
+    this.appState$.dispatch(store.fromOrganization.loadOrganizations());
   }
 
   /**

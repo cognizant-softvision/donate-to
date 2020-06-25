@@ -18,7 +18,7 @@ export const loadUsersPaged = createAction(
 );
 export const loadUsersPagedSuccess = createAction(
   '[User] Load paged success',
-  props<{ donationRequests: PageModel<UserModel> }>()
+  props<{ users: PageModel<UserModel> }>()
 );
 export const loadUsersPagedFailed = createAction('[User] Load paged failed');
 

@@ -1,10 +1,9 @@
 import { BaseHttpClientService } from './base-http-client.service';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { OrganizationModel, UserModel } from '../../models';
+import { UserModel } from '../../models';
 import { ConfigService } from 'src/app/app-config.service';
 import { Observable } from 'rxjs';
-import { UserOrganization } from '../../models/user-organization.model';
 
 @Injectable({
   providedIn: 'root',
