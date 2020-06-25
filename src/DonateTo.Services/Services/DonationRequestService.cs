@@ -1,6 +1,7 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Interfaces.Services;
+using DonateTo.ApplicationCore.Models;
 using DonateTo.Mailer.Entities;
 using DonateTo.Mailer.Interfaces;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace DonateTo.Services
         }
 
         ///<inheritdoc cref="IDonationService"/>
-        public async Task SendNewRequestMailToOrganizationUsersAsync(DonationRequest donationRequest, IEnumerable<User> users, string client)
+        public async Task SendNewRequestMailToOrganizationUsersAsync(DonationRequest donationRequest, IEnumerable<UserModel> users, string client)
         {
             if (donationRequest.Organization == null) 
             {

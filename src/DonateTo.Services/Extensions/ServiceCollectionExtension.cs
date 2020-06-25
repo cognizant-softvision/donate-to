@@ -1,3 +1,4 @@
+using AutoMapper;
 using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.Infrastructure.Extensions;
@@ -32,6 +33,8 @@ namespace DonateTo.Services.Extensions
             service.AddTransient<IBaseService<Unit>, UnitService>();
             service.AddTransient<IBaseService<Status>, StatusService>();
             service.AddTransient<IMailSender, MailSender>();
+
+            service.AddAutoMapper(typeof(Startup));
         }
     }
 }
