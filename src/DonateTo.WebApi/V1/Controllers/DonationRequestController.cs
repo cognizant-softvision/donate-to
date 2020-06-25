@@ -8,8 +8,8 @@ using System;
 using System.Globalization;
 using Microsoft.Extensions.Primitives;
 using Microsoft.AspNetCore.Authorization;
-
 using DonateTo.WebApi.Common;
+using DonateTo.WebApi.Filters;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -22,16 +22,13 @@ namespace DonateTo.WebApi.V1.Controllers
     {
         private readonly IDonationRequestService _donationRequestService;
         private readonly IUserService _userService;
-        private readonly IAuthorizationService _authorizationService;
 
         public DonationRequestController(
             IDonationRequestService donationRequestService,
-            IUserService userService,
-            IAuthorizationService authorizationService) : base(donationRequestService)
+            IUserService userService) : base(donationRequestService)
         {
             _donationRequestService = donationRequestService;
             _userService = userService;
-            _authorizationService = authorizationService;
         }
 
         /// <summary>
@@ -43,6 +40,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ServiceFilter(typeof(OrganizationAccessFilter))]
         public override async Task<IActionResult> Post([FromBody] DonationRequest value)
         {
             if (!ModelState.IsValid || value == null)

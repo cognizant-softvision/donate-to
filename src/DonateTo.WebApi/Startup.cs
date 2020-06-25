@@ -11,6 +11,7 @@ using DonateTo.Services.Extensions;
 using Newtonsoft.Json;
 using DonateTo.Mailer.Entities;
 using System.IdentityModel.Tokens.Jwt;
+using DonateTo.WebApi.Filters;
 
 namespace DonateTo.WebApi
 {
@@ -43,6 +44,8 @@ namespace DonateTo.WebApi
                     options.RequireHttpsMetadata = bearerOptions.GetValue<bool>("RequireHttpsMetadata");
                     options.Audience = bearerOptions.GetValue<string>("Audience");
                 });
+
+            services.AddFiltersToModule();
 
             services.AddVersioning();
 

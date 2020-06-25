@@ -12,18 +12,26 @@ namespace DonateTo.Services
     public class DonationRequestService: BaseService<DonationRequest>, IDonationRequestService
     {
         private readonly IMailSender _mailSender;
+        private readonly IOrganizationService _organizationService;
 
         public DonationRequestService(
             IMailSender mailSender,
+            IOrganizationService organizationService,
             IRepository<DonationRequest> donationRequestRepository, 
             IUnitOfWork unitOfWork) : base(donationRequestRepository, unitOfWork)
         {
             _mailSender = mailSender;
+            _organizationService = organizationService;
         }
 
         ///<inheritdoc cref="IDonationService"/>
         public async Task SendNewRequestMailToOrganizationUsersAsync(DonationRequest donationRequest, IEnumerable<User> users, string client)
         {
+            if (donationRequest.Organization == null) 
+            {
+                donationRequest.Organization = _organizationService.Get(donationRequest.OrganizationId);
+            }
+
             var messages = new List<Message>();
             var body = @"<p>Hi {0}!</p>
                             <p>A new Donation Request has been added to {1}</p>
