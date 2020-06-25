@@ -7,7 +7,6 @@ export interface UserState {
   failed: boolean;
   items: UserModel[];
   pagedItems: PageModel<UserModel>;
-  items: UserModel[];
   user: UserModel;
 }
 
@@ -79,41 +78,6 @@ const userReducer = createReducer(
     ...state,
     loading: false,
     failed: true,
-  }))
-  /*
-  on(userActions.userOrganizationRetrieve, (state, action) => ({
-    ...state,
-    loading: true,
-    failed: false,
-  })),
-  on(userActions.loadUsersSuccess, (state, { users }) => ({
-    ...state,
-    loading: false,
-    failed: false,
-    items: users,
-  })),
-  on(userActions.loadUsersFailed, (state) => ({
-    ...state,
-    loading: false,
-    failed: false,
-    items: [],
-  })),
-  on(userActions.loadUsersPaged, (state) => ({
-    ...state,
-    loading: true,
-    failed: false,
-  })),
-  on(userActions.loadUsersPagedSuccess, (state, { users }) => ({
-    ...state,
-    loading: false,
-    failed: false,
-    pagedItems: users,
-  })),
-  on(userActions.loadUsersPagedFailed, (state) => ({
-    ...state,
-    loading: false,
-    failed: false,
-    items: [],
   }))
 );
 
