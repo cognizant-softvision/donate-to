@@ -30,6 +30,7 @@ import {
   NzTableModule,
   NzTagModule,
 } from 'ng-zorro-antd';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { UserComponent } from './user.component';
 import { UserRoutingModule } from './user-routing.module';
 import { PopupModalComponent } from './components/popup-modal/popup-modal.component';
@@ -58,6 +59,7 @@ const ICONS: IconDefinition[] = [PlusOutline];
     NzInputModule,
     NzDividerModule,
     NzTableModule,
+    NzDropDownModule,
     EffectsModule.forFeature([UserEffects]),
     StoreModule.forFeature(fromUser.userFeatureKey, fromUser.reducer),
     FormsModule,

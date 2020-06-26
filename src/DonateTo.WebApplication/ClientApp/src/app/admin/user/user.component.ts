@@ -12,9 +12,12 @@ import { UserSandbox } from './user.sandbox';
 export class UserComponent implements OnInit, OnDestroy {
   @ViewChild(PopupModalComponent) private popUpModalComponent: PopupModalComponent;
   user: UserModel;
+  usersList: UserModel[] = [];
   private isSubmited = false;
   private subscriptions: Subscription[] = [];
   private failedStatus = false;
+  searchValue = '';
+  visible = false;
 
   listOfColumns: ColumnItem[] = [
     {
@@ -40,12 +43,15 @@ export class UserComponent implements OnInit, OnDestroy {
     this.unregisterEvents();
   }
 
-  editUser(user: UserModel) {
-    this.popUpModalComponent.ShowModal(user);
-  }
-
   ngOnInit(): void {
     this.userSandbox.loadUsers();
+
+    this.subscriptions.push(
+      this.userSandbox.users$.subscribe((userList) => {
+        this.usersList = userList;
+      })
+    );
+
     this.subscriptions.push(
       this.userSandbox.failAction$.subscribe((status) => {
         this.failedStatus = status;
@@ -57,6 +63,14 @@ export class UserComponent implements OnInit, OnDestroy {
         this.handleRequestResult();
       })
     );
+  }
+
+  private unregisterEvents() {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+  editUser(user: UserModel) {
+    this.popUpModalComponent.ShowModal(user);
   }
 
   handleRequestResult() {
@@ -72,11 +86,17 @@ export class UserComponent implements OnInit, OnDestroy {
     return organizations.map(({ name }) => name).join(', ');
   }
 
-  private unregisterEvents() {
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
-  }
-
   associateResult(data: any) {
     this.isSubmited = data;
+  }
+
+  reset(): void {
+    this.searchValue = '';
+    this.search();
+  }
+
+  search(): void {
+    this.visible = false;
+    this.usersList = this.usersList.filter((item: UserModel) => item.email.indexOf(this.searchValue) !== -1);
   }
 }

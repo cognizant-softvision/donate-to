@@ -2,22 +2,21 @@
   <h4 class="section-title">{{ 'Admin.User.Title' | translate }}</h4>
   <nz-divider></nz-divider>
 </div>
-<nz-table #userTable [nzData]="this.userSandbox.users$ | async" nzTableLayout="fixed">
+<nz-table #userTable [nzData]="this.usersList" nzTableLayout="fixed">
   <thead>
     <tr>
-      <th
-        *ngFor="let column of listOfColumns"
-        [nzSortOrder]="column.sortOrder"
-        [nzSortFn]="column.sortFn"
-        [nzSortDirections]="column.sortDirections"
-        [nzFilterMultiple]="column.filterMultiple"
-        [nzFilters]="column.listOfFilter"
-        [nzFilterFn]="column.filterFn"
-      >
-        {{ column.name | translate }}
+      <th>{{ 'Admin.User.Table.Name' | translate }}</th>
+      <th>{{ 'Admin.User.Table.Organization' | translate }}</th>
+      <th nzCustomFilter>
+        {{ 'Admin.User.Table.Email' | translate }}
+        <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
+          <i nz-icon nzType="search"></i>
+        </nz-filter-trigger>
       </th>
+      <th>{{ 'Admin.User.Table.Action' | translate }}</th>
     </tr>
   </thead>
+
   <tbody>
     <tr *ngFor="let data of userTable.data">
       <td>{{ data.firstName }}</td>
@@ -31,4 +30,15 @@
     </tr>
   </tbody>
 </nz-table>
+<nz-dropdown-menu #menu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
+      <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">
+        Search
+      </button>
+      <button nz-button nzSize="small" (click)="reset()">Reset</button>
+    </div>
+  </div>
+</nz-dropdown-menu>
 <app-popup-modal (associateResult)="associateResult($event)"></app-popup-modal>

@@ -233,7 +233,8 @@
       "Table": {
         "Name": "Name",
         "Organization": "Organization",
-        "Email": "Email"
+        "Email": "Email",
+        "Action": "Action"
       }
     },
     "Organization": {
