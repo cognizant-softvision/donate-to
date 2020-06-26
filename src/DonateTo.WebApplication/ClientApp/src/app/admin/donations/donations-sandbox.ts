@@ -24,6 +24,7 @@ export class DonationsSandbox extends Sandbox implements OnDestroy {
   donationRequest$ = this.appState$.select(store.fromDonationRequest.getDonationRequest);
   failAction$ = this.appState$.select(store.fromDonationRequest.getFailedStatus);
   loadAction$ = this.appState$.select(store.fromDonationRequest.getLoadingStatus);
+  questions$ = this.appState$.select(store.fromQuestion.getAllQuestions);
 
   constructor(protected appState$: Store<store.State>) {
     super(appState$);
@@ -112,5 +113,12 @@ export class DonationsSandbox extends Sandbox implements OnDestroy {
 
   private unregisterEvents() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+  /**
+   * Loads Questions from the server
+   */
+  public loadQuestions(): void {
+    this.appState$.dispatch(store.fromQuestion.loadQuestions());
   }
 }

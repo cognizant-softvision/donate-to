@@ -7,6 +7,7 @@ import * as unit from './unit';
 import * as status from './status';
 import * as address from './address';
 import * as settings from './settings';
+import * as question from './question';
 
 export interface State {
   settings: settings.SettingsState;
@@ -22,3 +23,4 @@ export const fromCategory = category;
 export const fromStatus = status;
 export const fromAddress = address;
 export const fromUnit = unit;
+export const fromQuestion = question;
