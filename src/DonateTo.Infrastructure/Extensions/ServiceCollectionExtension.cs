@@ -36,6 +36,7 @@ namespace DonateTo.Infrastructure.Extensions
             services.AddScoped<IRepository<Country>, CountryRepository>();
             services.AddScoped<IRepository<State>, StateRepository>();
             services.AddScoped<IRepository<City>, CityRepository>();
+            services.AddScoped<IRepository<Question>, QuestionRepository>();
             services.AddScoped<ISearchRepository, PostgresSearchRepository>();
         }
     }
