@@ -5,6 +5,7 @@ import { Question } from 'src/app/shared/models/question.model';
 @Component({
   selector: 'app-question',
   templateUrl: './dynamic-form-question.component.html',
+  styleUrls: ['./dynamic-form-question.component.css'],
 })
 export class DynamicFormQuestionComponent implements OnInit {
   @Input() question: Question;

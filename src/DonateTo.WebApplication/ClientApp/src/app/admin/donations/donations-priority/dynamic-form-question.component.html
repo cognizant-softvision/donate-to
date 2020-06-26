@@ -4,48 +4,34 @@
 
     <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="streetErrorTpl">
       <div [ngSwitch]="question.controlType">
-        <div *ngSwitchCase="'textbox'">
-          <input
-            *ngSwitchCase="'textbox'"
-            nz-input
-            formControlName="question.key"
-            id="question.key"
-            type="question.type"
-          />
-        </div>
+        <input
+          *ngSwitchCase="'textbox'"
+          nz-input
+          [formControlName]="question.key"
+          [id]="question.key"
+          [type]="question.type"
+        />
 
-        <div *ngSwitchCase="'dropdown'">
-          <select id="question.key" *ngSwitchCase="'dropdown'" formControlName="question.key">
-            <option *ngFor="let opt of question.options" value="opt.key">{{ opt.value }}</option>
-          </select>
-        </div>
+        <nz-select [id]="question.key" *ngSwitchCase="'dropdown'" [formControlName]="question.key">
+          <nz-option *ngFor="let opt of question.options" [nzValue]="opt.key" [nzLabel]="opt.value"></nz-option>
+        </nz-select>
 
-        <!-- <form *ngSwitchCase="'radiobutton'">
-          <div *ngFor="let opt of question.options" [formControlName]="question.key">
-            <input type="radio" [id]="opt.key" [name]="question.key" [value]="opt.key" />
-            <label [for]="opt.key">{{ opt.value }}</label
-            ><br />
-          </div>
-        </form>
-    
-        <form *ngSwitchCase="'checkbox'">
-          <div *ngFor="let opt of question.options" [formControlName]="question.key">
-            <input type="checkbox" [id]="opt.key" [name]="question.key" [value]="opt.key" />
-            <label [for]="opt.key">{{ opt.value }}</label
-            ><br />
-          </div>
-        </form>
-      </div>
-      <br /> -->
+        <nz-radio-group
+          *ngSwitchCase="'radiobutton'"
+          *ngFor="let opt of question.options"
+          [formControlName]="question.key"
+        >
+          <label nz-radio nzValue="opt.key">{{ opt.value }</label>
+        </nz-radio-group>
+
+        <div *ngSwitchCase="'checkbox'" *ngFor="let opt of question.options" [formControlName]="question.key">
+          <input type="checkbox" [id]="opt.key" [name]="question.key" [value]="opt.key" />
+          <label [for]="opt.key">{{ opt.value }}</label
+          ><br />
+        </div>
 
         <div class="errorMessage" *ngIf="!isValid">{{ question.label }} is required</div>
       </div>
-      <!-- 
-      <ng-template #streetErrorTpl let-control>
-        <ng-container *ngIf="control.hasError('required')">
-          {{ 'RequestDonation.DonationSteps.AddressStep.RequiredStreet' | translate }}
-        </ng-container>
-      </ng-template> -->
     </nz-form-control>
   </nz-form-item>
 </div>

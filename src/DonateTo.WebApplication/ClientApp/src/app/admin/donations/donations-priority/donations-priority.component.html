@@ -1,11 +1,11 @@
 <div>
   <form nz-form [formGroup]="form">
-    <div *ngFor="let question of this.donationSandbox.questions$ | async" class="form-row">
+    <div *ngFor="let question of this.donationSandbox.questions" class="form-row">
       <app-question [question]="question" [form]="form"></app-question>
     </div>
 
     <div class="form-row">
-      <button type="submit" [disabled]="!form.valid">Save</button>
+      <button nz-button nzType="primary" type="submit" [disabled]="!form.valid">Save</button>
     </div>
   </form>
 </div>
