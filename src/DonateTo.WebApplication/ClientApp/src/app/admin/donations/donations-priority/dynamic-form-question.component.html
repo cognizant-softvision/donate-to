@@ -10,25 +10,23 @@
       [type]="question.type"
     />
 
-    <select [id]="question.key" *ngSwitchCase="'dropdown'" [formControlName]="question.key">
-      <option *ngFor="let opt of question.options" [value]="opt.key">{{ opt.value }}</option>
-    </select>
+    <nz-select [id]="question.key" *ngSwitchCase="'dropdown'" [ngModel]="question.key">
+      <nz-option *ngFor="let opt of question.options" [nzValue]="opt.key" [nzLabel]="opt.value"></nz-option>
+    </nz-select>
 
-    <form *ngSwitchCase="'radiobutton'">
-      <div *ngFor="let opt of question.options" [formControlName]="question.key">
-        <input type="radio" [id]="opt.key" [name]="question.key" [value]="opt.key" />
-        <label [for]="opt.key">{{ opt.value }}</label
-        ><br />
-      </div>
-    </form>
+    <div *ngSwitchCase="'radiobutton'">
+      <nz-radio-group *ngFor="let opt of question.options" [(ngModel)]="question.key">
+        <label nz-radio nzValue="opt.key">{{ opt.value }</label>
+      </nz-radio-group>
+    </div>
 
-    <form *ngSwitchCase="'checkbox'">
+    <div *ngSwitchCase="'checkbox'">
       <div *ngFor="let opt of question.options" [formControlName]="question.key">
         <input type="checkbox" [id]="opt.key" [name]="question.key" [value]="opt.key" />
         <label [for]="opt.key">{{ opt.value }}</label
         ><br />
       </div>
-    </form>
+    </div>
   </div>
   <br />
 
