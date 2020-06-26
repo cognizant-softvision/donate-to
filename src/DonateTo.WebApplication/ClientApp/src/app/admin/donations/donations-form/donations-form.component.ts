@@ -13,7 +13,6 @@ import { compareDate } from 'src/app/shared/utility/dates/compare-dates';
 })
 export class DonationsFormComponent implements OnInit, OnDestroy {
   @Input() donationRequest: DonationRequestModel;
-  @Output() validationResult = new EventEmitter<DonationRequestModel>();
 
   private subscriptions: Subscription[] = [];
   disabledDates: (current: Date) => boolean;
@@ -23,7 +22,7 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
   finishDate: Date;
   observations: string;
   organizationId: number;
-  priority: number;
+  priority = 5;
   statusId = 2;
   selectedItemCategories: CategoryModel[] = [];
   title: string;
@@ -38,7 +37,6 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
 
   donationRequestFormGroup = new FormGroup({
     titleFormControl: new FormControl('', Validators.required),
-    priorityFormControl: new FormControl('', Validators.required),
     statusFormControl: new FormControl(''),
     organizationFormControl: new FormControl('', Validators.required),
     addressFormControl: new FormControl('', Validators.required),
@@ -120,10 +118,6 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
 
   validateForm() {
     this.validateFormGroup(this.donationRequestFormGroup);
-    if (this.donationRequestFormGroup.valid) {
-      this.buildDonationRequest();
-      this.validationResult.emit(this.donationRequest);
-    }
   }
 
   private validateFormGroup(formGroup: FormGroup) {

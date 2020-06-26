@@ -14,7 +14,7 @@ import { DonationsRoutingModule } from './donations-routing.module';
 import { DonationsSandbox } from './donations-sandbox';
 import { EffectsModule } from '@ngrx/effects';
 import { FormsModule } from '@angular/forms';
-import { fromStatus, fromUnit } from 'src/app/shared/store';
+import { fromQuestion, fromStatus, fromUnit } from 'src/app/shared/store';
 import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { IconDefinition } from '@ant-design/icons-angular';
@@ -44,6 +44,7 @@ import {
   NzTagModule,
 } from 'ng-zorro-antd';
 import { DonationPriorityComponent } from './donations-priority/donations-priority.component';
+import { QuestionEffects } from 'src/app/shared/store/question';
 
 // FIX this should be moved to an upper level.
 registerLocaleData(es);
@@ -68,12 +69,20 @@ const ICONS: IconDefinition[] = [PlusOutline];
     NzInputModule,
     NzDividerModule,
     NzTableModule,
-    EffectsModule.forFeature([OrganizationEffects, AddressEffects, UnitEffects, CategoryEffects, StatusEffects]),
+    EffectsModule.forFeature([
+      OrganizationEffects,
+      AddressEffects,
+      UnitEffects,
+      CategoryEffects,
+      StatusEffects,
+      QuestionEffects,
+    ]),
     StoreModule.forFeature(fromOrganization.organizationFeatureKey, fromOrganization.reducer),
     StoreModule.forFeature(fromStatus.statusFeatureKey, fromStatus.reducer),
     StoreModule.forFeature(fromAddress.addressFeatureKey, fromAddress.reducer),
     StoreModule.forFeature(fromCategory.categoryFeatureKey, fromCategory.reducer),
     StoreModule.forFeature(fromUnit.unitFeatureKey, fromUnit.reducer),
+    StoreModule.forFeature(fromQuestion.questionsFeatureKey, fromQuestion.reducer),
     FormsModule,
     CommonModule,
     ReactiveFormsModule,

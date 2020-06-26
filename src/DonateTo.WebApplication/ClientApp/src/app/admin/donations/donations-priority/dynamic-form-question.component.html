@@ -1,36 +1,51 @@
-<div [formGroup]="form">
-  <label [attr.for]="question.key">{{ question.label }}</label>
+<div>
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>{{ question.label }}</nz-form-label>
 
-  <div [ngSwitch]="question.controlType">
-    <input
-      *ngSwitchCase="'textbox'"
-      nz-input
-      [formControlName]="question.key"
-      [id]="question.key"
-      [type]="question.type"
-    />
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="streetErrorTpl">
+      <div [ngSwitch]="question.controlType">
+        <div *ngSwitchCase="'textbox'">
+          <input
+            *ngSwitchCase="'textbox'"
+            nz-input
+            formControlName="question.key"
+            id="question.key"
+            type="question.type"
+          />
+        </div>
 
-    <select [id]="question.key" *ngSwitchCase="'dropdown'" [formControlName]="question.key">
-      <option *ngFor="let opt of question.options" [value]="opt.key">{{ opt.value }}</option>
-    </select>
+        <div *ngSwitchCase="'dropdown'">
+          <select id="question.key" *ngSwitchCase="'dropdown'" formControlName="question.key">
+            <option *ngFor="let opt of question.options" value="opt.key">{{ opt.value }}</option>
+          </select>
+        </div>
 
-    <form *ngSwitchCase="'radiobutton'">
-      <div *ngFor="let opt of question.options" [formControlName]="question.key">
-        <input type="radio" [id]="opt.key" [name]="question.key" [value]="opt.key" />
-        <label [for]="opt.key">{{ opt.value }}</label
-        ><br />
+        <!-- <form *ngSwitchCase="'radiobutton'">
+          <div *ngFor="let opt of question.options" [formControlName]="question.key">
+            <input type="radio" [id]="opt.key" [name]="question.key" [value]="opt.key" />
+            <label [for]="opt.key">{{ opt.value }}</label
+            ><br />
+          </div>
+        </form>
+    
+        <form *ngSwitchCase="'checkbox'">
+          <div *ngFor="let opt of question.options" [formControlName]="question.key">
+            <input type="checkbox" [id]="opt.key" [name]="question.key" [value]="opt.key" />
+            <label [for]="opt.key">{{ opt.value }}</label
+            ><br />
+          </div>
+        </form>
       </div>
-    </form>
+      <br /> -->
 
-    <form *ngSwitchCase="'checkbox'">
-      <div *ngFor="let opt of question.options" [formControlName]="question.key">
-        <input type="checkbox" [id]="opt.key" [name]="question.key" [value]="opt.key" />
-        <label [for]="opt.key">{{ opt.value }}</label
-        ><br />
+        <div class="errorMessage" *ngIf="!isValid">{{ question.label }} is required</div>
       </div>
-    </form>
-  </div>
-  <br />
-
-  <div class="errorMessage" *ngIf="!isValid">{{ question.label }} is required</div>
+      <!-- 
+      <ng-template #streetErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          {{ 'RequestDonation.DonationSteps.AddressStep.RequiredStreet' | translate }}
+        </ng-container>
+      </ng-template> -->
+    </nz-form-control>
+  </nz-form-item>
 </div>

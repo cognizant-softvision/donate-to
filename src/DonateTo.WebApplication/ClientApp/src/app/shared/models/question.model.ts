@@ -1,4 +1,5 @@
 import { BaseModel } from './base.model';
+import { QuestionOption } from './question-option.modal';
 
 export class Question extends BaseModel {
   key: string;
@@ -7,5 +8,5 @@ export class Question extends BaseModel {
   order: number;
   controlType: string;
   type: string;
-  options: Array<{ key: string; value: string }>;
+  options: QuestionOption[];
 }

@@ -1,8 +1,9 @@
-import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { DonationsFormComponent } from '../donations-form/donations-form.component';
 import { DonationsSandbox } from '../donations-sandbox';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-donations-create',
@@ -12,12 +13,16 @@ import { Subscription } from 'rxjs';
 export class DonationsCreateComponent implements OnDestroy {
   @ViewChild(DonationsFormComponent)
   private donationsFormComponent: DonationsFormComponent;
+
   private subscriptions: Subscription[] = [];
   private isSubmited = false;
   private failedStatus = false;
   isErrorModalActive = false;
 
-  constructor(public donationSandbox: DonationsSandbox, private router: Router) {
+  @ViewChild('modalContent') public modalContent: TemplateRef<any>;
+  tplModal?: NzModalRef;
+
+  constructor(public donationSandbox: DonationsSandbox, private router: Router, private modal: NzModalService) {
     this.subscriptions.push(
       this.donationSandbox.failAction$.subscribe((status) => {
         this.failedStatus = status;
@@ -46,14 +51,43 @@ export class DonationsCreateComponent implements OnDestroy {
     }
   }
 
-  openDonationPrioriry() {
-    this.donationsFormComponent.validateForm();
-    this.router.navigate(['admin/donations/priority']);
+  submitPriority(data: any): void {
+    this.hideModal();
+    this.createDonationRequest();
   }
 
-  createDonationRequest(data: any) {
+  openDonationPriority(): void {
+    // this.donationsFormComponent.validateForm();
+    // if (this.donationsFormComponent.donationRequestFormGroup.valid) {
+    console.log('open modal');
+    this.showModal();
+    // }
+    // DESCOMENTAR
+  }
+
+  showModal() {
+    this.createTplModal(this.modalContent);
+  }
+
+  createTplModal(tplContent: TemplateRef<{}>): void {
+    this.tplModal = this.modal.create({
+      nzContent: tplContent,
+      nzFooter: null,
+      nzClosable: true,
+      nzStyle: {
+        top: '2em;',
+      },
+      nzWidth: '60%',
+    });
+  }
+
+  hideModal() {
+    this.tplModal?.destroy();
+  }
+
+  createDonationRequest() {
     this.isSubmited = true;
-    this.donationSandbox.createDonationRequest(data);
+    this.donationSandbox.createDonationRequest(this.donationsFormComponent.donationRequest);
   }
 
   goBack() {
