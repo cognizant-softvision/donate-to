@@ -63,5 +63,27 @@ namespace DonateTo.WebApi.V1.Controllers
                 return Ok(donationRequest);
             }
         }
+
+        /// <summary>
+        /// Updates a DonationRequest
+        /// </summary>
+        /// <param name="id">DonationRequest Id</param>
+        /// <param name="donationRequest">DonationRequest</param>
+        /// <returns>Updated DonationRequest.</returns>
+        [ServiceFilter(typeof(OrganizationAccessFilter))]
+        public override Task<IActionResult> Put(long id, [FromBody] DonationRequest donationRequest)
+        {
+            return base.Put(id, donationRequest);
+        }
+
+        /// <summary>
+        /// Deletes a DonationRequest
+        /// </summary>
+        /// <param name="id">DonationRequestId to delete.</param>
+        [ServiceFilter(typeof(OrganizationAccessFilter))]
+        public override Task<IActionResult> Delete(long id)
+        {
+            return base.Delete(id);
+        }
     }
 }
