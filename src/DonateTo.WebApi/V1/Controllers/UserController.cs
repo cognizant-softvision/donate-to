@@ -131,7 +131,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<PagedResult<UserModel>>> GetPagedUsersByOrganizationAsync(int pageNumber, int pageSize, long organizationId)
-        {   
+        {
             return await _userService.GetPagedAsync(pageNumber, pageSize, (u => u.Organizations.Any(o => o.Id == organizationId))).ConfigureAwait(false);
         }
 
@@ -185,7 +185,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> PutUserOrganizationsAsync(long userId, [FromBody] IEnumerable<OrganizationModel> value)
+        public async Task<IActionResult> PutUserOrganizationsAsync(long userId, [FromBody] IEnumerable<long> value)
         {
             if (!ModelState.IsValid)
             {
@@ -203,7 +203,7 @@ namespace DonateTo.WebApi.V1.Controllers
                     }
 
                     var username = User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserName)?.Value;
-                    await _userService.UpdateUserOrganizationsAsync(userId, value.Select(o => o.Id), username).ConfigureAwait(false);
+                    await _userService.UpdateUserOrganizationsAsync(userId, value, username).ConfigureAwait(false);
 
                     return Ok();
                 }

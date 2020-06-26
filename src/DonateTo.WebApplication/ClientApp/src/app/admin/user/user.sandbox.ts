@@ -29,6 +29,9 @@ export class UserSandbox extends Sandbox implements OnDestroy {
     this.appState$.dispatch(store.fromUser.userOrganizationLink({ userId, organizations }));
   }
 
+  /**
+   * Loads users from the server
+   */
   public loadUsers(): void {
     this.appState$.dispatch(store.fromUser.loadUsers());
   }
@@ -51,6 +54,9 @@ export class UserSandbox extends Sandbox implements OnDestroy {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
+  /**
+   * load user by id from the server
+   */
   public loadUser(userId: number): void {
     this.appState$.dispatch(store.fromUser.loadUser({ userId }));
   }

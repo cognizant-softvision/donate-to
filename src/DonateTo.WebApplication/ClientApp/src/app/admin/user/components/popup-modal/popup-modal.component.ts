@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { UserSandbox } from '../../user.sandbox';
-import { OrganizationModel, UserModel } from '../../../../shared/models';
+import { UserModel } from '../../../../shared/models';
 
 @Component({
   selector: 'app-popup-modal',
@@ -8,10 +8,10 @@ import { OrganizationModel, UserModel } from '../../../../shared/models';
   styleUrls: ['./popup-modal.component.css'],
 })
 export class PopupModalComponent implements OnInit {
+  @Output() associateResult = new EventEmitter<boolean>();
   user: UserModel;
   isVisible = false;
-  selectedOrganizations: OrganizationModel[];
-  organizations: OrganizationModel[];
+  selectedOrganizations: number[];
 
   constructor(public userSandbox: UserSandbox) {}
 
@@ -23,7 +23,7 @@ export class PopupModalComponent implements OnInit {
     this.user = user;
 
     if (this.user.organizations) {
-      this.selectedOrganizations = this.user.organizations;
+      this.selectedOrganizations = this.user.organizations.map((o) => o.id);
     } else {
       this.selectedOrganizations = [];
     }
@@ -33,15 +33,12 @@ export class PopupModalComponent implements OnInit {
   handleOk(): void {
     this.userSandbox.userOrganizationLink(this.user.id, this.selectedOrganizations);
     this.selectedOrganizations = [];
+    this.associateResult.emit(true);
     this.isVisible = false;
   }
 
   handleCancel(): void {
     this.selectedOrganizations = [];
     this.isVisible = false;
-  }
-
-  isNotSelected(value: OrganizationModel): boolean {
-    return this.selectedOrganizations && !this.selectedOrganizations.some((o) => o.id === value.id);
   }
 }
