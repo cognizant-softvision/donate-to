@@ -1,4 +1,4 @@
-import { ColumnItem, UserModel } from './../../shared/models';
+import { ColumnItem, OrganizationModel, UserModel } from './../../shared/models';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserSandbox } from './user.sandbox';
 import { PopupModalComponent } from './components/popup-modal/popup-modal.component';
@@ -38,5 +38,9 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.userSandbox.loadUsers();
+  }
+
+  showOrganizations(organizations: OrganizationModel[]) {
+    return organizations.map(({ name }) => name).join(', ');
   }
 }

@@ -1,7 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { OrganizationModel, UserModel } from 'src/app/shared/models';
+import { Component, OnInit } from '@angular/core';
 import { UserSandbox } from '../../user.sandbox';
-import { Subscription } from 'rxjs';
+import { OrganizationModel, UserModel } from '../../../../shared/models';
 
 @Component({
   selector: 'app-popup-modal',
@@ -40,5 +39,9 @@ export class PopupModalComponent implements OnInit {
   handleCancel(): void {
     this.selectedOrganizations = [];
     this.isVisible = false;
+  }
+
+  isNotSelected(value: OrganizationModel): boolean {
+    return this.selectedOrganizations && !this.selectedOrganizations.some((o) => o.id === value.id);
   }
 }

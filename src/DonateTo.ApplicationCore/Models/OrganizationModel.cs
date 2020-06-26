@@ -5,9 +5,9 @@ namespace DonateTo.ApplicationCore.Models
 {
     public class OrganizationModel
     {
+        public long Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public long ContactId { get; set; }
         public Contact Contact { get; set; }
         public IEnumerable<Address> Addresses { get; set; }
     }

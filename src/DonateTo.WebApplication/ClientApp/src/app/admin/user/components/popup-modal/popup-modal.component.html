@@ -11,7 +11,8 @@
     <nz-option
       *ngFor="let item of this.userSandbox.organizations$ | async"
       [nzLabel]="item.name"
-      [nzValue]="item.id"
+      [nzValue]="item"
+      [nzHide]="!isNotSelected(item)"
     ></nz-option>
   </nz-select>
   <ng-template #tagPlaceHolder let-selectedList> and {{ selectedList.length }} more selected </ng-template>

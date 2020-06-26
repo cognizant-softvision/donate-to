@@ -131,9 +131,8 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<PagedResult<UserModel>>> GetPagedUsersByOrganizationAsync(int pageNumber, int pageSize, long organizationId)
-        {
-            //add filter matching organizationId as third parameter of the method eg. u => u.UserOrganization.Where(uo => uo.OrganizationId == organizationId)
-            return await _userService.GetPagedAsync(pageNumber, pageSize).ConfigureAwait(false);
+        {   
+            return await _userService.GetPagedAsync(pageNumber, pageSize, (u => u.Organizations.Any(o => o.Id == organizationId))).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -186,7 +185,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> PutUserOrganizationsAsync(long userId, [FromBody] IEnumerable<long> value)
+        public async Task<IActionResult> PutUserOrganizationsAsync(long userId, [FromBody] IEnumerable<OrganizationModel> value)
         {
             if (!ModelState.IsValid)
             {
@@ -197,13 +196,13 @@ namespace DonateTo.WebApi.V1.Controllers
                 try
                 {
                     var userRole = User.Claims.FirstOrDefault(claim => claim.Type.Contains(Claims.Role))?.Value;
-                    if (userRole != Roles.Superadmin && userRole != Roles.Admin)
+                    if (userRole == Roles.Donor)
                     {
-                        return Forbid();
+                        return Unauthorized();
                     }
 
                     var username = User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserName)?.Value;
-                    await _userService.UpdateUserOrganizationsAsync(userId, value, username).ConfigureAwait(false);
+                    await _userService.UpdateUserOrganizationsAsync(userId, value.Select(o => o.Id), username).ConfigureAwait(false);
 
                     return Ok();
                 }

@@ -21,7 +21,7 @@
   <tbody>
     <tr *ngFor="let data of userTable.data">
       <td>{{ data.firstName }}</td>
-      <td>{{ data.organizations }}</td>
+      <td>{{ showOrganizations(data.organizations) }}</td>
       <td>{{ data.email }}</td>
       <td>
         <a>{{ 'Admin.Details' | translate }}</a>

@@ -9,10 +9,11 @@ namespace DonateTo.Services.Mapping.Profiles
         public OrganizationProfile() 
         {
             CreateMap<UserOrganization, OrganizationModel>()
-                .ForAllMembers(m => m.MapFrom(src => src.Organization));
-
-            CreateMap<OrganizationModel, UserOrganization>()
-                .ForMember(o => o.Organization, opt => opt.MapFrom(s => s));
+                .ForMember(m => m.Id, opt => opt.MapFrom(src => src.OrganizationId))
+                .ForMember(m => m.Name, opt => opt.MapFrom(src => src.Organization.Name))
+                .ForMember(m => m.Contact, opt => opt.MapFrom(src => src.Organization.Contact))
+                .ForMember(m => m.Addresses, opt => opt.MapFrom(src => src.Organization.Addresses))
+                .ReverseMap();
 
         }
     }
