@@ -196,7 +196,8 @@ namespace DonateTo.WebApi.V1.Controllers
                 try
                 {
                     var userRole = User.Claims.FirstOrDefault(claim => claim.Type.Contains(Claims.Role))?.Value;
-                    if (userRole == Roles.Donor)
+
+                    if (userRole != Roles.Superadmin && userRole != Roles.Admin)
                     {
                         return Unauthorized();
                     }

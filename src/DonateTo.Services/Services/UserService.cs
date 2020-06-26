@@ -5,6 +5,7 @@ using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models;
 using DonateTo.ApplicationCore.Models.Pagination;
+using DonateTo.Infrastructure.Common;
 using DonateTo.Services.Extensions;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace DonateTo.Services
     public class UserService : IUserService
     {
         private readonly IRepository<User> _userRepository;
+        private readonly IRepository<Role> _roleRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
@@ -26,10 +28,12 @@ namespace DonateTo.Services
 
         public UserService(
             IRepository<User> userRepository,
+            IRepository<Role> roleRepository,
             IUnitOfWork unitOfWork,
             IMapper mapper)
         {
             _userRepository = userRepository;
+            _roleRepository = roleRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
@@ -135,6 +139,14 @@ namespace DonateTo.Services
             user.UpdateBy = username;
 
             user.UserOrganizations = FilterUserOrganizations(user.UserOrganizations, userId, organizationsId);
+
+            if (!user.UserRoles.Any(r => r.Role.Name == Roles.Organization))
+            {
+                user.UserRoles.Add(new UserRole()
+                {
+                    RoleId = _roleRepository.FirstOrDefault(r => r.Name == Roles.Organization).Id
+                });
+            }
 
             await _userRepository.UpdateAsync(user).ConfigureAwait(false);
             await _unitOfWork.SaveAsync().ConfigureAwait(false);
