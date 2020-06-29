@@ -10,7 +10,7 @@ const routes: Routes = [
     component: AdminLayoutComponent,
     children: [
       { path: '', redirectTo: 'donations', pathMatch: 'prefix' },
-      { path: 'user', component: UserComponent },
+      { path: 'user', loadChildren: () => import('src/app/admin/user/user.module').then((m) => m.UserModule) },
       {
         path: 'donations',
         loadChildren: () => import('src/app/admin/donations/donations.module').then((m) => m.DonationsModule),

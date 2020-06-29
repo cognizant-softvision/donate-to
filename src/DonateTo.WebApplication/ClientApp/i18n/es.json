@@ -228,7 +228,14 @@
     },
     "User": {
       "Title": "Usuarios",
-      "Associate": "Asociar"
+      "Associate": "Asociar",
+      "SelectOrganization": "Seleccionar Organizaciones",
+      "Table": {
+        "Name": "Nombre",
+        "Organization": "Organización",
+        "Email": "Email",
+        "Action": "Acción"
+      }
     },
     "Organization": {
       "Title": "Organización"
