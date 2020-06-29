@@ -27,30 +27,33 @@
           <i nz-icon nzType="edit" nzTheme="outline" (click)="startEdit(data.id)"></i>
         </td>
       </ng-container>
+
       <ng-template #editTemplate>
-        <td>
+        <td class="quantity-to-donate">
           <nz-input-number
             [(ngModel)]="data.quantityToDonate"
             [nzMin]="0"
             [nzMax]="data.item.finishQuantity - data.item.currentQuantity"
             (keyup.enter)="saveEdit(data.id)"
-            (focusout)="cancelEdit(data.id)"
           ></nz-input-number>
+
+          <div>
+            <i
+              nz-icon
+              nzType="check-circle"
+              nzTheme="twotone"
+              [nzTwotoneColor]="'#52c41a'"
+              (click)="saveEdit(data.id)"
+            ></i>
+            <i
+              nz-icon
+              nzType="close-circle"
+              nzTheme="twotone"
+              [nzTwotoneColor]="'#eb2f96'"
+              (click)="cancelEdit(data.id)"
+            ></i>
+          </div>
         </td>
-        <!--
-        <td>
-          <a (click)="saveEdit(data.id)" class="save">{{
-            'RequestDonation.DonationItemList.SaveButton' | translate
-          }}</a>
-          <a
-            nz-popconfirm
-            nzPopconfirmTitle="{{ 'RequestDonation.DonationItemList.PopUpConfirmTitle' | translate }}"
-            nzPopconfirmPlacement="top"
-            (nzOnConfirm)="cancelEdit(data.id)"
-            >{{ 'RequestDonation.DonationItemList.CancelButton' | translate }}</a
-          >
-        </td>
-        -->
       </ng-template>
     </tr>
     <tr class="ant-row-end">

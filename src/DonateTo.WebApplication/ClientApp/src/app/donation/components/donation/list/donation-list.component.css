@@ -10,3 +10,8 @@
   display: flex;
   justify-content: space-between;
 }
+
+[nz-icon] {
+  margin-right: 6px;
+  font-size: 1.5em;
+}
