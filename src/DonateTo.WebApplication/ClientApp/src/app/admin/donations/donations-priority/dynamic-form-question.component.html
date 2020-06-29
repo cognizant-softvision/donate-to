@@ -1,9 +1,9 @@
-<div>
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>{{ question.label }}</nz-form-label>
+<nz-form-item>
+  <nz-form-label [nzSpan]="7" nzRequired>{{ question.label }}</nz-form-label>
 
-    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="streetErrorTpl">
-      <div [ngSwitch]="question.controlType">
+  <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="streetErrorTpl">
+    <div [ngSwitch]="question.controlType">
+      <div *ngSwitchCase="'radiobutton'">
         <input
           *ngSwitchCase="'textbox'"
           nz-input
@@ -11,27 +11,29 @@
           [id]="question.key"
           [type]="question.type"
         />
+      </div>
 
-        <nz-select [id]="question.key" *ngSwitchCase="'dropdown'" [formControlName]="question.key">
+      <div *ngSwitchCase="'dropdown'">
+        <nz-select [id]="question.key" [formControlName]="question.key">
           <nz-option *ngFor="let opt of question.options" [nzValue]="opt.key" [nzLabel]="opt.value"></nz-option>
         </nz-select>
+      </div>
 
-        <nz-radio-group
-          *ngSwitchCase="'radiobutton'"
-          *ngFor="let opt of question.options"
-          [formControlName]="question.key"
-        >
+      <div *ngSwitchCase="'radiobutton'">
+        <nz-radio-group *ngFor="let opt of question.options" [formControlName]="question.key">
           <label nz-radio nzValue="opt.key">{{ opt.value }</label>
         </nz-radio-group>
+      </div>
 
-        <div *ngSwitchCase="'checkbox'" *ngFor="let opt of question.options" [formControlName]="question.key">
+      <div *ngSwitchCase="'checkbox'">
+        <div *ngFor="let opt of question.options" [formControlName]="question.key">
           <input type="checkbox" [id]="opt.key" [name]="question.key" [value]="opt.key" />
           <label [for]="opt.key">{{ opt.value }}</label
           ><br />
         </div>
-
-        <div class="errorMessage" *ngIf="!isValid">{{ question.label }} is required</div>
       </div>
-    </nz-form-control>
-  </nz-form-item>
-</div>
+
+      <div class="errorMessage" *ngIf="!isValid">{{ question.label }} is required</div>
+    </div>
+  </nz-form-control>
+</nz-form-item>

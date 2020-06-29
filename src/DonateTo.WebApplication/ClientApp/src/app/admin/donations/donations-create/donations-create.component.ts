@@ -74,6 +74,7 @@ export class DonationsCreateComponent implements OnDestroy {
       nzContent: tplContent,
       nzFooter: null,
       nzClosable: true,
+      nzTitle: 'Questions',
       nzStyle: {
         top: '2em;',
       },

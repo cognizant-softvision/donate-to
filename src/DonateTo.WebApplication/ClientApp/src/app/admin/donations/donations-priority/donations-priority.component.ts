@@ -57,6 +57,12 @@ export class DonationPriorityComponent implements OnInit, OnDestroy {
       group[question.key] = question.required ? new FormControl('', Validators.required) : new FormControl('');
     });
 
+    console.log(questions);
+
     return this.formBuilder.group(group);
+  }
+
+  isValid(question: Question) {
+    return this.form.controls[question.key].valid;
   }
 }
