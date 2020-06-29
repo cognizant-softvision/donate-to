@@ -5,3 +5,8 @@
 .donate {
   text-align: right;
 }
+
+.quantity-to-donate {
+  display: flex;
+  justify-content: space-between;
+}

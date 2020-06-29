@@ -13,18 +13,18 @@
       <th nzColumnKey="quantityToDonate" nzWidth="10%">
         {{ 'RequestDonation.DonationItemList.QuantityToDonate' | translate }}
       </th>
-      <th nzColumnKey="operation">{{ 'RequestDonation.DonationItemList.Operation' | translate }}</th>
     </tr>
   </thead>
+
   <tbody>
     <tr *ngFor="let data of editCache">
       <td>{{ data.item.name }}</td>
       <td>{{ data.item.finishQuantity - data.item.currentQuantity }} {{ data.item.unit?.code }}</td>
       <td>{{ data.item.observation }}</td>
       <ng-container *ngIf="!data.edit; else editTemplate">
-        <td>{{ data.quantityToDonate }}</td>
-        <td>
-          <a (click)="startEdit(data.id)">{{ 'RequestDonation.DonationItemList.EditButton' | translate }}</a>
+        <td class="quantity-to-donate">
+          {{ data.quantityToDonate }}
+          <i nz-icon nzType="edit" nzTheme="outline" (click)="startEdit(data.id)"></i>
         </td>
       </ng-container>
       <ng-template #editTemplate>
@@ -33,8 +33,11 @@
             [(ngModel)]="data.quantityToDonate"
             [nzMin]="0"
             [nzMax]="data.item.finishQuantity - data.item.currentQuantity"
+            (keyup.enter)="saveEdit(data.id)"
+            (focusout)="cancelEdit(data.id)"
           ></nz-input-number>
         </td>
+        <!--
         <td>
           <a (click)="saveEdit(data.id)" class="save">{{
             'RequestDonation.DonationItemList.SaveButton' | translate
@@ -47,6 +50,7 @@
             >{{ 'RequestDonation.DonationItemList.CancelButton' | translate }}</a
           >
         </td>
+        -->
       </ng-template>
     </tr>
     <tr class="ant-row-end">
