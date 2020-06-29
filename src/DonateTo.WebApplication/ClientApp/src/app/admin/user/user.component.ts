@@ -12,24 +12,31 @@ import { UserSandbox } from './user.sandbox';
 export class UserComponent implements OnInit, OnDestroy {
   @ViewChild(PopupModalComponent) private popUpModalComponent: PopupModalComponent;
   user: UserModel;
+  users: UserModel[] = [];
   usersList: UserModel[] = [];
   private isSubmited = false;
   private subscriptions: Subscription[] = [];
   private failedStatus = false;
-  searchValue = '';
-  visible = false;
+  searchMailValue = '';
+  searchMailvisible = false;
+  searchNameValue = '';
+  searchNameVisible = false;
 
   listOfColumns: ColumnItem[] = [
     {
       name: 'Admin.User.Table.Name',
-      sortFn: (a: UserModel, b: UserModel) => a.firstName.localeCompare(b.firstName),
+      sortOrder: null,
+      sortFn: (a: UserModel, b: UserModel) =>
+        (a.firstName + ' ' + a.lastName).localeCompare(b.firstName + ' ' + b.lastName),
     },
     {
       name: 'Admin.User.Table.Organization',
+      sortOrder: null,
       sortFn: (a: UserModel, b: UserModel) => a.lastName.localeCompare(b.lastName),
     },
     {
       name: 'Admin.User.Table.Email',
+      sortOrder: null,
       sortFn: (a: UserModel, b: UserModel) => a.email.localeCompare(b.email),
     },
     {
@@ -48,6 +55,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(
       this.userSandbox.users$.subscribe((userList) => {
+        this.users = userList;
         this.usersList = userList;
       })
     );
@@ -91,12 +99,21 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   reset(): void {
-    this.searchValue = '';
-    this.search();
+    this.searchMailValue = '';
+    this.searchNameValue = '';
+    this.searchMail();
   }
 
-  search(): void {
-    this.visible = false;
-    this.usersList = this.usersList.filter((item: UserModel) => item.email.indexOf(this.searchValue) !== -1);
+  searchMail(): void {
+    this.searchMailvisible = false;
+    this.usersList = this.users.filter((item: UserModel) => item.email.includes(this.searchMailValue) === true);
+  }
+
+  searchName(): void {
+    this.searchNameVisible = false;
+    this.usersList.forEach((x) => console.log(x.fullName));
+    this.usersList = this.users.filter(
+      (item: UserModel) => item.fullName.toLowerCase().includes(this.searchNameValue.toLowerCase()) === true
+    );
   }
 }

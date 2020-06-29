@@ -1,15 +1,31 @@
 <div class="table-operations">
   <h4 class="section-title">{{ 'Admin.User.Title' | translate }}</h4>
   <nz-divider></nz-divider>
+  <button nz-button nzType="secondary" (click)="reset()">{{ 'Admin.ClearFilter' | translate }}</button>
 </div>
-<nz-table #userTable [nzData]="this.usersList" nzTableLayout="fixed">
+<nz-table #userTable [nzData]="usersList" nzTableLayout="fixed">
   <thead>
     <tr>
-      <th>{{ 'Admin.User.Table.Name' | translate }}</th>
+      <th [(nzSortOrder)]="listOfColumns[0].sortOrder" [nzSortFn]="listOfColumns[0].sortFn" nzCustomFilter>
+        {{ 'Admin.User.Table.Name' | translate }}
+        <nz-filter-trigger
+          [(nzVisible)]="searchNameVisible"
+          [nzActive]="searchNameValue.length > 0"
+          [nzDropdownMenu]="nameSearch"
+        >
+          <i nz-icon nzType="search"></i>
+        </nz-filter-trigger>
+      </th>
+
       <th>{{ 'Admin.User.Table.Organization' | translate }}</th>
+
       <th nzCustomFilter>
         {{ 'Admin.User.Table.Email' | translate }}
-        <nz-filter-trigger [(nzVisible)]="visible" [nzActive]="searchValue.length > 0" [nzDropdownMenu]="menu">
+        <nz-filter-trigger
+          [(nzVisible)]="searchMailvisible"
+          [nzActive]="searchMailValue.length > 0"
+          [nzDropdownMenu]="mailSeach"
+        >
           <i nz-icon nzType="search"></i>
         </nz-filter-trigger>
       </th>
@@ -19,7 +35,7 @@
 
   <tbody>
     <tr *ngFor="let data of userTable.data">
-      <td>{{ data.firstName }}</td>
+      <td>{{ data.firstName }} {{ data.lastName }}</td>
       <td>{{ showOrganizations(data.organizations) }}</td>
       <td>{{ data.email }}</td>
       <td>
@@ -30,15 +46,29 @@
     </tr>
   </tbody>
 </nz-table>
-<nz-dropdown-menu #menu="nzDropdownMenu">
+
+<nz-dropdown-menu #nameSearch="nzDropdownMenu">
   <div class="ant-table-filter-dropdown">
     <div class="search-box">
-      <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
-      <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">
+      <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchNameValue" />
+      <button nz-button nzSize="small" nzType="primary" (click)="searchName()" class="search-button">
         Search
       </button>
       <button nz-button nzSize="small" (click)="reset()">Reset</button>
     </div>
   </div>
 </nz-dropdown-menu>
+
+<nz-dropdown-menu #mailSeach="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input type="text" nz-input placeholder="Search mail" [(ngModel)]="searchMailValue" />
+      <button nz-button nzSize="small" nzType="primary" (click)="searchMail()" class="search-button">
+        Search
+      </button>
+      <button nz-button nzSize="small" (click)="reset()">Reset</button>
+    </div>
+  </div>
+</nz-dropdown-menu>
+
 <app-popup-modal (associateResult)="associateResult($event)"></app-popup-modal>
