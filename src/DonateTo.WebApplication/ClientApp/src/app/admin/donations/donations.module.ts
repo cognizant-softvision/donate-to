@@ -29,6 +29,7 @@ import { StoreModule } from '@ngrx/store';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { UnitEffects } from 'src/app/shared/store/unit';
 import {
+  NzCheckboxModule,
   NzDatePickerModule,
   NzFormModule,
   NzIconModule,
@@ -55,6 +56,7 @@ const ICONS: IconDefinition[] = [PlusOutline];
   imports: [
     NzIconModule.forChild(ICONS),
     NzLayoutModule,
+    NzCheckboxModule,
     NzMenuModule,
     NzModalModule,
     NzRateModule,

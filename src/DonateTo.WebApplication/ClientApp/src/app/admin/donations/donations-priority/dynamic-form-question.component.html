@@ -20,15 +20,14 @@
       </div>
 
       <div *ngSwitchCase="'radiobutton'">
-        <nz-radio-group *ngFor="let opt of question.options" [formControlName]="question.key">
-          <label nz-radio nzValue="opt.key">{{ opt.value }</label>
+        <nz-radio-group *ngFor="let opt of question.options" [ngModel]="question.key">
+          <label nz-radio nzValue="opt.key">{{ opt.value }}</label>
         </nz-radio-group>
       </div>
 
       <div *ngSwitchCase="'checkbox'">
         <div *ngFor="let opt of question.options" [formControlName]="question.key">
-          <input type="checkbox" [id]="opt.key" [name]="question.key" [value]="opt.key" />
-          <label [for]="opt.key">{{ opt.value }}</label
+          <label nz-checkbox [(ngModel)]="opt.key">{{ opt.value }}</label>
           ><br />
         </div>
       </div>
