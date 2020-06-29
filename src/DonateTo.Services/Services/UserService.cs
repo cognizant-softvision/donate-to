@@ -77,6 +77,7 @@ namespace DonateTo.Services
             return await _userRepository.GetPagedAsync(page, pageSize, filter).ConfigureAwait(false);
         }
 
+        ///<inheritdoc cref="IUserService"/>
         public IEnumerable<User> GetByOrganizationId(long organizationId)
         {
             return _userRepository.Get(u => u.UserOrganizations
@@ -84,6 +85,7 @@ namespace DonateTo.Services
             .Equals(organizationId)));
         }
 
+        ///<inheritdoc cref="IUserService"/>
         public async Task<IEnumerable<User>> GetByOrganizationIdAsync(long organizationId)
         {
             return await _userRepository.GetAsync(u => u.UserOrganizations
@@ -100,5 +102,51 @@ namespace DonateTo.Services
         {
             throw new NotImplementedException();
         }
+
+        ///<inheritdoc cref="IUserService"/>
+        public void UpdateUserOrganizations(long userId, IEnumerable<long> organizationsId, string username)
+        {
+            var user = _userRepository.Get(userId);
+            user.UpdateBy = username;
+
+            user.UserOrganizations = FilterUserOrganizations(user.UserOrganizations, userId, organizationsId);
+
+            _userRepository.Update(user);
+            _unitOfWork.Save();
+        }
+
+        ///<inheritdoc cref="IUserService"/>
+        public async Task UpdateUserOrganizationsAsync(long userId, IEnumerable<long> organizationsId, string username)
+        {
+            var user = await _userRepository.GetAsync(userId).ConfigureAwait(false);
+            user.UpdateBy = username;
+
+            user.UserOrganizations = FilterUserOrganizations(user.UserOrganizations, userId, organizationsId);
+
+            await _userRepository.UpdateAsync(user).ConfigureAwait(false);
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
+        }
+
+        #region private
+        private ICollection<UserOrganization> FilterUserOrganizations(ICollection<UserOrganization> userOrganizations, long userId, IEnumerable<long> organizationsId)
+        {
+            var newOrganizations = new List<UserOrganization>();
+            var currentOrganizations = userOrganizations.ToList();
+
+            newOrganizations = organizationsId
+           .Where(o => userOrganizations.Any(uo => uo.OrganizationId != o))
+           .Select(o => new UserOrganization { UserId = userId, OrganizationId = o })
+           .ToList();
+
+            currentOrganizations.RemoveAll(uo => organizationsId.Any(o => o != uo.OrganizationId));
+
+            if (newOrganizations.Any())
+            {
+                currentOrganizations.AddRange(newOrganizations);
+            }
+
+            return currentOrganizations;
+        }
+        #endregion
     }
 }
