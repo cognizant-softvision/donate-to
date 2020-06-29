@@ -29,6 +29,8 @@ import {
   TeamOutline,
   UserOutline,
 } from '@ant-design/icons-angular/icons';
+import { MyDonationSandbox } from 'src/app/my-donations/my-donation.sandbox';
+import { MyDonationsModule } from 'src/app/my-donations/my-donation.module';
 
 const ICONS: IconDefinition[] = [
   HeartOutline,
@@ -64,6 +66,6 @@ const ICONS: IconDefinition[] = [
     NzIconModule.forChild(ICONS),
   ],
   declarations: [DonationLayoutComponent],
-  providers: [DonationSandbox, NzModalService],
+  providers: [DonationSandbox, MyDonationSandbox, NzModalService],
 })
 export class DonationLayoutModule {}

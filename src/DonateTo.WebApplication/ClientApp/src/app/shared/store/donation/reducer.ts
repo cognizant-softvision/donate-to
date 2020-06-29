@@ -1,19 +1,24 @@
 import * as donationRequestActions from './actions';
 import { Action, createReducer, on } from '@ngrx/store';
-import { DonationRequestModel } from '../../models';
+import { DonationRequestModel, PageModel } from '../../models';
+import { DonationModel } from '../../models/donation.model';
 
 export interface DonationRequestState {
   loading: boolean;
   failed: boolean;
   item: DonationRequestModel;
+  currentDonation: DonationModel;
   newDonationLoading: boolean;
+  donations: PageModel<DonationModel>;
 }
 
 const INITIAL_STATE: DonationRequestState = {
   loading: true,
   failed: false,
   item: new DonationRequestModel(),
+  donations: new PageModel<DonationModel>(),
   newDonationLoading: false,
+  currentDonation: new DonationModel(),
 };
 
 const donationRequestReducer = createReducer(
@@ -35,7 +40,18 @@ const donationRequestReducer = createReducer(
     loading: false,
     failed: true,
   })),
+  on(donationRequestActions.loadDonationById, (state) => ({
+    ...state,
+    loading: true,
+    failed: false,
+  })),
   on(donationRequestActions.addDonation, (state) => ({
+    ...state,
+    loading: true,
+    failed: false,
+    newDonationLoading: true,
+  })),
+  on(donationRequestActions.updateDonation, (state) => ({
     ...state,
     loading: true,
     failed: false,
@@ -47,10 +63,49 @@ const donationRequestReducer = createReducer(
     failed: false,
     newDonationLoading: false,
   })),
+  on(donationRequestActions.loadDonationByIdSuccess, (state, { donation }) => ({
+    ...state,
+    loading: false,
+    failed: false,
+    currentDonation: donation,
+  })),
+  on(donationRequestActions.updateDonation, (state, { donation }) => ({
+    ...state,
+    loading: false,
+    failed: false,
+    newDonationLoading: false,
+  })),
   on(donationRequestActions.addDonationFailed, (state) => ({
     ...state,
     loading: false,
     failed: true,
+  })),
+  on(donationRequestActions.loadDonationByIdFailed, (state) => ({
+    ...state,
+    loading: false,
+    failed: true,
+  })),
+  on(donationRequestActions.updateDonationFailed, (state) => ({
+    ...state,
+    loading: false,
+    failed: true,
+  })),
+  on(donationRequestActions.loadDonationByUserPaged, (state) => ({
+    ...state,
+    loading: true,
+    failed: false,
+  })),
+  on(donationRequestActions.loadDonationByUserPagedSuccess, (state, { donations }) => ({
+    ...state,
+    loading: false,
+    failed: false,
+    donations,
+  })),
+  on(donationRequestActions.loadDonationByUserPagedFailed, (state) => ({
+    ...state,
+    loading: false,
+    failed: true,
+    items: new PageModel<DonationModel>(),
   }))
 );
 

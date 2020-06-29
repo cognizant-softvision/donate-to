@@ -6,6 +6,7 @@ import { DonationRequestModel } from './donation-request.model';
 import { DonationItemModel } from './donation-item.model';
 
 export class DonationModel extends BaseModel {
+  donationId?: number;
   observation?: string;
   donationRequestId: number;
   donationRequest?: DonationRequestModel;

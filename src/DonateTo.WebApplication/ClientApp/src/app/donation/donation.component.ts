@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { DonationSandbox } from './donation.sandbox';
@@ -7,6 +7,7 @@ import { DonationListComponent } from './components/donation/list/donation-list.
 import { DonationItemModel } from '../shared/models/donation-item.model';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { TranslateService } from '@ngx-translate/core';
+import { DonationModel } from '../shared/models/donation.model';
 
 @Component({
   selector: 'app-donation',
@@ -14,6 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./donation.component.css'],
 })
 export class DonationComponent implements OnInit, OnDestroy {
+  donationId: any;
   constructor(
     protected router: ActivatedRoute,
     public donationSandbox: DonationSandbox,
@@ -27,13 +29,17 @@ export class DonationComponent implements OnInit, OnDestroy {
   donationItems: DonationItemModel[] = [];
   isSubmited = false;
 
+  @Input() userId: number;
+  @Input() isEdit: boolean;
+
   @ViewChild('modalContent') public modalContent: TemplateRef<any>;
 
   tplModal?: NzModalRef;
 
   subscriptions: Subscription[] = [];
 
-  donation: DonationRequestModel;
+  donationRequest: DonationRequestModel;
+  donation: DonationModel;
 
   @ViewChild(DonationListComponent)
   private donationListComponent: DonationListComponent;
@@ -60,13 +66,26 @@ export class DonationComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.router.params.subscribe((params: Params) => {
         this.donationRequestId = params['donationRequestId'];
-        this.donationSandbox.loadDonationRequest(params['donationRequestId']);
+        this.donationId = params['donationId'];
+        if (this.donationRequestId) {
+          this.donationSandbox.loadDonationRequest(params['donationRequestId']);
+        } else if (this.donationId) {
+          this.donationSandbox.loadDonation(this.donationId);
+          this.isEdit = true;
+        }
       })
     );
 
     this.subscriptions.push(
       this.donationSandbox.donationRequest$.subscribe((donationRequest) => {
-        this.donation = donationRequest;
+        this.donationRequest = donationRequest;
+      })
+    );
+
+    this.subscriptions.push(
+      this.donationSandbox.donation$.subscribe((donation) => {
+        this.donation = donation;
+        this.donationRequest = donation.donationRequest;
       })
     );
 

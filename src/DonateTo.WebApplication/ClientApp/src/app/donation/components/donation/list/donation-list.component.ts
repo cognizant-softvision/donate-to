@@ -1,8 +1,9 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { DonationRequestItemModel, DonationRequestModel } from 'src/app/shared/models';
 import { DonationSandbox } from 'src/app/donation/donation.sandbox';
 import { NotificationsService } from 'src/app/shared/notifications/notifications.service';
 import { Subscription } from 'rxjs';
+import { DonationModel } from 'src/app/shared/models/donation.model';
 
 @Component({
   selector: 'app-donation-list',
@@ -15,6 +16,8 @@ export class DonationListComponent implements OnInit, OnDestroy {
   donationRequest: DonationRequestModel = new DonationRequestModel();
 
   @Output() showDonationConfirmModal = new EventEmitter();
+  @Input() donation: DonationModel = new DonationModel();
+  @Input() isEdit: boolean;
 
   subscriptions: Subscription[] = [];
 
@@ -22,11 +25,16 @@ export class DonationListComponent implements OnInit, OnDestroy {
 
   updateEditCache(): void {
     this.donationRequest.donationRequestItems?.forEach((item) => {
+      let quantityToDonate = 0;
+      if (this.isEdit) {
+        const existingDonationItem = this.donation.donationItems.find((di) => di.donationRequestItemId === item.id);
+        quantityToDonate = !!existingDonationItem ? existingDonationItem.quantity : 0;
+      }
       this.editCache.push({
         edit: false,
         id: item.id,
         item,
-        quantityToDonate: 0,
+        quantityToDonate,
       });
     });
   }

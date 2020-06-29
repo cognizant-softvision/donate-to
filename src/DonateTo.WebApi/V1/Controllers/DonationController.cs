@@ -24,10 +24,10 @@ namespace DonateTo.WebApi.V1.Controllers
         private readonly IUserService _userService;
 
         public DonationController(IDonationService donationService,
-            IUserService userService,
-            IMailSender mailSender) : base(donationService)
+            IUserService userService) : base(donationService)
         {
             _userService = userService;
+            _donationService = donationService;
         }
 
         /// <summary>
@@ -83,10 +83,11 @@ namespace DonateTo.WebApi.V1.Controllers
             }
             else
             {
+                var defaultedUserId = userId ?? long.Parse(User.Claims.First(claim => claim.Type == _userIdClaim).Value);
                 var result = await _donationService.GetPagedAsync(
                                                         pageNumber, 
                                                         pageSize, 
-                                                        (d => (userId == null || d.UserId == userId) && (statusId == null || d.StatusId == statusId)))
+                                                        (d => (d.UserId == defaultedUserId) && (!statusId.HasValue || d.StatusId == statusId)))
                                                     .ConfigureAwait(false);
 
                 if (result != null)

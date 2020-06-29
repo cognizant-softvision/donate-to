@@ -2,9 +2,21 @@ import {
   addDonation,
   addDonationFailed,
   addDonationSuccess,
+  deleteDonation,
+  deleteDonationFailed,
+  deleteDonationSuccess,
+  loadDonationById,
+  loadDonationByIdFailed,
+  loadDonationByIdSuccess,
+  loadDonationByUserPaged,
+  loadDonationByUserPagedFailed,
+  loadDonationByUserPagedSuccess,
   loadDonationRequest,
   loadDonationRequestFailed,
   loadDonationRequestSuccess,
+  updateDonation,
+  updateDonationFailed,
+  updateDonationSuccess,
 } from './actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { catchError, map, switchMap } from 'rxjs/operators';
@@ -37,6 +49,49 @@ export class DonationRequestEffects {
     )
   );
 
+  @Effect()
+  updateDonation$: Observable<{}> = this.actions$.pipe(
+    ofType(updateDonation),
+    switchMap(({ donation }) =>
+      this.donationService.update(donation).pipe(
+        map((newDonation) => updateDonationSuccess({ newDonation })),
+        catchError(() => of(updateDonationFailed()))
+      )
+    )
+  );
+
+  @Effect()
+  loadDonationRequestsPaged$: Observable<{}> = this.actions$.pipe(
+    ofType(loadDonationByUserPaged),
+    switchMap(({ pageNumber, pageSize, userId }) =>
+      this.donationService.loadDonationByUserPaged(pageNumber, pageSize, userId).pipe(
+        map((donations) => loadDonationByUserPagedSuccess({ donations })),
+        catchError(() => of(loadDonationByUserPagedFailed()))
+      )
+    )
+  );
+
+  @Effect()
+  deleteDonationRequestsPaged$: Observable<{}> = this.actions$.pipe(
+    ofType(deleteDonation),
+    switchMap(({ donation }) =>
+      this.donationService.delete(donation).pipe(
+        map((donations) => deleteDonationSuccess({ donation })),
+        catchError(() => of(deleteDonationFailed()))
+      )
+    )
+  );
+
+  @Effect()
+  loadDonationById$: Observable<{}> = this.actions$.pipe(
+    ofType(loadDonationById),
+    switchMap(({ donationId }) =>
+      this.donationService.getById(donationId).pipe(
+        map((donation) => loadDonationByIdSuccess({ donation })),
+        catchError(() => of(loadDonationByIdFailed()))
+      )
+    )
+  );
   constructor(
     private actions$: Actions,
     private donationRequestService: DonationRequestService,

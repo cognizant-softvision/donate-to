@@ -3,6 +3,9 @@
     "HomeTitle": "Bienvenido",
     "NewSample": "Nueva Muestra"
   },
+  "MyDonations": {
+    "Title": "Mis Donaciones"
+  },
   "RequestDonation": {
     "Donate": "Donar",
     "ResourcesNeeded": "Recursos necesitados",
@@ -147,6 +150,9 @@
   },
   "ProfileActionBar": {
     "Logout": "Salir"
+  },
+  "NavBar": {
+    "MyDonations": "Mis Donaciones"
   },
   "PageNotFound": {
     "Title": "Ooops, Página no encontrada",
