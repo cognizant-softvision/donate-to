@@ -1,0 +1,31 @@
+<div>
+  <form nz-form [formGroup]="form">
+    <div *ngFor="let question of questions" class="form-row">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="7" nzRequired>{{ question.label }}</nz-form-label>
+        <br />
+        <nz-form-control [nzSpan]="12" nzHasFeedback>
+          <div [ngSwitch]="question.controlType">
+            <div *ngSwitchCase="'textbox'">
+              <input nz-input [formControlName]="question.key" [id]="question.key" [type]="question.type" />
+            </div>
+            <div *ngSwitchCase="'dropdown'">
+              <nz-select [id]="question.key" [formControlName]="question.key">
+                <nz-option *ngFor="let opt of question.options" [nzValue]="opt.key" [nzLabel]="opt.value"></nz-option>
+              </nz-select>
+            </div>
+            <div *ngSwitchCase="'radiobutton'">
+              <nz-radio-group [formControlName]="question">
+                <label nz-radio [nzValue]="opt.key" *ngFor="let opt of question.options">{{ opt.value }} </label>
+              </nz-radio-group>
+            </div>
+            <div class="errorMessage" *ngIf="!isValid(question)">{{ question.label }} is required</div>
+          </div>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div class="form-row">
+      <button nz-button nzType="primary" nzType="primary" (click)="onSubmit()" [disabled]="!form.valid">Save</button>
+    </div>
+  </form>
+</div>
