@@ -41,6 +41,7 @@
     </nz-form-label>
     <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="identityNumberErrorTpl">
       <input
+        type="number"
         nz-input
         formControlName="identityNumber"
         placeholder="{{ 'RequestDonation.DonationSteps.ResponsableStep.IdentityNumberPlaceHolder' | translate }}"
@@ -78,6 +79,7 @@
     </nz-form-label>
     <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="phoneNumberErrorTpl">
       <input
+        type="number"
         nz-input
         formControlName="phoneNumber"
         placeholder="{{ 'RequestDonation.DonationSteps.ResponsableStep.PhoneNumberPlaceHolder' | translate }}"
