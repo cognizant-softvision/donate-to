@@ -17,9 +17,7 @@ export class DonationPriorityComponent implements OnInit, OnDestroy {
   @Output() isSubmited = new EventEmitter<boolean>();
 
   constructor(public donationSandbox: DonationsSandbox, private formBuilder: FormBuilder) {
-    console.log('form creation');
     this.form = this.toFormGroup([]);
-    console.log('form creation done');
   }
 
   ngOnDestroy(): void {
@@ -45,7 +43,7 @@ export class DonationPriorityComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    // validacion de form
+    // form validation
     this.payLoad = JSON.stringify(this.form.getRawValue());
     this.isSubmited.emit(true);
   }
@@ -56,8 +54,6 @@ export class DonationPriorityComponent implements OnInit, OnDestroy {
     questions.forEach((question) => {
       group[question.key] = question.required ? new FormControl('', Validators.required) : new FormControl('');
     });
-
-    console.log(questions);
 
     return this.formBuilder.group(group);
   }

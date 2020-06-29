@@ -1,4 +1,3 @@
-import { DynamicFormQuestionComponent } from './donations-priority/dynamic-form-question.component';
 import * as fromAddress from 'src/app/shared/store/address';
 import * as fromCategory from 'src/app/shared/store/category';
 import * as fromOrganization from 'src/app/shared/store/organization';
@@ -104,7 +103,6 @@ const ICONS: IconDefinition[] = [PlusOutline];
     DonationsCreateComponent,
     DonationsEditComponent,
     DonationsFormComponent,
-    DynamicFormQuestionComponent,
     DonationPriorityComponent,
   ],
   providers: [DonationsSandbox],

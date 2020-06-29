@@ -1,10 +1,9 @@
 <div>
   <form nz-form [formGroup]="form">
     <div *ngFor="let question of this.donationSandbox.questions$ | async" class="form-row">
-      <!-- <app-question [question]="question" [form]="form"></app-question> -->
       <nz-form-item>
         <nz-form-label [nzSpan]="7" nzRequired>{{ question.label }}</nz-form-label>
-
+        <br />
         <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="streetErrorTpl">
           <div [ngSwitch]="question.controlType">
             <div *ngSwitchCase="'textbox'">
@@ -18,17 +17,9 @@
             </div>
 
             <div *ngSwitchCase="'radiobutton'">
-              <nz-radio-group *ngFor="let opt of question.options" [formControlName]="question.key">
-                <label nz-radio nzValue="opt.key">{{ opt.value }</label>
+              <nz-radio-group [formControlName]="question">
+                <label nz-radio [nzValue]="opt.key" *ngFor="let opt of question.options">{{ opt.value }} </label>
               </nz-radio-group>
-            </div>
-
-            <div *ngSwitchCase="'checkbox'">
-              <div *ngFor="let opt of question.options" [formControlName]="question.key">
-                <input type="checkbox" [id]="opt.key" [name]="question.key" [value]="opt.key" />
-                <label [for]="opt.key">{{ opt.value }}</label
-                ><br />
-              </div>
             </div>
 
             <div class="errorMessage" *ngIf="!isValid(question)">{{ question.label }} is required</div>
@@ -38,7 +29,7 @@
     </div>
 
     <div class="form-row">
-      <button nz-button nzType="primary" type="submit" [disabled]="!form.valid">Save</button>
+      <button nz-button nzType="primary" nzType="primary" (click)="onSubmit()" [disabled]="!form.valid">Save</button>
     </div>
   </form>
 </div>

@@ -57,12 +57,10 @@ export class DonationsCreateComponent implements OnDestroy {
   }
 
   openDonationPriority(): void {
-    // this.donationsFormComponent.validateForm();
-    // if (this.donationsFormComponent.donationRequestFormGroup.valid) {
-    console.log('open modal');
-    this.showModal();
-    // }
-    // DESCOMENTAR
+    this.donationsFormComponent.validateForm();
+    if (this.donationsFormComponent.donationRequestFormGroup.valid) {
+      this.showModal();
+    }
   }
 
   showModal() {
