@@ -1,4 +1,5 @@
 ﻿using DonateTo.ApplicationCore.Entities;
+using DonateTo.ApplicationCore.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -13,6 +14,6 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// <param name="users">IEnumerable<Users></Users></param>
         /// <param name="client">Client</param>
         /// <returns></returns>
-        Task SendNewRequestMailToOrganizationUsersAsync(DonationRequest donationRequest, IEnumerable<User> users, string client);
+        Task SendNewRequestMailToOrganizationUsersAsync(DonationRequest donationRequest, IEnumerable<UserModel> users, string client);
     }
 }

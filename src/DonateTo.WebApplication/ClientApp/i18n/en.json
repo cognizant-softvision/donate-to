@@ -51,7 +51,7 @@
         "LastName": "Last Name",
         "LastNamePlaceHolder": "Last Name",
         "RequiredLastName": "Please input your Last Name!",
-        "IdentityNumber": "Identity Number",
+        "IdentityNumber": "Identity ID",
         "IdentityNumberPlaceHolder": "Identity Number",
         "RequiredIdentityNumber": "Please input your Identity Number!",
         "Email": "Email",
@@ -228,7 +228,14 @@
     },
     "User": {
       "Title": "Users",
-      "Associate": "Associate"
+      "Associate": "Associate",
+      "SelectOrganization": "Select Organizations",
+      "Table": {
+        "Name": "Name",
+        "Organization": "Organization",
+        "Email": "Email",
+        "Action": "Action"
+      }
     },
     "Organization": {
       "Title": "Organization"

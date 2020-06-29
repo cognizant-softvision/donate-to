@@ -176,5 +176,11 @@ namespace DonateTo.Services
         {
             return _entityRequestRepository.FirstOrDefault(filter);
         }
+
+        ///<inheritdoc cref="IBaseService{TEntity}"/>
+        public virtual async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter)
+        {
+            return await _entityRequestRepository.FirstOrDefaultAsync(filter).ConfigureAwait(false);
+        }
     }
 }

@@ -5,7 +5,6 @@ import { ContactModel } from './contact.model';
 export class OrganizationModel extends BaseModel {
   name: string;
   description: string;
-  contactId: number;
   contact: ContactModel;
   addresses: AddressModel[];
 }

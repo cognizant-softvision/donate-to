@@ -1,3 +1,4 @@
+using AutoMapper;
 using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.Infrastructure.Extensions;
@@ -22,7 +23,7 @@ namespace DonateTo.Services.Extensions
             service.AddScoped<IUserService, UserService>();
             service.AddScoped<IStateService, StateService>();
             service.AddScoped<ICityService, CityService>();
-            service.AddTransient<IBaseService<Donation>, DonationService>();
+            service.AddTransient<IDonationService, DonationService>();
             service.AddTransient<IDonationRequestService, DonationRequestService>();
             service.AddTransient<IBaseService<Country>, CountryService>();
             service.AddTransient<ISearchService, SearchService>();
@@ -32,6 +33,8 @@ namespace DonateTo.Services.Extensions
             service.AddTransient<IBaseService<Unit>, UnitService>();
             service.AddTransient<IBaseService<Status>, StatusService>();
             service.AddTransient<IMailSender, MailSender>();
+
+            service.AddAutoMapper(typeof(Startup));
         }
     }
 }
