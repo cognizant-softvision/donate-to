@@ -51,7 +51,7 @@
         "LastName": "Apellido",
         "LastNamePlaceHolder": "Apellido",
         "RequiredLastName": "Por favor ingrese su apellido!",
-        "IdentityNumber": "Número de identidad",
+        "IdentityNumber": "ID de identidad",
         "IdentityNumberPlaceHolder": "Número de identidad",
         "RequiredIdentityNumber": "Por favor ingrese su número de identidad!",
         "Email": "Email",
