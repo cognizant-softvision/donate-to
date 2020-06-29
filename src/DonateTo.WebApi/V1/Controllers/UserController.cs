@@ -1,5 +1,6 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces.Services;
+using DonateTo.ApplicationCore.Models;
 using DonateTo.ApplicationCore.Models.Pagination;
 using DonateTo.Infrastructure.Common;
 using DonateTo.WebApi.Common;
@@ -12,7 +13,6 @@ using System.Threading.Tasks;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
-    ///<inheritdoc cref="BaseApiController{User}"/>
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -36,7 +36,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "<Pending>")]
-        public virtual async Task<ActionResult<User>> Get(long id)
+        public virtual async Task<ActionResult<UserModel>> Get(long id)
         {
             if (!ModelState.IsValid)
             {
@@ -67,7 +67,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "<Pending>")]
-        public virtual async Task<ActionResult<IEnumerable<User>>> Get()
+        public virtual async Task<ActionResult<IEnumerable<UserModel>>> Get()
         {
             if (!ModelState.IsValid)
             {
@@ -98,7 +98,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<PagedResult<User>>> GetPaged(int pageNumber, int pageSize)
+        public async Task<ActionResult<PagedResult<UserModel>>> GetPaged(int pageNumber, int pageSize)
         {
             if (!ModelState.IsValid)
             {
@@ -130,10 +130,9 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<PagedResult<User>>> GetPagedUsersByOrganizationAsync(int pageNumber, int pageSize, long organizationId)
+        public async Task<ActionResult<PagedResult<UserModel>>> GetPagedUsersByOrganizationAsync(int pageNumber, int pageSize, long organizationId)
         {
-            //add filter matching organizationId as third parameter of the method eg. u => u.UserOrganization.Where(uo => uo.OrganizationId == organizationId)
-            return await _userService.GetPagedAsync(pageNumber, pageSize).ConfigureAwait(false);
+            return await _userService.GetPagedAsync(pageNumber, pageSize, (u => u.Organizations.Any(o => o.Id == organizationId))).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -147,7 +146,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public virtual async Task<IActionResult> Put(long id, [FromBody] User value)
+        public virtual async Task<IActionResult> Put(long id, [FromBody] UserModel value)
         {
             if (!ModelState.IsValid)
             {
@@ -197,9 +196,10 @@ namespace DonateTo.WebApi.V1.Controllers
                 try
                 {
                     var userRole = User.Claims.FirstOrDefault(claim => claim.Type.Contains(Claims.Role))?.Value;
+
                     if (userRole != Roles.Superadmin && userRole != Roles.Admin)
                     {
-                        return Forbid();
+                        return Unauthorized();
                     }
 
                     var username = User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserName)?.Value;
