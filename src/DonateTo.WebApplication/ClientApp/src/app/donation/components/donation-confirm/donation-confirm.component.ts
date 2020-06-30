@@ -52,23 +52,29 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
   @Output() isSubmited = new EventEmitter<boolean>();
   @Input() donationItems: DonationItemModel[];
 
-  isResponsableStepReady(value: boolean) {
-    this._isResponsableStepReady = value;
-    this.contactModel = this.donationStepResponsableComponent.getContactFormModel();
-    this.updateStepsData();
+  isResponsableStepReady(event) {
+    if (event) {
+      this._isResponsableStepReady = event.value;
+      this.contactModel = event.contactFormModel;
+      this.updateStepsData();
+    }
   }
 
-  isAddressStepReady(value: boolean) {
-    this._isAddressStepReady = value;
-    this.addressModel = this.donationStepAddressComponent.getAddressFormModel();
-    this.updateStepsData();
+  isAddressStepReady(event) {
+    if (event) {
+      this._isAddressStepReady = event.value;
+      this.addressModel = event.addressFormModel;
+      this.updateStepsData();
+    }
   }
 
-  isFinishStepReady(value: boolean) {
-    this._isFinishStepReady = value;
-    this.observation = this.donationStepFinishComponent.observation;
-    Object.assign(this.availabilities, this.donationStepFinishComponent.availabilities);
-    this.updateStepsData();
+  isFinishStepReady(event) {
+    if (event) {
+      this._isFinishStepReady = event.value;
+      this.observation = event.observation;
+      this.availabilities = event.availabilities;
+      this.updateStepsData();
+    }
   }
 
   ngOnInit(): void {
@@ -76,11 +82,10 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
     if (this.isEdit) {
       const donation = this.donation;
       this.observation = donation.observation;
-      this.donationRequest.id = donation.donationRequestId;
+      this.donationRequest = donation.donationRequest;
       this.addressModel = donation.address ?? new AddressModel();
       this.contactModel = donation.address.contact ?? new ContactModel();
       this.availabilities = donation.availabilities;
-      this.donationItems = donation.donationItems;
     }
   }
 
@@ -106,15 +111,20 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
   }
 
   donate(): void {
-    const donation = this.donation;
+    const donation = new DonationModel();
+    Object.entries(this.donation).forEach((kv) => {
+      if (['string', 'number', 'Date'].includes(typeof kv[1])) {
+        donation[kv[0]] = kv[1];
+      }
+    });
     if (this.isEdit) {
+      donation.id = this.donation.id;
+      donation.statusId = this.donation.statusId;
       donation.observation = this.observation;
       donation.donationRequestId = this.donationRequest.id;
-      donation.address = new AddressModel();
-      Object.assign(donation.address, this.addressModel);
-      donation.address.contact = new ContactModel();
-      Object.assign(donation.address.contact, this.contactModel);
-      donation.availabilities = this.availabilities;
+      donation.address = { ...this.addressModel };
+      donation.address.contact = { ...this.contactModel };
+      donation.availabilities = [...this.availabilities];
       donation.donationItems = this.donationItems.map((item) => {
         const donationItem: DonationItemModel = new DonationItemModel();
         Object.assign(donationItem, item);
@@ -125,10 +135,9 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
       donation.donationRequestId = this.donationRequest.id;
       donation.statusId = Status.Pending;
       donation.address = new AddressModel();
-      Object.assign(donation.address, this.addressModel);
-      donation.address.contact = new ContactModel();
-      Object.assign(donation.address.contact, this.contactModel);
-      donation.availabilities = this.availabilities;
+      donation.address = { ...this.addressModel };
+      donation.address.contact = { ...this.contactModel };
+      donation.availabilities = [...this.availabilities];
       donation.donationItems = this.donationItems.map((item) => {
         const donationItem: DonationItemModel = new DonationItemModel();
         Object.assign(donationItem, item);

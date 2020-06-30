@@ -63,8 +63,8 @@ export class DonationRequestEffects {
   @Effect()
   loadDonationRequestsPaged$: Observable<{}> = this.actions$.pipe(
     ofType(loadDonationByUserPaged),
-    switchMap(({ pageNumber, pageSize, userId }) =>
-      this.donationService.loadDonationByUserPaged(pageNumber, pageSize, userId).pipe(
+    switchMap(({ pageNumber, pageSize, userId, statusId }) =>
+      this.donationService.loadDonationByUserPaged(pageNumber, pageSize, userId, statusId).pipe(
         map((donations) => loadDonationByUserPagedSuccess({ donations })),
         catchError(() => of(loadDonationByUserPagedFailed()))
       )

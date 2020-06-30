@@ -12,7 +12,7 @@ import { DonationSandbox } from 'src/app/donation/donation.sandbox';
 export class DonationStepAddressComponent implements OnInit, OnDestroy {
   addressStepForm: FormGroup;
 
-  @Output() isFormValid = new EventEmitter<boolean>();
+  @Output() isFormValid = new EventEmitter();
   @Input() addressModel: AddressModel;
 
   subscriptions: Subscription[] = [];
@@ -77,6 +77,13 @@ export class DonationStepAddressComponent implements OnInit, OnDestroy {
 
     this.registerEvents();
     this.donationSandbox.loadCountries();
+    if (this.addressModel.id && this.addressModel.cityId) {
+      this.setStates();
+      this.setCities();
+      this.isFormValid.emit(
+        this.isFormValid.emit({ value: this.isValidForm(), addressFormModel: this.getAddressFormModel() })
+      );
+    }
   }
 
   ngOnDestroy(): void {
@@ -95,7 +102,9 @@ export class DonationStepAddressComponent implements OnInit, OnDestroy {
    */
   registerEvents(): void {
     this.subscriptions.push(
-      this.addressStepForm.valueChanges.subscribe(() => this.isFormValid.emit(this.isValidForm()))
+      this.addressStepForm.valueChanges.subscribe(() =>
+        this.isFormValid.emit({ value: this.isValidForm(), addressFormModel: this.getAddressFormModel() })
+      )
     );
   }
 }

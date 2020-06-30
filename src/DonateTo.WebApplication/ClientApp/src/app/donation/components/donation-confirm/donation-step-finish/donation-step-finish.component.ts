@@ -23,19 +23,19 @@ export class DonationStepFinishComponent implements OnInit, OnDestroy {
   ) {
     this.finishStepFormGroup = this.fb.group({
       weekDayFormControl: new FormControl('', Validators.required),
-      startTimeFormControl: new FormControl(null, [Validators.required, this.startTimeValidator]),
-      finishTimeFormControl: new FormControl(null, [Validators.required, this.finishTimeValidator]),
+      startTimeFormControl: new FormControl(null, [Validators.required, this.startTimeValidator.bind(this)]),
+      finishTimeFormControl: new FormControl(null, [Validators.required, this.finishTimeValidator.bind(this)]),
     });
   }
 
   @Input() donationItems: DonationItemModel[];
-  @Output() isFormValid = new EventEmitter<boolean>();
+  @Output() isFormValid = new EventEmitter();
 
-  observation: string;
+  @Input() observation: string;
 
   subscriptions: Subscription[] = [];
 
-  availabilities: AvailabilityModel[] = [];
+  @Input() availabilities: AvailabilityModel[] = [];
 
   weekDays = [
     { dayOfWeek: WeekDays.Monday, description: this.translateService.instant('WeekDays.Monday') },
@@ -47,14 +47,20 @@ export class DonationStepFinishComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.registerEvents();
+    if (this.availabilities.length > 0) {
+      this.isFormValid.emit(
+        this.isFormValid.emit({ value: true, observation: this.observation, availabilities: this.availabilities })
+      );
+    }
   }
 
   startTimeValidator(control: FormControl): { [s: string]: boolean } {
     if (!control.value) {
       return { error: true, required: true };
     } else if (
+      this.finishStepFormGroup.controls.finishTimeFormControl.value &&
       compareDate(control.value, this.finishStepFormGroup.controls.finishTimeFormControl.value) ===
-      CompareDateResult.Greater
+        CompareDateResult.Greater
     ) {
       return { greater: true, error: true };
     }
@@ -65,8 +71,9 @@ export class DonationStepFinishComponent implements OnInit, OnDestroy {
     if (!control.value) {
       return { error: true, required: true };
     } else if (
+      this.finishStepFormGroup.controls.startTimeFormControl.value &&
       compareDate(control.value, this.finishStepFormGroup.controls.startTimeFormControl.value) ===
-      CompareDateResult.Less
+        CompareDateResult.Less
     ) {
       return { greater: true, error: true };
     }
@@ -84,9 +91,8 @@ export class DonationStepFinishComponent implements OnInit, OnDestroy {
       availability.dayOfWeek = this.finishStepFormGroup.controls.weekDayFormControl.value;
       availability.startTime = this.finishStepFormGroup.controls.startTimeFormControl.value;
       availability.endTime = this.finishStepFormGroup.controls.finishTimeFormControl.value;
-      this.availabilities = [...this.availabilities, availability];
+      this.availabilities = [...(this.availabilities || []), availability];
       this.finishStepFormGroup.reset();
-      this.isFormValid.emit(true);
     }
   }
 
@@ -104,7 +110,7 @@ export class DonationStepFinishComponent implements OnInit, OnDestroy {
   }
 
   isValidForm(): boolean {
-    return this.finishStepFormGroup.valid;
+    return (!!this.availabilities && this.availabilities.length > 0) || this.finishStepFormGroup.valid;
   }
 
   ngOnDestroy(): void {
@@ -122,7 +128,17 @@ export class DonationStepFinishComponent implements OnInit, OnDestroy {
    * Subscribes to events
    */
   registerEvents(): void {
-    this.subscriptions.push(this.finishStepFormGroup.valueChanges.subscribe(() => this.isFormValid.emit(true)));
+    this.subscriptions.push(
+      this.finishStepFormGroup.valueChanges.subscribe(() =>
+        this.isFormValid.emit(
+          this.isFormValid.emit({
+            value: this.isValidForm(),
+            observation: this.observation,
+            availabilities: this.availabilities,
+          })
+        )
+      )
+    );
 
     this.subscriptions.push();
   }

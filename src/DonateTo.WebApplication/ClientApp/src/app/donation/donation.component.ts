@@ -78,14 +78,19 @@ export class DonationComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(
       this.donationSandbox.donationRequest$.subscribe((donationRequest) => {
-        this.donationRequest = donationRequest;
+        if (!this.isEdit) {
+          this.donationRequest = donationRequest;
+        }
       })
     );
 
     this.subscriptions.push(
       this.donationSandbox.donation$.subscribe((donation) => {
-        this.donation = donation;
-        this.donationRequest = donation.donationRequest;
+        if (this.isEdit && donation.id) {
+          this.donation = donation;
+          this.donationRequest = donation.donationRequest;
+          this.donationItems = this.donation.donationItems;
+        }
       })
     );
 
@@ -101,6 +106,7 @@ export class DonationComponent implements OnInit, OnDestroy {
 
   submited(value: boolean): void {
     this.isSubmited = value;
+    this.hideModal();
   }
 
   showModal() {
@@ -130,6 +136,14 @@ export class DonationComponent implements OnInit, OnDestroy {
         .filter((item) => item.quantityToDonate > 0)
         .map((item) => {
           const donationItem: DonationItemModel = new DonationItemModel();
+          if (this.isEdit) {
+            const currentItem = this.donation.donationItems.find((di) => di.donationRequestItemId === item.id);
+            Object.entries(currentItem).forEach((kv) => {
+              if (['string', 'number', 'Date'].includes(typeof kv[1])) {
+                donationItem[kv[0]] = kv[1];
+              }
+            });
+          }
           donationItem.donationRequestItemId = item.item.id;
           donationItem.donationRequestItem = JSON.parse(JSON.stringify(item.item));
           donationItem.unitId = item.item.unitId;

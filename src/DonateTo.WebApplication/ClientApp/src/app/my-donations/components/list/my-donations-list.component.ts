@@ -4,6 +4,7 @@ import { EventEmitter } from '@angular/core';
 import { NzConfigService } from 'ng-zorro-antd';
 import { DonationModel } from 'src/app/shared/models/donation.model';
 import { MyDonationSandbox } from '../../my-donation.sandbox';
+import { Status } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-my-donation-list',
@@ -15,7 +16,7 @@ export class MyDonationsListComponent implements OnInit, OnDestroy {
   mockData = new Array(3).fill(new DonationModel());
   donations: DonationModel[] = [];
   isLoading = true;
-
+  statusId = Status.Pending;
   gutter = [8, 8];
   headStyle = {
     textAlign: 'left',
@@ -31,7 +32,7 @@ export class MyDonationsListComponent implements OnInit, OnDestroy {
   constructor(public donationSandbox: MyDonationSandbox, private nzConfigService: NzConfigService) {}
 
   ngOnInit(): void {
-    this.donationSandbox.getDonationsByUserPaged(1, 6);
+    this.donationSandbox.getDonationsByUserPaged(1, 6, this.statusId);
     this.registerEvents();
     this.nzConfigService.set('empty', { nzDefaultEmptyContent: this.customTpl });
   }
@@ -50,7 +51,7 @@ export class MyDonationsListComponent implements OnInit, OnDestroy {
   getDonations({ pageSize = this.pageSize, pageNumber }) {
     this.pageSize = pageSize;
     this.currentPage = pageNumber;
-    this.donationSandbox.getDonationsByUserPaged(pageSize, pageNumber);
+    this.donationSandbox.getDonationsByUserPaged(pageSize, pageNumber, this.statusId);
   }
 
   registerEvents() {

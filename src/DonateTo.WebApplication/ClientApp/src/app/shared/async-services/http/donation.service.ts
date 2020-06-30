@@ -19,8 +19,17 @@ export class DonationService extends BaseHttpClientService<DonationModel> {
     return this.create(donation);
   }
 
-  loadDonationByUserPaged(pageNumber: number, pageSize: number, userId: number): Observable<PageModel<DonationModel>> {
-    const queryString = { pageNumber: pageNumber.toString(), pageSize: pageSize.toString() };
+  loadDonationByUserPaged(
+    pageNumber: number,
+    pageSize: number,
+    userId: number,
+    statusId: number
+  ): Observable<PageModel<DonationModel>> {
+    const queryString = {
+      pageNumber: pageNumber.toString(),
+      pageSize: pageSize.toString(),
+      statusId: statusId.toString(),
+    };
     if (userId) {
       queryString['userId'] = userId.toString();
     }

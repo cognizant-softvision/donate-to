@@ -20,8 +20,8 @@ export class MyDonationSandbox extends Sandbox {
   /**
    * Loads donationRequest from the server
    */
-  public getDonationsByUserPaged(pageNumber: number, pageSize: number): void {
-    this.appState$.dispatch(store.fromDonation.loadDonationByUserPaged({ pageNumber, pageSize }));
+  public getDonationsByUserPaged(pageNumber: number, pageSize: number, statusId: number): void {
+    this.appState$.dispatch(store.fromDonation.loadDonationByUserPaged({ pageNumber, pageSize, statusId }));
   }
 
   /**

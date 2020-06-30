@@ -1,6 +1,6 @@
 <div class="donations-container">
   <nz-skeleton [nzLoading]="this.donationSandbox.donationRequestLoading$ | async" [nzActive]="true">
-    <div>
+    <div *ngIf="donationRequest">
       <div nz-row>
         <div nz-col>
           <h2>
@@ -28,7 +28,9 @@
     </div>
     <div>
       <app-donation-list
+        *ngIf="donation || donationRequest"
         [donation]="donation"
+        [donationRequest]="donationRequest"
         [isEdit]="isEdit"
         (showDonationConfirmModal)="showDonationConfirmModal($event)"
       ></app-donation-list>
@@ -41,5 +43,7 @@
     (showDonationConfirmModal)="showDonationConfirmModal($event)"
     (isSubmited)="submited($event)"
     [donationItems]="donationItems"
+    [donation]="donation"
+    [isEdit]="isEdit"
   ></app-donation-confirm>
 </ng-template>

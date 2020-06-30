@@ -45,7 +45,7 @@ export const loadDonationById = createAction(
 );
 export const loadDonationByUserPaged = createAction(
   '[Donation Request] Load donations by user from server',
-  props<{ pageNumber: number; pageSize: number; userId?: number }>()
+  props<{ pageNumber: number; pageSize: number; userId?: number; statusId?: number }>()
 );
 export const loadDonationByUserPagedSuccess = createAction(
   '[Donation Request] Load donations by user success',

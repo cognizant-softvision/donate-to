@@ -1,4 +1,9 @@
 {
+  "Donation": {
+    "DonationId": "Id",
+    "PickUpDate": "Pick-up date",
+    "DonationRequest": "Donation Request"
+  },
   "Home": {
     "HomeTitle": "Welcome",
     "NewSample": "New Sample"

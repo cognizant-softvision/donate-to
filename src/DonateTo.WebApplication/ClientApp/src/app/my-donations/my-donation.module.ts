@@ -27,6 +27,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MyDonationsListComponent } from './components/list/my-donations-list.component';
 import { MyDonationsListItemComponent } from './components/list/item/my-donations-list-itemcomponent';
 import { MyDonationsComponent } from './my-donation.component';
+import { RouterModule } from '@angular/router';
 
 // FIX this should be moved to an upper level.
 registerLocaleData(es);
@@ -54,6 +55,7 @@ const icons = [HeartFill, SearchOutline, UserOutline, HeartOutline, HomeOutline]
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    RouterModule,
   ],
   declarations: [MyDonationsComponent, MyDonationsListComponent, MyDonationsListItemComponent],
   providers: [MyDonationSandbox],

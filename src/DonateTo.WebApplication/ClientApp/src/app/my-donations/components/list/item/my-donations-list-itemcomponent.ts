@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DonationModel } from 'src/app/shared/models/donation.model';
 import { MyDonationSandbox } from 'src/app/my-donations/my-donation.sandbox';
 import { Status } from 'src/app/shared/models';
+import { NzModalRef } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-my-donations-list-item',
@@ -12,6 +13,7 @@ export class MyDonationsListItemComponent implements OnInit {
   @Input() item: DonationModel;
   @Input() loading = true;
   isPending = false;
+  tplModal?: NzModalRef;
 
   constructor(public donationSandbox: MyDonationSandbox) {}
 

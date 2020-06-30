@@ -1,4 +1,9 @@
 {
+  "Donation": {
+    "DonationId": "Identificación",
+    "PickUpDate": "Fecha de retiro",
+    "DonationRequest": "Solicitud"
+  },
   "Home": {
     "HomeTitle": "Bienvenido",
     "NewSample": "Nueva Muestra"

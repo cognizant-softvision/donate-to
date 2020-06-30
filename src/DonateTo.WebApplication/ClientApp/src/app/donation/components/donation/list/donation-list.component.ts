@@ -4,6 +4,7 @@ import { DonationSandbox } from 'src/app/donation/donation.sandbox';
 import { NotificationsService } from 'src/app/shared/notifications/notifications.service';
 import { Subscription } from 'rxjs';
 import { DonationModel } from 'src/app/shared/models/donation.model';
+import { DonationItemModel } from 'src/app/shared/models/donation-item.model';
 
 @Component({
   selector: 'app-donation-list',
@@ -13,7 +14,7 @@ import { DonationModel } from 'src/app/shared/models/donation.model';
 export class DonationListComponent implements OnInit, OnDestroy {
   constructor(public donationSandbox: DonationSandbox, private notifiactionsService: NotificationsService) {}
 
-  donationRequest: DonationRequestModel = new DonationRequestModel();
+  @Input() donationRequest: DonationRequestModel;
 
   @Output() showDonationConfirmModal = new EventEmitter();
   @Input() donation: DonationModel = new DonationModel();
@@ -41,6 +42,9 @@ export class DonationListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.registerEvents();
+    if (this.isEdit) {
+      this.updateEditCache();
+    }
   }
 
   ngOnDestroy(): void {
@@ -60,26 +64,30 @@ export class DonationListComponent implements OnInit, OnDestroy {
   registerEvents(): void {
     this.subscriptions.push(
       this.donationSandbox.donationRequest$.subscribe((donationRequest) => {
-        this.donationRequest = donationRequest;
-        this.updateEditCache();
+        if (!this.isEdit) {
+          this.donationRequest = donationRequest;
+          this.updateEditCache();
+        }
       })
     );
   }
 
   startEdit(id: number): void {
-    const donationItem = this.editCache.find((item) => item.id === id);
-    donationItem.edit = true;
+    const donationItemCache = this.editCache.find((item) => item.id === id);
+    donationItemCache.edit = true;
   }
 
   cancelEdit(id: number): void {
     const donationItem = this.editCache.find((item) => item.id === id);
-    donationItem.quantityToDonate = 0;
+    if (!this.isEdit) {
+      donationItem.quantityToDonate = 0;
+    }
     donationItem.edit = false;
   }
 
   saveEdit(id: number): void {
-    const donationItem = this.editCache.find((item) => item.id === id);
-    donationItem.edit = false;
+    const donationItemCache = this.editCache.find((item) => item.id === id);
+    donationItemCache.edit = false;
   }
 
   isSomethingToDonate(): boolean {

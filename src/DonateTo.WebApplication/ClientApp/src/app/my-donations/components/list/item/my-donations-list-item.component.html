@@ -1,24 +1,22 @@
 <nz-card hoverable [nzSize]="'small'" [nzActions]="[actions]" *ngIf="item">
   <nz-card-meta [nzTitle]="item.title"> </nz-card-meta>
+
+  <span *ngIf="item.donationRequest"
+    ><b>{{ 'Donation.DonationRequest' | translate }}: {{ item.donationRequest.title }}</b></span
+  ><br />
+
   <p class="item.observation">{{ item.observation }}</p>
   <br />
-  <span>{{ 'Donation.DonationId' | translate }}: {{ item.donationId }}</span
+  <span>{{ 'Donation.DonationId' | translate }}: {{ item.id }}</span
   ><br />
   <span>{{ 'Donation.PickUpDate' | translate }}: {{ item.pickUpDate | date: 'fullDate' }}</span
   ><br />
 
-  <span *ngIf="item.donationRequest"
-    >{{ 'Donation.DonationRequest' | translate }}: {{ item.donationRequest.title }}</span
-  ><br />
-
   <ng-template #actions class="ant-card-actions">
-    <div *ngIf="isPending" class="action-buttons">
-      <a nz-button ghost type="primary" [disabled]="loading" [routerLink]="['/detail/' + item.donationId]">
-        {{ 'MoreDetail' | translate }}
+    <div class="action-buttons">
+      <a nz-button type="primary" [routerLink]="['/donation/detail/' + item.id]">
+        {{ 'EditBtn' | translate }}
       </a>
-      <button nz-button ghost type="primary" [disabled]="loading" (click)="delete(item)">
-        {{ 'Delete' }}
-      </button>
     </div>
   </ng-template>
 </nz-card>
