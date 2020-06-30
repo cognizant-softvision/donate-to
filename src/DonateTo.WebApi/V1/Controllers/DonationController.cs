@@ -4,12 +4,10 @@ using DonateTo.ApplicationCore.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Primitives;
-using DonateTo.Mailer.Interfaces;
 using System;
 using System.Linq;
 using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
-
 using DonateTo.WebApi.Common;
 
 namespace DonateTo.WebApi.V1.Controllers
@@ -25,10 +23,10 @@ namespace DonateTo.WebApi.V1.Controllers
         private readonly IUserService _userService;
 
         public DonationController(IDonationService donationService,
-            IUserService userService,
-            IMailSender mailSender) : base(donationService)
+            IUserService userService) : base(donationService)
         {
             _userService = userService;
+            _donationService = donationService;
         }
 
         /// <summary>
@@ -48,8 +46,7 @@ namespace DonateTo.WebApi.V1.Controllers
             }
             else
             {
-                StringValues client;
-                Request.Headers.TryGetValue("Origin", out client);
+                Request.Headers.TryGetValue("Origin", out StringValues client);
 
                 var username = User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserName)?.Value;
                 var userId = Convert.ToInt64(User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserId)?.Value, CultureInfo.InvariantCulture);
