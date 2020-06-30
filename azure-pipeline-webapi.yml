@@ -4,7 +4,7 @@
 # https://aka.ms/yaml
 
 #trigger:
-#  - develop
+#  - qa
 
 pool: DiegoLocalMachine
 #  vmImage: "DiegoLocalMachine"
