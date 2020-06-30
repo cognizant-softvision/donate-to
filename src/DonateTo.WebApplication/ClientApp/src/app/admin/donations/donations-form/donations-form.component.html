@@ -1,5 +1,10 @@
 <form [formGroup]="donationRequestFormGroup" nz-form>
   <nz-form-item>
+    <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.TitleRequiredError' | translate }}">
+      <input type="hidden" [(ngModel)]="userId" formControlName="userIdFormControl" name="id" type="text" id="id" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
     <nz-form-label nzRequired nzFor="title">{{ 'Admin.Donation.Form.Title' | translate }}</nz-form-label>
     <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.TitleRequiredError' | translate }}">
       <input
