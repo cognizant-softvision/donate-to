@@ -1,4 +1,5 @@
 ﻿using DonateTo.ApplicationCore.Entities;
+using DonateTo.ApplicationCore.Models;
 using System.Threading.Tasks;
 
 namespace DonateTo.ApplicationCore.Interfaces.Services
@@ -11,6 +12,6 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// <param name="donation">Donation</param>
         /// <param name="client">Client</param>
         /// <returns></returns>
-        Task SendNewDonationMailAsync(Donation donation, User user, string client);
+        Task SendNewDonationMailAsync(Donation donation, UserModel user, string client);
     }
 }

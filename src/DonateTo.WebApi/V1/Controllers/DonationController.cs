@@ -11,6 +11,8 @@ using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
 using DonateTo.ApplicationCore.Models.Pagination;
 
+using DonateTo.WebApi.Common;
+
 namespace DonateTo.WebApi.V1.Controllers
 {
     ///<inheritdoc cref="BaseApiController{Donation}"/>
@@ -50,9 +52,9 @@ namespace DonateTo.WebApi.V1.Controllers
                 StringValues client;
                 Request.Headers.TryGetValue("Origin", out client);
 
-                var username = User.Claims.FirstOrDefault(claim => claim.Type == _usernameClaim)?.Value;
-                value.UserId = Convert.ToInt64(User.Claims.FirstOrDefault(claim => claim.Type == _userIdClaim)?.Value, CultureInfo.InvariantCulture);
-                
+                var username = User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserName)?.Value;
+                var userId = Convert.ToInt64(User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserId)?.Value, CultureInfo.InvariantCulture);
+
                 var donation = await _baseService.CreateAsync(value, username).ConfigureAwait(false);
 
                 var user = await _userService.GetAsync(donation.UserId).ConfigureAwait(false);
@@ -83,7 +85,7 @@ namespace DonateTo.WebApi.V1.Controllers
             }
             else
             {
-                var defaultedUserId = userId ?? long.Parse(User.Claims.First(claim => claim.Type == _userIdClaim).Value);
+                var defaultedUserId = userId ?? long.Parse(User.Claims.First(claim => claim.Type == Claims.UserId).Value);
                 var result = await _donationService.GetPagedAsync(
                                                         pageNumber, 
                                                         pageSize, 
