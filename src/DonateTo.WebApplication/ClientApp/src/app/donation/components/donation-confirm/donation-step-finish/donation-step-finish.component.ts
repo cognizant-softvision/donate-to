@@ -14,22 +14,10 @@ import { compareDate, CompareDateResult } from 'src/app/shared/utility/dates/com
   styleUrls: ['./donation-step-finish.component.css'],
 })
 export class DonationStepFinishComponent implements OnInit, OnDestroy {
-  finishStepFormGroup: FormGroup;
-
-  constructor(
-    public donationSandbox: DonationSandbox,
-    public translateService: TranslateService,
-    private fb: FormBuilder
-  ) {
-    this.finishStepFormGroup = this.fb.group({
-      weekDayFormControl: new FormControl('', Validators.required),
-      startTimeFormControl: new FormControl(null, [Validators.required, this.startTimeValidator]),
-      finishTimeFormControl: new FormControl(null, [Validators.required, this.finishTimeValidator]),
-    });
-  }
-
   @Input() donationItems: DonationItemModel[];
   @Output() isFormValid = new EventEmitter<boolean>();
+
+  finishStepFormGroup: FormGroup;
 
   observation: string;
 
@@ -45,6 +33,18 @@ export class DonationStepFinishComponent implements OnInit, OnDestroy {
     { dayOfWeek: WeekDays.Friday, description: this.translateService.instant('WeekDays.Friday') },
   ];
 
+  constructor(
+    public donationSandbox: DonationSandbox,
+    public translateService: TranslateService,
+    private fb: FormBuilder
+  ) {
+    this.finishStepFormGroup = this.fb.group({
+      weekDayFormControl: new FormControl('', Validators.required),
+      startTimeFormControl: new FormControl(null, [Validators.required, this.startTimeValidator]),
+      finishTimeFormControl: new FormControl(null, [Validators.required, this.finishTimeValidator]),
+    });
+  }
+
   ngOnInit(): void {
     this.registerEvents();
   }
@@ -53,8 +53,9 @@ export class DonationStepFinishComponent implements OnInit, OnDestroy {
     if (!control.value) {
       return { error: true, required: true };
     } else if (
-      compareDate(control.value, this.finishStepFormGroup.controls.finishTimeFormControl.value) ===
-      CompareDateResult.Greater
+      (control.parent as FormGroup).controls?.finishTimeFormControl?.value &&
+      compareDate(control.value, (control.parent as FormGroup).controls?.finishTimeFormControl?.value) ===
+        CompareDateResult.Greater
     ) {
       return { greater: true, error: true };
     }
@@ -65,8 +66,9 @@ export class DonationStepFinishComponent implements OnInit, OnDestroy {
     if (!control.value) {
       return { error: true, required: true };
     } else if (
-      compareDate(control.value, this.finishStepFormGroup.controls.startTimeFormControl.value) ===
-      CompareDateResult.Less
+      (control.parent as FormGroup).controls?.startTimeFormControl?.value &&
+      compareDate(control.value, (control.parent as FormGroup).controls?.startTimeFormControl?.value) ===
+        CompareDateResult.Less
     ) {
       return { greater: true, error: true };
     }
