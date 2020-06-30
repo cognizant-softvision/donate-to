@@ -1,4 +1,11 @@
-nz-select {
-  margin: 0 8px 10px 0;
-  width: 120px;
+.form-label {
+  margin-right: 1em;
+}
+
+.form-row {
+  margin-left: 1em;
+}
+
+.nz-option {
+  margin: 1em;
 }

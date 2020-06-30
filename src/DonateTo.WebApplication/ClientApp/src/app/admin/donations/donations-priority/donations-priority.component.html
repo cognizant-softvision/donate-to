@@ -2,8 +2,10 @@
   <form nz-form [formGroup]="form">
     <div *ngFor="let question of questions" class="form-row">
       <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired>{{ question.label }}</nz-form-label>
-        <br />
+        <div class="form-label">
+          <nz-form-label nzRequired>{{ question.label }}</nz-form-label>
+          <br />
+        </div>
         <nz-form-control [nzSpan]="12" nzHasFeedback>
           <div [ngSwitch]="question.controlType">
             <div *ngSwitchCase="'textbox'">
