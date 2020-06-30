@@ -5,7 +5,7 @@ using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models;
 using DonateTo.ApplicationCore.Models.Pagination;
-using DonateTo.Infrastructure.Common;
+using DonateTo.ApplicationCore.Common;
 using DonateTo.Services.Extensions;
 using System;
 using System.Collections.Generic;

@@ -1,5 +1,7 @@
-﻿using DonateTo.ApplicationCore.Models.Pagination;
+﻿using DonateTo.ApplicationCore.Models;
+using DonateTo.ApplicationCore.Models.Pagination;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -65,6 +67,16 @@ namespace DonateTo.ApplicationCore.Interfaces
         PagedResult<TEntity> GetPaged(int page, int pageSize, Expression<Func<TEntity, bool>> filter = null);
 
         /// <summary>
+        /// Gets a paged list of entities filtered and sorted.
+        /// </summary>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="filters"></param>
+        /// <param name="sort"></param>
+        /// <returns></returns>
+        PagedResult<TEntity> GetPaged(int pageNumber, int pageSize, IEnumerable<FilterModel> filters, SortModel sort);
+
+        /// <summary>
         /// Gets a list of paged entities by page and page size async.
         /// </summary>
         /// <param name="pageSize">Max number of rows in a specific page.</param>
@@ -72,6 +84,16 @@ namespace DonateTo.ApplicationCore.Interfaces
         /// <param name="pageSize">Max number of rows in a specific page.</param>
         /// <returns>Task of PagedResult of TEntity.</returns>
         Task<PagedResult<TEntity>> GetPagedAsync(int page, int pageSize, Expression<Func<TEntity, bool>> filter = null);
+
+        /// <summary>
+        /// Gets a paged list of entities filtered and sorted async.
+        /// </summary>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="filters"></param>
+        /// <param name="sort"></param>
+        /// <returns></returns>
+        Task<PagedResult<TEntity>> GetPagedAsync(int pageNumber, int pageSize, IEnumerable<FilterModel> filters, SortModel sort);
 
         /// <summary>
         /// Add an entity.

@@ -1,9 +1,12 @@
 ﻿using DonateTo.ApplicationCore.Interfaces;
+using DonateTo.ApplicationCore.Models;
 using DonateTo.ApplicationCore.Models.Pagination;
 using DonateTo.Infrastructure.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -110,7 +113,7 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
         }
 
         ///<inheritdoc cref="IRepository{TEntity}"/>
-        public virtual PagedResult<TEntity> GetPaged(int page, int pageSize, Expression<Func<TEntity, bool>> filter)
+        public virtual ApplicationCore.Models.Pagination.PagedResult<TEntity> GetPaged(int page, int pageSize, Expression<Func<TEntity, bool>> filter)
         {
             var entities = DbContext.Set<TEntity>().AsQueryable();
 
@@ -123,7 +126,32 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
         }
 
         ///<inheritdoc cref="IRepository{TEntity}"/>
-        public virtual async Task<PagedResult<TEntity>> GetPagedAsync(int page, int pageSize, Expression<Func<TEntity, bool>> filter)
+        public virtual ApplicationCore.Models.Pagination.PagedResult<TEntity> GetPaged(int pageNumber, int pageSize, IEnumerable<FilterModel> filters, SortModel sort)
+        {
+            var entities = DbContext.Set<TEntity>().AsQueryable();
+
+            if (filters != null)
+            {
+                Expression<Func<TEntity, bool>> predicate;
+                var parserConfig = new ParsingConfig();
+                var conditions = string.Empty;
+
+                foreach (var f in filters)
+                {
+                    conditions += string.IsNullOrEmpty(conditions) ? " And" : "";
+                    conditions += $"{f.Property}.{f.Condition}(\"{f.SearchValue}\")";
+                }
+
+                predicate = DynamicExpressionParser.ParseLambda<TEntity, bool>(parserConfig, true, conditions);
+
+                entities = entities.Where(predicate);
+            }
+
+            return entities.OrderBy(sort.SortString).GetPaged(pageNumber, pageSize);
+        }
+
+        ///<inheritdoc cref="IRepository{TEntity}"/>
+        public virtual async Task<ApplicationCore.Models.Pagination.PagedResult<TEntity>> GetPagedAsync(int page, int pageSize, Expression<Func<TEntity, bool>> filter)
         {
             var entities = DbContext.Set<TEntity>().AsQueryable();
 
@@ -133,6 +161,33 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
             }
 
             return await entities.GetPagedAsync(page, pageSize).ConfigureAwait(false);
+        }
+
+        ///<inheritdoc cref="IRepository{TEntity}"/>
+        public virtual async Task<ApplicationCore.Models.Pagination.PagedResult<TEntity>> GetPagedAsync(int pageNumber, int pageSize, IEnumerable<FilterModel> filters, SortModel sort)
+        {
+            var entities = DbContext.Set<TEntity>().AsQueryable();
+
+            if (filters != null)
+            {
+                Expression<Func<TEntity, bool>> predicate;
+                var parserConfig = new ParsingConfig();
+                var conditions = string.Empty;
+
+                foreach (var f in filters)
+                {
+                    conditions += string.IsNullOrEmpty(conditions) ? " And" : "";
+                    conditions += $"{f.Property}.{f.Condition}(\"{f.SearchValue}\")";
+                }
+
+                predicate = DynamicExpressionParser.ParseLambda<TEntity, bool>(parserConfig, true, conditions);
+
+                entities = entities.Where(predicate);
+            }
+
+            entities = entities.OrderBy(sort.SortString);
+
+            return await entities.AsQueryable().GetPagedAsync(pageNumber, pageSize).ConfigureAwait(false);
         }
 
         ///<inheritdoc cref="IRepository{TEntity}"/>

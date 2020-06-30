@@ -4,6 +4,11 @@ using DonateTo.ApplicationCore.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using DonateTo.ApplicationCore.Models.Pagination;
+using DonateTo.ApplicationCore.Models;
+using System.Linq.Expressions;
+using System;
+using DonateTo.ApplicationCore.Common;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -39,6 +44,40 @@ namespace DonateTo.WebApi.V1.Controllers
             else
             {
                 var result = await _organizationService.GetByUserIdAsync(userId).ConfigureAwait(false);
+
+                if (result != null)
+                {
+                    return Ok(result);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pageNumber"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="filter"></param>
+        /// <param name="sort"></param>
+        /// <returns></returns>
+        [HttpPost("searchOrganization")]
+        public async Task<ActionResult<PagedResult<OrganizationModel>>> SearchOrganization(
+            int pageNumber = 0, 
+            int pageSize = 100, 
+            IEnumerable<FilterModel> filter = null, 
+            SortModel sort = null)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            else
+            {             
+                var result = await _organizationService.GetPagedAsync(pageNumber, pageSize, filter, sort).ConfigureAwait(false);
 
                 if (result != null)
                 {
