@@ -26,12 +26,6 @@
       ></textarea>
     </nz-form-control>
   </nz-form-item>
-  <nz-form-item>
-    <nz-form-label nzRequired nzFor="priority">{{ 'Admin.Donation.Form.Priority' | translate }}</nz-form-label>
-    <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.PriorityRequiredError' | translate }}">
-      <nz-rate [(ngModel)]="priority" formControlName="priorityFormControl" nzCount="5"></nz-rate>
-    </nz-form-control>
-  </nz-form-item>
   <nz-form-item *ngIf="donationRequest?.id">
     <nz-form-label nzRequired nzFor="status">{{ 'Admin.Donation.Form.Status' | translate }}</nz-form-label>
     <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.Status' | translate }}">
