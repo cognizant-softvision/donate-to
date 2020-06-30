@@ -1,7 +1,7 @@
 <form [formGroup]="donationRequestFormGroup" nz-form>
   <nz-form-item>
     <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.TitleRequiredError' | translate }}">
-      <input type="hidden" [(ngModel)]="userId" formControlName="userIdFormControl" name="id" type="text" id="id" />
+      <input type="hidden" [(ngModel)]="userId" formControlName="userIdFormControl" name="userId" id="userId" />
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
