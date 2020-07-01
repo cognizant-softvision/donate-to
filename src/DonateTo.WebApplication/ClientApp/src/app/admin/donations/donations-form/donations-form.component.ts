@@ -17,7 +17,7 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
   disabledDates: (current: Date) => boolean;
-  userId: number;
+  userId = 0;
   addressId: number;
   categories: CategoryModel[] = [];
   donationRequestItems: DonationRequestItemModel[] = [];
@@ -38,7 +38,7 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
   ];
 
   donationRequestFormGroup = new FormGroup({
-    userIdFormControl: new FormControl('', Validators.required),
+    userIdFormControl: new FormControl('0', Validators.required),
     titleFormControl: new FormControl('', Validators.required),
     statusFormControl: new FormControl(''),
     organizationFormControl: new FormControl('', Validators.required),
