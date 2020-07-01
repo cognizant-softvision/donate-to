@@ -4,6 +4,7 @@ import { DonationRequestModel } from 'src/app/shared/models';
 import { DonationsFormComponent } from '../donations-form/donations-form.component';
 import { DonationsSandbox } from '../donations-sandbox';
 import { Subscription } from 'rxjs';
+import { first } from 'rxjs/internal/operators/first';
 
 @Component({
   selector: 'app-donations-edit',
@@ -72,6 +73,7 @@ export class DonationsEditComponent implements OnInit, OnDestroy {
   updateDonationRequest(updatedDonationRequest: DonationRequestModel) {
     this.isSubmited = true;
     this.donationSandbox.updateDonationRequest(updatedDonationRequest);
+    this.donationSandbox.loadAction$.pipe(first()).subscribe((_) => this.donationSandbox.loadDonationRequests());
   }
 
   goBack() {
