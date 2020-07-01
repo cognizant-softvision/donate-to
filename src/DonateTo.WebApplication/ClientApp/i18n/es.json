@@ -228,6 +228,7 @@
       },
       "BackConfirm": "Estas seguro que quieres volver?",
       "CreateConfirm": "Estas seguro que quieres crear una solicitud de donación?",
+      "EditConfirm": "Estas seguro que quieres editar esta solicitud de donación?",
       "DeleteConfirmation": "Está seguro que desea eliminar esta solicitud de donación?",
       "Table": {
         "Itemcolumn": "Item",
