@@ -4,7 +4,6 @@ using DonateTo.ApplicationCore.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Primitives;
-using DonateTo.Mailer.Interfaces;
 using System;
 using System.Linq;
 using System.Globalization;
@@ -49,8 +48,7 @@ namespace DonateTo.WebApi.V1.Controllers
             }
             else
             {
-                StringValues client;
-                Request.Headers.TryGetValue("Origin", out client);
+                Request.Headers.TryGetValue("Origin", out StringValues client);
 
                 var username = User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserName)?.Value;
                 var userId = Convert.ToInt64(User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserId)?.Value, CultureInfo.InvariantCulture);
