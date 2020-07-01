@@ -15,7 +15,7 @@ import { DonationModel } from '../shared/models/donation.model';
   styleUrls: ['./donation.component.css'],
 })
 export class DonationComponent implements OnInit, OnDestroy {
-  donationId: any;
+  donationId: number;
   constructor(
     protected router: ActivatedRoute,
     public donationSandbox: DonationSandbox,

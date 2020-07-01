@@ -97,6 +97,7 @@
       "SaveButton": "Save",
       "CancelButton": "Cancel",
       "DonateButton": "Donate",
+      "ContinueEditButton": "Continue edit",
       "Item": "Item",
       "QuantityRequested": "Quantity requested",
       "Description": "Description",

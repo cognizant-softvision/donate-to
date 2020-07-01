@@ -35,15 +35,15 @@ namespace DonateTo.WebApi.V1.Controllers
         /// <summary>
         /// Creates a new Donation.
         /// </summary>
-        /// <param name="value">Entity to create.</param>
+        /// <param name="receivedDonation">Entity to create.</param>
         /// <returns>Created entity.</returns>
         [HttpPost(Name = "[controller]_[action]")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public override async Task<IActionResult> Post([FromBody] Donation value)
+        public override async Task<IActionResult> Post([FromBody] Donation receivedDonation)
         {
-            if (!ModelState.IsValid || value == null)
+            if (!ModelState.IsValid || receivedDonation == null)
             {
                 return BadRequest();
             }
@@ -55,12 +55,14 @@ namespace DonateTo.WebApi.V1.Controllers
                 var username = User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserName)?.Value;
                 var userId = Convert.ToInt64(User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserId)?.Value, CultureInfo.InvariantCulture);
 
-                var donation = await _baseService.CreateAsync(value, username).ConfigureAwait(false);
+                receivedDonation.UserId = userId;
 
-                var user = await _userService.GetAsync(donation.UserId).ConfigureAwait(false);
-                await _donationService.SendNewDonationMailAsync(donation, user, client).ConfigureAwait(false);
+                var createdDonation = await _baseService.CreateAsync(receivedDonation, username).ConfigureAwait(false);
 
-                return Ok(donation);
+                var user = await _userService.GetAsync(createdDonation.UserId).ConfigureAwait(false);
+                await _donationService.SendNewDonationMailAsync(createdDonation, user, client).ConfigureAwait(false);
+
+                return Ok(createdDonation);
             }
         }
 

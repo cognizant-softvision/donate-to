@@ -66,7 +66,9 @@ export class DonationListComponent implements OnInit, OnDestroy {
       this.donationSandbox.donationRequest$.subscribe((donationRequest) => {
         if (!this.isEdit) {
           this.donationRequest = donationRequest;
-          this.updateEditCache();
+          if (donationRequest) {
+            this.updateEditCache();
+          }
         }
       })
     );

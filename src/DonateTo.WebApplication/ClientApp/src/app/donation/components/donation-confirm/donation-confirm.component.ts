@@ -79,7 +79,7 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.registerEvents();
-    if (this.isEdit) {
+    if (this.isEdit && this.donation) {
       const donation = this.donation;
       this.observation = donation.observation;
       this.donationRequest = donation.donationRequest;
@@ -112,12 +112,12 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
 
   donate(): void {
     const donation = new DonationModel();
-    Object.entries(this.donation).forEach((kv) => {
-      if (['string', 'number', 'Date'].includes(typeof kv[1])) {
-        donation[kv[0]] = kv[1];
-      }
-    });
-    if (this.isEdit) {
+    if (this.isEdit && this.donation) {
+      Object.entries(this.donation).forEach((kv) => {
+        if (['string', 'number', 'Date'].includes(typeof kv[1])) {
+          donation[kv[0]] = kv[1];
+        }
+      });
       donation.id = this.donation.id;
       donation.statusId = this.donation.statusId;
       donation.observation = this.observation;

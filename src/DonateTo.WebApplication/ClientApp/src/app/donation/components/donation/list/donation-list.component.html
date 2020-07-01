@@ -53,8 +53,10 @@
       <td colspan="5">
         <div class="donate">
           <button nz-button nzType="primary" (click)="donationConfirm()">
-            <span *ngIf="!isEdit">{{ 'RequestDonation.DonationItemList.DonateButton' | translate }}</span>
-            <span *ngIf="isEdit">{{ 'Admin.Edit' | translate }}</span>
+            <span *ngIf="isEdit; else notEditBlock">{{
+              'RequestDonation.DonationItemList.ContinueEditButton' | translate
+            }}</span>
+            <ng-template #notEditBlock>{{ 'RequestDonation.DonationItemList.DonateButton' | translate }}</ng-template>
           </button>
         </div>
       </td>
