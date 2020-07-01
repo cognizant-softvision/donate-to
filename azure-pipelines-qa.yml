@@ -4,50 +4,51 @@
 # https://aka.ms/yaml
 
 trigger:
-  - qa
+- qa
 
 pool:
-  vmImage: "windows-latest"
+  vmImage: 'windows-latest'
 
 variables:
-  - name: buildPlatform
-    value: Any CPU
-  - name: buildConfiguration
-    value: Release
+- name: buildPlatform
+  value: Any CPU
+- name: buildConfiguration
+  value: Release
 stages:
-  - stage: __default
-    jobs:
-      - job: Job
-        pool:
-          vmImage: windows-latest
-        steps:
-          - task: DotNetCoreCLI@2
-            displayName: Restore
-            inputs:
-              command: restore
-              projects: src/DonateTo.WebApplication/*.csproj
-          - task: DotNetCoreCLI@2
-            displayName: Build
-            inputs:
-              projects: src/DonateTo.WebApplication/*.csproj
-              arguments: --configuration $(BuildConfiguration)
-          - task: DotNetCoreCLI@2
-            displayName: Test
-            inputs:
-              command: test
-              projects: $(Parameters.TestProjects)
-              arguments: --configuration $(BuildConfiguration)
-          - task: DotNetCoreCLI@2
-            displayName: Publish
-            inputs:
-              command: publish
-              publishWebProjects: false
-              projects: src/DonateTo.WebApplication/*.csproj
-              arguments: --configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)
-              zipAfterPublish: True
-          - task: PublishBuildArtifacts@1
-            displayName: Publish Artifact
-            inputs:
-              PathtoPublish: $(build.artifactstagingdirectory)
-              ArtifactName: webapidropqa
-            condition: succeededOrFailed()
+- stage: __default
+  jobs:
+  - job: Job
+    pool:
+      vmImage: windows-latest
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: Restore
+      inputs:
+        command: restore
+        projects: src/DonateTo.WebApplication/*.csproj
+    - task: DotNetCoreCLI@2
+      displayName: Build
+      inputs:
+        projects: src/DonateTo.WebApplication/*.csproj
+        arguments: --configuration $(BuildConfiguration)
+    - task: DotNetCoreCLI@2
+      displayName: Test
+      inputs:
+        command: test
+        projects: $(Parameters.TestProjects)
+        arguments: --configuration $(BuildConfiguration)
+    - task: DotNetCoreCLI@2
+      displayName: Publish
+      inputs:
+        command: publish
+        publishWebProjects: false
+        projects: src/DonateTo.WebApplication/*.csproj
+        arguments: --configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)
+        zipAfterPublish: True
+    - task: PublishBuildArtifacts@1
+      displayName: Publish Artifact
+      inputs:
+        PathtoPublish: $(build.artifactstagingdirectory)
+        ArtifactName: webapidropqa
+      condition: succeededOrFailed()
+
