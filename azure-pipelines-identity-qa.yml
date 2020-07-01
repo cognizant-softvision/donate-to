@@ -1,0 +1,52 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- qa
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+#  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+
+steps:
+  - task: DotNetCoreCLI@2
+    displayName: Restore
+    inputs:
+      command: restore
+      projects: "src/DonateTo.IdentityServer/*.csproj"
+
+  - task: DotNetCoreCLI@2
+    displayName: Build
+    inputs:
+      projects: "src/DonateTo.IdentityServer/*.csproj"
+      arguments: "--configuration $(BuildConfiguration)"
+
+  - task: DotNetCoreCLI@2
+    displayName: Test
+    inputs:
+      command: test
+      projects: "$(Parameters.TestProjects)"
+      arguments: "--configuration $(BuildConfiguration)"
+    enabled: true
+
+  - task: DotNetCoreCLI@2
+    displayName: Publish
+    inputs:
+      command: publish
+      publishWebProjects: false
+      projects: "src/DonateTo.IdentityServer/*.csproj"
+      arguments: "--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)"
+      zipAfterPublish: True
+
+  - task: PublishBuildArtifacts@1
+    displayName: "Publish Artifact"
+    inputs:
+      PathtoPublish: "$(build.artifactstagingdirectory)"
+      ArtifactName: identityserverdrop
+    condition: succeededOrFailed()
