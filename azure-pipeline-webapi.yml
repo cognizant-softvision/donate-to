@@ -3,11 +3,11 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-#trigger:
-#  - qa
+trigger:
+ - qa
 
-pool: DiegoLocalMachine
-#  vmImage: "DiegoLocalMachine"
+pool:
+  vmImage: 'windows-latest'
 
 variables:
 #  solution: '**/*.sln'
