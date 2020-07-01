@@ -30,6 +30,7 @@ export class DonationStepFinishComponent implements OnInit, OnDestroy {
     { dayOfWeek: WeekDays.Thursday, description: this.translateService.instant('WeekDays.Thursday') },
     { dayOfWeek: WeekDays.Friday, description: this.translateService.instant('WeekDays.Friday') },
   ];
+  finishStepFormGroup: FormGroup;
 
   constructor(
     public donationSandbox: DonationSandbox,
@@ -91,7 +92,11 @@ export class DonationStepFinishComponent implements OnInit, OnDestroy {
       availability.endTime = this.finishStepFormGroup.controls.finishTimeFormControl.value;
       this.availabilities = [...(this.availabilities || []), availability];
       this.finishStepFormGroup.reset();
-      this.isFormValid.emit(true);
+      this.isFormValid.emit({
+        value: this.isValidForm(),
+        observation: this.observation,
+        availabilities: this.availabilities,
+      });
     }
   }
 
