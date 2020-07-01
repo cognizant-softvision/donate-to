@@ -28,6 +28,8 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
   private donationStepFinishComponent: DonationStepFinishComponent;
 
   currentStep = 0;
+  @Input() donation: DonationModel = new DonationModel();
+  @Input() isEdit: boolean;
 
   _isResponsableStepReady = false;
   _isAddressStepReady = false;
@@ -43,34 +45,48 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
 
   availabilities: AvailabilityModel[] = [];
 
-  donation: DonationRequestModel;
+  donationRequest: DonationRequestModel;
 
   @Output() showDonationConfirmModal = new EventEmitter<boolean>();
 
   @Output() isSubmited = new EventEmitter<boolean>();
   @Input() donationItems: DonationItemModel[];
 
-  isResponsableStepReady(value: boolean) {
-    this._isResponsableStepReady = value;
-    this.contactModel = this.donationStepResponsableComponent.getContactFormModel();
-    this.updateStepsData();
+  isResponsableStepReady(event) {
+    if (event) {
+      this._isResponsableStepReady = event.value;
+      this.contactModel = event.contactFormModel;
+      this.updateStepsData();
+    }
   }
 
-  isAddressStepReady(value: boolean) {
-    this._isAddressStepReady = value;
-    this.addressModel = this.donationStepAddressComponent.getAddressFormModel();
-    this.updateStepsData();
+  isAddressStepReady(event) {
+    if (event) {
+      this._isAddressStepReady = event.value;
+      this.addressModel = event.addressFormModel;
+      this.updateStepsData();
+    }
   }
 
-  isFinishStepReady(value: boolean) {
-    this._isFinishStepReady = value;
-    this.observation = this.donationStepFinishComponent.observation;
-    Object.assign(this.availabilities, this.donationStepFinishComponent.availabilities);
-    this.updateStepsData();
+  isFinishStepReady(event) {
+    if (event) {
+      this._isFinishStepReady = event.value;
+      this.observation = event.observation;
+      this.availabilities = event.availabilities;
+      this.updateStepsData();
+    }
   }
 
   ngOnInit(): void {
     this.registerEvents();
+    if (this.isEdit && this.donation) {
+      const donation = this.donation;
+      this.observation = donation.observation;
+      this.donationRequest = donation.donationRequest;
+      this.addressModel = donation.address ?? new AddressModel();
+      this.contactModel = donation.address.contact ?? new ContactModel();
+      this.availabilities = donation.availabilities;
+    }
   }
 
   ngOnDestroy(): void {
@@ -89,34 +105,55 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
   registerEvents(): void {
     this.subscriptions.push(
       this.donationSandbox.donationRequest$.subscribe((donationRequest) => {
-        this.donation = donationRequest;
+        this.donationRequest = donationRequest;
       })
     );
   }
 
   donate(): void {
-    const donation: DonationModel = new DonationModel();
-
-    donation.observation = this.observation;
-    donation.donationRequestId = this.donation.id;
-    donation.statusId = Status.Pending;
-    donation.address = new AddressModel();
-    Object.assign(donation.address, this.addressModel);
-    donation.address.contact = new ContactModel();
-    Object.assign(donation.address.contact, this.contactModel);
-    donation.availabilities = this.availabilities;
-    donation.donationItems = this.donationItems.map((item) => {
-      const donationItem: DonationItemModel = new DonationItemModel();
-      Object.assign(donationItem, item);
-      donationItem.unit = null;
-      donationItem.donationRequestItem = null;
-      donationItem.statusId = Status.Pending;
-      return donationItem;
-    });
-
+    const donation = new DonationModel();
+    if (this.isEdit && this.donation) {
+      Object.entries(this.donation).forEach((kv) => {
+        if (['string', 'number', 'Date'].includes(typeof kv[1])) {
+          donation[kv[0]] = kv[1];
+        }
+      });
+      donation.id = this.donation.id;
+      donation.statusId = this.donation.statusId;
+      donation.observation = this.observation;
+      donation.donationRequestId = this.donationRequest.id;
+      donation.address = { ...this.addressModel };
+      donation.address.contact = { ...this.contactModel };
+      donation.availabilities = [...this.availabilities];
+      donation.donationItems = this.donationItems.map((item) => {
+        const donationItem: DonationItemModel = new DonationItemModel();
+        Object.assign(donationItem, item);
+        return donationItem;
+      });
+    } else {
+      donation.observation = this.observation;
+      donation.donationRequestId = this.donationRequest.id;
+      donation.statusId = Status.Pending;
+      donation.address = new AddressModel();
+      donation.address = { ...this.addressModel };
+      donation.address.contact = { ...this.contactModel };
+      donation.availabilities = [...this.availabilities];
+      donation.donationItems = this.donationItems.map((item) => {
+        const donationItem: DonationItemModel = new DonationItemModel();
+        Object.assign(donationItem, item);
+        donationItem.unit = null;
+        donationItem.donationRequestItem = null;
+        donationItem.statusId = Status.Pending;
+        return donationItem;
+      });
+    }
     this.isSubmited.emit(true);
 
-    this.donationSandbox.addDonation(donation);
+    if (this.isEdit) {
+      this.donationSandbox.updateDonation(donation);
+    } else {
+      this.donationSandbox.addDonation(donation);
+    }
   }
 
   updateStepsData(): void {
