@@ -1,0 +1,16 @@
+<div class="donations-container">
+  <nz-skeleton [nzLoading]="this.donationSandbox.donationsLoading$ | async" [nzActive]="true">
+    <div>
+      <div nz-row>
+        <div nz-col>
+          <h2>
+            {{ 'MyDonations.Title' | translate }}
+          </h2>
+        </div>
+      </div>
+    </div>
+    <div>
+      <app-my-donation-list> </app-my-donation-list>
+    </div>
+  </nz-skeleton>
+</div>

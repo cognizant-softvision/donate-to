@@ -19,6 +19,8 @@
     <app-donation-step-finish
       (isFormValid)="isFinishStepReady($event)"
       [donationItems]="donationItems"
+      [observation]="observation"
+      [availabilities]="availabilities"
       *ngIf="currentStep === 2"
     ></app-donation-step-finish>
   </div>

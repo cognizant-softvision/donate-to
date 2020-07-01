@@ -21,6 +21,8 @@ import { DonationLayoutRoutingModule } from './donation-layout-routing.module';
 import { DonationSandbox } from 'src/app/donation/donation.sandbox';
 import { IconDefinition } from '@ant-design/icons-angular';
 import {
+  CheckCircleTwoTone,
+  CloseCircleTwoTone,
   HeartFill,
   HeartOutline,
   HomeOutline,
@@ -29,6 +31,7 @@ import {
   TeamOutline,
   UserOutline,
 } from '@ant-design/icons-angular/icons';
+import { MyDonationSandbox } from 'src/app/my-donations/my-donation.sandbox';
 
 const ICONS: IconDefinition[] = [
   HeartOutline,
@@ -38,6 +41,8 @@ const ICONS: IconDefinition[] = [
   HomeOutline,
   SearchOutline,
   UserOutline,
+  CloseCircleTwoTone,
+  CheckCircleTwoTone,
 ];
 
 @NgModule({
@@ -64,6 +69,6 @@ const ICONS: IconDefinition[] = [
     NzIconModule.forChild(ICONS),
   ],
   declarations: [DonationLayoutComponent],
-  providers: [DonationSandbox, NzModalService],
+  providers: [DonationSandbox, MyDonationSandbox, NzModalService],
 })
 export class DonationLayoutModule {}

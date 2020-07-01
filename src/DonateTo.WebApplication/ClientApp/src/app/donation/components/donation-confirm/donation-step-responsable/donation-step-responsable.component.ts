@@ -10,7 +10,7 @@ import { ContactModel } from 'src/app/shared/models/contact.model';
 export class DonationStepResponsableComponent implements OnInit {
   responsableStepForm: FormGroup;
 
-  @Output() isFormValid = new EventEmitter<boolean>();
+  @Output() isFormValid = new EventEmitter();
   @Input() contactModel: ContactModel;
 
   constructor(private fb: FormBuilder) {}
@@ -25,7 +25,18 @@ export class DonationStepResponsableComponent implements OnInit {
       position: [this.contactModel?.position],
     });
 
-    this.responsableStepForm.valueChanges.subscribe(() => this.isFormValid.emit(this.isValidForm()));
+    if (this.contactModel.id) {
+      this.validateForm();
+      this.isFormValid.emit(
+        this.isFormValid.emit({ value: this.isValidForm(), contactFormModel: this.getContactFormModel() })
+      );
+    }
+
+    this.responsableStepForm.valueChanges.subscribe(() =>
+      this.isFormValid.emit(
+        this.isFormValid.emit({ value: this.isValidForm(), contactFormModel: this.getContactFormModel() })
+      )
+    );
   }
 
   validateForm(): void {

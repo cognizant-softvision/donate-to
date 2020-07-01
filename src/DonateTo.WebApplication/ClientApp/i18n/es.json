@@ -1,7 +1,15 @@
 {
+  "Donation": {
+    "DonationId": "Identificación",
+    "PickUpDate": "Fecha de retiro",
+    "DonationRequest": "Solicitud"
+  },
   "Home": {
     "HomeTitle": "Bienvenido",
     "NewSample": "Nueva Muestra"
+  },
+  "MyDonations": {
+    "Title": "Mis Donaciones"
   },
   "RequestDonation": {
     "Donate": "Donar",
@@ -90,6 +98,7 @@
       "CancelButton": "Cancelar",
       "DonateButton": "Doná",
       "Item": "Item",
+      "ContinueEditButton": "Seguir editando",
       "QuantityRequested": "Cantidad requerida",
       "Description": "Descripción",
       "QuantityToDonate": "Cantidad a donar",
@@ -147,6 +156,9 @@
   },
   "ProfileActionBar": {
     "Logout": "Salir"
+  },
+  "NavBar": {
+    "MyDonations": "Mis Donaciones"
   },
   "PageNotFound": {
     "Title": "Ooops, Página no encontrada",

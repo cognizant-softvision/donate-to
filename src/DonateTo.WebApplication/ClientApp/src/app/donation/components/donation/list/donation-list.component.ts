@@ -1,8 +1,10 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { DonationRequestItemModel, DonationRequestModel } from 'src/app/shared/models';
 import { DonationSandbox } from 'src/app/donation/donation.sandbox';
 import { NotificationsService } from 'src/app/shared/notifications/notifications.service';
 import { Subscription } from 'rxjs';
+import { DonationModel } from 'src/app/shared/models/donation.model';
+import { DonationItemModel } from 'src/app/shared/models/donation-item.model';
 
 @Component({
   selector: 'app-donation-list',
@@ -12,9 +14,11 @@ import { Subscription } from 'rxjs';
 export class DonationListComponent implements OnInit, OnDestroy {
   constructor(public donationSandbox: DonationSandbox, private notifiactionsService: NotificationsService) {}
 
-  donationRequest: DonationRequestModel = new DonationRequestModel();
+  @Input() donationRequest: DonationRequestModel;
 
   @Output() showDonationConfirmModal = new EventEmitter();
+  @Input() donation: DonationModel = new DonationModel();
+  @Input() isEdit: boolean;
 
   subscriptions: Subscription[] = [];
 
@@ -22,17 +26,25 @@ export class DonationListComponent implements OnInit, OnDestroy {
 
   updateEditCache(): void {
     this.donationRequest.donationRequestItems?.forEach((item) => {
+      let quantityToDonate = 0;
+      if (this.isEdit) {
+        const existingDonationItem = this.donation.donationItems.find((di) => di.donationRequestItemId === item.id);
+        quantityToDonate = !!existingDonationItem ? existingDonationItem.quantity : 0;
+      }
       this.editCache.push({
         edit: false,
         id: item.id,
         item,
-        quantityToDonate: 0,
+        quantityToDonate,
       });
     });
   }
 
   ngOnInit(): void {
     this.registerEvents();
+    if (this.isEdit) {
+      this.updateEditCache();
+    }
   }
 
   ngOnDestroy(): void {
@@ -52,26 +64,32 @@ export class DonationListComponent implements OnInit, OnDestroy {
   registerEvents(): void {
     this.subscriptions.push(
       this.donationSandbox.donationRequest$.subscribe((donationRequest) => {
-        this.donationRequest = donationRequest;
-        this.updateEditCache();
+        if (!this.isEdit) {
+          this.donationRequest = donationRequest;
+          if (donationRequest) {
+            this.updateEditCache();
+          }
+        }
       })
     );
   }
 
   startEdit(id: number): void {
-    const donationItem = this.editCache.find((item) => item.id === id);
-    donationItem.edit = true;
+    const donationItemCache = this.editCache.find((item) => item.id === id);
+    donationItemCache.edit = true;
   }
 
   cancelEdit(id: number): void {
     const donationItem = this.editCache.find((item) => item.id === id);
-    donationItem.quantityToDonate = 0;
+    if (!this.isEdit) {
+      donationItem.quantityToDonate = 0;
+    }
     donationItem.edit = false;
   }
 
   saveEdit(id: number): void {
-    const donationItem = this.editCache.find((item) => item.id === id);
-    donationItem.edit = false;
+    const donationItemCache = this.editCache.find((item) => item.id === id);
+    donationItemCache.edit = false;
   }
 
   isSomethingToDonate(): boolean {
