@@ -76,7 +76,9 @@ export class NavMenuSandBox extends Sandbox {
       this.isAuthenticated$.subscribe((isAuthenticated: boolean) => (this.isAuthenticated = isAuthenticated))
     );
     this.subscriptions.push(
-      this.userRoles$.subscribe((userRoles: string[]) => (this.isAdmin = userRoles.includes('Admin')))
+      this.userRoles$.subscribe(
+        (userRoles: string[]) => (this.isAdmin = userRoles.includes('Admin') || userRoles.includes('Superadmin'))
+      )
     );
   }
 }
