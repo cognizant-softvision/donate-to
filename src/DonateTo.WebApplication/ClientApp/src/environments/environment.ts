@@ -23,7 +23,7 @@ export const environment = {
     redirectUri: 'http://localhost:4200',
     clientId: 'DonateTo.WebApplication',
     responseType: 'code',
-    scope: 'openid profile',
+    scope: 'openid profile offline_access',
     showDebugInformation: true,
     clearHashAfterLogin: true,
     nonceStateSeparator: 'semicolon',
