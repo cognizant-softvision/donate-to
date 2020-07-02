@@ -16,6 +16,9 @@
       <a (click)="login()"> {{ 'Auth.Login.Title' | translate }} </a>
     </li>
     <li nz-menu-item *ngIf="navMenuSandbox.isAuthenticated">
+      <a [routerLink]="['/donation/my-donations']"> {{ 'NavBar.MyDonations' | translate }} </a>
+    </li>
+    <li nz-menu-item *ngIf="navMenuSandbox.isAuthenticated">
       <a [routerLink]="['/my-profile']">{{ 'UserProfile.MyProfile' | translate }}</a>
     </li>
     <li nz-menu-item *ngIf="navMenuSandbox.isAuthenticated">

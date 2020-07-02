@@ -19,7 +19,6 @@
       />
     </nz-form-control>
   </nz-form-item>
-
   <nz-form-item>
     <nz-form-label nzFor="observations">{{ 'Admin.Donation.Form.Observations' | translate }}</nz-form-label>
     <nz-form-control>
@@ -33,7 +32,6 @@
       ></textarea>
     </nz-form-control>
   </nz-form-item>
-
   <nz-form-item *ngIf="donationRequest?.id">
     <nz-form-label nzRequired nzFor="status">{{ 'Admin.Donation.Form.Status' | translate }}</nz-form-label>
     <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.Status' | translate }}">

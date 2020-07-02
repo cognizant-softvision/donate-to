@@ -1,7 +1,15 @@
 {
+  "Donation": {
+    "DonationId": "Id",
+    "PickUpDate": "Pick-up date",
+    "DonationRequest": "Donation Request"
+  },
   "Home": {
     "HomeTitle": "Welcome",
     "NewSample": "New Sample"
+  },
+  "MyDonations": {
+    "Title": "My Donations"
   },
   "RequestDonation": {
     "Donate": "Donate",
@@ -89,6 +97,7 @@
       "SaveButton": "Save",
       "CancelButton": "Cancel",
       "DonateButton": "Donate",
+      "ContinueEditButton": "Continue edit",
       "Item": "Item",
       "QuantityRequested": "Quantity requested",
       "Description": "Description",
@@ -147,6 +156,9 @@
   },
   "ProfileActionBar": {
     "Logout": "Logout"
+  },
+  "NavBar": {
+    "MyDonations": "My Donations"
   },
   "PageNotFound": {
     "Title": "Ooops, Page Not Found",
@@ -216,6 +228,7 @@
       },
       "BackConfirm": "Are you sure you want to go back?",
       "CreateConfirm": "Are you sure you want to create a donation request?",
+      "EditConfirm": "Are you sure you want to edit a donation request?",
       "DeleteConfirmation": "Are you sure you want to delete this donation request?",
       "Table": {
         "Itemcolumn": "Item",

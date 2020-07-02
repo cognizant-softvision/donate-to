@@ -13,6 +13,7 @@ import { HomeModule } from 'src/app/home/home.module';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { HttpClient } from '@angular/common/http';
 import { DonationModule } from 'src/app/donation/donation.module';
+import { MyDonationsModule } from 'src/app/my-donations/my-donation.module';
 
 export const COMPONENTS = [DonatorLayoutComponent];
 @NgModule({
@@ -36,6 +37,7 @@ export const COMPONENTS = [DonatorLayoutComponent];
     ComponentsModule,
     HomeModule,
     DonationModule,
+    MyDonationsModule,
     DonatorLayoutRoutingModule,
   ],
   declarations: COMPONENTS,

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { Sandbox } from '../shared/sandbox/base.sandbox';
@@ -9,6 +9,9 @@ import { DonationModel } from '../shared/models/donation.model';
 export class DonationSandbox extends Sandbox {
   donationRequestLoading$ = this.appState$.select(store.fromDonation.getDonationLoading);
   donationRequest$ = this.appState$.select(store.fromDonation.getDonationRequest);
+  donations$ = this.appState$.select(store.fromDonation.getDonations);
+  donation$ = this.appState$.select(store.fromDonation.getDonation);
+  donationsLoading$ = this.appState$.select(store.fromDonation.getDonationLoading);
   countries$ = this.appState$.select(store.fromAddress.getCountries);
   states$ = this.appState$.select(store.fromAddress.getStates);
   cities$ = this.appState$.select(store.fromAddress.getCities);
@@ -31,8 +34,22 @@ export class DonationSandbox extends Sandbox {
   /**
    * Loads donationRequest from the server
    */
+  public loadDonation(donationId: number): void {
+    this.appState$.dispatch(store.fromDonation.loadDonationById({ donationId }));
+  }
+
+  /**
+   * Adds donations to the server
+   */
   public addDonation(donation: DonationModel): void {
     this.appState$.dispatch(store.fromDonation.addDonation({ donation }));
+  }
+
+  /**
+   * Updates donations on the server
+   */
+  public updateDonation(donation: DonationModel): void {
+    this.appState$.dispatch(store.fromDonation.updateDonation({ donation }));
   }
 
   /**
