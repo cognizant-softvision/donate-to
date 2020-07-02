@@ -7,9 +7,9 @@
 
   <p class="item.observation">{{ item.observation }}</p>
   <br />
-  <span>{{ 'Donation.DonationId' | translate }}: {{ item.id }}</span
+  <span>{{ 'Donation.Organization' | translate }}: {{ item?.donationRequest?.organization?.name }}</span
   ><br />
-  <span>{{ 'Donation.PickUpDate' | translate }}: {{ item.pickUpDate | date: 'fullDate' }}</span
+  <span>{{ 'Donation.DonationItemsCount' | translate }}: {{ donationItemsCount }}</span
   ><br />
 
   <ng-template #actions class="ant-card-actions">
