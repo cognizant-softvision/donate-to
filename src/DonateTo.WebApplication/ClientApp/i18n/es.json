@@ -252,7 +252,7 @@
     },
     "User": {
       "Title": "Usuarios",
-      "Associate": "Asociar",
+      "Associate": "Administrar Asociaciones",
       "SelectOrganization": "Seleccionar Organizaciones",
       "Table": {
         "Name": "Nombre",
