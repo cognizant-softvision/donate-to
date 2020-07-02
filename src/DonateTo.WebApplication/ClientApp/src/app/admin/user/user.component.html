@@ -3,7 +3,7 @@
   <nz-divider></nz-divider>
   <button nz-button nzType="secondary" (click)="reset()">{{ 'Admin.ClearFilter' | translate }}</button>
 </div>
-<nz-table #userTable [nzData]="usersList" nzTableLayout="fixed">
+<nz-table #userTable [nzData]="usersList" nzTableLayout="fixed" [nzNoResult]="customTpl">
   <thead>
     <tr>
       <th [(nzSortOrder)]="listOfColumns[0].sortOrder" [nzSortFn]="listOfColumns[0].sortFn" nzCustomFilter>
@@ -72,3 +72,10 @@
 </nz-dropdown-menu>
 
 <app-popup-modal (associateResult)="associateResult($event)"></app-popup-modal>
+
+<ng-template #customTpl let-name>
+  <div style="text-align: center;">
+    <nz-empty [nzNotFoundContent]="null"></nz-empty>
+    <p>{{ 'NoEntries' | translate }}</p>
+  </div>
+</ng-template>

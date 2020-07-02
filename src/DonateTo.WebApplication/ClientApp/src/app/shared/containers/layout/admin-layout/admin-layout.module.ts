@@ -4,10 +4,15 @@ import { IconDefinition } from '@ant-design/icons-angular';
 
 import { HeartOutline, ProfileOutline, TeamOutline } from '@ant-design/icons-angular/icons';
 
-import { NzIconModule, NzLayoutModule, NzMenuModule } from 'ng-zorro-antd';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzTableModule } from 'ng-zorro-antd/table';
+import {
+  NzButtonModule,
+  NzDividerModule,
+  NzEmptyModule,
+  NzIconModule,
+  NzLayoutModule,
+  NzMenuModule,
+  NzTableModule,
+} from 'ng-zorro-antd';
 
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { ComponentsModule } from 'src/app/shared/components';
@@ -28,6 +33,7 @@ const ICONS: IconDefinition[] = [HeartOutline, TeamOutline, ProfileOutline];
     NzButtonModule,
     NzDividerModule,
     NzTableModule,
+    NzEmptyModule,
     AdminLayoutRoutingModule,
     CommonModule,
     TranslateModule.forChild({
