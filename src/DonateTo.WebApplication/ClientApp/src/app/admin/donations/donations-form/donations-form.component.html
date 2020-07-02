@@ -199,6 +199,7 @@
           [nzShowPagination]="false"
           [nzFrontPagination]="false"
           [nzShowPagination]="false"
+          [nzNoResult]="customTpl"
         >
           <thead>
             <tr>
@@ -227,3 +228,10 @@
     </nz-form-control>
   </nz-form-item>
 </form>
+
+<ng-template #customTpl let-name>
+  <div style="text-align: center;">
+    <nz-empty [nzNotFoundContent]="null"></nz-empty>
+    <p>{{ 'NoEntries' | translate }}</p>
+  </div>
+</ng-template>
