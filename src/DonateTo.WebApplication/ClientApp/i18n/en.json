@@ -1,8 +1,19 @@
 {
+  "Status": {
+    "Draft": "Draft",
+    "Pending": "Pending",
+    "Completed": "Completed",
+    "Rejected": "Rejected"
+  },
   "Donation": {
     "DonationId": "Id",
     "PickUpDate": "Pick-up date",
-    "DonationRequest": "Donation Request"
+    "Organization": "Organization",
+    "DonationItemsCount": "Donated Items",
+    "DonationRequest": "Donation Request",
+    "List": {
+      "Status": "Filterd by Status"
+    }
   },
   "Home": {
     "HomeTitle": "Welcome",
@@ -97,7 +108,7 @@
       "SaveButton": "Save",
       "CancelButton": "Cancel",
       "DonateButton": "Donate",
-      "ContinueEditButton": "Continue edit",
+      "MoreOptions": "More Options",
       "Item": "Item",
       "QuantityRequested": "Quantity requested",
       "Description": "Description",
