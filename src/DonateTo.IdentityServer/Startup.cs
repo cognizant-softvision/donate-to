@@ -51,9 +51,9 @@ namespace DonateTo.IdentityServer
             services.AddDbContext<DonateIdentityDbContext>(options =>
                 options.UseNpgsql(connectionString));
 
-            services.AddDonateToModule(Configuration);
-
             services.AddAutoMapper(typeof(Startup));
+
+            services.AddDonateToModule(Configuration);
 
             services.AddTransient<IClientService, ClientService>();
             services.AddTransient<IClientRepository, ClientRepository>();

@@ -7,6 +7,7 @@ import {
   NzCardModule,
   NzDatePickerModule,
   NzDividerModule,
+  NzEmptyModule,
   NzFormModule,
   NzGridModule,
   NzIconModule,
@@ -24,7 +25,15 @@ import {
   NzTagModule,
   NzTimePickerModule,
 } from 'ng-zorro-antd';
-import { HeartFill, HeartOutline, HomeOutline, SearchOutline, UserOutline } from '@ant-design/icons-angular/icons';
+import {
+  CheckCircleTwoTone,
+  CloseCircleTwoTone,
+  HeartFill,
+  HeartOutline,
+  HomeOutline,
+  SearchOutline,
+  UserOutline,
+} from '@ant-design/icons-angular/icons';
 import { DonationSandbox } from './donation.sandbox';
 import { DonationRequestModule } from './donation-request.module';
 
@@ -39,7 +48,15 @@ import { DonationStepFinishComponent } from './components/donation-confirm/donat
 // FIX this should be moved to an upper level.
 registerLocaleData(es);
 
-const icons = [HeartFill, SearchOutline, UserOutline, HeartOutline, HomeOutline];
+const icons = [
+  HeartFill,
+  SearchOutline,
+  UserOutline,
+  HeartOutline,
+  HomeOutline,
+  CloseCircleTwoTone,
+  CheckCircleTwoTone,
+];
 @NgModule({
   imports: [
     NzInputModule,
@@ -64,6 +81,7 @@ const icons = [HeartFill, SearchOutline, UserOutline, HeartOutline, HomeOutline]
     NzInputNumberModule,
     TranslateModule,
     NzFormModule,
+    NzEmptyModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,

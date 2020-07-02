@@ -9,6 +9,7 @@ using IdentityModel;
 using IdentityServer4.Extensions;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using Microsoft.EntityFrameworkCore.Internal;
+using Newtonsoft.Json;
 
 namespace DonateTo.IdentityServer.Services
 {
@@ -41,8 +42,11 @@ namespace DonateTo.IdentityServer.Services
             claims = claims.Where(claim => context.RequestedClaimTypes.Contains(claim.Type)).ToList();
 
             var userOrganizations = await _organizationService.GetByUserIdAsync(user.Id);
+
             if (userOrganizations.Any())
-                claims.AddRange(userOrganizations.Select(o => new Claim("organization", o.Name)));
+            {
+                claims.AddRange(userOrganizations.Select(o => new Claim("organization", JsonConvert.SerializeObject(new { o.Id, o.Name }))));
+            }
 
             var roleClaimName = JwtClaimTypes.Role;
             var existingRoles = context.IssuedClaims.Where(c => c.Type == roleClaimName).Select(c => c.Value);

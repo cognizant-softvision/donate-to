@@ -17,6 +17,7 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
 
   private subscriptions: Subscription[] = [];
   disabledDates: (current: Date) => boolean;
+  userId = 0;
   addressId: number;
   categories: CategoryModel[] = [];
   donationRequestItems: DonationRequestItemModel[] = [];
@@ -37,8 +38,8 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
   ];
 
   donationRequestFormGroup = new FormGroup({
+    userIdFormControl: new FormControl('0', Validators.required),
     titleFormControl: new FormControl('', Validators.required),
-    priorityFormControl: new FormControl('', Validators.required),
     statusFormControl: new FormControl(''),
     organizationFormControl: new FormControl('', Validators.required),
     addressFormControl: new FormControl('', Validators.required),
@@ -59,6 +60,7 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.donationRequest) {
+      this.userId = this.donationRequest.userId;
       this.title = this.donationRequest.title;
       this.observations = this.donationRequest.observation;
       this.priority = this.donationRequest.priority;
@@ -162,6 +164,7 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
     donationRequestForm.finishDate = this.finishDate;
     donationRequestForm.donationRequestItems = this.donationRequestItems;
     donationRequestForm.statusId = this.statusId;
+    donationRequestForm.userId = this.userId;
 
     if (this.donationRequest.id) {
       donationRequestForm.id = this.donationRequest.id;

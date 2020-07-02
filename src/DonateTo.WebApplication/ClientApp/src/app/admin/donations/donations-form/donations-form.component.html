@@ -1,4 +1,5 @@
 <form [formGroup]="donationRequestFormGroup" nz-form>
+  <input type="hidden" [(ngModel)]="userId" formControlName="userIdFormControl" name="userId" id="userId" />
   <nz-form-item>
     <nz-form-label nzRequired nzFor="title">{{ 'Admin.Donation.Form.Title' | translate }}</nz-form-label>
     <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.TitleRequiredError' | translate }}">
@@ -24,12 +25,6 @@
         name="observations"
         id="observations"
       ></textarea>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-label nzRequired nzFor="priority">{{ 'Admin.Donation.Form.Priority' | translate }}</nz-form-label>
-    <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.PriorityRequiredError' | translate }}">
-      <nz-rate [(ngModel)]="priority" formControlName="priorityFormControl" nzCount="5"></nz-rate>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item *ngIf="donationRequest?.id">

@@ -1,7 +1,15 @@
 {
+  "Donation": {
+    "DonationId": "Identificación",
+    "PickUpDate": "Fecha de retiro",
+    "DonationRequest": "Solicitud"
+  },
   "Home": {
     "HomeTitle": "Bienvenido",
     "NewSample": "Nueva Muestra"
+  },
+  "MyDonations": {
+    "Title": "Mis Donaciones"
   },
   "RequestDonation": {
     "Donate": "Donar",
@@ -51,7 +59,7 @@
         "LastName": "Apellido",
         "LastNamePlaceHolder": "Apellido",
         "RequiredLastName": "Por favor ingrese su apellido!",
-        "IdentityNumber": "Número de identidad",
+        "IdentityNumber": "ID de identidad",
         "IdentityNumberPlaceHolder": "Número de identidad",
         "RequiredIdentityNumber": "Por favor ingrese su número de identidad!",
         "Email": "Email",
@@ -90,6 +98,7 @@
       "CancelButton": "Cancelar",
       "DonateButton": "Doná",
       "Item": "Item",
+      "ContinueEditButton": "Seguir editando",
       "QuantityRequested": "Cantidad requerida",
       "Description": "Descripción",
       "QuantityToDonate": "Cantidad a donar",
@@ -147,6 +156,9 @@
   },
   "ProfileActionBar": {
     "Logout": "Salir"
+  },
+  "NavBar": {
+    "MyDonations": "Mis Donaciones"
   },
   "PageNotFound": {
     "Title": "Ooops, Página no encontrada",
@@ -216,6 +228,7 @@
       },
       "BackConfirm": "Estas seguro que quieres volver?",
       "CreateConfirm": "Estas seguro que quieres crear una solicitud de donación?",
+      "EditConfirm": "Estas seguro que quieres editar esta solicitud de donación?",
       "DeleteConfirmation": "Está seguro que desea eliminar esta solicitud de donación?",
       "Table": {
         "Itemcolumn": "Item",
@@ -228,7 +241,14 @@
     },
     "User": {
       "Title": "Usuarios",
-      "Associate": "Asociar"
+      "Associate": "Asociar",
+      "SelectOrganization": "Seleccionar Organizaciones",
+      "Table": {
+        "Name": "Nombre",
+        "Organization": "Organización",
+        "Email": "Email",
+        "Action": "Acción"
+      }
     },
     "Organization": {
       "Title": "Organización"

@@ -3,14 +3,14 @@
     <h4 class="section-title">{{ 'Admin.Donation.Create.Title' | translate }}</h4>
   </div>
   <br />
-  <app-donations-form (validationResult)="createDonationRequest($event)"></app-donations-form>
+  <app-donations-form></app-donations-form>
   <br />
   <div class="create-donation-form-buttons">
     <button
       nz-popconfirm
-      nzPopconfirmTitle="{{ 'Admin.Donation.Create.Form.DeleteItemConfirmation' | translate }}"
+      nzPopconfirmTitle="{{ 'Admin.Donation.CreateConfirm' | translate }}"
       nzPopconfirmPlacement="bottom"
-      (nzOnConfirm)="validateDonationRequestForm()"
+      (nzOnConfirm)="openDonationPriority()"
       nz-button
       nzType="primary"
       type="submit"
@@ -38,3 +38,6 @@
     <div>{{ 'Admin.Donation.Create.ErrorMessage' | translate }}</div>
   </nz-modal>
 </div>
+<ng-template #modalContent>
+  <app-donations-priority (isSubmited)="submitPriority($event)"></app-donations-priority>
+</ng-template>

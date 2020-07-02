@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { DonationSandbox } from './donation.sandbox';
@@ -7,6 +7,7 @@ import { DonationListComponent } from './components/donation/list/donation-list.
 import { DonationItemModel } from '../shared/models/donation-item.model';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { TranslateService } from '@ngx-translate/core';
+import { DonationModel } from '../shared/models/donation.model';
 
 @Component({
   selector: 'app-donation',
@@ -14,6 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./donation.component.css'],
 })
 export class DonationComponent implements OnInit, OnDestroy {
+  donationId: number;
   constructor(
     protected router: ActivatedRoute,
     public donationSandbox: DonationSandbox,
@@ -27,13 +29,17 @@ export class DonationComponent implements OnInit, OnDestroy {
   donationItems: DonationItemModel[] = [];
   isSubmited = false;
 
+  @Input() userId: number;
+  @Input() isEdit: boolean;
+
   @ViewChild('modalContent') public modalContent: TemplateRef<any>;
 
   tplModal?: NzModalRef;
 
   subscriptions: Subscription[] = [];
 
-  donation: DonationRequestModel;
+  donationRequest: DonationRequestModel;
+  donation: DonationModel;
 
   @ViewChild(DonationListComponent)
   private donationListComponent: DonationListComponent;
@@ -60,13 +66,31 @@ export class DonationComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.router.params.subscribe((params: Params) => {
         this.donationRequestId = params['donationRequestId'];
-        this.donationSandbox.loadDonationRequest(params['donationRequestId']);
+        this.donationId = params['donationId'];
+        if (this.donationRequestId) {
+          this.donationSandbox.loadDonationRequest(params['donationRequestId']);
+        } else if (this.donationId) {
+          this.donationSandbox.loadDonation(this.donationId);
+          this.isEdit = true;
+        }
       })
     );
 
     this.subscriptions.push(
       this.donationSandbox.donationRequest$.subscribe((donationRequest) => {
-        this.donation = donationRequest;
+        if (!this.isEdit) {
+          this.donationRequest = donationRequest;
+        }
+      })
+    );
+
+    this.subscriptions.push(
+      this.donationSandbox.donation$.subscribe((donation) => {
+        if (this.isEdit && donation.id) {
+          this.donation = donation;
+          this.donationRequest = donation.donationRequest;
+          this.donationItems = this.donation.donationItems;
+        }
       })
     );
 
@@ -82,6 +106,7 @@ export class DonationComponent implements OnInit, OnDestroy {
 
   submited(value: boolean): void {
     this.isSubmited = value;
+    this.hideModal();
   }
 
   showModal() {
@@ -111,6 +136,14 @@ export class DonationComponent implements OnInit, OnDestroy {
         .filter((item) => item.quantityToDonate > 0)
         .map((item) => {
           const donationItem: DonationItemModel = new DonationItemModel();
+          if (this.isEdit) {
+            const currentItem = this.donation.donationItems.find((di) => di.donationRequestItemId === item.id);
+            Object.entries(currentItem).forEach((kv) => {
+              if (['string', 'number', 'Date'].includes(typeof kv[1])) {
+                donationItem[kv[0]] = kv[1];
+              }
+            });
+          }
           donationItem.donationRequestItemId = item.item.id;
           donationItem.donationRequestItem = JSON.parse(JSON.stringify(item.item));
           donationItem.unitId = item.item.unitId;

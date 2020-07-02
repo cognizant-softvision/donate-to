@@ -1,0 +1,18 @@
+<nz-modal [(nzVisible)]="isVisible" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <h2>{{ 'Admin.User.SelectOrganization' | translate }}</h2>
+  <nz-select
+    class="dropdown-selector"
+    [nzMaxTagCount]="3"
+    [nzMaxTagPlaceholder]="tagPlaceHolder"
+    nzMode="multiple"
+    nzPlaceHolder="Please select"
+    [(ngModel)]="this.selectedOrganizations"
+  >
+    <nz-option
+      *ngFor="let item of this.userSandbox.organizations$ | async"
+      [nzLabel]="item.name"
+      [nzValue]="item.id"
+    ></nz-option>
+  </nz-select>
+  <ng-template #tagPlaceHolder let-selectedList> and {{ selectedList.length }} more selected </ng-template>
+</nz-modal>

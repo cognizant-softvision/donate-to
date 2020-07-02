@@ -57,6 +57,6 @@ namespace DonateTo.ApplicationCore.Entities
         public virtual ICollection<UserLogin> Logins { get; set; }
         public virtual ICollection<UserToken> Tokens { get; set; }
         public virtual ICollection<UserRole> UserRoles { get; set; }
-        public IEnumerable<UserOrganization> UserOrganizations { get; set; }
+        public virtual ICollection<UserOrganization> UserOrganizations { get; set; }
     }
 }
