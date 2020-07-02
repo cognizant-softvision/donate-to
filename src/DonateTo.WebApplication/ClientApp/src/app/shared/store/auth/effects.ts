@@ -41,6 +41,8 @@ export class AuthEffects {
           const claims = this.authService.getIdentityClaims();
           return userProfileLoaded({
             accessToken: this.authService.getAccessToken(),
+            nameUser: claims['name'],
+            roles: claims['role'],
           });
         })
         .catch(() => loadUserProfileFailed())
