@@ -9,7 +9,7 @@
   <button nz-button nzType="secondary">{{ 'Admin.ClearFilter' | translate }}</button>
   <button nz-button nzType="secondary">{{ 'Admin.ClearFilterAndSorted' | translate }}</button>
 </div>
-<nz-table #organizationTable [nzData]="listOfData">
+<nz-table #organizationTable [nzData]="listOfData" [nzNoResult]="customTpl">
   <thead>
     <tr>
       <th
@@ -40,3 +40,10 @@
     </tr>
   </tbody>
 </nz-table>
+
+<ng-template #customTpl let-name>
+  <div style="text-align: center;">
+    <nz-empty [nzNotFoundContent]="null"></nz-empty>
+    <p>{{ 'NoEntries' | translate }}</p>
+  </div>
+</ng-template>

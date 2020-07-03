@@ -52,6 +52,10 @@ export class DonationRequestsListComponent implements OnInit, OnDestroy {
     }
   }
 
+  pageIndexChange(pageNumber: number) {
+    this.getDonationRequests({ pageNumber });
+  }
+
   getDonationRequests({ pageSize = this.pageSize, pageNumber }) {
     this.pageSize = pageSize;
     this.currentPage = pageNumber;

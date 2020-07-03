@@ -1,8 +1,19 @@
 {
+  "Status": {
+    "Draft": "Borrador",
+    "Pending": "Pendiente",
+    "Completed": "Completo",
+    "Rejected": "Rechazado"
+  },
   "Donation": {
     "DonationId": "Identificación",
     "PickUpDate": "Fecha de retiro",
-    "DonationRequest": "Solicitud"
+    "Organization": "Organización",
+    "DonationItemsCount": "Items Donados",
+    "DonationRequest": "Solicitud",
+    "List": {
+      "Status": "Filtrado Por Estado"
+    }
   },
   "Home": {
     "HomeTitle": "Bienvenido",
@@ -98,7 +109,7 @@
       "CancelButton": "Cancelar",
       "DonateButton": "Doná",
       "Item": "Item",
-      "ContinueEditButton": "Seguir editando",
+      "MoreOptions": "Más Opciones",
       "QuantityRequested": "Cantidad requerida",
       "Description": "Descripción",
       "QuantityToDonate": "Cantidad a donar",
@@ -241,7 +252,7 @@
     },
     "User": {
       "Title": "Usuarios",
-      "Associate": "Asociar",
+      "Associate": "Administrar Asociaciones",
       "SelectOrganization": "Seleccionar Organizaciones",
       "Table": {
         "Name": "Nombre",

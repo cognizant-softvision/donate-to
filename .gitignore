@@ -349,3 +349,6 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 /src/DonateTo.WebApplication/.angulardoc.json
+
+# Transpiled less file
+/src/DonateTo.IdentityServer/wwwroot/css/site.css

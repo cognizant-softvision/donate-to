@@ -14,13 +14,17 @@ export class MyDonationsListItemComponent implements OnInit {
   @Input() loading = true;
   isPending = false;
   tplModal?: NzModalRef;
-
   constructor(public donationSandbox: MyDonationSandbox) {}
+
+  donationItemsCount = 0;
 
   delete(item: DonationModel) {
     this.donationSandbox.deleteDonation(item);
   }
   ngOnInit(): void {
     this.isPending = this.item.statusId === Status.Pending;
+    if (this.item && this.item.donationItems) {
+      this.donationItemsCount = this.item.donationItems.length;
+    }
   }
 }
