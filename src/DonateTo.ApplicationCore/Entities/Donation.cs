@@ -12,8 +12,8 @@ namespace DonateTo.ApplicationCore.Entities
         public Address Address { get; set; }
         public long StatusId { get; set; }
         public Status Status { get; set; }
-        public long UserId { get; set; }
-        public User User { get; set; }
+        public long OwnerId { get; set; }
+        public User Owner { get; set; }
         public DateTime PickUpDate { get; set; }
         public IEnumerable<DonationItem> DonationItems { get; set; }
         public IEnumerable<Availability> Availabilities { get; set; }

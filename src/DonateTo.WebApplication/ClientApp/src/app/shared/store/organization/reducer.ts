@@ -21,6 +21,11 @@ const organizationReducer = createReducer(
     loading: true,
     failed: false,
   })),
+  on(organizationActions.loadOrganizationsByUser, (state, action) => ({
+    ...state,
+    loading: true,
+    failed: false,
+  })),
   on(organizationActions.loadOrganizationsSuccess, (state, { organizations }) => ({
     ...state,
     loading: false,
