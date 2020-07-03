@@ -78,8 +78,8 @@ export class NavMenuSandBox extends Sandbox {
     this.subscriptions.push(
       this.userRoles$.subscribe(
         (userRoles: string[]) =>
-          (this.isAdmin = userRoles.includes('Admin') || userRoles.includes('Superadmin')) ||
-          userRoles.includes('Organization')
+          (this.isAdmin =
+            userRoles.includes('Admin') || userRoles.includes('Superadmin') || userRoles.includes('Organization'))
       )
     );
   }
