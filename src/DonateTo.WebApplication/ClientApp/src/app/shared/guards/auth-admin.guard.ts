@@ -3,7 +3,7 @@ import { CanActivate, CanLoad } from '@angular/router';
 import { AuthSandbox } from '../auth/auth.sandbox';
 
 @Injectable()
-export class AuthGuard implements CanActivate, CanLoad {
+export class AuthAdminGuard implements CanActivate, CanLoad {
   constructor(private authSandbox: AuthSandbox) {}
 
   public canActivate() {
