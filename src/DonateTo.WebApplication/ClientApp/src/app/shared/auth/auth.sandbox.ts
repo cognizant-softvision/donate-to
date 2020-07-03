@@ -22,6 +22,7 @@ export class AuthSandbox extends Sandbox {
   public setupAuth(): void {
     const authConfig = this.authConfigService.getConfig();
     this.authService.configure(authConfig);
+    this.authService.setupAutomaticSilentRefresh();
     this.appState$.dispatch(store.fromAuth.tryLogin());
 
     this.authService.events.subscribe(this.handleAuthEvents.bind(this));

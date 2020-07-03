@@ -1,9 +1,17 @@
+<b
+  >{{ 'Donation.List.Status' | translate }}:
+  <nz-select [(ngModel)]="statusId" [ngClass]="'w-25'" (ngModelChange)="onSelectedStatus($event)">
+    <nz-option *ngFor="let status of statusList" [nzValue]="status.value" [nzLabel]="status.label"></nz-option>
+  </nz-select>
+</b>
+
 <nz-list
   [nzDataSource]="isLoading ? mockData : donations"
   [nzRenderItem]="item"
   [nzGrid]="{ gutter: 16, span: 8 }"
   [nzPagination]="pagination"
   [nzNoResult]="customTpl"
+  [ngClass]="'pt-3'"
 >
   <ng-template #item let-itemData>
     <nz-list-item [nzContent]="isLoading ? '' : donationItem">
