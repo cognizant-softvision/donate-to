@@ -30,6 +30,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { UnitEffects } from 'src/app/shared/store/unit';
 import {
   NzDatePickerModule,
+  NzEmptyModule,
   NzFormModule,
   NzIconModule,
   NzInputModule,
@@ -57,6 +58,7 @@ const ICONS: IconDefinition[] = [PlusOutline];
     NzModalModule,
     NzRateModule,
     NzPopconfirmModule,
+    NzEmptyModule,
     NzFormModule,
     NzTableModule,
     NzTagModule,

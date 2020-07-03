@@ -61,7 +61,7 @@
         <div class="donate">
           <button nz-button nzType="primary" (click)="donationConfirm()">
             <span *ngIf="isEdit; else notEditBlock">{{
-              'RequestDonation.DonationItemList.ContinueEditButton' | translate
+              'RequestDonation.DonationItemList.MoreOptions' | translate
             }}</span>
             <ng-template #notEditBlock>{{ 'RequestDonation.DonationItemList.DonateButton' | translate }}</ng-template>
           </button>
