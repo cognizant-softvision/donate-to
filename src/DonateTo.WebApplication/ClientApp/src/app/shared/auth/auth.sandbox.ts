@@ -4,15 +4,34 @@ import { OAuthEvent, OAuthService } from 'angular-oauth2-oidc';
 import { Sandbox } from '../sandbox/base.sandbox';
 import { Store } from '@ngrx/store';
 import * as store from '../store';
+import { Subscription } from 'rxjs';
 
 @Injectable()
 export class AuthSandbox extends Sandbox {
+  private subscriptions: Subscription[] = [];
+  public isAdmin = false;
+
   constructor(
     protected appState$: Store<store.State>,
     private authService: OAuthService,
     private authConfigService: AuthConfigService
   ) {
     super(appState$);
+    this.registerEvents();
+    this.isAdmin = false;
+  }
+
+  /**
+   * Subscribes to events
+   */
+  private registerEvents(): void {
+    this.subscriptions.push(
+      this.userRoles$.subscribe(
+        (userRoles: string[]) =>
+          (this.isAdmin =
+            userRoles.includes('Admin') || userRoles.includes('Superadmin') || userRoles.includes('Organization'))
+      )
+    );
   }
 
   /**
