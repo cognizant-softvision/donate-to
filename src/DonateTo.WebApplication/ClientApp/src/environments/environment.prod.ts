@@ -23,7 +23,7 @@ export const environment = {
     redirectUri: 'https://donatedevwebapp.azurewebsites.net',
     clientId: 'DonateTo.WebApplication',
     responseType: 'code',
-    scope: 'openid profile',
+    scope: 'openid profile offline_access',
     showDebugInformation: true,
     clearHashAfterLogin: true,
     nonceStateSeparator: 'semicolon',
