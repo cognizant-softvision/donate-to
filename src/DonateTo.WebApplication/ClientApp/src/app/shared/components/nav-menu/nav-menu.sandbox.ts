@@ -10,7 +10,7 @@ import { en_US, es_ES, NzI18nService } from 'ng-zorro-antd';
 @Injectable()
 export class NavMenuSandBox extends Sandbox {
   private subscriptions: Subscription[] = [];
-  public isAdmin: boolean;
+  public isAdmin = false;
 
   constructor(
     protected appState$: Store<store.State>,
@@ -20,7 +20,6 @@ export class NavMenuSandBox extends Sandbox {
   ) {
     super(appState$);
     this.registerEvents();
-    this.isAdmin = false;
   }
 
   /**
