@@ -1,0 +1,22 @@
+<nz-card hoverable [nzSize]="'small'" [nzActions]="[actions]" *ngIf="item">
+  <nz-card-meta [nzTitle]="item.title"> </nz-card-meta>
+
+  <span *ngIf="item.donationRequest"
+    ><b>{{ 'Donation.DonationRequest' | translate }}: {{ item.donationRequest.title }}</b></span
+  ><br />
+
+  <p class="item.observation">{{ item.observation }}</p>
+  <br />
+  <span>{{ 'Donation.Organization' | translate }}: {{ item?.donationRequest?.organization?.name }}</span
+  ><br />
+  <span>{{ 'Donation.DonationItemsCount' | translate }}: {{ donationItemsCount }}</span
+  ><br />
+
+  <ng-template #actions class="ant-card-actions">
+    <div class="action-buttons">
+      <a nz-button type="primary" [routerLink]="['/donation/detail/' + item.id]">
+        {{ 'EditBtn' | translate }}
+      </a>
+    </div>
+  </ng-template>
+</nz-card>

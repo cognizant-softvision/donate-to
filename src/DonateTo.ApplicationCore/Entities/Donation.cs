@@ -9,9 +9,11 @@ namespace DonateTo.ApplicationCore.Entities
         public long DonationRequestId { get; set; }
         public DonationRequest DonationRequest { get; set; }
         public long AddressId { get; set; }
-        public Address Address { get; set; }        
+        public Address Address { get; set; }
         public long StatusId { get; set; }
         public Status Status { get; set; }
+        public long UserId { get; set; }
+        public User User { get; set; }
         public DateTime PickUpDate { get; set; }
         public IEnumerable<DonationItem> DonationItems { get; set; }
         public IEnumerable<Availability> Availabilities { get; set; }

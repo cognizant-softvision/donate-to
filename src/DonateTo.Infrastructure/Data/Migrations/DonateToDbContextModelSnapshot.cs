@@ -295,6 +295,9 @@ namespace DonateTo.ApplicationCore.Migrations
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
@@ -302,6 +305,8 @@ namespace DonateTo.ApplicationCore.Migrations
                     b.HasIndex("DonationRequestId");
 
                     b.HasIndex("StatusId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Donation");
                 });
@@ -944,6 +949,12 @@ namespace DonateTo.ApplicationCore.Migrations
                     b.HasOne("DonateTo.ApplicationCore.Entities.Status", "Status")
                         .WithMany()
                         .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

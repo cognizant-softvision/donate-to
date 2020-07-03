@@ -7,6 +7,7 @@ import { CategoryEffects } from 'src/app/shared/store/category';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { DonationsComponent } from './donations.component';
 import { DonationsCreateComponent } from './donations-create/donations-create.component';
+import { DonationPriorityComponent } from './donations-priority/donations-priority.component';
 import { DonationsEditComponent } from './donations-edit/donations-edit.component';
 import { DonationsFormComponent } from './donations-form/donations-form.component';
 import { DonationsRoutingModule } from './donations-routing.module';
@@ -29,6 +30,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { UnitEffects } from 'src/app/shared/store/unit';
 import {
   NzDatePickerModule,
+  NzEmptyModule,
   NzFormModule,
   NzIconModule,
   NzInputModule,
@@ -56,6 +58,7 @@ const ICONS: IconDefinition[] = [PlusOutline];
     NzModalModule,
     NzRateModule,
     NzPopconfirmModule,
+    NzEmptyModule,
     NzFormModule,
     NzTableModule,
     NzTagModule,
@@ -86,7 +89,13 @@ const ICONS: IconDefinition[] = [PlusOutline];
       extend: true,
     }),
   ],
-  declarations: [DonationsComponent, DonationsCreateComponent, DonationsEditComponent, DonationsFormComponent],
+  declarations: [
+    DonationsComponent,
+    DonationsCreateComponent,
+    DonationsEditComponent,
+    DonationsFormComponent,
+    DonationPriorityComponent,
+  ],
   providers: [DonationsSandbox],
 })
 export class DonationsModule {}

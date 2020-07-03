@@ -1,4 +1,4 @@
-<nz-modal [(nzVisible)]="isVisible" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+<nz-modal [(nzVisible)]="isVisible" [nzFooter]="footer">
   <h2>{{ 'Admin.User.SelectOrganization' | translate }}</h2>
   <nz-select
     class="dropdown-selector"
@@ -15,4 +15,11 @@
     ></nz-option>
   </nz-select>
   <ng-template #tagPlaceHolder let-selectedList> and {{ selectedList.length }} more selected </ng-template>
+
+  <ng-template #footer>
+    <button nz-button nzType="default" (click)="handleCancel()">{{ 'CancelBtn' | translate }}</button>
+    <button nz-button nzType="primary" (click)="handleOk()">{{ 'SaveBtn' | translate }}</button>
+  </ng-template>
 </nz-modal>
+
+<!--(nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" -->

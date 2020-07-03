@@ -5,3 +5,13 @@
 .donate {
   text-align: right;
 }
+
+.quantity-to-donate {
+  display: flex;
+  justify-content: space-between;
+}
+
+[nz-icon] {
+  margin-right: 0.5em;
+  font-size: 1.5em;
+}
