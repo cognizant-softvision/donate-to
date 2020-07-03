@@ -24,7 +24,7 @@
       [nzPageIndex]="currentPage"
       [nzPageSize]="pageSize"
       [nzTotal]="totalItems"
-      (nzPageIndexChange)="getDonationRequests($event)"
+      (nzPageIndexChange)="pageIndexChange($event)"
     ></nz-pagination>
   </ng-template>
 </nz-list>
