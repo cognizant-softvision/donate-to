@@ -4,13 +4,13 @@ import { OAuthEvent, OAuthService } from 'angular-oauth2-oidc';
 import { Sandbox } from '../sandbox/base.sandbox';
 import { Store } from '@ngrx/store';
 import * as store from '../store';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { Roles } from '../enum/roles';
 
 @Injectable()
 export class AuthSandbox extends Sandbox {
   private subscriptions: Subscription[] = [];
-  public isAdmin = false;
+  public isAdmin = new BehaviorSubject(false);
 
   constructor(
     protected appState$: Store<store.State>,
@@ -19,7 +19,6 @@ export class AuthSandbox extends Sandbox {
   ) {
     super(appState$);
     this.registerEvents();
-    this.isAdmin = false;
   }
 
   /**
@@ -27,12 +26,12 @@ export class AuthSandbox extends Sandbox {
    */
   private registerEvents(): void {
     this.subscriptions.push(
-      this.userRoles$.subscribe(
-        (userRoles: string[]) =>
-          (this.isAdmin =
-            userRoles.includes(Roles.Admin) ||
+      this.userRoles$.subscribe((userRoles: string[]) =>
+        this.isAdmin.next(
+          userRoles.includes(Roles.Admin) ||
             userRoles.includes(Roles.Superadmin) ||
-            userRoles.includes(Roles.Organization))
+            userRoles.includes(Roles.Organization)
+        )
       )
     );
   }
