@@ -41,6 +41,7 @@ export class AuthEffects {
           const claims = this.authService.getIdentityClaims();
           return userProfileLoaded({
             accessToken: this.authService.getAccessToken(),
+            userId: +claims['sub'],
             nameUser: claims['name'],
             roles: claims['role'],
           });
