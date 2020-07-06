@@ -1,5 +1,4 @@
 <form [formGroup]="donationRequestFormGroup" nz-form>
-  <input type="hidden" [(ngModel)]="userId" formControlName="userIdFormControl" name="userId" id="userId" />
   <nz-form-item>
     <nz-form-label nzRequired nzFor="title">{{ 'Admin.Donation.Form.Title' | translate }}</nz-form-label>
     <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.TitleRequiredError' | translate }}">
@@ -18,10 +17,10 @@
     <nz-form-label nzFor="observations">{{ 'Admin.Donation.Form.Observations' | translate }}</nz-form-label>
     <nz-form-control>
       <textarea
-        [ngModel]="observations"
+        [(ngModel)]="observations"
         nz-input
         placeholder="{{ 'Admin.Donation.Form.ObservationsPlaceholder' | translate }}"
-        formControlName="observationFormControl"
+        formControlName="observationsFormControl"
         name="observations"
         id="observations"
       ></textarea>
@@ -48,6 +47,7 @@
         [(ngModel)]="organizationId"
         (ngModelChange)="setOrganization()"
         formControlName="organizationFormControl"
+        [nzDisabled]="isEdit"
       >
         <nz-option
           *ngFor="let organization of this.donationSandbox.organizations$ | async"
@@ -195,6 +195,7 @@
           [nzShowPagination]="false"
           [nzFrontPagination]="false"
           [nzShowPagination]="false"
+          [nzNoResult]="customTpl"
         >
           <thead>
             <tr>
@@ -223,3 +224,10 @@
     </nz-form-control>
   </nz-form-item>
 </form>
+
+<ng-template #customTpl let-name>
+  <div style="text-align: center;">
+    <nz-empty [nzNotFoundContent]="null"></nz-empty>
+    <p>{{ 'NoEntries' | translate }}</p>
+  </div>
+</ng-template>

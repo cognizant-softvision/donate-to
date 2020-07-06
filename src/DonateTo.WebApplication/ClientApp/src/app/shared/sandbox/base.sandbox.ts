@@ -10,6 +10,9 @@ export abstract class Sandbox {
   public accessToken$ = this.appState$.select(store.fromAuth.getAccessToken);
   public isAuthenticated$ = this.appState$.select(store.fromAuth.isAuthenticated);
   public isLoginProcessed$ = this.appState$.select(store.fromAuth.isLoginProcessed);
+  public userId$ = this.appState$.select(store.fromAuth.getUserId);
+  public userName$ = this.appState$.select(store.fromAuth.getUserName);
+  public userRoles$ = this.appState$.select(store.fromAuth.getUserRoles);
 
   public accessToken: string;
   public isAuthenticated: boolean;

@@ -6,7 +6,7 @@
   [style]="{ position: 'fixed', zIndex: 1, width: '100%' }"
 >
   <div class="logo">
-    <a href="/admin">Donate</a>
+    <a routerLink="/">Donate</a>
   </div>
   <ul nz-menu nzTheme="dark" nzMode="horizontal" class="float-right">
     <li nz-menu-item *ngIf="!navMenuSandbox.isAuthenticated">
@@ -20,6 +20,9 @@
     </li>
     <li nz-menu-item *ngIf="navMenuSandbox.isAuthenticated">
       <a [routerLink]="['/my-profile']">{{ 'UserProfile.MyProfile' | translate }}</a>
+    </li>
+    <li nz-menu-item *ngIf="navMenuSandbox.isAuthenticated && navMenuSandbox.isAdmin">
+      <a href="/admin"> Admin </a>
     </li>
     <li nz-menu-item *ngIf="navMenuSandbox.isAuthenticated">
       <a (click)="logout()">{{ 'ProfileActionBar.Logout' | translate }}</a>

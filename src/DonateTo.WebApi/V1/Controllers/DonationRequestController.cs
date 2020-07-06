@@ -54,8 +54,6 @@ namespace DonateTo.WebApi.V1.Controllers
 
                 var username = User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserName)?.Value;
 
-                value.UserId = Convert.ToInt64(User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserId)?.Value, CultureInfo.InvariantCulture);
-
                 var donationRequest = await _baseService.CreateAsync(value, username).ConfigureAwait(false);
                 var users = await _userService.GetByOrganizationIdAsync(donationRequest.OrganizationId).ConfigureAwait(false);
                 await _donationRequestService.SendNewRequestMailToOrganizationUsersAsync(donationRequest, users, client).ConfigureAwait(false);

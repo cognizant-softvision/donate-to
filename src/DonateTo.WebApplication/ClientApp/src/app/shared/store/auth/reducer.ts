@@ -5,6 +5,9 @@ export class AuthState {
   isAuthenticated: boolean;
   access_token: string;
   isLoginProcessed: boolean;
+  userId: number;
+  nameUser: string;
+  roles: string[];
 }
 
 const INITIAL_STATE: AuthState = {
@@ -12,6 +15,9 @@ const INITIAL_STATE: AuthState = {
 
   access_token: undefined,
   isLoginProcessed: false,
+  userId: undefined,
+  nameUser: undefined,
+  roles: [],
 };
 
 const authReducer = createReducer(
@@ -20,6 +26,9 @@ const authReducer = createReducer(
     ...state,
     isAuthenticated: true,
     access_token: action.accessToken,
+    userId: action.userId,
+    nameUser: action.nameUser,
+    roles: action.roles,
     isLoginProcessed: true,
   })),
   on(authActions.doLoginFailed, (state) => ({
@@ -31,6 +40,9 @@ const authReducer = createReducer(
   on(authActions.loadUserProfileFailed, (state) => ({
     ...state,
     access_token: undefined,
+    userId: undefined,
+    nameUser: undefined,
+    roles: [],
   })),
   on(authActions.tryLoginFailed, (state) => ({
     ...state,

@@ -16,7 +16,9 @@ export class MyDonationsListComponent implements OnInit, OnDestroy {
   mockData = new Array(3).fill(new DonationModel());
   donations: DonationModel[] = [];
   isLoading = true;
-  statusId = Status.Pending;
+
+  statusId: number = Status.Pending;
+  statusList: Array<{ value: number; label: string }> = [];
   gutter = [8, 8];
   headStyle = {
     textAlign: 'left',
@@ -35,6 +37,19 @@ export class MyDonationsListComponent implements OnInit, OnDestroy {
     this.donationSandbox.getDonationsByUserPaged(1, 6, this.statusId);
     this.registerEvents();
     this.nzConfigService.set('empty', { nzDefaultEmptyContent: this.customTpl });
+    this.populateStatusList();
+  }
+
+  populateStatusList() {
+    for (const status in Status) {
+      if (Status.hasOwnProperty(status)) {
+        const statusId = Number.parseInt(status, 10);
+        if (!Number.isNaN(statusId)) {
+          const statusItem = { value: statusId, label: Status[statusId] };
+          this.statusList = [...(this.statusList || []), statusItem];
+        }
+      }
+    }
   }
 
   ngOnDestroy(): void {
@@ -48,10 +63,14 @@ export class MyDonationsListComponent implements OnInit, OnDestroy {
     }
   }
 
-  getDonations({ pageSize = this.pageSize, pageNumber }) {
+  onSelectedStatus(event) {
+    this.getDonations();
+  }
+
+  getDonations({ pageSize = this.pageSize, pageNumber = this.currentPage } = {}) {
     this.pageSize = pageSize;
     this.currentPage = pageNumber;
-    this.donationSandbox.getDonationsByUserPaged(pageSize, pageNumber, this.statusId);
+    this.donationSandbox.getDonationsByUserPaged(pageNumber, pageSize, this.statusId);
   }
 
   registerEvents() {
