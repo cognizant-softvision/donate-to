@@ -5,6 +5,7 @@ import { Sandbox } from '../sandbox/base.sandbox';
 import { Store } from '@ngrx/store';
 import * as store from '../store';
 import { Subscription } from 'rxjs';
+import { Roles } from '../enum/roles';
 
 @Injectable()
 export class AuthSandbox extends Sandbox {
@@ -29,7 +30,9 @@ export class AuthSandbox extends Sandbox {
       this.userRoles$.subscribe(
         (userRoles: string[]) =>
           (this.isAdmin =
-            userRoles.includes('Admin') || userRoles.includes('Superadmin') || userRoles.includes('Organization'))
+            userRoles.includes(Roles.Admin) ||
+            userRoles.includes(Roles.Superadmin) ||
+            userRoles.includes(Roles.Organization))
       )
     );
   }
