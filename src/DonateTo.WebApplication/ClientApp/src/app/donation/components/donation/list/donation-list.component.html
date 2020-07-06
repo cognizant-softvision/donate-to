@@ -65,6 +65,9 @@
             }}</span>
             <ng-template #notEditBlock>{{ 'RequestDonation.DonationItemList.DonateButton' | translate }}</ng-template>
           </button>
+          <button nz-button nzType="primary" (click)="donate()" class="donate-button">
+            <span *ngIf="isEdit">{{ 'RequestDonation.DonationItemList.DonateButton' | translate }}</span>
+          </button>
         </div>
       </td>
     </tr>

@@ -107,4 +107,28 @@ export class DonationListComponent implements OnInit, OnDestroy {
   alertMessage(): void {
     this.notifiactionsService.createNotification('warning', 'Warning', 'There are no items to donate');
   }
+
+  donate() {
+    if (this.isSomethingToDonate()) {
+      const donation = new DonationModel();
+
+      Object.entries(this.donation).forEach((kv) => {
+        if (['string', 'number', 'Date'].includes(typeof kv[1])) {
+          donation[kv[0]] = kv[1];
+        }
+      });
+
+      donation.donationItems = this.donation.donationItems.map((item) => {
+        const donationItem: DonationItemModel = new DonationItemModel();
+        Object.assign(donationItem, item);
+        return donationItem;
+      });
+
+      donation.donationItems.forEach((item) => {
+        item.quantity = this.editCache.find((x) => item.donationRequestItemId === x.id).quantityToDonate;
+      });
+
+      this.donationSandbox.updateDonation(donation);
+    }
+  }
 }
