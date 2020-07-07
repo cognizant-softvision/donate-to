@@ -15,11 +15,10 @@ export class AuthAdminGuard implements CanActivate, CanLoad {
   }
 
   private checkIsAuthenticated() {
-    // if (this.authSandbox.validateToken() && this.authSandbox.isAdmin.value) {
-    //   return true;
-    // }
+    if (this.authSandbox.validateToken() && this.authSandbox.isAdmin.value) {
+      return true;
+    }
 
-    // this.authSandbox.login();
-    return true;
+    this.authSandbox.login();
   }
 }

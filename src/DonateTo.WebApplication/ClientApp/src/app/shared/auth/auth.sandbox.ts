@@ -73,14 +73,13 @@ export class AuthSandbox extends Sandbox {
    * Checks if the token in the session store is valid and updates the ngrx store
    */
   public validateToken(): boolean {
-    // if (this.authService.hasValidAccessToken()) {
-    //   this.appState$.dispatch(store.fromAuth.validateTokenSucess());
-    //   return true;
-    // }
+    if (this.authService.hasValidAccessToken()) {
+      this.appState$.dispatch(store.fromAuth.validateTokenSucess());
+      return true;
+    }
 
-    // this.appState$.dispatch(store.fromAuth.validateTokenFailed());
-    // return false;
-    return true;
+    this.appState$.dispatch(store.fromAuth.validateTokenFailed());
+    return false;
   }
 
   /**
