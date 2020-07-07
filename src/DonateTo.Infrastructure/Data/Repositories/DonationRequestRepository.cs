@@ -1,12 +1,12 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.Infrastructure.Data.EntityFramework;
 using DonateTo.Infrastructure.Data.Extensions;
-using DonateTo.ApplicationCore.Models.Pagination;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
 using System;
+using System.Linq.Dynamic.Core;
 
 namespace DonateTo.Infrastructure.Data.Repositories
 {
@@ -28,7 +28,8 @@ namespace DonateTo.Infrastructure.Data.Repositories
         }
 
         ///<inheritdoc cref="IRepository{DonationRequest}"/>
-        public override PagedResult<DonationRequest> GetPaged(int page, int pageSize, Expression<Func<DonationRequest, bool>> filter = null)
+        public override ApplicationCore.Models.Pagination.PagedResult<DonationRequest> 
+            GetPaged(int page, int pageSize, Expression<Func<DonationRequest, bool>> filter = null, string sort = "")
         {
             var requests = GetHydratedDonationRequests();
 
@@ -37,17 +38,28 @@ namespace DonateTo.Infrastructure.Data.Repositories
                 requests = requests.Where(filter);
             }
 
+            if (!string.IsNullOrEmpty(sort))
+            {
+                requests = requests.OrderBy(sort);
+            }
+
             return requests.GetPaged(page, pageSize);
         }
 
         ///<inheritdoc cref="IRepository{DonationRequest}"/>
-        public override async Task<PagedResult<DonationRequest>> GetPagedAsync(int page, int pageSize, Expression<Func<DonationRequest, bool>> filter = null)
+        public override async Task<ApplicationCore.Models.Pagination.PagedResult<DonationRequest>> 
+            GetPagedAsync(int page, int pageSize, Expression<Func<DonationRequest, bool>> filter = null, string sort = "")
         {
             var requests = GetHydratedDonationRequests();
 
             if (filter != null) 
             {
                 requests =  requests.Where(filter);
+            }
+
+            if (!string.IsNullOrEmpty(sort))
+            {
+                requests = requests.OrderBy(sort);
             }
 
             return await requests.GetPagedAsync(page, pageSize).ConfigureAwait(false);

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using DonateTo.ApplicationCore.Models.Pagination;
 
 using DonateTo.WebApi.Common;
+using DonateTo.ApplicationCore.Models.Filtering;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -19,7 +20,7 @@ namespace DonateTo.WebApi.V1.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [Authorize]
-    public class DonationController : BaseApiController<Donation>
+    public class DonationController : BaseApiController<Donation, BaseFilterModel>
     {
         private readonly IDonationService _donationService;
         private readonly IUserService _userService;

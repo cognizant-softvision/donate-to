@@ -1,4 +1,4 @@
-﻿using DonateTo.Infrastructure.Common;
+﻿using DonateTo.ApplicationCore.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 

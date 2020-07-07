@@ -8,6 +8,7 @@ using DonateTo.ApplicationCore.Models.Pagination;
 using System;
 using System.Linq;
 using DonateTo.WebApi.Common;
+using DonateTo.ApplicationCore.Models.Filtering;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -15,16 +16,19 @@ namespace DonateTo.WebApi.V1.Controllers
     /// Base api controller
     /// </summary>
     /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TFilter"></typeparam>
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [Authorize]
-    public abstract class BaseApiController<T> : ControllerBase where T : class
+    public abstract class BaseApiController<T, TFilter> : ControllerBase 
+        where T : class
+        where TFilter : BaseFilterModel
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1051:Do not declare visible instance fields", Justification = "<Pending>")]
-        protected readonly IBaseService<T> _baseService;
+        protected readonly IBaseService<T, TFilter> _baseService;
 
-        protected BaseApiController(IBaseService<T> baseService)
+        protected BaseApiController(IBaseService<T, TFilter> baseService)
         {
             _baseService = baseService;
         }
@@ -202,6 +206,37 @@ namespace DonateTo.WebApi.V1.Controllers
             else
             {
                 var result = await _baseService.GetPagedAsync(pageNumber, pageSize).ConfigureAwait(false);
+
+                if (result != null)
+                {
+                    return Ok(result);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get a paged list orf organizations filterd by given data
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
+        [HttpGet("pagedFiltered", Name = "[controller]_[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<PagedResult<T>>> GetPagedFiltered([FromQuery] TFilter filter)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                var result = await _baseService.GetPagedFilteredAsync(filter).ConfigureAwait(false);
 
                 if (result != null)
                 {

@@ -1,8 +1,7 @@
-﻿using DonateTo.ApplicationCore.Entities;
-using DonateTo.ApplicationCore.Interfaces.Services;
+﻿using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models;
 using DonateTo.ApplicationCore.Models.Pagination;
-using DonateTo.Infrastructure.Common;
+using DonateTo.ApplicationCore.Common;
 using DonateTo.WebApi.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
