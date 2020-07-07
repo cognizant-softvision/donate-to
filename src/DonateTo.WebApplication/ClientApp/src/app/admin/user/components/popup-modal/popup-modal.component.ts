@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { UserSandbox } from '../../user.sandbox';
 import { UserModel } from '../../../../shared/models';
+import { NzModalService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-popup-modal',
@@ -12,8 +13,10 @@ export class PopupModalComponent implements OnInit {
   user: UserModel;
   isVisible = false;
   selectedOrganizations: number[];
+  previousLinkedOrganizations: number;
+  linkedOrganizations: number;
 
-  constructor(public userSandbox: UserSandbox) {}
+  constructor(public userSandbox: UserSandbox, private modal: NzModalService) {}
 
   ngOnInit(): void {
     this.userSandbox.loadOrganizations();
@@ -24,6 +27,7 @@ export class PopupModalComponent implements OnInit {
 
     if (this.user.organizations) {
       this.selectedOrganizations = this.user.organizations.map((o) => o.id);
+      this.linkedOrganizations = this.selectedOrganizations.length;
     } else {
       this.selectedOrganizations = [];
     }
@@ -40,5 +44,33 @@ export class PopupModalComponent implements OnInit {
   handleCancel(): void {
     this.selectedOrganizations = [];
     this.isVisible = false;
+  }
+
+  confirmRemove(): void {
+    const selectedOrganization = this.selectedOrganizations[this.selectedOrganizations.length - 1];
+
+    if (this.linkedOrganizations !== this.selectedOrganizations.length) {
+      this.previousLinkedOrganizations = this.linkedOrganizations;
+      this.linkedOrganizations = this.selectedOrganizations.length;
+    }
+
+    if (this.linkedOrganizations < this.previousLinkedOrganizations) {
+      this.showDeleteConfirm();
+    }
+  }
+
+  showDeleteConfirm(): void {
+    this.modal.confirm({
+      nzTitle: 'Are you sure delete this Organization?',
+      nzOkText: 'Yes',
+      nzOkType: 'danger',
+      nzCancelText: 'No',
+      nzOnCancel: () => {
+        this.handleCancel();
+      },
+      nzOnOk: () => {
+        this.handleOk();
+      },
+    });
   }
 }
