@@ -23,8 +23,8 @@ export class HomeSandbox extends Sandbox {
   /**
    * User logs in the application
    */
-  public login(): void {
-    this.authSandbox.login();
+  public login(additionalState?: string, params?: {}): void {
+    this.authSandbox.login(additionalState, params);
   }
 
   /**
