@@ -63,37 +63,20 @@ namespace DonateTo.ApplicationCore.Interfaces
         /// </summary>
         /// <param name="page">Number of the page to be obtained.</param>
         /// <param name="pageSize">Max number of rows in a specific page.</param>
+        /// <param name="filter">Linq expression filter.</param>
+        /// <param name="sort">Sort string.</param>
         /// <returns>PagedResult of TEntity.</returns>
-        PagedResult<TEntity> GetPaged(int page, int pageSize, Expression<Func<TEntity, bool>> filter = null);
-
-        /// <summary>
-        /// Gets a paged list of entities filtered and sorted.
-        /// </summary>
-        /// <param name="pageNumber"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="filters"></param>
-        /// <param name="sort"></param>
-        /// <returns></returns>
-        PagedResult<TEntity> GetPaged(int pageNumber, int pageSize, IEnumerable<FilterModel> filters, SortModel sort);
+        PagedResult<TEntity> GetPaged(int page, int pageSize, Expression<Func<TEntity, bool>> filter = null, string sort = "");
 
         /// <summary>
         /// Gets a list of paged entities by page and page size async.
         /// </summary>
         /// <param name="pageSize">Max number of rows in a specific page.</param>
         /// <param name="page">Number of the page to be obtained.</param>
-        /// <param name="pageSize">Max number of rows in a specific page.</param>
+        /// <param name="filter">Linq expression filter.</param>
+        /// <param name="sort">Sort string.</param>
         /// <returns>Task of PagedResult of TEntity.</returns>
-        Task<PagedResult<TEntity>> GetPagedAsync(int page, int pageSize, Expression<Func<TEntity, bool>> filter = null);
-
-        /// <summary>
-        /// Gets a paged list of entities filtered and sorted async.
-        /// </summary>
-        /// <param name="pageNumber"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="filters"></param>
-        /// <param name="sort"></param>
-        /// <returns></returns>
-        Task<PagedResult<TEntity>> GetPagedAsync(int pageNumber, int pageSize, IEnumerable<FilterModel> filters, SortModel sort);
+        Task<PagedResult<TEntity>> GetPagedAsync(int page, int pageSize, Expression<Func<TEntity, bool>> filter = null, string sort = "");
 
         /// <summary>
         /// Add an entity.

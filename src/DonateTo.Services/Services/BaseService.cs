@@ -6,10 +6,17 @@ using DonateTo.ApplicationCore.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using DonateTo.ApplicationCore.Models.Filtering;
+using LinqKit;
+using Microsoft.EntityFrameworkCore.Internal;
+using System.Linq;
+using DonateTo.ApplicationCore.Common;
 
 namespace DonateTo.Services
 {
-    public abstract class BaseService<TEntity>: IBaseService<TEntity> where TEntity: EntityBase
+    public abstract class BaseService<TEntity, TFilter>: IBaseService<TEntity, TFilter> 
+        where TEntity: EntityBase
+        where TFilter: BaseFilterModel
     {
         private readonly IRepository<TEntity> _entityRequestRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -181,6 +188,44 @@ namespace DonateTo.Services
         public virtual async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter)
         {
             return await _entityRequestRepository.FirstOrDefaultAsync(filter).ConfigureAwait(false);
+        }
+
+        ///<inheritdoc cref="IBaseService{TEntity}"/>
+        public virtual async Task<PagedResult<TEntity>> GetPagedFilteredAsync(TFilter filter)
+        {
+            var predicate = PredicateBuilder.New<TEntity>();
+
+            if (filter.UpdateDateBegin != null)
+            {
+                predicate = predicate.Or(p => p.UpdateDate >= filter.UpdateDateBegin);
+            }
+
+            if (filter.UpdateDateEnd != null)
+            {
+                predicate = predicate.Or(p => p.UpdateDate <= filter.UpdateDateEnd);
+            }
+
+            return await _entityRequestRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicate, GetSort(filter)).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns sort string from filter model
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        protected string GetSort(TFilter filter) 
+        {
+            var properties = typeof(TEntity).GetProperties();
+
+            var sort = !string.IsNullOrEmpty(filter.OrderBy) && properties.Any(p => p.Name == filter.OrderBy) ?
+                filter.OrderBy + " " :
+                "Id ";
+
+            sort += !string.IsNullOrEmpty(filter.OrderDirection) && filter.OrderDirection == SortDirection.Descending ?
+                SortDirection.Descending :
+                SortDirection.Ascending;
+
+            return sort;
         }
     }
 }

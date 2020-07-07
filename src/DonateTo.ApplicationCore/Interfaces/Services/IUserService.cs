@@ -1,5 +1,6 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Models;
+using DonateTo.ApplicationCore.Models.Filtering;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DonateTo.ApplicationCore.Interfaces.Services
 {
-    public interface IUserService : IGetService<UserModel>
+    public interface IUserService : IGetService<UserModel, BaseFilterModel>
     {
         /// <summary>
         /// Get a list of User from an spesific Organization Id.

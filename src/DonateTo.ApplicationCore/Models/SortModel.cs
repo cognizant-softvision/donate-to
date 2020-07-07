@@ -12,7 +12,7 @@ namespace DonateTo.ApplicationCore.Models
     public SortModel() 
         {
             Key = "Id";
-            Order = SortOrder.Ascending;
+            Order = SortDirection.Ascending;
         }
     }
 }

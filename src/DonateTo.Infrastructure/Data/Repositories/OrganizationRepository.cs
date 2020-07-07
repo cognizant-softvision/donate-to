@@ -1,10 +1,8 @@
 ﻿using DonateTo.ApplicationCore.Entities;
-using DonateTo.ApplicationCore.Models;
 using DonateTo.Infrastructure.Data.EntityFramework;
 using DonateTo.Infrastructure.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -19,55 +17,41 @@ namespace DonateTo.Infrastructure.Data.Repositories
         }
 
         ///<inheritdoc cref="IRepository{Organization}"/>
-        public override ApplicationCore.Models.Pagination.PagedResult<Organization> GetPaged(int pageNumber, int pageSize, IEnumerable<FilterModel> filters, SortModel sort)
+        public override ApplicationCore.Models.Pagination.PagedResult<Organization> 
+            GetPaged(int page, int pageSize, Expression<Func<Organization, bool>> filter = null, string sort = "")
         {
             var organizations = GetHydratedOrganization();
 
-            if (filters != null)
+            if (filter != null)
             {
-                Expression<Func<Organization, bool>> predicate;
-                var parserConfig = new ParsingConfig();
-                var conditions = string.Empty;
-
-                foreach (var f in filters)
-                {
-                    conditions += string.IsNullOrEmpty(conditions) ? " And" : "";
-                    conditions += $"{f.Property}.{f.Condition}(\"{f.SearchValue}\")";
-                }
-
-                predicate = DynamicExpressionParser.ParseLambda<Organization, bool>(parserConfig, true, conditions);
-
-                organizations = organizations.Where(predicate);
+                organizations = organizations.Where(filter);
             }
 
-            return organizations.OrderBy(sort.SortString).GetPaged(pageNumber, pageSize);
+            if (!string.IsNullOrEmpty(sort))
+            {
+                organizations = organizations.OrderBy(sort);
+            }
+
+            return organizations.GetPaged(page, pageSize);
         }
 
         ///<inheritdoc cref="IRepository{Organization}"/>
-        public override async Task<ApplicationCore.Models.Pagination.PagedResult<Organization>> GetPagedAsync(int pageNumber, int pageSize, IEnumerable<FilterModel> filters, SortModel sort)
+        public override async Task<ApplicationCore.Models.Pagination.PagedResult<Organization>> 
+            GetPagedAsync(int page, int pageSize, Expression<Func<Organization, bool>> filter = null, string sort = "")
         {
             var organizations = GetHydratedOrganization();
 
-            if (filters != null)
+            if (filter != null)
             {
-                Expression<Func<Organization, bool>> predicate;
-                var parserConfig = new ParsingConfig();
-                var conditions = string.Empty;
-
-                foreach (var f in filters)
-                {
-                    conditions += string.IsNullOrEmpty(conditions) ? " And" : "";
-                    conditions += $"{f.Property}.{f.Condition}(\"{f.SearchValue}\")";
-                }
-
-                predicate = DynamicExpressionParser.ParseLambda<Organization, bool>(parserConfig, true, conditions);
-
-                organizations = organizations.Where(predicate);
+                organizations = organizations.Where(filter);
             }
 
-            organizations = organizations.OrderBy(sort.SortString);
+            if (!string.IsNullOrEmpty(sort))
+            {
+                organizations = organizations.OrderBy(sort);
+            }
 
-            return await organizations.AsQueryable().GetPagedAsync(pageNumber, pageSize).ConfigureAwait(false);
+            return await organizations.GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
 
         #region private
