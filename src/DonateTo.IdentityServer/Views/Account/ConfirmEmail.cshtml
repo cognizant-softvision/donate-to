@@ -1,4 +1,5 @@
-﻿@{
+﻿@model RedirectHomeViewModel
+@{
     ViewData["Title"] = "Confirm Email";
 }
 
@@ -6,6 +7,6 @@
     <div class="message-box">
         <h6>Thank you for confirming your email.</h6>
         <br>
-        <a href="@Url.Action("Index","Home")">Go to home page </a>
+        <a href="@(Model.RedirectUris)">Go to home page </a>
     </div>
 </div>
