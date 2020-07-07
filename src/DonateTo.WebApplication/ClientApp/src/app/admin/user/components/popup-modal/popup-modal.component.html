@@ -1,5 +1,6 @@
-<nz-modal [(nzVisible)]="isVisible" [nzFooter]="footer">
+<nz-modal [(nzVisible)]="isVisible" [nzFooter]="footer" (nzOnCancel)="handleCancel()">
   <h2>{{ 'Admin.User.SelectOrganization' | translate }}</h2>
+
   <nz-select
     class="dropdown-selector"
     [nzMaxTagCount]="3"
@@ -7,13 +8,12 @@
     nzMode="multiple"
     nzPlaceHolder="Please select"
     [(ngModel)]="this.selectedOrganizations"
+    (ngModelChange)="confirmRemove()"
   >
-    <nz-option
-      *ngFor="let item of this.userSandbox.organizations$ | async"
-      [nzLabel]="item.name"
-      [nzValue]="item.id"
-    ></nz-option>
+    <nz-option *ngFor="let item of this.userSandbox.organizations$ | async" [nzLabel]="item.name" [nzValue]="item.id">
+    </nz-option>
   </nz-select>
+
   <ng-template #tagPlaceHolder let-selectedList> and {{ selectedList.length }} more selected </ng-template>
 
   <ng-template #footer>
@@ -21,5 +21,3 @@
     <button nz-button nzType="primary" (click)="handleOk()">{{ 'SaveBtn' | translate }}</button>
   </ng-template>
 </nz-modal>
-
-<!--(nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()" -->
