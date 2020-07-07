@@ -24,6 +24,7 @@ namespace DonateTo.ApplicationCore.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:IdentitySequenceOptions", "'20', '1', '', '', 'False', '1'")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("AdditionalInformation")
@@ -191,6 +192,7 @@ namespace DonateTo.ApplicationCore.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:IdentitySequenceOptions", "'20', '1', '', '', 'False', '1'")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("CreatedBy")
@@ -283,6 +285,9 @@ namespace DonateTo.ApplicationCore.Migrations
                     b.Property<string>("Observation")
                         .HasColumnType("text");
 
+                    b.Property<long>("OwnerId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("PickUpDate")
                         .HasColumnType("timestamp without time zone");
 
@@ -295,18 +300,15 @@ namespace DonateTo.ApplicationCore.Migrations
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
 
                     b.HasIndex("DonationRequestId");
 
-                    b.HasIndex("StatusId");
+                    b.HasIndex("OwnerId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("StatusId");
 
                     b.ToTable("Donation");
                 });
@@ -386,6 +388,9 @@ namespace DonateTo.ApplicationCore.Migrations
                     b.Property<long>("OrganizationId")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("OwnerId")
+                        .HasColumnType("bigint");
+
                     b.Property<int>("Priority")
                         .HasColumnType("integer");
 
@@ -401,18 +406,15 @@ namespace DonateTo.ApplicationCore.Migrations
                     b.Property<DateTime>("UpdateDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
 
                     b.HasIndex("OrganizationId");
 
-                    b.HasIndex("StatusId");
+                    b.HasIndex("OwnerId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("StatusId");
 
                     b.ToTable("DonationRequest");
                 });
@@ -946,15 +948,15 @@ namespace DonateTo.ApplicationCore.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DonateTo.ApplicationCore.Entities.Status", "Status")
+                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "Owner")
                         .WithMany()
-                        .HasForeignKey("StatusId")
+                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "User")
+                    b.HasOne("DonateTo.ApplicationCore.Entities.Status", "Status")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1000,15 +1002,15 @@ namespace DonateTo.ApplicationCore.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DonateTo.ApplicationCore.Entities.Status", "Status")
+                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "Owner")
                         .WithMany()
-                        .HasForeignKey("StatusId")
+                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DonateTo.ApplicationCore.Entities.User", "User")
+                    b.HasOne("DonateTo.ApplicationCore.Entities.Status", "Status")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

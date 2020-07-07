@@ -78,8 +78,8 @@ export class DonationsSandbox extends Sandbox implements OnDestroy {
   /**
    * Loads organizations from the server
    */
-  public loadOrganizations(): void {
-    this.appState$.dispatch(store.fromOrganization.loadOrganizations());
+  public loadOrganizationsByUser(userId: number): void {
+    this.appState$.dispatch(store.fromOrganization.loadOrganizationsByUser({ userId }));
   }
 
   /**

@@ -1,11 +1,5 @@
 <form [formGroup]="donationRequestFormGroup" nz-form>
   <nz-form-item>
-    <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.TitleRequiredError' | translate }}">
-      <input type="hidden" [(ngModel)]="userId" formControlName="userIdFormControl" name="userId" id="userId" />
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item>
     <nz-form-label nzRequired nzFor="title">{{ 'Admin.Donation.Form.Title' | translate }}</nz-form-label>
     <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.TitleRequiredError' | translate }}">
       <input
@@ -53,6 +47,7 @@
         [(ngModel)]="organizationId"
         (ngModelChange)="setOrganization()"
         formControlName="organizationFormControl"
+        [nzDisabled]="isEdit"
       >
         <nz-option
           *ngFor="let organization of this.donationSandbox.organizations$ | async"

@@ -28,7 +28,6 @@ namespace DonateTo.WebApi.Filters
         {
             var user = (context.Controller as ControllerBase).User;
 
-            //TODO: Remove userId claim check, it shoud be a part of DonationRequest
             if (!(user.HasClaim(c => c.Type == Claims.UserId) && user.HasClaim(c => c.Type == Claims.Role)))
             {
                 context.Result = new UnauthorizedObjectResult("Malformed Token error.");

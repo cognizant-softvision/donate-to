@@ -30,7 +30,7 @@ namespace DonateTo.WebApi.V1.Controllers
         /// </summary>
         /// <param name="userId">Id</param>
         /// <returns>List of organizations</returns>
-        [HttpGet("{userId}", Name = "GetByUserId")]
+        [HttpGet("getByUser", Name = "[controller]_[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

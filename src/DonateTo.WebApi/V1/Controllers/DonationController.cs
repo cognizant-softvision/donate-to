@@ -54,11 +54,11 @@ namespace DonateTo.WebApi.V1.Controllers
                 var username = User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserName)?.Value;
                 var userId = Convert.ToInt64(User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserId)?.Value, CultureInfo.InvariantCulture);
 
-                receivedDonation.UserId = userId;
+                receivedDonation.OwnerId = userId;
 
                 var createdDonation = await _baseService.CreateAsync(receivedDonation, username).ConfigureAwait(false);
 
-                var user = await _userService.GetAsync(createdDonation.UserId).ConfigureAwait(false);
+                var user = await _userService.GetAsync(userId).ConfigureAwait(false);
                 await _donationService.SendNewDonationMailAsync(createdDonation, user, client).ConfigureAwait(false);
 
                 return Ok(createdDonation);
@@ -86,11 +86,11 @@ namespace DonateTo.WebApi.V1.Controllers
             }
             else
             {
-                var defaultedUserId = userId ?? long.Parse(User.Claims.First(claim => claim.Type == Claims.UserId).Value);
+                var defaultedUserId = userId ?? long.Parse(User.Claims.First(claim => claim.Type == Claims.UserId).Value, CultureInfo.InvariantCulture);
                 var result = await _donationService.GetPagedAsync(
                                                         pageNumber, 
                                                         pageSize, 
-                                                        (d => (d.UserId == defaultedUserId) && (!statusId.HasValue || d.StatusId == statusId)))
+                                                        (d => (d.OwnerId == defaultedUserId) && (!statusId.HasValue || d.StatusId == statusId)))
                                                     .ConfigureAwait(false);
 
                 if (result != null)

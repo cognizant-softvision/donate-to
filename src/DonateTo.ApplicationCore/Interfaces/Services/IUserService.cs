@@ -29,15 +29,15 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// </summary>
         /// <param name="organizationId">Organization Id</param>
         /// <param name="userId">User Id.</param>
-        /// <param name="organizationsId">Organizations id list.</param>
-        void UpdateUserOrganizations(long userId, IEnumerable<long> organizationsId, string username = null);
+        /// <param name="organizationsIds">Organizations id list.</param>
+        void UpdateUserOrganizations(long userId, IEnumerable<long> organizationsIds, string username = null);
 
         /// <summary>
         /// Update an user linked organizations async.
         /// </summary>
         /// <param name="userId">User Id.</param>
-        /// <param name="organizationsId">Organizations id list.</param>
-        Task UpdateUserOrganizationsAsync(long userId, IEnumerable<long> organizationsId, string username = null);
+        /// <param name="organizationsIds">Organizations id list.</param>
+        Task UpdateUserOrganizationsAsync(long userId, IEnumerable<long> organizationsIds, string username = null);
 
         /// <summary>
         /// First or default User matching filter

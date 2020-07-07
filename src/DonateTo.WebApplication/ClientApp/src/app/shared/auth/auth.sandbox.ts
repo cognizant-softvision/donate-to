@@ -4,15 +4,38 @@ import { OAuthEvent, OAuthService } from 'angular-oauth2-oidc';
 import { Sandbox } from '../sandbox/base.sandbox';
 import { Store } from '@ngrx/store';
 import * as store from '../store';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { Roles } from '../enum/roles';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthSandbox extends Sandbox {
+  private subscriptions: Subscription[] = [];
+  public isAdmin = new BehaviorSubject(false);
+
   constructor(
     protected appState$: Store<store.State>,
     private authService: OAuthService,
-    private authConfigService: AuthConfigService
+    private authConfigService: AuthConfigService,
+    private router: Router
   ) {
     super(appState$);
+    this.registerEvents();
+  }
+
+  /**
+   * Subscribes to events
+   */
+  private registerEvents(): void {
+    this.subscriptions.push(
+      this.userRoles$.subscribe((userRoles: string[]) =>
+        this.isAdmin.next(
+          userRoles.includes(Roles.Admin) ||
+            userRoles.includes(Roles.Superadmin) ||
+            userRoles.includes(Roles.Organization)
+        )
+      )
+    );
   }
 
   /**
@@ -31,8 +54,8 @@ export class AuthSandbox extends Sandbox {
   /**
    * Dispatches a login action to redirect to the login page
    */
-  public login(): void {
-    this.authService.initCodeFlow();
+  public login(additionalState?: string, params?: {}): void {
+    this.authService.initCodeFlow(additionalState, params);
   }
 
   public register(): void {
@@ -68,10 +91,21 @@ export class AuthSandbox extends Sandbox {
     switch (event.type) {
       case 'token_received':
         this.appState$.dispatch(store.fromAuth.loadUserProfile());
+        this.manageRedirection();
         break;
       case 'token_refreshed':
         this.appState$.dispatch(store.fromAuth.loadUserProfile());
         break;
+    }
+  }
+
+  private manageRedirection(): void {
+    if (this.authService.state) {
+      const pathSlash = '/';
+      const decodedURIComponent = decodeURIComponent(this.authService.state);
+      if (this.router.url !== pathSlash.concat(decodedURIComponent)) {
+        this.router.navigate([decodedURIComponent]);
+      }
     }
   }
 }

@@ -123,24 +123,12 @@ namespace DonateTo.Services
         }
 
         ///<inheritdoc cref="IUserService"/>
-        public void UpdateUserOrganizations(long userId, IEnumerable<long> organizationsId, string username)
+        public void UpdateUserOrganizations(long userId, IEnumerable<long> organizationsIds, string username)
         {
             var user = _userRepository.Get(userId);
             user.UpdateBy = username;
 
-            user.UserOrganizations = FilterUserOrganizations(user.UserOrganizations, userId, organizationsId);
-
-            _userRepository.Update(user);
-            _unitOfWork.Save();
-        }
-
-        ///<inheritdoc cref="IUserService"/>
-        public async Task UpdateUserOrganizationsAsync(long userId, IEnumerable<long> organizationsId, string username)
-        {
-            var user = await _userRepository.GetAsync(userId).ConfigureAwait(false);
-            user.UpdateBy = username;
-
-            user.UserOrganizations = FilterUserOrganizations(user.UserOrganizations, userId, organizationsId);
+            user.UserOrganizations = FilterUserOrganizations(user.UserOrganizations, userId, organizationsIds);
 
             if (!user.UserRoles.Any(r => r.Role.Name == Roles.Organization))
             {
@@ -148,6 +136,62 @@ namespace DonateTo.Services
                 {
                     RoleId = _roleRepository.FirstOrDefault(r => r.Name == Roles.Organization).Id
                 });
+            }
+            else 
+            {
+                // When there's no organization assigned removes that given role 
+                // and assigns the donor role in case it was not present at the moment
+                if (!user.UserOrganizations.Any()) 
+                {
+                    var ur = user.UserRoles.FirstOrDefault(usr => usr.Role.Name == Roles.Organization);
+                    user.UserRoles.Remove(ur);
+
+                    if (!user.UserRoles.Any(r => r.Role.Name == Roles.Donor))
+                    {
+                        user.UserRoles.Add(new UserRole()
+                        {
+                            RoleId = _roleRepository.FirstOrDefault(r => r.Name == Roles.Donor).Id
+                        });
+                    }
+                }
+            }
+
+            _userRepository.Update(user);
+            _unitOfWork.Save();
+        }
+
+        ///<inheritdoc cref="IUserService"/>
+        public async Task UpdateUserOrganizationsAsync(long userId, IEnumerable<long> organizationsIds, string username)
+        {
+            var user = await _userRepository.GetAsync(userId).ConfigureAwait(false);
+            user.UpdateBy = username;
+
+            user.UserOrganizations = FilterUserOrganizations(user.UserOrganizations, userId, organizationsIds);
+
+            if (!user.UserRoles.Any(r => r.Role.Name == Roles.Organization))
+            {
+                user.UserRoles.Add(new UserRole()
+                {
+                    RoleId = _roleRepository.FirstOrDefault(r => r.Name == Roles.Organization).Id
+                });
+            }
+            else
+            {
+                // When there's no organization assigned removes that given role 
+                // and assigns the donor role in case it was not present at the moment
+                if (!user.UserOrganizations.Any())
+                {
+                    var ur = user.UserRoles.FirstOrDefault(usr => usr.Role.Name == Roles.Organization);
+                    user.UserRoles.Remove(ur);
+
+                    if (!user.UserRoles.Any(r => r.Role.Name == Roles.Donor))
+                    {
+                        user.UserRoles.Add(new UserRole()
+                        {
+                            RoleId = _roleRepository.FirstOrDefault(r => r.Name == Roles.Donor).Id
+                        });
+                    }
+                }
             }
 
             await _userRepository.UpdateAsync(user).ConfigureAwait(false);
