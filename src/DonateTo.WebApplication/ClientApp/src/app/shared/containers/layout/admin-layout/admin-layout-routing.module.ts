@@ -1,7 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { AdminLayoutComponent } from './admin-layout.component';
-import { UserComponent } from 'src/app/admin/user/user.component';
 import { OrganizationComponent } from 'src/app/admin/organization/organization.component';
 
 const routes: Routes = [
