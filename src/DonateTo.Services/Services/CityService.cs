@@ -1,12 +1,13 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Interfaces.Services;
+using DonateTo.ApplicationCore.Models.Filtering;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DonateTo.Services
 {
-    public class CityService : BaseService<City>, ICityService 
+    public class CityService : BaseService<City, BaseFilterModel>, ICityService 
     {
         private readonly IRepository<City> _cityRepository;
 

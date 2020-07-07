@@ -5,13 +5,15 @@ using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models;
 using DonateTo.ApplicationCore.Models.Pagination;
-using DonateTo.Infrastructure.Common;
+using DonateTo.ApplicationCore.Common;
 using DonateTo.Services.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using DonateTo.ApplicationCore.Models.Filtering;
+using LinqKit;
 
 namespace DonateTo.Services
 {
@@ -242,6 +244,33 @@ namespace DonateTo.Services
             return _mapper.Map<User, UserModel>(entity);
         }
 
+        ///<inheritdoc cref="IUserService"/>
+        public async Task<PagedResult<UserModel>> GetPagedFilteredAsync(BaseFilterModel filter)
+        {
+            var predicate = PredicateBuilder.New<User>();
+
+            if (filter.UpdateDateBegin != null)
+            {
+                predicate = predicate.Or(p => p.UpdateDate >= filter.UpdateDateBegin);
+            }
+
+            if (filter.UpdateDateEnd != null)
+            {
+                predicate = predicate.Or(p => p.UpdateDate <= filter.UpdateDateEnd);
+            }
+
+            var properties = typeof(User).GetProperties();
+
+            var sort = !string.IsNullOrEmpty(filter.OrderBy) && properties.Any(p => p.Name == filter.OrderBy) ?
+                filter.OrderBy + " " :
+                "Id ";
+
+            sort += !string.IsNullOrEmpty(filter.OrderDirection) && filter.OrderDirection == SortDirection.Descending ?
+                SortDirection.Descending :
+                SortDirection.Ascending;
+
+            return (await _userRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicate, sort).ConfigureAwait(false)).Map<User, UserModel>(_mapper);
+        }
 
         #region private
         private ICollection<UserOrganization> FilterUserOrganizations(ICollection<UserOrganization> userOrganizations, long userId, IEnumerable<long> organizationsId)

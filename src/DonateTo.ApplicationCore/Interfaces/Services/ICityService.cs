@@ -1,10 +1,11 @@
 ﻿using DonateTo.ApplicationCore.Entities;
+using DonateTo.ApplicationCore.Models.Filtering;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DonateTo.ApplicationCore.Interfaces.Services
 {
-    public interface ICityService : IBaseService<City>
+    public interface ICityService : IBaseService<City, BaseFilterModel>
     {
         /// <summary>
         /// Gets a list of cities in a state async.

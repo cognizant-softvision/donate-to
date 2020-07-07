@@ -1,12 +1,13 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Interfaces.Services;
+using DonateTo.ApplicationCore.Models.Filtering;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DonateTo.Services
 {
-    public class StateService : BaseService<State>, IStateService
+    public class StateService : BaseService<State, BaseFilterModel>, IStateService
     {
         private readonly IRepository<State> _stateRepository;
 

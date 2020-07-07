@@ -1,6 +1,5 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.Infrastructure.Data.EntityFramework;
-using DonateTo.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -22,7 +21,7 @@ namespace DonateTo.Infrastructure.Data.Repositories
 
         public async override Task<User> GetAsync(long id)
         {
-            return await GetHydratedUser().FirstOrDefaultAsync(u => u.Id.Equals(id)).ConfigureAwait(false); ;
+            return await GetHydratedUser().FirstOrDefaultAsync(u => u.Id.Equals(id)).ConfigureAwait(false);
         }
 
         public override IQueryable<User> Get(Expression<Func<User, bool>> filter)

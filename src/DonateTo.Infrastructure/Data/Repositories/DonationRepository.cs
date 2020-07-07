@@ -1,12 +1,12 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.Infrastructure.Data.EntityFramework;
 using DonateTo.Infrastructure.Data.Extensions;
-using DonateTo.ApplicationCore.Models.Pagination;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
 using System;
+using System.Linq.Dynamic.Core;
 
 namespace DonateTo.Infrastructure.Data.Repositories
 {
@@ -28,7 +28,8 @@ namespace DonateTo.Infrastructure.Data.Repositories
         }
 
         ///<inheritdoc cref="IRepository{Donation}"/>
-        public override PagedResult<Donation> GetPaged(int page, int pageSize, Expression<Func<Donation, bool>> filter = null)
+        public override ApplicationCore.Models.Pagination.PagedResult<Donation> 
+            GetPaged(int page, int pageSize, Expression<Func<Donation, bool>> filter = null, string sort = "")
         {
             var donations = GetHydratedDonations();
 
@@ -37,17 +38,28 @@ namespace DonateTo.Infrastructure.Data.Repositories
                 donations = donations.Where(filter);
             }
 
+            if (!string.IsNullOrEmpty(sort))
+            {
+                donations = donations.OrderBy(sort);
+            }
+
             return donations.GetPaged(page, pageSize);
         }
 
         ///<inheritdoc cref="IRepository{Donation}"/>
-        public override async Task<PagedResult<Donation>> GetPagedAsync(int page, int pageSize, Expression<Func<Donation, bool>> filter = null)
+        public override async Task<ApplicationCore.Models.Pagination.PagedResult<Donation>> 
+            GetPagedAsync(int page, int pageSize, Expression<Func<Donation, bool>> filter = null, string sort = "")
         {
             var donations = GetHydratedDonations();
 
             if (filter != null)
             {
                 donations = donations.Where(filter);
+            }
+
+            if (!string.IsNullOrEmpty(sort)) 
+            {
+                donations = donations.OrderBy(sort);
             }
 
             return await donations.GetPagedAsync(page, pageSize).ConfigureAwait(false);
