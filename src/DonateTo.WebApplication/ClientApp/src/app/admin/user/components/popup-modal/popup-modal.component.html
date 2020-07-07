@@ -8,7 +8,7 @@
     nzMode="multiple"
     nzPlaceHolder="Please select"
     [(ngModel)]="this.selectedOrganizations"
-    (ngModelChange)="confirmRemove(this.selectedOrganizations)"
+    (ngModelChange)="confirmRemove()"
   >
     <nz-option *ngFor="let item of this.userSandbox.organizations$ | async" [nzLabel]="item.name" [nzValue]="item.id">
     </nz-option>

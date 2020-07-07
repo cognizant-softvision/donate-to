@@ -46,6 +46,14 @@ export class PopupModalComponent implements OnInit {
     this.isVisible = false;
   }
 
+  noChanges() {
+    this.ShowModal(this.user);
+  }
+
+  handleChanges() {
+    this.userSandbox.loadOrganizations();
+  }
+
   confirmRemove(): void {
     const selectedOrganization = this.selectedOrganizations[this.selectedOrganizations.length - 1];
 
@@ -66,10 +74,10 @@ export class PopupModalComponent implements OnInit {
       nzOkType: 'danger',
       nzCancelText: 'No',
       nzOnCancel: () => {
-        this.handleCancel();
+        this.noChanges();
       },
       nzOnOk: () => {
-        this.handleOk();
+        this.handleChanges();
       },
     });
   }
