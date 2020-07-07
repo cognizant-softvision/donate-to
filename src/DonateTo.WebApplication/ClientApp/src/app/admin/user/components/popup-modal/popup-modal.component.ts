@@ -50,10 +50,6 @@ export class PopupModalComponent implements OnInit {
     this.ShowModal(this.user);
   }
 
-  handleChanges() {
-    this.userSandbox.loadOrganizations();
-  }
-
   confirmRemove(): void {
     const selectedOrganization = this.selectedOrganizations[this.selectedOrganizations.length - 1];
 
@@ -75,9 +71,6 @@ export class PopupModalComponent implements OnInit {
       nzCancelText: 'No',
       nzOnCancel: () => {
         this.noChanges();
-      },
-      nzOnOk: () => {
-        this.handleChanges();
       },
     });
   }
