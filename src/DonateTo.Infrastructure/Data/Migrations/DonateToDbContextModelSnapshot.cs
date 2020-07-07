@@ -548,7 +548,7 @@ namespace DonateTo.Infrastructure.Migrations
                     b.Property<int?>("Order")
                         .HasColumnType("integer");
 
-                    b.Property<bool?>("Required")
+                    b.Property<bool>("Required")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Type")

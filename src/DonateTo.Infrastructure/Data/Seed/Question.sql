@@ -1,8 +1,8 @@
 INSERT INTO public."Question" ("Id", "Key", "Label", "Required", "Order", "ControlType", "Type", "Value", "CreatedBy", "CreatedDate", "UpdateBy", "UpdateDate")
 VALUES
-(1, 'brave', 'Bravery Rating', null, 3, 'dropdown', null, null, 'DataSeed', (SELECT now() at time zone 'utc'), 'DataSeed', (SELECT now() at time zone 'utc')),
-(2, 'age', 'Age', null, 1, 'textbox', 'number', null, 'DataSeed', (SELECT now() at time zone 'utc'), 'DataSeed', (SELECT now() at time zone 'utc')),
-(3, 'gender', 'Gender', null, 2, 'radiobutton', null, null, 'DataSeed', (SELECT now() at time zone 'utc'), 'DataSeed', (SELECT now() at time zone 'utc'))
+(1, 'brave', 'Bravery Rating', false, 3, 'dropdown', null, null, 'DataSeed', (SELECT now() at time zone 'utc'), 'DataSeed', (SELECT now() at time zone 'utc')),
+(2, 'age', 'Age', false, 1, 'textbox', 'number', null, 'DataSeed', (SELECT now() at time zone 'utc'), 'DataSeed', (SELECT now() at time zone 'utc')),
+(3, 'gender', 'Gender', false, 2, 'radiobutton', null, null, 'DataSeed', (SELECT now() at time zone 'utc'), 'DataSeed', (SELECT now() at time zone 'utc'))
 ON CONFLICT DO NOTHING;
 
 INSERT INTO public."QuestionOption" ("Id", "Key", "Value", "QuestionId", "CreatedBy", "CreatedDate", "UpdateBy", "UpdateDate")

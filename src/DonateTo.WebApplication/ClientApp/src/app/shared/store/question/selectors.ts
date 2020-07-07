@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 // selectors
 export const getQuestionsState = createFeatureSelector<QuestionState>('question');
 
-export const getAllQuestions = createSelector(getQuestionsState, (state: QuestionState) => state.items);
+export const getAllQuestions = createSelector(getQuestionsState, (state: QuestionState) => state.questions);
 
 export const getQuestionsLoading = createSelector(getQuestionsState, (state: QuestionState) => state.loading);
 

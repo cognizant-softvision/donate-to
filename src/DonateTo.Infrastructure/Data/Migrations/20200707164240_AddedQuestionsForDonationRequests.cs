@@ -5,7 +5,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DonateTo.Infrastructure.Migrations
 {
-    public partial class AddPriorityQuestions : Migration
+    public partial class AddedQuestionsForDonationRequests : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,7 +21,7 @@ namespace DonateTo.Infrastructure.Migrations
                     UpdateDate = table.Column<DateTime>(nullable: false),
                     Key = table.Column<string>(nullable: true),
                     Label = table.Column<string>(nullable: true),
-                    Required = table.Column<bool>(nullable: true),
+                    Required = table.Column<bool>(nullable: false),
                     Order = table.Column<int>(nullable: true),
                     ControlType = table.Column<string>(nullable: true),
                     Type = table.Column<string>(nullable: true),

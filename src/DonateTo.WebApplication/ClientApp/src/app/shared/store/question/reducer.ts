@@ -1,17 +1,17 @@
-import { Question } from '../../models/question.model';
+import { QuestionModel } from '../../models/question.model';
 import * as questionActions from './actions';
 import { Action, createReducer, on } from '@ngrx/store';
 
 export interface QuestionState {
   loading: boolean;
   failed: boolean;
-  items: Question[];
+  questions: QuestionModel[];
 }
 
 const INITIAL_STATE: QuestionState = {
   loading: false,
   failed: false,
-  items: [],
+  questions: [],
 };
 
 const questionReducer = createReducer(
@@ -25,13 +25,12 @@ const questionReducer = createReducer(
     ...state,
     loading: false,
     failed: false,
-    items: questions,
+    questions,
   })),
   on(questionActions.loadQuestionsFailed, (state) => ({
     ...state,
     loading: false,
     failed: true,
-    items: [],
   }))
 );
 

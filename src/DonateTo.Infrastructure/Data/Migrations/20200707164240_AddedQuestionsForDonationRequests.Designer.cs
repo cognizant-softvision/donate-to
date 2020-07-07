@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DonateTo.Infrastructure.Migrations
 {
     [DbContext(typeof(DonateToDbContext))]
-    [Migration("20200626140911_AddPriorityQuestions")]
-    partial class AddPriorityQuestions
+    [Migration("20200707164240_AddedQuestionsForDonationRequests")]
+    partial class AddedQuestionsForDonationRequests
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -550,7 +550,7 @@ namespace DonateTo.Infrastructure.Migrations
                     b.Property<int?>("Order")
                         .HasColumnType("integer");
 
-                    b.Property<bool?>("Required")
+                    b.Property<bool>("Required")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Type")

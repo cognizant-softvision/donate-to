@@ -1,6 +1,6 @@
 import { BaseModel } from './base.model';
 
-export class QuestionOption extends BaseModel {
+export class QuestionOptionModel extends BaseModel {
   key: string;
   value: string;
   questionId: number;

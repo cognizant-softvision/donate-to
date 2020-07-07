@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Question } from 'src/app/shared/models/question.model';
+import { QuestionModel } from 'src/app/shared/models/question.model';
 import { DonationsSandbox } from '../donations-sandbox';
 import { Subscription } from 'rxjs';
 
@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./donations-priority.component.css'],
 })
 export class DonationPriorityComponent implements OnInit, OnDestroy {
-  questions: Question[] = [];
+  questions: QuestionModel[] = [];
   subscriptions: Subscription[] = [];
   form: FormGroup;
   payLoad = '';
@@ -48,7 +48,7 @@ export class DonationPriorityComponent implements OnInit, OnDestroy {
     this.isSubmited.emit(true);
   }
 
-  toFormGroup(questions: Question[]) {
+  toFormGroup(questions: QuestionModel[]) {
     const group: any = {};
 
     questions.forEach((question) => {
@@ -58,7 +58,7 @@ export class DonationPriorityComponent implements OnInit, OnDestroy {
     return this.formBuilder.group(group);
   }
 
-  isValid(question: Question) {
+  isValid(question: QuestionModel) {
     return this.form.controls[question.key].valid;
   }
 }
