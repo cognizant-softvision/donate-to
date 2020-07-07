@@ -1,18 +1,16 @@
-# Starter pipeline
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-#trigger:
-#  - develop
+trigger: develop
 
 pool: DiegoLocalMachine
 #  vmImage: "DiegoLocalMachine"
 
 variables:
-#  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
+  #  solution: '**/*.sln'
+  buildPlatform: "Any CPU"
+  buildConfiguration: "Release"
 
 steps:
   - task: DotNetCoreCLI@2
