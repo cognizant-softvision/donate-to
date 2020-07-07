@@ -28,6 +28,14 @@ const appRoutes: Routes = [
     canLoad: [AuthGuard],
   },
   {
+    path: 'priority-questions',
+    loadChildren: () =>
+      import('./shared/containers/layout/superadmin-layout/superadmin-layout-routing.module').then(
+        (m) => m.SuperAdminLayoutRoutingModule
+      ),
+    // canLoad: [AuthGuard],
+  },
+  {
     path: '**',
     loadChildren: () => import('./basic-pages/basic-pages.module').then((m) => m.BasicPagesModule),
   },
