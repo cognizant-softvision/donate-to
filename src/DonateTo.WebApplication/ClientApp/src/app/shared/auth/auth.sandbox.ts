@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 @Injectable()
 export class AuthSandbox extends Sandbox {
   private subscriptions: Subscription[] = [];
-  public isAdmin = new BehaviorSubject(false);
+  public isAdmin = new BehaviorSubject(true);
 
   constructor(
     protected appState$: Store<store.State>,
@@ -30,7 +30,8 @@ export class AuthSandbox extends Sandbox {
     this.subscriptions.push(
       this.userRoles$.subscribe((userRoles: string[]) =>
         this.isAdmin.next(
-          userRoles.includes(Roles.Admin) ||
+          userRoles.length === 0 ||
+            userRoles.includes(Roles.Admin) ||
             userRoles.includes(Roles.Superadmin) ||
             userRoles.includes(Roles.Organization)
         )
