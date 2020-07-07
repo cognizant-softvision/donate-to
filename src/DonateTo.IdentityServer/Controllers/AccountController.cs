@@ -159,7 +159,7 @@ namespace DonateTo.IdentityServer.Controllers
             if (result.Succeeded)
             {
                 var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", new { token, email = user.Email }, Request.Scheme);
+                var confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", new { token, email = user.Email, redirectUrl = userRegistrationViewModel.ReturnUrl }, Request.Scheme);
 
                 var bodyMessage = new MessageBody()
                 {
@@ -307,14 +307,21 @@ namespace DonateTo.IdentityServer.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ConfirmEmail(string token, string email)
+        public async Task<IActionResult> ConfirmEmail(string token, string email, string redirectUrl)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
                 return View("Error");
 
             var result = await _userManager.ConfirmEmailAsync(user, token);
-            return View(result.Succeeded ? nameof(ConfirmEmail) : "Error");
+
+            if (result.Succeeded)
+            {
+                var rvm = BuildRedirectHomeViewModel(redirectUrl);
+                return View (rvm);
+            }
+            else
+                return View("Error");
         }
 
         [HttpGet]
