@@ -1,8 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using DonateTo.ApplicationCore.Models.Filtering;
+using System.Threading.Tasks;
 
 namespace DonateTo.ApplicationCore.Interfaces.Services
 {
-    public interface IBaseService<T> : IGetService<T> where T : class
+    public interface IBaseService<T, TFilter> : IGetService<T, TFilter> 
+        where T : class
+        where TFilter : BaseFilterModel
     {
         /// <summary>
         /// Create an entity.

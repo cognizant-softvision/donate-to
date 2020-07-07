@@ -4,6 +4,7 @@ using DonateTo.ApplicationCore.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using DonateTo.ApplicationCore.Models.Filtering;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -11,7 +12,7 @@ namespace DonateTo.WebApi.V1.Controllers
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class StateController : BaseApiController<State>
+    public class StateController : BaseApiController<State, BaseFilterModel>
     {
         private readonly IStateService _stateService;
 

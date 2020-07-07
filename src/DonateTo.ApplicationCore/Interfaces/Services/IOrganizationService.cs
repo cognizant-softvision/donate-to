@@ -1,10 +1,11 @@
 ﻿using DonateTo.ApplicationCore.Entities;
+using DonateTo.ApplicationCore.Models.Filtering;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DonateTo.ApplicationCore.Interfaces.Services
 {
-    public interface IOrganizationService : IBaseService<Organization>
+    public interface IOrganizationService : IBaseService<Organization, OrganizationFilterModel>
     {
         /// <summary>
         /// Get a list of Organizations from an spesific User Id.

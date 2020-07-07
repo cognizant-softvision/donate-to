@@ -1,4 +1,5 @@
-﻿using DonateTo.ApplicationCore.Models.Pagination;
+﻿using DonateTo.ApplicationCore.Models.Filtering;
+using DonateTo.ApplicationCore.Models.Pagination;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -6,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace DonateTo.ApplicationCore.Interfaces.Services
 {
-    public interface IGetService<T> where T : class
+    public interface IGetService<T, TFilter> 
+        where T : class 
+        where TFilter : BaseFilterModel
     {
         /// <summary>
         /// Get a list of entity.
@@ -63,5 +66,12 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// <param name="filter">Filter</param>
         /// <returns>User</returns>
         Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> filter = null);
+
+        /// <summary>
+        /// Get async paged result filtered and sorted
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        Task<PagedResult<T>> GetPagedFilteredAsync(TFilter filter);
     }
 }
