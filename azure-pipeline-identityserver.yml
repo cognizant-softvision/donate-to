@@ -3,7 +3,8 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-trigger: develop
+trigger: 
+  develop
 pool: DiegoLocalMachine
 #  vmImage: "DiegoLocalMachine"
 variables:
