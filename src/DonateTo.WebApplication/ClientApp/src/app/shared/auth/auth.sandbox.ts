@@ -4,10 +4,15 @@ import { OAuthEvent, OAuthService } from 'angular-oauth2-oidc';
 import { Sandbox } from '../sandbox/base.sandbox';
 import { Store } from '@ngrx/store';
 import * as store from '../store';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { Roles } from '../enum/roles';
 import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthSandbox extends Sandbox {
+  private subscriptions: Subscription[] = [];
+  public isAdmin = new BehaviorSubject(false);
+
   constructor(
     protected appState$: Store<store.State>,
     private authService: OAuthService,
@@ -15,6 +20,22 @@ export class AuthSandbox extends Sandbox {
     private router: Router
   ) {
     super(appState$);
+    this.registerEvents();
+  }
+
+  /**
+   * Subscribes to events
+   */
+  private registerEvents(): void {
+    this.subscriptions.push(
+      this.userRoles$.subscribe((userRoles: string[]) =>
+        this.isAdmin.next(
+          userRoles.includes(Roles.Admin) ||
+            userRoles.includes(Roles.Superadmin) ||
+            userRoles.includes(Roles.Organization)
+        )
+      )
+    );
   }
 
   /**
