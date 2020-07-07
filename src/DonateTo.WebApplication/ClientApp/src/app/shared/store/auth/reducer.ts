@@ -42,7 +42,6 @@ const authReducer = createReducer(
     access_token: undefined,
     userId: undefined,
     nameUser: undefined,
-    roles: [],
   })),
   on(authActions.tryLoginFailed, (state) => ({
     ...state,
