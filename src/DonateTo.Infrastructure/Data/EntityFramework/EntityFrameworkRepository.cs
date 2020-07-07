@@ -121,7 +121,10 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
                 entities = entities.Where(filter);
             }
 
-            entities = entities.OrderBy(sort);
+            if (!string.IsNullOrEmpty(sort))
+            {
+                entities = entities.OrderBy(sort);
+            }
 
             return entities.GetPaged(page, pageSize);
         }
@@ -137,7 +140,10 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
                 entities = entities.Where(filter);
             }
 
-            entities = entities.OrderBy(sort);
+            if (!string.IsNullOrEmpty(sort))
+            {
+                entities = entities.OrderBy(sort);
+            }
 
             return await entities.GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
