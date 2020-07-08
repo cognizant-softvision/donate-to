@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  baseUrl: 'https://donatedevwebapi.azurewebsites.net',
+  baseUrl: '',
   paths: {
     imagesRoot: '/src/assets/images/',
   },
@@ -19,8 +19,8 @@ export const environment = {
   debugging: false,
 
   authConfig: {
-    issuer: 'https://donatedevidentity.azurewebsites.net',
-    redirectUri: 'https://donatedevwebapp.azurewebsites.net',
+    issuer: '',
+    redirectUri: '',
     clientId: 'DonateTo.WebApplication',
     responseType: 'code',
     scope: 'openid profile offline_access',
