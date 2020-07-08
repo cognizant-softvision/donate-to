@@ -14,6 +14,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
     { title: 'Admin.Menu.Title.Donation', url: './donations', iconType: 'heart' },
     { title: 'Admin.Menu.Title.User', url: './user', iconType: 'team' },
     { title: 'Admin.Menu.Title.Organization', url: './organization', iconType: 'profile' },
+    { title: 'Admin.Menu.Title.Priority-questions', url: './priority-questions', iconType: 'star' },
   ];
 
   subscriptions: Subscription[] = [];
