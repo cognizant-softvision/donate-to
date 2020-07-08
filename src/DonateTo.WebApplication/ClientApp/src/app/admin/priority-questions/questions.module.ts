@@ -1,5 +1,6 @@
-import { QuestionEffects } from './../../shared/store/question/effects';
-import { HttpLoaderFactory } from 'src/app/app.module';
+import { QuestionsFormComponent } from './questions-form/questions-form.component';
+import { QuestionEffects } from '../../shared/store/question/effects';
+import { HttpLoaderFactory } from '../../app.module';
 import { QuestionsEditComponent } from './question-edit/questions-edit.component';
 import { QuestionsCreateComponent } from './question-create/questions-create.component';
 import es from '@angular/common/locales/es';
@@ -34,7 +35,7 @@ import {
   NzTableModule,
   NzTagModule,
 } from 'ng-zorro-antd';
-import { fromQuestion } from 'src/app/shared/store';
+import { fromQuestion } from '../../shared/store';
 
 // FIX this should be moved to an upper level.
 registerLocaleData(es);
@@ -76,7 +77,7 @@ const ICONS: IconDefinition[] = [PlusOutline];
       extend: true,
     }),
   ],
-  declarations: [QuestionsComponent, QuestionsCreateComponent, QuestionsEditComponent],
+  declarations: [QuestionsComponent, QuestionsCreateComponent, QuestionsEditComponent, QuestionsFormComponent],
   providers: [QuestionsSandbox],
 })
-export class DonationsModule {}
+export class QuestionsModule {}

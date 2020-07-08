@@ -14,7 +14,7 @@ const appRoutes: Routes = [
     path: 'admin',
     loadChildren: () =>
       import('./shared/containers/layout/admin-layout/admin-layout.module').then((m) => m.AdminLayoutModule),
-    canLoad: [AuthAdminGuard],
+    // canLoad: [AuthAdminGuard],
   },
   {
     path: 'donation',
@@ -26,14 +26,6 @@ const appRoutes: Routes = [
     path: 'my-profile',
     loadChildren: () => import('./home/my-profile/my-profile-layout.module').then((m) => m.ProfileLayoutModule),
     canLoad: [AuthGuard],
-  },
-  {
-    path: 'priority-questions',
-    loadChildren: () =>
-      import('./shared/containers/layout/superadmin-layout/superadmin-layout-routing.module').then(
-        (m) => m.SuperAdminLayoutRoutingModule
-      ),
-    // canLoad: [AuthGuard],
   },
   {
     path: '**',
