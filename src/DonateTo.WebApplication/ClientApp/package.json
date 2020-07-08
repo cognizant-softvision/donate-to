@@ -4,7 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:staging": "ng serve -c=staging",
+    "start:dev": "ng serve -c=dev",
     "build": "ng build --prod",
+    "build:staging": "ng build -c=staging",
+    "build:dev": "ng build -c=dev",
     "build:ssr": "ng run Donate.WebApplication:server:dev",
     "test": "ng test",
     "lint": "ng lint",

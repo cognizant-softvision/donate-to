@@ -10,6 +10,7 @@ using Microsoft.Extensions.Primitives;
 using Microsoft.AspNetCore.Authorization;
 using DonateTo.WebApi.Common;
 using DonateTo.WebApi.Filters;
+using DonateTo.ApplicationCore.Models.Filtering;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -18,7 +19,7 @@ namespace DonateTo.WebApi.V1.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [Authorize]
-    public class DonationRequestController : BaseApiController<DonationRequest>
+    public class DonationRequestController : BaseApiController<DonationRequest, BaseFilterModel>
     {
         private readonly IDonationRequestService _donationRequestService;
         private readonly IUserService _userService;

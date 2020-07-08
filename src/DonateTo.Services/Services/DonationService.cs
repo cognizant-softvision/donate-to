@@ -2,6 +2,7 @@
 using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models;
+using DonateTo.ApplicationCore.Models.Filtering;
 using DonateTo.Mailer.Entities;
 using DonateTo.Mailer.Interfaces;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DonateTo.Services
 {
-    public class DonationService: BaseService<Donation>, IDonationService
+    public class DonationService: BaseService<Donation, BaseFilterModel>, IDonationService
     {
         private readonly IMailSender _mailSender;
 

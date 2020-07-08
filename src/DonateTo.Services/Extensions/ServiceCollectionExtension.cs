@@ -1,6 +1,7 @@
 using AutoMapper;
 using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces.Services;
+using DonateTo.ApplicationCore.Models.Filtering;
 using DonateTo.Infrastructure.Extensions;
 using DonateTo.Mailer;
 using DonateTo.Mailer.Interfaces;
@@ -25,13 +26,13 @@ namespace DonateTo.Services.Extensions
             service.AddScoped<ICityService, CityService>();
             service.AddTransient<IDonationService, DonationService>();
             service.AddTransient<IDonationRequestService, DonationRequestService>();
-            service.AddTransient<IBaseService<Country>, CountryService>();
+            service.AddTransient<IBaseService<Country, BaseFilterModel>, CountryService>();
             service.AddTransient<ISearchService, SearchService>();
             service.AddTransient<IOrganizationService, OrganizationService>();
-            service.AddTransient<IBaseService<Address>, AddressService>();
-            service.AddTransient<IBaseService<Category>, CategoryService>();
-            service.AddTransient<IBaseService<Unit>, UnitService>();
-            service.AddTransient<IBaseService<Status>, StatusService>();
+            service.AddTransient<IBaseService<Address, BaseFilterModel>, AddressService>();
+            service.AddTransient<IBaseService<Category, BaseFilterModel>, CategoryService>();
+            service.AddTransient<IBaseService<Unit, BaseFilterModel>, UnitService>();
+            service.AddTransient<IBaseService<Status, BaseFilterModel>, StatusService>();
             service.AddTransient<IMailSender, MailSender>();
 
             service.AddAutoMapper(typeof(Startup));

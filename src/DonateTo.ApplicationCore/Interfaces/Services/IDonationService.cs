@@ -1,10 +1,11 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Models;
+using DonateTo.ApplicationCore.Models.Filtering;
 using System.Threading.Tasks;
 
 namespace DonateTo.ApplicationCore.Interfaces.Services
 {
-    public interface IDonationService : IBaseService<Donation>
+    public interface IDonationService : IBaseService<Donation, BaseFilterModel>
     {
         /// <summary>
         /// Send Created donation info mail to user

@@ -61,7 +61,7 @@ namespace DonateTo.UnitTests.Mock.Repositories
         
         public MockBaseRepository<TEntity> MockGetPaged(PagedResult<TEntity> result)
         {
-            Setup(x => x.GetPaged(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Expression<Func<TEntity, bool>>>()))
+            Setup(x => x.GetPaged(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Expression<Func<TEntity, bool>>>(), ""))
                 .Returns(result);
 
             return this;
@@ -69,7 +69,7 @@ namespace DonateTo.UnitTests.Mock.Repositories
 
         public MockBaseRepository<TEntity> MockGetPagedAsync(Task<PagedResult<TEntity>> result)
         {
-            Setup(x => x.GetPagedAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Expression<Func<TEntity, bool>>>()))
+            Setup(x => x.GetPagedAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Expression<Func<TEntity, bool>>>(), ""))
                 .Returns(result);
 
             return this;

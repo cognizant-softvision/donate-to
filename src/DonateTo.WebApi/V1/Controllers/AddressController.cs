@@ -7,15 +7,16 @@ using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using DonateTo.ApplicationCore.Models.Filtering;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class AddressController : BaseApiController<Address>
+    public class AddressController : BaseApiController<Address, BaseFilterModel>
     {
-        public AddressController(IBaseService<Address> addressService) : base(addressService)
+        public AddressController(IBaseService<Address, BaseFilterModel> addressService) : base(addressService)
         {
         }
 
