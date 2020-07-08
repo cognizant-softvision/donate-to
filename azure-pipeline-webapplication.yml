@@ -29,11 +29,6 @@ steps:
 #      command: 'install'
 #      workingDir: 'src/DonateTo.WebApplication/ClientApp'
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'custom'
-    custom: 'ngbuild'
-    arguments: 'buildname'
   - task: DotNetCoreCLI@2
     displayName: Build
     inputs:
