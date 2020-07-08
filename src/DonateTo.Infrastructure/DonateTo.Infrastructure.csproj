@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <OutputType>Library</OutputType>
+    <Configurations>Debug;Release;QA;Dev</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

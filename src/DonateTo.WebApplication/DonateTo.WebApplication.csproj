@@ -13,7 +13,7 @@
     <UserSecretsId>023c3ae3-c8e9-4624-a283-ff2fa1b2db6d</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
-    <Configurations>Debug;Release;QA</Configurations>
+    <Configurations>Debug;Release;QA;Dev</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
@@ -90,9 +90,9 @@
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --prod" />
-	<Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:stage -- --stage" Condition="'$(BuildDefinitionName)' == 'stage' Or $(BuildDefinitionName)' == 'qa'" />
-    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:dev -- --dev" Condition="'$(BuildDefinitionName)' == 'dev'" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --prod" Condition="'$(Configuration)' == 'Release'" />
+	<Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:stage -- --stage" Condition="'$(Configuration)' == 'QA'"/>
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:dev -- --dev" Condition="'$(Configuration)' == 'Dev'" />
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr -- --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
 
     <!-- Include the newly-built files in the publish output -->
