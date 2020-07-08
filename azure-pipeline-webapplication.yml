@@ -15,6 +15,7 @@ variables:
 #  solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  BuildDefinitionNAme: 'dev'
 
 steps:
   - task: DotNetCoreCLI@2
