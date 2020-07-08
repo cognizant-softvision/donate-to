@@ -14,9 +14,8 @@ pool:
 variables:
 #  solution: '**/*.sln'
   buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
-  BuildDefinitionNAme: 'dev'
-
+  buildConfiguration: 'Dev'
+  
 steps:
   - task: DotNetCoreCLI@2
     displayName: Restore
@@ -30,6 +29,11 @@ steps:
 #      command: 'install'
 #      workingDir: 'src/DonateTo.WebApplication/ClientApp'
 
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'custom'
+    custom: 'ngbuild'
+    arguments: 'buildname'
   - task: DotNetCoreCLI@2
     displayName: Build
     inputs:
@@ -41,7 +45,7 @@ steps:
     inputs:
       command: test
       projects: "$(Parameters.TestProjects)"
-      arguments: "--configuration $(BuildConfiguration)"
+      arguments: "--configuration $(BuildConfiguration) "
 
   - task: DotNetCoreCLI@2
     displayName: Publish
@@ -58,3 +62,4 @@ steps:
       PathtoPublish: "$(build.artifactstagingdirectory)"
       ArtifactName: webapidrop
     condition: succeededOrFailed()
+
