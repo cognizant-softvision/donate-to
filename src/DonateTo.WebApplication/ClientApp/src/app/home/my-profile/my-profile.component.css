@@ -27,7 +27,19 @@
 .profile-layout {
   margin: 1em;
 }
+
 .title {
   margin: 1em;
   margin-top: 5em;
+}
+
+nz-tabset {
+  background-color: white;
+  margin: 1em;
+  padding: 1em;
+}
+
+nz-descriptions {
+  padding-left: 2em;
+  padding-right: 2em;
 }
