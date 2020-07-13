@@ -268,7 +268,8 @@
     "PriorityQuestion": {
       "Title": "Prioridad de preguntas",
       "Create": {
-        "Title": "Crear pregunta de prioridad"
+        "Title": "Crear pregunta de prioridad",
+        "CreateRequest": "Crear pregunta"
       },
       "Table": {
         "LabelColumn": "Etiqueta",
@@ -277,7 +278,9 @@
         "WeightColumn": "Peso",
         "ControlTypeColumn": "Tipo Control",
         "DefaultValueColumn": "Valor default"
-      }
+      },
+      "CreateConfirm": "Está seguro de que quiere crear una nueva pregunta?",
+      "QuestionRequiredError": "Al menos una pregunta es requerida"
     },
     "ClearFilter": "Limpiar Filtro",
     "ClearFilterAndSorted": "Limpiar Filtro y Orden",

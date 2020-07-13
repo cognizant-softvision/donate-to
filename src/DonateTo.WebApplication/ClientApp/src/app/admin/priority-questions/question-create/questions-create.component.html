@@ -8,14 +8,14 @@
   <div class="create-priority-question-form-buttons">
     <button
       nz-popconfirm
-      nzPopconfirmTitle="{{ 'Admin.Donation.CreateConfirm' | translate }}"
+      nzPopconfirmTitle="{{ 'Admin.PriorityQuestion.CreateConfirm' | translate }}"
       nzPopconfirmPlacement="bottom"
-      (nzOnConfirm)="openDonationPriority()"
+      (nzOnConfirm)="createQuestions()"
       nz-button
       nzType="primary"
       type="submit"
     >
-      {{ 'Admin.Donation.Create.CreateRequest' | translate }}
+      {{ 'Admin.PriorityQuestion.Create.CreateRequest' | translate }}
     </button>
     <button
       nz-popconfirm
@@ -28,16 +28,4 @@
       {{ 'BackBtn' | translate }}
     </button>
   </div>
-  <nz-modal
-    [(nzVisible)]="isErrorModalActive"
-    [nzClosable]="false"
-    [nzCancelText]="null"
-    nzTitle="{{ 'Admin.Donation.Create.ErrorTitle' | translate }}"
-    (nzOnOk)="switchErrorModal()"
-  >
-    <div>{{ 'Admin.Donation.Create.ErrorMessage' | translate }}</div>
-  </nz-modal>
 </div>
-<ng-template #modalContent>
-  <app-questions-form (isSubmited)="submitPriority($event)"></app-questions-form>
-</ng-template>

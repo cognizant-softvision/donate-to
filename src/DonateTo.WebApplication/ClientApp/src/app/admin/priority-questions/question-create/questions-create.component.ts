@@ -44,17 +44,7 @@ export class QuestionsCreateComponent implements OnDestroy {
       }
     }
   }
-  submitPriority(priority: number): void {
-    this.hideModal();
-    // this.questionsFormComponent.donationRequest.priority = priority;
-    this.createDonationRequest();
-  }
-  openDonationPriority(): void {
-    // this.questionsFormComponent.validateForm();
-    // if (this.questionsFormComponent.donationRequestFormGroup.valid) {
-    //   this.showModal();
-    // }
-  }
+
   showModal() {
     this.createTplModal(this.modalContent);
   }
@@ -73,9 +63,9 @@ export class QuestionsCreateComponent implements OnDestroy {
   hideModal() {
     this.tplModal?.destroy();
   }
-  createDonationRequest() {
+  createQuestions() {
     this.isSubmited = true;
-    // this.questionSandbox.createDonationRequest(this.questionsFormComponent.donationRequest);
+    this.questionSandbox.updateQuestions(this.questionsFormComponent.questions);
   }
   goBack() {
     this.router.navigate(['/admin/priority-questions']);
