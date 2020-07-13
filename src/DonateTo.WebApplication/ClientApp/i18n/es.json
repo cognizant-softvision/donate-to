@@ -279,8 +279,23 @@
         "ControlTypeColumn": "Tipo Control",
         "DefaultValueColumn": "Valor default"
       },
-      "CreateConfirm": "Está seguro de que quiere crear una nueva pregunta?",
-      "QuestionRequiredError": "Al menos una pregunta es requerida"
+      "Form": {
+        "Label": "Etiqueta",
+        "Placeholder": "Marcador",
+        "Order": "Orden",
+        "Weight": "Peso",
+        "ControlType": "Tipo Control",
+        "DefaultValue": "Valor default",
+        "LabelPlaceHolder": "Nombre etiqueta",
+        "PlaceholderPlaceHolder": "Nombre marcador",
+        "OrderPlaceHolder": "Orden",
+        "WeightPlaceHolder": "Peso",
+        "ControlTypePlaceHolder": "Tipo Control",
+        "DefaultValuePlaceHolder": "Valor default",
+        "AddItem": "Agregar Pregunta",
+        "PriorityQuestionRequiredError": "Por lo menos una pregunta de prioridad es requerida"
+      },
+      "CreateConfirm": "Está seguro de que quiere crear una nueva pregunta?"
     },
     "ClearFilter": "Limpiar Filtro",
     "ClearFilterAndSorted": "Limpiar Filtro y Orden",
