@@ -1,0 +1,29 @@
+.dynamic-delete-button {
+  cursor: pointer;
+  position: relative;
+  top: 4px;
+  font-size: 24px;
+  color: #999;
+  transition: all 0.3s;
+}
+
+.dynamic-delete-button:hover {
+  color: #777;
+}
+
+.option-input {
+  width: 40em;
+  margin-right: 2em;
+}
+
+.option-list {
+  margin-left: 2em;
+}
+
+[nz-form] {
+  max-width: 80em;
+}
+
+.add-button {
+  width: 40em;
+}

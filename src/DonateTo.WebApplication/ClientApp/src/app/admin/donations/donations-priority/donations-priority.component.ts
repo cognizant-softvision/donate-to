@@ -142,6 +142,7 @@ export class DonationPriorityComponent implements OnInit {
     });
     return this.formBuilder.group(group);
   }
+
   isValid(question: Question) {
     return this.form.controls[question.key].valid;
   }
