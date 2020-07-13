@@ -1,1 +1,151 @@
-<h2>Questions-form works!</h2>
+<form [formGroup]="questionItemFormGroup" nz-form>
+  <div [formGroup]="questionItemFormGroup" class="create-priority-question-add-item-container">
+    <div class="create-priority-question-add-item-box-first">
+      <div class="create-item-container">
+        <nz-form-label class="donation-item">{{ 'Admin.Donation.Form.DonationItem.Name' | translate }}</nz-form-label>
+        <nz-form-label>{{ 'Admin.Donation.Form.DonationItem.Observation' | translate }}</nz-form-label>
+        <nz-form-label class="priority-question-item">{{
+          'Admin.Donation.Form.DonationItem.Quantity' | translate
+        }}</nz-form-label>
+      </div>
+      <div class="create-item-container create-donation-add-item-input">
+        <nz-form-item>
+          <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.DonationItem.NameRequiredError' | translate }}">
+            <input
+              nz-input
+              placeholder="{{ 'Admin.Donation.Form.DonationItem.NamePlaceholder' | translate }}"
+              formControlName="labelFormControl"
+              type="text"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control>
+            <input
+              nz-input
+              placeholder="{{ 'Admin.Donation.Form.DonationItem.ObservationPlaceholder' | translate }}"
+              formControlName="placeholderFormControl"
+              type="text"
+            />
+          </nz-form-control>
+        </nz-form-item>
+        <div class="item-quantity">
+          <nz-form-item>
+            <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.DonationItem.QuantityRequiredError' | translate }}">
+              <input
+                nz-input
+                placeholder="{{ 'Admin.Donation.Form.DonationItem.QuantityPlaceholder' | translate }}"
+                formControlName="defaultValueFormControl"
+                type="text"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+    </div>
+
+    <div class="create-priority-question-add-item-box-second">
+      <div class="create-item-container">
+        <nz-form-label class="priority-question-item">{{
+          'Admin.Donation.Form.DonationItem.Quantity' | translate
+        }}</nz-form-label>
+        <nz-form-label>{{ 'Admin.Donation.Form.DonationItem.Category' | translate }}</nz-form-label>
+        <nz-form-label>{{ 'Admin.Donation.Form.DonationItem.Category' | translate }}</nz-form-label>
+      </div>
+      <div class="create-item-container create-priority-question-add-item-input">
+        <div class="item-quantity">
+          <nz-form-item>
+            <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.DonationItem.QuantityRequiredError' | translate }}">
+              <input
+                nz-input
+                placeholder="{{ 'Admin.Donation.Form.DonationItem.QuantityPlaceholder' | translate }}"
+                formControlName="orderFormControl"
+                type="number"
+                min="1"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <div class="item-quantity">
+          <nz-form-item>
+            <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.DonationItem.QuantityRequiredError' | translate }}">
+              <input
+                nz-input
+                placeholder="{{ 'Admin.Donation.Form.DonationItem.QuantityPlaceholder' | translate }}"
+                formControlName="weightFormControl"
+                type="number"
+                min="1"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <nz-form-item>
+          <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.DonationItem.CategoryRequiredError' | translate }}">
+            <nz-select
+              formControlName="controlTypeFormControl"
+              nzPlaceHolder="{{ 'Admin.Donation.Form.DonationItem.CategoryPlaceholder' | translate }}"
+            >
+              <nz-option
+                *ngFor="let controlType of controlTypes"
+                [nzLabel]="controlType"
+                [nzValue]="controlType"
+              ></nz-option>
+            </nz-select>
+            <ng-template #categoryItemTagPlaceHolder let-selectedItemList>
+              {{ selectedItemList.length }} {{ 'Admin.Donation.Form.OverflowTag' | translate }}
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+
+    <button type="button" class="priority-question-request-item-add" (click)="addQuestion()" nz-button nzType="primary">
+      {{ 'Admin.Donation.Create.AddItem' | translate }}
+    </button>
+  </div>
+  <span class="item-required">{{ 'Admin.Donation.Form.DonationItemRequiredError' | translate }}</span>
+  <br />
+  <nz-form-item>
+    <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.DonationItemRequiredError' | translate }}">
+      <div [(ngModel)]="questions" ngDefaultControl formControlName="itemsFormControl">
+        <nz-table
+          [nzData]="questions"
+          [nzShowPagination]="false"
+          [nzFrontPagination]="false"
+          [nzShowPagination]="false"
+          [nzNoResult]="customTpl"
+        >
+          <thead>
+            <tr>
+              <th *ngFor="let column of listOfColumns">
+                {{ column.name | translate }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of questions">
+              <td>{{ item.label }}</td>
+              <td>{{ item.placeholder }}</td>
+              <td>{{ item.order }}</td>
+              <td>{{ item.weight }}</td>
+              <td>{{ item.controlType }}</td>
+              <td>{{ item.defaultValue }}</td>
+              <!-- <td>
+                  <a (click)="removeDonationRequestItem(item)">{{ 'Admin.Delete' | translate }}</a>
+                </td> -->
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+
+<ng-template #customTpl let-name>
+  <div style="text-align: center;">
+    <nz-empty [nzNotFoundContent]="null"></nz-empty>
+    <p>{{ 'NoEntries' | translate }}</p>
+  </div>
+</ng-template>
