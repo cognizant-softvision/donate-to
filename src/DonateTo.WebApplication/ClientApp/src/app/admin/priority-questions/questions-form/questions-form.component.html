@@ -115,9 +115,9 @@
   <br />
   <nz-form-item>
     <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.DonationItemRequiredError' | translate }}">
-      <div [(ngModel)]="donationRequestItems" ngDefaultControl formControlName="itemsFormControl">
+      <div [(ngModel)]="questions" ngDefaultControl formControlName="itemsFormControl">
         <nz-table
-          [nzData]="donationRequestItems"
+          [nzData]="questions"
           [nzShowPagination]="false"
           [nzFrontPagination]="false"
           [nzShowPagination]="false"
@@ -131,7 +131,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of donationRequestItems">
+            <tr *ngFor="let item of questions">
               <td>{{ item.label }}</td>
               <td>{{ item.placeholder }}</td>
               <td>{{ item.order }}</td>
