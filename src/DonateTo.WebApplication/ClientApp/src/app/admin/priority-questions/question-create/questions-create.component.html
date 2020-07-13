@@ -1,1 +1,43 @@
-<h2>Create works!</h2>
+<div>
+  <div class="create-priority-question-title">
+    <h4 class="section-title">{{ 'Admin.PriorityQuestion.Create.Title' | translate }}</h4>
+  </div>
+  <br />
+  <app-questions-form></app-questions-form>
+  <br />
+  <div class="create-priority-question-form-buttons">
+    <button
+      nz-popconfirm
+      nzPopconfirmTitle="{{ 'Admin.Donation.CreateConfirm' | translate }}"
+      nzPopconfirmPlacement="bottom"
+      (nzOnConfirm)="openDonationPriority()"
+      nz-button
+      nzType="primary"
+      type="submit"
+    >
+      {{ 'Admin.Donation.Create.CreateRequest' | translate }}
+    </button>
+    <button
+      nz-popconfirm
+      nzPopconfirmTitle="{{ 'Admin.Donation.BackConfirm' | translate }}"
+      nzPopconfirmPlacement="bottom"
+      (nzOnConfirm)="goBack()"
+      nz-button
+      nzType="primary"
+    >
+      {{ 'BackBtn' | translate }}
+    </button>
+  </div>
+  <nz-modal
+    [(nzVisible)]="isErrorModalActive"
+    [nzClosable]="false"
+    [nzCancelText]="null"
+    nzTitle="{{ 'Admin.Donation.Create.ErrorTitle' | translate }}"
+    (nzOnOk)="switchErrorModal()"
+  >
+    <div>{{ 'Admin.Donation.Create.ErrorMessage' | translate }}</div>
+  </nz-modal>
+</div>
+<ng-template #modalContent>
+  <app-questions-form (isSubmited)="submitPriority($event)"></app-questions-form>
+</ng-template>
