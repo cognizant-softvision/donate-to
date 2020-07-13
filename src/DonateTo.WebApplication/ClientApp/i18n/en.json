@@ -277,6 +277,22 @@
         "WeightColumn": "Weight",
         "ControlTypeColumn": "Control Type",
         "DefaultValueColumn": "Default Value"
+      },
+      "Form": {
+        "Label": "Label",
+        "Placeholder": "Placeholder",
+        "Order": "Order",
+        "Weight": "Weight",
+        "ControlType": "Control Type",
+        "DefaultValue": "Default Value",
+        "LabelPlaceHolder": "Label Name",
+        "PlaceholderPlaceHolder": "Placeholder name",
+        "OrderPlaceHolder": "Order",
+        "WeightPlaceHolder": "Weight",
+        "ControlTypePlaceHolder": "Control Type",
+        "DefaultValuePlaceHolder": "Default Value",
+        "AddItem": "Add Question",
+        "PriorityQuestionRequiredError": "At least 1 priority question is required"
       }
     },
     "ClearFilter": "Clear Filter",

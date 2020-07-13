@@ -7,6 +7,6 @@
         public string ControlType { get; set; }
         public string Placeholder { get; set; }
         public string DefaultValue { get; set; }
-        public float Weight { get; set; }
+        public decimal Weight { get; set; }
     }
 }

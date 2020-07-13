@@ -277,6 +277,22 @@
         "WeightColumn": "Peso",
         "ControlTypeColumn": "Tipo Control",
         "DefaultValueColumn": "Valor default"
+      },
+      "Form": {
+        "Label": "Etiqueta",
+        "Placeholder": "Marcador",
+        "Order": "Orden",
+        "Weight": "Peso",
+        "ControlType": "Tipo Control",
+        "DefaultValue": "Valor default",
+        "LabelPlaceHolder": "Nombre etiqueta",
+        "PlaceholderPlaceHolder": "Nombre marcador",
+        "OrderPlaceHolder": "Orden",
+        "WeightPlaceHolder": "Peso",
+        "ControlTypePlaceHolder": "Tipo Control",
+        "DefaultValuePlaceHolder": "Valor default",
+        "AddItem": "Agregar Pregunta",
+        "PriorityQuestionRequiredError": "Por lo menos una pregunta de prioridad es requerida"
       }
     },
     "ClearFilter": "Limpiar Filtro",

@@ -2,18 +2,22 @@
   <div [formGroup]="questionItemFormGroup" class="create-priority-question-add-item-container">
     <div class="create-priority-question-add-item-box-first">
       <div class="create-item-container">
-        <nz-form-label class="donation-item">{{ 'Admin.Donation.Form.DonationItem.Name' | translate }}</nz-form-label>
-        <nz-form-label>{{ 'Admin.Donation.Form.DonationItem.Observation' | translate }}</nz-form-label>
         <nz-form-label class="priority-question-item">{{
-          'Admin.Donation.Form.DonationItem.Quantity' | translate
+          'Admin.PriorityQuestion.Form.Label' | translate
+        }}</nz-form-label>
+        <nz-form-label class="priority-question-item">{{
+          'Admin.PriorityQuestion.Form.Placeholder' | translate
+        }}</nz-form-label>
+        <nz-form-label class="priority-question-item">{{
+          'Admin.PriorityQuestion.Form.DefaultValue' | translate
         }}</nz-form-label>
       </div>
-      <div class="create-item-container create-donation-add-item-input">
+      <div class="create-item-container create-priority-question-add-item-input">
         <nz-form-item>
-          <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.DonationItem.NameRequiredError' | translate }}">
+          <nz-form-control nzErrorTip="{{ 'Admin.PriorityQuestion.Form.DonationItem.NameRequiredError' | translate }}">
             <input
               nz-input
-              placeholder="{{ 'Admin.Donation.Form.DonationItem.NamePlaceholder' | translate }}"
+              placeholder="{{ 'Admin.PriorityQuestion.Form.LabelPlaceHolder' | translate }}"
               formControlName="labelFormControl"
               type="text"
             />
@@ -23,7 +27,7 @@
           <nz-form-control>
             <input
               nz-input
-              placeholder="{{ 'Admin.Donation.Form.DonationItem.ObservationPlaceholder' | translate }}"
+              placeholder="{{ 'Admin.PriorityQuestion.Form.PlaceholderPlaceHolder' | translate }}"
               formControlName="placeholderFormControl"
               type="text"
             />
@@ -31,10 +35,12 @@
         </nz-form-item>
         <div class="item-quantity">
           <nz-form-item>
-            <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.DonationItem.QuantityRequiredError' | translate }}">
+            <nz-form-control
+              nzErrorTip="{{ 'Admin.PriorityQuestion.Form.DonationItem.QuantityRequiredError' | translate }}"
+            >
               <input
                 nz-input
-                placeholder="{{ 'Admin.Donation.Form.DonationItem.QuantityPlaceholder' | translate }}"
+                placeholder="{{ 'Admin.PriorityQuestion.Form.DefaultValuePlaceHolder' | translate }}"
                 formControlName="defaultValueFormControl"
                 type="text"
               />
@@ -47,18 +53,24 @@
     <div class="create-priority-question-add-item-box-second">
       <div class="create-item-container">
         <nz-form-label class="priority-question-item">{{
-          'Admin.Donation.Form.DonationItem.Quantity' | translate
+          'Admin.PriorityQuestion.Form.Order' | translate
         }}</nz-form-label>
-        <nz-form-label>{{ 'Admin.Donation.Form.DonationItem.Category' | translate }}</nz-form-label>
-        <nz-form-label>{{ 'Admin.Donation.Form.DonationItem.Category' | translate }}</nz-form-label>
+        <nz-form-label class="priority-question-item">{{
+          'Admin.PriorityQuestion.Form.Weight' | translate
+        }}</nz-form-label>
+        <nz-form-label class="priority-question-item">{{
+          'Admin.PriorityQuestion.Form.ControlType' | translate
+        }}</nz-form-label>
       </div>
       <div class="create-item-container create-priority-question-add-item-input">
         <div class="item-quantity">
           <nz-form-item>
-            <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.DonationItem.QuantityRequiredError' | translate }}">
+            <nz-form-control
+              nzErrorTip="{{ 'Admin.PriorityQuestion.Form.DonationItem.QuantityRequiredError' | translate }}"
+            >
               <input
                 nz-input
-                placeholder="{{ 'Admin.Donation.Form.DonationItem.QuantityPlaceholder' | translate }}"
+                placeholder="{{ 'Admin.PriorityQuestion.Form.OrderPlaceHolder' | translate }}"
                 formControlName="orderFormControl"
                 type="number"
                 min="1"
@@ -69,10 +81,12 @@
 
         <div class="item-quantity">
           <nz-form-item>
-            <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.DonationItem.QuantityRequiredError' | translate }}">
+            <nz-form-control
+              nzErrorTip="{{ 'Admin.PriorityQuestion.Form.DonationItem.QuantityRequiredError' | translate }}"
+            >
               <input
                 nz-input
-                placeholder="{{ 'Admin.Donation.Form.DonationItem.QuantityPlaceholder' | translate }}"
+                placeholder="{{ 'Admin.PriorityQuestion.Form.WeightPlaceHolder' | translate }}"
                 formControlName="weightFormControl"
                 type="number"
                 min="1"
@@ -82,10 +96,12 @@
         </div>
 
         <nz-form-item>
-          <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.DonationItem.CategoryRequiredError' | translate }}">
+          <nz-form-control
+            nzErrorTip="{{ 'Admin.PriorityQuestion.Form.DonationItem.CategoryRequiredError' | translate }}"
+          >
             <nz-select
               formControlName="controlTypeFormControl"
-              nzPlaceHolder="{{ 'Admin.Donation.Form.DonationItem.CategoryPlaceholder' | translate }}"
+              nzPlaceHolder="{{ 'Admin.PriorityQuestion.Form.ControlTypePlaceHolder' | translate }}"
             >
               <nz-option
                 *ngFor="let controlType of controlTypes"
@@ -93,22 +109,19 @@
                 [nzValue]="controlType"
               ></nz-option>
             </nz-select>
-            <ng-template #categoryItemTagPlaceHolder let-selectedItemList>
-              {{ selectedItemList.length }} {{ 'Admin.Donation.Form.OverflowTag' | translate }}
-            </ng-template>
           </nz-form-control>
         </nz-form-item>
       </div>
     </div>
 
     <button type="button" class="priority-question-request-item-add" (click)="addQuestion()" nz-button nzType="primary">
-      {{ 'Admin.Donation.Create.AddItem' | translate }}
+      {{ 'Admin.PriorityQuestion.Form.AddItem' | translate }}
     </button>
   </div>
-  <span class="item-required">{{ 'Admin.Donation.Form.DonationItemRequiredError' | translate }}</span>
+  <span class="item-required">{{ 'Admin.PriorityQuestion.Form.PriorityQuestionRequiredError' | translate }}</span>
   <br />
   <nz-form-item>
-    <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.DonationItemRequiredError' | translate }}">
+    <nz-form-control nzErrorTip="{{ 'Admin.PriorityQuestion.Form.PriorityQuestionRequiredError' | translate }}">
       <div [(ngModel)]="questions" ngDefaultControl formControlName="itemsFormControl">
         <nz-table
           [nzData]="questions"
