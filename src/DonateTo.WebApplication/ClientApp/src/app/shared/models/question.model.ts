@@ -1,12 +1,9 @@
 import { BaseModel } from './base.model';
-import { QuestionOption } from './question-option.modal';
-
-export class Question extends BaseModel {
-  key: string;
+export class QuestionModel extends BaseModel {
   label: string;
-  required: boolean;
   order: number;
   controlType: string;
-  type: string;
-  options: QuestionOption[];
+  placeholder: string;
+  weight: number;
+  defaultValue: string;
 }

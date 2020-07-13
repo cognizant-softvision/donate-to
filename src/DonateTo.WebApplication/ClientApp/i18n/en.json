@@ -188,7 +188,8 @@
       "Title": {
         "Donation": "Donations",
         "User": "Users",
-        "Organization": "Organization"
+        "Organization": "Organization",
+        "Priority-questions": "Priority Questions"
       }
     },
     "Donation": {

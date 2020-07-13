@@ -15,6 +15,10 @@ const routes: Routes = [
         loadChildren: () => import('src/app/admin/donations/donations.module').then((m) => m.DonationsModule),
       },
       { path: 'organization', component: OrganizationComponent },
+      {
+        path: 'priority-questions',
+        loadChildren: () => import('src/app/admin/priority-questions/questions.module').then((m) => m.QuestionsModule),
+      },
     ],
   },
 ];

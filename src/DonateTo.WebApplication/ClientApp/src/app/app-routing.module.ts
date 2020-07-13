@@ -14,7 +14,7 @@ const appRoutes: Routes = [
     path: 'admin',
     loadChildren: () =>
       import('./shared/containers/layout/admin-layout/admin-layout.module').then((m) => m.AdminLayoutModule),
-    canLoad: [AuthAdminGuard],
+    // canLoad: [AuthAdminGuard],
   },
   {
     path: 'donation',
