@@ -265,6 +265,20 @@
     "Organization": {
       "Title": "Organización"
     },
+    "PriorityQuestion": {
+      "Title": "Prioridad de preguntas",
+      "Create": {
+        "Title": "Crear pregunta de prioridad"
+      },
+      "Table": {
+        "LabelColumn": "Etiqueta",
+        "PlaceholderColumn": "Marcador",
+        "OrderColumnColumn": "Orden",
+        "WeightColumn": "Peso",
+        "ControlTypeColumn": "Tipo Control",
+        "DefaultValueColumn": "Valor default"
+      }
+    },
     "ClearFilter": "Limpiar Filtro",
     "ClearFilterAndSorted": "Limpiar Filtro y Orden",
     "Name": "Nombre",
