@@ -265,6 +265,38 @@
     "Organization": {
       "Title": "Organization"
     },
+    "PriorityQuestion": {
+      "Title": "Priority Questions",
+      "Create": {
+        "Title": "Create Priority Questions",
+        "CreateRequest": "Create question"
+      },
+      "Table": {
+        "LabelColumn": "Label",
+        "PlaceholderColumn": "Placeholder",
+        "OrderColumnColumn": "Order",
+        "WeightColumn": "Weight",
+        "ControlTypeColumn": "Control Type",
+        "DefaultValueColumn": "Default Value"
+      },
+      "Form": {
+        "Label": "Label",
+        "Placeholder": "Placeholder",
+        "Order": "Order",
+        "Weight": "Weight",
+        "ControlType": "Control Type",
+        "DefaultValue": "Default Value",
+        "LabelPlaceHolder": "Label Name",
+        "PlaceholderPlaceHolder": "Placeholder name",
+        "OrderPlaceHolder": "Order",
+        "WeightPlaceHolder": "Weight",
+        "ControlTypePlaceHolder": "Control Type",
+        "DefaultValuePlaceHolder": "Default Value",
+        "AddItem": "Add Question",
+        "PriorityQuestionRequiredError": "At least 1 priority question is required"
+      },
+      "CreateConfirm": "Are you sure you want to create a new question?"
+    },
     "ClearFilter": "Clear Filter",
     "ClearFilterAndSorted": "Clear Filter and Sorted",
     "Name": "Name",

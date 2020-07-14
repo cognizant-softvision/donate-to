@@ -3,6 +3,7 @@ import { ConfigService } from 'src/app/app-config.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { QuestionModel } from '../../models';
+import { Observable } from 'rxjs/internal/Observable';
 @Injectable({
   providedIn: 'root',
 })
@@ -13,5 +14,13 @@ export class QuestionService extends BaseHttpClientService<QuestionModel> {
   }
   getQuestions() {
     return this.get();
+  }
+
+  createQuestions(question: QuestionModel[]): Observable<QuestionModel[]> {
+    return this.httpClient.post<QuestionModel[]>(
+      `${this.url}/${this.endpoint}`,
+      JSON.stringify(question),
+      this.httpOptions
+    );
   }
 }

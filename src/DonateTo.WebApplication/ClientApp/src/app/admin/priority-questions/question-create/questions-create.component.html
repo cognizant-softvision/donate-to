@@ -1,35 +1,31 @@
-<form nz-form [formGroup]="form" (ngSubmit)="submitForm()" nzLayout="vertical">
-  <nz-form-item>
-    <nz-form-label [nzXs]="24" [nzSm]="4" [nzFor]="label">Question</nz-form-label>
-    <nz-form-control nzErrorTip="Please enter question.">
-      <input class="passenger-input" nz-input placeholder="Question" [attr.id]="label" formControlName="label" />
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item *ngFor="let control of listOfControl; let i = index" class="option-list">
-    <nz-form-control nzErrorTip="Please input passenger's name or delete this field.">
-      <input
-        class="option-input"
-        nz-input
-        placeholder="placeholder"
-        [attr.id]="control.id"
-        [formControlName]="control.option"
-      />
-      <i nz-icon nzType="minus-circle-o" class="dynamic-delete-button" (click)="removeField(control, $event)"></i>
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item class="option-list">
-    <nz-form-control>
-      <button nz-button nzType="dashed" class="add-button" (click)="addField($event)">
-        <i nz-icon nzType="plus"></i>
-        Add field
-      </button>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item>
-    <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 20, offset: 4 }">
-      <button nz-button nzType="primary">Submit</button>
-    </nz-form-control>
-  </nz-form-item>
-</form>
+<div>
+  <div class="create-priority-question-title">
+    <h4 class="section-title">{{ 'Admin.PriorityQuestion.Create.Title' | translate }}</h4>
+  </div>
+  <br />
+  <app-questions-form></app-questions-form>
+  <br />
+  <div class="create-priority-question-form-buttons">
+    <button
+      nz-popconfirm
+      nzPopconfirmTitle="{{ 'Admin.PriorityQuestion.CreateConfirm' | translate }}"
+      nzPopconfirmPlacement="bottom"
+      (nzOnConfirm)="createQuestions()"
+      nz-button
+      nzType="primary"
+      type="submit"
+    >
+      {{ 'Admin.PriorityQuestion.Create.CreateRequest' | translate }}
+    </button>
+    <button
+      nz-popconfirm
+      nzPopconfirmTitle="{{ 'Admin.Donation.BackConfirm' | translate }}"
+      nzPopconfirmPlacement="bottom"
+      (nzOnConfirm)="goBack()"
+      nz-button
+      nzType="primary"
+    >
+      {{ 'BackBtn' | translate }}
+    </button>
+  </div>
+</div>

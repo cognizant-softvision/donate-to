@@ -265,6 +265,38 @@
     "Organization": {
       "Title": "Organización"
     },
+    "PriorityQuestion": {
+      "Title": "Prioridad de preguntas",
+      "Create": {
+        "Title": "Crear pregunta de prioridad",
+        "CreateRequest": "Crear pregunta"
+      },
+      "Table": {
+        "LabelColumn": "Etiqueta",
+        "PlaceholderColumn": "Marcador",
+        "OrderColumnColumn": "Orden",
+        "WeightColumn": "Peso",
+        "ControlTypeColumn": "Tipo Control",
+        "DefaultValueColumn": "Valor default"
+      },
+      "Form": {
+        "Label": "Etiqueta",
+        "Placeholder": "Marcador",
+        "Order": "Orden",
+        "Weight": "Peso",
+        "ControlType": "Tipo Control",
+        "DefaultValue": "Valor default",
+        "LabelPlaceHolder": "Nombre etiqueta",
+        "PlaceholderPlaceHolder": "Nombre marcador",
+        "OrderPlaceHolder": "Orden",
+        "WeightPlaceHolder": "Peso",
+        "ControlTypePlaceHolder": "Tipo Control",
+        "DefaultValuePlaceHolder": "Valor default",
+        "AddItem": "Agregar Pregunta",
+        "PriorityQuestionRequiredError": "Por lo menos una pregunta de prioridad es requerida"
+      },
+      "CreateConfirm": "Está seguro de que quiere crear una nueva pregunta?"
+    },
     "ClearFilter": "Limpiar Filtro",
     "ClearFilterAndSorted": "Limpiar Filtro y Orden",
     "Name": "Nombre",

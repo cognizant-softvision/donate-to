@@ -1,4 +1,11 @@
-import { loadQuestions, loadQuestionsFailed, loadQuestionsSuccess } from './actions';
+import {
+  addQuestions,
+  addQuestionsFailed,
+  addQuestionsSuccess,
+  loadQuestions,
+  loadQuestionsFailed,
+  loadQuestionsSuccess,
+} from './actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
@@ -16,5 +23,17 @@ export class QuestionEffects {
       )
     )
   );
+
+  @Effect()
+  addQuestions$: Observable<{}> = this.actions$.pipe(
+    ofType(addQuestions),
+    switchMap(({ questions }) =>
+      this.questionService.createQuestions(questions).pipe(
+        map(() => addQuestionsSuccess({ questions })),
+        catchError(() => of(addQuestionsFailed()))
+      )
+    )
+  );
+
   constructor(private actions$: Actions, private questionService: QuestionService) {}
 }
