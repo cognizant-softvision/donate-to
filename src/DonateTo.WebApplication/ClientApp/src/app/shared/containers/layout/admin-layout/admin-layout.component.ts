@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { AuthSandbox } from 'src/app/shared/auth/auth.sandbox';
+import { AuthSandbox } from '../../../../shared/auth/auth.sandbox';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 

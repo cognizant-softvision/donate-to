@@ -21,8 +21,6 @@
   nzTableLayout="fixed"
   [nzNoResult]="customTpl"
   [nzFrontPagination]="false"
-  [nzSortFn]="true"
-  [nzFilterFn]="true"
   [nzTotal]="total"
   [nzPageSize]="pageSize"
   [nzPageIndex]="pageIndex"
@@ -41,7 +39,7 @@
         <nz-filter-trigger
           [(nzVisible)]="labelVisible"
           [nzActive]="searchLabelValue.length > 0"
-          [nzDropdownMenu]="menu"
+          [nzDropdownMenu]="searchLabelMenu"
         >
           <i nz-icon nzType="search"></i>
         </nz-filter-trigger>
@@ -54,7 +52,11 @@
         >
           ({{ searchTypeValue }})
         </label>
-        <nz-filter-trigger [(nzVisible)]="typeVisible" [nzActive]="searchTypeValue.length > 0" [nzDropdownMenu]="menu">
+        <nz-filter-trigger
+          [(nzVisible)]="typeVisible"
+          [nzActive]="searchTypeValue.length > 0"
+          [nzDropdownMenu]="searchTypeMenu"
+        >
           <i nz-icon nzType="search"></i>
         </nz-filter-trigger>
       </th>
@@ -69,7 +71,7 @@
         <nz-filter-trigger
           [(nzVisible)]="placeholderVisible"
           [nzActive]="searchPlaceholderValue.length > 0"
-          [nzDropdownMenu]="menu"
+          [nzDropdownMenu]="searchPlaceholderMenu"
         >
           <i nz-icon nzType="search"></i>
         </nz-filter-trigger>
@@ -114,7 +116,7 @@
   </tbody>
 </nz-table>
 
-<nz-dropdown-menu #searchLabel="nzDropdownMenu">
+<nz-dropdown-menu #searchLabelMenu="nzDropdownMenu">
   <div class="ant-table-filter-dropdown">
     <div class="search-box">
       <input
@@ -133,7 +135,7 @@
   </div>
 </nz-dropdown-menu>
 
-<nz-dropdown-menu #searchType="nzDropdownMenu">
+<nz-dropdown-menu #searchTypeMenu="nzDropdownMenu">
   <div class="ant-table-filter-dropdown">
     <div class="search-box">
       <input
@@ -152,7 +154,7 @@
   </div>
 </nz-dropdown-menu>
 
-<nz-dropdown-menu #searchPlaceholder="nzDropdownMenu">
+<nz-dropdown-menu #searchPlaceholderMenu="nzDropdownMenu">
   <div class="ant-table-filter-dropdown">
     <div class="search-box">
       <input

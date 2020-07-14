@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { NzTableQueryParams } from 'ng-zorro-antd';
 import { QuestionSandbox } from './question.sandbox';
 import { QuestionFilter } from '../../shared/models/filters/question-filter';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-questions',
@@ -19,12 +20,16 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   searchLabelValue = '';
   searchTypeValue = '';
   searchPlaceholderValue = '';
+  labelVisible = false;
+  typeVisible = false;
+  placeholderVisible = false;
   questionFilter = new QuestionFilter();
+  expandSet = new Set<number>();
   private isSubmited = false;
   private subscriptions: Subscription[] = [];
   private failedStatus = false;
 
-  constructor(private questionSandbox: QuestionSandbox) {}
+  constructor(private questionSandbox: QuestionSandbox, protected router: Router) {}
 
   ngOnInit(): void {
     this.questionSandbox.loadQuestionsFilteredPaged(this.questionFilter);
@@ -84,11 +89,25 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     this.searchPlaceholderValue = '';
   }
 
-  searchLabel(): void {}
+  searchLabel(): void {
+    this.labelVisible = false;
+  }
 
-  searchType(): void {}
+  searchType(): void {
+    this.typeVisible = false;
+  }
 
-  searchPlaceholder(): void {}
+  searchPlaceholder(): void {
+    this.placeholderVisible = false;
+  }
+
+  onExpandChange(id: number, checked: boolean): void {
+    if (checked) {
+      this.expandSet.add(id);
+    } else {
+      this.expandSet.delete(id);
+    }
+  }
 
   private handleRequestResult() {
     if (this.isSubmited) {
