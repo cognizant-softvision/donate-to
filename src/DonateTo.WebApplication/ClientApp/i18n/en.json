@@ -271,6 +271,9 @@
         "Title": "Create Priority Questions",
         "CreateRequest": "Create questions"
       },
+      "Edit": {
+        "Title": "Edit Question"
+      },
       "Table": {
         "LabelColumn": "Label",
         "PlaceholderColumn": "Placeholder",
@@ -301,7 +304,8 @@
         "AddItem": "Add Question",
         "PriorityQuestionRequiredError": "At least 1 priority question is required"
       },
-      "CreateConfirm": "Are you sure you want to create a new question?"
+      "CreateConfirm": "Are you sure you want to create a new question?",
+      "EditConfirm": "Are you sure you want to edit the question?"
     },
     "ClearFilter": "Clear Filter",
     "ClearFilterAndSorted": "Clear Filter and Sorted",

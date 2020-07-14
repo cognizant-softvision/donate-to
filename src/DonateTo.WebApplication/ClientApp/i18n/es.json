@@ -271,6 +271,9 @@
         "Title": "Crear pregunta de prioridad",
         "CreateRequest": "Crear preguntas"
       },
+      "Edit": {
+        "Title": "Edit Question"
+      },
       "Table": {
         "LabelColumn": "Etiqueta",
         "PlaceholderColumn": "Marcador",
@@ -301,7 +304,8 @@
         "AddItem": "Agregar Pregunta",
         "PriorityQuestionRequiredError": "Por lo menos una pregunta de prioridad es requerida"
       },
-      "CreateConfirm": "Está seguro de que quiere crear una nueva pregunta?"
+      "CreateConfirm": "Está seguro de que quiere crear una nueva pregunta?",
+      "EditConfirm": "Estas seguro que quieres editar esta pregunta?"
     },
     "ClearFilter": "Limpiar Filtro",
     "ClearFilterAndSorted": "Limpiar Filtro y Orden",
