@@ -83,6 +83,10 @@ export class QuestionsFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  removeQuestion(item: QuestionModel): void {
+    this.questions = this.questions.filter((q) => q !== item);
+  }
+
   private unregisterEvents() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }

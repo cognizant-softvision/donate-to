@@ -269,7 +269,7 @@
       "Title": "Priority Questions",
       "Create": {
         "Title": "Create Priority Questions",
-        "CreateRequest": "Create question"
+        "CreateRequest": "Create questions"
       },
       "Table": {
         "LabelColumn": "Label",
@@ -277,7 +277,8 @@
         "OrderColumnColumn": "Order",
         "WeightColumn": "Weight",
         "ControlTypeColumn": "Control Type",
-        "DefaultValueColumn": "Default Value"
+        "DefaultValueColumn": "Default Value",
+        "DeleteQuestion": "Delete"
       },
       "Form": {
         "Label": "Label",
@@ -292,6 +293,11 @@
         "WeightPlaceHolder": "Weight",
         "ControlTypePlaceHolder": "Control Type",
         "DefaultValuePlaceHolder": "Default Value",
+        "LabelRequired": "Label is required",
+        "DefaultValueRequired": "Default Value is required",
+        "OrderRequired": "Order is required",
+        "WeightRequired": "Weight is required",
+        "ControlTypeRequired": "Control Type is required",
         "AddItem": "Add Question",
         "PriorityQuestionRequiredError": "At least 1 priority question is required"
       },

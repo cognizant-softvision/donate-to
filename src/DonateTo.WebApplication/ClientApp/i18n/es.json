@@ -269,7 +269,7 @@
       "Title": "Prioridad de preguntas",
       "Create": {
         "Title": "Crear pregunta de prioridad",
-        "CreateRequest": "Crear pregunta"
+        "CreateRequest": "Crear preguntas"
       },
       "Table": {
         "LabelColumn": "Etiqueta",
@@ -277,7 +277,8 @@
         "OrderColumnColumn": "Orden",
         "WeightColumn": "Peso",
         "ControlTypeColumn": "Tipo Control",
-        "DefaultValueColumn": "Valor default"
+        "DefaultValueColumn": "Valor default",
+        "DeleteQuestion": "Eliminar"
       },
       "Form": {
         "Label": "Etiqueta",
@@ -292,6 +293,11 @@
         "WeightPlaceHolder": "Peso",
         "ControlTypePlaceHolder": "Tipo Control",
         "DefaultValuePlaceHolder": "Valor default",
+        "LabelRequired": "Etiqueta es requerida",
+        "DefaultValueRequired": "Valor default es requerido",
+        "OrderRequired": "Orden es requerido",
+        "WeightRequired": "Peso es requerido",
+        "ControlTypeRequired": "Tipo control es requerido",
         "AddItem": "Agregar Pregunta",
         "PriorityQuestionRequiredError": "Por lo menos una pregunta de prioridad es requerida"
       },
