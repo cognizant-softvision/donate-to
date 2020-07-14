@@ -29,7 +29,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   private failedStatus = false;
 
-  constructor(private questionSandbox: QuestionSandbox, protected router: Router) {}
+  constructor(private questionSandbox: QuestionSandbox, public router: Router) {}
 
   ngOnInit(): void {
     this.questionSandbox.loadQuestionsFilteredPaged(this.questionFilter);
