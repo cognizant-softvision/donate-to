@@ -60,7 +60,7 @@ const ICONS: IconDefinition[] = [PlusOutline];
     NzDividerModule,
     NzTableModule,
     EffectsModule.forFeature([QuestionEffects]),
-    StoreModule.forFeature(fromQuestion.questionsFeatureKey, fromQuestion.reducer),
+    StoreModule.forFeature(fromQuestion.questionFeatureKey, fromQuestion.reducer),
     FormsModule,
     CommonModule,
     ReactiveFormsModule,

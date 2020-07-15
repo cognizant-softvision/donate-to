@@ -8,8 +8,8 @@ export const getQuestionState = createFeatureSelector<QuestionState>('question')
 export const getFailedStatus = createSelector(getQuestionState, (state: QuestionState) => state.failed);
 export const getLoadingStatus = createSelector(getQuestionState, (state: QuestionState) => state.loading);
 export const getQuestionsFilteredPaged = createSelector(getQuestionState, (state: QuestionState) => state.pagedItems);
-export const getAllQuestions = createSelector(getQuestionsState, (state: QuestionState) => state.questions);
-export const getQuestionsLoading = createSelector(getQuestionsState, (state: QuestionState) => state.loading);
+export const getAllQuestions = createSelector(getQuestionState, (state: QuestionState) => state.questions);
+export const getQuestionsLoading = createSelector(getQuestionState, (state: QuestionState) => state.loading);
 
 @Injectable()
 export class QuestionSelectors {
@@ -19,5 +19,5 @@ export class QuestionSelectors {
   failed$ = this.store.select(getFailedStatus);
   loading$ = this.store.select(getLoadingStatus);
   questions$ = this.store.select(getAllQuestions);
-  questionState$ = this.store.select(getQuestionsState);
+  questionState$ = this.store.select(getQuestionState);
 }

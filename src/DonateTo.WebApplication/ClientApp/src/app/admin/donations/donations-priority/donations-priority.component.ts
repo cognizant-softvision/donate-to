@@ -8,7 +8,7 @@ import { Question } from 'src/app/shared/models/question-provisional.model';
 })
 export class DonationPriorityComponent implements OnInit {
   form: FormGroup;
-  questions: QuestionModel[];
+  questions: Question[];
 
   @Output() isSubmited = new EventEmitter<number>();
 
@@ -141,14 +141,14 @@ export class DonationPriorityComponent implements OnInit {
     }
   }
 
-  toFormGroup(questions: QuestionModel[]) {
+  toFormGroup(questions: Question[]) {
     const group: any = {};
     questions.forEach((question) => {
       group[question.key] = question.required ? new FormControl('', Validators.required) : new FormControl('');
     });
     return this.formBuilder.group(group);
   }
-  isValid(question: QuestionModel) {
+  isValid(question: Question) {
     return this.form.controls[question.key].valid;
   }
 }

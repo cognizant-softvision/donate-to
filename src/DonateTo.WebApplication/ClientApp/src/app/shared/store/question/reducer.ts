@@ -6,12 +6,14 @@ export interface QuestionState {
   loading: boolean;
   failed: boolean;
   pagedItems: PageModel<QuestionModel>;
+  questions: QuestionModel[];
 }
 
 const INITIAL_STATE: QuestionState = {
   loading: false,
   failed: false,
   pagedItems: new PageModel<QuestionModel>(),
+  questions: [],
 };
 
 const questionReducer = createReducer(
