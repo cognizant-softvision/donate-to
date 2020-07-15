@@ -1,7 +1,7 @@
 import { BaseModel } from './base.model';
 
 export class QuestionOption extends BaseModel {
-  key: string;
+  label: string;
   value: string;
-  questionId: number;
+  weight: number;
 }

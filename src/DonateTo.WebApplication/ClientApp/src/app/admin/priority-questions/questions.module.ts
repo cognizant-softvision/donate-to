@@ -34,6 +34,7 @@ import {
   NzTableModule,
   NzTagModule,
 } from 'ng-zorro-antd';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { fromQuestion } from '../../shared/store';
 import { MinusCircleOutline, PlusOutline } from '@ant-design/icons-angular/icons';
 
@@ -61,6 +62,7 @@ const ICONS = [MinusCircleOutline, PlusOutline];
     NzInputModule,
     NzDividerModule,
     NzTableModule,
+    NzCheckboxModule,
     EffectsModule.forFeature([QuestionEffects]),
     StoreModule.forFeature(fromQuestion.questionsFeatureKey, fromQuestion.reducer),
     FormsModule,
