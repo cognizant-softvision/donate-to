@@ -269,7 +269,10 @@
       "Title": "Priority Questions",
       "Create": {
         "Title": "Create Priority Questions",
-        "CreateRequest": "Create question"
+        "CreateRequest": "Create questions"
+      },
+      "Edit": {
+        "Title": "Edit Question"
       },
       "Table": {
         "LabelColumn": "Label",
@@ -277,7 +280,8 @@
         "OrderColumnColumn": "Order",
         "WeightColumn": "Weight",
         "ControlTypeColumn": "Control Type",
-        "DefaultValueColumn": "Default Value"
+        "DefaultValueColumn": "Default Value",
+        "DeleteQuestion": "Delete"
       },
       "Form": {
         "Label": "Label",
@@ -292,10 +296,36 @@
         "WeightPlaceHolder": "Weight",
         "ControlTypePlaceHolder": "Control Type",
         "DefaultValuePlaceHolder": "Default Value",
+        "LabelRequired": "Label is required",
+        "DefaultValueRequired": "Default Value is required",
+        "OrderRequired": "Order is required",
+        "WeightRequired": "Weight is required",
+        "ControlTypeRequired": "Control Type is required",
         "AddItem": "Add Question",
         "PriorityQuestionRequiredError": "At least 1 priority question is required"
       },
-      "CreateConfirm": "Are you sure you want to create a new question?"
+      "CreateConfirm": "Are you sure you want to create a new question?",
+      "EditConfirm": "Are you sure you want to edit the question?"
+    },
+    "Question": {
+      "Title": "Questions",
+      "CreateConfirm": "Are you sure you want to create a question?",
+      "Table": {
+        "Label": "Label",
+        "Type": "Type",
+        "Placeholder": "Placeholder",
+        "Weight": "Weight",
+        "Order": "Order",
+        "Action": "Action",
+        "Search": "Search",
+        "Reset": "Reset",
+        "Filtered": "Filtered",
+        "Option": {
+          "Label": "Label",
+          "Value": "Value",
+          "Weight": "Weight"
+        }
+      }
     },
     "ClearFilter": "Clear Filter",
     "ClearFilterAndSorted": "Clear Filter and Sorted",

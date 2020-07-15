@@ -1,58 +1,95 @@
 <nz-layout id="main-layout">
   <app-nav-menu></app-nav-menu>
+
   <nz-layout class="profile-layout">
     <div class="title">
       <h3>{{ 'UserProfile.MyProfile' | translate }}</h3>
     </div>
-    <nz-table #editRowTable nzBordered [nzData]="listOfRow" [nzFrontPagination]="false">
-      <thead>
-        <tr>
-          <th>{{ 'UserProfile.GeneralInformation' | translate }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let data of editRowTable.data" class="editable-row">
-          <td>
-            <div class="editable-cell" [hidden]="isEnable" (click)="toggleEdit()">
-              {{ data.row | translate }}: {{ data.value }}
-            </div>
-            <input [hidden]="!isEnable" type="text" nz-input [(ngModel)]="data.value" (blur)="toggleEdit()" />
-          </td>
-        </tr>
-      </tbody>
-    </nz-table>
-    <div class="button-div">
-      <button nz-button class="buttons" nzType="default" (click)="cancelGeneralInformation()">
-        {{ 'CancelBtn' | translate }}
-      </button>
-      <button nz-button class="buttons" nzType="primary" (click)="saveGeneralInformation()">
-        {{ 'SaveBtn' | translate }}
-      </button>
-    </div>
-    <nz-table #newPassRowTable nzBordered [nzData]="listChangePassword" [nzFrontPagination]="false">
-      <thead>
-        <tr>
-          <th>{{ 'UserProfile.ChangePassword' | translate }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let data of newPassRowTable.data" class="editable-row">
-          <td>
-            <div class="editable-cell" [hidden]="isEnable" (click)="toggleEdit()">
-              {{ data.row | translate }}: {{ data.value }}
-            </div>
-            <input [hidden]="!isEnable" type="text" nz-input [(ngModel)]="data.value" (blur)="toggleEdit()" />
-          </td>
-        </tr>
-      </tbody>
-    </nz-table>
-    <div class="button-div">
-      <button nz-button class="buttons" nzType="default" (click)="cancelPassword()">
-        {{ 'CancelBtn' | translate }}
-      </button>
-      <button nz-button class="buttons" nzType="primary" (click)="saveNewPassword()">
-        {{ 'SaveBtn' | translate }}
-      </button>
-    </div>
+
+    <nz-tabset>
+      <!-- TAB 1 -->
+      <nz-tab nzTitle="{{ 'UserProfile.GeneralInformation' | translate }}">
+        <nz-page-header
+          class="site-page-header"
+          nzTitle="{{ 'UserProfile.GeneralInformation' | translate }}"
+          [nzSubtitle]="editSubtitle"
+        >
+          <ng-template #editSubtitle>
+            <a [hidden]="isEdit" (click)="edit()"
+              >{{ 'Admin.Edit' | translate }}<i nz-icon nzType="edit" nzTheme="twotone" nzTwotoneColor="#B8B8B8"></i
+            ></a>
+          </ng-template>
+        </nz-page-header>
+
+        <nz-descriptions [hidden]="isEdit">
+          <nz-descriptions-item
+            *ngFor="let data of listOfRow"
+            class="editable-row"
+            nzTitle="{{ data.row | translate }}"
+            >{{ data.value }}</nz-descriptions-item
+          >
+        </nz-descriptions>
+
+        <nz-descriptions [hidden]="!isEdit">
+          <nz-descriptions-item
+            *ngFor="let data of listOfRow"
+            class="editable-row"
+            nzTitle="{{ data.row | translate }}"
+          >
+            <input
+              nz-input
+              placeholder="{{ data.value | translate }}"
+              value="{{ data.value | translate }}"
+              nzSize="small"
+            />
+          </nz-descriptions-item>
+        </nz-descriptions>
+        <div class="button-div" [hidden]="!isEdit">
+          <button nz-button class="buttons" nzType="default" (click)="cancelGeneralInformation()">
+            {{ 'CancelBtn' | translate }}
+          </button>
+          <button nz-button class="buttons" nzType="primary" (click)="saveGeneralInformation()">
+            {{ 'SaveBtn' | translate }}
+          </button>
+        </div>
+      </nz-tab>
+
+      <!-- TAB 2 -->
+      <nz-tab [nzTitle]="titleTemplate">
+        <ng-template #titleTemplate>
+          <i nz-icon nzType="setting" nzTheme="twotone" nzTwotoneColor="#B8B8B8"></i
+          >{{ 'UserProfile.ChangePassword' | translate }}
+        </ng-template>
+
+        <nz-page-header
+          class="site-page-header"
+          nzTitle="{{ 'UserProfile.ChangePassword' | translate }}"
+        ></nz-page-header>
+
+        <nz-descriptions class="descriptions">
+          <nz-descriptions-item
+            *ngFor="let data of listChangePassword"
+            class="editable-row"
+            nzTitle="{{ data.row | translate }}"
+          >
+            <input
+              nz-input
+              placeholder="{{ data.value | translate }}"
+              value="{{ data.value | translate }}"
+              nzSize="small"
+            />
+          </nz-descriptions-item>
+        </nz-descriptions>
+
+        <div class="button-div">
+          <button nz-button class="buttons" nzType="default" (click)="cancelPassword()">
+            {{ 'CancelBtn' | translate }}
+          </button>
+          <button nz-button class="buttons" nzType="primary" (click)="saveNewPassword()">
+            {{ 'SaveBtn' | translate }}
+          </button>
+        </div>
+      </nz-tab>
+    </nz-tabset>
   </nz-layout>
 </nz-layout>

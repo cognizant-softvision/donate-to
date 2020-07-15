@@ -1,7 +1,5 @@
-import { QuestionsFormComponent } from './questions-form/questions-form.component';
 import { QuestionEffects } from '../../shared/store/question/effects';
 import { HttpLoaderFactory } from '../../app.module';
-import { QuestionsEditComponent } from './question-edit/questions-edit.component';
 import { QuestionsCreateComponent } from './question-create/questions-create.component';
 import es from '@angular/common/locales/es';
 import { CommonModule, registerLocaleData } from '@angular/common';
@@ -20,6 +18,7 @@ import { StoreModule } from '@ngrx/store';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import {
   NzDatePickerModule,
+  NzDropDownModule,
   NzEmptyModule,
   NzFormModule,
   NzIconModule,
@@ -57,6 +56,7 @@ const ICONS = [MinusCircleOutline, PlusOutline];
     NzTagModule,
     NzRadioModule,
     NzDatePickerModule,
+    NzDropDownModule,
     NzButtonModule,
     NzSelectModule,
     NzInputModule,
@@ -64,7 +64,7 @@ const ICONS = [MinusCircleOutline, PlusOutline];
     NzTableModule,
     NzCheckboxModule,
     EffectsModule.forFeature([QuestionEffects]),
-    StoreModule.forFeature(fromQuestion.questionsFeatureKey, fromQuestion.reducer),
+    StoreModule.forFeature(fromQuestion.questionFeatureKey, fromQuestion.reducer),
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
@@ -79,7 +79,7 @@ const ICONS = [MinusCircleOutline, PlusOutline];
       extend: true,
     }),
   ],
-  declarations: [QuestionsComponent, QuestionsCreateComponent, QuestionsEditComponent, QuestionsFormComponent],
+  declarations: [QuestionsComponent, QuestionsCreateComponent],
   providers: [QuestionsSandbox],
 })
 export class QuestionsModule {}

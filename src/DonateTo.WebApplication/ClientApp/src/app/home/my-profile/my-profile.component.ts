@@ -23,6 +23,7 @@ export class MyProfileComponent implements OnInit {
     { row: 'UserProfile.RepeatPassword', value: '' },
   ];
 
+  isEdit = false;
   isEnable = false;
 
   constructor() {}
@@ -33,19 +34,15 @@ export class MyProfileComponent implements OnInit {
     this.isEnable = !this.isEnable;
   }
 
-  saveGeneralInformation() {}
+  edit() {
+    this.isEdit = true;
+  }
+  saveGeneralInformation() {
+    this.isEdit = false;
+  }
 
   cancelGeneralInformation() {
-    this.listOfRow = [
-      { row: 'UserProfile.Name', value: 'Charly Brown' },
-      { row: 'UserProfile.Phone', value: '5472323456' },
-      { row: 'UserProfile.Country', value: 'United State' },
-      { row: 'UserProfile.State', value: 'Ohio' },
-      { row: 'UserProfile.Apartment', value: 'Columbus' },
-      { row: 'UserProfile.Street', value: 'National Rd SE 32' },
-      { row: 'UserProfile.PostalCode', value: '4212' },
-      { row: 'UserProfile.AdditionalInformation', value: 'N/A' },
-    ];
+    this.isEdit = false;
   }
 
   cancelPassword() {

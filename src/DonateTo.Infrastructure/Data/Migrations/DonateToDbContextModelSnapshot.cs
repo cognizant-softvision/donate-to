@@ -230,6 +230,33 @@ namespace DonateTo.Infrastructure.Migrations
                     b.ToTable("Contact");
                 });
 
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.ControlType", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ControlType");
+                });
+
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Country", b =>
                 {
                     b.Property<long>("Id")
@@ -537,8 +564,8 @@ namespace DonateTo.Infrastructure.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("ControlType")
-                        .HasColumnType("text");
+                    b.Property<long>("ControlTypeId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
@@ -569,7 +596,47 @@ namespace DonateTo.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ControlTypeId");
+
                     b.ToTable("Question");
+                });
+
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.QuestionOption", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Label")
+                        .HasColumnType("text");
+
+                    b.Property<long>("QuestionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("UpdateBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("Weight")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("QuestionOption");
                 });
 
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Role", b =>
@@ -1105,6 +1172,24 @@ namespace DonateTo.Infrastructure.Migrations
                     b.HasOne("DonateTo.ApplicationCore.Entities.Contact", "Contact")
                         .WithMany()
                         .HasForeignKey("ContactId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Question", b =>
+                {
+                    b.HasOne("DonateTo.ApplicationCore.Entities.ControlType", "ControlType")
+                        .WithMany()
+                        .HasForeignKey("ControlTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.QuestionOption", b =>
+                {
+                    b.HasOne("DonateTo.ApplicationCore.Entities.Question", "Question")
+                        .WithMany("Options")
+                        .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

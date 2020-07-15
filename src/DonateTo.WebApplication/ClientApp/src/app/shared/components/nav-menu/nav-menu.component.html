@@ -21,7 +21,7 @@
     <li nz-menu-item *ngIf="navMenuSandbox.isAuthenticated">
       <a [routerLink]="['/my-profile']">{{ 'UserProfile.MyProfile' | translate }}</a>
     </li>
-    <li nz-menu-item *ngIf="navMenuSandbox.isAuthenticated && navMenuSandbox.isAdmin">
+    <li nz-menu-item *ngIf="navMenuSandbox.isAuthenticated && navMenuSandbox.isSuperAdmin">
       <a href="/admin"> Admin </a>
     </li>
     <li nz-menu-item *ngIf="navMenuSandbox.isAuthenticated">

@@ -269,7 +269,10 @@
       "Title": "Prioridad de preguntas",
       "Create": {
         "Title": "Crear pregunta de prioridad",
-        "CreateRequest": "Crear pregunta"
+        "CreateRequest": "Crear preguntas"
+      },
+      "Edit": {
+        "Title": "Edit Question"
       },
       "Table": {
         "LabelColumn": "Etiqueta",
@@ -277,7 +280,8 @@
         "OrderColumnColumn": "Orden",
         "WeightColumn": "Peso",
         "ControlTypeColumn": "Tipo Control",
-        "DefaultValueColumn": "Valor default"
+        "DefaultValueColumn": "Valor default",
+        "DeleteQuestion": "Eliminar"
       },
       "Form": {
         "Label": "Etiqueta",
@@ -292,10 +296,36 @@
         "WeightPlaceHolder": "Peso",
         "ControlTypePlaceHolder": "Tipo Control",
         "DefaultValuePlaceHolder": "Valor default",
+        "LabelRequired": "Etiqueta es requerida",
+        "DefaultValueRequired": "Valor default es requerido",
+        "OrderRequired": "Orden es requerido",
+        "WeightRequired": "Peso es requerido",
+        "ControlTypeRequired": "Tipo control es requerido",
         "AddItem": "Agregar Pregunta",
         "PriorityQuestionRequiredError": "Por lo menos una pregunta de prioridad es requerida"
       },
-      "CreateConfirm": "Está seguro de que quiere crear una nueva pregunta?"
+      "CreateConfirm": "Está seguro de que quiere crear una nueva pregunta?",
+      "EditConfirm": "Estas seguro que quieres editar esta pregunta?"
+    },
+    "Question": {
+      "Title": "Preguntas",
+      "CreateConfirm": "Estas seguro que quieres crear una pregunta?",
+      "Table": {
+        "Label": "Título",
+        "Type": "Tipo",
+        "Placeholder": "Marcador",
+        "Weight": "Peso",
+        "Order": "Órden",
+        "Action": "Acción",
+        "Search": "Buscar",
+        "Reset": "Reestablecer",
+        "Filtered": "Filtrada",
+        "Option": {
+          "Label": "Título",
+          "Value": "Valor",
+          "Weight": "Peso"
+        }
+      }
     },
     "ClearFilter": "Limpiar Filtro",
     "ClearFilterAndSorted": "Limpiar Filtro y Orden",
