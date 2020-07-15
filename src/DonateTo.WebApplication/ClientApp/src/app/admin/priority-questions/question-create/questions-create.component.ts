@@ -165,13 +165,19 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
         const questionOption = new QuestionOption();
         questionOption.label = o.optionLabel;
         questionOption.value = o.optionValue;
-        questionOption.weight = o.weight;
+        questionOption.weight = o.optionWeight;
         options = [...options, questionOption];
       }
       questionItem.options = options;
-      console.log('OPTIONS', questionItem.options);
 
-      this.questions = [...this.questions, questionItem];
+      if (this.optionsWeight(questionItem.options) !== true) {
+        this.modal.error({
+          nzTitle: 'Warning',
+          nzContent: 'The weight of each option must sum a total of 100',
+        });
+      } else {
+        this.questions = [...this.questions, questionItem];
+      }
     }
   }
 
@@ -219,5 +225,15 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     if (this.optionsArray.length > 2) {
       const index = this.optionsArray.removeAt(i);
     }
+  }
+
+  optionsWeight(options: QuestionOption[]): boolean {
+    const totalWeight = options.reduce((acc, cur) => acc + cur.weight, 0);
+
+    if (totalWeight !== 100) {
+      return false;
+    }
+
+    return true;
   }
 }
