@@ -47,7 +47,7 @@ namespace DonateTo.Services
 
             if (!string.IsNullOrEmpty(filter.Type))
             {
-                predicate = predicate.And(p => p.ControlType.Contains(filter.Type, StringComparison.InvariantCulture));
+                predicate = predicate.And(p => p.ControlType.Name.Contains(filter.Type, StringComparison.InvariantCulture));
             }
 
 
