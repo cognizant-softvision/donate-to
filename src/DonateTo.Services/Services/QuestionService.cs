@@ -1,20 +1,23 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces;
+using DonateTo.ApplicationCore.Interfaces.Repositories;
+using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models.Filtering;
 using DonateTo.ApplicationCore.Models.Pagination;
 using LinqKit;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DonateTo.Services
 {
-    public class QuestionService : BaseService<Question, QuestionFilterModel>
+    public class QuestionService : BaseService<Question, QuestionFilterModel>, IQuestionService
     {
-        private readonly IRepository<Question> _questionRepository;
+        private readonly IQuestionRepository _questionRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public QuestionService(
-            IRepository<Question> questionRepository,
+            IQuestionRepository questionRepository,
             IUnitOfWork unitOfWork) : base(questionRepository, unitOfWork)
         {
             _questionRepository = questionRepository;
@@ -52,6 +55,16 @@ namespace DonateTo.Services
 
 
             return await _questionRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicate, GetSort(filter)).ConfigureAwait(false);
+        }
+
+        public async Task BulkUpdateAsync(IEnumerable<Question> updatedQuestions)
+        {
+            await _questionRepository.BulkUpdateAsync(updatedQuestions).ConfigureAwait(false);        
+        }
+
+        public void BulkUpdate(IEnumerable<Question> updatedQuestions)
+        {
+            throw new NotImplementedException();
         }
     }
 }
