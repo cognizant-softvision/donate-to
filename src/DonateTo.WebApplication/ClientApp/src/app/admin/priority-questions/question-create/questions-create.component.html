@@ -47,6 +47,11 @@
                   placeholder="{{ 'Admin.PriorityQuestion.Form.DefaultValuePlaceHolder' | translate }}"
                   formControlName="defaultValueFormControl"
                   type="text"
+                  [disabled]="
+                    select.activatedValue == 'RadioButton' ||
+                    select.activatedValue == 'Checkbox' ||
+                    select.activatedValue == 'DropDown'
+                  "
                 />
               </nz-form-control>
             </nz-form-item>
@@ -131,13 +136,8 @@
                       type="number"
                       min="1"
                     />
-                    <i
-                      nz-icon
-                      nzType="minus-circle-o"
-                      class="dynamic-delete-button"
-                      (click)="removeField(o, $event)"
-                    ></i>
                   </nz-form-control>
+                  <i nz-icon nzType="minus-circle-o" class="dynamic-delete-button" (click)="removeField(i, $event)"></i>
                 </ng-container>
               </nz-form-item>
             </nz-radio-group>
@@ -175,7 +175,7 @@
                       nz-icon
                       nzType="minus-circle-o"
                       class="dynamic-delete-button"
-                      (click)="removeField(o, $event)"
+                      (click)="removeField(i, $event)"
                     ></i>
                   </nz-form-control>
                 </ng-container>
@@ -214,7 +214,7 @@
                       nz-icon
                       nzType="minus-circle-o"
                       class="dynamic-delete-button"
-                      (click)="removeField(o, $event)"
+                      (click)="removeField(i, $event)"
                     ></i>
                   </nz-form-control>
                 </ng-container>

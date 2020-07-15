@@ -15,7 +15,7 @@ import { QuestionOption } from 'src/app/shared/models/question-option.modal';
 })
 export class QuestionsCreateComponent implements OnDestroy, OnInit {
   @ViewChild('modalContent') public modalContent: TemplateRef<any>;
-  @Input() questions: QuestionModel[];
+  @Input() questions: QuestionModel[] = [];
   @Output() validationResult = new EventEmitter<QuestionModel[]>();
 
   private subscriptions: Subscription[] = [];
@@ -46,7 +46,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     weightFormControl: new FormControl('', Validators.required),
     orderFormControl: new FormControl('', Validators.required),
     controlTypeFormControl: new FormControl('', Validators.required),
-    defaultValueFormControl: new FormControl('', Validators.required),
+    defaultValueFormControl: new FormControl(''),
     itemsFormControl: new FormControl(),
   });
 
@@ -160,6 +160,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
       questionItem.weight = this.questionItemFormGroup.controls.weightFormControl.value;
       questionItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
 
+      this.optionsArray.removeAt(this.optionsArray.length);
       for (const o of this.optionsArray.value) {
         const questionOption = new QuestionOption();
         questionOption.label = o.optionLabel;
@@ -168,6 +169,8 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
         options = [...options, questionOption];
       }
       questionItem.options = options;
+      console.log('OPTIONS', questionItem.options);
+
       this.questions = [...this.questions, questionItem];
     }
   }
@@ -201,8 +204,8 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     if (e) {
       e.preventDefault();
     }
+
     const group = new FormGroup({
-      id: new FormControl(''),
       optionLabel: new FormControl(''),
       optionValue: new FormControl(''),
       optionWeight: new FormControl(''),
@@ -211,13 +214,10 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     this.optionsArray.push(group);
   }
 
-  removeField(i: { id: number; optionLabel: string; optionValue: string }, e: MouseEvent): void {
+  removeField(i: number, e: MouseEvent): void {
     e.preventDefault();
-    // if (this.optionsArray.length > 2) {
-    //   const index = this.optionsArray.indexOf(i);
-    //   this.optionsArray.splice(index, 1);
-    //   console.log(this.optionsArray);
-    //   this.form.removeControl(i.optionLabel);
-    //
+    if (this.optionsArray.length > 2) {
+      const index = this.optionsArray.removeAt(i);
+    }
   }
 }
