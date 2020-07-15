@@ -1,18 +1,19 @@
-import { Component, EventEmitter, Input, OnDestroy, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { QuestionsSandbox } from '../questions-sandbox';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { Subscription } from 'rxjs';
 import { ColumnItem, QuestionModel } from 'src/app/shared/models';
 import { ControlType, ControlType2LabelMapping } from 'src/app/shared/enum/controlTypes';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { QuestionOption } from 'src/app/shared/models/question-option.modal';
 
 @Component({
   selector: 'app-questions-create',
   templateUrl: './questions-create.component.html',
   styleUrls: ['./questions-create.component.css'],
 })
-export class QuestionsCreateComponent implements OnDestroy {
+export class QuestionsCreateComponent implements OnDestroy, OnInit {
   @ViewChild('modalContent') public modalContent: TemplateRef<any>;
   @Input() questions: QuestionModel[];
   @Output() validationResult = new EventEmitter<QuestionModel[]>();
@@ -25,6 +26,9 @@ export class QuestionsCreateComponent implements OnDestroy {
 
   isErrorModalActive = false;
   tplModal?: NzModalRef;
+  public isOption = false;
+  form!: FormGroup;
+  optionsArray = new FormArray([]);
 
   listOfColumns: ColumnItem[] = [
     { name: 'Admin.PriorityQuestion.Table.LabelColumn' },
@@ -46,7 +50,12 @@ export class QuestionsCreateComponent implements OnDestroy {
     itemsFormControl: new FormControl(),
   });
 
-  constructor(public questionSandbox: QuestionsSandbox, private router: Router, private modal: NzModalService) {
+  constructor(
+    public questionSandbox: QuestionsSandbox,
+    private router: Router,
+    private modal: NzModalService,
+    private formBuilder: FormBuilder
+  ) {
     // this.subscriptions.push(
     //   this.questionSandbox.failAction$.subscribe((status) => {
     //     this.failedStatus = status;
@@ -58,9 +67,17 @@ export class QuestionsCreateComponent implements OnDestroy {
     //   })
     // );
   }
+
+  ngOnInit(): void {
+    this.form = this.formBuilder.group({});
+    this.addField();
+    this.addField();
+  }
+
   ngOnDestroy(): void {
     this.unregisterEvents();
   }
+
   handleRequestResult() {
     if (this.isSubmited) {
       if (this.failedStatus) {
@@ -75,6 +92,7 @@ export class QuestionsCreateComponent implements OnDestroy {
   showModal() {
     this.createTplModal(this.modalContent);
   }
+
   createTplModal(tplContent: TemplateRef<{}>): void {
     this.tplModal = this.modal.create({
       nzContent: tplContent,
@@ -87,16 +105,20 @@ export class QuestionsCreateComponent implements OnDestroy {
       nzWidth: '60%',
     });
   }
+
   hideModal() {
     this.tplModal?.destroy();
   }
+
   createQuestions() {
     this.isSubmited = true;
     this.questionSandbox.updateQuestions(this.questions);
   }
+
   goBack() {
     this.router.navigate(['/admin/priority-questions']);
   }
+
   switchErrorModal() {
     this.isErrorModalActive = !this.isErrorModalActive;
   }
@@ -109,19 +131,28 @@ export class QuestionsCreateComponent implements OnDestroy {
     );
   }
 
-  private validateFormGroup(formGroup: FormGroup) {
+  private validateFormGroup(formGroup: FormGroup, optionGroup: FormGroup) {
     for (const i in formGroup.controls) {
       if (formGroup.controls.hasOwnProperty(i)) {
         formGroup.controls[i].markAsDirty();
         formGroup.controls[i].updateValueAndValidity();
       }
     }
+
+    for (const i in optionGroup.controls) {
+      if (this.form.controls.hasOwnProperty(i)) {
+        this.form.controls[i].markAsDirty();
+        this.form.controls[i].updateValueAndValidity();
+      }
+    }
   }
 
   addQuestion() {
-    this.validateFormGroup(this.questionItemFormGroup);
+    this.validateFormGroup(this.questionItemFormGroup, this.form);
     if (this.questionItemFormGroup.valid) {
       const questionItem = new QuestionModel();
+      let options: QuestionOption[] = [];
+
       questionItem.label = this.questionItemFormGroup.controls.labelFormControl.value;
       questionItem.placeholder = this.questionItemFormGroup.controls.placeholderFormControl.value;
       questionItem.order = this.questionItemFormGroup.controls.orderFormControl.value;
@@ -129,6 +160,14 @@ export class QuestionsCreateComponent implements OnDestroy {
       questionItem.weight = this.questionItemFormGroup.controls.weightFormControl.value;
       questionItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
 
+      for (const o of this.optionsArray.value) {
+        const questionOption = new QuestionOption();
+        questionOption.label = o.optionLabel;
+        questionOption.value = o.optionValue;
+        questionOption.weight = o.weight;
+        options = [...options, questionOption];
+      }
+      questionItem.options = options;
       this.questions = [...this.questions, questionItem];
     }
   }
@@ -148,5 +187,37 @@ export class QuestionsCreateComponent implements OnDestroy {
 
   private unregisterEvents() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+  questionWithOptions(): boolean {
+    if (this.questionItemFormGroup.controls.controlTypeFormControl.value === 'RadioButton') {
+      this.isOption = true;
+    }
+
+    return this.isOption;
+  }
+
+  addField(e?: MouseEvent): void {
+    if (e) {
+      e.preventDefault();
+    }
+    const group = new FormGroup({
+      id: new FormControl(''),
+      optionLabel: new FormControl(''),
+      optionValue: new FormControl(''),
+      optionWeight: new FormControl(''),
+    });
+
+    this.optionsArray.push(group);
+  }
+
+  removeField(i: { id: number; optionLabel: string; optionValue: string }, e: MouseEvent): void {
+    e.preventDefault();
+    // if (this.optionsArray.length > 2) {
+    //   const index = this.optionsArray.indexOf(i);
+    //   this.optionsArray.splice(index, 1);
+    //   console.log(this.optionsArray);
+    //   this.form.removeControl(i.optionLabel);
+    //
   }
 }

@@ -63,3 +63,43 @@
 .priority-question-item {
   margin-bottom: 1em;
 }
+
+.dynamic-delete-button {
+  cursor: pointer;
+  position: relative;
+  top: 4px;
+  font-size: 24px;
+  color: #999;
+  transition: all 0.3s;
+}
+
+.dynamic-delete-button:hover {
+  color: #777;
+}
+
+.option-input-form {
+  width: 40em;
+}
+
+.option-weight {
+  width: 6em;
+  margin-right: 1em;
+}
+
+.option-input {
+  width: 25em;
+  margin-right: 1em;
+}
+
+.option-nz-label {
+  width: 2em;
+}
+
+.add-button {
+  margin-left: 2.5em;
+  width: 32em;
+}
+
+.add-button-dropdown {
+  width: 32em;
+}
