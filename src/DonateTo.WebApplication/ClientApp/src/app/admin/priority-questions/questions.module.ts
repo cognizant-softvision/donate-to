@@ -19,6 +19,7 @@ import { StoreModule } from '@ngrx/store';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import {
   NzDatePickerModule,
+  NzDropDownModule,
   NzEmptyModule,
   NzFormModule,
   NzIconModule,
@@ -54,6 +55,7 @@ const ICONS: IconDefinition[] = [PlusOutline];
     NzTagModule,
     NzRadioModule,
     NzDatePickerModule,
+    NzDropDownModule,
     NzButtonModule,
     NzSelectModule,
     NzInputModule,
