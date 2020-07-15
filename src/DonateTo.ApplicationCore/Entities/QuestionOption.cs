@@ -5,7 +5,7 @@
         public string Label { get; set; }
         public string Value { get; set; }
         public decimal Weight { get; set; }
-        public string QuestionId { get; set; }
+        public long QuestionId { get; set; }
         public Question Question { get; set; }
     }
 }

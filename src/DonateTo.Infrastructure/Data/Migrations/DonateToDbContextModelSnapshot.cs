@@ -588,10 +588,7 @@ namespace DonateTo.Infrastructure.Migrations
                     b.Property<string>("Label")
                         .HasColumnType("text");
 
-                    b.Property<string>("QuestionId")
-                        .HasColumnType("text");
-
-                    b.Property<long?>("QuestionId1")
+                    b.Property<long>("QuestionId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("UpdateBy")
@@ -608,7 +605,7 @@ namespace DonateTo.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("QuestionId1");
+                    b.HasIndex("QuestionId");
 
                     b.ToTable("QuestionOption");
                 });
@@ -1154,7 +1151,9 @@ namespace DonateTo.Infrastructure.Migrations
                 {
                     b.HasOne("DonateTo.ApplicationCore.Entities.Question", "Question")
                         .WithMany("Options")
-                        .HasForeignKey("QuestionId1");
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.RoleClaim", b =>
