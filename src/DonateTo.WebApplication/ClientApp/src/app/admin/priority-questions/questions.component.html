@@ -1,120 +1,122 @@
-<div class="table-operations">
-  <h4 class="section-title">{{ 'Admin.Question.Title' | translate }}</h4>
-  <div class="create-button">
-    <button
-      nz-popconfirm
-      nzPopconfirmTitle="{{ 'Admin.Question.CreateConfirm' | translate }}"
-      nzPopconfirmPlacement="bottom"
-      (nzOnConfirm)="router.navigate(['admin/prioriry-questions/create'])"
-      nz-button
-      nzType="primary"
-    >
-      {{ 'Admin.Create' | translate }}
-    </button>
+<div *ngIf="outlet.isActivated == false">
+  <div class="table-operations">
+    <h4 class="section-title">{{ 'Admin.Question.Title' | translate }}</h4>
+    <div class="create-button">
+      <button
+        nz-popconfirm
+        nzPopconfirmTitle="{{ 'Admin.Question.CreateConfirm' | translate }}"
+        nzPopconfirmPlacement="bottom"
+        (nzOnConfirm)="router.navigate(['admin/priority-questions/create'])"
+        nz-button
+        nzType="primary"
+      >
+        {{ 'Admin.Create' | translate }}
+      </button>
+    </div>
+    <nz-divider></nz-divider>
+    <button nz-button nzType="secondary" (click)="reset()">{{ 'Admin.ClearFilter' | translate }}</button>
   </div>
-  <nz-divider></nz-divider>
-  <button nz-button nzType="secondary" (click)="reset()">{{ 'Admin.ClearFilter' | translate }}</button>
-</div>
-<nz-table
-  #questionsTable
-  [nzData]="questionsList"
-  nzTableLayout="fixed"
-  [nzNoResult]="customTpl"
-  [nzFrontPagination]="false"
-  [nzTotal]="total"
-  [nzPageSize]="pageSize"
-  [nzPageIndex]="pageIndex"
-  (nzQueryParams)="onQueryParamsChange($event)"
->
-  <thead>
-    <tr>
-      <th nzColumnKey="label" [nzSortOrder]="'ascend'" [nzSortFn]="true">
-        {{ 'Admin.Question.Table.Label' | translate }}
-        <label
-          title="{{ 'Admin.Question.Table.Filtered' | translate }}"
-          *ngIf="searchLabelValue.length > 0 && !labelVisible"
-        >
-          ({{ searchLabelValue }})
-        </label>
-        <nz-filter-trigger
-          [(nzVisible)]="labelVisible"
-          [nzActive]="searchLabelValue.length > 0"
-          [nzDropdownMenu]="searchLabelMenu"
-        >
-          <i nz-icon nzType="search"></i>
-        </nz-filter-trigger>
-      </th>
-      <th [nzSortFn]="true">
-        {{ 'Admin.Question.Table.Type' | translate }}
-        <label
-          title="{{ 'Admin.Question.Table.Filtered' | translate }}"
-          *ngIf="searchTypeValue.length > 0 && !typeVisible"
-        >
-          ({{ searchTypeValue }})
-        </label>
-        <nz-filter-trigger
-          [(nzVisible)]="typeVisible"
-          [nzActive]="searchTypeValue.length > 0"
-          [nzDropdownMenu]="searchTypeMenu"
-        >
-          <i nz-icon nzType="search"></i>
-        </nz-filter-trigger>
-      </th>
-      <th [nzSortFn]="true">
-        {{ 'Admin.Question.Table.Placeholder' | translate }}
-        <label
-          title="{{ 'Admin.Question.Table.Filtered' | translate }}"
-          *ngIf="searchPlaceholderValue.length > 0 && !placeholderVisible"
-        >
-          ({{ searchPlaceholderValue }})
-        </label>
-        <nz-filter-trigger
-          [(nzVisible)]="placeholderVisible"
-          [nzActive]="searchPlaceholderValue.length > 0"
-          [nzDropdownMenu]="searchPlaceholderMenu"
-        >
-          <i nz-icon nzType="search"></i>
-        </nz-filter-trigger>
-      </th>
-      <th [nzSortFn]="true">{{ 'Admin.Question.Table.Weight' | translate }}</th>
-      <th [nzSortFn]="true">{{ 'Admin.Question.Table.Order' | translate }}</th>
-      <th>{{ 'Admin.Question.Table.Action' | translate }}</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <ng-container *ngFor="let data of questionsTable.data">
+  <nz-table
+    #questionsTable
+    [nzData]="questionsList"
+    nzTableLayout="fixed"
+    [nzNoResult]="customTpl"
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [nzPageSize]="pageSize"
+    [nzPageIndex]="pageIndex"
+    (nzQueryParams)="onQueryParamsChange($event)"
+  >
+    <thead>
       <tr>
-        <td [nzExpand]="expandSet.has(data.id)" (nzExpandChange)="onExpandChange(data.id, $event)"></td>
-        <td>{{ data.label }}</td>
-        <td>{{ data.controlType }}</td>
-        <td>{{ data.placeholder }}</td>
-        <td>{{ data.weight }}</td>
-        <td>{{ data.order }}</td>
+        <th nzColumnKey="label" [nzSortOrder]="'ascend'" [nzSortFn]="true">
+          {{ 'Admin.Question.Table.Label' | translate }}
+          <label
+            title="{{ 'Admin.Question.Table.Filtered' | translate }}"
+            *ngIf="searchLabelValue.length > 0 && !labelVisible"
+          >
+            ({{ searchLabelValue }})
+          </label>
+          <nz-filter-trigger
+            [(nzVisible)]="labelVisible"
+            [nzActive]="searchLabelValue.length > 0"
+            [nzDropdownMenu]="searchLabelMenu"
+          >
+            <i nz-icon nzType="search"></i>
+          </nz-filter-trigger>
+        </th>
+        <th [nzSortFn]="true">
+          {{ 'Admin.Question.Table.Type' | translate }}
+          <label
+            title="{{ 'Admin.Question.Table.Filtered' | translate }}"
+            *ngIf="searchTypeValue.length > 0 && !typeVisible"
+          >
+            ({{ searchTypeValue }})
+          </label>
+          <nz-filter-trigger
+            [(nzVisible)]="typeVisible"
+            [nzActive]="searchTypeValue.length > 0"
+            [nzDropdownMenu]="searchTypeMenu"
+          >
+            <i nz-icon nzType="search"></i>
+          </nz-filter-trigger>
+        </th>
+        <th [nzSortFn]="true">
+          {{ 'Admin.Question.Table.Placeholder' | translate }}
+          <label
+            title="{{ 'Admin.Question.Table.Filtered' | translate }}"
+            *ngIf="searchPlaceholderValue.length > 0 && !placeholderVisible"
+          >
+            ({{ searchPlaceholderValue }})
+          </label>
+          <nz-filter-trigger
+            [(nzVisible)]="placeholderVisible"
+            [nzActive]="searchPlaceholderValue.length > 0"
+            [nzDropdownMenu]="searchPlaceholderMenu"
+          >
+            <i nz-icon nzType="search"></i>
+          </nz-filter-trigger>
+        </th>
+        <th [nzSortFn]="true">{{ 'Admin.Question.Table.Weight' | translate }}</th>
+        <th [nzSortFn]="true">{{ 'Admin.Question.Table.Order' | translate }}</th>
+        <th>{{ 'Admin.Question.Table.Action' | translate }}</th>
       </tr>
-      <tr [nzExpand]="expandSet.has(data.id)">
-        <td>
-          <table>
-            <thead>
-              <tr>
-                <th>{{ 'Admin.Question.Table.Option.Label' | translate }}</th>
-                <th>{{ 'Admin.Question.Table.Option.Value' | translate }}</th>
-                <th>{{ 'Admin.Question.Table.Option.Weight' | translate }}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let opt of data.options">
-                <td>{{ opt.label }}</td>
-                <td>{{ opt.value }}</td>
-                <td>{{ opt.weight }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </td>
-      </tr>
-    </ng-container>
-  </tbody>
-</nz-table>
+    </thead>
+
+    <tbody>
+      <ng-container *ngFor="let data of questionsTable.data">
+        <tr>
+          <td [nzExpand]="expandSet.has(data.id)" (nzExpandChange)="onExpandChange(data.id, $event)"></td>
+          <td>{{ data.label }}</td>
+          <td>{{ data.controlType }}</td>
+          <td>{{ data.placeholder }}</td>
+          <td>{{ data.weight }}</td>
+          <td>{{ data.order }}</td>
+        </tr>
+        <tr [nzExpand]="expandSet.has(data.id)">
+          <td>
+            <table>
+              <thead>
+                <tr>
+                  <th>{{ 'Admin.Question.Table.Option.Label' | translate }}</th>
+                  <th>{{ 'Admin.Question.Table.Option.Value' | translate }}</th>
+                  <th>{{ 'Admin.Question.Table.Option.Weight' | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let opt of data.options">
+                  <td>{{ opt.label }}</td>
+                  <td>{{ opt.value }}</td>
+                  <td>{{ opt.weight }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </nz-table>
+</div>
 
 <nz-dropdown-menu #searchLabelMenu="nzDropdownMenu">
   <div class="ant-table-filter-dropdown">
@@ -172,6 +174,8 @@
     </div>
   </div>
 </nz-dropdown-menu>
+
+<router-outlet #outlet="outlet"></router-outlet>
 
 <ng-template #customTpl let-name>
   <div style="text-align: center;">
