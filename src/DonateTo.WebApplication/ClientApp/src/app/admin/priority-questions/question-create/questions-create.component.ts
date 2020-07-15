@@ -13,17 +13,18 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./questions-create.component.css'],
 })
 export class QuestionsCreateComponent implements OnDestroy {
+  @ViewChild('modalContent') public modalContent: TemplateRef<any>;
+  @Input() questions: QuestionModel[];
+  @Output() validationResult = new EventEmitter<QuestionModel[]>();
+
   private subscriptions: Subscription[] = [];
   private isSubmited = false;
   private failedStatus = false;
-  isErrorModalActive = false;
-  @ViewChild('modalContent') public modalContent: TemplateRef<any>;
-  tplModal?: NzModalRef;
   public ControlType2LabelMapping = ControlType2LabelMapping;
   public controlTypes = Object.values(ControlType);
 
-  @Input() questions: QuestionModel[];
-  @Output() validationResult = new EventEmitter<QuestionModel[]>();
+  isErrorModalActive = false;
+  tplModal?: NzModalRef;
 
   listOfColumns: ColumnItem[] = [
     { name: 'Admin.PriorityQuestion.Table.LabelColumn' },
@@ -44,6 +45,7 @@ export class QuestionsCreateComponent implements OnDestroy {
     defaultValueFormControl: new FormControl('', Validators.required),
     itemsFormControl: new FormControl(),
   });
+
   constructor(public questionSandbox: QuestionsSandbox, private router: Router, private modal: NzModalService) {
     // this.subscriptions.push(
     //   this.questionSandbox.failAction$.subscribe((status) => {
