@@ -23,14 +23,14 @@ namespace DonateTo.Services
 
         public override async Task<PagedResult<Question>> GetPagedFilteredAsync(QuestionFilterModel filter)
         {
-            var predicate = PredicateBuilder.New<Question>();
+            var predicate = PredicateBuilder.New<Question>(true);
 
-            if (filter.UpdateDateBegin != null)
+            if (filter.UpdateDateBegin != null && filter.UpdateDateBegin != DateTime.MinValue)
             {
                 predicate = predicate.Or(p => p.UpdateDate >= filter.UpdateDateBegin);
             }
 
-            if (filter.UpdateDateEnd != null)
+            if (filter.UpdateDateEnd != null && filter.UpdateDateEnd != DateTime.MinValue)
             {
                 predicate = predicate.Or(p => p.UpdateDate <= filter.UpdateDateEnd);
             }

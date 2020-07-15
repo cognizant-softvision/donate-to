@@ -23,7 +23,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   labelVisible = false;
   typeVisible = false;
   placeholderVisible = false;
-  questionFilter = new QuestionFilter();
+  questionFilter: QuestionFilter;
   expandSet = new Set<number>();
   private isSubmited = false;
   private subscriptions: Subscription[] = [];
@@ -32,6 +32,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   constructor(private questionSandbox: QuestionSandbox, public router: Router) {}
 
   ngOnInit(): void {
+    this.questionFilter = new QuestionFilter();
     this.questionSandbox.loadQuestionsFilteredPaged(this.questionFilter);
 
     this.subscriptions.push(
@@ -56,14 +57,20 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
   onQueryParamsChange(params: NzTableQueryParams): void {
     const { pageSize, pageIndex, sort, filter } = params;
-    this.questionFilter.pageSize = pageSize;
-    this.questionFilter.pageNumber = pageIndex;
     const currentSort = sort.find((item) => item.value !== null);
-    this.questionFilter.orderBy = (currentSort && currentSort.key) || null;
-    this.questionFilter.orderDirection = (currentSort && currentSort.value) || null;
-    this.questionFilter.label = filter.find((f) => f.key === 'label').value;
-    this.questionFilter.type = filter.find((f) => f.key === 'type').value;
-    this.questionFilter.placeholder = filter.find((f) => f.key === 'placeholder').value;
+
+    this.questionFilter = {
+      pageSize: pageSize,
+      pageNumber: pageIndex,
+      orderBy: (currentSort && currentSort.key) || '',
+      orderDirection: (currentSort && currentSort.value) || '',
+      label: (filter && filter.find((f) => f.key === 'label')?.value) || '',
+      type: (filter && filter.find((f) => f.key === 'type')?.value) || '',
+      placeholder: (filter && filter.find((f) => f.key === 'placeholder')?.value) || '',
+      updateDateBegin: null,
+      updateDateEnd: null,
+    };
+
     this.questionSandbox.loadQuestionsFilteredPaged(this.questionFilter);
   }
 
