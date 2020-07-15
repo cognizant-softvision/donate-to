@@ -35,7 +35,7 @@ export class QuestionService extends BaseHttpClientService<QuestionModel> {
   }
 
   createQuestions(question: QuestionModel[]): Observable<QuestionModel[]> {
-    return this.httpClient.post<QuestionModel[]>(
+    return this.httpClient.put<QuestionModel[]>(
       `${this.url}/${this.endpoint}`,
       JSON.stringify(question),
       this.httpOptions

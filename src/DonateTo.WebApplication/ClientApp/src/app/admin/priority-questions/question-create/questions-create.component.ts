@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { QuestionsSandbox } from '../questions-sandbox';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd';
@@ -14,8 +14,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class QuestionsCreateComponent implements OnDestroy {
   @ViewChild('modalContent') public modalContent: TemplateRef<any>;
-  @Input() questions: QuestionModel[];
-  @Output() validationResult = new EventEmitter<QuestionModel[]>();
+  questions: QuestionModel[] = [];
 
   private subscriptions: Subscription[] = [];
   private isSubmited = false;
@@ -46,21 +45,12 @@ export class QuestionsCreateComponent implements OnDestroy {
     itemsFormControl: new FormControl(),
   });
 
-  constructor(public questionSandbox: QuestionsSandbox, private router: Router, private modal: NzModalService) {
-    // this.subscriptions.push(
-    //   this.questionSandbox.failAction$.subscribe((status) => {
-    //     this.failedStatus = status;
-    //   })
-    // );
-    // this.subscriptions.push(
-    //   this.questionSandbox.loadAction$.subscribe((_) => {
-    //     this.handleRequestResult();
-    //   })
-    // );
-  }
+  constructor(public questionSandbox: QuestionsSandbox, private router: Router, private modal: NzModalService) {}
+
   ngOnDestroy(): void {
     this.unregisterEvents();
   }
+
   handleRequestResult() {
     if (this.isSubmited) {
       if (this.failedStatus) {
@@ -75,6 +65,7 @@ export class QuestionsCreateComponent implements OnDestroy {
   showModal() {
     this.createTplModal(this.modalContent);
   }
+
   createTplModal(tplContent: TemplateRef<{}>): void {
     this.tplModal = this.modal.create({
       nzContent: tplContent,
@@ -87,26 +78,22 @@ export class QuestionsCreateComponent implements OnDestroy {
       nzWidth: '60%',
     });
   }
+
   hideModal() {
     this.tplModal?.destroy();
   }
+
   createQuestions() {
     this.isSubmited = true;
     this.questionSandbox.updateQuestions(this.questions);
   }
+
   goBack() {
     this.router.navigate(['/admin/priority-questions']);
   }
+
   switchErrorModal() {
     this.isErrorModalActive = !this.isErrorModalActive;
-  }
-
-  private sandBoxSubscriptionInit(): void {
-    this.subscriptions.push(
-      this.questionSandbox.questions$.subscribe((questions) => {
-        this.questions = questions;
-      })
-    );
   }
 
   private validateFormGroup(formGroup: FormGroup) {
