@@ -1,7 +1,5 @@
-import { QuestionsFormComponent } from './questions-form/questions-form.component';
 import { QuestionEffects } from '../../shared/store/question/effects';
 import { HttpLoaderFactory } from '../../app.module';
-import { QuestionsEditComponent } from './question-edit/questions-edit.component';
 import { QuestionsCreateComponent } from './question-create/questions-create.component';
 import es from '@angular/common/locales/es';
 import { CommonModule, registerLocaleData } from '@angular/common';
@@ -77,7 +75,7 @@ const ICONS: IconDefinition[] = [PlusOutline];
       extend: true,
     }),
   ],
-  declarations: [QuestionsComponent, QuestionsCreateComponent, QuestionsEditComponent, QuestionsFormComponent],
+  declarations: [QuestionsComponent, QuestionsCreateComponent],
   providers: [QuestionsSandbox],
 })
 export class QuestionsModule {}

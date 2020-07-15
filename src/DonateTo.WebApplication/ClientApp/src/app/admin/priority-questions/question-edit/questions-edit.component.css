@@ -1,9 +1,0 @@
-.create-priority-question-title {
-  display: flex;
-  justify-content: space-between;
-}
-
-.create-priority-question-form-buttons {
-  display: flex;
-  justify-content: flex-end;
-}
