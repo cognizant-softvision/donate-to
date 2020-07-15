@@ -1,5 +1,6 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces;
+using DonateTo.ApplicationCore.Interfaces.Repositories;
 using DonateTo.Infrastructure.Data.EntityFramework;
 using DonateTo.Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -37,7 +38,7 @@ namespace DonateTo.Infrastructure.Extensions
             services.AddScoped<IRepository<State>, StateRepository>();
             services.AddScoped<IRepository<City>, CityRepository>();
             services.AddScoped<ISearchRepository, PostgresSearchRepository>();
-            services.AddScoped<IRepository<Question>, QuestionRepository>();
+            services.AddScoped<IQuestionRepository, QuestionRepository>();
         }
     }
 }
