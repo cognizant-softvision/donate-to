@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <Configurations>Debug;Release;QA;Dev</Configurations>
   </PropertyGroup>
 
   <ItemGroup>    
@@ -52,7 +53,7 @@
 
   <Target Name="MyPreCompileTarget" BeforeTargets="Build">
     <Exec WorkingDirectory="$(ProjectDir)\Styles" ContinueOnError="WarnAndContinue" Command="npm i" />
-    <Exec WorkingDirectory="$(ProjectDir)\Styles\node_modules\.bin" ContinueOnError="WarnAndContinue"  Command="./gulp" />
+    <Exec WorkingDirectory="$(ProjectDir)\Styles\node_modules\.bin" ContinueOnError="WarnAndContinue" Command="./gulp" />
   </Target>
 
 </Project>

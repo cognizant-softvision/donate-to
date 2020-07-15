@@ -307,6 +307,26 @@
       "CreateConfirm": "Está seguro de que quiere crear una nueva pregunta?",
       "EditConfirm": "Estas seguro que quieres editar esta pregunta?"
     },
+    "Question": {
+      "Title": "Preguntas",
+      "CreateConfirm": "Estas seguro que quieres crear una pregunta?",
+      "Table": {
+        "Label": "Título",
+        "Type": "Tipo",
+        "Placeholder": "Marcador",
+        "Weight": "Peso",
+        "Order": "Órden",
+        "Action": "Acción",
+        "Search": "Buscar",
+        "Reset": "Reestablecer",
+        "Filtered": "Filtrada",
+        "Option": {
+          "Label": "Título",
+          "Value": "Valor",
+          "Weight": "Peso"
+        }
+      }
+    },
     "ClearFilter": "Limpiar Filtro",
     "ClearFilterAndSorted": "Limpiar Filtro y Orden",
     "Name": "Nombre",

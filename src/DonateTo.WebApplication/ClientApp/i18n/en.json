@@ -307,6 +307,26 @@
       "CreateConfirm": "Are you sure you want to create a new question?",
       "EditConfirm": "Are you sure you want to edit the question?"
     },
+    "Question": {
+      "Title": "Questions",
+      "CreateConfirm": "Are you sure you want to create a question?",
+      "Table": {
+        "Label": "Label",
+        "Type": "Type",
+        "Placeholder": "Placeholder",
+        "Weight": "Weight",
+        "Order": "Order",
+        "Action": "Action",
+        "Search": "Search",
+        "Reset": "Reset",
+        "Filtered": "Filtered",
+        "Option": {
+          "Label": "Label",
+          "Value": "Value",
+          "Weight": "Weight"
+        }
+      }
+    },
     "ClearFilter": "Clear Filter",
     "ClearFilterAndSorted": "Clear Filter and Sorted",
     "Name": "Name",

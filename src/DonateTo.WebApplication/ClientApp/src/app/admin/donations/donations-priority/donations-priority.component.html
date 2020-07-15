@@ -13,12 +13,12 @@
             </div>
             <div *ngSwitchCase="'dropdown'">
               <nz-select [id]="question.key" [formControlName]="question.key">
-                <nz-option *ngFor="let opt of question.options" [nzValue]="opt.key" [nzLabel]="opt.value"></nz-option>
+                <nz-option *ngFor="let opt of question.options" [nzValue]="opt.value" [nzLabel]="opt.label"></nz-option>
               </nz-select>
             </div>
             <div *ngSwitchCase="'radiobutton'">
               <nz-radio-group [formControlName]="question">
-                <label nz-radio [nzValue]="opt.key" *ngFor="let opt of question.options">{{ opt.value }} </label>
+                <label nz-radio [nzValue]="opt.value" *ngFor="let opt of question.options">{{ opt.label }} </label>
               </nz-radio-group>
             </div>
             <div class="errorMessage" *ngIf="!isValid(question)">{{ question.label }} is required</div>
