@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
-import { AuthSandbox } from 'src/app/shared/auth/auth.sandbox';
+import { AuthSandbox } from '../../../../shared/auth/auth.sandbox';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -14,6 +14,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
     { title: 'Admin.Menu.Title.Donation', url: './donations', iconType: 'heart' },
     { title: 'Admin.Menu.Title.User', url: './user', iconType: 'team' },
     { title: 'Admin.Menu.Title.Organization', url: './organization', iconType: 'profile' },
+    { title: 'Admin.Menu.Title.Question', url: './question', iconType: 'question' },
   ];
 
   subscriptions: Subscription[] = [];

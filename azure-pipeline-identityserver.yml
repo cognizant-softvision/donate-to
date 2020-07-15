@@ -10,7 +10,7 @@ pool: DiegoLocalMachine
 variables:
   #  solution: '**/*.sln'
   buildPlatform: "Any CPU"
-  buildConfiguration: "Release"
+  buildConfiguration: 'Dev'
 
 steps:
   - task: DotNetCoreCLI@2
