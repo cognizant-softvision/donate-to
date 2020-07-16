@@ -24,33 +24,35 @@ namespace DonateTo.Services
             _unitOfWork = unitOfWork;
         }
 
+        ///<inheritdoc cref="BaseService{Question, QuestionFilterModel}"/>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "<Pending>")]
         public override async Task<PagedResult<Question>> GetPagedFilteredAsync(QuestionFilterModel filter)
         {
-            var predicate = PredicateBuilder.New<Question>();
+            var predicate = PredicateBuilder.New<Question>(true);
 
-            if (filter.UpdateDateBegin != null)
+            if (filter.UpdateDateBegin != null && filter.UpdateDateBegin != DateTime.MinValue)
             {
                 predicate = predicate.Or(p => p.UpdateDate >= filter.UpdateDateBegin);
             }
 
-            if (filter.UpdateDateEnd != null)
+            if (filter.UpdateDateEnd != null && filter.UpdateDateEnd != DateTime.MinValue)
             {
                 predicate = predicate.Or(p => p.UpdateDate <= filter.UpdateDateEnd);
             }
 
             if (!string.IsNullOrEmpty(filter.Label))
             {
-                predicate = predicate.And(p => p.Label.Contains(filter.Label, StringComparison.InvariantCulture));
+                predicate = predicate.And(p => p.Label.Contains(filter.Label));
             }
 
             if (!string.IsNullOrEmpty(filter.Placeholder))
             {
-                predicate = predicate.And(p => p.Placeholder.Contains(filter.Placeholder, StringComparison.InvariantCulture));
+                predicate = predicate.And(p => p.Placeholder.Contains(filter.Placeholder));
             }
 
             if (!string.IsNullOrEmpty(filter.Type))
             {
-                predicate = predicate.And(p => p.ControlType.Name.Contains(filter.Type, StringComparison.InvariantCulture));
+                predicate = predicate.And(p => p.ControlType.Name.Contains(filter.Type));
             }
 
 

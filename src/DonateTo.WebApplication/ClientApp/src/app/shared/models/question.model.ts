@@ -1,4 +1,5 @@
 import { BaseModel } from './base.model';
+import { QuestionOption } from './question-option.modal';
 import { ControlTypeModel } from './control-type.model';
 
 export class QuestionModel extends BaseModel {
@@ -6,8 +7,6 @@ export class QuestionModel extends BaseModel {
   label: string;
   order: number;
   controlType: ControlTypeModel;
-  controlTypeId: number;
-  placeholder: string;
-  weight: number;
-  defaultValue: string;
+  type: string;
+  options: QuestionOption[];
 }
