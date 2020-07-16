@@ -37,6 +37,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     { name: 'Admin.PriorityQuestion.Table.WeightColumn' },
     { name: 'Admin.PriorityQuestion.Table.ControlTypeColumn' },
     { name: 'Admin.PriorityQuestion.Table.DefaultValueColumn' },
+    { name: 'Admin.PriorityQuestion.Table.OptionsColumn' },
     { name: 'Admin.Action' },
   ];
 

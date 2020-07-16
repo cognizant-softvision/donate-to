@@ -243,6 +243,7 @@
         {{ 'Admin.PriorityQuestion.Form.AddItem' | translate }}
       </button>
     </div>
+
     <span class="item-required">{{ 'Admin.PriorityQuestion.Form.PriorityQuestionRequiredError' | translate }}</span>
     <br />
     <nz-form-item>
@@ -270,6 +271,9 @@
                 <td>{{ item.weight }}</td>
                 <td>{{ item.controlType }}</td>
                 <td>{{ item.defaultValue }}</td>
+                <td>
+                  <p *ngFor="let option of item.options">{{ option.label }}</p>
+                </td>
                 <td>
                   <a (click)="removeQuestion(item)">{{ 'Admin.PriorityQuestion.Table.DeleteQuestion' | translate }}</a>
                 </td>
