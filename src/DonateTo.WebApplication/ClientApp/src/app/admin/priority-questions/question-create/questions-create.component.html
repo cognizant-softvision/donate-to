@@ -277,9 +277,6 @@
                 <td>{{ item.controlType?.name }}</td>
                 <td>{{ item.defaultValue }}</td>
                 <td>
-                  <span *ngFor="let option of item.options"> {{ option.label }} -</span>
-                </td>
-                <td>
                   <a (click)="editQuestion(item)">{{ 'Admin.PriorityQuestion.Table.EditQuestion' | translate }}</a>
                   <nz-divider nzType="vertical"></nz-divider>
                   <a (click)="removeQuestion(item)">{{ 'Admin.PriorityQuestion.Table.DeleteQuestion' | translate }}</a>
