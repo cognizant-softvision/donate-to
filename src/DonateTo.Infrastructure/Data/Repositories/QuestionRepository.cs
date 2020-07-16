@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DonateTo.Infrastructure.Data.Repositories
 {
-    public sealed class QuestionRepository : EntityFrameworkRepository<Question, DonateToDbContext>, IQuestionRepository
+    public class QuestionRepository : EntityFrameworkRepository<Question, DonateToDbContext>, IQuestionRepository
     {
         public QuestionRepository(DonateToDbContext dbContext) : base(dbContext) { }
 
