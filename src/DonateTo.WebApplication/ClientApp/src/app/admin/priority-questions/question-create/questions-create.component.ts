@@ -44,6 +44,7 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.questionSandbox.loadControlTypes();
+    this.questionSandbox.loadQuestions();
     this.registerEvents();
   }
 
@@ -51,6 +52,8 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.questionSandbox.controlTypes$.subscribe((controlTypes) => (this.controlTypes = controlTypes))
     );
+
+    this.subscriptions.push(this.questionSandbox.questions$.subscribe((questions) => (this.questions = questions)));
   }
 
   ngOnDestroy(): void {
@@ -69,6 +72,9 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
 
   createQuestions() {
     this.isSubmited = true;
+    this.questions.forEach((question) => {
+      question.controlType = undefined;
+    });
     this.questionSandbox.updateQuestions(this.questions);
   }
 
@@ -93,8 +99,10 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
       questionItem.placeholder = this.questionItemFormGroup.controls.placeholderFormControl.value;
       questionItem.order = this.questionItemFormGroup.controls.orderFormControl.value;
       questionItem.controlType = new ControlTypeModel();
-      questionItem.controlType.id = this.questionItemFormGroup.controls.controlTypeFormControl.value;
-      // questionItem.controlType.name = this.controlTypes.find(controlType => controlType.id ===  questionItem.controlType.id)[0].name
+      questionItem.controlTypeId = this.questionItemFormGroup.controls.controlTypeFormControl.value;
+      questionItem.controlType = this.controlTypes.find(
+        (controlType) => controlType.id === questionItem.controlTypeId
+      )[0];
       questionItem.weight = this.questionItemFormGroup.controls.weightFormControl.value;
       questionItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
 

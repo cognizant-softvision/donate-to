@@ -1,6 +1,7 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces.Repositories;
 using DonateTo.Infrastructure.Data.EntityFramework;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,16 +18,16 @@ namespace DonateTo.Infrastructure.Data.Repositories
             throw new System.NotImplementedException();
         }
 
-        async Task IQuestionRepository.BulkUpdateAsync(IEnumerable<Question> updatedQuestions)
+        public async Task BulkUpdateAsync(IEnumerable<Question> updatedQuestions)
         {
             using var transaction = DbContext.Database.BeginTransaction();
 
             try
             {
-                var removedQuestions = Get(null)
+                var removedQuestions = await Get(null)
                     .Where(q => !updatedQuestions
                     .Select(uq => uq.Id)
-                    .Contains(q.Id));
+                    .Contains(q.Id)).ToListAsync().ConfigureAwait(false);
 
                 var addedQuestions = updatedQuestions.Where(uq => uq.Id == 0);
 
@@ -47,11 +48,13 @@ namespace DonateTo.Infrastructure.Data.Repositories
                     await UpdateAsync(question).ConfigureAwait(false);
                 }
 
+                await DbContext.SaveChangesAsync().ConfigureAwait(false);
                 await transaction.CommitAsync().ConfigureAwait(false);
             }
             catch (Exception e)
             {
                 await transaction.RollbackAsync().ConfigureAwait(false);
+                throw;
             }
         }
     }

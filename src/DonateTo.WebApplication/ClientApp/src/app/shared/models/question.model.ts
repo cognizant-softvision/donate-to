@@ -6,6 +6,7 @@ export class QuestionModel extends BaseModel {
   label: string;
   order: number;
   controlType: ControlTypeModel;
+  controlTypeId: number;
   placeholder: string;
   weight: number;
   defaultValue: string;

@@ -20,10 +20,10 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   searchLabelValue = '';
   searchTypeValue = '';
   searchPlaceholderValue = '';
+  questionFilter = new QuestionFilter();
   labelVisible = false;
   typeVisible = false;
   placeholderVisible = false;
-  questionFilter = new QuestionFilter();
   expandSet = new Set<number>();
   private isSubmited = false;
   private subscriptions: Subscription[] = [];
@@ -34,8 +34,14 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions.push(
       this.questionSandbox.questionsPagedFiltered$.subscribe((res) => {
-        this.total = res.rowCount;
+        // this.total = res.rowCount;
         this.questionsList = res.results;
+      })
+    );
+
+    this.subscriptions.push(
+      this.questionSandbox.questions$.subscribe((questions) => {
+        this.questionsList = questions;
       })
     );
 
@@ -50,18 +56,22 @@ export class QuestionsComponent implements OnInit, OnDestroy {
         this.handleRequestResult();
       })
     );
+
+    this.questionSandbox.loadQuestions();
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
     const { pageSize, pageIndex, sort, filter } = params;
-    this.questionFilter.pageSize = pageSize;
-    this.questionFilter.pageNumber = pageIndex;
+    let questionFilter = new QuestionFilter();
+    questionFilter.pageSize = pageSize;
+    questionFilter.pageNumber = pageIndex;
     const currentSort = sort.find((item) => item.value !== null);
-    this.questionFilter.orderBy = (currentSort && currentSort.key) || null;
-    this.questionFilter.orderDirection = (currentSort && currentSort.value) || null;
-    this.questionFilter.label = filter.find((f) => f.key === 'label')?.value;
-    this.questionFilter.type = filter.find((f) => f.key === 'type')?.value;
-    this.questionFilter.placeholder = filter.find((f) => f.key === 'placeholder')?.value;
+    questionFilter.orderBy = (currentSort && currentSort.key) || null;
+    questionFilter.orderDirection = (currentSort && currentSort.value) || null;
+    questionFilter.label = filter.find((f) => f.key === 'label')?.value;
+    questionFilter.type = filter.find((f) => f.key === 'type')?.value;
+    questionFilter.placeholder = filter.find((f) => f.key === 'placeholder')?.value;
+    this.questionFilter = questionFilter;
     this.questionSandbox.loadQuestionsFilteredPaged(this.questionFilter);
   }
 
