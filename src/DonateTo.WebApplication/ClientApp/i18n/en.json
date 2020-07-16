@@ -281,7 +281,8 @@
         "WeightColumn": "Weight",
         "ControlTypeColumn": "Control Type",
         "DefaultValueColumn": "Default Value",
-        "DeleteQuestion": "Delete"
+        "DeleteQuestion": "Delete",
+        "EditQuestion": "Edit"
       },
       "Form": {
         "Label": "Label",

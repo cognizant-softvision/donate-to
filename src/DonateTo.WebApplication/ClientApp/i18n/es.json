@@ -281,7 +281,8 @@
         "WeightColumn": "Peso",
         "ControlTypeColumn": "Tipo Control",
         "DefaultValueColumn": "Valor default",
-        "DeleteQuestion": "Eliminar"
+        "DeleteQuestion": "Eliminar",
+        "EditQuestion": "Editar"
       },
       "Form": {
         "Label": "Etiqueta",

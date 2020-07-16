@@ -26,6 +26,7 @@
                 placeholder="{{ 'Admin.PriorityQuestion.Form.LabelPlaceHolder' | translate }}"
                 formControlName="labelFormControl"
                 type="text"
+                [(ngModel)]="label"
               />
             </nz-form-control>
           </nz-form-item>
@@ -36,6 +37,7 @@
                 placeholder="{{ 'Admin.PriorityQuestion.Form.PlaceholderPlaceHolder' | translate }}"
                 formControlName="placeholderFormControl"
                 type="text"
+                [(ngModel)]="placeholder"
               />
             </nz-form-control>
           </nz-form-item>
@@ -47,6 +49,7 @@
                   placeholder="{{ 'Admin.PriorityQuestion.Form.DefaultValuePlaceHolder' | translate }}"
                   formControlName="defaultValueFormControl"
                   type="text"
+                  [(ngModel)]="defaultValue"
                 />
               </nz-form-control>
             </nz-form-item>
@@ -75,6 +78,7 @@
                   placeholder="{{ 'Admin.PriorityQuestion.Form.OrderPlaceHolder' | translate }}"
                   formControlName="orderFormControl"
                   type="number"
+                  [(ngModel)]="order"
                   min="1"
                 />
               </nz-form-control>
@@ -90,6 +94,7 @@
                   formControlName="weightFormControl"
                   type="number"
                   min="1"
+                  [(ngModel)]="weight"
                   max="100"
                 />
               </nz-form-control>
@@ -101,6 +106,7 @@
               <nz-select
                 formControlName="controlTypeFormControl"
                 nzPlaceHolder="{{ 'Admin.PriorityQuestion.Form.ControlTypePlaceHolder' | translate }}"
+                [(ngModel)]="controlTypeId"
               >
                 <nz-option
                   *ngFor="let controlType of this.questionSandbox.controlTypes$ | async"
@@ -152,6 +158,7 @@
                 <td>{{ item.defaultValue }}</td>
                 <td>
                   <a (click)="removeQuestion(item)">{{ 'Admin.PriorityQuestion.Table.DeleteQuestion' | translate }}</a>
+                  <a (click)="editQuestion(item)">{{ 'Admin.PriorityQuestion.Table.EditQuestion' | translate }}</a>
                 </td>
               </tr>
             </tbody>

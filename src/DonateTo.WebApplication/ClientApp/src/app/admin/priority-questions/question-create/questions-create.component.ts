@@ -20,6 +20,15 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
   private failedStatus = false;
   private controlTypes: ControlTypeModel[] = [];
 
+  label = '';
+  placeholder = '';
+  weight = 0;
+  order = 0;
+  defaultValue = '';
+  controlTypeId = 0;
+  questionId = 0;
+  isEdit = false;
+
   listOfColumns: ColumnItem[] = [
     { name: 'Admin.PriorityQuestion.Table.LabelColumn' },
     { name: 'Admin.PriorityQuestion.Table.PlaceholderColumn' },
@@ -91,22 +100,63 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
     }
   }
 
+  editQuestion(item: QuestionModel) {
+    this.label = item.label;
+    this.placeholder = item.placeholder;
+    this.weight = item.weight;
+    this.order = item.order;
+    this.defaultValue = item.defaultValue;
+    this.controlTypeId = item.controlTypeId;
+    this.questionId = item.id;
+    this.isEdit = true;
+  }
+
   addQuestion() {
     this.validateFormGroup(this.questionItemFormGroup);
     if (this.questionItemFormGroup.valid) {
       const questionItem = new QuestionModel();
-      questionItem.label = this.questionItemFormGroup.controls.labelFormControl.value;
-      questionItem.placeholder = this.questionItemFormGroup.controls.placeholderFormControl.value;
-      questionItem.order = this.questionItemFormGroup.controls.orderFormControl.value;
-      questionItem.controlType = new ControlTypeModel();
-      questionItem.controlTypeId = this.questionItemFormGroup.controls.controlTypeFormControl.value;
-      questionItem.controlType = this.controlTypes.find(
-        (controlType) => controlType.id === questionItem.controlTypeId
-      )[0];
-      questionItem.weight = this.questionItemFormGroup.controls.weightFormControl.value;
-      questionItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
+      if (this.isEdit) {
+        const questionSavedItem = this.questions.find((q) => q.id === this.questionId);
+        questionItem.label = this.questionItemFormGroup.controls.labelFormControl.value;
+        questionItem.placeholder = this.questionItemFormGroup.controls.placeholderFormControl.value;
+        questionItem.order = this.questionItemFormGroup.controls.orderFormControl.value;
+        questionItem.controlType = new ControlTypeModel();
+        questionItem.controlTypeId = this.questionItemFormGroup.controls.controlTypeFormControl.value;
+        questionItem.controlType = this.controlTypes.find(
+          (controlType) => controlType.id === questionItem.controlTypeId
+        );
+        questionItem.weight = this.questionItemFormGroup.controls.weightFormControl.value;
+        questionItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
 
-      this.questions = [...this.questions, questionItem];
+        questionItem.id = questionSavedItem.id;
+        questionItem.key = questionSavedItem.key;
+        questionItem.createdBy = questionSavedItem.createdBy;
+        questionItem.createdDate = questionSavedItem.createdDate;
+        questionItem.updateBy = questionSavedItem.updateBy;
+        questionItem.updateDate = questionSavedItem.updateDate;
+
+        this.isEdit = false;
+        this.questionId = 0;
+
+        this.questions.splice(
+          this.questions.findIndex((item) => item.id === this.questionId),
+          1
+        );
+        this.questions = [...this.questions, questionItem];
+      } else {
+        questionItem.label = this.questionItemFormGroup.controls.labelFormControl.value;
+        questionItem.placeholder = this.questionItemFormGroup.controls.placeholderFormControl.value;
+        questionItem.order = this.questionItemFormGroup.controls.orderFormControl.value;
+        questionItem.controlType = new ControlTypeModel();
+        questionItem.controlTypeId = this.questionItemFormGroup.controls.controlTypeFormControl.value;
+        questionItem.controlType = this.controlTypes.find(
+          (controlType) => controlType.id === questionItem.controlTypeId
+        );
+        questionItem.weight = this.questionItemFormGroup.controls.weightFormControl.value;
+        questionItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
+
+        this.questions = [...this.questions, questionItem];
+      }
     }
   }
 
