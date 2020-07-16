@@ -5,4 +5,5 @@ export class QuestionOption extends BaseModel {
   value: string;
   weight: number;
   questionId: number;
+  options: QuestionOption[];
 }
