@@ -170,13 +170,15 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
       }
       questionItem.options = options;
 
-      if (this.optionsWeight(questionItem.options) !== true) {
-        this.modal.error({
-          nzTitle: 'Warning',
-          nzContent: 'The weight of each option must sum a total of 100',
-        });
-      } else {
-        this.questions = [...this.questions, questionItem];
+      if (questionItem.controlType !== ControlType.Textbox) {
+        if (this.optionsWeight(questionItem.options) !== true) {
+          this.modal.error({
+            nzTitle: 'Warning',
+            nzContent: 'The weight of each option must sum a total of 100',
+          });
+        } else {
+          this.questions = [...this.questions, questionItem];
+        }
       }
     }
   }
