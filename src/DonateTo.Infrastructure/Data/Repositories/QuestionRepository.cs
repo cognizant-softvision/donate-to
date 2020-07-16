@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace DonateTo.Infrastructure.Data.Repositories
@@ -57,5 +58,19 @@ namespace DonateTo.Infrastructure.Data.Repositories
                 throw;
             }
         }
+
+        public override IQueryable<Question> Get(Expression<Func<Question, bool>> filter)
+        {
+            return GetHydratedQuestions();
+        }
+
+        #region private
+        private IQueryable<Question> GetHydratedQuestions()
+        {
+            return DbContext.Set<Question>()
+                .Include(q => q.ControlType)
+                .Include(q => q.Options).ThenInclude(o => o.Question);
+        }
+        #endregion
     }
 }
