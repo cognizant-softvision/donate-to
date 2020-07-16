@@ -25,9 +25,9 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   placeholderVisible = false;
   questionFilter: QuestionFilter;
   expandSet = new Set<number>();
-  private isSubmited = false;
+  failedStatus = false;
+  successStatus = false;
   private subscriptions: Subscription[] = [];
-  private failedStatus = false;
 
   constructor(private questionSandbox: QuestionSandbox, public router: Router) {}
 
@@ -49,17 +49,19 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.push(
-      this.questionSandbox.loadAction$.subscribe((_) => {
-        this.handleRequestResult();
+      this.questionSandbox.loadAction$.subscribe((status) => {
+        this.successStatus = status;
       })
     );
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
+    console.log(params);
     const { pageSize, pageIndex, sort, filter } = params;
     const currentSort = sort.find((item) => item.value !== null);
 
     this.questionFilter = {
+      ...this.questionFilter,
       pageSize: pageSize,
       pageNumber: pageIndex,
       orderBy: (currentSort && currentSort.key) || '',
@@ -67,8 +69,6 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       label: (filter && filter.find((f) => f.key === 'label')?.value) || '',
       type: (filter && filter.find((f) => f.key === 'type')?.value) || '',
       placeholder: (filter && filter.find((f) => f.key === 'placeholder')?.value) || '',
-      updateDateBegin: null,
-      updateDateEnd: null,
     };
 
     this.questionSandbox.loadQuestionsFilteredPaged(this.questionFilter);
@@ -82,30 +82,43 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     this.searchLabelValue = '';
     this.searchTypeValue = '';
     this.searchPlaceholderValue = '';
+    this.questionSandbox.loadQuestionsFilteredPaged(this.questionFilter);
   }
 
   resetLabelSearch(): void {
     this.searchLabelValue = '';
+    this.questionFilter = { ...this.questionFilter, label: this.searchLabelValue };
+    this.questionSandbox.loadQuestionsFilteredPaged(this.questionFilter);
   }
 
   resetTypeSearch(): void {
     this.searchTypeValue = '';
+    this.questionFilter = { ...this.questionFilter, type: this.searchTypeValue };
+    this.questionSandbox.loadQuestionsFilteredPaged(this.questionFilter);
   }
 
   resetPlaceholderSearch(): void {
     this.searchPlaceholderValue = '';
+    this.questionFilter = { ...this.questionFilter, placeholder: this.searchPlaceholderValue };
+    this.questionSandbox.loadQuestionsFilteredPaged(this.questionFilter);
   }
 
   searchLabel(): void {
     this.labelVisible = false;
+    this.questionFilter = { ...this.questionFilter, label: this.searchLabelValue };
+    this.questionSandbox.loadQuestionsFilteredPaged(this.questionFilter);
   }
 
   searchType(): void {
     this.typeVisible = false;
+    this.questionFilter = { ...this.questionFilter, type: this.searchTypeValue };
+    this.questionSandbox.loadQuestionsFilteredPaged(this.questionFilter);
   }
 
   searchPlaceholder(): void {
     this.placeholderVisible = false;
+    this.questionFilter = { ...this.questionFilter, placeholder: this.searchPlaceholderValue };
+    this.questionSandbox.loadQuestionsFilteredPaged(this.questionFilter);
   }
 
   onExpandChange(id: number, checked: boolean): void {
@@ -113,15 +126,6 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       this.expandSet.add(id);
     } else {
       this.expandSet.delete(id);
-    }
-  }
-
-  private handleRequestResult() {
-    if (this.isSubmited) {
-      if (!this.failedStatus) {
-        this.questionSandbox.loadQuestionsFilteredPaged(this.questionFilter);
-        this.isSubmited = false;
-      }
     }
   }
 
