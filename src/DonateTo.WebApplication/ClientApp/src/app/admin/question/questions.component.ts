@@ -62,7 +62,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
     this.questionFilter = {
       ...this.questionFilter,
-      pageSize: pageSize,
+      pageSize,
       pageNumber: pageIndex,
       orderBy: (currentSort && currentSort.key) || '',
       orderDirection: (currentSort && currentSort.value) || '',
