@@ -8,12 +8,7 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace DonateTo.Infrastructure.Data.Repositories
 {
@@ -59,7 +54,7 @@ namespace DonateTo.Infrastructure.Data.Repositories
                 await DbContext.SaveChangesAsync().ConfigureAwait(false);
                 await transaction.CommitAsync().ConfigureAwait(false);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 await transaction.RollbackAsync().ConfigureAwait(false);
                 throw;

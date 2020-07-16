@@ -33,11 +33,13 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.questionFilter = new QuestionFilter();
+    this.questionFilter.pageSize = this.pageSize;
+    this.questionFilter.pageNumber = this.pageIndex;
     this.questionSandbox.loadQuestionsFilteredPaged(this.questionFilter);
 
     this.subscriptions.push(
       this.questionSandbox.questionsPagedFiltered$.subscribe((res) => {
-        // this.total = res.rowCount;
+        this.total = res.rowCount;
         this.questionsList = res.results;
       })
     );
