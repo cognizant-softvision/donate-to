@@ -7,8 +7,9 @@ export class QuestionModel extends BaseModel {
   label: string;
   order: number;
   controlType: ControlTypeModel;
-  placeholder: string;
-  defaultValue: string;
+  type: string;
+  options: QuestionOption[];
+  controlType: ControlTypeModel;
   controlTypeId: number;
   weight: number;
   options: QuestionOption[];
