@@ -10,7 +10,7 @@
         nz-button
         nzType="primary"
       >
-        {{ 'Admin.Create' | translate }}
+        {{ 'Admin.Edit' | translate }}
       </button>
     </div>
     <nz-divider></nz-divider>
@@ -28,6 +28,7 @@
   >
     <thead>
       <tr>
+        <th>options</th>
         <th nzColumnKey="label" [nzSortOrder]="'ascend'" [nzSortFn]="true">
           {{ 'Admin.Question.Table.Label' | translate }}
           <label

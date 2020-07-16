@@ -59,10 +59,32 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
 
   registerEvents(): void {
     this.subscriptions.push(
-      this.questionSandbox.controlTypes$.subscribe((controlTypes) => (this.controlTypes = controlTypes))
+      this.questionSandbox.controlTypes$.subscribe((controlTypes) => {
+        controlTypes.forEach((element) => {
+          this.controlTypes.push(element);
+        });
+      })
     );
 
-    this.subscriptions.push(this.questionSandbox.questions$.subscribe((questions) => (this.questions = questions)));
+    this.subscriptions.push(
+      this.questionSandbox.questions$.subscribe((questions) => {
+        this.questions = [];
+        questions.forEach((element) => {
+          this.questions.push(element);
+        });
+      })
+    );
+  }
+
+  resetForm(): void {
+    this.label = undefined;
+    this.placeholder = undefined;
+    this.weight = undefined;
+    this.order = undefined;
+    this.defaultValue = undefined;
+    this.controlTypeId = undefined;
+    this.questionId = 0;
+    this.isEdit = false;
   }
 
   ngOnDestroy(): void {
@@ -135,14 +157,13 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
         questionItem.updateBy = questionSavedItem.updateBy;
         questionItem.updateDate = questionSavedItem.updateDate;
 
-        this.isEdit = false;
-        this.questionId = 0;
-
         this.questions.splice(
-          this.questions.findIndex((item) => item.id === this.questionId),
+          this.questions.findIndex((element) => element.id === this.questionId),
           1
         );
-        this.questions = [...this.questions, questionItem];
+        this.questions.push(questionItem);
+
+        this.resetForm();
       } else {
         questionItem.label = this.questionItemFormGroup.controls.labelFormControl.value;
         questionItem.placeholder = this.questionItemFormGroup.controls.placeholderFormControl.value;

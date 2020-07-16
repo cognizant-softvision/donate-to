@@ -301,6 +301,7 @@
         "DefaultValueRequired": "Default Value is required",
         "OrderRequired": "Order is required",
         "WeightRequired": "Weight is required",
+        "PlaceholderRequired": "Nombre marcador es requerido",
         "ControlTypeRequired": "Control Type is required",
         "AddItem": "Add Question",
         "PriorityQuestionRequiredError": "At least 1 priority question is required"

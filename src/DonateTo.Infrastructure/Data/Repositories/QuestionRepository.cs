@@ -61,19 +61,17 @@ namespace DonateTo.Infrastructure.Data.Repositories
             }
         }
 
-        public override IQueryable<Question> Get(Expression<Func<Question, bool>> filter)
+        public override Task<IQueryable<Question>> GetAsync(Expression<Func<Question, bool>> filter)
         {
-            return GetHydratedQuestions();
-        }
+            var questions = GetHydratedQuestion();
 
-        #region private
-        private IQueryable<Question> GetHydratedQuestions()
-        {
-            return DbContext.Set<Question>()
-                .Include(q => q.ControlType)
-                .Include(q => q.Options).ThenInclude(o => o.Question);
+            if (filter != null)
+            {
+                questions = questions.Where(filter);
+            }
+
+            return Task.FromResult(questions);
         }
-        #endregion
 
         ///<inheritdoc cref="IRepository{Organization}"/>
         public override ApplicationCore.Models.Pagination.PagedResult<Question>
