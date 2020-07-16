@@ -62,7 +62,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
   onQueryParamsChange(params: NzTableQueryParams): void {
     const { pageSize, pageIndex, sort, filter } = params;
-    let questionFilter = new QuestionFilter();
+    const questionFilter = new QuestionFilter();
     questionFilter.pageSize = pageSize;
     questionFilter.pageNumber = pageIndex;
     const currentSort = sort.find((item) => item.value !== null);
