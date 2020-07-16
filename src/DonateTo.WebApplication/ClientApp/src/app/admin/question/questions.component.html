@@ -28,9 +28,11 @@
 >
   <thead>
     <tr>
-      <th nzColumnKey="label" [nzSortOrder]="'ascend'" [nzSortFn]="true">
+      <th nzWidth="3em"></th>
+      <th nzCustomFilter nzColumnKey="label" [nzSortOrder]="'ascend'" [nzSortFn]="true">
         {{ 'Admin.Question.Table.Label' | translate }}
         <label
+          class="filter"
           title="{{ 'Admin.Question.Table.Filtered' | translate }}"
           *ngIf="searchLabelValue.length > 0 && !labelVisible"
         >
@@ -44,9 +46,10 @@
           <i nz-icon nzType="search"></i>
         </nz-filter-trigger>
       </th>
-      <th [nzSortFn]="true">
+      <th nzCustomFilter nzColumnKey="type" [nzSortFn]="true">
         {{ 'Admin.Question.Table.Type' | translate }}
         <label
+          class="filter"
           title="{{ 'Admin.Question.Table.Filtered' | translate }}"
           *ngIf="searchTypeValue.length > 0 && !typeVisible"
         >
@@ -60,9 +63,10 @@
           <i nz-icon nzType="search"></i>
         </nz-filter-trigger>
       </th>
-      <th [nzSortFn]="true">
+      <th nzCustomFilter nzColumnKey="placeholder" [nzSortFn]="true">
         {{ 'Admin.Question.Table.Placeholder' | translate }}
         <label
+          class="filter"
           title="{{ 'Admin.Question.Table.Filtered' | translate }}"
           *ngIf="searchPlaceholderValue.length > 0 && !placeholderVisible"
         >
@@ -76,25 +80,33 @@
           <i nz-icon nzType="search"></i>
         </nz-filter-trigger>
       </th>
-      <th [nzSortFn]="true">{{ 'Admin.Question.Table.Weight' | translate }}</th>
-      <th [nzSortFn]="true">{{ 'Admin.Question.Table.Order' | translate }}</th>
-      <th>{{ 'Admin.Question.Table.Action' | translate }}</th>
+      <th nzColumnKey="weight" [nzSortFn]="true">{{ 'Admin.Question.Table.Weight' | translate }}</th>
+      <th nzColumnKey="order" [nzSortFn]="true">{{ 'Admin.Question.Table.Order' | translate }}</th>
     </tr>
   </thead>
-
   <tbody>
     <ng-container *ngFor="let data of questionsTable.data">
       <tr>
-        <td [nzExpand]="expandSet.has(data.id)" (nzExpandChange)="onExpandChange(data.id, $event)"></td>
+        <td
+          [nzExpand]="expandSet.has(data.id)"
+          (nzExpandChange)="onExpandChange(data.id, $event)"
+          [ngStyle]="data.options.length === 0 && { visibility: 'hidden' }"
+        ></td>
         <td>{{ data.label }}</td>
-        <td>{{ data.controlType }}</td>
+        <td>{{ data.controlType.name }}</td>
         <td>{{ data.placeholder }}</td>
         <td>{{ data.weight }}</td>
         <td>{{ data.order }}</td>
       </tr>
       <tr [nzExpand]="expandSet.has(data.id)">
-        <td>
-          <table>
+        <span>
+          <nz-table
+            #innerTable
+            [nzData]="data.options"
+            nzTitle="{{ 'Admin.Question.Table.OptionsTitle' | translate }}"
+            nzSize="middle"
+            [nzShowPagination]="false"
+          >
             <thead>
               <tr>
                 <th>{{ 'Admin.Question.Table.Option.Label' | translate }}</th>
@@ -103,14 +115,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let opt of data.options">
+              <tr *ngFor="let opt of innerTable.data">
                 <td>{{ opt.label }}</td>
                 <td>{{ opt.value }}</td>
                 <td>{{ opt.weight }}</td>
               </tr>
             </tbody>
-          </table>
-        </td>
+          </nz-table>
+        </span>
       </tr>
     </ng-container>
   </tbody>

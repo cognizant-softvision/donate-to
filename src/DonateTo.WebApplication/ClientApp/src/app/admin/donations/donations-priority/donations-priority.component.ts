@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { QuestionModel } from '../../../shared/models/question.model';
+import { ControlTypeModel } from '../../../shared/models/control-type.model';
 @Component({
   selector: 'app-donations-priority',
   templateUrl: './donations-priority.component.html',
@@ -21,7 +22,14 @@ export class DonationPriorityComponent implements OnInit {
         updateDate: new Date(),
         id: 1,
         order: 0,
-        controlType: 'dropdown',
+        controlType: {
+          id: 1,
+          createdBy: '',
+          createdDate: new Date(),
+          updateBy: '',
+          updateDate: new Date(),
+          name: 'dropdown',
+        },
         required: true,
         key: '1',
         label: 'Question 1',
@@ -69,7 +77,14 @@ export class DonationPriorityComponent implements OnInit {
         updateDate: new Date(),
         id: 2,
         order: 0,
-        controlType: 'dropdown',
+        controlType: {
+          id: 1,
+          createdBy: '',
+          createdDate: new Date(),
+          updateBy: '',
+          updateDate: new Date(),
+          name: 'dropdown',
+        },
         required: true,
         key: '2',
         label: 'Question 2',
