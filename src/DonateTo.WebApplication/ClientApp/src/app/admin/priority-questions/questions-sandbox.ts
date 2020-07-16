@@ -13,6 +13,7 @@ export class QuestionsSandbox extends Sandbox implements OnDestroy {
   failAction$ = this.appState$.select(store.fromQuestion.getFailedStatus);
   loadAction$ = this.appState$.select(store.fromQuestion.getLoadingStatus);
   questionsPagedFiltered$ = this.appState$.select(store.fromQuestion.getQuestionsFilteredPaged);
+  controlTypes$ = this.appState$.select(store.fromQuestion.getControlTypes);
 
   constructor(protected appState$: Store<store.State>) {
     super(appState$);
@@ -28,6 +29,10 @@ export class QuestionsSandbox extends Sandbox implements OnDestroy {
 
   loadQuestions(): void {
     this.appState$.dispatch(store.fromQuestion.loadQuestions());
+  }
+
+  loadControlTypes(): void {
+    this.appState$.dispatch(store.fromQuestion.loadControlTypes());
   }
 
   updateQuestions(questions: QuestionModel[]): void {

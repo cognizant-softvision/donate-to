@@ -1,29 +1,24 @@
-import { Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { QuestionsSandbox } from '../questions-sandbox';
-import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { Subscription } from 'rxjs';
 import { ColumnItem, QuestionModel } from 'src/app/shared/models';
-import { ControlType, ControlType2LabelMapping } from 'src/app/shared/enum/controlTypes';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ControlTypeModel } from 'src/app/shared/models/control-type.model';
 
 @Component({
   selector: 'app-questions-create',
   templateUrl: './questions-create.component.html',
   styleUrls: ['./questions-create.component.css'],
 })
-export class QuestionsCreateComponent implements OnDestroy {
+export class QuestionsCreateComponent implements OnInit, OnDestroy {
   @ViewChild('modalContent') public modalContent: TemplateRef<any>;
   questions: QuestionModel[] = [];
 
   private subscriptions: Subscription[] = [];
   private isSubmited = false;
   private failedStatus = false;
-  public ControlType2LabelMapping = ControlType2LabelMapping;
-  public controlTypes = Object.values(ControlType);
-
-  isErrorModalActive = false;
-  tplModal?: NzModalRef;
+  private controlTypes: ControlTypeModel[] = [];
 
   listOfColumns: ColumnItem[] = [
     { name: 'Admin.PriorityQuestion.Table.LabelColumn' },
@@ -45,7 +40,18 @@ export class QuestionsCreateComponent implements OnDestroy {
     itemsFormControl: new FormControl(),
   });
 
-  constructor(public questionSandbox: QuestionsSandbox, private router: Router, private modal: NzModalService) {}
+  constructor(public questionSandbox: QuestionsSandbox, private router: Router) {}
+
+  ngOnInit(): void {
+    this.questionSandbox.loadControlTypes();
+    this.registerEvents();
+  }
+
+  registerEvents(): void {
+    this.subscriptions.push(
+      this.questionSandbox.controlTypes$.subscribe((controlTypes) => (this.controlTypes = controlTypes))
+    );
+  }
 
   ngOnDestroy(): void {
     this.unregisterEvents();
@@ -55,32 +61,10 @@ export class QuestionsCreateComponent implements OnDestroy {
     if (this.isSubmited) {
       if (this.failedStatus) {
         this.isSubmited = false;
-        this.switchErrorModal();
       } else {
         this.goBack();
       }
     }
-  }
-
-  showModal() {
-    this.createTplModal(this.modalContent);
-  }
-
-  createTplModal(tplContent: TemplateRef<{}>): void {
-    this.tplModal = this.modal.create({
-      nzContent: tplContent,
-      nzFooter: null,
-      nzClosable: true,
-      nzTitle: 'Questions',
-      nzStyle: {
-        top: '2em;',
-      },
-      nzWidth: '60%',
-    });
-  }
-
-  hideModal() {
-    this.tplModal?.destroy();
   }
 
   createQuestions() {
@@ -90,10 +74,6 @@ export class QuestionsCreateComponent implements OnDestroy {
 
   goBack() {
     this.router.navigate(['/admin/priority-questions']);
-  }
-
-  switchErrorModal() {
-    this.isErrorModalActive = !this.isErrorModalActive;
   }
 
   private validateFormGroup(formGroup: FormGroup) {
@@ -112,7 +92,9 @@ export class QuestionsCreateComponent implements OnDestroy {
       questionItem.label = this.questionItemFormGroup.controls.labelFormControl.value;
       questionItem.placeholder = this.questionItemFormGroup.controls.placeholderFormControl.value;
       questionItem.order = this.questionItemFormGroup.controls.orderFormControl.value;
-      questionItem.controlType = this.questionItemFormGroup.controls.controlTypeFormControl.value;
+      questionItem.controlType = new ControlTypeModel();
+      questionItem.controlType.id = this.questionItemFormGroup.controls.controlTypeFormControl.value;
+      // questionItem.controlType.name = this.controlTypes.find(controlType => controlType.id ===  questionItem.controlType.id)[0].name
       questionItem.weight = this.questionItemFormGroup.controls.weightFormControl.value;
       questionItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
 

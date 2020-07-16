@@ -103,9 +103,9 @@
                 nzPlaceHolder="{{ 'Admin.PriorityQuestion.Form.ControlTypePlaceHolder' | translate }}"
               >
                 <nz-option
-                  *ngFor="let controlType of controlTypes"
-                  [nzLabel]="controlType"
-                  [nzValue]="controlType"
+                  *ngFor="let controlType of this.questionSandbox.controlTypes$ | async"
+                  [nzLabel]="controlType.name"
+                  [nzValue]="controlType.id"
                 ></nz-option>
               </nz-select>
             </nz-form-control>
