@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Question } from 'src/app/shared/models/question-provisional.model';
-
+import { QuestionModel } from '../../../shared/models/question.model';
+import { ControlTypeModel } from '../../../shared/models/control-type.model';
 @Component({
   selector: 'app-donations-priority',
   templateUrl: './donations-priority.component.html',
