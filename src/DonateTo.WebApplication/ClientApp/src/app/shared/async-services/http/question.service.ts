@@ -18,13 +18,13 @@ export class QuestionService extends BaseHttpClientService<QuestionModel> {
 
   getPagedFiltered(questionFilter: QuestionFilter): Observable<PageModel<QuestionModel>> {
     const queryString = {
-      pageNumber: questionFilter.pageNumber.toString(),
-      pageSize: questionFilter.pageSize.toString(),
-      label: questionFilter.label ?? '',
-      placeholder: questionFilter.placeholder ?? '',
-      type: questionFilter.type ?? '',
-      orderBy: questionFilter.orderBy ?? '',
-      orderDirection: questionFilter.orderDirection ?? '',
+      pageNumber: questionFilter?.pageNumber.toString() ?? '',
+      pageSize: questionFilter?.pageSize.toString() ?? '',
+      label: questionFilter?.label ?? '',
+      placeholder: questionFilter?.placeholder ?? '',
+      type: questionFilter?.type ?? '',
+      orderBy: questionFilter?.orderBy ?? '',
+      orderDirection: questionFilter?.orderDirection ?? '',
     };
     return this.httpClient.get<PageModel<QuestionModel>>(`${this.url}/${this.endpoint}/pagedFiltered`, {
       params: queryString,

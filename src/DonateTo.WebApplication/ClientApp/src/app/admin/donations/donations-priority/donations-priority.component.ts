@@ -1,5 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { QuestionModel } from '../../../shared/models/question.model';
+import { ControlTypeModel } from '../../../shared/models/control-type.model';
 import { Question } from 'src/app/shared/models/question-provisional.model';
 @Component({
   selector: 'app-donations-priority',
@@ -13,7 +15,7 @@ export class DonationPriorityComponent implements OnInit {
   @Output() isSubmited = new EventEmitter<number>();
 
   constructor(private formBuilder: FormBuilder) {
-    /*this.questions = [
+    this.questions = [
       {
         createdBy: '',
         createdDate: new Date(),
@@ -21,8 +23,15 @@ export class DonationPriorityComponent implements OnInit {
         updateDate: new Date(),
         id: 1,
         order: 0,
-        controlType: 'dropdown',
         required: true,
+        controlType: {
+          id: 1,
+          createdBy: '',
+          createdDate: new Date(),
+          updateBy: '',
+          updateDate: new Date(),
+          name: 'dropdown',
+        },
         key: '1',
         label: 'Question 1',
         type: '',
@@ -69,8 +78,15 @@ export class DonationPriorityComponent implements OnInit {
         updateDate: new Date(),
         id: 2,
         order: 0,
-        controlType: 'dropdown',
         required: true,
+        controlType: {
+          id: 1,
+          createdBy: '',
+          createdDate: new Date(),
+          updateBy: '',
+          updateDate: new Date(),
+          name: 'dropdown',
+        },
         key: '2',
         label: 'Question 2',
         type: '',
@@ -110,7 +126,7 @@ export class DonationPriorityComponent implements OnInit {
           },
         ],
       },
-    ];*/
+    ];
   }
 
   ngOnInit() {

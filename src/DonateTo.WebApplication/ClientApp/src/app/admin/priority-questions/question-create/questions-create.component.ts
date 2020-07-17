@@ -171,7 +171,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
       }
       questionItem.options = options;
 
-      if (questionItem.controlType !== ControlType.Textbox) {
+      if (questionItem.controlType.name !== ControlType.Textbox) {
         if (this.optionsWeight(questionItem.options) !== true) {
           this.modal.error({
             nzTitle: 'Warning',

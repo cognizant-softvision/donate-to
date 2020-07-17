@@ -11,6 +11,7 @@ using LinqKit;
 using Microsoft.EntityFrameworkCore.Internal;
 using System.Linq;
 using DonateTo.ApplicationCore.Common;
+using System.Globalization;
 
 namespace DonateTo.Services
 {
@@ -208,20 +209,24 @@ namespace DonateTo.Services
             return await _entityRequestRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicate, GetSort(filter)).ConfigureAwait(false);
         }
 
+
         /// <summary>
         /// Returns sort string from filter model
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "<Pending>")]
         protected string GetSort(TFilter filter) 
         {
             var properties = typeof(TEntity).GetProperties();
 
-            var sort = !string.IsNullOrEmpty(filter.OrderBy) && properties.Any(p => p.Name == filter.OrderBy) ?
-                filter.OrderBy + " " :
+            var sort = !string.IsNullOrEmpty(filter.OrderBy) 
+                && properties.Any(p => p.Name.ToUpperInvariant() == filter.OrderBy.ToUpperInvariant()) ?
+                $"{ char.ToUpperInvariant(filter.OrderBy[0]) + filter.OrderBy.Substring(1).ToLowerInvariant() } " :
                 "Id ";
 
-            sort += !string.IsNullOrEmpty(filter.OrderDirection) && filter.OrderDirection == SortDirection.Descending ?
+            sort += !string.IsNullOrEmpty(filter.OrderDirection) 
+                && (filter.OrderDirection == SortDirection.Descending || filter.OrderDirection == "descending") ?
                 SortDirection.Descending :
                 SortDirection.Ascending;
 
