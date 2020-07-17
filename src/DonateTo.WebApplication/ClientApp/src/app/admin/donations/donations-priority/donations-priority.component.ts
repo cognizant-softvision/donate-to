@@ -159,7 +159,7 @@ export class DonationPriorityComponent implements OnInit {
   toFormGroup(questions: Question[]) {
     const group: any = {};
     questions.forEach((question) => {
-      group[question.key] = question.required ? new FormControl('', Validators.required) : new FormControl('');
+      group[question.key] = new FormControl('', Validators.required);
     });
     return this.formBuilder.group(group);
   }

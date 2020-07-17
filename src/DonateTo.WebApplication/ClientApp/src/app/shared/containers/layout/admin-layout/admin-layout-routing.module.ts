@@ -17,7 +17,8 @@ const routes: Routes = [
       { path: 'organization', component: OrganizationComponent },
       {
         path: 'priority-questions',
-        loadChildren: () => import('src/app/admin/priority-questions/questions.module').then((m) => m.QuestionsModule),
+        loadChildren: () =>
+          import('../../../../admin/priority-questions/questions.module').then((m) => m.QuestionsModule),
       },
     ],
   },

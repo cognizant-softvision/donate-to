@@ -14,14 +14,12 @@ namespace DonateTo.Services
     public class QuestionService : BaseService<Question, QuestionFilterModel>, IQuestionService
     {
         private readonly IQuestionRepository _questionRepository;
-        private readonly IUnitOfWork _unitOfWork;
 
         public QuestionService(
             IQuestionRepository questionRepository,
             IUnitOfWork unitOfWork) : base(questionRepository, unitOfWork)
         {
             _questionRepository = questionRepository;
-            _unitOfWork = unitOfWork;
         }
 
         ///<inheritdoc cref="BaseService{Question, QuestionFilterModel}"/>
