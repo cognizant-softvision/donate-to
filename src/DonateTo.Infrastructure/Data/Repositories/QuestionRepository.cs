@@ -16,14 +16,49 @@ namespace DonateTo.Infrastructure.Data.Repositories
     {
         public QuestionRepository(DonateToDbContext dbContext) : base(dbContext) { }
 
-        void IQuestionRepository.BulkUpdate(IEnumerable<Question> entities)
+        public void BulkUpdate(IEnumerable<Question> updatedQuestions)
         {
-            throw new System.NotImplementedException();
+            using var transaction = DbContext.Database.BeginTransaction();
+
+            try
+            {
+                var removedQuestions = Get(null)
+                    .Where(q => !updatedQuestions
+                    .Select(uq => uq.Id)
+                    .Contains(q.Id)).ToList();
+
+                var addedQuestions = updatedQuestions.Where(uq => uq.Id == 0);
+
+                updatedQuestions = updatedQuestions.Where(uq => !addedQuestions.Contains(uq));
+
+                foreach (var question in removedQuestions)
+                {
+                    Delete(question.Id);
+                }
+
+                foreach (var question in addedQuestions)
+                {
+                    Add(question);
+                }
+
+                foreach (var question in updatedQuestions)
+                {
+                    Update(question);
+                }
+
+                DbContext.SaveChanges();
+                transaction.Commit();
+            }
+            catch (Exception)
+            {
+                transaction.Rollback();
+                throw;
+            }
         }
 
         public async Task BulkUpdateAsync(IEnumerable<Question> updatedQuestions)
         {
-            using var transaction = DbContext.Database.BeginTransaction();
+            using var transaction = await DbContext.Database.BeginTransactionAsync().ConfigureAwait(false);
 
             try
             {
