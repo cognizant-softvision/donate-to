@@ -1,4 +1,5 @@
 ﻿using DonateTo.ApplicationCore.Entities;
+using DonateTo.ApplicationCore.Interfaces.Repositories;
 using DonateTo.Infrastructure.Data.EntityFramework;
 using DonateTo.Infrastructure.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
@@ -7,12 +8,105 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace DonateTo.Infrastructure.Data.Repositories
 {
-    public class QuestionRepository : EntityFrameworkRepository<Question, DonateToDbContext>
+    public class QuestionRepository : EntityFrameworkRepository<Question, DonateToDbContext>, IQuestionRepository
     {
         public QuestionRepository(DonateToDbContext dbContext) : base(dbContext) { }
+
+        public void BulkUpdate(IEnumerable<Question> updatedQuestions)
+        {
+            using var transaction = DbContext.Database.BeginTransaction();
+
+            try
+            {
+                var removedQuestions = Get(null)
+                    .Where(q => !updatedQuestions
+                    .Select(uq => uq.Id)
+                    .Contains(q.Id)).ToList();
+
+                var addedQuestions = updatedQuestions.Where(uq => uq.Id == 0);
+
+                updatedQuestions = updatedQuestions.Where(uq => !addedQuestions.Contains(uq));
+
+                foreach (var question in removedQuestions)
+                {
+                    Delete(question.Id);
+                }
+
+                foreach (var question in addedQuestions)
+                {
+                    Add(question);
+                }
+
+                foreach (var question in updatedQuestions)
+                {
+                    Update(question);
+                }
+
+                DbContext.SaveChanges();
+                transaction.Commit();
+            }
+            catch (Exception)
+            {
+                transaction.Rollback();
+                throw;
+            }
+        }
+
+        public async Task BulkUpdateAsync(IEnumerable<Question> updatedQuestions)
+        {
+            using var transaction = await DbContext.Database.BeginTransactionAsync().ConfigureAwait(false);
+
+            try
+            {
+                var removedQuestions = await Get(null)
+                    .Where(q => !updatedQuestions
+                    .Select(uq => uq.Id)
+                    .Contains(q.Id)).ToListAsync().ConfigureAwait(false);
+
+                var addedQuestions = updatedQuestions.Where(uq => uq.Id == 0);
+
+                updatedQuestions = updatedQuestions.Where(uq => !addedQuestions.Contains(uq));
+
+                foreach (var question in removedQuestions)
+                {
+                    await DeleteAsync(question.Id).ConfigureAwait(false);
+                }
+
+                foreach (var question in addedQuestions)
+                {
+                    await AddAsync(question).ConfigureAwait(false);
+                }
+
+                foreach (var question in updatedQuestions)
+                {
+                    await UpdateAsync(question).ConfigureAwait(false);
+                }
+
+                await DbContext.SaveChangesAsync().ConfigureAwait(false);
+                await transaction.CommitAsync().ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync().ConfigureAwait(false);
+                throw;
+            }
+        }
+
+        public override Task<IQueryable<Question>> GetAsync(Expression<Func<Question, bool>> filter)
+        {
+            var questions = GetHydratedQuestion();
+
+            if (filter != null)
+            {
+                questions = questions.Where(filter);
+            }
+
+            return Task.FromResult(questions);
+        }
 
         ///<inheritdoc cref="IRepository{Organization}"/>
         public override ApplicationCore.Models.Pagination.PagedResult<Question>
