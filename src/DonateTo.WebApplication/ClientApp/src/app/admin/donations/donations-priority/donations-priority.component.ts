@@ -1,7 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Question } from 'src/app/shared/models/question-provisional.model';
-
+import { QuestionModel } from 'src/app/shared/models';
 @Component({
   selector: 'app-donations-priority',
   templateUrl: './donations-priority.component.html',
@@ -9,7 +8,7 @@ import { Question } from 'src/app/shared/models/question-provisional.model';
 })
 export class DonationPriorityComponent implements OnInit {
   form: FormGroup;
-  questions: Question[];
+  questions: QuestionModel[];
 
   @Output() isSubmited = new EventEmitter<number>();
 
@@ -30,10 +29,12 @@ export class DonationPriorityComponent implements OnInit {
           updateDate: new Date(),
           name: 'dropdown',
         },
-        required: true,
         key: '1',
         label: 'Question 1',
-        type: '',
+        placeholder: '',
+        weight: 1,
+        defaultValue: '',
+        controlTypeId: 1,
         options: [
           {
             id: 1,
@@ -85,10 +86,12 @@ export class DonationPriorityComponent implements OnInit {
           updateDate: new Date(),
           name: 'dropdown',
         },
-        required: true,
         key: '2',
         label: 'Question 2',
-        type: '',
+        placeholder: '',
+        weight: 1,
+        defaultValue: '',
+        controlTypeId: 1,
         options: [
           {
             id: 1,
@@ -156,7 +159,7 @@ export class DonationPriorityComponent implements OnInit {
     }
   }
 
-  toFormGroup(questions: Question[]) {
+  toFormGroup(questions: QuestionModel[]) {
     const group: any = {};
     questions.forEach((question) => {
       group[question.key] = new FormControl('', Validators.required);
@@ -164,7 +167,7 @@ export class DonationPriorityComponent implements OnInit {
     return this.formBuilder.group(group);
   }
 
-  isValid(question: Question) {
+  isValid(question: QuestionModel) {
     return this.form.controls[question.key].valid;
   }
 }
