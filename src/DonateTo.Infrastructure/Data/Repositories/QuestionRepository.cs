@@ -16,57 +16,44 @@ namespace DonateTo.Infrastructure.Data.Repositories
     {
         public QuestionRepository(DonateToDbContext dbContext) : base(dbContext) { }
 
-        ///<inheritdoc cref="IRepository{Organization}"/>
-        public override ApplicationCore.Models.Pagination.PagedResult<Question>
-            GetPaged(int page, int pageSize, Expression<Func<Question, bool>> filter = null, string sort = "")
+        public void BulkUpdate(IEnumerable<Question> updatedQuestions)
         {
-            var organizations = GetHydratedQuestion();
+            using var transaction = DbContext.Database.BeginTransaction();
 
-            if (filter != null)
+            try
             {
-                organizations = organizations.Where(filter);
-            }
+                var removedQuestions = Get(null)
+                    .Where(q => !updatedQuestions
+                    .Select(uq => uq.Id)
+                    .Contains(q.Id)).ToList();
 
-            if (!string.IsNullOrEmpty(sort))
+                var addedQuestions = updatedQuestions.Where(uq => uq.Id == 0);
+
+                updatedQuestions = updatedQuestions.Where(uq => !addedQuestions.Contains(uq));
+
+                foreach (var question in removedQuestions)
+                {
+                    Delete(question.Id);
+                }
+
+                foreach (var question in addedQuestions)
+                {
+                    Add(question);
+                }
+
+                foreach (var question in updatedQuestions)
+                {
+                    Update(question);
+                }
+
+                DbContext.SaveChanges();
+                transaction.Commit();
+            }
+            catch (Exception)
             {
-                organizations = organizations.OrderBy(sort);
+                transaction.Rollback();
+                throw;
             }
-
-            return organizations.GetPaged(page, pageSize);
-        }
-
-        ///<inheritdoc cref="IRepository{Organization}"/>
-        public override async Task<ApplicationCore.Models.Pagination.PagedResult<Question>>
-            GetPagedAsync(int page, int pageSize, Expression<Func<Question, bool>> filter = null, string sort = "")
-        {
-            var organizations = GetHydratedQuestion();
-
-            if (filter != null)
-            {
-                organizations = organizations.Where(filter);
-            }
-
-            if (!string.IsNullOrEmpty(sort))
-            {
-                organizations = organizations.OrderBy(sort);
-            }
-
-            return await organizations.GetPagedAsync(page, pageSize).ConfigureAwait(false);
-        }
-
-
-        #region private
-        private IQueryable<Question> GetHydratedQuestion()
-        {
-            return DbContext.Set<Question>()
-                .Include(q => q.Options)
-                .Include(q => q.ControlType);
-        }
-        #endregion
-
-        void IQuestionRepository.BulkUpdate(IEnumerable<Question> entities)
-        {
-            throw new System.NotImplementedException();
         }
 
         public async Task BulkUpdateAsync(IEnumerable<Question> updatedQuestions)
