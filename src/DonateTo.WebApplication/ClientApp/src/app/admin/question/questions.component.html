@@ -1,0 +1,193 @@
+<div class="table-operations">
+  <h4 class="section-title">{{ 'Admin.Question.Title' | translate }}</h4>
+  <div class="create-button">
+    <button
+      nz-popconfirm
+      nzPopconfirmTitle="{{ 'Admin.Question.CreateConfirm' | translate }}"
+      nzPopconfirmPlacement="bottom"
+      (nzOnConfirm)="router.navigate(['admin/question/create'])"
+      nz-button
+      nzType="primary"
+    >
+      {{ 'Admin.Create' | translate }}
+    </button>
+  </div>
+  <nz-divider></nz-divider>
+  <button nz-button nzType="secondary" (click)="reset()">{{ 'Admin.ClearFilter' | translate }}</button>
+</div>
+<nz-table
+  #questionsTable
+  [nzData]="questionsList"
+  nzTableLayout="fixed"
+  [nzNoResult]="customTpl"
+  [nzFrontPagination]="false"
+  [nzTotal]="total"
+  [nzPageSize]="pageSize"
+  [nzPageIndex]="pageIndex"
+  (nzQueryParams)="onQueryParamsChange($event)"
+>
+  <thead>
+    <tr>
+      <th nzWidth="3em"></th>
+      <th nzCustomFilter nzColumnKey="label" [nzSortOrder]="'ascend'" [nzSortFn]="true">
+        {{ 'Admin.Question.Table.Label' | translate }}
+        <label
+          class="filter"
+          title="{{ 'Admin.Question.Table.Filtered' | translate }}"
+          *ngIf="searchLabelValue.length > 0 && !labelVisible"
+        >
+          ({{ searchLabelValue }})
+        </label>
+        <nz-filter-trigger
+          [(nzVisible)]="labelVisible"
+          [nzActive]="searchLabelValue.length > 0"
+          [nzDropdownMenu]="searchLabelMenu"
+        >
+          <i nz-icon nzType="search"></i>
+        </nz-filter-trigger>
+      </th>
+      <th nzCustomFilter nzColumnKey="type" [nzSortFn]="true">
+        {{ 'Admin.Question.Table.Type' | translate }}
+        <label
+          class="filter"
+          title="{{ 'Admin.Question.Table.Filtered' | translate }}"
+          *ngIf="searchTypeValue.length > 0 && !typeVisible"
+        >
+          ({{ searchTypeValue }})
+        </label>
+        <nz-filter-trigger
+          [(nzVisible)]="typeVisible"
+          [nzActive]="searchTypeValue.length > 0"
+          [nzDropdownMenu]="searchTypeMenu"
+        >
+          <i nz-icon nzType="search"></i>
+        </nz-filter-trigger>
+      </th>
+      <th nzCustomFilter nzColumnKey="placeholder" [nzSortFn]="true">
+        {{ 'Admin.Question.Table.Placeholder' | translate }}
+        <label
+          class="filter"
+          title="{{ 'Admin.Question.Table.Filtered' | translate }}"
+          *ngIf="searchPlaceholderValue.length > 0 && !placeholderVisible"
+        >
+          ({{ searchPlaceholderValue }})
+        </label>
+        <nz-filter-trigger
+          [(nzVisible)]="placeholderVisible"
+          [nzActive]="searchPlaceholderValue.length > 0"
+          [nzDropdownMenu]="searchPlaceholderMenu"
+        >
+          <i nz-icon nzType="search"></i>
+        </nz-filter-trigger>
+      </th>
+      <th nzColumnKey="weight" [nzSortFn]="true">{{ 'Admin.Question.Table.Weight' | translate }}</th>
+      <th nzColumnKey="order" [nzSortFn]="true">{{ 'Admin.Question.Table.Order' | translate }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let data of questionsTable.data">
+      <tr>
+        <td
+          [nzExpand]="expandSet.has(data.id)"
+          (nzExpandChange)="onExpandChange(data.id, $event)"
+          [ngStyle]="data.options.length === 0 && { visibility: 'hidden' }"
+        ></td>
+        <td>{{ data.label }}</td>
+        <td>{{ data.controlType.name }}</td>
+        <td>{{ data.placeholder }}</td>
+        <td>{{ data.weight }}</td>
+        <td>{{ data.order }}</td>
+      </tr>
+      <tr [nzExpand]="expandSet.has(data.id)">
+        <span>
+          <nz-table
+            #innerTable
+            [nzData]="data.options"
+            nzTitle="{{ 'Admin.Question.Table.OptionsTitle' | translate }}"
+            nzSize="middle"
+            [nzShowPagination]="false"
+          >
+            <thead>
+              <tr>
+                <th>{{ 'Admin.Question.Table.Option.Label' | translate }}</th>
+                <th>{{ 'Admin.Question.Table.Option.Value' | translate }}</th>
+                <th>{{ 'Admin.Question.Table.Option.Weight' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let opt of innerTable.data">
+                <td>{{ opt.label }}</td>
+                <td>{{ opt.value }}</td>
+                <td>{{ opt.weight }}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </span>
+      </tr>
+    </ng-container>
+  </tbody>
+</nz-table>
+
+<nz-dropdown-menu #searchLabelMenu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input
+        type="text"
+        nz-input
+        placeholder="{{ 'Admin.Question.Table.Label' | translate }}"
+        [(ngModel)]="searchLabelValue"
+      />
+      <button nz-button nzSize="small" nzType="primary" (click)="searchLabel()" class="search-button">
+        {{ 'Admin.Question.Table.Search' | translate }}
+      </button>
+      <button nz-button nzSize="small" (click)="resetLabelSearch()">
+        {{ 'Admin.Question.Table.Reset' | translate }}
+      </button>
+    </div>
+  </div>
+</nz-dropdown-menu>
+
+<nz-dropdown-menu #searchTypeMenu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input
+        type="text"
+        nz-input
+        placeholder="{{ 'Admin.Question.Table.Type' | translate }}"
+        [(ngModel)]="searchTypeValue"
+      />
+      <button nz-button nzSize="small" nzType="primary" (click)="searchType()" class="search-button">
+        {{ 'Admin.Question.Table.Search' | translate }}
+      </button>
+      <button nz-button nzSize="small" (click)="resetTypeSearch()">
+        {{ 'Admin.Question.Table.Reset' | translate }}
+      </button>
+    </div>
+  </div>
+</nz-dropdown-menu>
+
+<nz-dropdown-menu #searchPlaceholderMenu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input
+        type="text"
+        nz-input
+        placeholder="{{ 'Admin.Question.Table.Placeholder' | translate }}"
+        [(ngModel)]="searchPlaceholderValue"
+      />
+      <button nz-button nzSize="small" nzType="primary" (click)="searchPlaceholder()" class="search-button">
+        {{ 'Admin.Question.Table.Search' | translate }}
+      </button>
+      <button nz-button nzSize="small" (click)="resetPlaceholderSearch()">
+        {{ 'Admin.Question.Table.Reset' | translate }}
+      </button>
+    </div>
+  </div>
+</nz-dropdown-menu>
+
+<ng-template #customTpl let-name>
+  <div style="text-align: center;">
+    <nz-empty [nzNotFoundContent]="null"></nz-empty>
+    <p>{{ 'NoEntries' | translate }}</p>
+  </div>
+</ng-template>

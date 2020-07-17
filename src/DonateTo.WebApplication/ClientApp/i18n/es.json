@@ -188,7 +188,8 @@
       "Title": {
         "Donation": "Donaciones",
         "User": "Usuarios",
-        "Organization": "Organización"
+        "Organization": "Organizaciones",
+        "Question": "Preguntas"
       }
     },
     "Donation": {
@@ -263,6 +264,27 @@
     },
     "Organization": {
       "Title": "Organización"
+    },
+    "Question": {
+      "Title": "Preguntas",
+      "CreateConfirm": "Estas seguro que quieres crear una pregunta?",
+      "Table": {
+        "Label": "Título",
+        "Type": "Tipo",
+        "Placeholder": "Marcador",
+        "Weight": "Peso",
+        "Order": "Órden",
+        "Action": "Acción",
+        "Search": "Buscar",
+        "Reset": "Reestablecer",
+        "Filtered": "Filtrada",
+        "OptionsTitle": "Opciones",
+        "Option": {
+          "Label": "Título",
+          "Value": "Valor",
+          "Weight": "Peso"
+        }
+      }
     },
     "ClearFilter": "Limpiar Filtro",
     "ClearFilterAndSorted": "Limpiar Filtro y Orden",
