@@ -66,7 +66,7 @@ namespace DonateTo.Services
 
         public void BulkUpdate(IEnumerable<Question> updatedQuestions)
         {
-            throw new NotImplementedException();
+            _questionRepository.BulkUpdate(updatedQuestions);
         }
     }
 }
