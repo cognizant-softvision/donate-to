@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { IconDefinition } from '@ant-design/icons-angular';
 
-import { HeartOutline, ProfileOutline, QuestionOutline, TeamOutline } from '@ant-design/icons-angular/icons';
+import { HeartOutline, ProfileOutline, StarOutline, TeamOutline } from '@ant-design/icons-angular/icons';
 
 import {
   NzButtonModule,
@@ -23,7 +23,7 @@ import { HttpLoaderFactory } from '../../../../app.module';
 import { HttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
-const ICONS: IconDefinition[] = [HeartOutline, ProfileOutline, QuestionOutline, TeamOutline];
+const ICONS: IconDefinition[] = [HeartOutline, TeamOutline, ProfileOutline, StarOutline];
 
 @NgModule({
   imports: [

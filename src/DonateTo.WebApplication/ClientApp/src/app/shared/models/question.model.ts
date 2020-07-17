@@ -5,9 +5,11 @@ import { ControlTypeModel } from './control-type.model';
 export class QuestionModel extends BaseModel {
   key: string;
   label: string;
-  required: boolean;
   order: number;
   controlType: ControlTypeModel;
-  type: string;
+  placeholder: string;
+  defaultValue: string;
   options: QuestionOption[];
+  controlTypeId: number;
+  weight: number;
 }

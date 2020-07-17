@@ -30,4 +30,15 @@ export class QuestionService extends BaseHttpClientService<QuestionModel> {
       params: queryString,
     });
   }
+  getQuestions() {
+    return this.get();
+  }
+
+  createQuestions(question: QuestionModel[]): Observable<QuestionModel[]> {
+    return this.httpClient.put<QuestionModel[]>(
+      `${this.url}/${this.endpoint}`,
+      JSON.stringify(question),
+      this.httpOptions
+    );
+  }
 }

@@ -4,11 +4,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Sandbox } from 'src/app/shared/sandbox/base.sandbox';
 import { Store } from '@ngrx/store';
 import { CategorySerializer } from 'src/app/shared/utility/serializers/category-serializer';
-import {
-  DonationRequestCategoryModel,
-  DonationRequestItemCategoryModel,
-  DonationRequestModel,
-} from 'src/app/shared/models';
+import { DonationRequestItemCategoryModel, DonationRequestModel } from 'src/app/shared/models';
 
 @Injectable()
 export class DonationsSandbox extends Sandbox implements OnDestroy {

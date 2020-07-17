@@ -16,8 +16,9 @@ const routes: Routes = [
       },
       { path: 'organization', component: OrganizationComponent },
       {
-        path: 'question',
-        loadChildren: () => import('../../../../admin/question/question.module').then((m) => m.QuestionModule),
+        path: 'priority-questions',
+        loadChildren: () =>
+          import('../../../../admin/priority-questions/questions.module').then((m) => m.QuestionsModule),
       },
     ],
   },

@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { QuestionModel } from '../../shared/models';
+import { QuestionModel } from 'src/app/shared/models';
+import { QuestionFilter } from 'src/app/shared/models/filters/question-filter';
 import { Subscription } from 'rxjs';
-import { NzTableQueryParams } from 'ng-zorro-antd';
-import { QuestionSandbox } from './question.sandbox';
-import { QuestionFilter } from '../../shared/models/filters/question-filter';
 import { Router } from '@angular/router';
+import { NzTableQueryParams } from 'ng-zorro-antd';
+import { QuestionsSandbox } from './questions-sandbox';
 
 @Component({
-  selector: 'app-questions',
+  selector: 'app-questions-admin',
   templateUrl: './questions.component.html',
   styleUrls: ['./questions.component.css'],
 })
@@ -29,16 +29,24 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   successStatus = false;
   private subscriptions: Subscription[] = [];
 
-  constructor(private questionSandbox: QuestionSandbox, public router: Router) {}
+  constructor(private questionSandbox: QuestionsSandbox, public router: Router) {}
 
   ngOnInit(): void {
     this.questionFilter = new QuestionFilter();
+    this.questionFilter.pageSize = this.pageSize;
+    this.questionFilter.pageNumber = this.pageIndex;
     this.questionSandbox.loadQuestionsFilteredPaged(this.questionFilter);
 
     this.subscriptions.push(
       this.questionSandbox.questionsPagedFiltered$.subscribe((res) => {
         this.total = res.rowCount;
         this.questionsList = res.results;
+      })
+    );
+
+    this.subscriptions.push(
+      this.questionSandbox.questions$.subscribe((questions) => {
+        this.questionsList = questions;
       })
     );
 
@@ -53,6 +61,8 @@ export class QuestionsComponent implements OnInit, OnDestroy {
         this.successStatus = status;
       })
     );
+
+    this.questionSandbox.loadQuestions();
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
