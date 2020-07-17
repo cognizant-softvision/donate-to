@@ -1,10 +1,7 @@
 import { ColumnItem, QuestionModel } from 'src/app/shared/models';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
-import { ControlType } from 'src/app/shared/enum/controlTypes';
 import { ControlTypeModel } from 'src/app/shared/models/control-type.model';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { NzModalRef, NzModalService } from 'ng-zorro-antd';
-import { QuestionOption } from 'src/app/shared/models/question-option.modal';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { QuestionsSandbox } from '../questions-sandbox';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -23,12 +20,7 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
   private isSubmited = false;
   private failedStatus = false;
   private controlTypes: ControlTypeModel[] = [];
-  public isOption = false;
 
-  isErrorModalActive = false;
-  tplModal?: NzModalRef;
-  form!: FormGroup;
-  optionsArray = new FormArray([]);
   label = '';
   placeholder = '';
   weight = 0;
@@ -45,7 +37,6 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
     { name: 'Admin.PriorityQuestion.Table.WeightColumn' },
     { name: 'Admin.PriorityQuestion.Table.ControlTypeColumn' },
     { name: 'Admin.PriorityQuestion.Table.DefaultValueColumn' },
-    { name: 'Admin.PriorityQuestion.Table.OptionsColumn' },
     { name: 'Admin.Action' },
   ];
 
@@ -59,28 +50,18 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
     itemsFormControl: new FormControl(),
   });
 
-  constructor(
-    public questionSandbox: QuestionsSandbox,
-    private formBuilder: FormBuilder,
-    private modal: NzModalService,
-    private router: Router
-  ) {}
+  constructor(public questionSandbox: QuestionsSandbox, private router: Router) {}
 
   ngOnInit(): void {
     this.questionSandbox.loadControlTypes();
     this.questionSandbox.loadQuestions();
-    this.form = this.formBuilder.group({});
-    this.addField();
-    this.addField();
     this.registerEvents();
   }
 
   registerEvents(): void {
     this.subscriptions.push(
       this.questionSandbox.controlTypes$.subscribe((controlTypes) => {
-        controlTypes.forEach((element) => {
-          this.controlTypes.push(element);
-        });
+        this.controlTypes = JSON.parse(JSON.stringify(controlTypes));
       })
     );
 
@@ -131,30 +112,11 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
     this.router.navigate(['/admin/priority-questions']);
   }
 
-  switchErrorModal() {
-    this.isErrorModalActive = !this.isErrorModalActive;
-  }
-
-  private sandBoxSubscriptionInit(): void {
-    this.subscriptions.push(
-      this.questionSandbox.questions$.subscribe((questions) => {
-        this.questions = questions;
-      })
-    );
-  }
-
-  private validateFormGroup(formGroup: FormGroup, optionGroup: FormGroup) {
+  private validateFormGroup(formGroup: FormGroup) {
     for (const i in formGroup.controls) {
       if (formGroup.controls.hasOwnProperty(i)) {
         formGroup.controls[i].markAsDirty();
         formGroup.controls[i].updateValueAndValidity();
-      }
-    }
-
-    for (const i in optionGroup.controls) {
-      if (this.form.controls.hasOwnProperty(i)) {
-        this.form.controls[i].markAsDirty();
-        this.form.controls[i].updateValueAndValidity();
       }
     }
   }
@@ -171,7 +133,7 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
   }
 
   addQuestion() {
-    this.validateFormGroup(this.questionItemFormGroup, this.form);
+    this.validateFormGroup(this.questionItemFormGroup);
     if (this.questionItemFormGroup.valid) {
       const questionItem = new QuestionModel();
 
@@ -214,28 +176,7 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
         questionItem.weight = this.questionItemFormGroup.controls.weightFormControl.value;
         questionItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
 
-        this.optionsArray.removeAt(this.optionsArray.length);
-
-        let options: QuestionOption[] = [];
-        for (const o of this.optionsArray.value) {
-          const questionOption = new QuestionOption();
-          questionOption.label = o.optionLabel;
-          questionOption.value = o.optionValue;
-          questionOption.weight = o.optionWeight;
-          options = [...options, questionOption];
-        }
-        questionItem.options = options;
-
-        if (questionItem.controlType.name !== ControlType.Textbox) {
-          if (this.optionsWeight(questionItem.options) !== true) {
-            this.modal.error({
-              nzTitle: 'Warning',
-              nzContent: 'The weight of each option must sum a total of 100',
-            });
-          } else {
-            this.questions = [...this.questions, questionItem];
-          }
-        }
+        this.questions = [...this.questions, questionItem];
       }
     }
   }
@@ -255,44 +196,5 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
 
   private unregisterEvents() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
-  }
-
-  questionWithOptions(): boolean {
-    if (this.questionItemFormGroup.controls.controlTypeFormControl.value === 'RadioButton') {
-      this.isOption = true;
-    }
-
-    return this.isOption;
-  }
-
-  addField(e?: MouseEvent): void {
-    if (e) {
-      e.preventDefault();
-    }
-
-    const group = new FormGroup({
-      optionLabel: new FormControl(''),
-      optionValue: new FormControl(''),
-      optionWeight: new FormControl(''),
-    });
-
-    this.optionsArray.push(group);
-  }
-
-  removeField(i: number, e: MouseEvent): void {
-    e.preventDefault();
-    if (this.optionsArray.length > 2) {
-      const index = this.optionsArray.removeAt(i);
-    }
-  }
-
-  optionsWeight(options: QuestionOption[]): boolean {
-    const totalWeight = options.reduce((acc, cur) => acc + cur.weight, 0);
-
-    if (totalWeight !== 100) {
-      return false;
-    }
-
-    return true;
   }
 }
