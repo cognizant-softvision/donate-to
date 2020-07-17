@@ -281,6 +281,7 @@
         "WeightColumn": "Weight",
         "ControlTypeColumn": "Control Type",
         "DefaultValueColumn": "Default Value",
+        "OptionsColumn": "Options",
         "DeleteQuestion": "Delete",
         "EditQuestion": "Edit"
       },

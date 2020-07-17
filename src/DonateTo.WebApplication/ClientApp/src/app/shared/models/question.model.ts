@@ -11,6 +11,5 @@ export class QuestionModel extends BaseModel {
   defaultValue: string;
   controlTypeId: number;
   weight: number;
-  type: string;
   options: QuestionOption[];
 }

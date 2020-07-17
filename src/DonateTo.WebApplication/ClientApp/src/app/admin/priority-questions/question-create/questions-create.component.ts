@@ -1,10 +1,13 @@
-import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { QuestionsSandbox } from '../questions-sandbox';
-import { Subscription } from 'rxjs';
 import { ColumnItem, QuestionModel } from 'src/app/shared/models';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { ControlType } from 'src/app/shared/enum/controlTypes';
 import { ControlTypeModel } from 'src/app/shared/models/control-type.model';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd';
+import { QuestionOption } from 'src/app/shared/models/question-option.modal';
+import { QuestionsSandbox } from '../questions-sandbox';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-questions-create',
@@ -13,13 +16,19 @@ import { ControlTypeModel } from 'src/app/shared/models/control-type.model';
 })
 export class QuestionsCreateComponent implements OnInit, OnDestroy {
   @ViewChild('modalContent') public modalContent: TemplateRef<any>;
-  questions: QuestionModel[] = [];
+  @Input() questions: QuestionModel[] = [];
+  @Output() validationResult = new EventEmitter<QuestionModel[]>();
 
   private subscriptions: Subscription[] = [];
   private isSubmited = false;
   private failedStatus = false;
   private controlTypes: ControlTypeModel[] = [];
+  public isOption = false;
 
+  isErrorModalActive = false;
+  tplModal?: NzModalRef;
+  form!: FormGroup;
+  optionsArray = new FormArray([]);
   label = '';
   placeholder = '';
   weight = 0;
@@ -36,6 +45,7 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
     { name: 'Admin.PriorityQuestion.Table.WeightColumn' },
     { name: 'Admin.PriorityQuestion.Table.ControlTypeColumn' },
     { name: 'Admin.PriorityQuestion.Table.DefaultValueColumn' },
+    { name: 'Admin.PriorityQuestion.Table.OptionsColumn' },
     { name: 'Admin.Action' },
   ];
 
@@ -45,15 +55,23 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
     weightFormControl: new FormControl('', Validators.required),
     orderFormControl: new FormControl('', Validators.required),
     controlTypeFormControl: new FormControl('', Validators.required),
-    defaultValueFormControl: new FormControl('', Validators.required),
+    defaultValueFormControl: new FormControl(''),
     itemsFormControl: new FormControl(),
   });
 
-  constructor(public questionSandbox: QuestionsSandbox, private router: Router) {}
+  constructor(
+    public questionSandbox: QuestionsSandbox,
+    private formBuilder: FormBuilder,
+    private modal: NzModalService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.questionSandbox.loadControlTypes();
     this.questionSandbox.loadQuestions();
+    this.form = this.formBuilder.group({});
+    this.addField();
+    this.addField();
     this.registerEvents();
   }
 
@@ -113,11 +131,30 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
     this.router.navigate(['/admin/priority-questions']);
   }
 
-  private validateFormGroup(formGroup: FormGroup) {
+  switchErrorModal() {
+    this.isErrorModalActive = !this.isErrorModalActive;
+  }
+
+  private sandBoxSubscriptionInit(): void {
+    this.subscriptions.push(
+      this.questionSandbox.questions$.subscribe((questions) => {
+        this.questions = questions;
+      })
+    );
+  }
+
+  private validateFormGroup(formGroup: FormGroup, optionGroup: FormGroup) {
     for (const i in formGroup.controls) {
       if (formGroup.controls.hasOwnProperty(i)) {
         formGroup.controls[i].markAsDirty();
         formGroup.controls[i].updateValueAndValidity();
+      }
+    }
+
+    for (const i in optionGroup.controls) {
+      if (this.form.controls.hasOwnProperty(i)) {
+        this.form.controls[i].markAsDirty();
+        this.form.controls[i].updateValueAndValidity();
       }
     }
   }
@@ -134,9 +171,10 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
   }
 
   addQuestion() {
-    this.validateFormGroup(this.questionItemFormGroup);
+    this.validateFormGroup(this.questionItemFormGroup, this.form);
     if (this.questionItemFormGroup.valid) {
       const questionItem = new QuestionModel();
+
       if (this.isEdit) {
         const questionSavedItem = this.questions.find((q) => q.id === this.questionId);
         questionItem.label = this.questionItemFormGroup.controls.labelFormControl.value;
@@ -176,7 +214,28 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
         questionItem.weight = this.questionItemFormGroup.controls.weightFormControl.value;
         questionItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
 
-        this.questions = [...this.questions, questionItem];
+        this.optionsArray.removeAt(this.optionsArray.length);
+
+        let options: QuestionOption[] = [];
+        for (const o of this.optionsArray.value) {
+          const questionOption = new QuestionOption();
+          questionOption.label = o.optionLabel;
+          questionOption.value = o.optionValue;
+          questionOption.weight = o.optionWeight;
+          options = [...options, questionOption];
+        }
+        questionItem.options = options;
+
+        if (questionItem.controlType.name !== ControlType.Textbox) {
+          if (this.optionsWeight(questionItem.options) !== true) {
+            this.modal.error({
+              nzTitle: 'Warning',
+              nzContent: 'The weight of each option must sum a total of 100',
+            });
+          } else {
+            this.questions = [...this.questions, questionItem];
+          }
+        }
       }
     }
   }
@@ -196,5 +255,44 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
 
   private unregisterEvents() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+  questionWithOptions(): boolean {
+    if (this.questionItemFormGroup.controls.controlTypeFormControl.value === 'RadioButton') {
+      this.isOption = true;
+    }
+
+    return this.isOption;
+  }
+
+  addField(e?: MouseEvent): void {
+    if (e) {
+      e.preventDefault();
+    }
+
+    const group = new FormGroup({
+      optionLabel: new FormControl(''),
+      optionValue: new FormControl(''),
+      optionWeight: new FormControl(''),
+    });
+
+    this.optionsArray.push(group);
+  }
+
+  removeField(i: number, e: MouseEvent): void {
+    e.preventDefault();
+    if (this.optionsArray.length > 2) {
+      const index = this.optionsArray.removeAt(i);
+    }
+  }
+
+  optionsWeight(options: QuestionOption[]): boolean {
+    const totalWeight = options.reduce((acc, cur) => acc + cur.weight, 0);
+
+    if (totalWeight !== 100) {
+      return false;
+    }
+
+    return true;
   }
 }
