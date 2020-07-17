@@ -14,7 +14,7 @@ export class DonationPriorityComponent implements OnInit {
   @Output() isSubmited = new EventEmitter<number>();
 
   constructor(private formBuilder: FormBuilder) {
-    /*this.questions = [
+    this.questions = [
       {
         createdBy: '',
         createdDate: new Date(),
@@ -125,7 +125,7 @@ export class DonationPriorityComponent implements OnInit {
           },
         ],
       },
-    ];*/
+    ];
   }
 
   ngOnInit() {
