@@ -4,5 +4,4 @@ export class QuestionOption extends BaseModel {
   label: string;
   value: string;
   weight: number;
-  questionId: number;
 }
