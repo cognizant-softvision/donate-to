@@ -10,9 +10,9 @@ pool: DiegoLocalMachine
 #  vmImage: "DiegoLocalMachine"
 
 variables:
-#  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Dev'
+  #  solution: '**/*.sln'
+  buildPlatform: "Any CPU"
+  buildConfiguration: "Dev"
 
 steps:
   - task: DotNetCoreCLI@2

@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class AuthSandbox extends Sandbox {
   private subscriptions: Subscription[] = [];
   public isAdmin = new BehaviorSubject(true);
+  public isSuperAdmin = new BehaviorSubject(true);
 
   constructor(
     protected appState$: Store<store.State>,
@@ -28,14 +29,15 @@ export class AuthSandbox extends Sandbox {
    */
   private registerEvents(): void {
     this.subscriptions.push(
-      this.userRoles$.subscribe((userRoles: string[]) =>
+      this.userRoles$.subscribe((userRoles: string[]) => {
         this.isAdmin.next(
           userRoles.length === 0 ||
             userRoles.includes(Roles.Admin) ||
             userRoles.includes(Roles.Superadmin) ||
             userRoles.includes(Roles.Organization)
-        )
-      )
+        );
+        this.isSuperAdmin.next(userRoles.length === 0 || userRoles.includes(Roles.Superadmin));
+      })
     );
   }
 

@@ -188,8 +188,8 @@
       "Title": {
         "Donation": "Donaciones",
         "User": "Usuarios",
-        "Organization": "Organizaciones",
-        "Question": "Preguntas"
+        "Organization": "Organización",
+        "Priority-questions": "Prioridad"
       }
     },
     "Donation": {
@@ -264,6 +264,51 @@
     },
     "Organization": {
       "Title": "Organización"
+    },
+    "PriorityQuestion": {
+      "Title": "Prioridad de preguntas",
+      "Create": {
+        "Title": "Crear pregunta de prioridad",
+        "CreateRequest": "Crear preguntas"
+      },
+      "Edit": {
+        "Title": "Edit Question"
+      },
+      "Table": {
+        "LabelColumn": "Etiqueta",
+        "PlaceholderColumn": "Marcador",
+        "OrderColumnColumn": "Orden",
+        "WeightColumn": "Peso",
+        "ControlTypeColumn": "Tipo Control",
+        "DefaultValueColumn": "Valor default",
+        "OptionsColumn": "Opciones",
+        "DeleteQuestion": "Eliminar",
+        "EditQuestion": "Editar"
+      },
+      "Form": {
+        "Label": "Etiqueta",
+        "Placeholder": "Marcador",
+        "Order": "Orden",
+        "Weight": "Peso",
+        "ControlType": "Tipo Control",
+        "DefaultValue": "Valor default",
+        "LabelPlaceHolder": "Nombre etiqueta",
+        "PlaceholderPlaceHolder": "Nombre marcador",
+        "OrderPlaceHolder": "Orden",
+        "WeightPlaceHolder": "Peso",
+        "ControlTypePlaceHolder": "Tipo Control",
+        "DefaultValuePlaceHolder": "Valor default",
+        "LabelRequired": "Etiqueta es requerida",
+        "DefaultValueRequired": "Valor default es requerido",
+        "OrderRequired": "Orden es requerido",
+        "WeightRequired": "Peso es requerido",
+        "PlaceholderRequired": "Nombre marcador es requerido",
+        "ControlTypeRequired": "Tipo control es requerido",
+        "AddItem": "Agregar Pregunta",
+        "PriorityQuestionRequiredError": "Por lo menos una pregunta de prioridad es requerida"
+      },
+      "CreateConfirm": "Está seguro de que quiere crear una nueva pregunta?",
+      "EditConfirm": "Estas seguro que quieres editar esta pregunta?"
     },
     "Question": {
       "Title": "Preguntas",

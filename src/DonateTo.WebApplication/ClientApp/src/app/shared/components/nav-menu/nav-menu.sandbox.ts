@@ -11,6 +11,7 @@ import { en_US, es_ES, NzI18nService } from 'ng-zorro-antd';
 export class NavMenuSandBox extends Sandbox {
   private subscriptions: Subscription[] = [];
   isAdmin = false;
+  isSuperAdmin = false;
 
   constructor(
     protected appState$: Store<store.State>,
@@ -21,6 +22,7 @@ export class NavMenuSandBox extends Sandbox {
     super(appState$);
     this.registerEvents();
     this.isAdmin = false;
+    this.isSuperAdmin = false;
   }
 
   /**
@@ -75,7 +77,9 @@ export class NavMenuSandBox extends Sandbox {
     this.subscriptions.push(
       this.isAuthenticated$.subscribe((isAuthenticated: boolean) => (this.isAuthenticated = isAuthenticated))
     );
-    //
     this.subscriptions.push(this.authSandbox.isAdmin.asObservable().subscribe((isAdmin) => (this.isAdmin = isAdmin)));
+    this.subscriptions.push(
+      this.authSandbox.isSuperAdmin.asObservable().subscribe((isSuperAdmin) => (this.isSuperAdmin = isSuperAdmin))
+    );
   }
 }

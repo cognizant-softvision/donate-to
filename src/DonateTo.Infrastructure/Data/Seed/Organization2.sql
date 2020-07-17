@@ -1,14 +1,3 @@
-DELETE FROM public."DonationRequestItem" WHERE "DonationRequestId" IN (SELECT "Id" FROM public."DonationRequest" WHERE "OrganizationId" > 1);
-
-DELETE FROM public."DonationRequest" WHERE "OrganizationId" > 1;
-
-DELETE FROM public."Address" Where "Id" > 1;
-
-DELETE FROM public."Contact" WHERE "Id" > 1;
-
-DELETE FROM public."Organization" WHERE "Id" > 1;
-
-
 INSERT INTO public."Contact" 
 ("FirstName", "LastName", "Email", "IdentityNumber", "PhoneNumber", "Position", "CreatedBy", "CreatedDate", "UpdateBy", "UpdateDate")
 VALUES
