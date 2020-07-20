@@ -14,6 +14,7 @@ export class QuestionsSandbox extends Sandbox implements OnDestroy {
   loadAction$ = this.appState$.select(store.fromQuestion.getLoadingStatus);
   questionsPagedFiltered$ = this.appState$.select(store.fromQuestion.getQuestionsFilteredPaged);
   controlTypes$ = this.appState$.select(store.fromQuestion.getControlTypes);
+  // options$ = this.appState$.select(store.fromQuestion.getOptions);
 
   constructor(protected appState$: Store<store.State>) {
     super(appState$);

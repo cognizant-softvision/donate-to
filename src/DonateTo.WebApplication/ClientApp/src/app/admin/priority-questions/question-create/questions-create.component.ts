@@ -91,9 +91,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     this.subscriptions.push(
       this.questionSandbox.questions$.subscribe((questions) => {
         this.questions = [];
-        questions.forEach((element) => {
-          this.questions.push(element);
-        });
+        this.questions = JSON.parse(JSON.stringify(questions));
       })
     );
   }
@@ -166,18 +164,17 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
 
       if (this.isEdit) {
         const questionSavedItem = this.questions.find((q) => q.id === this.questionId);
-        questionItem.label = this.questionItemFormGroup.controls.labelFormControl.value;
-        questionItem.placeholder = this.questionItemFormGroup.controls.placeholderFormControl.value;
-        questionItem.order = this.questionItemFormGroup.controls.orderFormControl.value;
-        questionItem.controlType = new ControlTypeModel();
-        questionItem.controlTypeId = this.questionItemFormGroup.controls.controlTypeFormControl.value;
-        questionItem.controlType = this.controlTypes.find(
-          (controlType) => controlType.id === questionItem.controlTypeId
+        questionSavedItem.label = this.questionItemFormGroup.controls.labelFormControl.value;
+        questionSavedItem.placeholder = this.questionItemFormGroup.controls.placeholderFormControl.value;
+        questionSavedItem.order = this.questionItemFormGroup.controls.orderFormControl.value;
+        questionSavedItem.controlTypeId = this.questionItemFormGroup.controls.controlTypeFormControl.value;
+        questionSavedItem.controlType = this.controlTypes.find(
+          (controlType) => controlType.id === questionSavedItem.controlTypeId
         );
-        questionItem.weight = this.questionItemFormGroup.controls.weightFormControl.value;
-        questionItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
+        questionSavedItem.weight = this.questionItemFormGroup.controls.weightFormControl.value;
+        questionSavedItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
 
-        if (questionItem.controlType.name !== 'Textbox') {
+        if (questionSavedItem.controlType.name !== 'Textbox') {
           this.optionsArray.removeAt(this.optionsArray.length);
           for (const o of this.optionsArray.value) {
             const questionOption = new QuestionOption();
@@ -186,18 +183,14 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
             questionOption.weight = o.optionWeight;
             options = [...options, questionOption];
           }
-          questionItem.options = options;
+          questionSavedItem.options = options;
 
-          if (this.optionsWeight(questionItem.options) !== true) {
+          if (this.optionsWeight(questionSavedItem.options) !== true) {
             this.modal.error({
               nzTitle: 'Warning',
               nzContent: 'The weight of each option must sum a total of 100',
             });
-          } else {
-            this.questions = [...this.questions, questionItem];
           }
-        } else {
-          this.questions = [...this.questions, questionItem];
         }
 
         questionItem.id = questionSavedItem.id;
@@ -206,12 +199,6 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
         questionItem.createdDate = questionSavedItem.createdDate;
         questionItem.updateBy = questionSavedItem.updateBy;
         questionItem.updateDate = questionSavedItem.updateDate;
-
-        this.questions.splice(
-          this.questions.findIndex((element) => element.id === this.questionId),
-          1
-        );
-        this.questions.push(questionItem);
 
         this.resetForm();
       } else {
