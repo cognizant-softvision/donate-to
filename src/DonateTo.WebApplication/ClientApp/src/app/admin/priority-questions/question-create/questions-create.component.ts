@@ -21,7 +21,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
 
   private subscriptions: Subscription[] = [];
   private isSubmited = false;
-  private failedStatus = false;
+  private loadingStatus = false;
   public ControlType2LabelMapping = ControlType2LabelMapping;
   private controlTypes: ControlTypeModel[] = [];
 
@@ -94,6 +94,13 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
         this.questions = JSON.parse(JSON.stringify(questions));
       })
     );
+
+    this.subscriptions.push(
+      this.questionSandbox.loadAction$.subscribe((loading) => {
+        this.loadingStatus = loading;
+        this.handleRequestResult();
+      })
+    );
   }
 
   resetForm(): void {
@@ -109,9 +116,8 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
 
   handleRequestResult() {
     if (this.isSubmited) {
-      if (this.failedStatus) {
+      if (!this.loadingStatus) {
         this.isSubmited = false;
-      } else {
         this.goBack();
       }
     }
