@@ -1,25 +1,35 @@
-import { ColumnItem, QuestionModel } from 'src/app/shared/models';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
-import { ControlTypeModel } from 'src/app/shared/models/control-type.model';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { QuestionsSandbox } from '../questions-sandbox';
 import { Router } from '@angular/router';
+import { QuestionsSandbox } from '../questions-sandbox';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { Subscription } from 'rxjs';
+import { ColumnItem, QuestionModel } from 'src/app/shared/models';
+import { ControlType, ControlType2LabelMapping } from 'src/app/shared/enum/controlTypes';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { QuestionOption } from 'src/app/shared/models/question-option.modal';
+import { ControlTypeModel } from 'src/app/shared/models/control-type.model';
 
 @Component({
   selector: 'app-questions-create',
   templateUrl: './questions-create.component.html',
   styleUrls: ['./questions-create.component.css'],
 })
-export class QuestionsCreateComponent implements OnInit, OnDestroy {
+export class QuestionsCreateComponent implements OnDestroy, OnInit {
   @ViewChild('modalContent') public modalContent: TemplateRef<any>;
   @Input() questions: QuestionModel[] = [];
   @Output() validationResult = new EventEmitter<QuestionModel[]>();
 
   private subscriptions: Subscription[] = [];
   private isSubmited = false;
-  private failedStatus = false;
+  private loadingStatus = false;
+  public ControlType2LabelMapping = ControlType2LabelMapping;
   private controlTypes: ControlTypeModel[] = [];
+
+  isErrorModalActive = false;
+  tplModal?: NzModalRef;
+  public isOption = false;
+  form!: FormGroup;
+  optionsArray = new FormArray([]);
 
   label = '';
   placeholder = '';
@@ -37,6 +47,7 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
     { name: 'Admin.PriorityQuestion.Table.WeightColumn' },
     { name: 'Admin.PriorityQuestion.Table.ControlTypeColumn' },
     { name: 'Admin.PriorityQuestion.Table.DefaultValueColumn' },
+    { name: 'Admin.PriorityQuestion.Table.OptionsColumn' },
     { name: 'Admin.Action' },
   ];
 
@@ -50,12 +61,24 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
     itemsFormControl: new FormControl(),
   });
 
-  constructor(public questionSandbox: QuestionsSandbox, private router: Router) {}
+  constructor(
+    public questionSandbox: QuestionsSandbox,
+    private router: Router,
+    private modal: NzModalService,
+    private formBuilder: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.questionSandbox.loadControlTypes();
     this.questionSandbox.loadQuestions();
     this.registerEvents();
+    this.form = this.formBuilder.group({});
+    this.addField();
+    this.addField();
+  }
+
+  ngOnDestroy(): void {
+    this.unregisterEvents();
   }
 
   registerEvents(): void {
@@ -68,9 +91,14 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.questionSandbox.questions$.subscribe((questions) => {
         this.questions = [];
-        questions.forEach((element) => {
-          this.questions.push(element);
-        });
+        this.questions = JSON.parse(JSON.stringify(questions));
+      })
+    );
+
+    this.subscriptions.push(
+      this.questionSandbox.loadAction$.subscribe((loading) => {
+        this.loadingStatus = loading;
+        this.handleRequestResult();
       })
     );
   }
@@ -86,15 +114,10 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
     this.isEdit = false;
   }
 
-  ngOnDestroy(): void {
-    this.unregisterEvents();
-  }
-
   handleRequestResult() {
     if (this.isSubmited) {
-      if (this.failedStatus) {
+      if (!this.loadingStatus) {
         this.isSubmited = false;
-      } else {
         this.goBack();
       }
     }
@@ -112,11 +135,18 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
     this.router.navigate(['/admin/priority-questions']);
   }
 
-  private validateFormGroup(formGroup: FormGroup) {
+  private validateFormGroup(formGroup: FormGroup, optionGroup: FormGroup) {
     for (const i in formGroup.controls) {
       if (formGroup.controls.hasOwnProperty(i)) {
         formGroup.controls[i].markAsDirty();
         formGroup.controls[i].updateValueAndValidity();
+      }
+    }
+
+    for (const i in optionGroup.controls) {
+      if (this.form.controls.hasOwnProperty(i)) {
+        this.form.controls[i].markAsDirty();
+        this.form.controls[i].updateValueAndValidity();
       }
     }
   }
@@ -133,22 +163,41 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
   }
 
   addQuestion() {
-    this.validateFormGroup(this.questionItemFormGroup);
+    this.validateFormGroup(this.questionItemFormGroup, this.form);
     if (this.questionItemFormGroup.valid) {
       const questionItem = new QuestionModel();
+      let options: QuestionOption[] = [];
 
       if (this.isEdit) {
         const questionSavedItem = this.questions.find((q) => q.id === this.questionId);
-        questionItem.label = this.questionItemFormGroup.controls.labelFormControl.value;
-        questionItem.placeholder = this.questionItemFormGroup.controls.placeholderFormControl.value;
-        questionItem.order = this.questionItemFormGroup.controls.orderFormControl.value;
-        questionItem.controlType = new ControlTypeModel();
-        questionItem.controlTypeId = this.questionItemFormGroup.controls.controlTypeFormControl.value;
-        questionItem.controlType = this.controlTypes.find(
-          (controlType) => controlType.id === questionItem.controlTypeId
+        questionSavedItem.label = this.questionItemFormGroup.controls.labelFormControl.value;
+        questionSavedItem.placeholder = this.questionItemFormGroup.controls.placeholderFormControl.value;
+        questionSavedItem.order = this.questionItemFormGroup.controls.orderFormControl.value;
+        questionSavedItem.controlTypeId = this.questionItemFormGroup.controls.controlTypeFormControl.value;
+        questionSavedItem.controlType = this.controlTypes.find(
+          (controlType) => controlType.id === questionSavedItem.controlTypeId
         );
-        questionItem.weight = this.questionItemFormGroup.controls.weightFormControl.value;
-        questionItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
+        questionSavedItem.weight = this.questionItemFormGroup.controls.weightFormControl.value;
+        questionSavedItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
+
+        if (questionSavedItem.controlType.name !== 'Textbox') {
+          this.optionsArray.removeAt(this.optionsArray.length);
+          for (const o of this.optionsArray.value) {
+            const questionOption = new QuestionOption();
+            questionOption.label = o.optionLabel;
+            questionOption.value = o.optionValue;
+            questionOption.weight = o.optionWeight;
+            options = [...options, questionOption];
+          }
+          questionSavedItem.options = options;
+
+          if (this.optionsWeight(questionSavedItem.options) !== true) {
+            this.modal.error({
+              nzTitle: 'Warning',
+              nzContent: 'The weight of each option must sum a total of 100',
+            });
+          }
+        }
 
         questionItem.id = questionSavedItem.id;
         questionItem.key = questionSavedItem.key;
@@ -156,12 +205,6 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
         questionItem.createdDate = questionSavedItem.createdDate;
         questionItem.updateBy = questionSavedItem.updateBy;
         questionItem.updateDate = questionSavedItem.updateDate;
-
-        this.questions.splice(
-          this.questions.findIndex((element) => element.id === this.questionId),
-          1
-        );
-        this.questions.push(questionItem);
 
         this.resetForm();
       } else {
@@ -176,7 +219,28 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
         questionItem.weight = this.questionItemFormGroup.controls.weightFormControl.value;
         questionItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
 
-        this.questions = [...this.questions, questionItem];
+        if (questionItem.controlType.name !== 'Textbox') {
+          this.optionsArray.removeAt(this.optionsArray.length);
+          for (const o of this.optionsArray.value) {
+            const questionOption = new QuestionOption();
+            questionOption.label = o.optionLabel;
+            questionOption.value = o.optionValue;
+            questionOption.weight = o.optionWeight;
+            options = [...options, questionOption];
+          }
+          questionItem.options = options;
+
+          if (this.optionsWeight(questionItem.options) !== true) {
+            this.modal.error({
+              nzTitle: 'Warning',
+              nzContent: 'The weight of each option must sum a total of 100',
+            });
+          } else {
+            this.questions = [...this.questions, questionItem];
+          }
+        } else {
+          this.questions = [...this.questions, questionItem];
+        }
       }
     }
   }
@@ -196,5 +260,44 @@ export class QuestionsCreateComponent implements OnInit, OnDestroy {
 
   private unregisterEvents() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+  questionWithOptions(): boolean {
+    if (this.questionItemFormGroup.controls.controlTypeFormControl.value === 'RadioButton') {
+      this.isOption = true;
+    }
+
+    return this.isOption;
+  }
+
+  addField(e?: MouseEvent): void {
+    if (e) {
+      e.preventDefault();
+    }
+
+    const group = new FormGroup({
+      optionLabel: new FormControl(''),
+      optionValue: new FormControl(''),
+      optionWeight: new FormControl(''),
+    });
+
+    this.optionsArray.push(group);
+  }
+
+  removeField(i: number, e: MouseEvent): void {
+    e.preventDefault();
+    if (this.optionsArray.length > 2) {
+      const index = this.optionsArray.removeAt(i);
+    }
+  }
+
+  optionsWeight(options: QuestionOption[]): boolean {
+    const totalWeight = options.reduce((acc, cur) => acc + cur.weight, 0);
+
+    if (totalWeight !== 100) {
+      return false;
+    }
+
+    return true;
   }
 }
