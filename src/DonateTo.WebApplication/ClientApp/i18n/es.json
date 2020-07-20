@@ -259,7 +259,10 @@
         "Name": "Nombre",
         "Organization": "Organización",
         "Email": "Email",
-        "Action": "Acción"
+        "Action": "Acción",
+        "Filtered": "Filtrada",
+        "Search": "Buscar",
+        "Reset": "Reestablecer"
       }
     },
     "Organization": {

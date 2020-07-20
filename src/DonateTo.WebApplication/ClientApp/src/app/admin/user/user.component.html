@@ -3,39 +3,80 @@
   <nz-divider></nz-divider>
   <button nz-button nzType="secondary" (click)="reset()">{{ 'Admin.ClearFilter' | translate }}</button>
 </div>
-<nz-table #userTable [nzData]="usersList" nzTableLayout="fixed" [nzNoResult]="customTpl">
+<nz-table
+  #userTable
+  [nzData]="usersList"
+  nzTableLayout="fixed"
+  [nzNoResult]="customTpl"
+  [nzFrontPagination]="false"
+  [nzTotal]="total"
+  [nzPageSize]="pageSize"
+  [nzPageIndex]="pageIndex"
+  (nzQueryParams)="onQueryParamsChange($event)"
+>
   <thead>
     <tr>
-      <th [(nzSortOrder)]="listOfColumns[0].sortOrder" [nzSortFn]="listOfColumns[0].sortFn" nzCustomFilter>
+      <th nzColumnKey="fullName" nzCustomFilter [nzSortOrder]="'ascend'" [nzSortFn]="true">
         {{ 'Admin.User.Table.Name' | translate }}
+        <label
+          class="filter"
+          title="{{ 'Admin.User.Table.Filtered' | translate }}"
+          *ngIf="searchNameValue.length > 0 && !searchNameVisible"
+        >
+          ({{ searchNameValue }})
+        </label>
         <nz-filter-trigger
           [(nzVisible)]="searchNameVisible"
           [nzActive]="searchNameValue.length > 0"
-          [nzDropdownMenu]="nameSearch"
+          [nzDropdownMenu]="searchNameMenu"
         >
           <i nz-icon nzType="search"></i>
         </nz-filter-trigger>
       </th>
 
-      <th>{{ 'Admin.User.Table.Organization' | translate }}</th>
-
-      <th nzCustomFilter>
-        {{ 'Admin.User.Table.Email' | translate }}
+      <th [nzSortFn]="true" nzCustomFilter>
+        {{ 'Admin.User.Table.Organization' | translate }}
+        <label
+          class="filter"
+          title="{{ 'Admin.User.Table.Filtered' | translate }}"
+          *ngIf="searchOrganizationValue.length > 0 && !searchOrganizationVisible"
+        >
+          ({{ searchOrganizationValue }})
+        </label>
         <nz-filter-trigger
-          [(nzVisible)]="searchMailvisible"
-          [nzActive]="searchMailValue.length > 0"
-          [nzDropdownMenu]="mailSeach"
+          [(nzVisible)]="searchOrganizationVisible"
+          [nzActive]="searchOrganizationValue.length > 0"
+          [nzDropdownMenu]="searchOrganizationMenu"
         >
           <i nz-icon nzType="search"></i>
         </nz-filter-trigger>
       </th>
+
+      <th [nzSortFn]="true" nzCustomFilter>
+        {{ 'Admin.User.Table.Email' | translate }}
+        <label
+          class="filter"
+          title="{{ 'Admin.User.Table.Filtered' | translate }}"
+          *ngIf="searchEmailValue.length > 0 && !searchEmailVisible"
+        >
+          ({{ searchEmailValue }})
+        </label>
+        <nz-filter-trigger
+          [(nzVisible)]="searchEmailVisible"
+          [nzActive]="searchEmailValue.length > 0"
+          [nzDropdownMenu]="searchEmailMenu"
+        >
+          <i nz-icon nzType="search"></i>
+        </nz-filter-trigger>
+      </th>
+
       <th>{{ 'Admin.User.Table.Action' | translate }}</th>
     </tr>
   </thead>
 
   <tbody>
     <tr *ngFor="let data of userTable.data">
-      <td>{{ data.firstName }} {{ data.lastName }}</td>
+      <td>{{ data.fullName }}</td>
       <td>{{ showOrganizations(data.organizations) }}</td>
       <td>{{ data.email }}</td>
       <td>
@@ -45,26 +86,59 @@
   </tbody>
 </nz-table>
 
-<nz-dropdown-menu #nameSearch="nzDropdownMenu">
+<nz-dropdown-menu #searchNameMenu="nzDropdownMenu">
   <div class="ant-table-filter-dropdown">
     <div class="search-box">
-      <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchNameValue" />
+      <input
+        type="text"
+        nz-input
+        placeholder="{{ 'Admin.User.Table.Name' | translate }}"
+        [(ngModel)]="searchNameValue"
+      />
       <button nz-button nzSize="small" nzType="primary" (click)="searchName()" class="search-button">
-        Search
+        {{ 'Admin.User.Table.Search' | translate }}
       </button>
-      <button nz-button nzSize="small" (click)="reset()">Reset</button>
+      <button nz-button nzSize="small" (click)="resetNameSearch()">
+        {{ 'Admin.User.Table.Reset' | translate }}
+      </button>
     </div>
   </div>
 </nz-dropdown-menu>
 
-<nz-dropdown-menu #mailSeach="nzDropdownMenu">
+<nz-dropdown-menu #searchOrganizationMenu="nzDropdownMenu">
   <div class="ant-table-filter-dropdown">
     <div class="search-box">
-      <input type="text" nz-input placeholder="Search mail" [(ngModel)]="searchMailValue" />
-      <button nz-button nzSize="small" nzType="primary" (click)="searchMail()" class="search-button">
-        Search
+      <input
+        type="text"
+        nz-input
+        placeholder="{{ 'Admin.User.Table.Organization' | translate }}"
+        [(ngModel)]="searchOrganizationValue"
+      />
+      <button nz-button nzSize="small" nzType="primary" (click)="searchOrganization()" class="search-button">
+        {{ 'Admin.User.Table.Search' | translate }}
       </button>
-      <button nz-button nzSize="small" (click)="reset()">Reset</button>
+      <button nz-button nzSize="small" (click)="resetOrganizationSearch()">
+        {{ 'Admin.User.Table.Reset' | translate }}
+      </button>
+    </div>
+  </div>
+</nz-dropdown-menu>
+
+<nz-dropdown-menu #searchEmailMenu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input
+        type="text"
+        nz-input
+        placeholder="{{ 'Admin.User.Table.Email' | translate }}"
+        [(ngModel)]="searchEmailValue"
+      />
+      <button nz-button nzSize="small" nzType="primary" (click)="searchEmail()" class="search-button">
+        {{ 'Admin.User.Table.Search' | translate }}
+      </button>
+      <button nz-button nzSize="small" (click)="resetEmailSearch()">
+        {{ 'Admin.User.Table.Reset' | translate }}
+      </button>
     </div>
   </div>
 </nz-dropdown-menu>

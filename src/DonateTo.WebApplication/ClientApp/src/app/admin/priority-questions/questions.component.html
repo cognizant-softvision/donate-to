@@ -30,9 +30,10 @@
     <thead>
       <tr>
         <th nzWidth="3em"></th>
-        <th nzColumnKey="label" [nzSortOrder]="'ascend'" [nzSortFn]="true">
+        <th nzCustomFilter nzColumnKey="label" [nzSortOrder]="'ascend'" [nzSortFn]="true">
           {{ 'Admin.Question.Table.Label' | translate }}
           <label
+            class="filter"
             title="{{ 'Admin.Question.Table.Filtered' | translate }}"
             *ngIf="searchLabelValue.length > 0 && !labelVisible"
           >
@@ -46,9 +47,10 @@
             <i nz-icon nzType="search"></i>
           </nz-filter-trigger>
         </th>
-        <th [nzSortFn]="true">
+        <th nzCustomFilter [nzSortFn]="true">
           {{ 'Admin.Question.Table.Type' | translate }}
           <label
+            class="filter"
             title="{{ 'Admin.Question.Table.Filtered' | translate }}"
             *ngIf="searchTypeValue.length > 0 && !typeVisible"
           >
@@ -62,9 +64,10 @@
             <i nz-icon nzType="search"></i>
           </nz-filter-trigger>
         </th>
-        <th [nzSortFn]="true">
+        <th nzCustomFilter [nzSortFn]="true">
           {{ 'Admin.Question.Table.Placeholder' | translate }}
           <label
+            class="filter"
             title="{{ 'Admin.Question.Table.Filtered' | translate }}"
             *ngIf="searchPlaceholderValue.length > 0 && !placeholderVisible"
           >
@@ -98,8 +101,14 @@
           <td>{{ data.order }}</td>
         </tr>
         <tr [nzExpand]="expandSet.has(data.id)">
-          <td>
-            <table>
+          <span>
+            <nz-table
+              #innerTable
+              [nzData]="data.options"
+              nzTitle="{{ 'Admin.Question.Table.OptionsTitle' | translate }}"
+              nzSize="middle"
+              [nzShowPagination]="false"
+            >
               <thead>
                 <tr>
                   <th>{{ 'Admin.Question.Table.Option.Label' | translate }}</th>
@@ -108,14 +117,14 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let opt of data.options">
+                <tr *ngFor="let opt of innerTable.data">
                   <td>{{ opt.label }}</td>
                   <td>{{ opt.value }}</td>
                   <td>{{ opt.weight }}</td>
                 </tr>
               </tbody>
-            </table>
-          </td>
+            </nz-table>
+          </span>
         </tr>
       </ng-container>
     </tbody>

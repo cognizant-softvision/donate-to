@@ -1,8 +1,10 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.Infrastructure.Data.EntityFramework;
+using DonateTo.Infrastructure.Data.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -39,6 +41,44 @@ namespace DonateTo.Infrastructure.Data.Repositories
             }
 
             return (await users.ToListAsync().ConfigureAwait(false)).AsQueryable();
+        }
+
+        ///<inheritdoc cref="IRepository{User}"/>
+        public override ApplicationCore.Models.Pagination.PagedResult<User>
+            GetPaged(int page, int pageSize, Expression<Func<User, bool>> filter = null, string sort = "")
+        {
+            var users = GetHydratedUser();
+
+            if (filter != null)
+            {
+                users = users.Where(filter);
+            }
+
+            if (!string.IsNullOrEmpty(sort))
+            {
+                users = users.OrderBy(sort);
+            }
+
+            return users.GetPaged(page, pageSize);
+        }
+
+        ///<inheritdoc cref="IRepository{User}"/>
+        public override async Task<ApplicationCore.Models.Pagination.PagedResult<User>>
+            GetPagedAsync(int page, int pageSize, Expression<Func<User, bool>> filter = null, string sort = "")
+        {
+            var organizations = GetHydratedUser();
+
+            if (filter != null)
+            {
+                organizations = organizations.Where(filter);
+            }
+
+            if (!string.IsNullOrEmpty(sort))
+            {
+                organizations = organizations.OrderBy(sort);
+            }
+
+            return await organizations.GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
 
         #region private

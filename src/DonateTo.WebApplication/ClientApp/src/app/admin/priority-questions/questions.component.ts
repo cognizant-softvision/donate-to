@@ -92,6 +92,12 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     this.searchLabelValue = '';
     this.searchTypeValue = '';
     this.searchPlaceholderValue = '';
+    this.questionFilter = {
+      ...this.questionFilter,
+      label: this.searchLabelValue,
+      type: this.searchTypeValue,
+      placeholder: this.searchPlaceholderValue,
+    };
     this.questionSandbox.loadQuestionsFilteredPaged(this.questionFilter);
   }
 

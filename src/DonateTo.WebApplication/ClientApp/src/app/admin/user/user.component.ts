@@ -3,6 +3,8 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { PopupModalComponent } from './components/popup-modal/popup-modal.component';
 import { Subscription } from 'rxjs';
 import { UserSandbox } from './user.sandbox';
+import { UserFilter } from '../../shared/models/filters/user-filter';
+import { NzTableQueryParams } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-user-admin',
@@ -16,33 +18,18 @@ export class UserComponent implements OnInit, OnDestroy {
   usersList: UserModel[] = [];
   private isSubmited = false;
   private subscriptions: Subscription[] = [];
-  private failedStatus = false;
-  searchMailValue = '';
-  searchMailvisible = false;
   searchNameValue = '';
   searchNameVisible = false;
-
-  listOfColumns: ColumnItem[] = [
-    {
-      name: 'Admin.User.Table.Name',
-      sortOrder: null,
-      sortFn: (a: UserModel, b: UserModel) =>
-        (a.firstName + ' ' + a.lastName).localeCompare(b.firstName + ' ' + b.lastName),
-    },
-    {
-      name: 'Admin.User.Table.Organization',
-      sortOrder: null,
-      sortFn: (a: UserModel, b: UserModel) => a.lastName.localeCompare(b.lastName),
-    },
-    {
-      name: 'Admin.User.Table.Email',
-      sortOrder: null,
-      sortFn: (a: UserModel, b: UserModel) => a.email.localeCompare(b.email),
-    },
-    {
-      name: 'Admin.Action',
-    },
-  ];
+  searchOrganizationValue = '';
+  searchOrganizationVisible = false;
+  searchEmailValue = '';
+  searchEmailVisible = false;
+  total = 0;
+  pageSize = 10;
+  pageIndex = 1;
+  userFilter: UserFilter;
+  failedStatus = false;
+  successStatus = false;
 
   constructor(public userSandbox: UserSandbox) {}
 
@@ -51,12 +38,15 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.userSandbox.loadUsers();
+    this.userFilter = new UserFilter();
+    this.userFilter.pageSize = this.pageSize;
+    this.userFilter.pageNumber = this.pageIndex;
+    this.userSandbox.loadUsersFilteredPaged(this.userFilter);
 
     this.subscriptions.push(
-      this.userSandbox.users$.subscribe((userList) => {
-        this.users = userList;
-        this.usersList = userList;
+      this.userSandbox.usersPagedFiltered$.subscribe((res) => {
+        this.total = res.rowCount;
+        this.usersList = res.results;
       })
     );
 
@@ -67,10 +57,29 @@ export class UserComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.push(
-      this.userSandbox.loadAction$.subscribe((_) => {
-        this.handleRequestResult();
+      this.userSandbox.loadAction$.subscribe((status) => {
+        this.successStatus = status;
       })
     );
+  }
+
+  onQueryParamsChange(params: NzTableQueryParams): void {
+    console.log(params);
+    const { pageSize, pageIndex, sort, filter } = params;
+    const currentSort = sort.find((item) => item.value !== null);
+
+    this.userFilter = {
+      ...this.userFilter,
+      pageSize,
+      pageNumber: pageIndex,
+      orderBy: (currentSort && currentSort.key) || '',
+      orderDirection: (currentSort && currentSort.value) || '',
+      fullName: (filter && filter.find((f) => f.key === 'fullName')?.value) || '',
+      email: (filter && filter.find((f) => f.key === 'email')?.value) || '',
+      organization: (filter && filter.find((f) => f.key === 'organization')?.value) || '',
+    };
+
+    this.userSandbox.loadUsersFilteredPaged(this.userFilter);
   }
 
   private unregisterEvents() {
@@ -99,21 +108,51 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   reset(): void {
-    this.searchMailValue = '';
     this.searchNameValue = '';
-    this.searchMail();
+    this.searchOrganizationValue = '';
+    this.searchEmailValue = '';
+    this.userFilter = {
+      ...this.userFilter,
+      fullName: this.searchNameValue,
+      organization: this.searchOrganizationValue,
+      email: this.searchEmailValue,
+    };
+    this.userSandbox.loadUsersFilteredPaged(this.userFilter);
   }
 
-  searchMail(): void {
-    this.searchMailvisible = false;
-    this.usersList = this.users.filter((item: UserModel) => item.email.includes(this.searchMailValue) === true);
+  resetNameSearch(): void {
+    this.searchNameValue = '';
+    this.userFilter = { ...this.userFilter, fullName: this.searchNameValue };
+    this.userSandbox.loadUsersFilteredPaged(this.userFilter);
+  }
+
+  resetOrganizationSearch(): void {
+    this.searchOrganizationValue = '';
+    this.userFilter = { ...this.userFilter, organization: this.searchOrganizationValue };
+    this.userSandbox.loadUsersFilteredPaged(this.userFilter);
+  }
+
+  resetEmailSearch(): void {
+    this.searchEmailValue = '';
+    this.userFilter = { ...this.userFilter, email: this.searchEmailValue };
+    this.userSandbox.loadUsersFilteredPaged(this.userFilter);
   }
 
   searchName(): void {
     this.searchNameVisible = false;
-    this.usersList.forEach((x) => console.log(x.fullName));
-    this.usersList = this.users.filter(
-      (item: UserModel) => item.fullName.toLowerCase().includes(this.searchNameValue.toLowerCase()) === true
-    );
+    this.userFilter = { ...this.userFilter, fullName: this.searchNameValue };
+    this.userSandbox.loadUsersFilteredPaged(this.userFilter);
+  }
+
+  searchOrganization(): void {
+    this.searchOrganizationVisible = false;
+    this.userFilter = { ...this.userFilter, organization: this.searchOrganizationValue };
+    this.userSandbox.loadUsersFilteredPaged(this.userFilter);
+  }
+
+  searchEmail(): void {
+    this.searchEmailVisible = false;
+    this.userFilter = { ...this.userFilter, email: this.searchEmailValue };
+    this.userSandbox.loadUsersFilteredPaged(this.userFilter);
   }
 }
