@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ColumnItem, DataItem } from './../../shared/models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-organization-admin',
@@ -7,7 +8,7 @@ import { ColumnItem, DataItem } from './../../shared/models';
   styleUrls: ['./organization.component.css'],
 })
 export class OrganizationComponent {
-  constructor() {}
+  constructor(protected router: Router) {}
 
   listOfColumns: ColumnItem[] = [
     {
