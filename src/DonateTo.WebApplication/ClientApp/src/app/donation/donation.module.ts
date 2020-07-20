@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { DonationComponent } from './donation.component';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
+import { RouterModule } from '@angular/router';
+
 import {
   NzButtonModule,
   NzCardModule,
@@ -85,6 +87,7 @@ const icons = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    RouterModule,
   ],
   declarations: [
     DonationComponent,
