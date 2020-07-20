@@ -33,12 +33,20 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.questionFilter = new QuestionFilter();
+    this.questionFilter.pageSize = this.pageSize;
+    this.questionFilter.pageNumber = this.pageIndex;
     this.questionSandbox.loadQuestionsFilteredPaged(this.questionFilter);
 
     this.subscriptions.push(
       this.questionSandbox.questionsPagedFiltered$.subscribe((res) => {
         this.total = res.rowCount;
         this.questionsList = res.results;
+      })
+    );
+
+    this.subscriptions.push(
+      this.questionSandbox.questions$.subscribe((questions) => {
+        this.questionsList = questions;
       })
     );
 
@@ -53,6 +61,8 @@ export class QuestionsComponent implements OnInit, OnDestroy {
         this.successStatus = status;
       })
     );
+
+    this.questionSandbox.loadQuestions();
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {

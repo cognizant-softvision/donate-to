@@ -10,6 +10,7 @@ export const getLoadingStatus = createSelector(getQuestionState, (state: Questio
 export const getQuestionsFilteredPaged = createSelector(getQuestionState, (state: QuestionState) => state.pagedItems);
 export const getAllQuestions = createSelector(getQuestionState, (state: QuestionState) => state.questions);
 export const getQuestionsLoading = createSelector(getQuestionState, (state: QuestionState) => state.loading);
+export const getControlTypes = createSelector(getQuestionState, (state: QuestionState) => state.controlTypes);
 
 @Injectable()
 export class QuestionSelectors {
@@ -20,4 +21,5 @@ export class QuestionSelectors {
   loading$ = this.store.select(getLoadingStatus);
   questions$ = this.store.select(getAllQuestions);
   questionState$ = this.store.select(getQuestionState);
+  controlTypes$ = this.store.select(getControlTypes);
 }

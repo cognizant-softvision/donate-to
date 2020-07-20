@@ -5,6 +5,7 @@ using DonateTo.ApplicationCore.Models.Filtering;
 using DonateTo.Infrastructure.Extensions;
 using DonateTo.Mailer;
 using DonateTo.Mailer.Interfaces;
+using DonateTo.Services.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -35,6 +36,7 @@ namespace DonateTo.Services.Extensions
             service.AddTransient<IBaseService<Status, BaseFilterModel>, StatusService>();
             service.AddTransient<IMailSender, MailSender>();
             service.AddTransient<IQuestionService, QuestionService>();
+            service.AddTransient<IBaseService<ControlType, BaseFilterModel>, ControlTypeService>();
 
             service.AddAutoMapper(typeof(Startup));
         }

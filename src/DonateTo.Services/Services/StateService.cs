@@ -23,4 +23,4 @@ namespace DonateTo.Services
             return await _stateRepository.GetAsync(state => state.CountryId == countryId).ConfigureAwait(false);
         }
     }
-}
+}   

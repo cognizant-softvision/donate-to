@@ -3,7 +3,6 @@
     <h4 class="section-title">{{ 'Admin.PriorityQuestion.Create.Title' | translate }}</h4>
   </div>
   <br />
-
   <form [formGroup]="questionItemFormGroup" nz-form>
     <div [formGroup]="questionItemFormGroup" class="create-priority-question-add-item-container">
       <div class="create-priority-question-add-item-box-first">
@@ -26,16 +25,18 @@
                 placeholder="{{ 'Admin.PriorityQuestion.Form.LabelPlaceHolder' | translate }}"
                 formControlName="labelFormControl"
                 type="text"
+                [(ngModel)]="label"
               />
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
-            <nz-form-control>
+            <nz-form-control nzErrorTip="{{ 'Admin.PriorityQuestion.Form.PlaceholderRequired' | translate }}">
               <input
                 nz-input
                 placeholder="{{ 'Admin.PriorityQuestion.Form.PlaceholderPlaceHolder' | translate }}"
                 formControlName="placeholderFormControl"
                 type="text"
+                [(ngModel)]="placeholder"
               />
             </nz-form-control>
           </nz-form-item>
@@ -52,6 +53,7 @@
                     select.activatedValue == 'Checkbox' ||
                     select.activatedValue == 'DropDown'
                   "
+                  [(ngModel)]="defaultValue"
                 />
               </nz-form-control>
             </nz-form-item>
@@ -80,6 +82,7 @@
                   placeholder="{{ 'Admin.PriorityQuestion.Form.OrderPlaceHolder' | translate }}"
                   formControlName="orderFormControl"
                   type="number"
+                  [(ngModel)]="order"
                   min="1"
                 />
               </nz-form-control>
@@ -95,6 +98,7 @@
                   formControlName="weightFormControl"
                   type="number"
                   min="1"
+                  [(ngModel)]="weight"
                   max="100"
                 />
               </nz-form-control>
@@ -107,18 +111,19 @@
                 #select
                 formControlName="controlTypeFormControl"
                 nzPlaceHolder="{{ 'Admin.PriorityQuestion.Form.ControlTypePlaceHolder' | translate }}"
+                [(ngModel)]="controlTypeId"
               >
                 <nz-option
-                  *ngFor="let controlType of controlTypes"
-                  [nzLabel]="controlType"
-                  [nzValue]="controlType"
+                  *ngFor="let controlType of this.questionSandbox.controlTypes$ | async"
+                  [nzLabel]="controlType.name"
+                  [nzValue]="controlType.id"
                 ></nz-option>
               </nz-select>
             </nz-form-control>
           </nz-form-item>
 
           <!-- Radio Button Options-->
-          <nz-form-item *ngIf="select.activatedValue == 'RadioButton'">
+          <nz-form-item *ngIf="controlTypeId == 2">
             <nz-radio-group>
               <nz-form-item *ngFor="let o of optionsArray?.controls; index as i">
                 <ng-container [formGroup]="o">
@@ -153,7 +158,7 @@
           </nz-form-item>
 
           <!-- Checkbox Options-->
-          <nz-form-item *ngIf="select.activatedValue == 'Checkbox'">
+          <nz-form-item *ngIf="controlTypeId == 3">
             <nz-checkbox-wrapper>
               <nz-form-item *ngFor="let o of optionsArray?.controls; index as i">
                 <ng-container [formGroup]="o">
@@ -193,7 +198,7 @@
           </nz-form-item>
 
           <!-- Dropdown Options-->
-          <nz-form-item *ngIf="select.activatedValue == 'DropDown'">
+          <nz-form-item *ngIf="controlTypeId == 4">
             <nz-checkbox-wrapper>
               <nz-form-item *ngFor="let o of optionsArray?.controls; index as i">
                 <ng-container [formGroup]="o">
@@ -269,12 +274,14 @@
                 <td>{{ item.placeholder }}</td>
                 <td>{{ item.order }}</td>
                 <td>{{ item.weight }}</td>
-                <td>{{ item.controlType }}</td>
+                <td>{{ item.controlType?.name }}</td>
                 <td>{{ item.defaultValue }}</td>
                 <td>
                   <span *ngFor="let option of item.options"> {{ option.label }} -</span>
                 </td>
                 <td>
+                  <a (click)="editQuestion(item)">{{ 'Admin.PriorityQuestion.Table.EditQuestion' | translate }}</a>
+                  <nz-divider nzType="vertical"></nz-divider>
                   <a (click)="removeQuestion(item)">{{ 'Admin.PriorityQuestion.Table.DeleteQuestion' | translate }}</a>
                 </td>
               </tr>

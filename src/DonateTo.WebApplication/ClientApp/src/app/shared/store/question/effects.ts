@@ -2,6 +2,9 @@ import {
   addQuestions,
   addQuestionsFailed,
   addQuestionsSuccess,
+  loadControlTypes,
+  loadControlTypesFailed,
+  loadControlTypesSuccess,
   loadQuestions,
   loadQuestionsFailed,
   loadQuestionsPagedFiltered,
@@ -14,6 +17,7 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { QuestionService } from '../../async-services/http/question.service';
+import { ControlTypeService } from '../../async-services/http/controlType.service';
 
 @Injectable()
 export class QuestionEffects {
@@ -49,5 +53,20 @@ export class QuestionEffects {
     )
   );
 
-  constructor(private actions$: Actions, private questionService: QuestionService) {}
+  @Effect()
+  loadControlTypes$: Observable<{}> = this.actions$.pipe(
+    ofType(loadControlTypes),
+    switchMap(() =>
+      this.controlTypeService.getControlTypes().pipe(
+        map((controlTypes) => loadControlTypesSuccess({ controlTypes })),
+        catchError(() => of(loadControlTypesFailed()))
+      )
+    )
+  );
+
+  constructor(
+    private actions$: Actions,
+    private questionService: QuestionService,
+    private controlTypeService: ControlTypeService
+  ) {}
 }

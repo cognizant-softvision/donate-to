@@ -1,8 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { QuestionModel } from '../../../shared/models/question.model';
-import { ControlTypeModel } from '../../../shared/models/control-type.model';
-import { Question } from 'src/app/shared/models/question-provisional.model';
+import { QuestionModel } from 'src/app/shared/models';
 @Component({
   selector: 'app-donations-priority',
   templateUrl: './donations-priority.component.html',
@@ -10,7 +8,7 @@ import { Question } from 'src/app/shared/models/question-provisional.model';
 })
 export class DonationPriorityComponent implements OnInit {
   form: FormGroup;
-  questions: Question[];
+  questions: QuestionModel[];
 
   @Output() isSubmited = new EventEmitter<number>();
 
@@ -23,7 +21,6 @@ export class DonationPriorityComponent implements OnInit {
         updateDate: new Date(),
         id: 1,
         order: 0,
-        required: true,
         controlType: {
           id: 1,
           createdBy: '',
@@ -34,7 +31,10 @@ export class DonationPriorityComponent implements OnInit {
         },
         key: '1',
         label: 'Question 1',
-        type: '',
+        placeholder: '',
+        weight: 1,
+        defaultValue: '',
+        controlTypeId: 1,
         options: [
           {
             id: 1,
@@ -78,7 +78,6 @@ export class DonationPriorityComponent implements OnInit {
         updateDate: new Date(),
         id: 2,
         order: 0,
-        required: true,
         controlType: {
           id: 1,
           createdBy: '',
@@ -89,7 +88,10 @@ export class DonationPriorityComponent implements OnInit {
         },
         key: '2',
         label: 'Question 2',
-        type: '',
+        placeholder: '',
+        weight: 1,
+        defaultValue: '',
+        controlTypeId: 1,
         options: [
           {
             id: 1,
@@ -157,15 +159,15 @@ export class DonationPriorityComponent implements OnInit {
     }
   }
 
-  toFormGroup(questions: Question[]) {
+  toFormGroup(questions: QuestionModel[]) {
     const group: any = {};
     questions.forEach((question) => {
-      group[question.key] = question.required ? new FormControl('', Validators.required) : new FormControl('');
+      group[question.key] = new FormControl('', Validators.required);
     });
     return this.formBuilder.group(group);
   }
 
-  isValid(question: Question) {
+  isValid(question: QuestionModel) {
     return this.form.controls[question.key].valid;
   }
 }

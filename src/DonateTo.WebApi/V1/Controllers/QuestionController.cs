@@ -36,7 +36,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> PutQuestionsAsync([FromBody] IEnumerable<Question> value)
         {
-            if (!ModelState.IsValid || value.Sum(w => w.Weight) != 100)
+            if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
@@ -49,6 +49,11 @@ namespace DonateTo.WebApi.V1.Controllers
                     if (userRole != Roles.Superadmin && userRole != Roles.Admin)
                     {
                         return Unauthorized();
+                    }
+
+                    if(value.Sum(w => w.Weight) != 100)
+                    {
+                        return BadRequest("Invalid batch, the sum of weights must reach 100.");
                     }
 
                     await _questionService.BulkUpdateAsync(value).ConfigureAwait(false);

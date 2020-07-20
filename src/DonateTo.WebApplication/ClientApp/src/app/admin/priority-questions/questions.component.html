@@ -10,7 +10,7 @@
         nz-button
         nzType="primary"
       >
-        {{ 'Admin.Create' | translate }}
+        {{ 'Admin.Edit' | translate }}
       </button>
     </div>
     <nz-divider></nz-divider>
@@ -29,6 +29,7 @@
   >
     <thead>
       <tr>
+        <th nzWidth="3em"></th>
         <th nzColumnKey="label" [nzSortOrder]="'ascend'" [nzSortFn]="true">
           {{ 'Admin.Question.Table.Label' | translate }}
           <label
@@ -79,16 +80,19 @@
         </th>
         <th [nzSortFn]="true">{{ 'Admin.Question.Table.Weight' | translate }}</th>
         <th [nzSortFn]="true">{{ 'Admin.Question.Table.Order' | translate }}</th>
-        <th>{{ 'Admin.Question.Table.Action' | translate }}</th>
       </tr>
     </thead>
 
     <tbody>
       <ng-container *ngFor="let data of questionsTable.data">
         <tr>
-          <td [nzExpand]="expandSet.has(data.id)" (nzExpandChange)="onExpandChange(data.id, $event)"></td>
+          <td
+            [nzExpand]="expandSet.has(data.id)"
+            (nzExpandChange)="onExpandChange(data.id, $event)"
+            [ngStyle]="data.options.length === 0 && { visibility: 'hidden' }"
+          ></td>
           <td>{{ data.label }}</td>
-          <td>{{ data.controlType }}</td>
+          <td>{{ data.controlType.name }}</td>
           <td>{{ data.placeholder }}</td>
           <td>{{ data.weight }}</td>
           <td>{{ data.order }}</td>

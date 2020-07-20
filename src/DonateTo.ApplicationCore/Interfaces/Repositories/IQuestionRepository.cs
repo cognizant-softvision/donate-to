@@ -1,12 +1,10 @@
 ﻿using DonateTo.ApplicationCore.Entities;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DonateTo.ApplicationCore.Interfaces.Repositories
 {
-    public interface IQuestionRepository:IRepository<Question>
+    public interface IQuestionRepository : IRepository<Question>
     {
         /// <summary>
         /// Update a bulk of questions.

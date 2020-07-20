@@ -282,7 +282,8 @@
         "ControlTypeColumn": "Tipo Control",
         "DefaultValueColumn": "Valor default",
         "OptionsColumn": "Opciones",
-        "DeleteQuestion": "Eliminar"
+        "DeleteQuestion": "Eliminar",
+        "EditQuestion": "Editar"
       },
       "Form": {
         "Label": "Etiqueta",
@@ -301,6 +302,7 @@
         "DefaultValueRequired": "Valor default es requerido",
         "OrderRequired": "Orden es requerido",
         "WeightRequired": "Peso es requerido",
+        "PlaceholderRequired": "Nombre marcador es requerido",
         "ControlTypeRequired": "Tipo control es requerido",
         "AddItem": "Agregar Pregunta",
         "PriorityQuestionRequiredError": "Por lo menos una pregunta de prioridad es requerida"

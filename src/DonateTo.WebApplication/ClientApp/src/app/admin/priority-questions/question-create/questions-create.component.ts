@@ -7,6 +7,7 @@ import { ColumnItem, QuestionModel } from 'src/app/shared/models';
 import { ControlType, ControlType2LabelMapping } from 'src/app/shared/enum/controlTypes';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { QuestionOption } from 'src/app/shared/models/question-option.modal';
+import { ControlTypeModel } from 'src/app/shared/models/control-type.model';
 
 @Component({
   selector: 'app-questions-create',
@@ -22,13 +23,22 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   private isSubmited = false;
   private failedStatus = false;
   public ControlType2LabelMapping = ControlType2LabelMapping;
-  public controlTypes = Object.values(ControlType);
+  private controlTypes: ControlTypeModel[] = [];
 
   isErrorModalActive = false;
   tplModal?: NzModalRef;
   public isOption = false;
   form!: FormGroup;
   optionsArray = new FormArray([]);
+
+  label = '';
+  placeholder = '';
+  weight = 0;
+  order = 0;
+  defaultValue = '';
+  controlTypeId = 0;
+  questionId = 0;
+  isEdit = false;
 
   listOfColumns: ColumnItem[] = [
     { name: 'Admin.PriorityQuestion.Table.LabelColumn' },
@@ -56,20 +66,12 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     private router: Router,
     private modal: NzModalService,
     private formBuilder: FormBuilder
-  ) {
-    // this.subscriptions.push(
-    //   this.questionSandbox.failAction$.subscribe((status) => {
-    //     this.failedStatus = status;
-    //   })
-    // );
-    // this.subscriptions.push(
-    //   this.questionSandbox.loadAction$.subscribe((_) => {
-    //     this.handleRequestResult();
-    //   })
-    // );
-  }
+  ) {}
 
   ngOnInit(): void {
+    this.questionSandbox.loadControlTypes();
+    this.questionSandbox.loadQuestions();
+    this.registerEvents();
     this.form = this.formBuilder.group({});
     this.addField();
     this.addField();
@@ -79,57 +81,54 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     this.unregisterEvents();
   }
 
+  registerEvents(): void {
+    this.subscriptions.push(
+      this.questionSandbox.controlTypes$.subscribe((controlTypes) => {
+        this.controlTypes = JSON.parse(JSON.stringify(controlTypes));
+      })
+    );
+
+    this.subscriptions.push(
+      this.questionSandbox.questions$.subscribe((questions) => {
+        this.questions = [];
+        questions.forEach((element) => {
+          this.questions.push(element);
+        });
+      })
+    );
+  }
+
+  resetForm(): void {
+    this.label = undefined;
+    this.placeholder = undefined;
+    this.weight = undefined;
+    this.order = undefined;
+    this.defaultValue = undefined;
+    this.controlTypeId = undefined;
+    this.questionId = 0;
+    this.isEdit = false;
+  }
+
   handleRequestResult() {
     if (this.isSubmited) {
       if (this.failedStatus) {
         this.isSubmited = false;
-        this.switchErrorModal();
       } else {
         this.goBack();
       }
     }
   }
 
-  showModal() {
-    this.createTplModal(this.modalContent);
-  }
-
-  createTplModal(tplContent: TemplateRef<{}>): void {
-    this.tplModal = this.modal.create({
-      nzContent: tplContent,
-      nzFooter: null,
-      nzClosable: true,
-      nzTitle: 'Questions',
-      nzStyle: {
-        top: '2em;',
-      },
-      nzWidth: '60%',
-    });
-  }
-
-  hideModal() {
-    this.tplModal?.destroy();
-  }
-
   createQuestions() {
     this.isSubmited = true;
+    this.questions.forEach((question) => {
+      question.controlType = undefined;
+    });
     this.questionSandbox.updateQuestions(this.questions);
   }
 
   goBack() {
     this.router.navigate(['/admin/priority-questions']);
-  }
-
-  switchErrorModal() {
-    this.isErrorModalActive = !this.isErrorModalActive;
-  }
-
-  private sandBoxSubscriptionInit(): void {
-    this.subscriptions.push(
-      this.questionSandbox.questions$.subscribe((questions) => {
-        this.questions = questions;
-      })
-    );
   }
 
   private validateFormGroup(formGroup: FormGroup, optionGroup: FormGroup) {
@@ -148,35 +147,104 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     }
   }
 
+  editQuestion(item: QuestionModel) {
+    this.label = item.label;
+    this.placeholder = item.placeholder;
+    this.weight = item.weight;
+    this.order = item.order;
+    this.defaultValue = item.defaultValue;
+    this.controlTypeId = item.controlTypeId;
+    this.questionId = item.id;
+    this.isEdit = true;
+  }
+
   addQuestion() {
     this.validateFormGroup(this.questionItemFormGroup, this.form);
     if (this.questionItemFormGroup.valid) {
       const questionItem = new QuestionModel();
       let options: QuestionOption[] = [];
 
-      questionItem.label = this.questionItemFormGroup.controls.labelFormControl.value;
-      questionItem.placeholder = this.questionItemFormGroup.controls.placeholderFormControl.value;
-      questionItem.order = this.questionItemFormGroup.controls.orderFormControl.value;
-      questionItem.controlType = this.questionItemFormGroup.controls.controlTypeFormControl.value;
-      questionItem.weight = this.questionItemFormGroup.controls.weightFormControl.value;
-      questionItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
+      if (this.isEdit) {
+        const questionSavedItem = this.questions.find((q) => q.id === this.questionId);
+        questionItem.label = this.questionItemFormGroup.controls.labelFormControl.value;
+        questionItem.placeholder = this.questionItemFormGroup.controls.placeholderFormControl.value;
+        questionItem.order = this.questionItemFormGroup.controls.orderFormControl.value;
+        questionItem.controlType = new ControlTypeModel();
+        questionItem.controlTypeId = this.questionItemFormGroup.controls.controlTypeFormControl.value;
+        questionItem.controlType = this.controlTypes.find(
+          (controlType) => controlType.id === questionItem.controlTypeId
+        );
+        questionItem.weight = this.questionItemFormGroup.controls.weightFormControl.value;
+        questionItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
 
-      this.optionsArray.removeAt(this.optionsArray.length);
-      for (const o of this.optionsArray.value) {
-        const questionOption = new QuestionOption();
-        questionOption.label = o.optionLabel;
-        questionOption.value = o.optionValue;
-        questionOption.weight = o.optionWeight;
-        options = [...options, questionOption];
-      }
-      questionItem.options = options;
+        if (questionItem.controlType.name !== 'Textbox') {
+          this.optionsArray.removeAt(this.optionsArray.length);
+          for (const o of this.optionsArray.value) {
+            const questionOption = new QuestionOption();
+            questionOption.label = o.optionLabel;
+            questionOption.value = o.optionValue;
+            questionOption.weight = o.optionWeight;
+            options = [...options, questionOption];
+          }
+          questionItem.options = options;
 
-      if (questionItem.controlType.name !== ControlType.Textbox) {
-        if (this.optionsWeight(questionItem.options) !== true) {
-          this.modal.error({
-            nzTitle: 'Warning',
-            nzContent: 'The weight of each option must sum a total of 100',
-          });
+          if (this.optionsWeight(questionItem.options) !== true) {
+            this.modal.error({
+              nzTitle: 'Warning',
+              nzContent: 'The weight of each option must sum a total of 100',
+            });
+          } else {
+            this.questions = [...this.questions, questionItem];
+          }
+        } else {
+          this.questions = [...this.questions, questionItem];
+        }
+
+        questionItem.id = questionSavedItem.id;
+        questionItem.key = questionSavedItem.key;
+        questionItem.createdBy = questionSavedItem.createdBy;
+        questionItem.createdDate = questionSavedItem.createdDate;
+        questionItem.updateBy = questionSavedItem.updateBy;
+        questionItem.updateDate = questionSavedItem.updateDate;
+
+        this.questions.splice(
+          this.questions.findIndex((element) => element.id === this.questionId),
+          1
+        );
+        this.questions.push(questionItem);
+
+        this.resetForm();
+      } else {
+        questionItem.label = this.questionItemFormGroup.controls.labelFormControl.value;
+        questionItem.placeholder = this.questionItemFormGroup.controls.placeholderFormControl.value;
+        questionItem.order = this.questionItemFormGroup.controls.orderFormControl.value;
+        questionItem.controlType = new ControlTypeModel();
+        questionItem.controlTypeId = this.questionItemFormGroup.controls.controlTypeFormControl.value;
+        questionItem.controlType = this.controlTypes.find(
+          (controlType) => controlType.id === questionItem.controlTypeId
+        );
+        questionItem.weight = this.questionItemFormGroup.controls.weightFormControl.value;
+        questionItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
+
+        if (questionItem.controlType.name !== 'Textbox') {
+          this.optionsArray.removeAt(this.optionsArray.length);
+          for (const o of this.optionsArray.value) {
+            const questionOption = new QuestionOption();
+            questionOption.label = o.optionLabel;
+            questionOption.value = o.optionValue;
+            questionOption.weight = o.optionWeight;
+            options = [...options, questionOption];
+          }
+          questionItem.options = options;
+
+          if (this.optionsWeight(questionItem.options) !== true) {
+            this.modal.error({
+              nzTitle: 'Warning',
+              nzContent: 'The weight of each option must sum a total of 100',
+            });
+          } else {
+            this.questions = [...this.questions, questionItem];
+          }
         } else {
           this.questions = [...this.questions, questionItem];
         }
