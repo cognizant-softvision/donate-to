@@ -1,10 +1,12 @@
-import { ColumnItem, OrganizationModel, UserModel } from './../../shared/models';
+import { OrganizationModel, UserModel } from './../../shared/models';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { PopupModalComponent } from './components/popup-modal/popup-modal.component';
 import { Subscription } from 'rxjs';
 import { UserSandbox } from './user.sandbox';
 import { UserFilter } from '../../shared/models/filters/user-filter';
 import { NzTableQueryParams } from 'ng-zorro-antd';
+import { ActivatedRoute } from '@angular/router';
+import 'rxjs/add/operator/filter';
 
 @Component({
   selector: 'app-user-admin',
@@ -27,21 +29,30 @@ export class UserComponent implements OnInit, OnDestroy {
   total = 0;
   pageSize = 10;
   pageIndex = 1;
-  userFilter: UserFilter;
+  userFilter = new UserFilter();
   failedStatus = false;
   successStatus = false;
+  organizationName: '';
 
-  constructor(public userSandbox: UserSandbox) {}
+  constructor(private userSandbox: UserSandbox, private route: ActivatedRoute) {}
 
   ngOnDestroy(): void {
     this.unregisterEvents();
   }
 
   ngOnInit(): void {
-    this.userFilter = new UserFilter();
-    this.userFilter.pageSize = this.pageSize;
-    this.userFilter.pageNumber = this.pageIndex;
-    this.userSandbox.loadUsersFilteredPaged(this.userFilter);
+    this.route.queryParams
+      .filter((params) => params.organizationName)
+      .subscribe((params) => {
+        this.organizationName = params.organizationName;
+
+        this.userFilter = {
+          ...this.userFilter,
+          pageSize: this.pageSize,
+          pageNumber: this.pageIndex,
+          organization: this.organizationName,
+        };
+      });
 
     this.subscriptions.push(
       this.userSandbox.usersPagedFiltered$.subscribe((res) => {
@@ -64,7 +75,6 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
-    console.log(params);
     const { pageSize, pageIndex, sort, filter } = params;
     const currentSort = sort.find((item) => item.value !== null);
 
@@ -76,7 +86,7 @@ export class UserComponent implements OnInit, OnDestroy {
       orderDirection: (currentSort && currentSort.value) || '',
       fullName: (filter && filter.find((f) => f.key === 'fullName')?.value) || '',
       email: (filter && filter.find((f) => f.key === 'email')?.value) || '',
-      organization: (filter && filter.find((f) => f.key === 'organization')?.value) || '',
+      organization: (filter && filter.find((f) => f.key === 'organization')?.value) || this.organizationName,
     };
 
     this.userSandbox.loadUsersFilteredPaged(this.userFilter);
@@ -108,6 +118,7 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   reset(): void {
+    this.organizationName = '';
     this.searchNameValue = '';
     this.searchOrganizationValue = '';
     this.searchEmailValue = '';

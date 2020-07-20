@@ -253,6 +253,7 @@
     },
     "User": {
       "Title": "Users",
+      "OrganizationTitle": "for Organization:",
       "Associate": "Manage Association",
       "SelectOrganization": "Select Organizations",
       "Table": {

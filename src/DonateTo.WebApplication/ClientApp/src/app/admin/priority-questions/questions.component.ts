@@ -23,7 +23,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   labelVisible = false;
   typeVisible = false;
   placeholderVisible = false;
-  questionFilter: QuestionFilter;
+  questionFilter = new QuestionFilter();
   expandSet = new Set<number>();
   failedStatus = false;
   successStatus = false;
@@ -32,10 +32,11 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   constructor(private questionSandbox: QuestionsSandbox, public router: Router) {}
 
   ngOnInit(): void {
-    this.questionFilter = new QuestionFilter();
-    this.questionFilter.pageSize = this.pageSize;
-    this.questionFilter.pageNumber = this.pageIndex;
-    this.questionSandbox.loadQuestionsFilteredPaged(this.questionFilter);
+    this.questionFilter = {
+      ...this.questionFilter,
+      pageSize: this.pageSize,
+      pageNumber: this.pageIndex,
+    };
 
     this.subscriptions.push(
       this.questionSandbox.questionsPagedFiltered$.subscribe((res) => {
@@ -66,7 +67,6 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
-    console.log(params);
     const { pageSize, pageIndex, sort, filter } = params;
     const currentSort = sort.find((item) => item.value !== null);
 
