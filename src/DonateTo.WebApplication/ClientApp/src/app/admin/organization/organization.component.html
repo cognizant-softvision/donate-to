@@ -6,7 +6,7 @@
         nz-popconfirm
         nzPopconfirmTitle="{{ 'Admin.Organization.CreateConfirm' | translate }}"
         nzPopconfirmPlacement="bottom"
-        (nzOnConfirm)="router.navigate(['./create'])"
+        (nzOnConfirm)="router.navigate(['admin/organization/create'])"
         nz-button
         nzType="primary"
       >
@@ -92,7 +92,7 @@
           <td>{{ data.description }}</td>
           <td>{{ data.contact.firstName + ' ' + data.contact.lastName }}</td>
           <td>
-            <a>{{ 'Admin.Edit' | translate }} </a>
+            <a [routerLink]="['./edit', data.id]">{{ 'Admin.Edit' | translate }} </a>
             <nz-divider nzType="vertical"></nz-divider>
             <a>{{ 'Admin.View' | translate }}</a>
           </td>
