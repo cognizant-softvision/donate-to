@@ -12,8 +12,9 @@ import { QuestionsSandbox } from './questions-sandbox';
   styleUrls: ['./questions.component.css'],
 })
 export class QuestionsComponent implements OnInit, OnDestroy {
-  question: QuestionModel;
+  private subscriptions: Subscription[] = [];
   questionsList: QuestionModel[] = [];
+  question: QuestionModel;
   total = 0;
   pageSize = 10;
   pageIndex = 1;
@@ -27,7 +28,6 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   expandSet = new Set<number>();
   failedStatus = false;
   successStatus = false;
-  private subscriptions: Subscription[] = [];
 
   constructor(private questionSandbox: QuestionsSandbox, public router: Router) {}
 

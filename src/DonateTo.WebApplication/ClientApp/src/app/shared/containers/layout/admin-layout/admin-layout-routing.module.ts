@@ -1,7 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { AdminLayoutComponent } from './admin-layout.component';
-import { OrganizationComponent } from '../../../../admin/organization/organization.component';
 
 const routes: Routes = [
   {
@@ -14,7 +13,11 @@ const routes: Routes = [
         path: 'donations',
         loadChildren: () => import('../../../../admin/donations/donations.module').then((m) => m.DonationsModule),
       },
-      { path: 'organization', component: OrganizationComponent },
+      {
+        path: 'organizations',
+        loadChildren: () =>
+          import('../../../../admin/organization/organization.module').then((m) => m.OrganizationModule),
+      },
       {
         path: 'priority-questions',
         loadChildren: () =>
