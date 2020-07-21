@@ -262,9 +262,6 @@
         "Action": "Acción"
       }
     },
-    "Organization": {
-      "Title": "Organización"
-    },
     "PriorityQuestion": {
       "Title": "Prioridad de preguntas",
       "Create": {
@@ -329,6 +326,19 @@
           "Value": "Valor",
           "Weight": "Peso"
         }
+      }
+    },
+    "Organization": {
+      "Title": "Organizaciones",
+      "CreateConfirm": "Estas seguro que quieres crear una organización?",
+      "Table": {
+        "Name": "Nombre",
+        "Description": "Descripción",
+        "ContactName": "Contacto",
+        "Action": "Acción",
+        "Search": "Buscar",
+        "Reset": "Reestablecer",
+        "Filtered": "Filtrada"
       }
     },
     "ClearFilter": "Limpiar Filtro",
