@@ -5,6 +5,7 @@ import { NotificationsService } from 'src/app/shared/notifications/notifications
 import { Subscription } from 'rxjs';
 import { DonationModel } from 'src/app/shared/models/donation.model';
 import { DonationItemModel } from 'src/app/shared/models/donation-item.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-donation-list',
@@ -12,13 +13,19 @@ import { DonationItemModel } from 'src/app/shared/models/donation-item.model';
   styleUrls: ['./donation-list.component.css'],
 })
 export class DonationListComponent implements OnInit, OnDestroy {
-  constructor(public donationSandbox: DonationSandbox, private notifiactionsService: NotificationsService) {}
+  constructor(
+    public donationSandbox: DonationSandbox,
+    private notifiactionsService: NotificationsService,
+    protected route: Router
+  ) {}
 
   @Input() donationRequest: DonationRequestModel;
 
   @Output() showDonationConfirmModal = new EventEmitter();
   @Input() donation: DonationModel = new DonationModel();
   @Input() isEdit: boolean;
+
+  isSubmited = false;
 
   subscriptions: Subscription[] = [];
 
@@ -69,6 +76,14 @@ export class DonationListComponent implements OnInit, OnDestroy {
           if (donationRequest) {
             this.updateEditCache();
           }
+        }
+      })
+    );
+
+    this.subscriptions.push(
+      this.donationSandbox.newDonationLoading$.subscribe((isLoading) => {
+        if (!isLoading && this.isSubmited) {
+          this.route.navigate(['/donation/my-donations']);
         }
       })
     );
@@ -128,6 +143,7 @@ export class DonationListComponent implements OnInit, OnDestroy {
         item.quantity = this.editCache.find((x) => item.donationRequestItemId === x.id).quantityToDonate;
       });
 
+      this.isSubmited = true;
       this.donationSandbox.updateDonation(donation);
     }
   }
