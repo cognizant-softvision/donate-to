@@ -1,9 +1,10 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import * as store from 'src/app/shared/store';
-import { Sandbox } from 'src/app/shared/sandbox/base.sandbox';
-import { UserModel } from 'src/app/shared/models';
+import * as store from '../../shared/store';
+import { Sandbox } from '../../shared/sandbox/base.sandbox';
+import { UserModel } from '../../shared/models';
+import { UserFilter } from '../../shared/models/filters/user-filter';
 
 @Injectable()
 export class UserSandbox extends Sandbox implements OnDestroy {
@@ -13,6 +14,7 @@ export class UserSandbox extends Sandbox implements OnDestroy {
   user$ = this.appState$.select(store.fromUser.getUser);
   failAction$ = this.appState$.select(store.fromUser.getFailedStatus);
   loadAction$ = this.appState$.select(store.fromUser.getLoadingStatus);
+  usersPagedFiltered$ = this.appState$.select(store.fromUser.getUsersFilteredPaged);
 
   constructor(protected appState$: Store<store.State>) {
     super(appState$);
@@ -59,5 +61,9 @@ export class UserSandbox extends Sandbox implements OnDestroy {
    */
   public loadUser(userId: number): void {
     this.appState$.dispatch(store.fromUser.loadUser({ userId }));
+  }
+
+  public loadUsersFilteredPaged(filter: UserFilter): void {
+    this.appState$.dispatch(store.fromUser.loadUsersPagedFiltered({ filter }));
   }
 }

@@ -9,6 +9,7 @@ using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using DonateTo.Infrastructure.Extensions;
 
 namespace DonateTo.Infrastructure.Data.Repositories
 {
@@ -98,7 +99,7 @@ namespace DonateTo.Infrastructure.Data.Repositories
 
         public override Task<IQueryable<Question>> GetAsync(Expression<Func<Question, bool>> filter)
         {
-            var questions = GetHydratedQuestion();
+            var questions = GetHydratedQuestions();
 
             if (filter != null)
             {
@@ -112,43 +113,25 @@ namespace DonateTo.Infrastructure.Data.Repositories
         public override ApplicationCore.Models.Pagination.PagedResult<Question>
             GetPaged(int page, int pageSize, Expression<Func<Question, bool>> filter = null, string sort = "")
         {
-            var organizations = GetHydratedQuestion();
+            var questions = GetHydratedQuestions()
+                .FilterAndSort(filter, sort);
 
-            if (filter != null)
-            {
-                organizations = organizations.Where(filter);
-            }
-
-            if (!string.IsNullOrEmpty(sort))
-            {
-                organizations = organizations.OrderBy(sort);
-            }
-
-            return organizations.GetPaged(page, pageSize);
+            return questions.GetPaged(page, pageSize);
         }
 
         ///<inheritdoc cref="IRepository{Organization}"/>
         public override async Task<ApplicationCore.Models.Pagination.PagedResult<Question>>
             GetPagedAsync(int page, int pageSize, Expression<Func<Question, bool>> filter = null, string sort = "")
         {
-            var organizations = GetHydratedQuestion();
+            var questions = GetHydratedQuestions()
+                .FilterAndSort(filter, sort);
 
-            if (filter != null)
-            {
-                organizations = organizations.Where(filter);
-            }
-
-            if (!string.IsNullOrEmpty(sort))
-            {
-                organizations = organizations.OrderBy(sort);
-            }
-
-            return await organizations.GetPagedAsync(page, pageSize).ConfigureAwait(false);
+            return await questions.GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
 
 
         #region private
-        private IQueryable<Question> GetHydratedQuestion()
+        private IQueryable<Question> GetHydratedQuestions()
         {
             return DbContext.Set<Question>()
                 .Include(q => q.Options)

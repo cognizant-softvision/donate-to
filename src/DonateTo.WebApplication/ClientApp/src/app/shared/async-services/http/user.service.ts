@@ -1,9 +1,10 @@
 import { BaseHttpClientService } from './base-http-client.service';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UserModel } from '../../models';
-import { ConfigService } from 'src/app/app-config.service';
+import { PageModel, UserModel } from '../../models';
+import { ConfigService } from '../../../app-config.service';
 import { Observable } from 'rxjs';
+import { UserFilter } from '../../models/filters/user-filter';
 
 @Injectable({
   providedIn: 'root',
@@ -28,5 +29,20 @@ export class UserService extends BaseHttpClientService<UserModel> {
 
   getUser(id: number): Observable<UserModel> {
     return this.getById(id);
+  }
+
+  getPagedFiltered(userFilter: UserFilter): Observable<PageModel<UserModel>> {
+    const queryString = {
+      pageNumber: userFilter?.pageNumber.toString() ?? '',
+      pageSize: userFilter?.pageSize.toString() ?? '',
+      fullName: userFilter?.fullName ?? '',
+      email: userFilter?.email ?? '',
+      organization: userFilter?.organization ?? '',
+      orderBy: userFilter?.orderBy ?? '',
+      orderDirection: userFilter?.orderDirection ?? '',
+    };
+    return this.httpClient.get<PageModel<UserModel>>(`${this.url}/${this.endpoint}/pagedFiltered`, {
+      params: queryString,
+    });
   }
 }
