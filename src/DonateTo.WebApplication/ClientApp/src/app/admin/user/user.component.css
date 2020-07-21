@@ -1,17 +1,13 @@
 .search-box {
-  padding: 8px;
+  padding: 0.5em;
 }
 
 .search-box input {
-  width: 188px;
-  margin-bottom: 8px;
+  width: 12em;
+  margin-bottom: 0.5em;
   display: block;
 }
 
-.search-box button {
-  width: 90px;
-}
-
-.search-button {
-  margin-right: 8px;
+label.filter {
+  color: #bfbfbf;
 }

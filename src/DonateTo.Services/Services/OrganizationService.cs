@@ -47,17 +47,7 @@ namespace DonateTo.Services
 
         public override async Task<PagedResult<Organization>> GetPagedFilteredAsync(OrganizationFilterModel filter)
         {
-            var predicate = PredicateBuilder.New<Organization>();
-
-            if (filter.UpdateDateBegin != null)
-            {
-                predicate = predicate.Or(p => p.UpdateDate >= filter.UpdateDateBegin);
-            }
-
-            if (filter.UpdateDateEnd != null)
-            {
-                predicate = predicate.Or(p => p.UpdateDate <= filter.UpdateDateEnd);
-            }
+            var predicate = GetBasePredicate(filter);
 
             if (!string.IsNullOrEmpty(filter.Name)) 
             {
