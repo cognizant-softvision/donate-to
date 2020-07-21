@@ -245,37 +245,20 @@ namespace DonateTo.Services
             return _mapper.Map<User, UserModel>(entity);
         }
 
+        ///<inheritdoc cref="IUserService"/>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "<Pending>")]
+        public PagedResult<UserModel> GetPagedFiltered(UserFilterModel filter)
+        {
+            var predicate = GetPredicate(filter);
+
+            return (_userRepository.GetPaged(filter.PageNumber, filter.PageSize, predicate, GetSort(filter))).Map<User, UserModel>(_mapper);
+        }
 
         ///<inheritdoc cref="IUserService"/>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "<Pending>")]
         public async Task<PagedResult<UserModel>> GetPagedFilteredAsync(UserFilterModel filter)
         {
-            var predicate = PredicateBuilder.New<User>(true);
-
-            if (filter.UpdateDateBegin != null && filter.UpdateDateBegin != DateTime.MinValue)
-            {
-                predicate = predicate.Or(p => p.UpdateDate >= filter.UpdateDateBegin);
-            }
-
-            if (filter.UpdateDateEnd != null && filter.UpdateDateEnd != DateTime.MinValue)
-            {
-                predicate = predicate.Or(p => p.UpdateDate <= filter.UpdateDateEnd);
-            }
-
-            if (!string.IsNullOrEmpty(filter.FullName))
-            {
-                predicate = predicate.And(p => p.FirstName.Contains(filter.FullName) || p.LastName.Contains(filter.FullName));
-            }
-
-            if (!string.IsNullOrEmpty(filter.Email))
-            {
-                predicate = predicate.And(p => p.Email.Contains(filter.Email));
-            }
-
-            if (!string.IsNullOrEmpty(filter.Organization))
-            {
-                predicate = predicate.And(p => p.UserOrganizations.Any(uo => uo.Organization.Name.Contains(filter.Organization)));
-            }
+            var predicate = GetPredicate(filter);
 
             return (await _userRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicate, GetSort(filter)).ConfigureAwait(false)).Map<User, UserModel>(_mapper);
         }
@@ -338,6 +321,39 @@ namespace DonateTo.Services
                 SortDirection.Ascending;
 
             return sort;
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "<Pending>")]
+        private Expression<Func<User, bool>> GetPredicate(UserFilterModel filter)
+        {
+            var predicate = PredicateBuilder.New<User>(true);
+
+            if (filter.UpdateDateBegin != null && filter.UpdateDateBegin != DateTime.MinValue)
+            {
+                predicate = predicate.Or(p => p.UpdateDate >= filter.UpdateDateBegin);
+            }
+
+            if (filter.UpdateDateEnd != null && filter.UpdateDateEnd != DateTime.MinValue)
+            {
+                predicate = predicate.Or(p => p.UpdateDate <= filter.UpdateDateEnd);
+            }
+
+            if (!string.IsNullOrEmpty(filter.FullName))
+            {
+                predicate = predicate.And(p => p.FirstName.Contains(filter.FullName) || p.LastName.Contains(filter.FullName));
+            }
+
+            if (!string.IsNullOrEmpty(filter.Email))
+            {
+                predicate = predicate.And(p => p.Email.Contains(filter.Email));
+            }
+
+            if (!string.IsNullOrEmpty(filter.Organization))
+            {
+                predicate = predicate.And(p => p.UserOrganizations.Any(uo => uo.Organization.Name.Contains(filter.Organization)));
+            }
+
+            return predicate;
         }
         #endregion
     }
