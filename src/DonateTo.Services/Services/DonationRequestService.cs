@@ -97,8 +97,7 @@ namespace DonateTo.Services
 
             if (!string.IsNullOrEmpty(filter.CreatedDateBegin))
             {
-                DateTime outDate;
-                if (DateTime.TryParse(filter.CreatedDateBegin, out outDate))
+                if (DateTime.TryParse(filter.CreatedDateBegin, out var outDate))
                 {
                     predicate = predicate.And(p => p.CreatedDate >= outDate);
                 }
@@ -106,8 +105,7 @@ namespace DonateTo.Services
 
             if (!string.IsNullOrEmpty(filter.CreatedDateEnd))
             {
-                DateTime outDate;
-                if (DateTime.TryParse(filter.CreatedDateEnd, out outDate))
+                if (DateTime.TryParse(filter.CreatedDateEnd, out var outDate))
                 {
                     predicate = predicate.And(p => p.CreatedDate <= outDate);
                 }
@@ -115,8 +113,7 @@ namespace DonateTo.Services
 
             if (!string.IsNullOrEmpty(filter.FinishDateBegin))
             {
-                DateTime outDate;
-                if (DateTime.TryParse(filter.FinishDateBegin, out outDate))
+                if (DateTime.TryParse(filter.FinishDateBegin, out var outDate))
                 {
                     predicate = predicate.And(p => p.FinishDate >= outDate);
                 }
@@ -124,8 +121,7 @@ namespace DonateTo.Services
 
             if (!string.IsNullOrEmpty(filter.FinishDateEnd))
             {
-                DateTime outDate;
-                if (DateTime.TryParse(filter.FinishDateEnd, out outDate))
+                if (DateTime.TryParse(filter.FinishDateEnd, out var outDate))
                 {
                     predicate = predicate.And(p => p.FinishDate <= outDate);
                 }
