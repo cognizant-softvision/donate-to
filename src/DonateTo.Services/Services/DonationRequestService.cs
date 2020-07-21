@@ -64,8 +64,7 @@ namespace DonateTo.Services
             await _mailSender.SendMultipleAsync(messages).ConfigureAwait(false);
         }
 
-
-        ///<inheritdoc cref="IDonationService"/>
+        ///<inheritdoc cref="BaseService{DonationRequest, DonationRequestFilterModel}"/>
         public override PagedResult<DonationRequest> GetPagedFiltered(DonationRequestFilterModel filter)
         {
             var predicate = GetPredicate(filter);
@@ -73,8 +72,7 @@ namespace DonateTo.Services
             return _donationRequestRepository.GetPaged(filter.PageNumber, filter.PageSize, predicate, GetSort(filter));
         }
 
-
-        ///<inheritdoc cref="IDonationService"/>
+        ///<inheritdoc cref="BaseService{DonationRequest, DonationRequestFilterModel}"/>
         public override async Task<PagedResult<DonationRequest>> GetPagedFilteredAsync(DonationRequestFilterModel filter)
         {
             var predicate = GetPredicate(filter);

@@ -29,6 +29,7 @@ namespace DonateTo.Services
             _mapper = mapper;
         }
 
+        ///<inheritdoc cref="IOrganizationService"/>
         public IEnumerable<Organization> GetByUserId(long userId)
         {
             return _organizationRepository.Get(o => o.UserOrganizations
@@ -36,6 +37,7 @@ namespace DonateTo.Services
             .Equals(userId)));
         }
 
+        ///<inheritdoc cref="IOrganizationService"/>
         public async Task<IEnumerable<Organization>> GetByUserIdAsync(long userId)
         {
             return await _organizationRepository.GetAsync(o => o.UserOrganizations
@@ -43,6 +45,7 @@ namespace DonateTo.Services
             .Equals(userId))).ConfigureAwait(false);
         }
 
+        ///<inheritdoc cref="BaseService{Organization, OrganizationFilterModel}"/>
         public override PagedResult<Organization> GetPagedFiltered(OrganizationFilterModel filter)
         {
             var predicate = GetPredicate(filter);
@@ -51,7 +54,6 @@ namespace DonateTo.Services
         }
 
         ///<inheritdoc cref="BaseService{Organization, OrganizationFilterModel}"/>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "<Pending>")]
         public override async Task<PagedResult<Organization>> GetPagedFilteredAsync(OrganizationFilterModel filter)
         {
             var predicate = GetPredicate(filter);
