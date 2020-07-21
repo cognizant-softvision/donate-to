@@ -27,180 +27,6 @@
     "Completed": "Completed",
     "Rejected": "Rejected"
   },
-  "Admin": {
-    "ClearFilter": "Clear Filter",
-    "ClearFilterAndSorted": "Clear Filter and Sorted",
-    "Name": "Name",
-    "Email": "Email",
-    "Action": "Action",
-    "Delete": "Delete",
-    "Create": "Create",
-    "Details": "Details",
-    "Edit": "Edit",
-    "View": "View",
-    "Menu": {
-      "Title": {
-        "Donation": "Donations",
-        "User": "Users",
-        "Organization": "Organization",
-        "Priority-questions": "Priority Questions"
-      }
-    },
-    "Donation": {
-      "Title": "Donations",
-      "Create": {
-        "Title": "Create donation request",
-        "AddItem": "Add Item",
-        "CreateRequest": "Create request"
-      },
-      "Edit": {
-        "Title": "Edit Donation Request",
-        "Save": "Save"
-      },
-      "Form": {
-        "Title": "Title",
-        "TitleRequiredError": "Title is required",
-        "TitlePlaceholder": "Please enter a title",
-        "Status": "Status",
-        "StatusRequiredError": "Status is required",
-        "Observations": "Observations",
-        "ObservationsPlaceholder": "Request observations",
-        "Priority": "Priority",
-        "PriorityRequiredError": "Priority is required",
-        "Organization": "Organization",
-        "OrganizationRequiredError": "Organization is required",
-        "OrganizationPlaceholder": "Please select a organization",
-        "Address": "Address",
-        "AddressRequiredError": "Address is required",
-        "AddressPlaceholder": "Please select a address",
-        "FinishDate": "Finish date",
-        "DonationItem": {
-          "Name": "Product",
-          "NameRequiredError": "Product is required",
-          "NamePlaceholder": "Please enter a product",
-          "Observation": "Observation",
-          "ObservationPlaceholder": "Item request observations",
-          "Quantity": "Quantity",
-          "QuantityRequiredError": "Quantity is required",
-          "QuantityPlaceholder": "Please enter the required quantity",
-          "UnitRequiredError": "Unit is required",
-          "Category": "Categories",
-          "CategoryRequiredError": "At least 1 category is required",
-          "CategoryPlaceholder": "Please select at least 1 category"
-        },
-        "OverflowTag": "+ more selected",
-        "DonationItemRequiredError": "At least 1 item request is required",
-        "DeleteItemConfirmation": "Are you sure delete this item request?"
-      },
-      "BackConfirm": "Are you sure you want to go back?",
-      "CreateConfirm": "Are you sure you want to create a donation request?",
-      "EditConfirm": "Are you sure you want to edit a donation request?",
-      "DeleteConfirmation": "Are you sure you want to delete this donation request?",
-      "Table": {
-        "Itemcolumn": "Item",
-        "CreatedColumn": "Created Date",
-        "Finishcolumn": "Finish Date",
-        "Observationcolumn": "Observation",
-        "Quantitycolumn": "Quantity",
-        "Categorycolumn": "Category"
-      }
-    },
-    "Organization": {
-      "Title": "Organization",
-      "BackConfirm": "Are you sure you want to go back?",
-      "CreateConfirm": "Are you sure you want to create an organization?",
-      "EditConfirm": "Are you sure you want to edit an organization?",
-      "DeleteConfirmation": "Are you sure you want to delete this organization?",
-      "Create": {
-        "Title": "Create Organization"
-      },
-      "OrganizationSteps": {
-        "GeneralInformation": {
-          "OrganizationName": "Organization Name",
-          "Description": "Description",
-          "RequiredOrganizationName": "The Organization name is required",
-          "RequiredDescription": "An organization description is required"
-        }
-      }
-    },
-    "PriorityQuestion": {
-      "Title": "Priority Questions",
-      "Create": {
-        "Title": "Create Priority Questions",
-        "CreateRequest": "Create questions"
-      },
-      "Edit": {
-        "Title": "Edit Question"
-      },
-      "Table": {
-        "LabelColumn": "Label",
-        "PlaceholderColumn": "Placeholder",
-        "OrderColumnColumn": "Order",
-        "WeightColumn": "Weight",
-        "ControlTypeColumn": "Control Type",
-        "DefaultValueColumn": "Default Value",
-        "OptionsColumn": "Options",
-        "DeleteQuestion": "Delete",
-        "EditQuestion": "Edit"
-      },
-      "Form": {
-        "Label": "Label",
-        "Placeholder": "Placeholder",
-        "Order": "Order",
-        "Weight": "Weight",
-        "ControlType": "Control Type",
-        "DefaultValue": "Default Value",
-        "LabelPlaceHolder": "Label Name",
-        "PlaceholderPlaceHolder": "Placeholder name",
-        "OrderPlaceHolder": "Order",
-        "WeightPlaceHolder": "Weight",
-        "ControlTypePlaceHolder": "Control Type",
-        "DefaultValuePlaceHolder": "Default Value",
-        "LabelRequired": "Label is required",
-        "DefaultValueRequired": "Default Value is required",
-        "OrderRequired": "Order is required",
-        "WeightRequired": "Weight is required",
-        "PlaceholderRequired": "Nombre marcador es requerido",
-        "ControlTypeRequired": "Control Type is required",
-        "AddItem": "Add Question",
-        "PriorityQuestionRequiredError": "At least 1 priority question is required"
-      },
-      "CreateConfirm": "Are you sure you want to create a new question?",
-      "EditConfirm": "Are you sure you want to edit the question?"
-    },
-    "Question": {
-      "Title": "Questions",
-      "CreateConfirm": "Are you sure you want to create a question?",
-      "Table": {
-        "Label": "Label",
-        "Type": "Type",
-        "Placeholder": "Placeholder",
-        "Weight": "Weight",
-        "Order": "Order",
-        "Action": "Action",
-        "Search": "Search",
-        "Reset": "Reset",
-        "Filtered": "Filtered",
-        "OptionsTitle": "Options",
-        "Option": {
-          "Label": "Label",
-          "Value": "Value",
-          "Weight": "Weight"
-        }
-      }
-    },
-    "User": {
-      "Title": "Users",
-      "Associate": "Manage Association",
-      "SelectOrganization": "Select Organizations",
-      "Table": {
-        "Name": "Name",
-        "Organization": "Organization",
-        "Email": "Email",
-        "Action": "Action"
-      }
-    }
-  },
   "Donation": {
     "DonationId": "Id",
     "PickUpDate": "Pick-up date",
@@ -356,6 +182,179 @@
     "Wednesday": "Wednesday",
     "Thursday": "Thursday",
     "Friday": "Friday"
+  },
+  "Admin": {
+    "Menu": {
+      "Title": {
+        "Donation": "Donations",
+        "User": "Users",
+        "Organization": "Organization",
+        "Priority-questions": "Priority Questions"
+      }
+    },
+    "Donation": {
+      "Title": "Donations",
+      "Create": {
+        "Title": "Create donation request",
+        "AddItem": "Add Item",
+        "CreateRequest": "Create request"
+      },
+      "Edit": {
+        "Title": "Edit Donation Request",
+        "Save": "Save"
+      },
+      "Form": {
+        "Title": "Title",
+        "TitleRequiredError": "Title is required",
+        "TitlePlaceholder": "Please enter a title",
+        "Status": "Status",
+        "StatusRequiredError": "Status is required",
+        "Observations": "Observations",
+        "ObservationsPlaceholder": "Request observations",
+        "Priority": "Priority",
+        "PriorityRequiredError": "Priority is required",
+        "Organization": "Organization",
+        "OrganizationRequiredError": "Organization is required",
+        "OrganizationPlaceholder": "Please select a organization",
+        "Address": "Address",
+        "AddressRequiredError": "Address is required",
+        "AddressPlaceholder": "Please select a address",
+        "FinishDate": "Finish date",
+        "DonationItem": {
+          "Name": "Product",
+          "NameRequiredError": "Product is required",
+          "NamePlaceholder": "Please enter a product",
+          "Observation": "Observation",
+          "ObservationPlaceholder": "Item request observations",
+          "Quantity": "Quantity",
+          "QuantityRequiredError": "Quantity is required",
+          "QuantityPlaceholder": "Please enter the required quantity",
+          "UnitRequiredError": "Unit is required",
+          "Category": "Categories",
+          "CategoryRequiredError": "At least 1 category is required",
+          "CategoryPlaceholder": "Please select at least 1 category"
+        },
+        "OverflowTag": "+ more selected",
+        "DonationItemRequiredError": "At least 1 item request is required",
+        "DeleteItemConfirmation": "Are you sure delete this item request?"
+      },
+      "BackConfirm": "Are you sure you want to go back?",
+      "CreateConfirm": "Are you sure you want to create a donation request?",
+      "EditConfirm": "Are you sure you want to edit a donation request?",
+      "DeleteConfirmation": "Are you sure you want to delete this donation request?",
+      "Table": {
+        "Itemcolumn": "Item",
+        "CreatedColumn": "Created Date",
+        "Finishcolumn": "Finish Date",
+        "Observationcolumn": "Observation",
+        "Quantitycolumn": "Quantity",
+        "Categorycolumn": "Category"
+      }
+    },
+    "User": {
+      "Title": "Users",
+      "OrganizationTitle": "for Organization:",
+      "Associate": "Manage Association",
+      "SelectOrganization": "Select Organizations",
+      "Table": {
+        "Name": "Name",
+        "Organization": "Organization",
+        "Email": "Email",
+        "Action": "Action",
+        "Filtered": "Filtered",
+        "Search": "Search",
+        "Reset": "Reset"
+      }
+    },
+    "PriorityQuestion": {
+      "Title": "Priority Questions",
+      "Create": {
+        "Title": "Create Priority Questions",
+        "CreateRequest": "Create questions"
+      },
+      "Edit": {
+        "Title": "Edit Question"
+      },
+      "Table": {
+        "LabelColumn": "Label",
+        "PlaceholderColumn": "Placeholder",
+        "OrderColumnColumn": "Order",
+        "WeightColumn": "Weight",
+        "ControlTypeColumn": "Control Type",
+        "DefaultValueColumn": "Default Value",
+        "OptionsColumn": "Options",
+        "DeleteQuestion": "Delete",
+        "EditQuestion": "Edit"
+      },
+      "Form": {
+        "Label": "Label",
+        "Placeholder": "Placeholder",
+        "Order": "Order",
+        "Weight": "Weight",
+        "ControlType": "Control Type",
+        "DefaultValue": "Default Value",
+        "LabelPlaceHolder": "Label Name",
+        "PlaceholderPlaceHolder": "Placeholder name",
+        "OrderPlaceHolder": "Order",
+        "WeightPlaceHolder": "Weight",
+        "ControlTypePlaceHolder": "Control Type",
+        "DefaultValuePlaceHolder": "Default Value",
+        "LabelRequired": "Label is required",
+        "DefaultValueRequired": "Default Value is required",
+        "OrderRequired": "Order is required",
+        "WeightRequired": "Weight is required",
+        "PlaceholderRequired": "Nombre marcador es requerido",
+        "ControlTypeRequired": "Control Type is required",
+        "AddItem": "Add Question",
+        "PriorityQuestionRequiredError": "At least 1 priority question is required"
+      },
+      "CreateConfirm": "Are you sure you want to create a new question?",
+      "EditConfirm": "Are you sure you want to edit the question?"
+    },
+    "Question": {
+      "Title": "Questions",
+      "CreateConfirm": "Are you sure you want to create a question?",
+      "Table": {
+        "Label": "Label",
+        "Type": "Type",
+        "Placeholder": "Placeholder",
+        "Weight": "Weight",
+        "Order": "Order",
+        "Action": "Action",
+        "Search": "Search",
+        "Reset": "Reset",
+        "Filtered": "Filtered",
+        "OptionsTitle": "Options",
+        "Option": {
+          "Label": "Label",
+          "Value": "Value",
+          "Weight": "Weight"
+        }
+      }
+    },
+    "Organization": {
+      "Title": "Organizations",
+      "CreateConfirm": "Are you sure you want to create a Organization?",
+      "Table": {
+        "Name": "Name",
+        "Description": "Description",
+        "ContactName": "Contact Name",
+        "Action": "Action",
+        "Search": "Search",
+        "Reset": "Reset",
+        "Filtered": "Filtered"
+      }
+    },
+    "ClearFilter": "Clear Filter",
+    "ClearFilterAndSorted": "Clear Filter and Sorted",
+    "Name": "Name",
+    "Email": "Email",
+    "Action": "Action",
+    "Delete": "Delete",
+    "Create": "Create",
+    "Details": "Details",
+    "Edit": "Edit",
+    "View": "View"
   },
   "UserProfile": {
     "MyProfile": "My Profile",

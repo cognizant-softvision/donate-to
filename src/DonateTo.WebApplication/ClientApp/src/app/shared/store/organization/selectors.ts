@@ -5,9 +5,24 @@ import { Injectable } from '@angular/core';
 // selectors
 export const getOrganizationState = createFeatureSelector<OrganizationState>('organization');
 
-export const getAllOrganizations = createSelector(getOrganizationState, (state: OrganizationState) => state.items);
+export const getAllOrganizations = createSelector(
+  getOrganizationState,
+  (state: OrganizationState) => state.organizations
+);
 
-export const getOrganizationsByUser = createSelector(getOrganizationState, (state: OrganizationState) => state.items);
+export const getOrganizationsByUser = createSelector(
+  getOrganizationState,
+  (state: OrganizationState) => state.organizations
+);
+
+export const getOrganizationsFilteredPaged = createSelector(
+  getOrganizationState,
+  (state: OrganizationState) => state.pagedItems
+);
+
+export const getFailedStatus = createSelector(getOrganizationState, (state: OrganizationState) => state.failed);
+
+export const getLoadingStatus = createSelector(getOrganizationState, (state: OrganizationState) => state.loading);
 
 export const getOrganizationsLoading = createSelector(
   getOrganizationState,
@@ -18,6 +33,7 @@ export const getOrganizationsLoading = createSelector(
 export class OrganizationSelectors {
   constructor(private store: Store<OrganizationState>) {}
   // selectors$
+  organizationsFilteredPaged$ = this.store.select(getOrganizationsFilteredPaged);
   organizations$ = this.store.select(getAllOrganizations);
   organizationsByUser$ = this.store.select(getOrganizationsByUser);
   organizationState$ = this.store.select(getOrganizationState);

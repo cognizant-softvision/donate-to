@@ -194,19 +194,31 @@ namespace DonateTo.Services
         ///<inheritdoc cref="IBaseService{TEntity}"/>
         public virtual async Task<PagedResult<TEntity>> GetPagedFilteredAsync(TFilter filter)
         {
-            var predicate = PredicateBuilder.New<TEntity>();
+            var predicate = GetBasePredicate(filter);
 
-            if (filter.UpdateDateBegin != null)
+            return await _entityRequestRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicate, GetSort(filter)).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get TEntity base predicate
+        /// </summary>
+        /// <param name="filter">Filter</param>
+        /// <returns>Predicate</returns>
+        protected ExpressionStarter<TEntity> GetBasePredicate(TFilter filter)
+        {
+            var predicate = PredicateBuilder.New<TEntity>(true);
+
+            if (filter.UpdateDateBegin != null && filter.UpdateDateBegin != DateTime.MinValue)
             {
                 predicate = predicate.Or(p => p.UpdateDate >= filter.UpdateDateBegin);
             }
 
-            if (filter.UpdateDateEnd != null)
+            if (filter.UpdateDateEnd != null && filter.UpdateDateEnd != DateTime.MinValue)
             {
                 predicate = predicate.Or(p => p.UpdateDate <= filter.UpdateDateEnd);
             }
 
-            return await _entityRequestRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicate, GetSort(filter)).ConfigureAwait(false);
+            return predicate;
         }
 
 

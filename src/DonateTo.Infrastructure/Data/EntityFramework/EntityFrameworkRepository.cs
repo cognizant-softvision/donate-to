@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
+using DonateTo.Infrastructure.Extensions;
 
 namespace DonateTo.Infrastructure.Data.EntityFramework
 {
@@ -114,17 +115,8 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
         public virtual ApplicationCore.Models.Pagination.PagedResult<TEntity> GetPaged(
             int page, int pageSize, Expression<Func<TEntity, bool>> filter, string sort)
         {
-            var entities = DbContext.Set<TEntity>().AsQueryable();
-
-            if (filter != null)
-            {
-                entities = entities.Where(filter);
-            }
-
-            if (!string.IsNullOrEmpty(sort))
-            {
-                entities = entities.OrderBy(sort);
-            }
+            var entities = DbContext.Set<TEntity>().AsQueryable()
+                .FilterAndSort(filter, sort);
 
             return entities.GetPaged(page, pageSize);
         }
@@ -133,17 +125,8 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
         public virtual async Task<ApplicationCore.Models.Pagination.PagedResult<TEntity>> GetPagedAsync(
             int page, int pageSize, Expression<Func<TEntity, bool>> filter, string sort)
         {
-            var entities = DbContext.Set<TEntity>().AsQueryable();
-
-            if (filter != null)
-            {
-                entities = entities.Where(filter);
-            }
-
-            if (!string.IsNullOrEmpty(sort))
-            {
-                entities = entities.OrderBy(sort);
-            }
+            var entities = DbContext.Set<TEntity>().AsQueryable()
+                .FilterAndSort(filter, sort);
 
             return await entities.GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }

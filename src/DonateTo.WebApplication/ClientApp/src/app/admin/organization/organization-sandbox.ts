@@ -3,17 +3,26 @@ import { Sandbox } from 'src/app/shared/sandbox/base.sandbox';
 import { Store } from '@ngrx/store';
 import * as store from 'src/app/shared/store';
 import { Subscription } from 'rxjs';
+import { OrganizationFilter } from 'src/app/shared/models/filters/organization-filter';
 
 @Injectable()
-export class OrganizationSandbox extends Sandbox {
+export class OrganizationSandbox extends Sandbox implements OnDestroy {
   private subscriptions: Subscription[] = [];
   countries$ = this.appState$.select(store.fromAddress.getCountries);
   states$ = this.appState$.select(store.fromAddress.getStates);
   cities$ = this.appState$.select(store.fromAddress.getCities);
+  organizations$ = this.appState$.select(store.fromOrganization.getAllOrganizations);
+  failAction$ = this.appState$.select(store.fromOrganization.getFailedStatus);
+  loadAction$ = this.appState$.select(store.fromOrganization.getLoadingStatus);
+  organizationsPagedFiltered$ = this.appState$.select(store.fromOrganization.getOrganizationsFilteredPaged);
 
   constructor(protected appState$: Store<store.State>) {
     super(appState$);
     this.registerEvents();
+  }
+
+  ngOnDestroy(): void {
+    this.unregisterEvents();
   }
 
   /**
@@ -35,6 +44,14 @@ export class OrganizationSandbox extends Sandbox {
    */
   public loadCitiesByState(stateId: number): void {
     this.appState$.dispatch(store.fromAddress.loadCities({ stateId }));
+  }
+
+  loadOrganizations(): void {
+    this.appState$.dispatch(store.fromOrganization.loadOrganizations());
+  }
+
+  public loadOrganizationsFilteredPaged(organizationFilter: OrganizationFilter): void {
+    this.appState$.dispatch(store.fromOrganization.loadOrganizationsPagedFiltered({ organizationFilter }));
   }
 
   /**

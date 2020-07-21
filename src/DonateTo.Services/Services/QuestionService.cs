@@ -26,17 +26,7 @@ namespace DonateTo.Services
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "<Pending>")]
         public override async Task<PagedResult<Question>> GetPagedFilteredAsync(QuestionFilterModel filter)
         {
-            var predicate = PredicateBuilder.New<Question>(true);
-
-            if (filter.UpdateDateBegin != null && filter.UpdateDateBegin != DateTime.MinValue)
-            {
-                predicate = predicate.Or(p => p.UpdateDate >= filter.UpdateDateBegin);
-            }
-
-            if (filter.UpdateDateEnd != null && filter.UpdateDateEnd != DateTime.MinValue)
-            {
-                predicate = predicate.Or(p => p.UpdateDate <= filter.UpdateDateEnd);
-            }
+            var predicate = GetBasePredicate(filter);
 
             if (!string.IsNullOrEmpty(filter.Label))
             {
