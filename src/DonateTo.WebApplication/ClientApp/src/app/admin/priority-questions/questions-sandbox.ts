@@ -1,10 +1,10 @@
 import { QuestionModel } from './../../shared/models/question.model';
-import * as store from 'src/app/shared/store';
+import * as store from '../../shared/store';
 import { Subscription } from 'rxjs';
 import { Injectable, OnDestroy } from '@angular/core';
-import { Sandbox } from 'src/app/shared/sandbox/base.sandbox';
+import { Sandbox } from '../../shared/sandbox/base.sandbox';
 import { Store } from '@ngrx/store';
-import { QuestionFilter } from 'src/app/shared/models/filters/question-filter';
+import { QuestionFilter } from '../../shared/models/filters/question-filter';
 
 @Injectable()
 export class QuestionsSandbox extends Sandbox implements OnDestroy {

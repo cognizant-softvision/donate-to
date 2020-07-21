@@ -1,6 +1,7 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.Infrastructure.Data.EntityFramework;
 using DonateTo.Infrastructure.Data.Extensions;
+using DonateTo.Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -20,17 +21,8 @@ namespace DonateTo.Infrastructure.Data.Repositories
         public override ApplicationCore.Models.Pagination.PagedResult<Organization> 
             GetPaged(int page, int pageSize, Expression<Func<Organization, bool>> filter = null, string sort = "")
         {
-            var organizations = GetHydratedOrganization();
-
-            if (filter != null)
-            {
-                organizations = organizations.Where(filter);
-            }
-
-            if (!string.IsNullOrEmpty(sort))
-            {
-                organizations = organizations.OrderBy(sort);
-            }
+            var organizations = GetHydratedOrganization()
+                .FilterAndSort(filter, sort);
 
             return organizations.GetPaged(page, pageSize);
         }
@@ -39,17 +31,8 @@ namespace DonateTo.Infrastructure.Data.Repositories
         public override async Task<ApplicationCore.Models.Pagination.PagedResult<Organization>> 
             GetPagedAsync(int page, int pageSize, Expression<Func<Organization, bool>> filter = null, string sort = "")
         {
-            var organizations = GetHydratedOrganization();
-
-            if (filter != null)
-            {
-                organizations = organizations.Where(filter);
-            }
-
-            if (!string.IsNullOrEmpty(sort))
-            {
-                organizations = organizations.OrderBy(sort);
-            }
+            var organizations = GetHydratedOrganization()
+                .FilterAndSort(filter, sort);
 
             return await organizations.GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }

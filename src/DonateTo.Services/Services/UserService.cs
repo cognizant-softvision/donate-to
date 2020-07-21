@@ -14,6 +14,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DonateTo.ApplicationCore.Models.Filtering;
 using LinqKit;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DonateTo.Services
 {
@@ -244,32 +245,39 @@ namespace DonateTo.Services
             return _mapper.Map<User, UserModel>(entity);
         }
 
-        ///<inheritdoc cref="IUserService"/>
-        public async Task<PagedResult<UserModel>> GetPagedFilteredAsync(BaseFilterModel filter)
-        {
-            var predicate = PredicateBuilder.New<User>();
 
-            if (filter.UpdateDateBegin != null)
+        ///<inheritdoc cref="IUserService"/>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "<Pending>")]
+        public async Task<PagedResult<UserModel>> GetPagedFilteredAsync(UserFilterModel filter)
+        {
+            var predicate = PredicateBuilder.New<User>(true);
+
+            if (filter.UpdateDateBegin != null && filter.UpdateDateBegin != DateTime.MinValue)
             {
                 predicate = predicate.Or(p => p.UpdateDate >= filter.UpdateDateBegin);
             }
 
-            if (filter.UpdateDateEnd != null)
+            if (filter.UpdateDateEnd != null && filter.UpdateDateEnd != DateTime.MinValue)
             {
                 predicate = predicate.Or(p => p.UpdateDate <= filter.UpdateDateEnd);
             }
 
-            var properties = typeof(User).GetProperties();
+            if (!string.IsNullOrEmpty(filter.FullName))
+            {
+                predicate = predicate.And(p => p.FirstName.Contains(filter.FullName) || p.LastName.Contains(filter.FullName));
+            }
 
-            var sort = !string.IsNullOrEmpty(filter.OrderBy) && properties.Any(p => p.Name == filter.OrderBy) ?
-                filter.OrderBy + " " :
-                "Id ";
+            if (!string.IsNullOrEmpty(filter.Email))
+            {
+                predicate = predicate.And(p => p.Email.Contains(filter.Email));
+            }
 
-            sort += !string.IsNullOrEmpty(filter.OrderDirection) && filter.OrderDirection == SortDirection.Descending ?
-                SortDirection.Descending :
-                SortDirection.Ascending;
+            if (!string.IsNullOrEmpty(filter.Organization))
+            {
+                predicate = predicate.And(p => p.UserOrganizations.Any(uo => uo.Organization.Name.Contains(filter.Organization)));
+            }
 
-            return (await _userRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicate, sort).ConfigureAwait(false)).Map<User, UserModel>(_mapper);
+            return (await _userRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicate, GetSort(filter)).ConfigureAwait(false)).Map<User, UserModel>(_mapper);
         }
 
         #region private
@@ -306,6 +314,30 @@ namespace DonateTo.Services
             }
 
             return currentOrganizations;
+        }
+
+        /// <summary>
+        /// Returns sort string from filter model
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1308:Normalize strings to uppercase", Justification = "<Pending>")]
+        private string GetSort(UserFilterModel filter)
+        {
+            var properties = typeof(UserFilterModel).GetProperties();
+
+            var sort = !string.IsNullOrEmpty(filter.OrderBy)
+                && properties.Any(p => p.Name.ToUpperInvariant() == filter.OrderBy.ToUpperInvariant() 
+                && p.GetCustomAttributes(typeof(NotMappedAttribute), true).Length > 1) ?
+                $"{ char.ToUpperInvariant(filter.OrderBy[0]) + filter.OrderBy.Substring(1).ToLowerInvariant() } " :
+                "Id ";
+
+            sort += !string.IsNullOrEmpty(filter.OrderDirection)
+                && (filter.OrderDirection == SortDirection.Descending || filter.OrderDirection == "descending") ?
+                SortDirection.Descending :
+                SortDirection.Ascending;
+
+            return sort;
         }
         #endregion
     }

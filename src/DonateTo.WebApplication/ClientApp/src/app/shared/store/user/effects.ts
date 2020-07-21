@@ -8,6 +8,9 @@ import {
   loadUserFailed,
   loadUsers,
   loadUsersFailed,
+  loadUsersPagedFiltered,
+  loadUsersPagedFilteredFailed,
+  loadUsersPagedFilteredSuccess,
   loadUsersSuccess,
   loadUserSuccess,
   updateUser,
@@ -60,6 +63,17 @@ export class UserEffects {
       this.userService.update(data.user).pipe(
         map((user) => updateUserSuccess({ user })),
         catchError(() => of(updateUserFailed()))
+      )
+    )
+  );
+
+  @Effect()
+  loadUsersPagedFiltered$: Observable<{}> = this.actions$.pipe(
+    ofType(loadUsersPagedFiltered),
+    switchMap(({ filter }) =>
+      this.userService.getPagedFiltered(filter).pipe(
+        map((pagedUsers) => loadUsersPagedFilteredSuccess({ pagedUsers })),
+        catchError(() => of(loadUsersPagedFilteredFailed()))
       )
     )
   );

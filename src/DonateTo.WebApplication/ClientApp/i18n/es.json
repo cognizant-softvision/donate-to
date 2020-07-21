@@ -253,13 +253,17 @@
     },
     "User": {
       "Title": "Usuarios",
+      "OrganizationTitle": "de la  Organización:",
       "Associate": "Administrar Asociaciones",
       "SelectOrganization": "Seleccionar Organizaciones",
       "Table": {
         "Name": "Nombre",
         "Organization": "Organización",
         "Email": "Email",
-        "Action": "Acción"
+        "Action": "Acción",
+        "Filtered": "Filtrada",
+        "Search": "Buscar",
+        "Reset": "Reestablecer"
       }
     },
     "Organization": {
