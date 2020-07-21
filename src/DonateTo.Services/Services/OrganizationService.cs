@@ -50,6 +50,8 @@ namespace DonateTo.Services
             return _organizationRepository.GetPaged(filter.PageNumber, filter.PageSize, predicate, GetSort(filter));
         }
 
+        ///<inheritdoc cref="BaseService{Organization, OrganizationFilterModel}"/>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "<Pending>")]
         public override async Task<PagedResult<Organization>> GetPagedFilteredAsync(OrganizationFilterModel filter)
         {
             var predicate = GetPredicate(filter);

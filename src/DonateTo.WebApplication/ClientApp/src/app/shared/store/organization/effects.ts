@@ -1,17 +1,31 @@
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { catchError, map, switchMap } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { OrganizationService } from '../../async-services/http/organization.service';
 import {
   loadOrganizations,
   loadOrganizationsByUser,
   loadOrganizationsFailed,
+  loadOrganizationsPagedFiltered,
+  loadOrganizationsPagedFilteredFailed,
+  loadOrganizationsPagedFilteredSuccess,
   loadOrganizationsSuccess,
 } from './actions';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import { catchError, map, switchMap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
-import { Injectable } from '@angular/core';
-import { OrganizationService } from '../../async-services/http/organization.service';
 
 @Injectable()
 export class OrganizationEffects {
+  @Effect()
+  loadOrganziationPagedFiltered$: Observable<{}> = this.actions$.pipe(
+    ofType(loadOrganizationsPagedFiltered),
+    switchMap(({ organizationFilter }) =>
+      this.organizationService.getPagedFiltered(organizationFilter).pipe(
+        map((pagedOrganizations) => loadOrganizationsPagedFilteredSuccess({ pagedOrganizations })),
+        catchError(() => of(loadOrganizationsPagedFilteredFailed()))
+      )
+    )
+  );
+
   @Effect()
   loadOrganizations$: Observable<{}> = this.actions$.pipe(
     ofType(loadOrganizations),

@@ -18,7 +18,6 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { ComponentsModule } from '../../../../shared/components';
 import { AdminLayoutComponent } from './admin-layout.component';
 import { AdminLayoutRoutingModule } from './admin-layout-routing.module';
-import { OrganizationComponent } from '../../../../admin/organization/organization.component';
 import { HttpLoaderFactory } from '../../../../app.module';
 import { HttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -48,6 +47,6 @@ const ICONS: IconDefinition[] = [HeartOutline, TeamOutline, ProfileOutline, Star
     ComponentsModule,
     ReactiveFormsModule,
   ],
-  declarations: [AdminLayoutComponent, OrganizationComponent],
+  declarations: [AdminLayoutComponent],
 })
 export class AdminLayoutModule {}
