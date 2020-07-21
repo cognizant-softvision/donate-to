@@ -69,7 +69,7 @@ const donationRequestReducer = createReducer(
     failed: false,
     currentDonation: donation,
   })),
-  on(donationRequestActions.updateDonation, (state, { donation }) => ({
+  on(donationRequestActions.updateDonationSuccess, (state, { newDonation }) => ({
     ...state,
     loading: false,
     failed: false,
