@@ -1,0 +1,106 @@
+<form nz-form [formGroup]="responsableStepForm">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>
+      {{ 'RequestDonation.DonationSteps.ResponsableStep.FirstName' | translate }}
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="firstNameErrorTpl">
+      <input
+        nz-input
+        formControlName="firstName"
+        placeholder="{{ 'RequestDonation.DonationSteps.ResponsableStep.FirstNamePlaceHolder' | translate }}"
+      />
+      <ng-template #firstNameErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          {{ 'RequestDonation.DonationSteps.ResponsableStep.RequiredFirstName' | translate }}
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>
+      {{ 'RequestDonation.DonationSteps.ResponsableStep.LastName' | translate }}
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="lastNameErrorTpl">
+      <input
+        nz-input
+        formControlName="lastName"
+        placeholder="{{ 'RequestDonation.DonationSteps.ResponsableStep.LastNamePlaceHolder' | translate }}"
+      />
+      <ng-template #lastNameErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          {{ 'RequestDonation.DonationSteps.ResponsableStep.RequiredLastName' | translate }}
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>
+      {{ 'RequestDonation.DonationSteps.ResponsableStep.IdentityNumber' | translate }}
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="identityNumberErrorTpl">
+      <input
+        nz-input
+        formControlName="identityNumber"
+        placeholder="{{ 'RequestDonation.DonationSteps.ResponsableStep.IdentityNumberPlaceHolder' | translate }}"
+      />
+      <ng-template #identityNumberErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          {{ 'RequestDonation.DonationSteps.ResponsableStep.RequiredIdentityNumber' | translate }}
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>
+      {{ 'RequestDonation.DonationSteps.ResponsableStep.Email' | translate }}
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="emailErrorTpl">
+      <input
+        nz-input
+        formControlName="email"
+        placeholder="{{ 'RequestDonation.DonationSteps.ResponsableStep.EmailPlaceHolder' | translate }}"
+        type="email"
+      />
+      <ng-template #emailErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          {{ 'RequestDonation.DonationSteps.ResponsableStep.RequiredEmail' | translate }}
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>
+      {{ 'RequestDonation.DonationSteps.ResponsableStep.PhoneNumber' | translate }}
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="phoneNumberErrorTpl">
+      <input
+        type="number"
+        nz-input
+        formControlName="phoneNumber"
+        placeholder="{{ 'RequestDonation.DonationSteps.ResponsableStep.PhoneNumberPlaceHolder' | translate }}"
+      />
+      <ng-template #phoneNumberErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          {{ 'RequestDonation.DonationSteps.ResponsableStep.RequiredPhoneNumber' | translate }}
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7">
+      {{ 'RequestDonation.DonationSteps.ResponsableStep.Position' | translate }}
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <input
+        nz-input
+        formControlName="position"
+        placeholder="{{ 'RequestDonation.DonationSteps.ResponsableStep.PositionPlaceHolder' | translate }}"
+      />
+    </nz-form-control>
+  </nz-form-item>
+</form>

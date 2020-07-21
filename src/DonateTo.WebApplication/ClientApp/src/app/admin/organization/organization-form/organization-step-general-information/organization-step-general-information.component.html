@@ -1,0 +1,41 @@
+<form nz-form [formGroup]="generalInformationStepForm">
+  <!-- Organization Name -->
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>
+      {{ 'Admin.Organization.OrganizationSteps.GeneralInformation.OrganizationName' | translate }}
+    </nz-form-label>
+    <nz-form-control [nzSpan]="14" nzHasFeedback [nzErrorTip]="organizationNameError">
+      <input
+        nz-input
+        formControlName="organizationName"
+        placeholder="{{ 'Admin.Organization.OrganizationSteps.GeneralInformation.OrganizationName' | translate }}"
+      />
+      <ng-template #organizationNameError let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          {{ 'Admin.Organization.OrganizationSteps.GeneralInformation.RequiredOrganizationName' | translate }}
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- Description -->
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>
+      {{ 'Admin.Organization.OrganizationSteps.GeneralInformation.Description' | translate }}
+    </nz-form-label>
+    <nz-form-control [nzSpan]="14" nzHasFeedback [nzErrorTip]="descriptionError">
+      <textarea
+        nz-input
+        rows="4"
+        formControlName="description"
+        placeholder="{{ 'Admin.Organization.OrganizationSteps.GeneralInformation.Description' | translate }}"
+      >
+      </textarea>
+      <ng-template #descriptionError let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          {{ 'Admin.Organization.OrganizationSteps.GeneralInformation.RequiredDescription' | translate }}
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+</form>

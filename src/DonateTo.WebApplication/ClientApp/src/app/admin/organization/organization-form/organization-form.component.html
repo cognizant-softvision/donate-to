@@ -1,1 +1,49 @@
-<p>organization-form works!</p>
+<div class="steps-container">
+  <!-- Steps Title -->
+  <nz-steps [nzCurrent]="currentStep">
+    <nz-step nzTitle="General Information" nzIcon="info-circle" [(nzStatus)]="statusGeneralInformation"></nz-step>
+    <nz-step nzTitle="Contact" nzIcon="user" [(nzStatus)]="statusContact"></nz-step>
+    <nz-step nzTitle="Address" nzIcon="home" [(nzStatus)]="statusAddress"></nz-step>
+    <nz-step nzTitle="Verify" [nzIcon]="iconTemplate" [(nzStatus)]="statusVerify"></nz-step>
+    <ng-template #iconTemplate><i nz-icon nzType="smile"></i></ng-template>
+  </nz-steps>
+
+  <!-- Steps Content -->
+  <div class="steps-content">
+    <app-organization-step-general-information
+      *ngIf="currentStep === 0"
+      (isFormValid)="isGeneralInformationStepReady($event)"
+      [generalInformationModel]="generalInformationModel"
+    >
+    </app-organization-step-general-information>
+
+    <app-organization-step-contact
+      *ngIf="currentStep === 1"
+      (isFormValid)="isContactStepReady($event)"
+      [contactModel]="contactModel"
+    >
+    </app-organization-step-contact>
+
+    <app-organization-step-address
+      *ngIf="currentStep === 2"
+      (isFormValid)="isAddressStepReady($event)"
+      [addressModel]="addressModel"
+    >
+    </app-organization-step-address>
+
+    <app-organization-step-verify *ngIf="currentStep === 3"> </app-organization-step-verify>
+  </div>
+
+  <!-- Steps Buttons -->
+  <div class="steps-action">
+    <button nz-button nzType="default" (click)="prev()" *ngIf="currentStep > 0">
+      <span>Previous</span>
+    </button>
+    <button nz-button nzType="default" (click)="next()" [disabled]="nextStepDisabled" *ngIf="currentStep < 3">
+      <span>Next</span>
+    </button>
+    <button nz-button nzType="primary" (click)="done()" [disabled]="!stepsData[currentStep]" *ngIf="currentStep === 3">
+      <span>Done</span>
+    </button>
+  </div>
+</div>

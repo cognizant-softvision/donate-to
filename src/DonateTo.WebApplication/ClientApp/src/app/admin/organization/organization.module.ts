@@ -17,6 +17,7 @@ import {
   NzTableModule,
   NzTagModule,
 } from 'ng-zorro-antd';
+import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { HttpClient } from '@angular/common/http';
@@ -33,8 +34,13 @@ import { StoreModule } from '@ngrx/store';
 import { OrganizationEffects } from 'src/app/shared/store/organization';
 import { AddressEffects } from 'src/app/shared/store/address';
 import { fromAddress, fromOrganization } from 'src/app/shared/store';
+import { HomeOutline, InfoCircleOutline, SmileOutline, UserOutline } from '@ant-design/icons-angular/icons';
+import { OrganizationStepGeneralInformationComponent } from './organization-form/organization-step-general-information/organization-step-general-information.component';
+import { OrganizationStepContactComponent } from './organization-form/organization-step-contact/organization-step-contact.component';
+import { OrganizationStepAddressComponent } from './organization-form/organization-step-address/organization-step-address.component';
+import { OrganizationStepVerifyComponent } from './organization-form/organization-step-verify/organization-step-verify.component';
 
-const ICONS: IconDefinition[] = [];
+const ICONS: IconDefinition[] = [HomeOutline, InfoCircleOutline, UserOutline, SmileOutline];
 
 @NgModule({
   imports: [
@@ -54,6 +60,7 @@ const ICONS: IconDefinition[] = [];
     NzInputModule,
     NzDividerModule,
     NzTableModule,
+    NzStepsModule,
 
     FormsModule,
     CommonModule,
@@ -79,6 +86,10 @@ const ICONS: IconDefinition[] = [];
     OrganizationCreateComponent,
     OrganizationEditComponent,
     OrganizationFormComponent,
+    OrganizationStepGeneralInformationComponent,
+    OrganizationStepContactComponent,
+    OrganizationStepAddressComponent,
+    OrganizationStepVerifyComponent,
   ],
   providers: [OrganizationSandbox],
 })
