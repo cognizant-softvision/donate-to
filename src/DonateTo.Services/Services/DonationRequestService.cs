@@ -95,24 +95,40 @@ namespace DonateTo.Services
                 predicate = predicate.And(p => p.Observation.Contains(filter.Observation));
             }
 
-            if (filter.CreatedDateBegin != null && filter.CreatedDateBegin != DateTime.MinValue)
+            if (!string.IsNullOrEmpty(filter.CreatedDateBegin))
             {
-                predicate = predicate.Or(p => p.CreatedDate >= filter.CreatedDateBegin);
+                DateTime outDate;
+                if (DateTime.TryParse(filter.CreatedDateBegin, out outDate))
+                {
+                    predicate = predicate.And(p => p.CreatedDate >= outDate);
+                }
             }
 
-            if (filter.CreatedDateEnd != null && filter.CreatedDateEnd != DateTime.MinValue)
+            if (!string.IsNullOrEmpty(filter.CreatedDateEnd))
             {
-                predicate = predicate.Or(p => p.CreatedDate <= filter.CreatedDateEnd);
+                DateTime outDate;
+                if (DateTime.TryParse(filter.CreatedDateEnd, out outDate))
+                {
+                    predicate = predicate.And(p => p.CreatedDate <= outDate);
+                }
             }
 
-            if (filter.FinishDateBegin != null && filter.FinishDateBegin != DateTime.MinValue)
+            if (!string.IsNullOrEmpty(filter.FinishDateBegin))
             {
-                predicate = predicate.Or(p => p.FinishDate >= filter.FinishDateBegin);
+                DateTime outDate;
+                if (DateTime.TryParse(filter.FinishDateBegin, out outDate))
+                {
+                    predicate = predicate.And(p => p.FinishDate >= outDate);
+                }
             }
 
-            if (filter.FinishDateEnd != null && filter.FinishDateEnd != DateTime.MinValue)
+            if (!string.IsNullOrEmpty(filter.FinishDateEnd))
             {
-                predicate = predicate.Or(p => p.FinishDate <= filter.FinishDateEnd);
+                DateTime outDate;
+                if (DateTime.TryParse(filter.FinishDateEnd, out outDate))
+                {
+                    predicate = predicate.And(p => p.FinishDate <= outDate);
+                }
             }
 
             return predicate;

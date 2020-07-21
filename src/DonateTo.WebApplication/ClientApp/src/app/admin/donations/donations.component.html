@@ -14,21 +14,93 @@
       </button>
     </div>
     <nz-divider></nz-divider>
-    <button nz-button nzType="secondary" (click)="resetSortAndFilters()">{{ 'Admin.ClearFilter' | translate }}</button>
+    <button nz-button nzType="secondary" (click)="reset()">{{ 'Admin.ClearFilter' | translate }}</button>
   </div>
-  <nz-table #donationTable [nzData]="this.donationSandBox.donationRequests$ | async" [nzNoResult]="customTpl">
+  <nz-table
+    #donationTable
+    [nzData]="donationRequestsList"
+    [nzNoResult]="customTpl"
+    nzTableLayout="fixed"
+    [nzNoResult]="customTpl"
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [nzPageSize]="pageSize"
+    [nzPageIndex]="pageIndex"
+    (nzQueryParams)="onQueryParamsChange($event)"
+  >
     <thead>
       <tr>
-        <th
-          *ngFor="let column of listOfColumns"
-          [nzSortOrder]="column.sortOrder"
-          [nzSortFn]="column.sortFn"
-          [nzSortDirections]="column.sortDirections"
-          [nzFilterMultiple]="column.filterMultiple"
-          [nzFilters]="column.listOfFilter"
-          [nzFilterFn]="column.filterFn"
-        >
-          {{ column.name | translate }}
+        <th nzCustomFilter nzColumnKey="title" [nzSortOrder]="'ascend'" [nzSortFn]="true">
+          {{ 'Admin.Donation.Table.Itemcolumn' | translate }}
+          <label
+            class="filter"
+            title="{{ 'Admin.Donation.Table.Filtered' | translate }}"
+            *ngIf="searchTitleValue.length > 0 && !titleVisible"
+          >
+            ({{ searchTitleValue }})
+          </label>
+          <nz-filter-trigger
+            [(nzVisible)]="titleVisible"
+            [nzActive]="searchTitleValue.length > 0"
+            [nzDropdownMenu]="searchTitleMenu"
+          >
+            <i nz-icon nzType="search"></i>
+          </nz-filter-trigger>
+        </th>
+        <th nzCustomFilter nzColumnKey="createdDate" [nzSortFn]="true">
+          {{ 'Admin.Donation.Table.CreatedColumn' | translate }}
+          <label
+            class="filter"
+            title="{{ 'Admin.Donation.Table.Filtered' | translate }}"
+            *ngIf="(searchCreatedDateBeginValue || searchCreatedDateEndValue) && !createdDateVisible"
+          >
+            ({{ searchCreatedDateBeginValue | date: 'shortDate' }} -
+            {{ searchCreatedDateEndValue | date: 'shortDate' }})
+          </label>
+          <nz-filter-trigger
+            [(nzVisible)]="createdDateVisible"
+            [nzActive]="searchCreatedDateBeginValue || searchCreatedDateEndValue"
+            [nzDropdownMenu]="searchCreatedDateMenu"
+          >
+            <i nz-icon nzType="search"></i>
+          </nz-filter-trigger>
+        </th>
+        <th nzCustomFilter nzColumnKey="finishDate" [nzSortFn]="true">
+          {{ 'Admin.Donation.Table.Finishcolumn' | translate }}
+          <label
+            class="filter"
+            title="{{ 'Admin.Donation.Table.Filtered' | translate }}"
+            *ngIf="(searchFinishDateBeginValue || searchFinishDateEndValue) && !finishDateVisible"
+          >
+            ({{ searchFinishDateBeginValue | date: 'shortDate' }} - {{ searchFinishDateEndValue | date: 'shortDate' }})
+          </label>
+          <nz-filter-trigger
+            [(nzVisible)]="finishDateVisible"
+            [nzActive]="searchFinishDateBeginValue || searchFinishDateEndValue"
+            [nzDropdownMenu]="searchFinishDateMenu"
+          >
+            <i nz-icon nzType="search"></i>
+          </nz-filter-trigger>
+        </th>
+        <th nzCustomFilter nzColumnKey="observation" [nzSortFn]="true">
+          {{ 'Admin.Donation.Table.Observationcolumn' | translate }}
+          <label
+            class="filter"
+            title="{{ 'Admin.Donation.Table.Filtered' | translate }}"
+            *ngIf="searchObservationValue.length > 0 && !observationVisible"
+          >
+            ({{ searchObservationValue }})
+          </label>
+          <nz-filter-trigger
+            [(nzVisible)]="observationVisible"
+            [nzActive]="searchObservationValue.length > 0"
+            [nzDropdownMenu]="searchObservationMenu"
+          >
+            <i nz-icon nzType="search"></i>
+          </nz-filter-trigger>
+        </th>
+        <th>
+          {{ 'Admin.Donation.Table.Action' | translate }}
         </th>
       </tr>
     </thead>
@@ -53,6 +125,83 @@
     </tbody>
   </nz-table>
 </div>
+
+<nz-dropdown-menu #searchTitleMenu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input
+        type="text"
+        nz-input
+        placeholder="{{ 'Admin.Donation.Table.Itemcolumn' | translate }}"
+        [(ngModel)]="searchTitleValue"
+      />
+      <button nz-button nzSize="small" nzType="primary" (click)="searchTitle()" class="search-button">
+        {{ 'Admin.Donation.Table.Search' | translate }}
+      </button>
+      <button nz-button nzSize="small" (click)="resetTitleSearch()">
+        {{ 'Admin.Donation.Table.Reset' | translate }}
+      </button>
+    </div>
+  </div>
+</nz-dropdown-menu>
+
+<nz-dropdown-menu #searchCreatedDateMenu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <div class="range">
+        <nz-date-picker
+          [(ngModel)]="searchCreatedDateBeginValue"
+          [nzPlaceHolder]="'From'"
+          class="from"
+        ></nz-date-picker>
+        <nz-date-picker [(ngModel)]="searchCreatedDateEndValue" [nzPlaceHolder]="'To'"></nz-date-picker>
+      </div>
+      <button nz-button nzSize="small" nzType="primary" (click)="searchCreatedDate()" class="search-button">
+        {{ 'Admin.Donation.Table.Search' | translate }}
+      </button>
+      <button nz-button nzSize="small" (click)="resetCreatedDateSearch()">
+        {{ 'Admin.Donation.Table.Reset' | translate }}
+      </button>
+    </div>
+  </div>
+</nz-dropdown-menu>
+
+<nz-dropdown-menu #searchFinishDateMenu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <div class="range">
+        <nz-date-picker [(ngModel)]="searchFinishDateBeginValue" [nzPlaceHolder]="'From'" class="from"></nz-date-picker>
+        <nz-date-picker [(ngModel)]="searchFinishDateEndValue" [nzPlaceHolder]="'To'"></nz-date-picker>
+      </div>
+      <button nz-button nzSize="small" nzType="primary" (click)="searchFinishDate()" class="search-button">
+        {{ 'Admin.Donation.Table.Search' | translate }}
+      </button>
+      <button nz-button nzSize="small" (click)="resetFinishDateSearch()">
+        {{ 'Admin.Donation.Table.Reset' | translate }}
+      </button>
+    </div>
+  </div>
+</nz-dropdown-menu>
+
+<nz-dropdown-menu #searchObservationMenu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input
+        type="text"
+        nz-input
+        placeholder="{{ 'Admin.Donation.Table.Observationcolumn' | translate }}"
+        [(ngModel)]="searchObservationValue"
+      />
+      <button nz-button nzSize="small" nzType="primary" (click)="searchObservation()" class="search-button">
+        {{ 'Admin.Donation.Table.Search' | translate }}
+      </button>
+      <button nz-button nzSize="small" (click)="resetObservationSearch()">
+        {{ 'Admin.Donation.Table.Reset' | translate }}
+      </button>
+    </div>
+  </div>
+</nz-dropdown-menu>
+
 <router-outlet #outlet="outlet"></router-outlet>
 
 <ng-template #customTpl let-name>
