@@ -86,6 +86,12 @@ export class OrganizationComponent implements OnInit, OnDestroy {
     this.searchNameValue = '';
     this.searchDescriptionValue = '';
     this.searchContactNameValue = '';
+    this.organizationFilter = {
+      ...this.organizationFilter,
+      name: this.searchNameValue,
+      description: this.searchDescriptionValue,
+      contactName: this.searchContactNameValue,
+    };
     this.organizationSandbox.loadOrganizationsFilteredPaged(this.organizationFilter);
   }
 
