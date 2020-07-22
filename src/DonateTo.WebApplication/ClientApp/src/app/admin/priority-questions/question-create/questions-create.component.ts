@@ -125,10 +125,13 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
 
   createQuestions() {
     this.isSubmited = true;
-    this.questions.forEach((question) => {
-      question.controlType = undefined;
-    });
-    this.questionSandbox.updateQuestions(this.questions);
+    this.validateFormGroup(this.questionItemFormGroup, this.form);
+    if (this.questionItemFormGroup.valid) {
+      this.questions.forEach((question) => {
+        question.controlType = undefined;
+      });
+      this.questionSandbox.updateQuestions(this.questions);
+    }
   }
 
   goBack() {
