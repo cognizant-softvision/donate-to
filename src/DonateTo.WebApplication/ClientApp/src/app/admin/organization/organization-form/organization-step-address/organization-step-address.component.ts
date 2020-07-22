@@ -18,8 +18,6 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
   @Input() addressModel: AddressModel;
   @Output() outputFromChild: EventEmitter<any> = new EventEmitter<any>();
 
-  // @Input() addressesModel: AddressModel[];
-
   subscriptions: Subscription[] = [];
   countries: CountryModel[] = [];
   states: StateModel[] = [];
@@ -163,4 +161,10 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
       this.addressStepForm.reset();
     }
   }
+
+  removeAddress(item: AddressModel) {
+    this.addresses = this.addresses.filter((a) => a !== item);
+  }
+
+  editAddress(item: AddressModel) {}
 }

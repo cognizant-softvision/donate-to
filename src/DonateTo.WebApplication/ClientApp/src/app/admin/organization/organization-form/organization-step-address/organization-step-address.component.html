@@ -194,7 +194,9 @@
               <td>
                 <a>{{ 'Admin.Organization.OrganizationSteps.Address.Edit' | translate }}</a>
                 <nz-divider nzType="vertical"></nz-divider>
-                <a>{{ 'Admin.Organization.OrganizationSteps.Address.Delete' | translate }}</a>
+                <a (click)="removeAddress(item)">{{
+                  'Admin.Organization.OrganizationSteps.Address.Delete' | translate
+                }}</a>
               </td>
             </tr>
           </tbody>
