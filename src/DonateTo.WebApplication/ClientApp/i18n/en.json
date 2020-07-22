@@ -116,10 +116,20 @@
       },
       "OrganizationSteps": {
         "GeneralInformation": {
+          "GeneralInformation": "General Information",
           "OrganizationName": "Organization Name",
           "Description": "Description",
           "RequiredOrganizationName": "The Organization name is required",
           "RequiredDescription": "An organization description is required"
+        },
+        "Contact": {
+          "Contact": "Contact"
+        },
+        "Address": {
+          "Address": "Address"
+        },
+        "Verify": {
+          "Verify": "Verify"
         }
       }
     },

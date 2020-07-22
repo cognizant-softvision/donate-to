@@ -116,6 +116,7 @@
       },
       "OrganizationSteps": {
         "GeneralInformation": {
+          "GeneralInformation": "Información General",
           "OrganizationName": "Nombre de la Organización",
           "Description": "Descripción",
           "RequiredOrganizationName": "Se requiere el nombre de la organización",

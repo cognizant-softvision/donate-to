@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AddressModel } from 'src/app/shared/models';
+import { AddressModel, CountryModel, CityModel, StateModel } from 'src/app/shared/models';
 import { Subscription } from 'rxjs';
 import { OrganizationSandbox } from '../../organization-sandbox';
 
@@ -104,7 +104,6 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
     addressModel.cityId = this.addressStepForm.value.cityId;
     addressModel.stateId = this.addressStepForm.value.stateId;
     addressModel.countryId = this.addressStepForm.value.countryId;
-
     return addressModel;
   }
 }

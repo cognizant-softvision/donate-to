@@ -1,5 +1,12 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { AddressModel, ContactModel, OrganizationModel } from 'src/app/shared/models';
+import {
+  AddressModel,
+  ContactModel,
+  OrganizationModel,
+  CountryModel,
+  StateModel,
+  CityModel,
+} from 'src/app/shared/models';
 import { OrganizationSandbox } from '../organization-sandbox';
 import { OrganizationStepGeneralInformationComponent } from './organization-step-general-information/organization-step-general-information.component';
 import { OrganizationStepContactComponent } from './organization-step-contact/organization-step-contact.component';
@@ -28,7 +35,6 @@ export class OrganizationFormComponent implements OnInit, OnDestroy {
   statusGeneralInformation = 'process';
   statusContact = 'wait';
   statusAddress = 'wait';
-  statusVerify = 'wait';
   nextStepDisabled = true;
 
   // Child component form
@@ -40,6 +46,8 @@ export class OrganizationFormComponent implements OnInit, OnDestroy {
   _isContactStepReady = false;
   _isAddressStepReady = false;
   stepsData: boolean[] = [];
+
+  organizationToSubmit = new OrganizationModel();
 
   constructor(public organizationSandbox: OrganizationSandbox) {}
 
@@ -69,7 +77,7 @@ export class OrganizationFormComponent implements OnInit, OnDestroy {
   }
 
   done(): void {
-    this.createOrganization();
+    this.organizationToSubmit = this.createOrganization();
   }
 
   changeStatus() {
@@ -78,28 +86,19 @@ export class OrganizationFormComponent implements OnInit, OnDestroy {
         this.statusGeneralInformation = 'process';
         this.statusContact = 'wait';
         this.statusAddress = 'wait';
-        this.statusVerify = 'wait';
         break;
       }
       case 1: {
         this.statusGeneralInformation = 'finish';
         this.statusContact = 'process';
         this.statusAddress = 'wait';
-        this.statusVerify = 'wait';
         break;
       }
       case 2: {
         this.statusGeneralInformation = 'finish';
         this.statusContact = 'finish';
         this.statusAddress = 'process';
-        this.statusVerify = 'wait';
         break;
-      }
-      case 3: {
-        this.statusGeneralInformation = 'finish';
-        this.statusContact = 'finish';
-        this.statusAddress = 'finish';
-        this.statusVerify = 'process';
       }
     }
   }
@@ -127,14 +126,6 @@ export class OrganizationFormComponent implements OnInit, OnDestroy {
       case 2: {
         if (this.stepsData[2] === true) {
           this.nextStepDisabled = false;
-        } else {
-          this.nextStepDisabled = true;
-        }
-        break;
-      }
-      case 3: {
-        if (this.stepsData[3] === true) {
-          this.nextStepDisabled = true;
         } else {
           this.nextStepDisabled = true;
         }
@@ -170,10 +161,47 @@ export class OrganizationFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  createOrganization() {
+  createOrganization(): OrganizationModel {
     const organization = new OrganizationModel();
+    const contact = new ContactModel();
+    const address = new AddressModel();
+    let addresses: AddressModel[] = [];
     console.log('General Information', this.generalInformationModel);
     console.log('Contact', this.contactModel);
     console.log('Address', this.addressModel);
+
+    contact.firstName = this.contactModel.firstName;
+    contact.lastName = this.contactModel.lastName;
+    contact.email = this.contactModel.email;
+    contact.identityNumber = this.contactModel.identityNumber;
+    contact.phoneNumber = this.contactModel.phoneNumber;
+    contact.position = this.contactModel.position;
+
+    const country = new CountryModel();
+    const state = new StateModel();
+    const city = new CityModel();
+    address.street = this.addressModel.street;
+    address.postalCode = this.addressModel.postalCode;
+    address.floor = this.addressModel.postalCode;
+    address.appartment = this.addressModel.appartment;
+    address.additionalInformation = this.addressModel.additionalInformation;
+
+    address.countryId = this.addressModel.countryId;
+    address.country = this.addressModel.country;
+    address.stateId = this.addressModel.stateId;
+    address.state = this.addressModel.state;
+    address.cityId = this.addressModel.cityId;
+    address.city = this.addressModel.city;
+    address.contact = this.addressModel.contact;
+    address.contactId = this.addressModel.contactId;
+    addresses = [...addresses, address];
+
+    organization.name = this.generalInformationModel.name;
+    organization.description = this.generalInformationModel.description;
+    organization.contact = contact;
+    organization.addresses = addresses;
+
+    console.log('ORGANIZATION TO CREATE', organization);
+    return organization;
   }
 }
