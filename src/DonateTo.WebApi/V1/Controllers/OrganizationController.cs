@@ -4,11 +4,6 @@ using DonateTo.ApplicationCore.Interfaces.Services;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using DonateTo.ApplicationCore.Models.Pagination;
-using DonateTo.ApplicationCore.Models;
-using System.Linq.Expressions;
-using System;
-using DonateTo.ApplicationCore.Common;
 using DonateTo.ApplicationCore.Models.Filtering;
 
 namespace DonateTo.WebApi.V1.Controllers

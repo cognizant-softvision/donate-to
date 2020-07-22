@@ -133,6 +133,23 @@ const donationRequestReducer = createReducer(
     ...state,
     loading: false,
     failed: true,
+  })),
+  on(donationRequestActions.loadDonationRequestsPagedFiltered, (state) => ({
+    ...state,
+    loading: true,
+    failed: false,
+  })),
+  on(donationRequestActions.loadDonationRequestsPagedFilteredSuccess, (state, { pagedDonationRequests }) => ({
+    ...state,
+    loading: false,
+    failed: false,
+    pagedItems: pagedDonationRequests,
+  })),
+  on(donationRequestActions.loadDonationRequestsPagedFilteredFailed, (state) => ({
+    ...state,
+    loading: false,
+    failed: true,
+    pagedItems: new PageModel<DonationRequestModel>(),
   }))
 );
 

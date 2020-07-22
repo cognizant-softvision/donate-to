@@ -13,6 +13,9 @@ import {
   loadDonationRequestsFailed,
   loadDonationRequestsPaged,
   loadDonationRequestsPagedFailed,
+  loadDonationRequestsPagedFiltered,
+  loadDonationRequestsPagedFilteredFailed,
+  loadDonationRequestsPagedFilteredSuccess,
   loadDonationRequestsPagedSuccess,
   loadDonationRequestsSearchPaged,
   loadDonationRequestsSearchPagedFailed,
@@ -104,6 +107,17 @@ export class DonationRequestEffects {
       this.donationRequestService.delete(data.donationRequest).pipe(
         map((donationRequest) => removeDonationRequestSuccess({ donationRequest })),
         catchError(() => of(removeDonationRequestFailed()))
+      )
+    )
+  );
+
+  @Effect()
+  loadDonationRequestsPagedFiltered$: Observable<{}> = this.actions$.pipe(
+    ofType(loadDonationRequestsPagedFiltered),
+    switchMap(({ donationRequestFilter }) =>
+      this.donationRequestService.getPagedFiltered(donationRequestFilter).pipe(
+        map((pagedDonationRequests) => loadDonationRequestsPagedFilteredSuccess({ pagedDonationRequests })),
+        catchError(() => of(loadDonationRequestsPagedFilteredFailed()))
       )
     )
   );

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Linq.Expressions;
 using System;
 using System.Linq.Dynamic.Core;
+using DonateTo.Infrastructure.Extensions;
 
 namespace DonateTo.Infrastructure.Data.Repositories
 {
@@ -28,41 +29,23 @@ namespace DonateTo.Infrastructure.Data.Repositories
         }
 
         ///<inheritdoc cref="IRepository{DonationRequest}"/>
-        public override ApplicationCore.Models.Pagination.PagedResult<DonationRequest> 
+        public override ApplicationCore.Models.Pagination.PagedResult<DonationRequest>
             GetPaged(int page, int pageSize, Expression<Func<DonationRequest, bool>> filter = null, string sort = "")
         {
-            var requests = GetHydratedDonationRequests();
+            var questions = GetHydratedDonationRequests()
+                .FilterAndSort(filter, sort);
 
-            if (filter != null)
-            {
-                requests = requests.Where(filter);
-            }
-
-            if (!string.IsNullOrEmpty(sort))
-            {
-                requests = requests.OrderBy(sort);
-            }
-
-            return requests.GetPaged(page, pageSize);
+            return questions.GetPaged(page, pageSize);
         }
 
         ///<inheritdoc cref="IRepository{DonationRequest}"/>
-        public override async Task<ApplicationCore.Models.Pagination.PagedResult<DonationRequest>> 
+        public override async Task<ApplicationCore.Models.Pagination.PagedResult<DonationRequest>>
             GetPagedAsync(int page, int pageSize, Expression<Func<DonationRequest, bool>> filter = null, string sort = "")
         {
-            var requests = GetHydratedDonationRequests();
+            var questions = GetHydratedDonationRequests()
+                .FilterAndSort(filter, sort);
 
-            if (filter != null) 
-            {
-                requests =  requests.Where(filter);
-            }
-
-            if (!string.IsNullOrEmpty(sort))
-            {
-                requests = requests.OrderBy(sort);
-            }
-
-            return await requests.GetPagedAsync(page, pageSize).ConfigureAwait(false);
+            return await questions.GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
 
         #region private
