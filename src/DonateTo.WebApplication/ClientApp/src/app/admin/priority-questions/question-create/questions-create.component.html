@@ -3,7 +3,7 @@
     <h4 class="section-title">{{ 'Admin.PriorityQuestion.Create.Title' | translate }}</h4>
   </div>
   <br />
-  <form [formGroup]="questionItemFormGroup" nz-form>
+  <form [formGroup]="questionsFormGroup" nz-form>
     <div [formGroup]="questionItemFormGroup" class="create-priority-question-add-item-container">
       <div class="create-priority-question-add-item-box-first">
         <div class="create-item-container">
@@ -253,7 +253,7 @@
     <br />
     <nz-form-item>
       <nz-form-control nzErrorTip="{{ 'Admin.PriorityQuestion.Form.PriorityQuestionRequiredError' | translate }}">
-        <div [(ngModel)]="questions" ngDefaultControl formControlName="itemsFormControl">
+        <div [(ngModel)]="questions" ngDefaultControl formControlName="questionsFormControl">
           <nz-table
             [nzData]="questions"
             [nzShowPagination]="false"
