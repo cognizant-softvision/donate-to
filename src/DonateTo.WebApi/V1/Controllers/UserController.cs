@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DonateTo.ApplicationCore.Models.Filtering;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -213,6 +214,36 @@ namespace DonateTo.WebApi.V1.Controllers
                 catch (InvalidOperationException ex)
                 {
                     return BadRequest(ex);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Get a paged list or Users filterd by given data
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [HttpGet("pagedFiltered", Name = "[controller]_[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<PagedResult<UserModel>>> GetPagedFiltered([FromQuery] UserFilterModel filter)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                var result = await _userService.GetPagedFilteredAsync(filter).ConfigureAwait(false);
+
+                if (result != null)
+                {
+                    return Ok(result);
+                }
+                else
+                {
+                    return NotFound();
                 }
             }
         }

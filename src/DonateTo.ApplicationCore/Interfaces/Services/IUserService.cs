@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DonateTo.ApplicationCore.Interfaces.Services
 {
-    public interface IUserService : IGetService<UserModel, BaseFilterModel>
+    public interface IUserService : IGetService<UserModel, UserFilterModel>
     {
         /// <summary>
         /// Get a list of User from an spesific Organization Id.

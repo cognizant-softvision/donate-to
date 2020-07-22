@@ -1,69 +1,133 @@
-import { Component } from '@angular/core';
-import { ColumnItem, DataItem } from './../../shared/models';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NzTableQueryParams } from 'ng-zorro-antd';
+import { OrganizationFilter } from 'src/app/shared/models/filters/organization-filter';
+import { OrganizationModel } from './../../shared/models';
+import { OrganizationSandbox } from './organization-sandbox';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-organization-admin',
   templateUrl: './organization.component.html',
   styleUrls: ['./organization.component.css'],
 })
-export class OrganizationComponent {
-  constructor(protected router: Router) {}
+export class OrganizationComponent implements OnInit, OnDestroy {
+  private subscriptions: Subscription[] = [];
+  organizationList: OrganizationModel[] = [];
+  organizationFilter: OrganizationFilter;
+  total = 0;
+  pageSize = 10;
+  pageIndex = 1;
+  searchNameValue = '';
+  searchDescriptionValue = '';
+  searchContactNameValue = '';
+  nameVisible = false;
+  descriptionVisible = false;
+  contactNameVisible = false;
+  failedStatus = false;
+  successStatus = false;
 
-  listOfColumns: ColumnItem[] = [
-    {
-      name: 'Admin.Name',
-      sortFn: (a: DataItem, b: DataItem) => a.name.localeCompare(b.name),
-      filterMultiple: true,
-      listOfFilter: [
-        { text: 'Joe', value: 'Joe' },
-        { text: 'Jim', value: 'Jim' },
-      ],
-      filterFn: (list: string[], item: DataItem) => list.some((name) => item.name.indexOf(name) !== -1),
-    },
-    {
-      name: 'Admin.Organization.Title',
-      sortFn: (a: DataItem, b: DataItem) => a.organization.localeCompare(b.organization),
-      filterMultiple: true,
-      listOfFilter: [
-        { text: 'Cognizant Softvision', value: 'Cognizant Softvision' },
-        { text: 'Cognizant Softvision', value: 'Cognizant Softvision' },
-      ],
-      filterFn: (list: string[], item: DataItem) => list.some((organization) => item.name.indexOf(organization) !== -1),
-    },
-    {
-      name: 'Admin.Email',
-      sortFn: (a: DataItem, b: DataItem) => a.email.length - b.email.length,
-      filterMultiple: false,
-      listOfFilter: [
-        { text: 'user@donateto.com', value: 'user@donateto.com' },
-        { text: 'user2@donateto.com', value: 'user2@donateto.com' },
-      ],
-      filterFn: (list: string[], item: DataItem) => list.some((email) => item.name.indexOf(email) !== -1),
-    },
-    {
-      name: 'Admin.Action',
-    },
-  ];
+  constructor(private organizationSandbox: OrganizationSandbox, public router: Router) {}
 
-  listOfData = [
-    {
-      key: '1',
-      name: 'John Brown',
-      organization: 'Cognizant Softvision',
-      email: 'user@donateto.com',
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      organization: 'Cognizant Softvision',
-      email: 'user2@donateto.com',
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      organization: 'Cognizant Softvision',
-      email: 'user3@donateto.com',
-    },
-  ];
+  ngOnInit(): void {
+    this.organizationFilter = {
+      ...this.organizationFilter,
+      pageSize: this.pageSize,
+      pageNumber: this.pageIndex,
+    };
+
+    this.subscriptions.push(
+      this.organizationSandbox.organizationsPagedFiltered$.subscribe((res) => {
+        this.total = res.rowCount;
+        this.organizationList = res.results;
+      })
+    );
+
+    this.subscriptions.push(
+      this.organizationSandbox.failAction$.subscribe((status) => {
+        this.failedStatus = status;
+      })
+    );
+
+    this.subscriptions.push(
+      this.organizationSandbox.loadAction$.subscribe((status) => {
+        this.successStatus = status;
+      })
+    );
+  }
+
+  onQueryParamsChange(params: NzTableQueryParams): void {
+    const { pageSize, pageIndex, sort, filter } = params;
+    const currentSort = sort.find((item) => item.value !== null);
+
+    this.organizationFilter = {
+      ...this.organizationFilter,
+      pageSize,
+      pageNumber: pageIndex,
+      orderBy: (currentSort && currentSort.key) || '',
+      orderDirection: (currentSort && currentSort.value) || '',
+      name: (filter && filter.find((f) => f.key === 'name')?.value) || '',
+      description: (filter && filter.find((f) => f.key === 'description')?.value) || '',
+      contactName: (filter && filter.find((f) => f.key === 'contactName')?.value) || '',
+    };
+
+    this.organizationSandbox.loadOrganizationsFilteredPaged(this.organizationFilter);
+  }
+
+  reset(): void {
+    this.searchNameValue = '';
+    this.searchDescriptionValue = '';
+    this.searchContactNameValue = '';
+    this.organizationFilter = {
+      ...this.organizationFilter,
+      name: this.searchNameValue,
+      description: this.searchDescriptionValue,
+      contactName: this.searchContactNameValue,
+    };
+    this.organizationSandbox.loadOrganizationsFilteredPaged(this.organizationFilter);
+  }
+
+  resetNameSearch(): void {
+    this.searchNameValue = '';
+    this.organizationFilter = { ...this.organizationFilter, name: this.searchNameValue };
+    this.organizationSandbox.loadOrganizationsFilteredPaged(this.organizationFilter);
+  }
+
+  resetDescriptionSearch(): void {
+    this.searchDescriptionValue = '';
+    this.organizationFilter = { ...this.organizationFilter, description: this.searchDescriptionValue };
+    this.organizationSandbox.loadOrganizationsFilteredPaged(this.organizationFilter);
+  }
+
+  resetContactNameSearch(): void {
+    this.searchContactNameValue = '';
+    this.organizationFilter = { ...this.organizationFilter, contactName: this.searchContactNameValue };
+    this.organizationSandbox.loadOrganizationsFilteredPaged(this.organizationFilter);
+  }
+
+  searchName(): void {
+    this.nameVisible = false;
+    this.organizationFilter = { ...this.organizationFilter, name: this.searchNameValue };
+    this.organizationSandbox.loadOrganizationsFilteredPaged(this.organizationFilter);
+  }
+
+  searchDescription(): void {
+    this.descriptionVisible = false;
+    this.organizationFilter = { ...this.organizationFilter, description: this.searchDescriptionValue };
+    this.organizationSandbox.loadOrganizationsFilteredPaged(this.organizationFilter);
+  }
+
+  searchContactName(): void {
+    this.contactNameVisible = false;
+    this.organizationFilter = { ...this.organizationFilter, contactName: this.searchContactNameValue };
+    this.organizationSandbox.loadOrganizationsFilteredPaged(this.organizationFilter);
+  }
+
+  ngOnDestroy(): void {
+    this.unregisterEvents();
+  }
+
+  private unregisterEvents() {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
 }

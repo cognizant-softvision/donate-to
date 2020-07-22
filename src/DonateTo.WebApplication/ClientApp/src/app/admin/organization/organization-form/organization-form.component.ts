@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import {
   AddressModel,
-  ContactModel,
-  OrganizationModel,
-  CountryModel,
-  StateModel,
   CityModel,
+  ContactModel,
+  CountryModel,
+  OrganizationModel,
+  StateModel,
 } from 'src/app/shared/models';
 import { OrganizationSandbox } from '../organization-sandbox';
 import { OrganizationStepGeneralInformationComponent } from './organization-step-general-information/organization-step-general-information.component';

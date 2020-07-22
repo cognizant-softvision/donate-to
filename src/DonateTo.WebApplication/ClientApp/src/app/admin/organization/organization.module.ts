@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { IconDefinition } from '@ant-design/icons-angular';
 import {
   NzButtonModule,
+  NzDatePickerModule,
   NzDividerModule,
+  NzDropDownModule,
   NzEmptyModule,
   NzFormModule,
   NzIconModule,
@@ -58,8 +60,9 @@ const ICONS: IconDefinition[] = [HomeOutline, InfoCircleOutline, UserOutline, Sm
     NzSelectModule,
     NzInputModule,
     NzDividerModule,
-    NzTableModule,
     NzStepsModule,
+    NzDatePickerModule,
+    NzDropDownModule,
 
     FormsModule,
     CommonModule,

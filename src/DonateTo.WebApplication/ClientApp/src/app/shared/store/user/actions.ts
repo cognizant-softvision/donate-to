@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { PageModel, UserModel } from '../../models';
+import { UserFilter } from '../../models/filters/user-filter';
 
 export const userOrganizationLink = createAction(
   '[User] Link user to organization',
@@ -30,18 +31,13 @@ export const updateUser = createAction('[User] Update', props<{ user: UserModel 
 export const updateUserSuccess = createAction('[User] Update success', props<{ user: UserModel }>());
 export const updateUserFailed = createAction('[User] Update failed');
 
-/*
-export const userOrganizationUnlink = createAction('[User] Unlink user to organization');
-export const userOrganizationUnlinkSuccess = createAction(
-  '[User] Unlink user to organization success',
-  props<{ user: number; organizations: number[] }>()
+export const loadUsersPagedFiltered = createAction(
+  '[User] Load items from server filtered and paged',
+  props<{ filter: UserFilter }>()
 );
-export const userOrganizationUnlinkFailed = createAction('[User] Unlink user to organization failed');
+export const loadUsersPagedFilteredSuccess = createAction(
+  '[Users] Load success',
+  props<{ pagedUsers: PageModel<UserModel> }>()
+);
 
-export const userOrganizationRetrieve = createAction('[User] Retrieve user organization');
-export const userOrganizationRetrieveSuccess = createAction(
-  '[User] Retrieve user organization success',
-  props<{ users: number[] }>()
-);
-export const userOrganizationRetrieveFailed = createAction('[User] Retrieve user organization failed');
-*/
+export const loadUsersPagedFilteredFailed = createAction('[User] Load failed');
