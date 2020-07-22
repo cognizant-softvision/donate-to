@@ -151,10 +151,15 @@
       <div class="range">
         <nz-date-picker
           [(ngModel)]="searchCreatedDateBeginValue"
-          [nzPlaceHolder]="'From'"
           class="from"
-        ></nz-date-picker>
-        <nz-date-picker [(ngModel)]="searchCreatedDateEndValue" [nzPlaceHolder]="'To'"></nz-date-picker>
+          nzPlaceHolder="{{ 'Admin.Donation.Table.CreatedFrom' | translate }}"
+        >
+        </nz-date-picker>
+        <nz-date-picker
+          [(ngModel)]="searchCreatedDateEndValue"
+          nzPlaceHolder="{{ 'Admin.Donation.Table.CreatedTo' | translate }}"
+        >
+        </nz-date-picker>
       </div>
       <button nz-button nzSize="small" nzType="primary" (click)="searchCreatedDate()" class="search-button">
         {{ 'Admin.Donation.Table.Search' | translate }}
@@ -170,8 +175,17 @@
   <div class="ant-table-filter-dropdown">
     <div class="search-box">
       <div class="range">
-        <nz-date-picker [(ngModel)]="searchFinishDateBeginValue" [nzPlaceHolder]="'From'" class="from"></nz-date-picker>
-        <nz-date-picker [(ngModel)]="searchFinishDateEndValue" [nzPlaceHolder]="'To'"></nz-date-picker>
+        <nz-date-picker
+          [(ngModel)]="searchFinishDateBeginValue"
+          class="from"
+          nzPlaceHolder="{{ 'Admin.Donation.Table.FinishFrom' | translate }}"
+        >
+        </nz-date-picker>
+        <nz-date-picker
+          [(ngModel)]="searchFinishDateEndValue"
+          nzPlaceHolder="{{ 'Admin.Donation.Table.FinishTo' | translate }}"
+        >
+        </nz-date-picker>
       </div>
       <button nz-button nzSize="small" nzType="primary" (click)="searchFinishDate()" class="search-button">
         {{ 'Admin.Donation.Table.Search' | translate }}
