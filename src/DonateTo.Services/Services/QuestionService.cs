@@ -7,6 +7,7 @@ using DonateTo.ApplicationCore.Models.Pagination;
 using LinqKit;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace DonateTo.Services
@@ -23,10 +24,37 @@ namespace DonateTo.Services
         }
 
         ///<inheritdoc cref="BaseService{Question, QuestionFilterModel}"/>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "<Pending>")]
+        public override PagedResult<Question> GetPagedFiltered(QuestionFilterModel filter)
+        {
+            var predicate = GetPredicate(filter);
+
+            return _questionRepository.GetPaged(filter.PageNumber, filter.PageSize, predicate, GetSort(filter));
+        }
+
+        ///<inheritdoc cref="BaseService{Question, QuestionFilterModel}"/>
         public override async Task<PagedResult<Question>> GetPagedFilteredAsync(QuestionFilterModel filter)
         {
-            var predicate = GetBasePredicate(filter);
+            var predicate = GetPredicate(filter);
+
+            return await _questionRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicate, GetSort(filter)).ConfigureAwait(false);
+        }
+
+        ///<inheritdoc cref="IQuestionService"/>
+        public async Task BulkUpdateAsync(IEnumerable<Question> updatedQuestions)
+        {
+            await _questionRepository.BulkUpdateAsync(updatedQuestions).ConfigureAwait(false);        
+        }
+
+        ///<inheritdoc cref="IQuestionService"/>
+        public void BulkUpdate(IEnumerable<Question> updatedQuestions)
+        {
+            _questionRepository.BulkUpdate(updatedQuestions);
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "<Pending>")]
+        protected override Expression<Func<Question, bool>> GetPredicate(QuestionFilterModel filter)
+        {
+            var predicate = base.GetPredicate(filter);
 
             if (!string.IsNullOrEmpty(filter.Label))
             {
@@ -43,18 +71,7 @@ namespace DonateTo.Services
                 predicate = predicate.And(p => p.ControlType.Name.Contains(filter.Type));
             }
 
-
-            return await _questionRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicate, GetSort(filter)).ConfigureAwait(false);
-        }
-
-        public async Task BulkUpdateAsync(IEnumerable<Question> updatedQuestions)
-        {
-            await _questionRepository.BulkUpdateAsync(updatedQuestions).ConfigureAwait(false);        
-        }
-
-        public void BulkUpdate(IEnumerable<Question> updatedQuestions)
-        {
-            _questionRepository.BulkUpdate(updatedQuestions);
+            return predicate;
         }
     }
 }

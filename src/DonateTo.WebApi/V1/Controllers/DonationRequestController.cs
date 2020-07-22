@@ -4,8 +4,6 @@ using DonateTo.ApplicationCore.Interfaces.Services;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
-using System;
-using System.Globalization;
 using Microsoft.Extensions.Primitives;
 using Microsoft.AspNetCore.Authorization;
 using DonateTo.WebApi.Common;
@@ -14,12 +12,12 @@ using DonateTo.ApplicationCore.Models.Filtering;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
-    ///<inheritdoc cref="BaseApiController{DonationRequest}"/>
+    ///<inheritdoc cref="BaseApiController{DonationRequest, DonationRequestFilterModel}"/>
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [Authorize]
-    public class DonationRequestController : BaseApiController<DonationRequest, BaseFilterModel>
+    public class DonationRequestController : BaseApiController<DonationRequest, DonationRequestFilterModel>
     {
         private readonly IDonationRequestService _donationRequestService;
         private readonly IUserService _userService;

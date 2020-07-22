@@ -248,7 +248,15 @@
         "Finishcolumn": "Finish Date",
         "Observationcolumn": "Observation",
         "Quantitycolumn": "Quantity",
-        "Categorycolumn": "Category"
+        "Categorycolumn": "Category",
+        "Action": "Action",
+        "Filtered": "Filtered",
+        "Search": "Search",
+        "Reset": "Reset",
+        "CreatedFrom": "From",
+        "CreatedTo": "To",
+        "FinishFrom": "From",
+        "FinishTo": "To"
       }
     },
     "User": {

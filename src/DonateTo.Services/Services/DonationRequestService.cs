@@ -3,17 +3,22 @@ using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models;
 using DonateTo.ApplicationCore.Models.Filtering;
+using DonateTo.ApplicationCore.Models.Pagination;
 using DonateTo.Mailer.Entities;
 using DonateTo.Mailer.Interfaces;
+using LinqKit;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace DonateTo.Services 
 {
-    public class DonationRequestService: BaseService<DonationRequest, BaseFilterModel>, IDonationRequestService
+    public class DonationRequestService: BaseService<DonationRequest, DonationRequestFilterModel>, IDonationRequestService
     {
         private readonly IMailSender _mailSender;
+        private readonly IRepository<DonationRequest> _donationRequestRepository;
         private readonly IOrganizationService _organizationService;
 
         public DonationRequestService(
@@ -23,6 +28,7 @@ namespace DonateTo.Services
             IUnitOfWork unitOfWork) : base(donationRequestRepository, unitOfWork)
         {
             _mailSender = mailSender;
+            _donationRequestRepository = donationRequestRepository;
             _organizationService = organizationService;
         }
 
@@ -56,6 +62,72 @@ namespace DonateTo.Services
             } 
 
             await _mailSender.SendMultipleAsync(messages).ConfigureAwait(false);
+        }
+
+        ///<inheritdoc cref="BaseService{DonationRequest, DonationRequestFilterModel}"/>
+        public override PagedResult<DonationRequest> GetPagedFiltered(DonationRequestFilterModel filter)
+        {
+            var predicate = GetPredicate(filter);
+
+            return _donationRequestRepository.GetPaged(filter.PageNumber, filter.PageSize, predicate, GetSort(filter));
+        }
+
+        ///<inheritdoc cref="BaseService{DonationRequest, DonationRequestFilterModel}"/>
+        public override async Task<PagedResult<DonationRequest>> GetPagedFilteredAsync(DonationRequestFilterModel filter)
+        {
+            var predicate = GetPredicate(filter);
+
+            return await _donationRequestRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicate, GetSort(filter)).ConfigureAwait(false);
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "<Pending>")]
+        protected override Expression<Func<DonationRequest, bool>> GetPredicate(DonationRequestFilterModel filter)
+        {
+            var predicate = base.GetPredicate(filter);
+
+            if (!string.IsNullOrEmpty(filter.Title))
+            {
+                predicate = predicate.And(p => p.Title.Contains(filter.Title));
+            }
+
+            if (!string.IsNullOrEmpty(filter.Observation))
+            {
+                predicate = predicate.And(p => p.Observation.Contains(filter.Observation));
+            }
+
+            if (!string.IsNullOrEmpty(filter.CreatedDateBegin))
+            {
+                if (DateTime.TryParse(filter.CreatedDateBegin, out var outDate))
+                {
+                    predicate = predicate.And(p => p.CreatedDate >= outDate);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(filter.CreatedDateEnd))
+            {
+                if (DateTime.TryParse(filter.CreatedDateEnd, out var outDate))
+                {
+                    predicate = predicate.And(p => p.CreatedDate <= outDate);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(filter.FinishDateBegin))
+            {
+                if (DateTime.TryParse(filter.FinishDateBegin, out var outDate))
+                {
+                    predicate = predicate.And(p => p.FinishDate >= outDate);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(filter.FinishDateEnd))
+            {
+                if (DateTime.TryParse(filter.FinishDateEnd, out var outDate))
+                {
+                    predicate = predicate.And(p => p.FinishDate <= outDate);
+                }
+            }
+
+            return predicate;
         }
     }
 }
