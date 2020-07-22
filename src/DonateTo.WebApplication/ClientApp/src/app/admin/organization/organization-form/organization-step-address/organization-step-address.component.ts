@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AddressModel } from 'src/app/shared/models';
 import { Subscription } from 'rxjs';
 import { OrganizationSandbox } from '../../organization-sandbox';
@@ -11,6 +11,7 @@ import { OrganizationSandbox } from '../../organization-sandbox';
 })
 export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
   addressStepForm: FormGroup;
+  addresses: AddressModel[] = [];
 
   @Output() isFormValid = new EventEmitter();
   @Input() addressModel: AddressModel;
@@ -105,5 +106,17 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
     addressModel.stateId = this.addressStepForm.value.stateId;
     addressModel.countryId = this.addressStepForm.value.countryId;
     return addressModel;
+  }
+
+  addAddress() {
+    if (this.isValidForm()) {
+      let newAddress = new AddressModel();
+      newAddress = this.getAddressFormModel();
+      this.addresses = [...this.addresses, newAddress];
+
+      this.addressStepForm.reset();
+      this.organizationSandbox.loadCountries();
+      console.log(this.addresses);
+    }
   }
 }

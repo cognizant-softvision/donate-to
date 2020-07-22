@@ -114,6 +114,15 @@
       "Create": {
         "Title": "Crear Organización"
       },
+      "Table": {
+        "Name": "Nombre",
+        "Description": "Descripción",
+        "ContactName": "Contacto",
+        "Action": "Acción",
+        "Search": "Buscar",
+        "Reset": "Reestablecer",
+        "Filtered": "Filtrada"
+      },
       "OrganizationSteps": {
         "GeneralInformation": {
           "GeneralInformation": "Información General",
@@ -121,6 +130,12 @@
           "Description": "Descripción",
           "RequiredOrganizationName": "Se requiere el nombre de la organización",
           "RequiredDescription": "Se requiere una descripción sobre la organización"
+        },
+        "Contact": {
+          "Contact": "Contacto"
+        },
+        "Address": {
+          "Address": "Dirección"
         }
       }
     },

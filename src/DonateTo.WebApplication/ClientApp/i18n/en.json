@@ -111,6 +111,15 @@
       "CreateConfirm": "Are you sure you want to create an organization?",
       "EditConfirm": "Are you sure you want to edit an organization?",
       "DeleteConfirmation": "Are you sure you want to delete this organization?",
+      "Table": {
+        "Name": "Name",
+        "Description": "Description",
+        "ContactName": "Contact Name",
+        "Action": "Action",
+        "Search": "Search",
+        "Reset": "Reset",
+        "Filtered": "Filtered"
+      },
       "Create": {
         "Title": "Create Organization"
       },
@@ -127,9 +136,6 @@
         },
         "Address": {
           "Address": "Address"
-        },
-        "Verify": {
-          "Verify": "Verify"
         }
       }
     },
