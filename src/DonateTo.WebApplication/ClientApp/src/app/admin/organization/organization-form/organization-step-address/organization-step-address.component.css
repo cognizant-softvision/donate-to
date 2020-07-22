@@ -1,5 +1,15 @@
-form {
+.form {
   max-width: 80em;
   margin: auto;
   margin-top: 4em;
+}
+
+.address-table {
+  width: 100%;
+}
+
+.add-address-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

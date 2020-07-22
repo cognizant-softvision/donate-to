@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AddressModel } from 'src/app/shared/models';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AddressModel, CityModel, ColumnItem, CountryModel, StateModel } from 'src/app/shared/models';
 import { Subscription } from 'rxjs';
 import { OrganizationSandbox } from '../../organization-sandbox';
+import { NzModalRef } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-organization-step-address',
@@ -15,8 +16,32 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
 
   @Output() isFormValid = new EventEmitter();
   @Input() addressModel: AddressModel;
+  @Output() outputFromChild: EventEmitter<any> = new EventEmitter<any>();
+
+  // @Input() addressesModel: AddressModel[];
 
   subscriptions: Subscription[] = [];
+  countries: CountryModel[] = [];
+  states: StateModel[] = [];
+  cities: CityModel[] = [];
+
+  tplModal?: NzModalRef;
+
+  listOfColumns: ColumnItem[] = [
+    { name: 'RequestDonation.DonationSteps.AddressStep.Street' },
+    { name: 'RequestDonation.DonationSteps.AddressStep.PostalCode' },
+    { name: 'RequestDonation.DonationSteps.AddressStep.Floor' },
+    { name: 'RequestDonation.DonationSteps.AddressStep.Appartment' },
+    { name: 'RequestDonation.DonationSteps.AddressStep.Country' },
+    { name: 'RequestDonation.DonationSteps.AddressStep.State' },
+    { name: 'RequestDonation.DonationSteps.AddressStep.City' },
+    { name: 'RequestDonation.DonationSteps.AddressStep.AdditionalInformation' },
+    { name: 'Admin.Action' },
+  ];
+
+  addressItemFormGroup = new FormGroup({
+    itemsFormControl: new FormControl(),
+  });
 
   constructor(private fb: FormBuilder, public organizationSandbox: OrganizationSandbox) {}
 
@@ -34,6 +59,7 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
 
     this.registerEvents();
     this.organizationSandbox.loadCountries();
+
     // if (this.addressModel.id && this.addressModel.cityId) {
     //   this.setStates();
     //   this.setCities();
@@ -63,6 +89,12 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
         this.isFormValid.emit({ value: this.isValidForm(), addressFormModel: this.getAddressFormModel() })
       )
     );
+
+    this.subscriptions.push(this.organizationSandbox.countries$.subscribe((countries) => (this.countries = countries)));
+
+    this.subscriptions.push(this.organizationSandbox.states$.subscribe((states) => (this.states = states)));
+
+    this.subscriptions.push(this.organizationSandbox.cities$.subscribe((cities) => (this.cities = cities)));
   }
 
   validateForm(): void {
@@ -97,14 +129,28 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
 
   getAddressFormModel(): AddressModel {
     const addressModel: AddressModel = new AddressModel();
+    const country: CountryModel = new CountryModel();
+    const state: StateModel = new StateModel();
+    const city: CityModel = new CityModel();
+
     addressModel.street = this.addressStepForm.value.street;
     addressModel.postalCode = this.addressStepForm.value.postalCode;
     addressModel.floor = this.addressStepForm.value.floor;
     addressModel.appartment = this.addressStepForm.value.appartment;
     addressModel.additionalInformation = this.addressStepForm.value.additionalInformation;
-    addressModel.cityId = this.addressStepForm.value.cityId;
-    addressModel.stateId = this.addressStepForm.value.stateId;
+
     addressModel.countryId = this.addressStepForm.value.countryId;
+    country.name = this.countries.find((x) => x.id === addressModel.countryId)?.name;
+    addressModel.country = country;
+
+    addressModel.stateId = this.addressStepForm.value.stateId;
+    state.name = this.states.find((x) => x.id === addressModel.stateId)?.name;
+    addressModel.state = state;
+
+    addressModel.cityId = this.addressStepForm.value.cityId;
+    city.name = this.cities.find((x) => x.id === addressModel.cityId)?.name;
+    addressModel.city = city;
+
     return addressModel;
   }
 
@@ -115,8 +161,6 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
       this.addresses = [...this.addresses, newAddress];
 
       this.addressStepForm.reset();
-      this.organizationSandbox.loadCountries();
-      console.log(this.addresses);
     }
   }
 }

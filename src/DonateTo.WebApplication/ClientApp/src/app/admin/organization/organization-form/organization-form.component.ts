@@ -41,6 +41,7 @@ export class OrganizationFormComponent implements OnInit, OnDestroy {
   generalInformationModel: OrganizationModel = new OrganizationModel();
   contactModel: ContactModel = new ContactModel();
   addressModel: AddressModel = new AddressModel();
+  addresses: AddressModel[] = [];
 
   _isGeneralInformationStepReady = false;
   _isContactStepReady = false;
@@ -78,6 +79,7 @@ export class OrganizationFormComponent implements OnInit, OnDestroy {
 
   done(): void {
     this.organizationToSubmit = this.createOrganization();
+    // save to database
   }
 
   changeStatus() {
@@ -166,9 +168,36 @@ export class OrganizationFormComponent implements OnInit, OnDestroy {
     const contact = new ContactModel();
     const address = new AddressModel();
     let addresses: AddressModel[] = [];
-    console.log('General Information', this.generalInformationModel);
-    console.log('Contact', this.contactModel);
-    console.log('Address', this.addressModel);
+    let addressesFromModel: AddressModel[] = [];
+    addressesFromModel = this.organizationStepAddressComponent.addresses;
+
+    addressesFromModel.forEach((a) => {
+      const newAddress = new AddressModel();
+      const country = new CountryModel();
+      const state = new StateModel();
+      const city = new CityModel();
+
+      country.name = a.country?.name;
+      state.name = a.state?.name;
+      city.name = a.city?.name;
+
+      newAddress.street = a.street;
+      newAddress.postalCode = a.postalCode;
+      newAddress.floor = a.postalCode;
+      newAddress.appartment = a.appartment;
+      newAddress.additionalInformation = a.additionalInformation;
+
+      newAddress.country = country;
+      newAddress.countryId = a.countryId;
+      newAddress.stateId = a.stateId;
+      newAddress.state = a.state;
+      newAddress.cityId = a.cityId;
+      newAddress.city = a.city;
+      newAddress.contact = a.contact;
+      newAddress.contactId = a.contactId;
+
+      addresses = [...addresses, newAddress];
+    });
 
     contact.firstName = this.contactModel.firstName;
     contact.lastName = this.contactModel.lastName;
@@ -177,31 +206,11 @@ export class OrganizationFormComponent implements OnInit, OnDestroy {
     contact.phoneNumber = this.contactModel.phoneNumber;
     contact.position = this.contactModel.position;
 
-    const country = new CountryModel();
-    const state = new StateModel();
-    const city = new CityModel();
-    address.street = this.addressModel.street;
-    address.postalCode = this.addressModel.postalCode;
-    address.floor = this.addressModel.postalCode;
-    address.appartment = this.addressModel.appartment;
-    address.additionalInformation = this.addressModel.additionalInformation;
-
-    address.countryId = this.addressModel.countryId;
-    address.country = this.addressModel.country;
-    address.stateId = this.addressModel.stateId;
-    address.state = this.addressModel.state;
-    address.cityId = this.addressModel.cityId;
-    address.city = this.addressModel.city;
-    address.contact = this.addressModel.contact;
-    address.contactId = this.addressModel.contactId;
-    addresses = [...addresses, address];
-
     organization.name = this.generalInformationModel.name;
     organization.description = this.generalInformationModel.description;
     organization.contact = contact;
     organization.addresses = addresses;
 
-    console.log('ORGANIZATION TO CREATE', organization);
     return organization;
   }
 }
