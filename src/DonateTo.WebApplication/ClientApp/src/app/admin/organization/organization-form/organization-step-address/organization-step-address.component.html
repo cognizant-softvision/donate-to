@@ -8,6 +8,7 @@
         nz-input
         formControlName="street"
         placeholder="{{ 'RequestDonation.DonationSteps.AddressStep.StreetPlaceholder' | translate }}"
+        [(ngModel)]="street"
       />
       <ng-template #streetErrorTpl let-control>
         <ng-container *ngIf="control.hasError('required')">
@@ -26,6 +27,7 @@
         nz-input
         formControlName="postalCode"
         placeholder="{{ 'RequestDonation.DonationSteps.AddressStep.PostalCodePlaceHolder' | translate }}"
+        [(ngModel)]="postalCode"
       />
       <ng-template #postalCodeErrorTpl let-control>
         <ng-container *ngIf="control.hasError('required')">
@@ -43,6 +45,7 @@
         type="number"
         formControlName="floor"
         placeholder="{{ 'RequestDonation.DonationSteps.AddressStep.FloorPlaceHolder' | translate }}"
+        [(ngModel)]="floor"
       />
     </nz-form-control>
   </nz-form-item>
@@ -56,6 +59,7 @@
         nz-input
         formControlName="appartment"
         placeholder="{{ 'RequestDonation.DonationSteps.AddressStep.AppartmentPlaceHolder' | translate }}"
+        [(ngModel)]="appartment"
       />
     </nz-form-control>
   </nz-form-item>
@@ -70,6 +74,7 @@
         nzAllowClear
         nzPlaceHolder="{{ 'RequestDonation.DonationSteps.AddressStep.CountryPlaceHolder' | translate }}"
         formControlName="countryId"
+        [(ngModel)]="country"
         (ngModelChange)="setStates()"
       >
         <nz-option
@@ -97,6 +102,7 @@
         nzAllowClear
         nzPlaceHolder="{{ 'RequestDonation.DonationSteps.AddressStep.StatePlaceHolder' | translate }}"
         formControlName="stateId"
+        [(ngModel)]="state"
         (ngModelChange)="setCities()"
       >
         <nz-option
@@ -122,6 +128,7 @@
       <nz-select
         nzShowSearch
         nzAllowClear
+        [(ngModel)]="city"
         nzPlaceHolder="{{ 'RequestDonation.DonationSteps.AddressStep.CityPlaceHolder' | translate }}"
         formControlName="cityId"
       >
@@ -192,7 +199,7 @@
               <td>{{ item.city?.name }}</td>
               <td>{{ item.additionalInformation }}</td>
               <td>
-                <a>{{ 'Admin.Organization.OrganizationSteps.Address.Edit' | translate }}</a>
+                <a (click)="editAddress(item)">{{ 'Admin.Organization.OrganizationSteps.Address.Edit' | translate }}</a>
                 <nz-divider nzType="vertical"></nz-divider>
                 <a (click)="removeAddress(item)">{{
                   'Admin.Organization.OrganizationSteps.Address.Delete' | translate

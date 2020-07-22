@@ -41,6 +41,14 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
     itemsFormControl: new FormControl(),
   });
 
+  street = '';
+  postalCode = '';
+  floor = '';
+  appartment = '';
+  country = 0;
+  state = 0;
+  city = 0;
+
   constructor(private fb: FormBuilder, public organizationSandbox: OrganizationSandbox) {}
 
   ngOnInit(): void {
@@ -166,5 +174,16 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
     this.addresses = this.addresses.filter((a) => a !== item);
   }
 
-  editAddress(item: AddressModel) {}
+  editAddress(item: AddressModel) {
+    this.removeAddress(item);
+
+    console.log('ITEM', item);
+    this.street = item.street;
+    this.postalCode = item.postalCode;
+    this.floor = item.floor;
+    this.appartment = item.appartment;
+    this.country = item.countryId;
+    this.state = item.stateId;
+    this.city = item.cityId;
+  }
 }
