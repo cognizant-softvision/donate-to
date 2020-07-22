@@ -23,3 +23,23 @@ export const loadOrganizationsByUser = createAction(
   '[Organization] Load items from server by user',
   props<{ userId: number }>()
 );
+
+export const addOrganization = createAction(
+  '[Organization] Add item to server',
+  props<{ newOrganization: OrganizationModel }>()
+);
+export const addOrganizationsSuccess = createAction(
+  '[Organization] Add success',
+  props<{ organization: OrganizationModel }>()
+);
+export const addOrganizationsFailed = createAction('[Organization] Add failed');
+
+export const updateOrganization = createAction(
+  '[Organization] Update item to server',
+  props<{ updatedOrganization: OrganizationModel }>()
+);
+export const updateOrganizationsSuccess = createAction(
+  '[Organization] Update success',
+  props<{ organization: OrganizationModel }>()
+);
+export const updateOrganizationsFailed = createAction('[Organization] Update failed');
