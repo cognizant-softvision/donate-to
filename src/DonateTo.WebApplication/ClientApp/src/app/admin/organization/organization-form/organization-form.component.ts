@@ -166,7 +166,6 @@ export class OrganizationFormComponent implements OnInit, OnDestroy {
   createOrganization(): OrganizationModel {
     const organization = new OrganizationModel();
     const contact = new ContactModel();
-    const address = new AddressModel();
     let addresses: AddressModel[] = [];
     let addressesFromModel: AddressModel[] = [];
     addressesFromModel = this.organizationStepAddressComponent.addresses;

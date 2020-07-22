@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import * as store from 'src/app/shared/store';
 import { Subscription } from 'rxjs';
 import { OrganizationFilter } from 'src/app/shared/models/filters/organization-filter';
+import { OrganizationModel } from 'src/app/shared/models';
 
 @Injectable()
 export class OrganizationSandbox extends Sandbox implements OnDestroy {
@@ -52,6 +53,10 @@ export class OrganizationSandbox extends Sandbox implements OnDestroy {
 
   public loadOrganizationsFilteredPaged(organizationFilter: OrganizationFilter): void {
     this.appState$.dispatch(store.fromOrganization.loadOrganizationsPagedFiltered({ organizationFilter }));
+  }
+
+  updateOrganization(organization: OrganizationModel): void {
+    this.appState$.dispatch(store.fromOrganization.addOrganization({ organization }));
   }
 
   /**

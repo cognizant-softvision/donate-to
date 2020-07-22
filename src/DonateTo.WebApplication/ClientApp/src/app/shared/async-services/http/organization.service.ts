@@ -37,4 +37,12 @@ export class OrganizationService extends BaseHttpClientService<OrganizationModel
   getByUser(userId: number): Observable<OrganizationModel[]> {
     return this.httpClient.get<OrganizationModel[]>(`${this.url}/${this.endpoint}/GetByUser?userId=${userId}`);
   }
+
+  createOrganization(organization: OrganizationModel): Observable<OrganizationModel> {
+    return this.httpClient.put<OrganizationModel>(
+      `${this.url}/${this.endpoint}`,
+      JSON.stringify(organization),
+      this.httpOptions
+    );
+  }
 }

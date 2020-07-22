@@ -4,6 +4,9 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { OrganizationService } from '../../async-services/http/organization.service';
 import {
+  addOrganization,
+  addOrganizationFailed,
+  addOrganizationSuccess,
   loadOrganizations,
   loadOrganizationsByUser,
   loadOrganizationsFailed,
@@ -44,6 +47,17 @@ export class OrganizationEffects {
       this.organizationService.getByUser(userId).pipe(
         map((organizations) => loadOrganizationsSuccess({ organizations })),
         catchError(() => of(loadOrganizationsFailed()))
+      )
+    )
+  );
+
+  @Effect()
+  addOrganization$: Observable<{}> = this.actions$.pipe(
+    ofType(addOrganization),
+    switchMap(({ organization }) =>
+      this.organizationService.createOrganization(organization).pipe(
+        map(() => addOrganizationSuccess({ organization })),
+        catchError(() => of(addOrganizationFailed()))
       )
     )
   );
