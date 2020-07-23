@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthSandbox } from '../../../../shared/auth/auth.sandbox';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { IconType } from 'src/app/shared/enum/iconTypes';
 
 @Component({
   selector: 'app-admin-layout',
@@ -39,13 +40,13 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
       this.authSandbox.isSuperAdmin.subscribe((isSuperAdmin) => {
         this.isSuperAdmin = isSuperAdmin;
         this.menus = [
-          { title: 'Admin.Menu.Title.Donation', url: './donations', iconType: 'heart', show: true },
-          { title: 'Admin.Menu.Title.User', url: './user', iconType: 'team', show: true },
-          { title: 'Admin.Menu.Title.Organization', url: './organizations', iconType: 'profile', show: true },
+          { title: 'Admin.Menu.Title.Donation', url: './donations', iconType: IconType.Heart, show: true },
+          { title: 'Admin.Menu.Title.User', url: './user', iconType: IconType.Team, show: true },
+          { title: 'Admin.Menu.Title.Organization', url: './organizations', iconType: IconType.Profile, show: true },
           {
             title: 'Admin.Menu.Title.Priority-questions',
             url: './priority-questions',
-            iconType: 'star',
+            iconType: IconType.Star,
             show: this.isSuperAdmin,
           },
         ];
