@@ -33,3 +33,13 @@ export const addOrganizationSuccess = createAction(
   props<{ organization: OrganizationModel }>()
 );
 export const addOrganizationFailed = createAction('[Organization] Add failed');
+
+export const loadOrganization = createAction(
+  '[Organization] Load organization from server',
+  props<{ organizationId: number }>()
+);
+export const loadOrganizationSuccess = createAction(
+  '[Organization] Load organization success',
+  props<{ organization: OrganizationModel }>()
+);
+export const loadOrganizationFailed = createAction('[Organization] Load organization failed');

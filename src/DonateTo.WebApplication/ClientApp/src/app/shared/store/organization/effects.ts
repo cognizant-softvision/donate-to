@@ -7,6 +7,8 @@ import {
   addOrganization,
   addOrganizationFailed,
   addOrganizationSuccess,
+  loadOrganization,
+  loadOrganizationFailed,
   loadOrganizations,
   loadOrganizationsByUser,
   loadOrganizationsFailed,
@@ -14,6 +16,7 @@ import {
   loadOrganizationsPagedFilteredFailed,
   loadOrganizationsPagedFilteredSuccess,
   loadOrganizationsSuccess,
+  loadOrganizationSuccess,
 } from './actions';
 
 @Injectable()
@@ -25,6 +28,17 @@ export class OrganizationEffects {
       this.organizationService.getPagedFiltered(organizationFilter).pipe(
         map((pagedOrganizations) => loadOrganizationsPagedFilteredSuccess({ pagedOrganizations })),
         catchError(() => of(loadOrganizationsPagedFilteredFailed()))
+      )
+    )
+  );
+
+  @Effect()
+  loadOrganization$: Observable<{}> = this.actions$.pipe(
+    ofType(loadOrganization),
+    switchMap((data: any) =>
+      this.organizationService.getOrganization(data.organizationId).pipe(
+        map((organization) => loadOrganizationSuccess({ organization })),
+        catchError(() => of(loadOrganizationFailed()))
       )
     )
   );

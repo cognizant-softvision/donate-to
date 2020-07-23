@@ -45,4 +45,8 @@ export class OrganizationService extends BaseHttpClientService<OrganizationModel
       this.httpOptions
     );
   }
+
+  getOrganization(id: number): Observable<OrganizationModel> {
+    return this.getById(id);
+  }
 }

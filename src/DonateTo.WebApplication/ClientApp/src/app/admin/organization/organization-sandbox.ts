@@ -12,6 +12,7 @@ export class OrganizationSandbox extends Sandbox implements OnDestroy {
   countries$ = this.appState$.select(store.fromAddress.getCountries);
   states$ = this.appState$.select(store.fromAddress.getStates);
   cities$ = this.appState$.select(store.fromAddress.getCities);
+  organization$ = this.appState$.select(store.fromOrganization.getOrganization);
   organizations$ = this.appState$.select(store.fromOrganization.getAllOrganizations);
   failAction$ = this.appState$.select(store.fromOrganization.getFailedStatus);
   loadAction$ = this.appState$.select(store.fromOrganization.getLoadingStatus);
@@ -55,9 +56,23 @@ export class OrganizationSandbox extends Sandbox implements OnDestroy {
     this.appState$.dispatch(store.fromOrganization.loadOrganizationsPagedFiltered({ organizationFilter }));
   }
 
+  /**
+   * Load organization by Id from the server
+   */
+  public loadOrganization(organizationId: number): void {
+    this.appState$.dispatch(store.fromOrganization.loadOrganization({ organizationId }));
+  }
+
   updateOrganization(organization: OrganizationModel): void {
     this.appState$.dispatch(store.fromOrganization.addOrganization({ organization }));
   }
+
+  /**
+   * Adds donationRequests to the server
+   */
+  // public createOrganization(organization: DonationRequestModel): void {
+  //   this.appState$.dispatch(store.fromDonationRequest.addDonationRequest({ donationRequest }));
+  // }
 
   /**
    * Unsubscribes from events
