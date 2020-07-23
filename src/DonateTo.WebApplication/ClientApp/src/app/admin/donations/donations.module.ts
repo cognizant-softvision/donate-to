@@ -30,6 +30,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { UnitEffects } from 'src/app/shared/store/unit';
 import {
   NzDatePickerModule,
+  NzDropDownModule,
   NzEmptyModule,
   NzFormModule,
   NzIconModule,
@@ -68,6 +69,7 @@ const ICONS: IconDefinition[] = [PlusOutline];
     NzSelectModule,
     NzInputModule,
     NzDividerModule,
+    NzDropDownModule,
     NzTableModule,
     EffectsModule.forFeature([OrganizationEffects, AddressEffects, UnitEffects, CategoryEffects, StatusEffects]),
     StoreModule.forFeature(fromOrganization.organizationFeatureKey, fromOrganization.reducer),
