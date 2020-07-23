@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DonateTo.ApplicationCore.Interfaces.Services
 {
-    public interface IDonationRequestService : IBaseService<DonationRequest, BaseFilterModel>
+    public interface IDonationRequestService : IBaseService<DonationRequest, DonationRequestFilterModel>
     {
         /// <summary>
         /// Send Created request info mail to all users of the organization

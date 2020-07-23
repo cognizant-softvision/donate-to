@@ -4,7 +4,7 @@ import { QuestionsSandbox } from '../questions-sandbox';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { Subscription } from 'rxjs';
 import { ColumnItem, QuestionModel } from 'src/app/shared/models';
-import { ControlType, ControlType2LabelMapping } from 'src/app/shared/enum/controlTypes';
+import { ControlType2LabelMapping } from 'src/app/shared/enum/controlTypes';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { QuestionOption } from 'src/app/shared/models/question-option.modal';
 import { ControlTypeModel } from 'src/app/shared/models/control-type.model';
@@ -28,7 +28,6 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   isErrorModalActive = false;
   tplModal?: NzModalRef;
   public isOption = false;
-  form!: FormGroup;
   optionsArray = new FormArray([]);
 
   label = '';
@@ -58,7 +57,6 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     orderFormControl: new FormControl('', Validators.required),
     controlTypeFormControl: new FormControl('', Validators.required),
     defaultValueFormControl: new FormControl(''),
-    itemsFormControl: new FormControl(),
   });
 
   constructor(
@@ -72,7 +70,6 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     this.questionSandbox.loadControlTypes();
     this.questionSandbox.loadQuestions();
     this.registerEvents();
-    this.form = this.formBuilder.group({});
     this.addField();
     this.addField();
   }
@@ -103,17 +100,6 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     );
   }
 
-  resetForm(): void {
-    this.label = undefined;
-    this.placeholder = undefined;
-    this.weight = undefined;
-    this.order = undefined;
-    this.defaultValue = undefined;
-    this.controlTypeId = undefined;
-    this.questionId = 0;
-    this.isEdit = false;
-  }
-
   handleRequestResult() {
     if (this.isSubmited) {
       if (!this.loadingStatus) {
@@ -125,28 +111,24 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
 
   createQuestions() {
     this.isSubmited = true;
-    this.questions.forEach((question) => {
-      question.controlType = undefined;
-    });
-    this.questionSandbox.updateQuestions(this.questions);
+    this.validateFormGroup(this.questionItemFormGroup);
+    if (this.questionItemFormGroup.valid) {
+      this.questions.forEach((question) => {
+        question.controlType = undefined;
+      });
+      this.questionSandbox.updateQuestions(this.questions);
+    }
   }
 
   goBack() {
     this.router.navigate(['/admin/priority-questions']);
   }
 
-  private validateFormGroup(formGroup: FormGroup, optionGroup: FormGroup) {
+  private validateFormGroup(formGroup: FormGroup) {
     for (const i in formGroup.controls) {
       if (formGroup.controls.hasOwnProperty(i)) {
         formGroup.controls[i].markAsDirty();
         formGroup.controls[i].updateValueAndValidity();
-      }
-    }
-
-    for (const i in optionGroup.controls) {
-      if (this.form.controls.hasOwnProperty(i)) {
-        this.form.controls[i].markAsDirty();
-        this.form.controls[i].updateValueAndValidity();
       }
     }
   }
@@ -163,7 +145,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   }
 
   addQuestion() {
-    this.validateFormGroup(this.questionItemFormGroup, this.form);
+    this.validateFormGroup(this.questionItemFormGroup);
     if (this.questionItemFormGroup.valid) {
       const questionItem = new QuestionModel();
       let options: QuestionOption[] = [];
@@ -205,8 +187,6 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
         questionItem.createdDate = questionSavedItem.createdDate;
         questionItem.updateBy = questionSavedItem.updateBy;
         questionItem.updateDate = questionSavedItem.updateDate;
-
-        this.resetForm();
       } else {
         questionItem.label = this.questionItemFormGroup.controls.labelFormControl.value;
         questionItem.placeholder = this.questionItemFormGroup.controls.placeholderFormControl.value;
@@ -242,6 +222,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
           this.questions = [...this.questions, questionItem];
         }
       }
+      this.questionItemFormGroup.reset();
     }
   }
 

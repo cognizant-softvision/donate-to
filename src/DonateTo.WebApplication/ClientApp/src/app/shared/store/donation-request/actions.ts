@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { DonationRequestModel, PageModel } from '../../models';
+import { DonationRequestFilter } from '../../models/filters/donation-request-filter';
 
 export const addDonationRequest = createAction(
   '[Donation Request] Add',
@@ -69,3 +70,15 @@ export const loadDonationRequestsSearchPagedSuccess = createAction(
 export const loadDonationRequestsSearchPagedFailed = createAction('[Donation Request] Load paged search result failed');
 
 export const validateDonateionRequestForm = createAction('[Donation Request] validates the Donation Request Form');
+
+export const loadDonationRequestsPagedFiltered = createAction(
+  '[DonationRequest] Load items from server paged and filtered',
+  props<{ donationRequestFilter: DonationRequestFilter }>()
+);
+
+export const loadDonationRequestsPagedFilteredSuccess = createAction(
+  '[DonationRequest] Load success',
+  props<{ pagedDonationRequests: PageModel<DonationRequestModel> }>()
+);
+
+export const loadDonationRequestsPagedFilteredFailed = createAction('[DonationRequest] Load failed');

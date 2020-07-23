@@ -248,7 +248,15 @@
         "Finishcolumn": "Fecha Fin",
         "Observationcolumn": "Observación",
         "Quantitycolumn": "Cantidad",
-        "Categorycolumn": "Categorías"
+        "Categorycolumn": "Categorías",
+        "Action": "Action",
+        "Filtered": "Filtrada",
+        "Search": "Buscar",
+        "Reset": "Reestablecer",
+        "CreatedFrom": "Desde",
+        "CreatedTo": "Hasta",
+        "FinishFrom": "Desde",
+        "FinishTo": "Hasta"
       }
     },
     "User": {
@@ -265,9 +273,6 @@
         "Search": "Buscar",
         "Reset": "Reestablecer"
       }
-    },
-    "Organization": {
-      "Title": "Organización"
     },
     "PriorityQuestion": {
       "Title": "Prioridad de preguntas",
@@ -333,6 +338,19 @@
           "Value": "Valor",
           "Weight": "Peso"
         }
+      }
+    },
+    "Organization": {
+      "Title": "Organizaciones",
+      "CreateConfirm": "Estas seguro que quieres crear una organización?",
+      "Table": {
+        "Name": "Nombre",
+        "Description": "Descripción",
+        "ContactName": "Contacto",
+        "Action": "Acción",
+        "Search": "Buscar",
+        "Reset": "Reestablecer",
+        "Filtered": "Filtrada"
       }
     },
     "ClearFilter": "Limpiar Filtro",
