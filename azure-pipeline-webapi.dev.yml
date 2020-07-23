@@ -6,8 +6,8 @@
 trigger:
   - develop
 
-pool: DiegoLocalMachine
-#  vmImage: "DiegoLocalMachine"
+pool:
+  vmImage: "windows-latest"
 
 variables:
   #  solution: '**/*.sln'

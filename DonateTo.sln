@@ -28,9 +28,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		ApplyMigrations.ps1 = ApplyMigrations.ps1
-		azure-pipeline-identityserver.yml = azure-pipeline-identityserver.yml
-		azure-pipeline-webapi.yml = azure-pipeline-webapi.yml
-		azure-pipeline-webapplication.yml = azure-pipeline-webapplication.yml
+		azure-pipeline-identityserver.dev.yml = azure-pipeline-identityserver.dev.yml
+		azure-pipeline-identityserver.qa.yml = azure-pipeline-identityserver.qa.yml
+		azure-pipeline-webapi.dev.yml = azure-pipeline-webapi.dev.yml
+		azure-pipeline-webapi.qa.yml = azure-pipeline-webapi.qa.yml
+		azure-pipeline-webapplication.dev.yml = azure-pipeline-webapplication.dev.yml
+		azure-pipeline-webapplication.qa.yml = azure-pipeline-webapplication.qa.yml
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
