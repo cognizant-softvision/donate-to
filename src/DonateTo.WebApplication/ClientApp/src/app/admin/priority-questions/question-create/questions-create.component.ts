@@ -70,7 +70,6 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     this.questionSandbox.loadControlTypes();
     this.questionSandbox.loadQuestions();
     this.registerEvents();
-    // this.form = this.formBuilder.group({});
     this.addField();
     this.addField();
   }
