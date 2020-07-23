@@ -56,11 +56,11 @@ export class OrganizationSandbox extends Sandbox implements OnDestroy {
   }
 
   public addOrganization(organization: OrganizationModel): void {
-    this.appState$.dispatch(store.fromOrganization.addOrganization({ organization }));
+    this.appState$.dispatch(store.fromOrganization.addOrganization({ newOrganization: organization }));
   }
 
   public updateOrganization(organization: OrganizationModel): void {
-    this.appState$.dispatch(store.fromOrganization.updateOrganization({ organization }));
+    this.appState$.dispatch(store.fromOrganization.updateOrganization({ updatedOrganization: organization }));
   }
 
   /**
