@@ -38,6 +38,8 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   controlTypeId = 0;
   questionId = 0;
   isEdit = false;
+  isQuestionsValid = true;
+  requiredWeight = 100;
 
   listOfColumns: ColumnItem[] = [
     { name: 'Admin.PriorityQuestion.Table.LabelColumn' },
@@ -111,13 +113,17 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
 
   createQuestions() {
     this.isSubmited = true;
-    this.validateFormGroup(this.questionItemFormGroup);
-    if (this.questionItemFormGroup.valid) {
+    this.validateQuestions();
+    if (this.isQuestionsValid) {
       this.questions.forEach((question) => {
         question.controlType = undefined;
       });
       this.questionSandbox.updateQuestions(this.questions);
     }
+  }
+
+  validateQuestions() {
+    this.isQuestionsValid = this.questions.length > 0 && this.sumWeight() === this.requiredWeight;
   }
 
   goBack() {
@@ -273,12 +279,6 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   }
 
   optionsWeight(options: QuestionOption[]): boolean {
-    const totalWeight = options.reduce((acc, cur) => acc + cur.weight, 0);
-
-    if (totalWeight !== 100) {
-      return false;
-    }
-
-    return true;
+    return options.reduce((acc, cur) => acc + cur.weight, 0) === this.requiredWeight;
   }
 }
