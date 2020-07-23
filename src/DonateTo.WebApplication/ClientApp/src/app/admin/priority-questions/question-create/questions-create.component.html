@@ -121,7 +121,7 @@
               </nz-select>
             </nz-form-control>
           </nz-form-item>
-          <nz-form-item *ngIf="controlTypeId > 1">
+          <nz-form-item>
             <nz-checkbox-wrapper>
               <nz-form-item *ngFor="let o of optionsArray?.controls; index as i">
                 <ng-container [formGroup]="o">
