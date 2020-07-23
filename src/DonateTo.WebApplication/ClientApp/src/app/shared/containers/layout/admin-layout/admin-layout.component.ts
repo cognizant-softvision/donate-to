@@ -10,12 +10,9 @@ import { Router } from '@angular/router';
   encapsulation: ViewEncapsulation.None,
 })
 export class AdminLayoutComponent implements OnInit, OnDestroy {
-  menus = [
-    { title: 'Admin.Menu.Title.Donation', url: './donations', iconType: 'heart' },
-    { title: 'Admin.Menu.Title.User', url: './user', iconType: 'team' },
-    { title: 'Admin.Menu.Title.Organization', url: './organizations', iconType: 'profile' },
-    { title: 'Admin.Menu.Title.Priority-questions', url: './priority-questions', iconType: 'star' },
-  ];
+  isSuperAdmin: boolean;
+
+  menus: Array<{ title: string; url: string; iconType: string; show: boolean }> = [];
 
   subscriptions: Subscription[] = [];
 
@@ -35,6 +32,23 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
         if (!isAdmin) {
           this.router.navigate(['']);
         }
+      })
+    );
+
+    this.subscriptions.push(
+      this.authSandbox.isSuperAdmin.subscribe((isSuperAdmin) => {
+        this.isSuperAdmin = isSuperAdmin;
+        this.menus = [
+          { title: 'Admin.Menu.Title.Donation', url: './donations', iconType: 'heart', show: true },
+          { title: 'Admin.Menu.Title.User', url: './user', iconType: 'team', show: true },
+          { title: 'Admin.Menu.Title.Organization', url: './organizations', iconType: 'profile', show: true },
+          {
+            title: 'Admin.Menu.Title.Priority-questions',
+            url: './priority-questions',
+            iconType: 'star',
+            show: this.isSuperAdmin,
+          },
+        ];
       })
     );
   }
