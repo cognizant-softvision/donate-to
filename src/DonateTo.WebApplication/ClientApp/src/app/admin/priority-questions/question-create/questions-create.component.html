@@ -285,7 +285,7 @@
       </tr>
     </tbody>
   </nz-table>
-  <div id="weightError" hidden="true" class="error-required">
+  <div *ngIf="!isQuestionsValid" class="error-required">
     {{ 'Admin.PriorityQuestion.Form.PriorityQuestionRequiredError' | translate }}"
   </div>
   <ng-template #customTpl let-name>

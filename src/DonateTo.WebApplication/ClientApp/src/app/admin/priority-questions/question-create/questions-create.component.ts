@@ -39,6 +39,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   controlTypeId = 0;
   questionId = 0;
   isEdit = false;
+  isQuestionsValid = true;
   requiredWeight = 100;
 
   listOfColumns: ColumnItem[] = [
@@ -125,7 +126,8 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
 
   createQuestions() {
     this.isSubmited = true;
-    if (this.validateQuestions()) {
+    this.validateQuestions();
+    if (this.isQuestionsValid) {
       this.questions.forEach((question) => {
         question.controlType = undefined;
       });
@@ -134,13 +136,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   }
 
   validateQuestions() {
-    const IsValid = this.questions.length > 0 && this.sumWeight() === this.requiredWeight;
-    if (!IsValid) {
-      document.getElementById('weightError').hidden = false;
-    } else {
-      document.getElementById('weightError').hidden = true;
-    }
-    return IsValid;
+    this.isQuestionsValid = this.questions.length > 0 && this.sumWeight() === this.requiredWeight;
   }
 
   goBack() {
