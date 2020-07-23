@@ -18,8 +18,8 @@ import {
   loadOrganizationsSuccess,
   loadOrganizationSuccess,
   updateOrganization,
-  updateOrganizationsFailed,
-  updateOrganizationsSuccess,
+  updateOrganizationFailed,
+  updateOrganizationSuccess,
 } from './actions';
 
 @Injectable()
@@ -84,8 +84,8 @@ export class OrganizationEffects {
     ofType(updateOrganization),
     switchMap(({ updatedOrganization }) =>
       this.organizationService.updateOrganization(updatedOrganization).pipe(
-        map((organization) => updateOrganizationsSuccess({ organization })),
-        catchError(() => of(updateOrganizationsFailed()))
+        map((organization) => updateOrganizationSuccess({ organization })),
+        catchError(() => of(updateOrganizationFailed()))
       )
     )
   );

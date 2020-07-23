@@ -79,7 +79,7 @@ export class OrganizationFormComponent implements OnInit, OnDestroy {
 
   done(): void {
     this.organizationToSubmit = this.createOrganization();
-    // save to database
+    this.organizationSandbox.addOrganization(this.organizationToSubmit);
   }
 
   changeStatus() {
