@@ -4,7 +4,7 @@ import { QuestionsSandbox } from '../questions-sandbox';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { Subscription } from 'rxjs';
 import { ColumnItem, QuestionModel } from 'src/app/shared/models';
-import { ControlType, ControlType2LabelMapping } from 'src/app/shared/enum/controlTypes';
+import { ControlType2LabelMapping } from 'src/app/shared/enum/controlTypes';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { QuestionOption } from 'src/app/shared/models/question-option.modal';
 import { ControlTypeModel } from 'src/app/shared/models/control-type.model';
@@ -57,7 +57,6 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     orderFormControl: new FormControl('', Validators.required),
     controlTypeFormControl: new FormControl('', Validators.required),
     defaultValueFormControl: new FormControl(''),
-    itemsFormControl: new FormControl(),
   });
 
   constructor(
@@ -224,7 +223,6 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
           this.questions = [...this.questions, questionItem];
         }
       }
-
       this.questionItemFormGroup.reset();
     }
   }
