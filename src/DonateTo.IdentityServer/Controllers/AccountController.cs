@@ -286,6 +286,16 @@ namespace DonateTo.IdentityServer.Controllers
             if (user == null)
                 RedirectToAction(nameof(ResetPasswordConfirmation));
 
+            //If user user hasn't confirmed by email yet it confirms it now (as Reset Password was triggered by a user email)
+            if (!user.EmailConfirmed)
+            {
+                user.EmailConfirmed = true;
+                var confirmEmailResult = await _userManager.UpdateAsync(user);
+                if (!confirmEmailResult.Succeeded) {
+                    return View("Error");
+                }
+            }
+
             var resetPassResult = await _userManager.ResetPasswordAsync(user, resetPasswordModel.Token, resetPasswordModel.Password);
             if (!resetPassResult.Succeeded)
             {
