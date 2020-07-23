@@ -56,7 +56,7 @@ const organizationReducer = createReducer(
     loading: false,
     failed: true,
   })),
-  on(organizationActions.addOrganization, (state, { organization }) => ({
+  on(organizationActions.addOrganization, (state, { newOrganization }) => ({
     ...state,
     loading: true,
     failed: false,
@@ -72,7 +72,7 @@ const organizationReducer = createReducer(
     loading: false,
     failed: true,
   })),
-  on(organizationActions.updateOrganization, (state, { organization }) => ({
+  on(organizationActions.updateOrganization, (state, { updatedOrganization }) => ({
     ...state,
     loading: true,
     failed: false,
