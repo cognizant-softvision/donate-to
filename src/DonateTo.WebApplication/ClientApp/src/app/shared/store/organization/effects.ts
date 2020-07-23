@@ -17,6 +17,9 @@ import {
   loadOrganizationsPagedFilteredSuccess,
   loadOrganizationsSuccess,
   loadOrganizationSuccess,
+  updateOrganization,
+  updateOrganizationsFailed,
+  updateOrganizationsSuccess,
 } from './actions';
 
 @Injectable()
@@ -68,10 +71,21 @@ export class OrganizationEffects {
   @Effect()
   addOrganization$: Observable<{}> = this.actions$.pipe(
     ofType(addOrganization),
-    switchMap(({ organization }) =>
-      this.organizationService.createOrganization(organization).pipe(
-        map(() => addOrganizationSuccess({ organization })),
+    switchMap(({ newOrganization }) =>
+      this.organizationService.createOrganization(newOrganization).pipe(
+        map((organization) => addOrganizationSuccess({ organization })),
         catchError(() => of(addOrganizationFailed()))
+      )
+    )
+  );
+
+  @Effect()
+  updateOrganization$: Observable<{}> = this.actions$.pipe(
+    ofType(updateOrganization),
+    switchMap(({ updatedOrganization }) =>
+      this.organizationService.updateOrganization(updatedOrganization).pipe(
+        map((organization) => updateOrganizationsSuccess({ organization })),
+        catchError(() => of(updateOrganizationsFailed()))
       )
     )
   );

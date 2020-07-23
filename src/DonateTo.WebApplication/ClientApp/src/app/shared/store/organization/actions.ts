@@ -25,14 +25,24 @@ export const loadOrganizationsByUser = createAction(
 );
 
 export const addOrganization = createAction(
-  '[Organization] Add organization to server',
-  props<{ organization: OrganizationModel }>()
+  '[Organization] Add item to server',
+  props<{ newOrganization: OrganizationModel }>()
 );
 export const addOrganizationSuccess = createAction(
   '[Organization] Add success',
   props<{ organization: OrganizationModel }>()
 );
 export const addOrganizationFailed = createAction('[Organization] Add failed');
+
+export const updateOrganization = createAction(
+  '[Organization] Update item to server',
+  props<{ updatedOrganization: OrganizationModel }>()
+);
+export const updateOrganizationSuccess = createAction(
+  '[Organization] Update success',
+  props<{ organization: OrganizationModel }>()
+);
+export const updateOrganizationFailed = createAction('[Organization] Update failed');
 
 export const loadOrganization = createAction(
   '[Organization] Load organization from server',

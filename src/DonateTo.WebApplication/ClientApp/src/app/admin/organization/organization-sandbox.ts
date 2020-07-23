@@ -56,23 +56,20 @@ export class OrganizationSandbox extends Sandbox implements OnDestroy {
     this.appState$.dispatch(store.fromOrganization.loadOrganizationsPagedFiltered({ organizationFilter }));
   }
 
+  public addOrganization(organization: OrganizationModel): void {
+    this.appState$.dispatch(store.fromOrganization.addOrganization({ newOrganization: organization }));
+  }
+
+  public updateOrganization(organization: OrganizationModel): void {
+    this.appState$.dispatch(store.fromOrganization.updateOrganization({ updatedOrganization: organization }));
+  }
+
   /**
    * Load organization by Id from the server
    */
   public loadOrganization(organizationId: number): void {
     this.appState$.dispatch(store.fromOrganization.loadOrganization({ organizationId }));
   }
-
-  updateOrganization(organization: OrganizationModel): void {
-    this.appState$.dispatch(store.fromOrganization.addOrganization({ organization }));
-  }
-
-  /**
-   * Adds donationRequests to the server
-   */
-  // public createOrganization(organization: DonationRequestModel): void {
-  //   this.appState$.dispatch(store.fromDonationRequest.addDonationRequest({ donationRequest }));
-  // }
 
   /**
    * Unsubscribes from events

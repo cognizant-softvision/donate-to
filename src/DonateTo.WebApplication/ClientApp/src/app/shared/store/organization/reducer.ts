@@ -58,17 +58,33 @@ const organizationReducer = createReducer(
     loading: false,
     failed: true,
   })),
-  on(organizationActions.addOrganization, (state) => ({
+  on(organizationActions.addOrganization, (state, { newOrganization }) => ({
     ...state,
     loading: true,
     failed: false,
   })),
-  on(organizationActions.addOrganizationSuccess, (state) => ({
+  on(organizationActions.addOrganizationSuccess, (state, { organization }) => ({
+    ...state,
+    loading: false,
+    failed: false,
+    organizations: [...state.organizations, organization],
+  })),
+  on(organizationActions.addOrganizationFailed, (state) => ({
+    ...state,
+    loading: false,
+    failed: true,
+  })),
+  on(organizationActions.updateOrganization, (state, { updatedOrganization }) => ({
+    ...state,
+    loading: true,
+    failed: false,
+  })),
+  on(organizationActions.updateOrganizationSuccess, (state, { organization }) => ({
     ...state,
     loading: false,
     failed: false,
   })),
-  on(organizationActions.addOrganizationFailed, (state) => ({
+  on(organizationActions.updateOrganizationFailed, (state) => ({
     ...state,
     loading: false,
     failed: true,

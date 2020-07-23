@@ -60,9 +60,9 @@ namespace DonateTo.WebApi.V1.Controllers
         /// <param name="organization">Organization</param>
         /// <returns>Updated Organization.</returns>
         [ServiceFilter(typeof(AdminAccessFilter))]
-        public override Task<IActionResult> Put(long id, [FromBody] Organization organization)
+        public override async Task<IActionResult> Put(long id, [FromBody] Organization organization)
         {
-            return base.Put(id, organization);
+            return await base.Put(id, organization).ConfigureAwait(false);
         }
 
         /// <summary>
