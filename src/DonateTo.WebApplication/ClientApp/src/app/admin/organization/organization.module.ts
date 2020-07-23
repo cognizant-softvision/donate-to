@@ -46,6 +46,7 @@ import {
 import { OrganizationStepGeneralInformationComponent } from './organization-form/organization-step-general-information/organization-step-general-information.component';
 import { OrganizationStepContactComponent } from './organization-form/organization-step-contact/organization-step-contact.component';
 import { OrganizationStepAddressComponent } from './organization-form/organization-step-address/organization-step-address.component';
+import { OrganizationDetailComponent } from './organization-detail/organization-detail.component';
 
 const ICONS: IconDefinition[] = [ArrowLeftOutline, HomeOutline, InfoCircleOutline, UserOutline, SmileOutline];
 
@@ -97,6 +98,7 @@ const ICONS: IconDefinition[] = [ArrowLeftOutline, HomeOutline, InfoCircleOutlin
     OrganizationStepGeneralInformationComponent,
     OrganizationStepContactComponent,
     OrganizationStepAddressComponent,
+    OrganizationDetailComponent,
   ],
   providers: [OrganizationSandbox],
 })

@@ -1,15 +1,15 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { OrganizationSandbox } from '../organization-sandbox';
 import { OrganizationModel } from 'src/app/shared/models';
+import { ActivatedRoute, Router } from '@angular/router';
+import { OrganizationSandbox } from '../organization-sandbox';
 
 @Component({
-  selector: 'app-organization-edit',
-  templateUrl: './organization-edit.component.html',
-  styleUrls: ['./organization-edit.component.css'],
+  selector: 'app-organization-detail',
+  templateUrl: './organization-detail.component.html',
+  styleUrls: ['./organization-detail.component.css'],
 })
-export class OrganizationEditComponent implements OnInit, OnDestroy {
+export class OrganizationDetailComponent implements OnInit {
   subscriptions: Subscription[] = [];
   organization: OrganizationModel;
   private failedStatus = false;

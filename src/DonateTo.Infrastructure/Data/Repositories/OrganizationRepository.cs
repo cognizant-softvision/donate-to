@@ -37,6 +37,12 @@ namespace DonateTo.Infrastructure.Data.Repositories
             return await organizations.GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
 
+        ///<inheritdoc cref="IRepository{Organization}"/>
+        public override async Task<Organization> GetAsync(long id)
+        {
+            return await GetHydratedOrganization().FirstOrDefaultAsync(x => x.Id == id).ConfigureAwait(false);
+        }
+
         #region private
         private IQueryable<Organization> GetHydratedOrganization()
         {

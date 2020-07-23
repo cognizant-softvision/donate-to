@@ -11,6 +11,7 @@ import { OrganizationSandbox } from '../organization-sandbox';
 import { OrganizationStepGeneralInformationComponent } from './organization-step-general-information/organization-step-general-information.component';
 import { OrganizationStepContactComponent } from './organization-step-contact/organization-step-contact.component';
 import { OrganizationStepAddressComponent } from './organization-step-address/organization-step-address.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-organization-form',
@@ -50,7 +51,7 @@ export class OrganizationFormComponent implements OnInit, OnDestroy {
 
   organizationToSubmit = new OrganizationModel();
 
-  constructor(public organizationSandbox: OrganizationSandbox) {}
+  constructor(public organizationSandbox: OrganizationSandbox, private router: Router) {}
 
   ngOnInit(): void {
     this.registerEvents();
@@ -80,6 +81,11 @@ export class OrganizationFormComponent implements OnInit, OnDestroy {
   done(): void {
     this.organizationToSubmit = this.createOrganization();
     this.organizationSandbox.addOrganization(this.organizationToSubmit);
+    this.goBack();
+  }
+
+  goBack() {
+    this.router.navigate(['/admin/organization']);
   }
 
   changeStatus() {
@@ -170,6 +176,13 @@ export class OrganizationFormComponent implements OnInit, OnDestroy {
     let addressesFromModel: AddressModel[] = [];
     addressesFromModel = this.organizationStepAddressComponent.addresses;
 
+    contact.firstName = this.contactModel.firstName;
+    contact.lastName = this.contactModel.lastName;
+    contact.email = this.contactModel.email;
+    contact.identityNumber = this.contactModel.identityNumber;
+    contact.phoneNumber = this.contactModel.phoneNumber;
+    contact.position = this.contactModel.position;
+
     addressesFromModel.forEach((a) => {
       const newAddress = new AddressModel();
       const country = new CountryModel();
@@ -186,24 +199,17 @@ export class OrganizationFormComponent implements OnInit, OnDestroy {
       newAddress.appartment = a.appartment;
       newAddress.additionalInformation = a.additionalInformation;
 
-      newAddress.country = country;
+      newAddress.country = undefined;
       newAddress.countryId = a.countryId;
       newAddress.stateId = a.stateId;
-      newAddress.state = a.state;
+      newAddress.state = undefined;
       newAddress.cityId = a.cityId;
-      newAddress.city = a.city;
-      newAddress.contact = a.contact;
-      newAddress.contactId = a.contactId;
+      newAddress.city = undefined;
+      newAddress.contact = contact;
+      newAddress.contactId = undefined;
 
       addresses = [...addresses, newAddress];
     });
-
-    contact.firstName = this.contactModel.firstName;
-    contact.lastName = this.contactModel.lastName;
-    contact.email = this.contactModel.email;
-    contact.identityNumber = this.contactModel.identityNumber;
-    contact.phoneNumber = this.contactModel.phoneNumber;
-    contact.position = this.contactModel.position;
 
     organization.name = this.generalInformationModel.name;
     organization.description = this.generalInformationModel.description;

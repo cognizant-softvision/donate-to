@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AddressModel, CityModel, ColumnItem, CountryModel, StateModel } from 'src/app/shared/models';
+import { AddressModel, CityModel, ColumnItem, CountryModel, StateModel, ContactModel } from 'src/app/shared/models';
 import { Subscription } from 'rxjs';
 import { OrganizationSandbox } from '../../organization-sandbox';
 import { NzModalRef } from 'ng-zorro-antd';
+import { OrganizationStepContactComponent } from '../organization-step-contact/organization-step-contact.component';
 
 @Component({
   selector: 'app-organization-step-address',
@@ -18,10 +19,14 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
   @Input() addressModel: AddressModel;
   @Output() outputFromChild: EventEmitter<any> = new EventEmitter<any>();
 
+  @ViewChild(OrganizationStepContactComponent)
+  private organizationStepContactComponent: OrganizationStepContactComponent;
+
   subscriptions: Subscription[] = [];
   countries: CountryModel[] = [];
   states: StateModel[] = [];
   cities: CityModel[] = [];
+  contactModel: ContactModel = new ContactModel();
 
   tplModal?: NzModalRef;
 
@@ -58,9 +63,9 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
       floor: [this.addressModel?.floor],
       appartment: [this.addressModel?.appartment],
       additionalInformation: [this.addressModel?.additionalInformation],
-      countryId: [this.addressModel?.countryId, [Validators.required]],
-      stateId: [this.addressModel?.stateId, [Validators.required]],
-      cityId: [this.addressModel?.cityId],
+      countryId: [this.addressModel?.countryId, [Validators.required, Validators.min(1)]],
+      stateId: [this.addressModel?.stateId, [Validators.required, Validators.min(1)]],
+      cityId: [this.addressModel?.cityId, [Validators.required, Validators.min(1)]],
     });
 
     this.registerEvents();
@@ -110,6 +115,8 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
         this.addressStepForm.controls[key].updateValueAndValidity();
       }
     }
+
+    this.organizationStepContactComponent.validateForm();
   }
 
   isValidForm(): boolean {
@@ -144,6 +151,7 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
     addressModel.floor = this.addressStepForm.value.floor;
     addressModel.appartment = this.addressStepForm.value.appartment;
     addressModel.additionalInformation = this.addressStepForm.value.additionalInformation;
+    addressModel.contact = this.getContact();
 
     addressModel.countryId = this.addressStepForm.value.countryId;
     country.name = this.countries.find((x) => x.id === addressModel.countryId)?.name;
@@ -160,6 +168,25 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
     return addressModel;
   }
 
+  getContact(): ContactModel {
+    const contact: ContactModel = new ContactModel();
+
+    contact.firstName = this.contactModel.firstName;
+    contact.lastName = this.contactModel.lastName;
+    contact.email = this.contactModel.email;
+    contact.identityNumber = this.contactModel.identityNumber;
+    contact.phoneNumber = this.contactModel.phoneNumber;
+    contact.position = this.contactModel.position;
+
+    return contact;
+  }
+
+  isContactStepReady(event) {
+    if (event) {
+      this.contactModel = event.contactFormModel;
+    }
+  }
+
   addAddress() {
     if (this.isValidForm()) {
       let newAddress = new AddressModel();
@@ -167,6 +194,9 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
       this.addresses = [...this.addresses, newAddress];
 
       this.addressStepForm.reset();
+    } else {
+      this.organizationStepContactComponent.validateForm();
+      this.validateForm();
     }
   }
 

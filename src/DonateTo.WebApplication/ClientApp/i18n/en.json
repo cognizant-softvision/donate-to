@@ -138,7 +138,9 @@
           "Address": "Address",
           "Edit": "Edit",
           "Delete": "Delete",
-          "AddAddress": "Add Address"
+          "AddAddress": "Add Address",
+          "Information": "Enter organization's address. Multiple addresses can be associated to an organization.",
+          "Contact": "Enter a contact for this address"
         }
       }
     },
