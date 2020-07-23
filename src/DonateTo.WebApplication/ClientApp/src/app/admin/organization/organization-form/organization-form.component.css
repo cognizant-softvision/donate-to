@@ -2,3 +2,9 @@
   max-width: 100em;
   margin: auto;
 }
+
+.steps-action {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}

@@ -135,7 +135,10 @@
           "Contact": "Contact"
         },
         "Address": {
-          "Address": "Address"
+          "Address": "Address",
+          "Edit": "Edit",
+          "Delete": "Delete",
+          "AddAddress": "Add Address"
         }
       }
     },

@@ -26,4 +26,8 @@ export class OrganizationCreateComponent implements OnDestroy {
   private unregisterEvents() {
     // this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
+
+  goBack() {
+    this.router.navigate(['/admin/organization']);
+  }
 }
