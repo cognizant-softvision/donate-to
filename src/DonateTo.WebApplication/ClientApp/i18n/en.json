@@ -314,7 +314,7 @@
         "PlaceholderRequired": "Nombre marcador es requerido",
         "ControlTypeRequired": "Control Type is required",
         "AddItem": "Add Question",
-        "PriorityQuestionRequiredError": "At least 1 priority question is required"
+        "PriorityQuestionRequiredError": "At least 1 priority question is required and weight must reach 100%."
       },
       "CreateConfirm": "Are you sure you want to create a new question?",
       "EditConfirm": "Are you sure you want to edit the question?"
