@@ -253,7 +253,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   }
 
   removeQuestion(item: QuestionModel): void {
-    if (item.id == this.questionId) {
+    if (item.id === this.questionId) {
       this.resetEdit();
     }
     this.questions = this.questions.filter((q) => q !== item);
