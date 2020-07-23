@@ -5,7 +5,9 @@
 
 trigger:
   - develop
-pool: DiegoLocalMachine
+
+pool:
+  vmImage: "windows-latest"
 
 variables:
   buildPlatform: "Any CPU"
