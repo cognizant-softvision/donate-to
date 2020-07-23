@@ -4,15 +4,15 @@
 # https://aka.ms/yaml
 
 trigger:
-- qa
+  - qa
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: "windows-latest"
 
 variables:
-#  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
+  #  solution: '**/*.sln'
+  buildPlatform: "Any CPU"
+  buildConfiguration: "QA"
 
 steps:
   - task: DotNetCoreCLI@2
