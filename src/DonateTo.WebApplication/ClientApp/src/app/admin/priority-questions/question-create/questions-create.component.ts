@@ -150,6 +150,17 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     this.isEdit = true;
   }
 
+  resetEdit() {
+    this.label = '';
+    this.placeholder = '';
+    this.weight = 0;
+    this.order = 0;
+    this.defaultValue = '';
+    this.controlTypeId = 0;
+    this.questionId = 0;
+    this.isEdit = false;
+  }
+
   addQuestion() {
     this.validateFormGroup(this.questionItemFormGroup);
     if (this.questionItemFormGroup.valid) {
@@ -242,6 +253,9 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   }
 
   removeQuestion(item: QuestionModel): void {
+    if (item.id == this.questionId) {
+      this.resetEdit();
+    }
     this.questions = this.questions.filter((q) => q !== item);
   }
 
