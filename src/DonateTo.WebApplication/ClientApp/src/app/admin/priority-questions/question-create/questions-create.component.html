@@ -3,7 +3,7 @@
     <h4 class="section-title">{{ 'Admin.PriorityQuestion.Create.Title' | translate }}</h4>
   </div>
   <br />
-  <form [formGroup]="questionsFormGroup" nz-form>
+  <form nz-form>
     <div [formGroup]="questionItemFormGroup" class="create-priority-question-add-item-container">
       <div class="create-priority-question-add-item-box-first">
         <div class="create-item-container">
@@ -248,50 +248,46 @@
         {{ 'Admin.PriorityQuestion.Form.AddItem' | translate }}
       </button>
     </div>
-
-    <span class="item-required">{{ 'Admin.PriorityQuestion.Form.PriorityQuestionRequiredError' | translate }}</span>
-    <br />
-    <nz-form-item>
-      <nz-form-control nzErrorTip="{{ 'Admin.PriorityQuestion.Form.PriorityQuestionRequiredError' | translate }}">
-        <div [(ngModel)]="questions" ngDefaultControl formControlName="questionsFormControl">
-          <nz-table
-            [nzData]="questions"
-            [nzShowPagination]="false"
-            [nzFrontPagination]="false"
-            [nzShowPagination]="false"
-            [nzNoResult]="customTpl"
-          >
-            <thead>
-              <tr>
-                <th *ngFor="let column of listOfColumns">
-                  {{ column.name | translate }}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of questions">
-                <td>{{ item.label }}</td>
-                <td>{{ item.placeholder }}</td>
-                <td>{{ item.order }}</td>
-                <td>{{ item.weight }}</td>
-                <td>{{ item.controlType?.name }}</td>
-                <td>{{ item.defaultValue }}</td>
-                <td>
-                  <span *ngFor="let option of item.options"> {{ option.label }} -</span>
-                </td>
-                <td>
-                  <a (click)="editQuestion(item)">{{ 'Admin.PriorityQuestion.Table.EditQuestion' | translate }}</a>
-                  <nz-divider nzType="vertical"></nz-divider>
-                  <a (click)="removeQuestion(item)">{{ 'Admin.PriorityQuestion.Table.DeleteQuestion' | translate }}</a>
-                </td>
-              </tr>
-            </tbody>
-          </nz-table>
-        </div>
-      </nz-form-control>
-    </nz-form-item>
   </form>
 
+  <span class="item-required">{{ 'Admin.PriorityQuestion.Form.PriorityQuestionRequiredError' | translate }}</span>
+  <br />
+  <nz-table
+    [nzData]="questions"
+    [nzShowPagination]="false"
+    [nzFrontPagination]="false"
+    [nzShowPagination]="false"
+    [nzNoResult]="customTpl"
+  >
+    <thead>
+      <tr>
+        <th *ngFor="let column of listOfColumns">
+          {{ column.name | translate }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of questions">
+        <td>{{ item.label }}</td>
+        <td>{{ item.placeholder }}</td>
+        <td>{{ item.order }}</td>
+        <td>{{ item.weight }}</td>
+        <td>{{ item.controlType?.name }}</td>
+        <td>{{ item.defaultValue }}</td>
+        <td>
+          <span *ngFor="let option of item.options"> {{ option.label }} -</span>
+        </td>
+        <td>
+          <a (click)="editQuestion(item)">{{ 'Admin.PriorityQuestion.Table.EditQuestion' | translate }}</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a (click)="removeQuestion(item)">{{ 'Admin.PriorityQuestion.Table.DeleteQuestion' | translate }}</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+  <div id="weightError" hidden="true" class="error-required">
+    {{ 'Admin.PriorityQuestion.Form.PriorityQuestionRequiredError' | translate }}"
+  </div>
   <ng-template #customTpl let-name>
     <div style="text-align: center;">
       <nz-empty [nzNotFoundContent]="null"></nz-empty>

@@ -39,6 +39,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   controlTypeId = 0;
   questionId = 0;
   isEdit = false;
+  requiredWeight = 100;
 
   listOfColumns: ColumnItem[] = [
     { name: 'Admin.PriorityQuestion.Table.LabelColumn' },
@@ -58,10 +59,6 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     orderFormControl: new FormControl('', Validators.required),
     controlTypeFormControl: new FormControl('', Validators.required),
     defaultValueFormControl: new FormControl(''),
-  });
-
-  questionsFormGroup = new FormGroup({
-    questionsFormControl: new FormControl('', Validators.required),
   });
 
   constructor(
@@ -128,13 +125,22 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
 
   createQuestions() {
     this.isSubmited = true;
-    this.validateFormGroup(this.questionsFormGroup, this.form);
-    if (this.questionsFormGroup.valid) {
+    if (this.validateQuestions()) {
       this.questions.forEach((question) => {
         question.controlType = undefined;
       });
       this.questionSandbox.updateQuestions(this.questions);
     }
+  }
+
+  validateQuestions() {
+    const IsValid = this.questions.length > 0 && this.sumWeight() === this.requiredWeight;
+    if (!IsValid) {
+      document.getElementById('weightError').hidden = false;
+    } else {
+      document.getElementById('weightError').hidden = true;
+    }
+    return IsValid;
   }
 
   goBack() {
@@ -298,12 +304,6 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   }
 
   optionsWeight(options: QuestionOption[]): boolean {
-    const totalWeight = options.reduce((acc, cur) => acc + cur.weight, 0);
-
-    if (totalWeight !== 100) {
-      return false;
-    }
-
-    return true;
+    return options.reduce((acc, cur) => acc + cur.weight, 0) === this.requiredWeight;
   }
 }
