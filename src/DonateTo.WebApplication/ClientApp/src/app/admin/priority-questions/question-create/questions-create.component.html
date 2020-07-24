@@ -121,7 +121,73 @@
               </nz-select>
             </nz-form-control>
           </nz-form-item>
-          <nz-form-item>
+
+          <!-- textbox -->
+          <nz-form-item *ngIf="controlTypeId == 1">
+            <div class="item-quantity-range">
+              <input
+                class="option-input-textbox"
+                nz-input
+                placeholder="Min Value"
+                formControlName="minFormControl"
+                type="number"
+                min="0"
+              />
+              <input
+                class="option-input-textbox"
+                nz-input
+                placeholder="Max Value"
+                formControlName="maxFormControl"
+                type="number"
+                min="0"
+              />
+            </div>
+            <nz-form-item *ngFor="let o of optionsArray?.controls; index as i">
+              <ng-container [formGroup]="o">
+                <nz-form-control
+                  nzErrorTip="Please input option for this question or delete this field."
+                  class="option-input-form"
+                >
+                  <input
+                    class="option-input-textbox"
+                    nz-input
+                    placeholder="Min Relative"
+                    formControlName="minRelativeFormControl"
+                    type="number"
+                    min="0"
+                  />
+                  <input
+                    class="option-input-textbox"
+                    nz-input
+                    placeholder="Max Relative"
+                    formControlName="maxRelativeFormControl"
+                    type="number"
+                    min="0"
+                  />
+                  <input
+                    class="option-weight"
+                    nz-input
+                    placeholder="{{ 'Admin.PriorityQuestion.Form.WeightPlaceHolder' | translate }}"
+                    formControlName="optionWeight"
+                    type="number"
+                    min="1"
+                  />
+                </nz-form-control>
+                <i nz-icon nzType="minus-circle-o" class="dynamic-delete-button" (click)="removeField(i, $event)"></i>
+              </ng-container>
+            </nz-form-item>
+
+            <nz-form-item class="option-list">
+              <nz-form-control>
+                <button nz-button nzType="dashed" class="add-button" (click)="addField($event)">
+                  <i nz-icon nzType="plus"></i>
+                  Add field
+                </button>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-form-item>
+
+          <nz-form-item *ngIf="controlTypeId > 1">
             <nz-checkbox-wrapper>
               <nz-form-item *ngFor="let o of optionsArray?.controls; index as i">
                 <ng-container [formGroup]="o">
@@ -200,7 +266,7 @@
         <td>{{ item.controlType?.name }}</td>
         <td>{{ item.defaultValue }}</td>
         <td>
-          <span *ngFor="let option of item.options"> {{ option.label }} -</span>
+          <span *ngFor="let option of item.options"> {{ option.label }} </span>
         </td>
         <td>
           <a (click)="editQuestion(item)">{{ 'Admin.PriorityQuestion.Table.EditQuestion' | translate }}</a>

@@ -59,6 +59,8 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     orderFormControl: new FormControl('', Validators.required),
     controlTypeFormControl: new FormControl('', Validators.required),
     defaultValueFormControl: new FormControl(''),
+    minFormControl: new FormControl(''),
+    maxFormControl: new FormControl(''),
   });
 
   constructor(
@@ -179,8 +181,8 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
         questionSavedItem.weight = this.questionItemFormGroup.controls.weightFormControl.value;
         questionSavedItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
 
+        this.optionsArray.removeAt(this.optionsArray.length);
         if (questionSavedItem.controlType.name !== 'Textbox') {
-          this.optionsArray.removeAt(this.optionsArray.length);
           for (const o of this.optionsArray.value) {
             const questionOption = new QuestionOption();
             questionOption.label = o.optionLabel;
@@ -188,16 +190,32 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
             questionOption.weight = o.optionWeight;
             options = [...options, questionOption];
           }
-          questionSavedItem.options = options;
-
-          if (this.optionsWeight(questionSavedItem.options) !== true) {
+        } else {
+          this.optionsArray.removeAt(this.optionsArray.length);
+          questionSavedItem.min = this.questionItemFormGroup.controls.minFormControl.value;
+          questionSavedItem.max = this.questionItemFormGroup.controls.maxFormControl.value;
+          for (const o of this.optionsArray.value) {
+            const questionOption = new QuestionOption();
+            questionOption.minimumRelative = o.minRelativeFormControl;
+            questionOption.maximumRelative = o.maxRelativeFormControl;
+            questionOption.weight = o.optionWeight;
+            options = [...options, questionOption];
+          }
+          if (!this.optionsRange(options)) {
             this.modal.error({
               nzTitle: 'Warning',
-              nzContent: 'The weight of each option must sum a total of 100',
+              nzContent: 'The range does not cover the entire value.',
             });
           }
         }
+        questionSavedItem.options = options;
 
+        if (this.optionsWeight(questionSavedItem.options) !== true) {
+          this.modal.error({
+            nzTitle: 'Warning',
+            nzContent: 'The weight of each option must sum a total of 100',
+          });
+        }
         questionItem.id = questionSavedItem.id;
         questionItem.key = questionSavedItem.key;
         questionItem.createdBy = questionSavedItem.createdBy;
@@ -216,8 +234,8 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
         questionItem.weight = this.questionItemFormGroup.controls.weightFormControl.value;
         questionItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
 
+        this.optionsArray.removeAt(this.optionsArray.length);
         if (questionItem.controlType.name !== 'Textbox') {
-          this.optionsArray.removeAt(this.optionsArray.length);
           for (const o of this.optionsArray.value) {
             const questionOption = new QuestionOption();
             questionOption.label = o.optionLabel;
@@ -225,21 +243,36 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
             questionOption.weight = o.optionWeight;
             options = [...options, questionOption];
           }
-          questionItem.options = options;
-
-          if (this.optionsWeight(questionItem.options) !== true) {
+        } else {
+          questionItem.min = this.questionItemFormGroup.controls.minFormControl.value;
+          questionItem.max = this.questionItemFormGroup.controls.maxFormControl.value;
+          for (const o of this.optionsArray.value) {
+            const questionOption = new QuestionOption();
+            questionOption.minimumRelative = o.minRelativeFormControl;
+            questionOption.maximumRelative = o.maxRelativeFormControl;
+            questionOption.weight = o.optionWeight;
+            options = [...options, questionOption];
+          }
+          if (!this.optionsRange(options)) {
             this.modal.error({
               nzTitle: 'Warning',
-              nzContent: 'The weight of each option must sum a total of 100',
+              nzContent: 'The range does not cover the entire value.',
             });
-          } else {
-            this.questions = [...this.questions, questionItem];
           }
+        }
+        questionItem.options = options;
+
+        if (this.optionsWeight(questionItem.options) !== true) {
+          this.modal.error({
+            nzTitle: 'Warning',
+            nzContent: 'The weight of each option must sum a total of 100',
+          });
         } else {
           this.questions = [...this.questions, questionItem];
         }
       }
       this.questionItemFormGroup.reset();
+      this.optionsArray.reset();
     }
   }
 
@@ -280,6 +313,8 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
       optionLabel: new FormControl(''),
       optionValue: new FormControl(''),
       optionWeight: new FormControl(''),
+      minRelativeFormControl: new FormControl(''),
+      maxRelativeFormControl: new FormControl(''),
     });
 
     this.optionsArray.push(group);
@@ -294,5 +329,16 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
 
   optionsWeight(options: QuestionOption[]): boolean {
     return options.reduce((acc, cur) => acc + cur.weight, 0) === this.requiredWeight;
+  }
+
+  optionsRange(options: QuestionOption[]): boolean {
+    const total =
+      this.questionItemFormGroup.controls.maxFormControl.value -
+      this.questionItemFormGroup.controls.minFormControl.value;
+    let relativeTotal = 0;
+    for (const o of options) {
+      relativeTotal = relativeTotal + (o.maximumRelative - o.minimumRelative);
+    }
+    return relativeTotal === total;
   }
 }
