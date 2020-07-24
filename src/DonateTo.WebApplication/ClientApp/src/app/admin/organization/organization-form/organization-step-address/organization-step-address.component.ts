@@ -27,6 +27,7 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
   states: StateModel[] = [];
   cities: CityModel[] = [];
   contactModel: ContactModel = new ContactModel();
+  item: AddressModel;
 
   tplModal?: NzModalRef;
 
@@ -53,6 +54,9 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
   country = 0;
   state = 0;
   city = 0;
+  additionalInformation = '';
+
+  isEditAddress = false;
 
   constructor(private fb: FormBuilder, public organizationSandbox: OrganizationSandbox) {}
 
@@ -194,6 +198,7 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
       this.addresses = [...this.addresses, newAddress];
 
       this.addressStepForm.reset();
+      this.organizationStepContactComponent.responsableStepForm.reset();
     } else {
       this.organizationStepContactComponent.validateForm();
       this.validateForm();
@@ -205,9 +210,8 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
   }
 
   editAddress(item: AddressModel) {
-    this.removeAddress(item);
+    this.isEditAddress = true;
 
-    console.log('ITEM', item);
     this.street = item.street;
     this.postalCode = item.postalCode;
     this.floor = item.floor;
@@ -215,5 +219,25 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
     this.country = item.countryId;
     this.state = item.stateId;
     this.city = item.cityId;
+    this.additionalInformation = item.additionalInformation;
+
+    this.organizationStepContactComponent.firstName = item.contact.firstName;
+    this.organizationStepContactComponent.lastName = item.contact.lastName;
+    this.organizationStepContactComponent.identityNumber = item.contact.identityNumber;
+    this.organizationStepContactComponent.email = item.contact.email;
+    this.organizationStepContactComponent.phoneNumber = item.contact.phoneNumber;
+    this.organizationStepContactComponent.position = item.contact.position;
+
+    this.item = item;
+  }
+
+  cancelEdit() {
+    this.isEditAddress = false;
+    this.addressStepForm.reset();
+  }
+
+  confirmEdit() {
+    this.addAddress();
+    this.removeAddress(this.item);
   }
 }

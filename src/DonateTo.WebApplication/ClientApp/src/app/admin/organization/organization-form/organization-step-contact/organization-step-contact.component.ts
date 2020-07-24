@@ -13,6 +13,13 @@ export class OrganizationStepContactComponent implements OnInit {
   @Output() isFormValid = new EventEmitter();
   @Input() contactModel: ContactModel;
 
+  firstName = '';
+  lastName = '';
+  identityNumber = '';
+  email = '';
+  phoneNumber = '';
+  position = '';
+
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {

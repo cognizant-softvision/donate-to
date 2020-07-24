@@ -111,6 +111,7 @@
       "CreateConfirm": "¿Estas seguro que quieres crear una organización?",
       "EditConfirm": "¿Estas seguro que quieres editar esta organización?",
       "DeleteConfirmation": "¿Está seguro que desea eliminar esta organización?",
+      "Edit": "Editar Organización",
       "Table": {
         "Name": "Nombre",
         "Description": "Descripción",
@@ -155,7 +156,9 @@
           "State": "Estado",
           "Country": "País",
           "PostalCode": "Código Postal",
-          "AdditionalInformation": "Información Adicional"
+          "AdditionalInformation": "Información Adicional",
+          "CancelEdit": "Cancelar edición",
+          "ConfirmEdit": "Confirmar edición"
         }
       }
     },

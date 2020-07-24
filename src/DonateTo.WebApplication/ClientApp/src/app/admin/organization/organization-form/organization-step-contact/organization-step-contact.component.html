@@ -7,6 +7,7 @@
       <input
         nz-input
         formControlName="firstName"
+        [(ngModel)]="firstName"
         placeholder="{{ 'RequestDonation.DonationSteps.ResponsableStep.FirstNamePlaceHolder' | translate }}"
       />
       <ng-template #firstNameErrorTpl let-control>
@@ -25,6 +26,7 @@
       <input
         nz-input
         formControlName="lastName"
+        [(ngModel)]="lastName"
         placeholder="{{ 'RequestDonation.DonationSteps.ResponsableStep.LastNamePlaceHolder' | translate }}"
       />
       <ng-template #lastNameErrorTpl let-control>
@@ -43,6 +45,7 @@
       <input
         nz-input
         formControlName="identityNumber"
+        [(ngModel)]="identityNumber"
         placeholder="{{ 'RequestDonation.DonationSteps.ResponsableStep.IdentityNumberPlaceHolder' | translate }}"
       />
       <ng-template #identityNumberErrorTpl let-control>
@@ -61,6 +64,7 @@
       <input
         nz-input
         formControlName="email"
+        [(ngModel)]="email"
         placeholder="{{ 'RequestDonation.DonationSteps.ResponsableStep.EmailPlaceHolder' | translate }}"
         type="email"
       />
@@ -81,6 +85,7 @@
         type="number"
         nz-input
         formControlName="phoneNumber"
+        [(ngModel)]="phoneNumber"
         placeholder="{{ 'RequestDonation.DonationSteps.ResponsableStep.PhoneNumberPlaceHolder' | translate }}"
       />
       <ng-template #phoneNumberErrorTpl let-control>
@@ -99,6 +104,7 @@
       <input
         nz-input
         formControlName="position"
+        [(ngModel)]="position"
         placeholder="{{ 'RequestDonation.DonationSteps.ResponsableStep.PositionPlaceHolder' | translate }}"
       />
     </nz-form-control>
