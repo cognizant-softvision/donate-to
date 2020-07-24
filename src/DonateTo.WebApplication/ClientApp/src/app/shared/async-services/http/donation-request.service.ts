@@ -43,7 +43,6 @@ export class DonationRequestService extends BaseHttpClientService<DonationReques
   }
 
   update(donationRequestModel: DonationRequestModel): Observable<DonationRequestModel> {
-    // return this.update(donationRequestModel.id, donationRequestModel);
     return this.httpClient.put<DonationRequestModel>(
       `${this.url}/${this.endpoint}/${donationRequestModel.id}`,
       donationRequestModel,
