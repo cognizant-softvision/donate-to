@@ -44,12 +44,6 @@ export class OrganizationComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.push(
-      this.organizationSandbox.organizations$.subscribe((organizations) => {
-        this.organizationList = organizations;
-      })
-    );
-
-    this.subscriptions.push(
       this.organizationSandbox.failAction$.subscribe((status) => {
         this.failedStatus = status;
       })
@@ -60,8 +54,6 @@ export class OrganizationComponent implements OnInit, OnDestroy {
         this.successStatus = status;
       })
     );
-
-    this.organizationSandbox.loadOrganizations();
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {

@@ -30,8 +30,6 @@ const addressReducer = createReducer(
     loading: true,
     failed: false,
     countries: [],
-    states: [],
-    cities: [],
   })),
   on(addressActions.loadCountriesSuccess, (state, { countries }) => ({
     ...state,
@@ -69,8 +67,6 @@ const addressReducer = createReducer(
     ...state,
     loading: true,
     failed: false,
-    countries: [],
-    states: [],
     cities: [],
   })),
   on(addressActions.loadCitiesSuccess, (state, { cities }) => ({

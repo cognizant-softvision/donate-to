@@ -29,6 +29,8 @@ export const getOrganizationsLoading = createSelector(
   (state: OrganizationState) => state.loading
 );
 
+export const getOrganization = createSelector(getOrganizationState, (state: OrganizationState) => state.organization);
+
 @Injectable()
 export class OrganizationSelectors {
   constructor(private store: Store<OrganizationState>) {}
@@ -38,4 +40,5 @@ export class OrganizationSelectors {
   organizationsByUser$ = this.store.select(getOrganizationsByUser);
   organizationState$ = this.store.select(getOrganizationState);
   loading$ = this.store.select(getOrganizationsLoading);
+  loadOrganization$ = this.store.select(getOrganization);
 }

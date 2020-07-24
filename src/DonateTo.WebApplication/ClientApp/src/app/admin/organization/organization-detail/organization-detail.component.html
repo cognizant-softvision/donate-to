@@ -1,0 +1,98 @@
+<nz-page-header class="site-page-header" (nzBack)="goBack()" nzBackIcon [nzTitle]="title" [nzSubtitle]="subtitle">
+</nz-page-header>
+
+<!-- Responsable -->
+<nz-descriptions nzTitle="{{ 'Admin.Organization.OrganizationSteps.Contact.Responsable' | translate }}" [nzColumn]="2">
+  <nz-descriptions-item nzTitle="{{ 'Admin.Organization.OrganizationSteps.Contact.FirstName' | translate }}">
+    {{ this.organization?.contact?.firstName }}
+  </nz-descriptions-item>
+
+  <nz-descriptions-item nzTitle="{{ 'Admin.Organization.OrganizationSteps.Contact.LastName' | translate }}">
+    {{ this.organization?.contact?.lastName }}
+  </nz-descriptions-item>
+
+  <nz-descriptions-item nzTitle="{{ 'Admin.Organization.OrganizationSteps.Contact.Email' | translate }}">
+    {{ this.organization?.contact?.email }}
+  </nz-descriptions-item>
+
+  <nz-descriptions-item nzTitle="{{ 'Admin.Organization.OrganizationSteps.Contact.IdentityNumber' | translate }}">
+    {{ this.organization?.contact?.identityNumber }}
+  </nz-descriptions-item>
+
+  <nz-descriptions-item nzTitle="{{ 'Admin.Organization.OrganizationSteps.Contact.PhoneNumber' | translate }}">
+    {{ this.organization?.contact?.phoneNumber }}
+  </nz-descriptions-item>
+
+  <nz-descriptions-item nzTitle="{{ 'Admin.Organization.OrganizationSteps.Contact.Position' | translate }}">
+    {{ this.organization?.contact?.position }}
+  </nz-descriptions-item>
+</nz-descriptions>
+
+<!-- Address and Contact-->
+<div nz-row *ngFor="let a of this.organization?.addresses" class="address-and-contact">
+  <div nz-col nzSpan="12">
+    <nz-descriptions nzTitle="{{ 'Admin.Organization.OrganizationSteps.Address.Address' | translate }}" [nzColumn]="2">
+      <nz-descriptions-item nzTitle="{{ 'Admin.Organization.OrganizationSteps.Address.Street' | translate }}">
+        {{ a.street }}
+      </nz-descriptions-item>
+
+      <nz-descriptions-item nzTitle="{{ 'Admin.Organization.OrganizationSteps.Address.Floor' | translate }}">
+        {{ a.floor }}
+      </nz-descriptions-item>
+
+      <nz-descriptions-item nzTitle="{{ 'Admin.Organization.OrganizationSteps.Address.Appartment' | translate }}">
+        {{ a.appartment }}
+      </nz-descriptions-item>
+
+      <nz-descriptions-item nzTitle="{{ 'Admin.Organization.OrganizationSteps.Address.City' | translate }}">
+        {{ a.city?.name }}
+      </nz-descriptions-item>
+
+      <nz-descriptions-item nzTitle="{{ 'Admin.Organization.OrganizationSteps.Address.State' | translate }}">
+        {{ a.state?.name }}
+      </nz-descriptions-item>
+
+      <nz-descriptions-item nzTitle="{{ 'Admin.Organization.OrganizationSteps.Address.Country' | translate }}">
+        {{ a.country?.name }}
+      </nz-descriptions-item>
+
+      <nz-descriptions-item nzTitle="{{ 'Admin.Organization.OrganizationSteps.Address.PostalCode' | translate }}">
+        {{ a.postalCode }}
+      </nz-descriptions-item>
+
+      <nz-descriptions-item
+        nzTitle="{{ 'Admin.Organization.OrganizationSteps.Address.AdditionalInformation' | translate }}"
+      >
+        {{ a.additionalInformation }}
+      </nz-descriptions-item>
+    </nz-descriptions>
+  </div>
+
+  <div nz-col nzSpan="12">
+    <nz-descriptions nzTitle="{{ 'Admin.Organization.OrganizationSteps.Contact.Contact' | translate }}" [nzColumn]="2">
+      <nz-descriptions-item nzTitle="{{ 'Admin.Organization.OrganizationSteps.Contact.FirstName' | translate }}">
+        {{ a.contact.firstName }}
+      </nz-descriptions-item>
+
+      <nz-descriptions-item nzTitle="{{ 'Admin.Organization.OrganizationSteps.Contact.LastName' | translate }}">
+        {{ a.contact.lastName }}
+      </nz-descriptions-item>
+
+      <nz-descriptions-item nzTitle="{{ 'Admin.Organization.OrganizationSteps.Contact.Email' | translate }}">
+        {{ a.contact.email }}
+      </nz-descriptions-item>
+
+      <nz-descriptions-item nzTitle="{{ 'Admin.Organization.OrganizationSteps.Contact.IdentityNumber' | translate }}">
+        {{ a.contact.identityNumber }}
+      </nz-descriptions-item>
+
+      <nz-descriptions-item nzTitle="{{ 'Admin.Organization.OrganizationSteps.Contact.PhoneNumber' | translate }}">
+        {{ a.contact.phoneNumber }}
+      </nz-descriptions-item>
+
+      <nz-descriptions-item nzTitle="{{ 'Admin.Organization.OrganizationSteps.Contact.Position' | translate }}">
+        {{ a.contact.position }}
+      </nz-descriptions-item>
+    </nz-descriptions>
+  </div>
+</div>
