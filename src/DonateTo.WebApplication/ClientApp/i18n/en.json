@@ -132,7 +132,14 @@
           "RequiredDescription": "An organization description is required"
         },
         "Contact": {
-          "Contact": "Contact"
+          "Contact": "Contact",
+          "Responsable": "Responsable",
+          "FirstName": "First Name",
+          "LastName": "Last Name",
+          "Email": "Email",
+          "IdentityNumber": "Identity Number",
+          "PhoneNumber": "Phone Number",
+          "Position": "Position"
         },
         "Address": {
           "Address": "Address",
@@ -140,7 +147,15 @@
           "Delete": "Delete",
           "AddAddress": "Add Address",
           "Information": "Enter organization's address. Multiple addresses can be associated to an organization.",
-          "Contact": "Enter a contact for this address"
+          "Contact": "Enter a contact for this address",
+          "Street": "Street",
+          "Floor": "Floor",
+          "Appartment": "Appartment",
+          "City": "City",
+          "State": "State",
+          "Country": "Country",
+          "PostalCode": "Postal Code",
+          "AdditionalInformation": "Additional Information"
         }
       }
     },

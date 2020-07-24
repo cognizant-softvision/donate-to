@@ -205,7 +205,7 @@ export class OrganizationFormComponent implements OnInit, OnDestroy {
       newAddress.state = undefined;
       newAddress.cityId = a.cityId;
       newAddress.city = undefined;
-      newAddress.contact = contact;
+      newAddress.contact = a.contact;
       newAddress.contactId = undefined;
 
       addresses = [...addresses, newAddress];

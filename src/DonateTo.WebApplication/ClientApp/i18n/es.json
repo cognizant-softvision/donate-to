@@ -111,9 +111,6 @@
       "CreateConfirm": "¿Estas seguro que quieres crear una organización?",
       "EditConfirm": "¿Estas seguro que quieres editar esta organización?",
       "DeleteConfirmation": "¿Está seguro que desea eliminar esta organización?",
-      "Create": {
-        "Title": "Crear Organización"
-      },
       "Table": {
         "Name": "Nombre",
         "Description": "Descripción",
@@ -122,6 +119,9 @@
         "Search": "Buscar",
         "Reset": "Reestablecer",
         "Filtered": "Filtrada"
+      },
+      "Create": {
+        "Title": "Crear Organización"
       },
       "OrganizationSteps": {
         "GeneralInformation": {
@@ -132,13 +132,30 @@
           "RequiredDescription": "Se requiere una descripción sobre la organización"
         },
         "Contact": {
-          "Contact": "Contacto"
+          "Contact": "Contacto",
+          "Responsable": "Responsable",
+          "FirstName": "Nombre",
+          "LastName": "Apellido",
+          "Email": "Email",
+          "IdentityNumber": "Número de Identidad",
+          "PhoneNumber": "Número de teléfono",
+          "Position": "Posición"
         },
         "Address": {
           "Address": "Dirección",
           "Edit": "Editar",
           "Delete": "Eliminar",
-          "AddAddress": "Agregar Dirección"
+          "AddAddress": "Agregar Dirección",
+          "Information": "Ingrese una dirección para la organización. Se pueden asociar más de una dirección a una organización.",
+          "Contact": "Ingrese un contacto para esta dirección",
+          "Street": "Calle",
+          "Floor": "Piso",
+          "Appartment": "Departamento",
+          "City": "Ciudad",
+          "State": "Estado",
+          "Country": "País",
+          "PostalCode": "Código Postal",
+          "AdditionalInformation": "Información Adicional"
         }
       }
     },

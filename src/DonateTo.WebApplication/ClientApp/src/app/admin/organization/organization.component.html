@@ -94,7 +94,7 @@
           <td>
             <a [routerLink]="['./edit', data.id]">{{ 'Admin.Edit' | translate }} </a>
             <nz-divider nzType="vertical"></nz-divider>
-            <a>{{ 'Admin.View' | translate }}</a>
+            <a [routerLink]="['./detail', data.id]">{{ 'Admin.View' | translate }}</a>
           </td>
         </tr>
       </ng-container>

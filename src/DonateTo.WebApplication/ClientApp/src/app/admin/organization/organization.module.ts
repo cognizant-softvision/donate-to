@@ -20,6 +20,8 @@ import {
   NzTagModule,
 } from 'ng-zorro-antd';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
+import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
+import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { HttpClient } from '@angular/common/http';
@@ -70,6 +72,8 @@ const ICONS: IconDefinition[] = [ArrowLeftOutline, HomeOutline, InfoCircleOutlin
     NzStepsModule,
     NzDatePickerModule,
     NzDropDownModule,
+    NzPageHeaderModule,
+    NzDescriptionsModule,
 
     FormsModule,
     CommonModule,

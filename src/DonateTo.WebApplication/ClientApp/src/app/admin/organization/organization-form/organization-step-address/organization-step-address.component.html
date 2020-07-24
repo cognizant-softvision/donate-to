@@ -176,11 +176,7 @@
     <span class="address-column-information">{{
       'Admin.Organization.OrganizationSteps.Address.Contact' | translate
     }}</span>
-    <app-organization-step-contact
-      (isFormValid)="isContactStepReady($event)"
-      [contactModel]="contactModel"
-      ngModel="contactngModel"
-    >
+    <app-organization-step-contact (isFormValid)="isContactStepReady($event)" [contactModel]="contactModel">
     </app-organization-step-contact>
   </div>
 </div>

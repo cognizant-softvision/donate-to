@@ -1,21 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { OrganizationModel } from 'src/app/shared/models';
+import { AddressModel, CityModel, CountryModel, OrganizationModel, StateModel } from 'src/app/shared/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrganizationSandbox } from '../organization-sandbox';
+import { getOrganization } from 'src/app/shared/store/organization';
 
 @Component({
   selector: 'app-organization-detail',
   templateUrl: './organization-detail.component.html',
   styleUrls: ['./organization-detail.component.css'],
 })
-export class OrganizationDetailComponent implements OnInit {
+export class OrganizationDetailComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
+  countries: CountryModel[] = [];
+  states: StateModel[] = [];
+  cities: CityModel[] = [];
+  addresses: AddressModel[] = [];
+
   organization: OrganizationModel;
+  organizationAddress: AddressModel = new AddressModel();
   private failedStatus = false;
   private isSubmited = false;
   isErrorModalActive = false;
   id: number;
+
+  title: string;
+  subtitle: string;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -42,18 +52,31 @@ export class OrganizationDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.subscriptions.push(
-      this.organizationSandbox.organization$.subscribe((organization) => {
-        this.organization = organization;
-        console.log('Organization loaded: ', this.organization);
-      })
-    );
-
+    this.registerEvents();
     this.organizationSandbox.loadOrganization(this.id);
   }
 
   ngOnDestroy(): void {
     this.unregisterEvents();
+  }
+
+  registerEvents() {
+    this.subscriptions.push(this.organizationSandbox.countries$.subscribe((countries) => (this.countries = countries)));
+
+    this.subscriptions.push(this.organizationSandbox.states$.subscribe((states) => (this.states = states)));
+
+    this.subscriptions.push(this.organizationSandbox.cities$.subscribe((cities) => (this.cities = cities)));
+
+    this.subscriptions.push(
+      this.organizationSandbox.organization$.subscribe((organization) => {
+        this.organization = organization;
+        this.showDetail();
+      })
+    );
+  }
+
+  private unregisterEvents() {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   handleRequestResult() {
@@ -75,7 +98,22 @@ export class OrganizationDetailComponent implements OnInit {
     this.router.navigate(['/admin/organization']);
   }
 
-  private unregisterEvents() {
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
+  showDetail() {
+    this.title = this.organization?.name;
+    this.subtitle = this.organization?.description;
+
+    this.organization?.addresses.forEach((a) => {
+      const countryAux = new CountryModel();
+      const stateAux = new StateModel();
+      const city = new CityModel();
+      countryAux.name = this.countries.find((x) => x.id === a.countryId)?.name;
+      stateAux.name = this.states.find((x) => x.id === a.stateId)?.name;
+
+      a = {
+        ...a,
+        country: countryAux,
+        state: stateAux,
+      };
+    });
   }
 }
