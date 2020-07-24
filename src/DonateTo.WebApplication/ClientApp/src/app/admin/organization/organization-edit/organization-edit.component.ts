@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { OrganizationSandbox } from '../organization-sandbox';
 import { OrganizationModel } from 'src/app/shared/models';
+import { EditOrganizationService } from 'src/app/shared/async-services/edit-organization.service';
 
 @Component({
   selector: 'app-organization-edit',
@@ -17,14 +18,18 @@ export class OrganizationEditComponent implements OnInit, OnDestroy {
   isErrorModalActive = false;
   id: number;
 
+  organizationToEdit = new OrganizationModel();
+
   constructor(
     private activeRoute: ActivatedRoute,
     private router: Router,
-    public organizationSandbox: OrganizationSandbox
+    public organizationSandbox: OrganizationSandbox,
+    private data: EditOrganizationService
   ) {
     this.subscriptions.push(
       this.activeRoute.params.subscribe((param) => {
         this.id = parseInt(param['Id'], 10);
+        console.log('id: ', this.id);
       })
     );
 
@@ -45,10 +50,12 @@ export class OrganizationEditComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.organizationSandbox.organization$.subscribe((organization) => {
         this.organization = organization;
-        console.log('Organization loaded: ', this.organization);
+        this.data.changeOrganization(this.organization);
       })
     );
 
+    this.data.changeIsEditOrganization(true);
+    this.data.changeId(this.id);
     this.organizationSandbox.loadOrganization(this.id);
   }
 

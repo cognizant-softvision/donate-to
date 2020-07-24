@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { OrganizationSandbox } from '../../organization-sandbox';
 import { NzModalRef } from 'ng-zorro-antd';
 import { OrganizationStepContactComponent } from '../organization-step-contact/organization-step-contact.component';
+import { EditOrganizationService } from 'src/app/shared/async-services/edit-organization.service';
 
 @Component({
   selector: 'app-organization-step-address',
@@ -18,6 +19,7 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
   @Output() isFormValid = new EventEmitter();
   @Input() addressModel: AddressModel;
   @Output() outputFromChild: EventEmitter<any> = new EventEmitter<any>();
+  @Input() isEditOrganization: boolean;
 
   @ViewChild(OrganizationStepContactComponent)
   private organizationStepContactComponent: OrganizationStepContactComponent;
@@ -58,7 +60,11 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
 
   isEditAddress = false;
 
-  constructor(private fb: FormBuilder, public organizationSandbox: OrganizationSandbox) {}
+  constructor(
+    private fb: FormBuilder,
+    public organizationSandbox: OrganizationSandbox,
+    private data: EditOrganizationService
+  ) {}
 
   ngOnInit(): void {
     this.addressStepForm = this.fb.group({
@@ -110,6 +116,12 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.organizationSandbox.states$.subscribe((states) => (this.states = states)));
 
     this.subscriptions.push(this.organizationSandbox.cities$.subscribe((cities) => (this.cities = cities)));
+
+    if (this.isEditOrganization) {
+      this.data.currentOrganization.subscribe((x) => {
+        this.addresses = x.addresses;
+      });
+    }
   }
 
   validateForm(): void {

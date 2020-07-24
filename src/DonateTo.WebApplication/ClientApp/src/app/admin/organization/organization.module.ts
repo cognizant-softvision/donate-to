@@ -49,6 +49,7 @@ import { OrganizationStepGeneralInformationComponent } from './organization-form
 import { OrganizationStepContactComponent } from './organization-form/organization-step-contact/organization-step-contact.component';
 import { OrganizationStepAddressComponent } from './organization-form/organization-step-address/organization-step-address.component';
 import { OrganizationDetailComponent } from './organization-detail/organization-detail.component';
+import { EditOrganizationService } from 'src/app/shared/async-services/edit-organization.service';
 
 const ICONS: IconDefinition[] = [ArrowLeftOutline, HomeOutline, InfoCircleOutline, UserOutline, SmileOutline];
 
@@ -104,6 +105,6 @@ const ICONS: IconDefinition[] = [ArrowLeftOutline, HomeOutline, InfoCircleOutlin
     OrganizationStepAddressComponent,
     OrganizationDetailComponent,
   ],
-  providers: [OrganizationSandbox],
+  providers: [OrganizationSandbox, EditOrganizationService],
 })
 export class OrganizationModule {}

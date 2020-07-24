@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ContactModel } from 'src/app/shared/models';
+import { ContactModel, OrganizationModel } from 'src/app/shared/models';
+import { EditOrganizationService } from 'src/app/shared/async-services/edit-organization.service';
 
 @Component({
   selector: 'app-organization-step-contact',
@@ -12,6 +13,9 @@ export class OrganizationStepContactComponent implements OnInit {
 
   @Output() isFormValid = new EventEmitter();
   @Input() contactModel: ContactModel;
+  @Input() isEditOrganization: boolean;
+
+  organizationToEdit: OrganizationModel;
 
   firstName = '';
   lastName = '';
@@ -20,7 +24,7 @@ export class OrganizationStepContactComponent implements OnInit {
   phoneNumber = '';
   position = '';
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private data: EditOrganizationService) {}
 
   ngOnInit(): void {
     this.responsableStepForm = this.fb.group({
@@ -31,6 +35,17 @@ export class OrganizationStepContactComponent implements OnInit {
       email: [this.contactModel?.email, [Validators.required, Validators.email]],
       position: [this.contactModel?.position],
     });
+
+    if (this.isEditOrganization) {
+      this.data.currentOrganization.subscribe((x) => {
+        this.firstName = x?.contact?.firstName;
+        this.lastName = x?.contact?.lastName;
+        this.identityNumber = x?.contact?.identityNumber;
+        this.email = x?.contact?.email;
+        this.phoneNumber = x?.contact?.phoneNumber;
+        this.position = x?.contact?.position;
+      });
+    }
 
     if (this.contactModel.id) {
       this.validateForm();
@@ -44,6 +59,8 @@ export class OrganizationStepContactComponent implements OnInit {
         this.isFormValid.emit({ value: this.isValidForm(), contactFormModel: this.getContactFormModel() })
       )
     );
+
+    this.data.currentOrganization.subscribe((x) => (this.organizationToEdit = x));
   }
 
   validateForm(): void {
@@ -64,6 +81,9 @@ export class OrganizationStepContactComponent implements OnInit {
     contactModel.email = this.responsableStepForm.value.email;
     contactModel.position = this.responsableStepForm.value.position;
 
+    if (this.data.currentIsEditOrganization) {
+      this.contactModel.id = this.organizationToEdit.contact.id;
+    }
     return contactModel;
   }
 

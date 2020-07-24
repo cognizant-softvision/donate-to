@@ -61,12 +61,6 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
   }
 
   registerEvents() {
-    this.subscriptions.push(this.organizationSandbox.countries$.subscribe((countries) => (this.countries = countries)));
-
-    this.subscriptions.push(this.organizationSandbox.states$.subscribe((states) => (this.states = states)));
-
-    this.subscriptions.push(this.organizationSandbox.cities$.subscribe((cities) => (this.cities = cities)));
-
     this.subscriptions.push(
       this.organizationSandbox.organization$.subscribe((organization) => {
         this.organization = organization;

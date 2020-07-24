@@ -29,6 +29,7 @@
       *ngIf="currentStep === 0"
       (isFormValid)="isGeneralInformationStepReady($event)"
       [generalInformationModel]="generalInformationModel"
+      [isEditOrganization]="isEditOrganization"
     >
     </app-organization-step-general-information>
 
@@ -36,6 +37,7 @@
       *ngIf="currentStep === 1"
       (isFormValid)="isContactStepReady($event)"
       [contactModel]="contactModel"
+      [isEditOrganization]="isEditOrganization"
     >
     </app-organization-step-contact>
 
@@ -43,6 +45,7 @@
       *ngIf="currentStep === 2"
       (isFormValid)="isAddressStepReady($event)"
       [addressModel]="addressModel"
+      [isEditOrganization]="isEditOrganization"
     >
     </app-organization-step-address>
   </div>

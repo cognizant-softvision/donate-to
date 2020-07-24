@@ -8,6 +8,7 @@
       <input
         nz-input
         formControlName="organizationName"
+        [(ngModel)]="organizationName"
         placeholder="{{ 'Admin.Organization.OrganizationSteps.GeneralInformation.OrganizationName' | translate }}"
       />
       <ng-template #organizationNameError let-control>
@@ -28,6 +29,7 @@
         nz-input
         rows="4"
         formControlName="description"
+        [(ngModel)]="description"
         placeholder="{{ 'Admin.Organization.OrganizationSteps.GeneralInformation.Description' | translate }}"
       >
       </textarea>

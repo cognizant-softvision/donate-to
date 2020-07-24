@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import {
   AddressModel,
   CityModel,
@@ -12,13 +12,14 @@ import { OrganizationStepGeneralInformationComponent } from './organization-step
 import { OrganizationStepContactComponent } from './organization-step-contact/organization-step-contact.component';
 import { OrganizationStepAddressComponent } from './organization-step-address/organization-step-address.component';
 import { Router } from '@angular/router';
+import { EditOrganizationService } from 'src/app/shared/async-services/edit-organization.service';
 
 @Component({
   selector: 'app-organization-form',
   templateUrl: './organization-form.component.html',
   styleUrls: ['./organization-form.component.css'],
 })
-export class OrganizationFormComponent implements OnInit, OnDestroy {
+export class OrganizationFormComponent implements OnInit {
   @ViewChild(OrganizationStepGeneralInformationComponent)
   private organizationStepGeneralInformationComponent: OrganizationStepGeneralInformationComponent;
 
@@ -28,6 +29,8 @@ export class OrganizationFormComponent implements OnInit, OnDestroy {
   @ViewChild(OrganizationStepAddressComponent)
   private organizationStepAddressComponent: OrganizationStepAddressComponent;
 
+  // @Input() isEditOrganization: boolean;
+  // @Input() organizationToEdit: OrganizationModel;
   @Input() organization: OrganizationModel;
   @Output() validationResult = new EventEmitter<OrganizationModel>();
 
@@ -50,21 +53,20 @@ export class OrganizationFormComponent implements OnInit, OnDestroy {
   stepsData: boolean[] = [];
 
   organizationToSubmit = new OrganizationModel();
+  organizationToEdit = new OrganizationModel();
+  isEditOrganization = false;
+  currentId = 0;
 
-  constructor(public organizationSandbox: OrganizationSandbox, private router: Router) {}
+  constructor(
+    public organizationSandbox: OrganizationSandbox,
+    private router: Router,
+    private data: EditOrganizationService
+  ) {}
 
   ngOnInit(): void {
-    this.registerEvents();
-  }
-
-  ngOnDestroy(): void {
-    this.unregisterEvents();
-  }
-
-  registerEvents() {}
-
-  unregisterEvents() {
-    // this.subscriptions.forEach((sub) => sub.unsubscribe());
+    this.data.currentIsEditOrganization.subscribe((x) => (this.isEditOrganization = x));
+    this.data.currentOrganization.subscribe((x) => (this.organizationToEdit = { ...x }));
+    this.data.currentId.subscribe((x) => (this.currentId = x));
   }
 
   prev(): void {
@@ -79,8 +81,17 @@ export class OrganizationFormComponent implements OnInit, OnDestroy {
   }
 
   done(): void {
-    this.organizationToSubmit = this.createOrganization();
-    this.organizationSandbox.addOrganization(this.organizationToSubmit);
+    if (this.isEditOrganization) {
+      this.organizationToSubmit = this.organizationToEdit;
+
+      this.organizationToSubmit = this.editOrganization(this.organizationToSubmit);
+      this.organizationSandbox.updateOrganization(this.organizationToSubmit);
+      this.data.changeIsEditOrganization(false);
+    } else {
+      this.organizationToSubmit = this.createOrganization();
+      this.organizationSandbox.addOrganization(this.organizationToSubmit);
+    }
+
     this.goBack();
   }
 
@@ -167,6 +178,23 @@ export class OrganizationFormComponent implements OnInit, OnDestroy {
       this.addressModel = event.addressFormModel;
       this.updateStepsData();
     }
+  }
+
+  editOrganization(organizationToEdit: OrganizationModel): OrganizationModel {
+    // General Information
+    organizationToEdit.name = this.generalInformationModel.name;
+    organizationToEdit.description = this.generalInformationModel.description;
+
+    // Contact
+    organizationToEdit.contact = new ContactModel();
+    organizationToEdit.contact.firstName = this.contactModel?.firstName;
+    organizationToEdit.contact.lastName = this.contactModel?.lastName;
+    organizationToEdit.contact.email = this.contactModel?.email;
+    organizationToEdit.contact.identityNumber = this.contactModel?.identityNumber;
+    organizationToEdit.contact.phoneNumber = this.contactModel?.phoneNumber;
+    organizationToEdit.contact.position = this.contactModel?.position;
+
+    return organizationToEdit;
   }
 
   createOrganization(): OrganizationModel {

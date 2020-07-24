@@ -47,8 +47,11 @@ namespace DonateTo.Infrastructure.Data.Repositories
         private IQueryable<Organization> GetHydratedOrganization()
         {
             return DbContext.Set<Organization>()
-                .Include(o => o.Addresses).ThenInclude(a => a.Contact)
-                .Include(o => o.Contact);
+                .Include(a => a.Addresses).ThenInclude(a => a.Contact)
+                .Include(a => a.Addresses).ThenInclude(c => c.Country)
+                .Include(a => a.Addresses).ThenInclude(s => s.State)
+                .Include(a => a.Addresses).ThenInclude(c => c.City)
+                .Include(c => c.Contact);
         }
         #endregion
     }
