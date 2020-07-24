@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AddressModel, CityModel, ColumnItem, ContactModel, CountryModel, StateModel } from 'src/app/shared/models';
 import { Subscription } from 'rxjs';
 import { OrganizationSandbox } from '../../organization-sandbox';
@@ -13,7 +13,7 @@ import { OrganizationStepContactComponent } from '../organization-step-contact/o
 })
 export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
   addressStepForm: FormGroup;
-  @Input() addresses: AddressModel[] = [];
+  addresses: AddressModel[] = [];
 
   @Output() isFormValid = new EventEmitter();
   addressModel: AddressModel;
@@ -56,6 +56,7 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
   state = 0;
   city = 0;
   additionalInformation = '';
+  addressId = 0;
 
   isEditAddress = false;
 
@@ -76,18 +77,9 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
     this.registerEvents();
     this.organizationSandbox.loadCountries();
 
-    if (this.addresses) {
-      this.addresses.forEach((a) => {
-        this.street = a.street;
-        this.postalCode = a.postalCode;
-        this.floor = a.floor;
-        this.appartment = a.appartment;
-        this.country = a.countryId;
-        this.state = a.stateId;
-        this.city = a.cityId;
-        this.additionalInformation = a.additionalInformation;
-      });
-    }
+    this.organizationSandbox.organization$.subscribe((organization) => {
+      this.addresses = [...organization.addresses];
+    });
   }
 
   ngOnDestroy(): void {
@@ -152,10 +144,8 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
 
   getAddressFormModel(): AddressModel {
     const addressModel: AddressModel = new AddressModel();
-    const country: CountryModel = new CountryModel();
-    const state: StateModel = new StateModel();
-    const city: CityModel = new CityModel();
 
+    addressModel.id = this.addressId;
     addressModel.street = this.addressStepForm.value.street;
     addressModel.postalCode = this.addressStepForm.value.postalCode;
     addressModel.floor = this.addressStepForm.value.floor;
@@ -212,6 +202,7 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
   editAddress(item: AddressModel) {
     this.isEditAddress = true;
 
+    this.addressId = item.id;
     this.street = item.street;
     this.postalCode = item.postalCode;
     this.floor = item.floor;
@@ -229,6 +220,9 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
     this.organizationStepContactComponent.position = item.contact.position;
 
     this.item = item;
+
+    this.organizationSandbox.loadStatesByCountry(item.countryId);
+    this.organizationSandbox.loadCitiesByState(item.stateId);
   }
 
   cancelEdit() {

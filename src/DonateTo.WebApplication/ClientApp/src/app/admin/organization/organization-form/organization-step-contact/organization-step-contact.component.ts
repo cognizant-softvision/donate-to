@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ContactModel, OrganizationModel } from 'src/app/shared/models';
+import { OrganizationSandbox } from '../../organization-sandbox';
 
 @Component({
   selector: 'app-organization-step-contact',
@@ -22,8 +23,9 @@ export class OrganizationStepContactComponent implements OnInit {
   email = '';
   phoneNumber = '';
   position = '';
+  contactId = 0;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private organizationSandbox: OrganizationSandbox) {}
 
   ngOnInit(): void {
     this.responsableStepForm = this.fb.group({
@@ -35,26 +37,26 @@ export class OrganizationStepContactComponent implements OnInit {
       position: [this.contactModel?.position],
     });
 
-    if (this.contactModel.id || this.contactModel.id !== 0) {
-      this.firstName = this.contactModel?.firstName;
-      this.lastName = this.contactModel?.lastName;
-      this.identityNumber = this.contactModel?.identityNumber;
-      this.email = this.contactModel?.email;
-      this.phoneNumber = this.contactModel?.phoneNumber;
-      this.position = this.contactModel?.position;
-    }
+    this.organizationSandbox.organization$.subscribe((organization) => {
+      this.firstName = organization?.contact?.firstName;
+      this.lastName = organization?.contact?.lastName;
+      this.identityNumber = organization?.contact?.identityNumber;
+      this.email = organization?.contact?.email;
+      this.phoneNumber = organization?.contact?.phoneNumber;
+      this.position = organization?.contact?.position;
+      this.contactId = organization?.contact?.id;
+    });
 
     if (this.contactModel.id) {
       this.validateForm();
-      this.isFormValid.emit(
-        this.isFormValid.emit({ value: this.isValidForm(), contactFormModel: this.getContactFormModel() })
-      );
+      this.isFormValid.emit({ value: this.isValidForm(), contactFormModel: this.getContactFormModel() });
     }
 
     this.responsableStepForm.valueChanges.subscribe(() =>
-      this.isFormValid.emit(
-        this.isFormValid.emit({ value: this.isValidForm(), contactFormModel: this.getContactFormModel() })
-      )
+      this.isFormValid.emit({
+        value: this.isValidForm(),
+        contactFormModel: this.getContactFormModel(),
+      })
     );
   }
 
@@ -69,6 +71,7 @@ export class OrganizationStepContactComponent implements OnInit {
 
   getContactFormModel(): ContactModel {
     const contactModel: ContactModel = new ContactModel();
+    contactModel.id = this.contactId;
     contactModel.firstName = this.responsableStepForm.value.firstName;
     contactModel.lastName = this.responsableStepForm.value.lastName;
     contactModel.identityNumber = this.responsableStepForm.value.identityNumber;

@@ -1,15 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import {
-  AddressModel,
-  CityModel,
-  ContactModel,
-  CountryModel,
-  OrganizationModel,
-  StateModel,
-} from 'src/app/shared/models';
+import { AddressModel, ContactModel, OrganizationModel } from 'src/app/shared/models';
 import { OrganizationSandbox } from '../organization-sandbox';
-import { OrganizationStepGeneralInformationComponent } from './organization-step-general-information/organization-step-general-information.component';
-import { OrganizationStepContactComponent } from './organization-step-contact/organization-step-contact.component';
 import { OrganizationStepAddressComponent } from './organization-step-address/organization-step-address.component';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -20,12 +11,6 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./organization-form.component.css'],
 })
 export class OrganizationFormComponent implements OnInit {
-  @ViewChild(OrganizationStepGeneralInformationComponent)
-  private organizationStepGeneralInformationComponent: OrganizationStepGeneralInformationComponent;
-
-  @ViewChild(OrganizationStepContactComponent)
-  private organizationStepContactComponent: OrganizationStepContactComponent;
-
   @ViewChild(OrganizationStepAddressComponent)
   private organizationStepAddressComponent: OrganizationStepAddressComponent;
 
@@ -43,7 +28,6 @@ export class OrganizationFormComponent implements OnInit {
   generalInformationModel: OrganizationModel = new OrganizationModel();
   contactModel: ContactModel = new ContactModel();
   addressModel: AddressModel = new AddressModel();
-  addresses: AddressModel[] = [];
   subscriptions: Subscription[] = [];
 
   _isGeneralInformationStepReady = false;
@@ -63,9 +47,6 @@ export class OrganizationFormComponent implements OnInit {
       this.subscriptions.push(
         this.organizationSandbox.organization$.subscribe((o) => {
           this.organization = o;
-          this.generalInformationModel = this.organization;
-          this.contactModel = this.organization?.contact;
-          this.addresses = this.organization?.addresses;
         })
       );
     }

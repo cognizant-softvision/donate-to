@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OrganizationModel } from 'src/app/shared/models/organization.model';
+import { OrganizationSandbox } from '../../organization-sandbox';
 
 @Component({
   selector: 'app-organization-step-general-information',
@@ -17,7 +18,7 @@ export class OrganizationStepGeneralInformationComponent implements OnInit {
   organizationName = '';
   description = '';
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private organizationSandbox: OrganizationSandbox) {}
 
   ngOnInit(): void {
     this.generalInformationStepForm = this.fb.group({
@@ -25,18 +26,21 @@ export class OrganizationStepGeneralInformationComponent implements OnInit {
       description: [this.generalInformationModel?.description, [Validators.required]],
     });
 
-    if (this.generalInformationModel.id || this.generalInformationModel.id !== 0) {
-      this.organizationName = this.generalInformationModel?.name;
-      this.description = this.generalInformationModel?.name;
-    }
+    this.organizationSandbox.organization$.subscribe((organization) => {
+      this.organizationName = organization?.name;
+      this.description = organization?.description;
+    });
+
+    // if (this.generalInformationModel && this.generalInformationModel.id !== 0) {
+    //   this.organizationName = this.generalInformationModel?.name;
+    //   this.description = this.generalInformationModel?.name;
+    // }
 
     this.generalInformationStepForm.valueChanges.subscribe(() =>
-      this.isFormValid.emit(
-        this.isFormValid.emit({
-          value: this.isValidForm(),
-          generalInformationFormModel: this.getOrganizationFormModel(),
-        })
-      )
+      this.isFormValid.emit({
+        value: this.isValidForm(),
+        generalInformationFormModel: this.getOrganizationFormModel(),
+      })
     );
   }
 
