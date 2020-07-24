@@ -192,9 +192,17 @@ namespace DonateTo.Services
         }
 
         ///<inheritdoc cref="IBaseService{TEntity}"/>
+        public virtual PagedResult<TEntity> GetPagedFiltered(TFilter filter)
+        {
+            var predicate = GetPredicate(filter);
+
+            return _entityRequestRepository.GetPaged(filter.PageNumber, filter.PageSize, predicate, GetSort(filter));
+        }
+
+        ///<inheritdoc cref="IBaseService{TEntity}"/>
         public virtual async Task<PagedResult<TEntity>> GetPagedFilteredAsync(TFilter filter)
         {
-            var predicate = GetBasePredicate(filter);
+            var predicate = GetPredicate(filter);
 
             return await _entityRequestRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicate, GetSort(filter)).ConfigureAwait(false);
         }
@@ -204,7 +212,7 @@ namespace DonateTo.Services
         /// </summary>
         /// <param name="filter">Filter</param>
         /// <returns>Predicate</returns>
-        protected ExpressionStarter<TEntity> GetBasePredicate(TFilter filter)
+        protected virtual Expression<Func<TEntity, bool>> GetPredicate(TFilter filter)
         {
             var predicate = PredicateBuilder.New<TEntity>(true);
 

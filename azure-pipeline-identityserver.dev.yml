@@ -3,14 +3,13 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-#trigger:
-#  - develop
+trigger:
+  - develop
 
-pool: DiegoLocalMachine
-#  vmImage: "DiegoLocalMachine"
+pool:
+  vmImage: "windows-latest"
 
 variables:
-  #  solution: '**/*.sln'
   buildPlatform: "Any CPU"
   buildConfiguration: "Dev"
 
@@ -19,12 +18,12 @@ steps:
     displayName: Restore
     inputs:
       command: restore
-      projects: "src/DonateTo.WebApi/*.csproj"
+      projects: "src/DonateTo.IdentityServer/*.csproj"
 
   - task: DotNetCoreCLI@2
     displayName: Build
     inputs:
-      projects: "src/DonateTo.WebApi/*.csproj"
+      projects: "src/DonateTo.IdentityServer/*.csproj"
       arguments: "--configuration $(BuildConfiguration)"
 
   - task: DotNetCoreCLI@2
@@ -33,13 +32,14 @@ steps:
       command: test
       projects: "$(Parameters.TestProjects)"
       arguments: "--configuration $(BuildConfiguration)"
+    enabled: true
 
   - task: DotNetCoreCLI@2
     displayName: Publish
     inputs:
       command: publish
       publishWebProjects: false
-      projects: "src/DonateTo.WebApi/*.csproj"
+      projects: "src/DonateTo.IdentityServer/*.csproj"
       arguments: "--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)"
       zipAfterPublish: True
 
@@ -47,5 +47,5 @@ steps:
     displayName: "Publish Artifact"
     inputs:
       PathtoPublish: "$(build.artifactstagingdirectory)"
-      ArtifactName: webapidrop
+      ArtifactName: identityserverdrop
     condition: succeededOrFailed()

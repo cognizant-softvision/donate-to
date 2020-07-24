@@ -102,7 +102,15 @@
         "Finishcolumn": "Fecha Fin",
         "Observationcolumn": "Observación",
         "Quantitycolumn": "Cantidad",
-        "Categorycolumn": "Categorías"
+        "Categorycolumn": "Categorías",
+        "Action": "Action",
+        "Filtered": "Filtrada",
+        "Search": "Buscar",
+        "Reset": "Reestablecer",
+        "CreatedFrom": "Desde",
+        "CreatedTo": "Hasta",
+        "FinishFrom": "Desde",
+        "FinishTo": "Hasta"
       }
     },
     "Organization": {
@@ -202,7 +210,7 @@
         "PlaceholderRequired": "Nombre marcador es requerido",
         "ControlTypeRequired": "Tipo control es requerido",
         "AddItem": "Agregar Pregunta",
-        "PriorityQuestionRequiredError": "Por lo menos una pregunta de prioridad es requerida"
+        "PriorityQuestionRequiredError": "Por lo menos una pregunta de prioridad es requerida y el peso debe llegar a 100%."
       },
       "CreateConfirm": "Está seguro de que quiere crear una nueva pregunta?",
       "EditConfirm": "Estas seguro que quieres editar esta pregunta?"

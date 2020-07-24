@@ -90,7 +90,7 @@
         <tr>
           <td>{{ data.name }}</td>
           <td>{{ data.description }}</td>
-          <td>{{ data.contact.firstName + ' ' + data.contact.lastName }}</td>
+          <td>{{ data.contact?.fullName }}</td>
           <td>
             <a [routerLink]="['./edit', data.id]">{{ 'Admin.Edit' | translate }} </a>
             <nz-divider nzType="vertical"></nz-divider>

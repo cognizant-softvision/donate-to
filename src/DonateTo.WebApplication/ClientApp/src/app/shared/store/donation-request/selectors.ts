@@ -28,6 +28,11 @@ export const getAllDonationRequestsSearchPaged = createSelector(
   (state: DonationRequestState) => state.pagedItems
 );
 
+export const getDonationRequestsFilteredPaged = createSelector(
+  getEntityState,
+  (state: DonationRequestState) => state.pagedItems
+);
+
 @Injectable()
 export class DonationRequestSelectors {
   constructor(private store: Store<DonationRequestState>) {}
@@ -39,4 +44,5 @@ export class DonationRequestSelectors {
   loading$ = this.store.select(getLoadingStatus);
   failed$ = this.store.select(getFailedStatus);
   loadDonationRequest$ = this.store.select(getDonationRequest);
+  donationRequestsFilteredPaged$ = this.store.select(getDonationRequestsFilteredPaged);
 }

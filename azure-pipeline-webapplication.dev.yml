@@ -3,13 +3,11 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-#trigger:
-#  - develop
+trigger:
+  - develop
 
 pool:
   vmImage: "windows-latest"
-#pool: DiegoLocalMachine
-#  vmImage: "DiegoLocalMachine"
 
 variables:
   #  solution: '**/*.sln'
@@ -22,12 +20,6 @@ steps:
     inputs:
       command: restore
       projects: "src/DonateTo.WebApplication/*.csproj"
-
-  #  - task: Npm@1
-  #    displayName: Npm Install
-  #    inputs:
-  #      command: 'install'
-  #      workingDir: 'src/DonateTo.WebApplication/ClientApp'
 
   - task: DotNetCoreCLI@2
     displayName: Build

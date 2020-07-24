@@ -102,7 +102,15 @@
         "Finishcolumn": "Finish Date",
         "Observationcolumn": "Observation",
         "Quantitycolumn": "Quantity",
-        "Categorycolumn": "Category"
+        "Categorycolumn": "Category",
+        "Action": "Action",
+        "Filtered": "Filtered",
+        "Search": "Search",
+        "Reset": "Reset",
+        "CreatedFrom": "From",
+        "CreatedTo": "To",
+        "FinishFrom": "From",
+        "FinishTo": "To"
       }
     },
     "Organization": {
@@ -202,7 +210,7 @@
         "PlaceholderRequired": "Nombre marcador es requerido",
         "ControlTypeRequired": "Control Type is required",
         "AddItem": "Add Question",
-        "PriorityQuestionRequiredError": "At least 1 priority question is required"
+        "PriorityQuestionRequiredError": "At least 1 priority question is required and weight must reach 100%."
       },
       "CreateConfirm": "Are you sure you want to create a new question?",
       "EditConfirm": "Are you sure you want to edit the question?"

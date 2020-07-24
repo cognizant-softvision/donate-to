@@ -72,6 +72,13 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
+        PagedResult<T> GetPagedFiltered(TFilter filter);
+
+        /// <summary>
+        /// Get async paged result filtered and sorted
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
         Task<PagedResult<T>> GetPagedFilteredAsync(TFilter filter);
     }
 }

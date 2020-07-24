@@ -13,6 +13,10 @@
   margin-bottom: 2em;
 }
 
+.error-required {
+  color: red;
+}
+
 .create-priority-question-add-item-container {
   display: flex;
 }
