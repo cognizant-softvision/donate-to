@@ -70,6 +70,7 @@ export class UserComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.userSandbox.loadAction$.subscribe((status) => {
         this.successStatus = status;
+        this.handleRequestResult();
       })
     );
   }
@@ -103,7 +104,7 @@ export class UserComponent implements OnInit, OnDestroy {
   handleRequestResult() {
     if (this.isSubmited) {
       if (!this.failedStatus) {
-        this.userSandbox.loadUsers();
+        this.userSandbox.loadUsersFilteredPaged(this.userFilter);
         this.isSubmited = false;
       }
     }
