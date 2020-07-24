@@ -4,6 +4,7 @@ import { OrganizationFormComponent } from '../organization-form/organization-for
 import { OrganizationSandbox } from '../organization-sandbox';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { OrganizationModel } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-organization-create',
@@ -11,21 +12,15 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./organization-create.component.css'],
 })
 export class OrganizationCreateComponent implements OnDestroy {
-  // @ViewChild(OrganizationFormComponent)
   private organizationFormComponent: OrganizationFormComponent;
   private subscriptions: Subscription[] = [];
 
-  constructor(public organizationSandbox: OrganizationSandbox, private router: Router) {
-    //
-  }
+  organization: OrganizationModel = new OrganizationModel();
+  id = 0;
 
-  ngOnDestroy(): void {
-    this.unregisterEvents();
-  }
+  constructor(public organizationSandbox: OrganizationSandbox, private router: Router) {}
 
-  private unregisterEvents() {
-    // this.subscriptions.forEach((sub) => sub.unsubscribe());
-  }
+  ngOnDestroy(): void {}
 
   goBack() {
     this.router.navigate(['/admin/organization']);

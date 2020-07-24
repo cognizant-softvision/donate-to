@@ -44,7 +44,7 @@
     <app-organization-step-address
       *ngIf="currentStep === 2"
       (isFormValid)="isAddressStepReady($event)"
-      [addressModel]="addressModel"
+      [addresses]="addresses"
       [isEditOrganization]="isEditOrganization"
     >
     </app-organization-step-address>

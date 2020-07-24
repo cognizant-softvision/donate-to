@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OrganizationModel } from 'src/app/shared/models/organization.model';
-import { EditOrganizationService } from 'src/app/shared/async-services/edit-organization.service';
 
 @Component({
   selector: 'app-organization-step-general-information',
@@ -18,7 +17,7 @@ export class OrganizationStepGeneralInformationComponent implements OnInit {
   organizationName = '';
   description = '';
 
-  constructor(private fb: FormBuilder, private data: EditOrganizationService) {}
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.generalInformationStepForm = this.fb.group({
@@ -26,11 +25,9 @@ export class OrganizationStepGeneralInformationComponent implements OnInit {
       description: [this.generalInformationModel?.description, [Validators.required]],
     });
 
-    if (this.isEditOrganization) {
-      this.data.currentOrganization.subscribe((x) => {
-        this.organizationName = x?.name;
-        this.description = x?.description;
-      });
+    if (this.generalInformationModel.id || this.generalInformationModel.id !== 0) {
+      this.organizationName = this.generalInformationModel?.name;
+      this.description = this.generalInformationModel?.name;
     }
 
     this.generalInformationStepForm.valueChanges.subscribe(() =>

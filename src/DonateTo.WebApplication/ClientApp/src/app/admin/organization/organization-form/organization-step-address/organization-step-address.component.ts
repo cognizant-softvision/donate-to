@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { OrganizationSandbox } from '../../organization-sandbox';
 import { NzModalRef } from 'ng-zorro-antd';
 import { OrganizationStepContactComponent } from '../organization-step-contact/organization-step-contact.component';
-import { EditOrganizationService } from 'src/app/shared/async-services/edit-organization.service';
 
 @Component({
   selector: 'app-organization-step-address',
@@ -14,10 +13,10 @@ import { EditOrganizationService } from 'src/app/shared/async-services/edit-orga
 })
 export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
   addressStepForm: FormGroup;
-  addresses: AddressModel[] = [];
+  @Input() addresses: AddressModel[] = [];
 
   @Output() isFormValid = new EventEmitter();
-  @Input() addressModel: AddressModel;
+  addressModel: AddressModel;
   @Output() outputFromChild: EventEmitter<any> = new EventEmitter<any>();
   @Input() isEditOrganization: boolean;
 
@@ -60,11 +59,7 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
 
   isEditAddress = false;
 
-  constructor(
-    private fb: FormBuilder,
-    public organizationSandbox: OrganizationSandbox,
-    private data: EditOrganizationService
-  ) {}
+  constructor(private fb: FormBuilder, public organizationSandbox: OrganizationSandbox) {}
 
   ngOnInit(): void {
     this.addressStepForm = this.fb.group({
@@ -81,13 +76,18 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
     this.registerEvents();
     this.organizationSandbox.loadCountries();
 
-    // if (this.addressModel.id && this.addressModel.cityId) {
-    //   this.setStates();
-    //   this.setCities();
-    //   this.isFormValid.emit(
-    //     this.isFormValid.emit({ value: this.isValidForm(), addressFormModel: this.getAddressFormModel() })
-    //   );
-    // }
+    if (this.addresses) {
+      this.addresses.forEach((a) => {
+        this.street = a.street;
+        this.postalCode = a.postalCode;
+        this.floor = a.floor;
+        this.appartment = a.appartment;
+        this.country = a.countryId;
+        this.state = a.stateId;
+        this.city = a.cityId;
+        this.additionalInformation = a.additionalInformation;
+      });
+    }
   }
 
   ngOnDestroy(): void {
@@ -116,12 +116,6 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.organizationSandbox.states$.subscribe((states) => (this.states = states)));
 
     this.subscriptions.push(this.organizationSandbox.cities$.subscribe((cities) => (this.cities = cities)));
-
-    if (this.isEditOrganization) {
-      this.data.currentOrganization.subscribe((x) => {
-        this.addresses = x.addresses;
-      });
-    }
   }
 
   validateForm(): void {
@@ -170,16 +164,10 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
     addressModel.contact = this.getContact();
 
     addressModel.countryId = this.addressStepForm.value.countryId;
-    country.name = this.countries.find((x) => x.id === addressModel.countryId)?.name;
-    addressModel.country = country;
 
     addressModel.stateId = this.addressStepForm.value.stateId;
-    state.name = this.states.find((x) => x.id === addressModel.stateId)?.name;
-    addressModel.state = state;
 
     addressModel.cityId = this.addressStepForm.value.cityId;
-    city.name = this.cities.find((x) => x.id === addressModel.cityId)?.name;
-    addressModel.city = city;
 
     return addressModel;
   }

@@ -12,7 +12,7 @@ import { OrganizationStepGeneralInformationComponent } from './organization-step
 import { OrganizationStepContactComponent } from './organization-step-contact/organization-step-contact.component';
 import { OrganizationStepAddressComponent } from './organization-step-address/organization-step-address.component';
 import { Router } from '@angular/router';
-import { EditOrganizationService } from 'src/app/shared/async-services/edit-organization.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-organization-form',
@@ -29,9 +29,7 @@ export class OrganizationFormComponent implements OnInit {
   @ViewChild(OrganizationStepAddressComponent)
   private organizationStepAddressComponent: OrganizationStepAddressComponent;
 
-  // @Input() isEditOrganization: boolean;
-  // @Input() organizationToEdit: OrganizationModel;
-  @Input() organization: OrganizationModel;
+  @Input() id: number;
   @Output() validationResult = new EventEmitter<OrganizationModel>();
 
   // Step status
@@ -46,27 +44,31 @@ export class OrganizationFormComponent implements OnInit {
   contactModel: ContactModel = new ContactModel();
   addressModel: AddressModel = new AddressModel();
   addresses: AddressModel[] = [];
+  subscriptions: Subscription[] = [];
 
   _isGeneralInformationStepReady = false;
   _isContactStepReady = false;
   _isAddressStepReady = false;
   stepsData: boolean[] = [];
 
-  organizationToSubmit = new OrganizationModel();
-  organizationToEdit = new OrganizationModel();
   isEditOrganization = false;
-  currentId = 0;
+  organization: OrganizationModel;
 
-  constructor(
-    public organizationSandbox: OrganizationSandbox,
-    private router: Router,
-    private data: EditOrganizationService
-  ) {}
+  constructor(public organizationSandbox: OrganizationSandbox, private router: Router) {}
 
   ngOnInit(): void {
-    this.data.currentIsEditOrganization.subscribe((x) => (this.isEditOrganization = x));
-    this.data.currentOrganization.subscribe((x) => (this.organizationToEdit = { ...x }));
-    this.data.currentId.subscribe((x) => (this.currentId = x));
+    if (this.id !== 0) {
+      this.organizationSandbox.loadOrganization(this.id);
+
+      this.subscriptions.push(
+        this.organizationSandbox.organization$.subscribe((o) => {
+          this.organization = o;
+          this.generalInformationModel = this.organization;
+          this.contactModel = this.organization?.contact;
+          this.addresses = this.organization?.addresses;
+        })
+      );
+    }
   }
 
   prev(): void {
@@ -81,15 +83,12 @@ export class OrganizationFormComponent implements OnInit {
   }
 
   done(): void {
-    if (this.isEditOrganization) {
-      this.organizationToSubmit = this.organizationToEdit;
-
-      this.organizationToSubmit = this.editOrganization(this.organizationToSubmit);
-      this.organizationSandbox.updateOrganization(this.organizationToSubmit);
-      this.data.changeIsEditOrganization(false);
+    if (this.organization.id && this.organization.id !== 0) {
+      this.setOrganization();
+      this.organizationSandbox.updateOrganization(this.organization);
     } else {
-      this.organizationToSubmit = this.createOrganization();
-      this.organizationSandbox.addOrganization(this.organizationToSubmit);
+      this.setOrganization();
+      this.organizationSandbox.addOrganization(this.organization);
     }
 
     this.goBack();
@@ -180,70 +179,18 @@ export class OrganizationFormComponent implements OnInit {
     }
   }
 
-  editOrganization(organizationToEdit: OrganizationModel): OrganizationModel {
-    // General Information
-    organizationToEdit.name = this.generalInformationModel.name;
-    organizationToEdit.description = this.generalInformationModel.description;
-
-    // Contact
-    organizationToEdit.contact = new ContactModel();
-    organizationToEdit.contact.firstName = this.contactModel?.firstName;
-    organizationToEdit.contact.lastName = this.contactModel?.lastName;
-    organizationToEdit.contact.email = this.contactModel?.email;
-    organizationToEdit.contact.identityNumber = this.contactModel?.identityNumber;
-    organizationToEdit.contact.phoneNumber = this.contactModel?.phoneNumber;
-    organizationToEdit.contact.position = this.contactModel?.position;
-
-    return organizationToEdit;
-  }
-
-  createOrganization(): OrganizationModel {
-    const organization = new OrganizationModel();
-    const contact = new ContactModel();
-    let addresses: AddressModel[] = [];
+  setOrganization() {
     let addressesFromModel: AddressModel[] = [];
     addressesFromModel = this.organizationStepAddressComponent.addresses;
 
-    contact.firstName = this.contactModel.firstName;
-    contact.lastName = this.contactModel.lastName;
-    contact.email = this.contactModel.email;
-    contact.identityNumber = this.contactModel.identityNumber;
-    contact.phoneNumber = this.contactModel.phoneNumber;
-    contact.position = this.contactModel.position;
+    this.organization = {
+      ...this.organization,
+      name: this.generalInformationModel.name,
+      description: this.generalInformationModel.description,
+      contact: this.contactModel,
+      addresses: addressesFromModel,
+    };
 
-    addressesFromModel.forEach((a) => {
-      const newAddress = new AddressModel();
-      const country = new CountryModel();
-      const state = new StateModel();
-      const city = new CityModel();
-
-      country.name = a.country?.name;
-      state.name = a.state?.name;
-      city.name = a.city?.name;
-
-      newAddress.street = a.street;
-      newAddress.postalCode = a.postalCode;
-      newAddress.floor = a.postalCode;
-      newAddress.appartment = a.appartment;
-      newAddress.additionalInformation = a.additionalInformation;
-
-      newAddress.country = undefined;
-      newAddress.countryId = a.countryId;
-      newAddress.stateId = a.stateId;
-      newAddress.state = undefined;
-      newAddress.cityId = a.cityId;
-      newAddress.city = undefined;
-      newAddress.contact = a.contact;
-      newAddress.contactId = undefined;
-
-      addresses = [...addresses, newAddress];
-    });
-
-    organization.name = this.generalInformationModel.name;
-    organization.description = this.generalInformationModel.description;
-    organization.contact = contact;
-    organization.addresses = addresses;
-
-    return organization;
+    return this.organization;
   }
 }
