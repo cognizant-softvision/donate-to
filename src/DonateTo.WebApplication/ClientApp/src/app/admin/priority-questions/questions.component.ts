@@ -67,7 +67,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
-    const { pageSize, pageIndex, sort, filter } = params;
+    const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
 
     this.questionFilter = {
@@ -76,9 +76,6 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       pageNumber: pageIndex,
       orderBy: (currentSort && currentSort.key) || '',
       orderDirection: (currentSort && currentSort.value) || '',
-      label: (filter && filter.find((f) => f.key === 'label')?.value) || '',
-      type: (filter && filter.find((f) => f.key === 'type')?.value) || '',
-      placeholder: (filter && filter.find((f) => f.key === 'placeholder')?.value) || '',
     };
 
     this.questionSandbox.loadQuestionsFilteredPaged(this.questionFilter);
