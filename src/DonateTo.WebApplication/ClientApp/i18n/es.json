@@ -41,8 +41,8 @@
     "Menu": {
       "Title": {
         "Donation": "Donaciones",
-        "User": "Usuarios",
-        "Organization": "Organizaciones",
+        "Users": "Usuarios",
+        "Organizations": "Organizaciones",
         "Priority-questions": "Prioridad"
       }
     },
