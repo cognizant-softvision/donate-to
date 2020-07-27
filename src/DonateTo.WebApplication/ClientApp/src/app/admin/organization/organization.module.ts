@@ -1,23 +1,9 @@
-import es from '@angular/common/locales/es';
-import { CommonModule, registerLocaleData } from '@angular/common';
-import { EffectsModule } from '@ngrx/effects';
-import { FormsModule } from '@angular/forms';
-import { fromOrganization } from '../../shared/store';
-import { HttpClient } from '@angular/common/http';
-import { IconDefinition } from '@ant-design/icons-angular';
-import { HttpLoaderFactory } from '../../app.module';
 import { NgModule } from '@angular/core';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { OrganizationComponent } from './organization.component';
-import { OrganizationEffects } from '../../shared/store/organization/effects';
-import { OrganizationRoutingModule } from './organization-routing.module';
-import { OrganizationSandbox } from './organization-sandbox';
-import { ReactiveFormsModule } from '@angular/forms';
-import { StoreModule } from '@ngrx/store';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { IconDefinition } from '@ant-design/icons-angular';
 import {
+  NzButtonModule,
   NzDatePickerModule,
+  NzDividerModule,
   NzDropDownModule,
   NzEmptyModule,
   NzFormModule,
@@ -33,12 +19,38 @@ import {
   NzTableModule,
   NzTagModule,
 } from 'ng-zorro-antd';
-import { MinusCircleOutline, PlusOutline } from '@ant-design/icons-angular/icons';
+import { NzStepsModule } from 'ng-zorro-antd/steps';
+import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
+import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpLoaderFactory } from 'src/app/app.module';
+import { HttpClient } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { OrganizationCreateComponent } from './organization-create/organization-create.component';
+import { OrganizationSandbox } from './organization-sandbox';
+import { OrganizationComponent } from './organization.component';
+import { OrganizationEditComponent } from './organization-edit/organization-edit.component';
+import { OrganizationFormComponent } from './organization-form/organization-form.component';
+import { OrganizationRoutingModule } from './organization-routing.module';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { OrganizationEffects } from 'src/app/shared/store/organization';
+import { AddressEffects } from 'src/app/shared/store/address';
+import { fromAddress, fromOrganization } from 'src/app/shared/store';
+import {
+  ArrowLeftOutline,
+  HomeOutline,
+  InfoCircleOutline,
+  SmileOutline,
+  UserOutline,
+} from '@ant-design/icons-angular/icons';
+import { OrganizationStepGeneralInformationComponent } from './organization-form/organization-step-general-information/organization-step-general-information.component';
+import { OrganizationStepContactComponent } from './organization-form/organization-step-contact/organization-step-contact.component';
+import { OrganizationStepAddressComponent } from './organization-form/organization-step-address/organization-step-address.component';
+import { OrganizationDetailComponent } from './organization-detail/organization-detail.component';
 
-// FIX this should be moved to an upper level.
-registerLocaleData(es);
-
-const ICONS = [MinusCircleOutline, PlusOutline];
+const ICONS: IconDefinition[] = [ArrowLeftOutline, HomeOutline, InfoCircleOutline, UserOutline, SmileOutline];
 
 @NgModule({
   imports: [
@@ -53,19 +65,20 @@ const ICONS = [MinusCircleOutline, PlusOutline];
     NzTableModule,
     NzTagModule,
     NzRadioModule,
-    NzDatePickerModule,
-    NzDropDownModule,
     NzButtonModule,
     NzSelectModule,
     NzInputModule,
     NzDividerModule,
-    NzTableModule,
-    EffectsModule.forFeature([OrganizationEffects]),
-    StoreModule.forFeature(fromOrganization.organizationFeatureKey, fromOrganization.reducer),
+    NzStepsModule,
+    NzDatePickerModule,
+    NzDropDownModule,
+    NzPageHeaderModule,
+    NzDescriptionsModule,
+
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
-    OrganizationRoutingModule,
+
     TranslateModule.forChild({
       defaultLanguage: 'en',
       loader: {
@@ -75,8 +88,22 @@ const ICONS = [MinusCircleOutline, PlusOutline];
       },
       extend: true,
     }),
+    OrganizationRoutingModule,
+
+    EffectsModule.forFeature([OrganizationEffects, AddressEffects]),
+    StoreModule.forFeature(fromOrganization.organizationFeatureKey, fromOrganization.reducer),
+    StoreModule.forFeature(fromAddress.addressFeatureKey, fromAddress.reducer),
   ],
-  declarations: [OrganizationComponent],
+  declarations: [
+    OrganizationComponent,
+    OrganizationCreateComponent,
+    OrganizationEditComponent,
+    OrganizationFormComponent,
+    OrganizationStepGeneralInformationComponent,
+    OrganizationStepContactComponent,
+    OrganizationStepAddressComponent,
+    OrganizationDetailComponent,
+  ],
   providers: [OrganizationSandbox],
 })
 export class OrganizationModule {}

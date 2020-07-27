@@ -11,6 +11,7 @@ namespace DonateTo.WebApi.Filters
         public static void AddFiltersToModule(this IServiceCollection service)
         {
             service.AddScoped<OrganizationAccessFilter>();
+            service.AddScoped<AdminAccessFilter>();
         }
     }
 }
