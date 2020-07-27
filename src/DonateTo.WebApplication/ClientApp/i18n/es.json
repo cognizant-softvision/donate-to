@@ -42,7 +42,7 @@
       "Title": {
         "Donation": "Donaciones",
         "User": "Usuarios",
-        "Organization": "Organización",
+        "Organization": "Organizaciones",
         "Priority-questions": "Prioridad"
       }
     },
@@ -114,7 +114,7 @@
       }
     },
     "Organization": {
-      "Title": "Organización",
+      "Title": "Organizaciones",
       "BackConfirm": "¿Estas seguro que quieres volver?",
       "CreateConfirm": "¿Estas seguro que quieres crear una organización?",
       "EditConfirm": "¿Estas seguro que quieres editar esta organización?",
