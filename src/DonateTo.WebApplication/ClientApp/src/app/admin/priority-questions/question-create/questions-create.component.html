@@ -82,6 +82,7 @@
                   placeholder="{{ 'Admin.PriorityQuestion.Form.OrderPlaceHolder' | translate }}"
                   formControlName="orderFormControl"
                   type="number"
+                  [(ngModel)]="order"
                   min="1"
                 />
               </nz-form-control>
@@ -97,6 +98,7 @@
                   formControlName="weightFormControl"
                   type="number"
                   min="1"
+                  [(ngModel)]="weight"
                   max="100"
                 />
               </nz-form-control>
