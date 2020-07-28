@@ -207,10 +207,12 @@
         "DefaultValueRequired": "Default Value is required",
         "OrderRequired": "Order is required",
         "WeightRequired": "Weight is required",
-        "PlaceholderRequired": "Nombre marcador es requerido",
+        "PlaceholderRequired": "Placeholder is required",
         "ControlTypeRequired": "Control Type is required",
         "AddItem": "Add Question",
-        "PriorityQuestionRequiredError": "At least 1 priority question is required and weight must reach 100%."
+        "PriorityQuestionRequiredError": "At least 1 priority question is required and weight must reach 100%.",
+        "PriorityRangeError": "The range does not cover the entire value.",
+        "PriorityWeightError": "The weight of each option must sum a total of 100"
       },
       "CreateConfirm": "Are you sure you want to create a new question?",
       "EditConfirm": "Are you sure you want to edit the question?"

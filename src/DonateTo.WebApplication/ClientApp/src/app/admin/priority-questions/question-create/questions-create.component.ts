@@ -4,10 +4,10 @@ import { QuestionsSandbox } from '../questions-sandbox';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { Subscription } from 'rxjs';
 import { ColumnItem, QuestionModel } from 'src/app/shared/models';
-import { ControlType2LabelMapping } from 'src/app/shared/enum/controlTypes';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { QuestionOption } from 'src/app/shared/models/question-option.modal';
 import { ControlTypeModel } from 'src/app/shared/models/control-type.model';
+import { ControlType } from 'src/app/shared/enum/controlTypes';
 
 @Component({
   selector: 'app-questions-create',
@@ -22,8 +22,10 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   private subscriptions: Subscription[] = [];
   private isSubmited = false;
   private loadingStatus = false;
-  public ControlType2LabelMapping = ControlType2LabelMapping;
   private controlTypes: ControlTypeModel[] = [];
+  get controlTypeEnum() {
+    return ControlType;
+  }
 
   isErrorModalActive = false;
   tplModal?: NzModalRef;
@@ -63,12 +65,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     maxFormControl: new FormControl(''),
   });
 
-  constructor(
-    public questionSandbox: QuestionsSandbox,
-    private router: Router,
-    private modal: NzModalService,
-    private formBuilder: FormBuilder
-  ) {}
+  constructor(public questionSandbox: QuestionsSandbox, private router: Router, private modal: NzModalService) {}
 
   ngOnInit(): void {
     this.questionSandbox.loadControlTypes();
@@ -182,7 +179,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
         questionSavedItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
 
         this.optionsArray.removeAt(this.optionsArray.length);
-        if (questionSavedItem.controlType.name !== 'Textbox') {
+        if (questionSavedItem.controlType.id !== ControlType.Textbox) {
           for (const o of this.optionsArray.value) {
             const questionOption = new QuestionOption();
             questionOption.label = o.optionLabel;
@@ -203,17 +200,17 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
           }
           if (!this.optionsRange(options)) {
             this.modal.error({
-              nzTitle: 'Warning',
-              nzContent: 'The range does not cover the entire value.',
+              nzTitle: 'WarningNotificationTitle',
+              nzContent: 'Admin.PriorityQuestion.Form.PriorityRangeError',
             });
           }
         }
         questionSavedItem.options = options;
 
-        if (this.optionsWeight(questionSavedItem.options) !== true) {
+        if (!this.optionsWeight(questionSavedItem.options)) {
           this.modal.error({
-            nzTitle: 'Warning',
-            nzContent: 'The weight of each option must sum a total of 100',
+            nzTitle: 'WarningNotificationTitle',
+            nzContent: 'Admin.PriorityQuestion.Form.PriorityWeightError',
           });
         }
         questionItem.id = questionSavedItem.id;
@@ -235,7 +232,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
         questionItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
 
         this.optionsArray.removeAt(this.optionsArray.length);
-        if (questionItem.controlType.name !== 'Textbox') {
+        if (questionItem.controlType.id !== ControlType.Textbox) {
           for (const o of this.optionsArray.value) {
             const questionOption = new QuestionOption();
             questionOption.label = o.optionLabel;
@@ -255,8 +252,8 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
           }
           if (!this.optionsRange(options)) {
             this.modal.error({
-              nzTitle: 'Warning',
-              nzContent: 'The range does not cover the entire value.',
+              nzTitle: 'WarningNotificationTitle',
+              nzContent: 'Admin.PriorityQuestion.Form.PriorityRangeError',
             });
           }
         }
@@ -264,8 +261,8 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
 
         if (this.optionsWeight(questionItem.options) !== true) {
           this.modal.error({
-            nzTitle: 'Warning',
-            nzContent: 'The weight of each option must sum a total of 100',
+            nzTitle: 'WarningNotificationTitle',
+            nzContent: 'Admin.PriorityQuestion.Form.PriorityWeightError',
           });
         } else {
           this.questions = [...this.questions, questionItem];
