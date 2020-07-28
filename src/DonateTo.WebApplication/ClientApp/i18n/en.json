@@ -40,14 +40,14 @@
     "View": "View",
     "Menu": {
       "Title": {
-        "Donation": "Donations Request",
+        "Donation": "Donation Requests",
         "Users": "Users",
         "Organizations": "Organizations",
         "Priority-questions": "Priority Questions"
       }
     },
     "Donation": {
-      "Title": "Donation Request",
+      "Title": "Donation Requests",
       "Create": {
         "Title": "Create donation request",
         "AddItem": "Add Item",
