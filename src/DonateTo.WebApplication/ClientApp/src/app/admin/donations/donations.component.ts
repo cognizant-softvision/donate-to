@@ -26,10 +26,12 @@ export class DonationsComponent implements OnDestroy, OnInit {
   searchFinishDateBeginValue: Date;
   searchFinishDateEndValue: Date;
   searchObservationValue = '';
+  placedDonations = '';
   titleVisible = false;
   createdDateVisible = false;
   finishDateVisible = false;
   observationVisible = false;
+  placedDonationsVisible = false;
   donationRequestFilter = new DonationRequestFilter();
   failedStatus = false;
   successStatus = false;
