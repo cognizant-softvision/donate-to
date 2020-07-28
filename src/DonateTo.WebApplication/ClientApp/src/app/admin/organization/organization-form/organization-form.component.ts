@@ -76,7 +76,7 @@ export class OrganizationFormComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/admin/organization']);
+    this.router.navigate(['/admin/organizations']);
   }
 
   changeStatus() {
