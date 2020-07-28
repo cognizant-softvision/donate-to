@@ -8,6 +8,7 @@ import { ControlType2LabelMapping } from 'src/app/shared/enum/controlTypes';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { QuestionOption } from 'src/app/shared/models/question-option.modal';
 import { ControlTypeModel } from 'src/app/shared/models/control-type.model';
+import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
 
 @Component({
   selector: 'app-questions-create',
@@ -29,6 +30,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   tplModal?: NzModalRef;
   public isOption = false;
   optionsArray = new FormArray([]);
+  dataSaved = false;
 
   label = '';
   placeholder = '';
@@ -65,7 +67,8 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     public questionSandbox: QuestionsSandbox,
     private router: Router,
     private modal: NzModalService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private dataUpdated: DataUpdatedService
   ) {}
 
   ngOnInit(): void {
@@ -74,6 +77,8 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     this.registerEvents();
     this.addField();
     this.addField();
+
+    this.dataUpdated.currentStatus.subscribe((dataSaved) => (this.dataSaved = dataSaved));
   }
 
   ngOnDestroy(): void {
@@ -119,6 +124,8 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
         question.controlType = undefined;
       });
       this.questionSandbox.updateQuestions(this.questions);
+
+      this.dataUpdated.changeMessage(true);
     }
   }
 
