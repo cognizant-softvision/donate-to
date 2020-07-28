@@ -316,9 +316,9 @@ namespace DonateTo.Services
                 "Id ";
 
             sort += !string.IsNullOrEmpty(filter.OrderDirection)
-                && (filter.OrderDirection == SortDirection.Descending || filter.OrderDirection == "descending") ?
-                SortDirection.Descending :
-                SortDirection.Ascending;
+                && new[] { SortDirection.Desc, SortDirection.Descend, SortDirection.Descending }.Any(order => filter.OrderDirection == order) ?
+                    SortDirection.Desc :
+                    SortDirection.Asc;
 
             return sort;
         }
