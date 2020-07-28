@@ -8,6 +8,7 @@ import { ControlType2LabelMapping } from 'src/app/shared/enum/controlTypes';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { QuestionOption } from 'src/app/shared/models/question-option.modal';
 import { ControlTypeModel } from 'src/app/shared/models/control-type.model';
+import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
 
 @Component({
   selector: 'app-questions-create',
@@ -29,6 +30,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   tplModal?: NzModalRef;
   public isOption = false;
   optionsArray = new FormArray([]);
+  dataSaved = false;
 
   label = '';
   placeholder = '';
@@ -65,7 +67,8 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     public questionSandbox: QuestionsSandbox,
     private router: Router,
     private modal: NzModalService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private dataUpdated: DataUpdatedService
   ) {}
 
   ngOnInit(): void {
@@ -74,6 +77,8 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     this.registerEvents();
     this.addField();
     this.addField();
+
+    this.dataUpdated.currentStatus.subscribe((dataSaved) => (this.dataSaved = dataSaved));
   }
 
   ngOnDestroy(): void {
@@ -119,6 +124,8 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
         question.controlType = undefined;
       });
       this.questionSandbox.updateQuestions(this.questions);
+
+      this.dataUpdated.changeMessage(true);
     }
   }
 
@@ -150,7 +157,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     this.isEdit = true;
   }
 
-  resetEdit() {
+  resetForm() {
     this.label = '';
     this.placeholder = '';
     this.weight = 0;
@@ -159,11 +166,14 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     this.controlTypeId = 0;
     this.questionId = 0;
     this.isEdit = false;
+    this.optionsArray = new FormArray([]);
+    this.addField();
+    this.addField();
   }
 
   addQuestion() {
     this.validateFormGroup(this.questionItemFormGroup);
-    if (this.questionItemFormGroup.valid) {
+    if (this.questionItemFormGroup.valid && this.validateOptionsWeight()) {
       const questionItem = new QuestionModel();
       let options: QuestionOption[] = [];
 
@@ -189,13 +199,6 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
             options = [...options, questionOption];
           }
           questionSavedItem.options = options;
-
-          if (this.optionsWeight(questionSavedItem.options) !== true) {
-            this.modal.error({
-              nzTitle: 'Warning',
-              nzContent: 'The weight of each option must sum a total of 100',
-            });
-          }
         }
 
         questionItem.id = questionSavedItem.id;
@@ -227,19 +230,13 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
           }
           questionItem.options = options;
 
-          if (this.optionsWeight(questionItem.options) !== true) {
-            this.modal.error({
-              nzTitle: 'Warning',
-              nzContent: 'The weight of each option must sum a total of 100',
-            });
-          } else {
-            this.questions = [...this.questions, questionItem];
-          }
+          this.questions = [...this.questions, questionItem];
         } else {
           this.questions = [...this.questions, questionItem];
         }
       }
       this.questionItemFormGroup.reset();
+      this.resetForm();
     }
   }
 
@@ -254,7 +251,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
 
   removeQuestion(item: QuestionModel): void {
     if (item.id === this.questionId) {
-      this.resetEdit();
+      this.resetForm();
     }
     this.questions = this.questions.filter((q) => q !== item);
   }
@@ -267,8 +264,18 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     if (this.questionItemFormGroup.controls.controlTypeFormControl.value === 'RadioButton') {
       this.isOption = true;
     }
-
     return this.isOption;
+  }
+
+  validateOptionsWeight() {
+    const isValid = this.optionsWeight();
+    if (!isValid) {
+      this.modal.error({
+        nzTitle: 'Warning',
+        nzContent: 'The weight of each option must sum a total of 100',
+      });
+    }
+    return isValid;
   }
 
   addField(e?: MouseEvent): void {
@@ -292,7 +299,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     }
   }
 
-  optionsWeight(options: QuestionOption[]): boolean {
-    return options.reduce((acc, cur) => acc + cur.weight, 0) === this.requiredWeight;
+  optionsWeight(): boolean {
+    return this.optionsArray.value.reduce((acc, cur) => acc + cur.optionWeight, 0) === this.requiredWeight;
   }
 }

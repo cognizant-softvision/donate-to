@@ -6,15 +6,7 @@
   <app-donations-form></app-donations-form>
   <br />
   <div class="create-donation-form-buttons">
-    <button
-      nz-popconfirm
-      nzPopconfirmTitle="{{ 'Admin.Donation.CreateConfirm' | translate }}"
-      nzPopconfirmPlacement="bottom"
-      (nzOnConfirm)="openDonationPriority()"
-      nz-button
-      nzType="primary"
-      type="submit"
-    >
+    <button (click)="openDonationPriority()" nz-button nzType="primary" type="submit">
       {{ 'Admin.Donation.Create.CreateRequest' | translate }}
     </button>
     <button

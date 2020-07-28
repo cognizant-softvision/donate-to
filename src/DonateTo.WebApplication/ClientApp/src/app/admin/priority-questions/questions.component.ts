@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { NzTableQueryParams } from 'ng-zorro-antd';
 import { QuestionsSandbox } from './questions-sandbox';
+import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
 
 @Component({
   selector: 'app-questions-admin',
@@ -28,8 +29,13 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   expandSet = new Set<number>();
   failedStatus = false;
   successStatus = false;
+  dataSaved = false;
 
-  constructor(private questionSandbox: QuestionsSandbox, public router: Router) {}
+  constructor(
+    private questionSandbox: QuestionsSandbox,
+    public router: Router,
+    private dataUpdated: DataUpdatedService
+  ) {}
 
   ngOnInit(): void {
     this.questionFilter = {
@@ -64,10 +70,16 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     );
 
     this.questionSandbox.loadQuestions();
+
+    this.dataUpdated.currentStatus.subscribe((dataSaved) => (this.dataSaved = dataSaved));
+    if (this.dataSaved) {
+      this.dataUpdated.changeMessage(false);
+      window.location.reload();
+    }
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
-    const { pageSize, pageIndex, sort, filter } = params;
+    const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
 
     this.questionFilter = {
@@ -76,9 +88,6 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       pageNumber: pageIndex,
       orderBy: (currentSort && currentSort.key) || '',
       orderDirection: (currentSort && currentSort.value) || '',
-      label: (filter && filter.find((f) => f.key === 'label')?.value) || '',
-      type: (filter && filter.find((f) => f.key === 'type')?.value) || '',
-      placeholder: (filter && filter.find((f) => f.key === 'placeholder')?.value) || '',
     };
 
     this.questionSandbox.loadQuestionsFilteredPaged(this.questionFilter);

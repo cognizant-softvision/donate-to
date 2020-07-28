@@ -19,3 +19,11 @@ label.filter {
 .from {
   margin-right: 0.25em;
 }
+
+i {
+  font-size: 1.5em;
+}
+
+a {
+  color: grey;
+}

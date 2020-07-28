@@ -5,8 +5,10 @@ using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models.Filtering;
 using DonateTo.ApplicationCore.Models.Pagination;
 using LinqKit;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -61,25 +63,32 @@ namespace DonateTo.Services
             return await _organizationRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicate, GetSort(filter)).ConfigureAwait(false);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "<Pending>")]
+        ///<inheritdoc cref="BaseService{DonationRequest, DonationRequestFilterModel}"/>
         protected override Expression<Func<Organization, bool>> GetPredicate(OrganizationFilterModel filter)
         {
             var predicate = base.GetPredicate(filter);
 
+            //EF function is the way used to compare string avoiding EF core translation issue with
+            //case sensitive comparer mentioned here https://github.com/dotnet/efcore/issues/1222#issuecomment-611113142
+            //Also, due to EF core restriction EF functions cannot be extracted to an extension method
+
             if (!string.IsNullOrEmpty(filter.Name))
             {
-                predicate = predicate.And(p => p.Name.Contains(filter.Name));
+                predicate = predicate.And(p =>
+                                EF.Functions.ILike(p.Name, string.Format(CultureInfo.CurrentCulture, "%{0}%", filter.Name)));
             }
 
             if (!string.IsNullOrEmpty(filter.Description))
             {
-                predicate = predicate.And(p => p.Description.Contains(filter.Description));
+                predicate = predicate.And(p =>
+                                EF.Functions.ILike(p.Description, string.Format(CultureInfo.CurrentCulture, "%{0}%", filter.Description)));
             }
 
             if (!string.IsNullOrEmpty(filter.ContactName))
             {
-                predicate = predicate.And(p => p.Contact.FirstName.Contains(filter.ContactName)
-                                        || p.Contact.LastName.Contains(filter.ContactName));
+                predicate = predicate.And(p =>
+                                    EF.Functions.ILike(p.Contact.FirstName, string.Format(CultureInfo.CurrentCulture, "%{0}%", filter.ContactName)) ||
+                                    EF.Functions.ILike(p.Contact.LastName, string.Format(CultureInfo.CurrentCulture, "%{0}%", filter.ContactName)));
             }
 
             return predicate;
