@@ -208,7 +208,7 @@ namespace DonateTo.Services
         }
 
         /// <summary>
-        /// Get TEntity base predicate
+        /// Get TEntity base predicate from given filter
         /// </summary>
         /// <param name="filter">Filter</param>
         /// <returns>Predicate</returns>
