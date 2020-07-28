@@ -43,6 +43,8 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   questionId = 0;
   isEdit = false;
   isQuestionsValid = true;
+  isWeightValid = true;
+  isRangeValid = true;
   requiredWeight = 100;
 
   listOfColumns: ColumnItem[] = [
@@ -70,8 +72,6 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   constructor(
     public questionSandbox: QuestionsSandbox,
     private router: Router,
-    private modal: NzModalService,
-    private formBuilder: FormBuilder,
     private dataUpdated: DataUpdatedService
   ) {}
 
@@ -137,6 +137,12 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     this.isQuestionsValid = this.questions.length > 0 && this.sumWeight() === this.requiredWeight;
   }
 
+  validateOptions(): boolean {
+    this.isWeightValid = this.optionsWeight();
+    this.isRangeValid = this.optionsRange();
+    return this.isWeightValid && this.isRangeValid;
+  }
+
   goBack() {
     this.router.navigate(['/admin/priority-questions']);
   }
@@ -161,23 +167,9 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     this.isEdit = true;
   }
 
-  resetForm() {
-    this.label = '';
-    this.placeholder = '';
-    this.weight = 0;
-    this.order = 0;
-    this.defaultValue = '';
-    this.controlTypeId = 0;
-    this.questionId = 0;
-    this.isEdit = false;
-    this.optionsArray = new FormArray([]);
-    this.addField();
-    this.addField();
-  }
-
   addQuestion() {
     this.validateFormGroup(this.questionItemFormGroup);
-    if (this.questionItemFormGroup.valid && this.validateOptionsWeight()) {
+    if (this.questionItemFormGroup.valid && this.validateOptions()) {
       const questionItem = new QuestionModel();
       let options: QuestionOption[] = [];
 
@@ -213,21 +205,8 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
             questionOption.weight = o.optionWeight;
             options = [...options, questionOption];
           }
-          if (!this.optionsRange(options)) {
-            this.modal.error({
-              nzTitle: 'WarningNotificationTitle',
-              nzContent: 'Admin.PriorityQuestion.Form.PriorityRangeError',
-            });
-          }
         }
         questionSavedItem.options = options;
-
-        if (!this.optionsWeight(questionSavedItem.options)) {
-          this.modal.error({
-            nzTitle: 'WarningNotificationTitle',
-            nzContent: 'Admin.PriorityQuestion.Form.PriorityWeightError',
-          });
-        }
         questionItem.id = questionSavedItem.id;
         questionItem.key = questionSavedItem.key;
         questionItem.createdBy = questionSavedItem.createdBy;
@@ -265,23 +244,9 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
             questionOption.weight = o.optionWeight;
             options = [...options, questionOption];
           }
-          if (!this.optionsRange(options)) {
-            this.modal.error({
-              nzTitle: 'WarningNotificationTitle',
-              nzContent: 'Admin.PriorityQuestion.Form.PriorityRangeError',
-            });
-          }
         }
         questionItem.options = options;
-
-        if (this.optionsWeight(questionItem.options) !== true) {
-          this.modal.error({
-            nzTitle: 'WarningNotificationTitle',
-            nzContent: 'Admin.PriorityQuestion.Form.PriorityWeightError',
-          });
-        } else {
-          this.questions = [...this.questions, questionItem];
-        }
+        this.questions = [...this.questions, questionItem];
       }
       this.questionItemFormGroup.reset();
       this.optionsArray.reset();
@@ -299,7 +264,8 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
 
   removeQuestion(item: QuestionModel): void {
     if (item.id === this.questionId) {
-      this.resetForm();
+      this.questionItemFormGroup.reset();
+      this.optionsArray.reset();
     }
     this.questions = this.questions.filter((q) => q !== item);
   }
@@ -313,17 +279,6 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
       this.isOption = true;
     }
     return this.isOption;
-  }
-
-  validateOptionsWeight() {
-    const isValid = this.optionsWeight();
-    if (!isValid) {
-      this.modal.error({
-        nzTitle: 'Warning',
-        nzContent: 'The weight of each option must sum a total of 100',
-      });
-    }
-    return isValid;
   }
 
   addField(e?: MouseEvent): void {
@@ -353,13 +308,13 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     return this.optionsArray.value.reduce((acc, cur) => acc + cur.optionWeight, 0) === this.requiredWeight;
   }
 
-  optionsRange(options: QuestionOption[]): boolean {
+  optionsRange(): boolean {
     const total =
       this.questionItemFormGroup.controls.maxFormControl.value -
       this.questionItemFormGroup.controls.minFormControl.value;
     let relativeTotal = 0;
-    for (const o of options) {
-      relativeTotal = relativeTotal + (o.maximumRelative - o.minimumRelative);
+    for (const o of this.optionsArray.value) {
+      relativeTotal = relativeTotal + (o.maxRelativeFormControl - o.minRelativeFormControl);
     }
     return relativeTotal === total;
   }
