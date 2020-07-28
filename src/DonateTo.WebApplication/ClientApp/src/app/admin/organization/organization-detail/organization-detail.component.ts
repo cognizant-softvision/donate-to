@@ -89,7 +89,7 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
   }
 
   goBack() {
-    this.router.navigate(['/admin/organization']);
+    this.router.navigate(['/admin/organizations']);
   }
 
   showDetail() {
