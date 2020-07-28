@@ -82,7 +82,6 @@
                   placeholder="{{ 'Admin.PriorityQuestion.Form.OrderPlaceHolder' | translate }}"
                   formControlName="orderFormControl"
                   type="number"
-                  [(ngModel)]="order"
                   min="1"
                 />
               </nz-form-control>
@@ -98,7 +97,6 @@
                   formControlName="weightFormControl"
                   type="number"
                   min="1"
-                  [(ngModel)]="weight"
                   max="100"
                 />
               </nz-form-control>
@@ -111,7 +109,6 @@
                 #select
                 formControlName="controlTypeFormControl"
                 nzPlaceHolder="{{ 'Admin.PriorityQuestion.Form.ControlTypePlaceHolder' | translate }}"
-                [(ngModel)]="controlTypeId"
               >
                 <nz-option
                   *ngFor="let controlType of this.questionSandbox.controlTypes$ | async"

@@ -7,6 +7,7 @@ using DonateTo.ApplicationCore.Models.Pagination;
 using DonateTo.Mailer.Entities;
 using DonateTo.Mailer.Interfaces;
 using LinqKit;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -80,19 +81,24 @@ namespace DonateTo.Services
             return await _donationRequestRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicate, GetSort(filter)).ConfigureAwait(false);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "<Pending>")]
+        ///<inheritdoc cref="BaseService{DonationRequest, DonationRequestFilterModel}"/>
         protected override Expression<Func<DonationRequest, bool>> GetPredicate(DonationRequestFilterModel filter)
         {
             var predicate = base.GetPredicate(filter);
 
+            //EF function is the way used to compare string avoiding EF core translation issue with
+            //case sensitive comparer mentioned here https://github.com/dotnet/efcore/issues/1222#issuecomment-611113142
+            //Also, due to EF core restriction EF functions cannot be extracted to an extension method
             if (!string.IsNullOrEmpty(filter.Title))
             {
-                predicate = predicate.And(p => p.Title.Contains(filter.Title));
+                predicate = predicate.And(p =>
+                                EF.Functions.ILike(p.Title, string.Format(CultureInfo.CurrentCulture, "%{0}%", filter.Title)));
             }
 
             if (!string.IsNullOrEmpty(filter.Observation))
             {
-                predicate = predicate.And(p => p.Observation.Contains(filter.Observation));
+                predicate = predicate.And(p =>
+                                EF.Functions.ILike(p.Observation, string.Format(CultureInfo.CurrentCulture, "%{0}%", filter.Observation)));
             }
 
             if (!string.IsNullOrEmpty(filter.CreatedDateBegin))

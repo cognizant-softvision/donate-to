@@ -26,10 +26,12 @@ export class DonationsComponent implements OnDestroy, OnInit {
   searchFinishDateBeginValue: Date;
   searchFinishDateEndValue: Date;
   searchObservationValue = '';
+  placedDonations = '';
   titleVisible = false;
   createdDateVisible = false;
   finishDateVisible = false;
   observationVisible = false;
+  placedDonationsVisible = false;
   donationRequestFilter = new DonationRequestFilter();
   failedStatus = false;
   successStatus = false;
@@ -62,7 +64,7 @@ export class DonationsComponent implements OnDestroy, OnInit {
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
-    const { pageSize, pageIndex, sort, filter } = params;
+    const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
 
     this.donationRequestFilter = {
@@ -71,12 +73,6 @@ export class DonationsComponent implements OnDestroy, OnInit {
       pageNumber: pageIndex,
       orderBy: (currentSort && currentSort.key) || '',
       orderDirection: (currentSort && currentSort.value) || '',
-      title: (filter && filter.find((f) => f.key === 'title')?.value) || '',
-      observation: (filter && filter.find((f) => f.key === 'observation')?.value) || '',
-      createdDateBegin: (filter && filter.find((f) => f.key === 'createdDateBegin')?.value) || null,
-      createdDateEnd: (filter && filter.find((f) => f.key === 'createdDateEnd')?.value) || null,
-      finishDateBegin: (filter && filter.find((f) => f.key === 'finishDateBegin')?.value) || null,
-      finishDateEnd: (filter && filter.find((f) => f.key === 'finishDateEnd')?.value) || null,
     };
 
     this.donationSandbox.loadDonationRequestsFilteredPaged(this.donationRequestFilter);

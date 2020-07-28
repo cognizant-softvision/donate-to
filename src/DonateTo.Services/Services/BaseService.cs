@@ -208,7 +208,7 @@ namespace DonateTo.Services
         }
 
         /// <summary>
-        /// Get TEntity base predicate
+        /// Get TEntity base predicate from given filter
         /// </summary>
         /// <param name="filter">Filter</param>
         /// <returns>Predicate</returns>
@@ -245,10 +245,10 @@ namespace DonateTo.Services
                 $"{ char.ToUpperInvariant(filter.OrderBy[0]) + filter.OrderBy.Substring(1).ToLowerInvariant() } " :
                 "Id ";
 
-            sort += !string.IsNullOrEmpty(filter.OrderDirection) 
-                && (filter.OrderDirection == SortDirection.Descending || filter.OrderDirection == "descending") ?
-                SortDirection.Descending :
-                SortDirection.Ascending;
+            sort += !string.IsNullOrEmpty(filter.OrderDirection)
+                && new[] { SortDirection.Desc, SortDirection.Descend, SortDirection.Descending }.Any(order => filter.OrderDirection == order) ?
+                    SortDirection.Desc :
+                    SortDirection.Asc;
 
             return sort;
         }

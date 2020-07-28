@@ -41,13 +41,13 @@
     "Menu": {
       "Title": {
         "Donation": "Donaciones",
-        "User": "Usuarios",
-        "Organization": "Organización",
+        "Users": "Usuarios",
+        "Organizations": "Organizaciones",
         "Priority-questions": "Prioridad"
       }
     },
     "Donation": {
-      "Title": "Donaciones",
+      "Title": "Solicitud de Donaciones",
       "Create": {
         "Title": "Crear Donación",
         "AddItem": "Agregar Item",
@@ -96,10 +96,11 @@
       "CreateConfirm": "Estas seguro que quieres crear una solicitud de donación?",
       "EditConfirm": "Estas seguro que quieres editar esta solicitud de donación?",
       "DeleteConfirmation": "Está seguro que desea eliminar esta solicitud de donación?",
+      "Delete": "Eliminar Solicitud de Donación",
       "Table": {
-        "Itemcolumn": "Item",
+        "Itemcolumn": "Nombre de solicitud",
         "CreatedColumn": "Fecha de Creación",
-        "Finishcolumn": "Fecha Fin",
+        "Finishcolumn": "Fecha Límite de Donación",
         "Observationcolumn": "Observación",
         "Quantitycolumn": "Cantidad",
         "Categorycolumn": "Categorías",
@@ -110,11 +111,12 @@
         "CreatedFrom": "Desde",
         "CreatedTo": "Hasta",
         "FinishFrom": "Desde",
-        "FinishTo": "Hasta"
+        "FinishTo": "Hasta",
+        "PlacedDonations": "Donaciones hechas"
       }
     },
     "Organization": {
-      "Title": "Organización",
+      "Title": "Organizaciones",
       "BackConfirm": "¿Estas seguro que quieres volver?",
       "CreateConfirm": "¿Estas seguro que quieres crear una organización?",
       "EditConfirm": "¿Estas seguro que quieres editar esta organización?",
