@@ -73,7 +73,7 @@
         "Address": "Address",
         "AddressRequiredError": "Address is required",
         "AddressPlaceholder": "Please select a address",
-        "FinishDate": "Finish date",
+        "FinishDate": "Donation deadline",
         "DonationItem": {
           "Name": "Product",
           "NameRequiredError": "Product is required",
