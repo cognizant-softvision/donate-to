@@ -38,7 +38,11 @@
                 "output": "i18n"
               }
             ],
-            "styles": ["node_modules/bootstrap/dist/css/bootstrap.min.css", "src/styles.css"],
+            "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles.scss",
+              "src/softvision-theme.scss"
+            ],
             "scripts": []
           },
           "configurations": {
