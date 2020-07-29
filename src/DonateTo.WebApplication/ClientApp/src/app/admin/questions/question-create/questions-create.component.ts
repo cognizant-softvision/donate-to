@@ -34,10 +34,10 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
 
   label = '';
   placeholder = '';
-  weight = 0;
-  order = 0;
+  weight = null;
+  order = null;
   defaultValue = '';
-  controlTypeId = 0;
+  controlTypeId = null;
   questionId = 0;
   isEdit = false;
   isQuestionsValid = true;
@@ -160,10 +160,10 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   resetForm() {
     this.label = '';
     this.placeholder = '';
-    this.weight = 0;
-    this.order = 0;
+    this.weight = null;
+    this.order = null;
     this.defaultValue = '';
-    this.controlTypeId = 0;
+    this.controlTypeId = null;
     this.questionId = 0;
     this.isEdit = false;
     this.optionsArray = new FormArray([]);

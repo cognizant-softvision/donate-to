@@ -70,6 +70,7 @@
                   placeholder="{{ 'Admin.Questions.Form.OrderPlaceHolder' | translate }}"
                   formControlName="orderFormControl"
                   type="number"
+                  [ngModel]="order"
                   min="1"
                 />
               </nz-form-control>
@@ -86,6 +87,7 @@
                   type="number"
                   min="1"
                   max="100"
+                  [ngModel]="weight"
                 />
               </nz-form-control>
             </nz-form-item>
@@ -97,6 +99,7 @@
                 #select
                 formControlName="controlTypeFormControl"
                 nzPlaceHolder="{{ 'Admin.Questions.Form.ControlTypePlaceHolder' | translate }}"
+                [ngModel]="controlTypeId"
               >
                 <nz-option
                   *ngFor="let controlType of this.questionSandbox.controlTypes$ | async"
@@ -182,9 +185,25 @@
           <span *ngFor="let option of item.options"> {{ option.label }} -</span>
         </td>
         <td>
-          <a (click)="editQuestion(item)">{{ 'Admin.Questions.Table.EditQuestion' | translate }}</a>
+          <a
+            (click)="editQuestion(item)"
+            nzTooltipTitle="{{ 'Admin.Questions.Table.EditQuestion' | translate }}"
+            nzTooltipPlacement="bottom"
+            nz-tooltip
+            class="icon-link"
+          >
+            <i nz-icon nzType="edit" nzTheme="outline" class="action-icon"></i>
+          </a>
           <nz-divider nzType="vertical"></nz-divider>
-          <a (click)="removeQuestion(item)">{{ 'Admin.Questions.Table.DeleteQuestion' | translate }}</a>
+          <a
+            (click)="removeQuestion(item)"
+            nzTooltipTitle="{{ 'Admin.Questions.Table.DeleteQuestion' | translate }}"
+            nzTooltipPlacement="bottom"
+            nz-tooltip
+            class="icon-link"
+          >
+            <i nz-icon nzType="delete" nzTheme="outline" class="action-icon"></i>
+          </a>
         </td>
       </tr>
     </tbody>

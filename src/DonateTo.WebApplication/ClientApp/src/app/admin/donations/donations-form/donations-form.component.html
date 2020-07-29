@@ -220,7 +220,15 @@
                 </nz-tag>
               </td>
               <td>
-                <a (click)="removeDonationRequestItem(item)">{{ 'Admin.Delete' | translate }}</a>
+                <a
+                  class="icon-link"
+                  (click)="removeDonationRequestItem(item)"
+                  nzTooltipTitle="{{ 'Admin.Donation.Delete' | translate }}"
+                  nzTooltipPlacement="bottom"
+                  nz-tooltip
+                >
+                  <i nz-icon nzType="delete" nzTheme="outline" class="action-icon"></i>
+                </a>
               </td>
             </tr>
           </tbody>
