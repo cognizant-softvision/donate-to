@@ -3,6 +3,7 @@ import { ContactModel } from './contact.model';
 import { CountryModel } from './country.model';
 import { StateModel } from './state.model';
 import { CityModel } from './city.model';
+import { OrganizationModel } from './organization.model';
 
 export class AddressModel extends BaseModel {
   street: string;
@@ -19,4 +20,6 @@ export class AddressModel extends BaseModel {
   city: CityModel;
   contactId: number;
   contact: ContactModel;
+  organizationId: number;
+  organization: OrganizationModel;
 }

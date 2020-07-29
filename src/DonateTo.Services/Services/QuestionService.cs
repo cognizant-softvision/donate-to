@@ -5,8 +5,10 @@ using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models.Filtering;
 using DonateTo.ApplicationCore.Models.Pagination;
 using LinqKit;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -51,24 +53,31 @@ namespace DonateTo.Services
             _questionRepository.BulkUpdate(updatedQuestions);
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1307:Specify StringComparison", Justification = "<Pending>")]
+        ///<inheritdoc cref="BaseService{Question, QuestionFilterModel}"/>
         protected override Expression<Func<Question, bool>> GetPredicate(QuestionFilterModel filter)
         {
+            //EF function is the way used to compare string avoiding EF core translation issue with
+            //case sensitive comparer mentioned here https://github.com/dotnet/efcore/issues/1222#issuecomment-611113142
+            //Also, due to EF core restriction EF functions cannot be extracted to an extension method
+
             var predicate = base.GetPredicate(filter);
 
             if (!string.IsNullOrEmpty(filter.Label))
             {
-                predicate = predicate.And(p => p.Label.Contains(filter.Label));
+                predicate = predicate.And(p =>
+                                EF.Functions.ILike(p.Label, string.Format(CultureInfo.CurrentCulture, "%{0}%", filter.Label)));
             }
 
             if (!string.IsNullOrEmpty(filter.Placeholder))
             {
-                predicate = predicate.And(p => p.Placeholder.Contains(filter.Placeholder));
+                predicate = predicate.And(p =>
+                                EF.Functions.ILike(p.Placeholder, string.Format(CultureInfo.CurrentCulture, "%{0}%", filter.Placeholder)));
             }
 
             if (!string.IsNullOrEmpty(filter.Type))
             {
-                predicate = predicate.And(p => p.ControlType.Name.Contains(filter.Type));
+                predicate = predicate.And(p =>
+                                EF.Functions.ILike(p.ControlType.Name, string.Format(CultureInfo.CurrentCulture, "%{0}%", filter.Type)));
             }
 
             return predicate;

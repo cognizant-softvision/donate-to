@@ -1,9 +1,255 @@
 {
+  "ServerError401": "Acceso no permitido. Por favor iniciar sesión.",
+  "ServerError403": "Acceso prohibido. Por favor provea las credenciales correctas.",
+  "ServerError404": "Recurso no encontrado.",
+  "ServerError500": "Ocurrió un error. Por favor contacte a su administrador.",
+  "SuccessNotificationTitle": "Éxito",
+  "ErrorNotificationTitle": "Error",
+  "InfoNotificationTitle": "Info",
+  "WarningNotificationTitle": "Advertencia",
+  "SaveBtn": "Guardar",
+  "EditBtn": "Editar",
+  "CancelBtn": "Cancelar",
+  "BackBtn": "Volver",
+  "GridEmptyLabel": "No hay items disponibles",
+  "MoreDetail": "Más detalles",
+  "SearchPlaceHolder": "Escriba texto para buscar",
+  "NoEntries": "No hay datos",
+  "ConfirmDialog": {
+    "Title": "Por favor confirmar",
+    "Content": "¿Quieres salir sin guardar los cambios?",
+    "SubmitBtn": "Sí",
+    "CancelBtn": "No"
+  },
   "Status": {
     "Draft": "Borrador",
     "Pending": "Pendiente",
     "Completed": "Completo",
     "Rejected": "Rechazado"
+  },
+  "Admin": {
+    "ClearFilter": "Limpiar Filtro",
+    "ClearFilterAndSorted": "Limpiar Filtro y Orden",
+    "Name": "Nombre",
+    "Email": "Dirección",
+    "Action": "Acción",
+    "Delete": "Eliminar",
+    "Create": "Crear",
+    "Details": "Detalles",
+    "Edit": "Editar",
+    "View": "Vista",
+    "Menu": {
+      "Title": {
+        "Donation": "Solicitud de Donaciones",
+        "Users": "Usuarios",
+        "Organizations": "Organizaciones",
+        "Questions": "Preguntas",
+        "Logs": "Logs"
+      }
+    },
+    "Donation": {
+      "Title": "Solicitud de Donaciones",
+      "Create": {
+        "Title": "Crear Donación",
+        "AddItem": "Agregar Item",
+        "CreateRequest": "Crear Solicitud"
+      },
+      "Edit": {
+        "Title": "Editar Solicitud",
+        "Save": "Guardar"
+      },
+      "Form": {
+        "Title": "Titulo",
+        "TitleRequiredError": "Título es requerido",
+        "TitlePlaceholder": "Por favor ingresar un título",
+        "Status": "Estado",
+        "StatusRequiredError": "Estado es requerido",
+        "Observations": "Observaciones",
+        "ObservationsPlaceholder": "Observaciones solicitudes",
+        "Priority": "Prioridad",
+        "PriorityRequiredError": "Prioridad es requerido",
+        "Organization": "Organización",
+        "OrganizationRequiredError": "Organización es requerido",
+        "OrganizationPlaceholder": "Por favor ingresar una organización",
+        "Address": "Dirección",
+        "AddressRequiredError": "Dirección es requerido",
+        "AddressPlaceholder": "Por favor ingresar una dirección",
+        "FinishDate": "Fecha Límite de Donación",
+        "DonationItem": {
+          "Name": "Producto",
+          "NameRequiredError": "Producto es requerido",
+          "NamePlaceholder": "Por favor ingresar un producto",
+          "Observation": "Observaciones",
+          "ObservationPlaceholder": "Observaciones del item solicitado",
+          "Quantity": "Cantidad",
+          "QuantityRequiredError": "Cantidad es requerido",
+          "QuantityPlaceholder": "Por favor ingrese la cantidad requerida",
+          "UnitRequiredError": "Unidad es requerido",
+          "Category": "Categorías",
+          "CategoryRequiredError": "Al menos 1 categoria es requerida",
+          "CategoryPlaceholder": "Por favor seleccionar al menos 1 categoría"
+        },
+        "OverflowTag": "+ seleccionados",
+        "DonationItemRequiredError": "Al menos 1 item es requerido",
+        "DeleteItemConfirmation": "Está seguro que desea eliminar este item?"
+      },
+      "BackConfirm": "Estas seguro que quieres volver?",
+      "CreateConfirm": "Estas seguro que quieres crear una solicitud de donación?",
+      "EditConfirm": "Estas seguro que quieres editar esta solicitud de donación?",
+      "DeleteConfirmation": "Está seguro que desea eliminar esta solicitud de donación?",
+      "Delete": "Eliminar Solicitud de Donación",
+      "Table": {
+        "Itemcolumn": "Nombre de solicitud",
+        "CreatedColumn": "Fecha de Creación",
+        "Finishcolumn": "Fecha Límite de Donación",
+        "Observationcolumn": "Observación",
+        "Quantitycolumn": "Cantidad",
+        "Categorycolumn": "Categorías",
+        "Action": "Action",
+        "Filtered": "Filtrada",
+        "Search": "Buscar",
+        "Reset": "Reestablecer",
+        "CreatedFrom": "Desde",
+        "CreatedTo": "Hasta",
+        "FinishFrom": "Desde",
+        "FinishTo": "Hasta",
+        "PlacedDonations": "Donaciones hechas"
+      }
+    },
+    "Organization": {
+      "Title": "Organizaciones",
+      "BackConfirm": "¿Estas seguro que quieres volver?",
+      "CreateConfirm": "¿Estas seguro que quieres crear una organización?",
+      "EditConfirm": "¿Estas seguro que quieres editar esta organización?",
+      "DeleteConfirmation": "¿Está seguro que desea eliminar esta organización?",
+      "Edit": "Editar Organización",
+      "Table": {
+        "Name": "Nombre",
+        "Description": "Descripción",
+        "ContactName": "Contacto",
+        "Action": "Acción",
+        "Search": "Buscar",
+        "Reset": "Reestablecer",
+        "Filtered": "Filtrada"
+      },
+      "Create": {
+        "Title": "Crear Organización"
+      },
+      "OrganizationSteps": {
+        "GeneralInformation": {
+          "GeneralInformation": "Información General",
+          "OrganizationName": "Nombre de la Organización",
+          "Description": "Descripción",
+          "RequiredOrganizationName": "Se requiere el nombre de la organización",
+          "RequiredDescription": "Se requiere una descripción sobre la organización"
+        },
+        "Contact": {
+          "Contact": "Contacto",
+          "Responsable": "Responsable",
+          "FirstName": "Nombre",
+          "LastName": "Apellido",
+          "Email": "Email",
+          "IdentityNumber": "Número de Identidad",
+          "PhoneNumber": "Número de teléfono",
+          "Position": "Posición"
+        },
+        "Address": {
+          "Address": "Dirección",
+          "Edit": "Editar",
+          "Delete": "Eliminar",
+          "AddAddress": "Agregar Dirección",
+          "Information": "Ingrese una dirección para la organización. Se pueden asociar más de una dirección a una organización.",
+          "Contact": "Ingrese un contacto para esta dirección",
+          "Street": "Calle",
+          "Floor": "Piso",
+          "Appartment": "Departamento",
+          "City": "Ciudad",
+          "State": "Estado",
+          "Country": "País",
+          "PostalCode": "Código Postal",
+          "AdditionalInformation": "Información Adicional",
+          "CancelEdit": "Cancelar edición",
+          "ConfirmEdit": "Confirmar edición"
+        }
+      }
+    },
+    "Questions": {
+      "Title": "Prioridad de preguntas",
+      "Create": {
+        "Title": "Crear pregunta",
+        "CreateRequest": "Crear preguntas"
+      },
+      "Edit": {
+        "Title": "Edit Question"
+      },
+      "Table": {
+        "LabelColumn": "Etiqueta",
+        "PlaceholderColumn": "Marcador",
+        "OrderColumnColumn": "Orden",
+        "WeightColumn": "Peso",
+        "ControlTypeColumn": "Tipo Control",
+        "DefaultValueColumn": "Valor default",
+        "OptionsColumn": "Opciones",
+        "DeleteQuestion": "Eliminar",
+        "EditQuestion": "Editar"
+      },
+      "Form": {
+        "Label": "Etiqueta",
+        "Placeholder": "Marcador",
+        "Order": "Orden",
+        "Weight": "Peso",
+        "ControlType": "Tipo Control",
+        "DefaultValue": "Valor default",
+        "LabelPlaceHolder": "Nombre etiqueta",
+        "PlaceholderPlaceHolder": "Nombre marcador",
+        "OrderPlaceHolder": "Orden",
+        "WeightPlaceHolder": "Peso",
+        "ControlTypePlaceHolder": "Tipo Control",
+        "DefaultValuePlaceHolder": "Valor default",
+        "LabelRequired": "Etiqueta es requerida",
+        "DefaultValueRequired": "Valor default es requerido",
+        "OrderRequired": "Orden es requerido",
+        "WeightRequired": "Peso es requerido",
+        "PlaceholderRequired": "Nombre marcador es requerido",
+        "ControlTypeRequired": "Tipo control es requerido",
+        "AddItem": "Agregar Pregunta",
+        "PriorityQuestionRequiredError": "Por lo menos una pregunta es requerida y el peso debe llegar a 100%."
+      },
+      "CreateConfirm": "Está seguro de que quiere crear una nueva pregunta?",
+      "EditConfirm": "Estas seguro que quieres editar esta pregunta?"
+    },
+    "Question": {
+      "Title": "Preguntas",
+      "CreateConfirm": "Estas seguro que quieres crear una pregunta?",
+      "Table": {
+        "Label": "Título",
+        "Type": "Tipo",
+        "Placeholder": "Marcador",
+        "Weight": "Peso",
+        "Order": "Órden",
+        "Action": "Acción",
+        "Search": "Buscar",
+        "Reset": "Reestablecer",
+        "Filtered": "Filtrada",
+        "OptionsTitle": "Opciones",
+        "Option": {
+          "Label": "Título",
+          "Value": "Valor",
+          "Weight": "Peso"
+        }
+      }
+    },
+    "User": {
+      "Title": "Usuarios",
+      "Associate": "Administrar Asociaciones",
+      "SelectOrganization": "Seleccionar Organizaciones",
+      "Table": {
+        "Name": "Nombre",
+        "Organization": "Organización",
+        "Email": "Email",
+        "Action": "Acción"
+      }
+    }
   },
   "Donation": {
     "DonationId": "Identificación",
@@ -118,28 +364,6 @@
       "NoEntries": "No se encontraron items de la donación"
     }
   },
-  "ServerError401": "Acceso no permitido. Por favor iniciar sesión.",
-  "ServerError403": "Acceso prohibido. Por favor provea las credenciales correctas.",
-  "ServerError404": "Recurso no encontrado.",
-  "ServerError500": "Ocurrió un error. Por favor contacte a su administrador.",
-  "SuccessNotificationTitle": "Éxito",
-  "ErrorNotificationTitle": "Error",
-  "InfoNotificationTitle": "Info",
-  "WarningNotificationTitle": "Advertencia",
-  "SaveBtn": "Guardar",
-  "EditBtn": "Editar",
-  "CancelBtn": "Cancelar",
-  "BackBtn": "Volver",
-  "GridEmptyLabel": "No hay items disponibles",
-  "MoreDetail": "Más detalles",
-  "SearchPlaceHolder": "Escriba texto para buscar",
-  "NoEntries": "No hay datos",
-  "ConfirmDialog": {
-    "Title": "Por favor confirmar",
-    "Content": "¿Quieres salir sin guardar los cambios?",
-    "SubmitBtn": "Sí",
-    "CancelBtn": "No"
-  },
   "Auth": {
     "Email": "Email",
     "Password": "Contraseña",
@@ -182,188 +406,6 @@
     "Wednesday": "Miércoles",
     "Thursday": "Jueves",
     "Friday": "Viernes"
-  },
-  "Admin": {
-    "Menu": {
-      "Title": {
-        "Donation": "Donaciones",
-        "User": "Usuarios",
-        "Organization": "Organización",
-        "Priority-questions": "Prioridad",
-        "Logs": "Logs"
-      }
-    },
-    "Donation": {
-      "Title": "Donaciones",
-      "Create": {
-        "Title": "Crear Donación",
-        "AddItem": "Agregar Item",
-        "CreateRequest": "Crear Solicitud"
-      },
-      "Edit": {
-        "Title": "Editar Solicitud",
-        "Save": "Guardar"
-      },
-      "Form": {
-        "Title": "Titulo",
-        "TitleRequiredError": "Título es requerido",
-        "TitlePlaceholder": "Por favor ingresar un título",
-        "Status": "Estado",
-        "StatusRequiredError": "Estado es requerido",
-        "Observations": "Observaciones",
-        "ObservationsPlaceholder": "Observaciones solicitudes",
-        "Priority": "Prioridad",
-        "PriorityRequiredError": "Prioridad es requerido",
-        "Organization": "Organización",
-        "OrganizationRequiredError": "Organización es requerido",
-        "OrganizationPlaceholder": "Por favor ingresar una organización",
-        "Address": "Dirección",
-        "AddressRequiredError": "Dirección es requerido",
-        "AddressPlaceholder": "Por favor ingresar una dirección",
-        "FinishDate": "Fecha fin",
-        "DonationItem": {
-          "Name": "Producto",
-          "NameRequiredError": "Producto es requerido",
-          "NamePlaceholder": "Por favor ingresar un producto",
-          "Observation": "Observaciones",
-          "ObservationPlaceholder": "Observaciones del item solicitado",
-          "Quantity": "Cantidad",
-          "QuantityRequiredError": "Cantidad es requerido",
-          "QuantityPlaceholder": "Por favor ingrese la cantidad requerida",
-          "UnitRequiredError": "Unidad es requerido",
-          "Category": "Categorías",
-          "CategoryRequiredError": "Al menos 1 categoria es requerida",
-          "CategoryPlaceholder": "Por favor seleccionar al menos 1 categoría"
-        },
-        "OverflowTag": "+ seleccionados",
-        "DonationItemRequiredError": "Al menos 1 item es requerido",
-        "DeleteItemConfirmation": "Está seguro que desea eliminar este item?"
-      },
-      "BackConfirm": "Estas seguro que quieres volver?",
-      "CreateConfirm": "Estas seguro que quieres crear una solicitud de donación?",
-      "EditConfirm": "Estas seguro que quieres editar esta solicitud de donación?",
-      "DeleteConfirmation": "Está seguro que desea eliminar esta solicitud de donación?",
-      "Table": {
-        "Itemcolumn": "Item",
-        "CreatedColumn": "Fecha de Creación",
-        "Finishcolumn": "Fecha Fin",
-        "Observationcolumn": "Observación",
-        "Quantitycolumn": "Cantidad",
-        "Categorycolumn": "Categorías",
-        "Action": "Action",
-        "Filtered": "Filtrada",
-        "Search": "Buscar",
-        "Reset": "Reestablecer",
-        "CreatedFrom": "Desde",
-        "CreatedTo": "Hasta",
-        "FinishFrom": "Desde",
-        "FinishTo": "Hasta"
-      }
-    },
-    "User": {
-      "Title": "Usuarios",
-      "OrganizationTitle": "de la  Organización:",
-      "Associate": "Administrar Asociaciones",
-      "SelectOrganization": "Seleccionar Organizaciones",
-      "Table": {
-        "Name": "Nombre",
-        "Organization": "Organización",
-        "Email": "Email",
-        "Action": "Acción",
-        "Filtered": "Filtrada",
-        "Search": "Buscar",
-        "Reset": "Reestablecer"
-      }
-    },
-    "PriorityQuestion": {
-      "Title": "Prioridad de preguntas",
-      "Create": {
-        "Title": "Crear pregunta de prioridad",
-        "CreateRequest": "Crear preguntas"
-      },
-      "Edit": {
-        "Title": "Edit Question"
-      },
-      "Table": {
-        "LabelColumn": "Etiqueta",
-        "PlaceholderColumn": "Marcador",
-        "OrderColumnColumn": "Orden",
-        "WeightColumn": "Peso",
-        "ControlTypeColumn": "Tipo Control",
-        "DefaultValueColumn": "Valor default",
-        "OptionsColumn": "Opciones",
-        "DeleteQuestion": "Eliminar",
-        "EditQuestion": "Editar"
-      },
-      "Form": {
-        "Label": "Etiqueta",
-        "Placeholder": "Marcador",
-        "Order": "Orden",
-        "Weight": "Peso",
-        "ControlType": "Tipo Control",
-        "DefaultValue": "Valor default",
-        "LabelPlaceHolder": "Nombre etiqueta",
-        "PlaceholderPlaceHolder": "Nombre marcador",
-        "OrderPlaceHolder": "Orden",
-        "WeightPlaceHolder": "Peso",
-        "ControlTypePlaceHolder": "Tipo Control",
-        "DefaultValuePlaceHolder": "Valor default",
-        "LabelRequired": "Etiqueta es requerida",
-        "DefaultValueRequired": "Valor default es requerido",
-        "OrderRequired": "Orden es requerido",
-        "WeightRequired": "Peso es requerido",
-        "PlaceholderRequired": "Nombre marcador es requerido",
-        "ControlTypeRequired": "Tipo control es requerido",
-        "AddItem": "Agregar Pregunta",
-        "PriorityQuestionRequiredError": "Por lo menos una pregunta de prioridad es requerida y el peso debe llegar a 100%."
-      },
-      "CreateConfirm": "Está seguro de que quiere crear una nueva pregunta?",
-      "EditConfirm": "Estas seguro que quieres editar esta pregunta?"
-    },
-    "Question": {
-      "Title": "Preguntas",
-      "CreateConfirm": "Estas seguro que quieres crear una pregunta?",
-      "Table": {
-        "Label": "Título",
-        "Type": "Tipo",
-        "Placeholder": "Marcador",
-        "Weight": "Peso",
-        "Order": "Órden",
-        "Action": "Acción",
-        "Search": "Buscar",
-        "Reset": "Reestablecer",
-        "Filtered": "Filtrada",
-        "OptionsTitle": "Opciones",
-        "Option": {
-          "Label": "Título",
-          "Value": "Valor",
-          "Weight": "Peso"
-        }
-      }
-    },
-    "Organization": {
-      "Title": "Organizaciones",
-      "CreateConfirm": "Estas seguro que quieres crear una organización?",
-      "Table": {
-        "Name": "Nombre",
-        "Description": "Descripción",
-        "ContactName": "Contacto",
-        "Action": "Acción",
-        "Search": "Buscar",
-        "Reset": "Reestablecer",
-        "Filtered": "Filtrada"
-      }
-    },
-    "ClearFilter": "Limpiar Filtro",
-    "ClearFilterAndSorted": "Limpiar Filtro y Orden",
-    "Name": "Nombre",
-    "Email": "Dirección",
-    "Action": "Acción",
-    "Delete": "Eliminar",
-    "Create": "Crear",
-    "Details": "Detalles",
-    "Edit": "Editar",
-    "View": "Vista"
   },
   "UserProfile": {
     "MyProfile": "Mi Perfil",

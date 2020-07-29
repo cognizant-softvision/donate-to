@@ -36,6 +36,7 @@ import {
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { fromQuestion } from '../../shared/store';
 import { MinusCircleOutline, PlusOutline } from '@ant-design/icons-angular/icons';
+import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
 
 // FIX this should be moved to an upper level.
 registerLocaleData(es);
@@ -80,6 +81,6 @@ const ICONS = [MinusCircleOutline, PlusOutline];
     }),
   ],
   declarations: [QuestionsComponent, QuestionsCreateComponent],
-  providers: [QuestionsSandbox],
+  providers: [QuestionsSandbox, DataUpdatedService],
 })
 export class QuestionsModule {}

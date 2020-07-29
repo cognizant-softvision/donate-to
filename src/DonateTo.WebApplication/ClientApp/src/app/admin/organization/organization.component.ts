@@ -44,12 +44,6 @@ export class OrganizationComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.push(
-      this.organizationSandbox.organizations$.subscribe((organizations) => {
-        this.organizationList = organizations;
-      })
-    );
-
-    this.subscriptions.push(
       this.organizationSandbox.failAction$.subscribe((status) => {
         this.failedStatus = status;
       })
@@ -60,12 +54,10 @@ export class OrganizationComponent implements OnInit, OnDestroy {
         this.successStatus = status;
       })
     );
-
-    this.organizationSandbox.loadOrganizations();
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
-    const { pageSize, pageIndex, sort, filter } = params;
+    const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
 
     this.organizationFilter = {
@@ -74,9 +66,6 @@ export class OrganizationComponent implements OnInit, OnDestroy {
       pageNumber: pageIndex,
       orderBy: (currentSort && currentSort.key) || '',
       orderDirection: (currentSort && currentSort.value) || '',
-      name: (filter && filter.find((f) => f.key === 'name')?.value) || '',
-      description: (filter && filter.find((f) => f.key === 'description')?.value) || '',
-      contactName: (filter && filter.find((f) => f.key === 'contactName')?.value) || '',
     };
 
     this.organizationSandbox.loadOrganizationsFilteredPaged(this.organizationFilter);
