@@ -76,22 +76,8 @@
             <i nz-icon nzType="search"></i>
           </nz-filter-trigger>
         </th>
-        <th nzCustomFilter nzColumnKey="placedDonations" [nzSortFn]="true">
+        <th [nzSortFn]="true">
           {{ 'Admin.Donation.Table.PlacedDonations' | translate }}
-          <label
-            class="filter"
-            title="{{ 'Admin.Donation.Table.Filtered' | translate }}"
-            *ngIf="placedDonations.length > 0 && !placedDonationsVisible"
-          >
-            ({{ placedDonations }})
-          </label>
-          <nz-filter-trigger
-            [(nzVisible)]="placedDonationsVisible"
-            [nzActive]="placedDonations.length > 0"
-            [nzDropdownMenu]="searchPlacedDonationsMenu"
-          >
-            <i nz-icon nzType="search"></i>
-          </nz-filter-trigger>
         </th>
         <th>
           {{ 'Admin.Donation.Table.Action' | translate }}
@@ -105,7 +91,7 @@
         <td>{{ data.finishDate | date: 'longDate' }}</td>
         <td>
           <a [routerLink]="['./detail', data.id]">
-            {{ data?.placedDonations }}
+            {{ data?.donations.length }}
           </a>
         </td>
         <td>
