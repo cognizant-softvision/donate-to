@@ -203,7 +203,7 @@
 <!-- Table -->
 <form [formGroup]="addressItemFormGroup" class="address-table">
   <nz-form-item>
-    <nz-form-control nzErrorTip="{{ 'Admin.PriorityQuestion.Form.PriorityQuestionRequiredError' | translate }}">
+    <nz-form-control nzErrorTip="{{ 'Admin.Questions.Form.PriorityQuestionRequiredError' | translate }}">
       <div [(ngModel)]="addresses" ngDefaultControl formControlName="itemsFormControl">
         <nz-table
           [nzData]="addresses"

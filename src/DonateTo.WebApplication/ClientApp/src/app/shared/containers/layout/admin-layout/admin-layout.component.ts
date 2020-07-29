@@ -44,8 +44,8 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
           { title: 'Admin.Menu.Title.Users', url: './users', iconType: IconType.Team, show: true },
           { title: 'Admin.Menu.Title.Organizations', url: './organizations', iconType: IconType.Profile, show: true },
           {
-            title: 'Admin.Menu.Title.Priority-questions',
-            url: './priority-questions',
+            title: 'Admin.Menu.Title.Questions',
+            url: './questions',
             iconType: IconType.Star,
             show: this.isSuperAdmin,
           },

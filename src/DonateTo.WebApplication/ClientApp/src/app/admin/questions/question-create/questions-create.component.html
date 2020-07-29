@@ -1,28 +1,22 @@
 <div>
-  <div class="create-priority-question-title">
-    <h4 class="section-title">{{ 'Admin.PriorityQuestion.Create.Title' | translate }}</h4>
+  <div class="create-question-title">
+    <h4 class="section-title">{{ 'Admin.Questions.Create.Title' | translate }}</h4>
   </div>
   <br />
   <form nz-form>
-    <div [formGroup]="questionItemFormGroup" class="create-priority-question-add-item-container">
-      <div class="create-priority-question-add-item-box-first">
+    <div [formGroup]="questionItemFormGroup" class="create-question-add-item-container">
+      <div class="create-question-add-item-box-first">
         <div class="create-item-container">
-          <nz-form-label class="priority-question-item">{{
-            'Admin.PriorityQuestion.Form.Label' | translate
-          }}</nz-form-label>
-          <nz-form-label class="priority-question-item">{{
-            'Admin.PriorityQuestion.Form.Placeholder' | translate
-          }}</nz-form-label>
-          <nz-form-label class="priority-question-item">{{
-            'Admin.PriorityQuestion.Form.DefaultValue' | translate
-          }}</nz-form-label>
+          <nz-form-label class="question-item">{{ 'Admin.Questions.Form.Label' | translate }}</nz-form-label>
+          <nz-form-label class="question-item">{{ 'Admin.Questions.Form.Placeholder' | translate }}</nz-form-label>
+          <nz-form-label class="question-item">{{ 'Admin.Questions.Form.DefaultValue' | translate }}</nz-form-label>
         </div>
-        <div class="create-item-container create-priority-question-add-item-input">
+        <div class="create-item-container create-question-add-item-input">
           <nz-form-item>
-            <nz-form-control nzErrorTip="{{ 'Admin.PriorityQuestion.Form.LabelRequired' | translate }}">
+            <nz-form-control nzErrorTip="{{ 'Admin.Questions.Form.LabelRequired' | translate }}">
               <input
                 nz-input
-                placeholder="{{ 'Admin.PriorityQuestion.Form.LabelPlaceHolder' | translate }}"
+                placeholder="{{ 'Admin.Questions.Form.LabelPlaceHolder' | translate }}"
                 formControlName="labelFormControl"
                 type="text"
                 [(ngModel)]="label"
@@ -30,10 +24,10 @@
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
-            <nz-form-control nzErrorTip="{{ 'Admin.PriorityQuestion.Form.PlaceholderRequired' | translate }}">
+            <nz-form-control nzErrorTip="{{ 'Admin.Questions.Form.PlaceholderRequired' | translate }}">
               <input
                 nz-input
-                placeholder="{{ 'Admin.PriorityQuestion.Form.PlaceholderPlaceHolder' | translate }}"
+                placeholder="{{ 'Admin.Questions.Form.PlaceholderPlaceHolder' | translate }}"
                 formControlName="placeholderFormControl"
                 type="text"
                 [(ngModel)]="placeholder"
@@ -42,10 +36,10 @@
           </nz-form-item>
           <div class="item-quantity">
             <nz-form-item>
-              <nz-form-control nzErrorTip="{{ 'Admin.PriorityQuestion.Form.DefaultValueRequired' | translate }}">
+              <nz-form-control nzErrorTip="{{ 'Admin.Questions.Form.DefaultValueRequired' | translate }}">
                 <input
                   nz-input
-                  placeholder="{{ 'Admin.PriorityQuestion.Form.DefaultValuePlaceHolder' | translate }}"
+                  placeholder="{{ 'Admin.Questions.Form.DefaultValuePlaceHolder' | translate }}"
                   formControlName="defaultValueFormControl"
                   type="text"
                   [disabled]="
@@ -61,25 +55,19 @@
         </div>
       </div>
 
-      <div class="create-priority-question-add-item-box-second">
+      <div class="create-question-add-item-box-second">
         <div class="create-item-container">
-          <nz-form-label class="priority-question-item">{{
-            'Admin.PriorityQuestion.Form.Order' | translate
-          }}</nz-form-label>
-          <nz-form-label class="priority-question-item">{{
-            'Admin.PriorityQuestion.Form.Weight' | translate
-          }}</nz-form-label>
-          <nz-form-label class="priority-question-item">{{
-            'Admin.PriorityQuestion.Form.ControlType' | translate
-          }}</nz-form-label>
+          <nz-form-label class="question-item">{{ 'Admin.Questions.Form.Order' | translate }}</nz-form-label>
+          <nz-form-label class="question-item">{{ 'Admin.Questions.Form.Weight' | translate }}</nz-form-label>
+          <nz-form-label class="question-item">{{ 'Admin.Questions.Form.ControlType' | translate }}</nz-form-label>
         </div>
-        <div class="create-item-container create-priority-question-add-item-input">
+        <div class="create-item-container create-question-add-item-input">
           <div class="item-quantity">
             <nz-form-item>
-              <nz-form-control nzErrorTip="{{ 'Admin.PriorityQuestion.Form.OrderRequired' | translate }}">
+              <nz-form-control nzErrorTip="{{ 'Admin.Questions.Form.OrderRequired' | translate }}">
                 <input
                   nz-input
-                  placeholder="{{ 'Admin.PriorityQuestion.Form.OrderPlaceHolder' | translate }}"
+                  placeholder="{{ 'Admin.Questions.Form.OrderPlaceHolder' | translate }}"
                   formControlName="orderFormControl"
                   type="number"
                   min="1"
@@ -90,10 +78,10 @@
 
           <div class="item-quantity">
             <nz-form-item>
-              <nz-form-control nzErrorTip="{{ 'Admin.PriorityQuestion.Form.WeightRequired' | translate }}">
+              <nz-form-control nzErrorTip="{{ 'Admin.Questions.Form.WeightRequired' | translate }}">
                 <input
                   nz-input
-                  placeholder="{{ 'Admin.PriorityQuestion.Form.WeightPlaceHolder' | translate }}"
+                  placeholder="{{ 'Admin.Questions.Form.WeightPlaceHolder' | translate }}"
                   formControlName="weightFormControl"
                   type="number"
                   min="1"
@@ -104,11 +92,11 @@
           </div>
 
           <nz-form-item>
-            <nz-form-control nzErrorTip="{{ 'Admin.PriorityQuestion.Form.ControlTypeRequired' | translate }}">
+            <nz-form-control nzErrorTip="{{ 'Admin.Questions.Form.ControlTypeRequired' | translate }}">
               <nz-select
                 #select
                 formControlName="controlTypeFormControl"
-                nzPlaceHolder="{{ 'Admin.PriorityQuestion.Form.ControlTypePlaceHolder' | translate }}"
+                nzPlaceHolder="{{ 'Admin.Questions.Form.ControlTypePlaceHolder' | translate }}"
               >
                 <nz-option
                   *ngFor="let controlType of this.questionSandbox.controlTypes$ | async"
@@ -130,7 +118,7 @@
                     <input
                       class="option-weight"
                       nz-input
-                      placeholder="{{ 'Admin.PriorityQuestion.Form.WeightPlaceHolder' | translate }}"
+                      placeholder="{{ 'Admin.Questions.Form.WeightPlaceHolder' | translate }}"
                       formControlName="optionWeight"
                       type="number"
                       min="1"
@@ -159,20 +147,14 @@
       </div>
     </div>
 
-    <div class="create-priority-question-form-buttons">
-      <button
-        type="button"
-        class="priority-question-request-item-add"
-        (click)="addQuestion()"
-        nz-button
-        nzType="primary"
-      >
-        {{ 'Admin.PriorityQuestion.Form.AddItem' | translate }}
+    <div class="create-question-form-buttons">
+      <button type="button" class="question-request-item-add" (click)="addQuestion()" nz-button nzType="primary">
+        {{ 'Admin.Questions.Form.AddItem' | translate }}
       </button>
     </div>
   </form>
 
-  <span class="item-required">{{ 'Admin.PriorityQuestion.Form.PriorityQuestionRequiredError' | translate }}</span>
+  <span class="item-required">{{ 'Admin.Questions.Form.PriorityQuestionRequiredError' | translate }}</span>
   <br />
   <nz-table
     [nzData]="questions"
@@ -200,15 +182,15 @@
           <span *ngFor="let option of item.options"> {{ option.label }} -</span>
         </td>
         <td>
-          <a (click)="editQuestion(item)">{{ 'Admin.PriorityQuestion.Table.EditQuestion' | translate }}</a>
+          <a (click)="editQuestion(item)">{{ 'Admin.Questions.Table.EditQuestion' | translate }}</a>
           <nz-divider nzType="vertical"></nz-divider>
-          <a (click)="removeQuestion(item)">{{ 'Admin.PriorityQuestion.Table.DeleteQuestion' | translate }}</a>
+          <a (click)="removeQuestion(item)">{{ 'Admin.Questions.Table.DeleteQuestion' | translate }}</a>
         </td>
       </tr>
     </tbody>
   </nz-table>
   <div *ngIf="!isQuestionsValid" class="error-required">
-    {{ 'Admin.PriorityQuestion.Form.PriorityQuestionRequiredError' | translate }}"
+    {{ 'Admin.Questions.Form.PriorityQuestionRequiredError' | translate }}"
   </div>
   <ng-template #customTpl let-name>
     <div style="text-align: center;">
@@ -218,17 +200,17 @@
   </ng-template>
 
   <br />
-  <div class="create-priority-question-form-buttons">
+  <div class="create-question-form-buttons">
     <button
       nz-popconfirm
-      nzPopconfirmTitle="{{ 'Admin.PriorityQuestion.CreateConfirm' | translate }}"
+      nzPopconfirmTitle="{{ 'Admin.Questions.CreateConfirm' | translate }}"
       nzPopconfirmPlacement="bottom"
       (nzOnConfirm)="createQuestions()"
       nz-button
       nzType="primary"
       type="submit"
     >
-      {{ 'Admin.PriorityQuestion.Create.CreateRequest' | translate }}
+      {{ 'Admin.Questions.Create.CreateRequest' | translate }}
     </button>
     <button
       nz-popconfirm

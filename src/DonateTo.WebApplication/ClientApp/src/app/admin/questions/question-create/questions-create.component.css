@@ -1,13 +1,14 @@
-.create-priority-question-title {
+.create-question-title {
   display: flex;
   justify-content: space-between;
 }
 
-.create-priority-question-form-buttons {
+.create-question-form-buttons {
   display: flex;
   justify-content: flex-end;
 }
-.priority-question-request-item-add {
+
+.question-request-item-add {
   margin: 1em;
   align-self: center;
   margin-bottom: 2em;
@@ -17,11 +18,11 @@
   color: red;
 }
 
-.create-priority-question-add-item-container {
+.create-question-add-item-container {
   display: flex;
 }
 
-.create-priority-question-add-item-container div {
+.create-question-add-item-container div {
   display: flex;
   align-items: baseline;
   margin-left: 1em;
@@ -32,20 +33,20 @@
   flex-direction: column;
 }
 
-.create-priority-question-add-item-box-first {
+.create-question-add-item-box-first {
   width: 50%;
 }
 
-.create-priority-question-add-item-box-second {
+.create-question-add-item-box-second {
   width: 40%;
 }
 
-.create-priority-question-add-item-input nz-form-item,
-.create-priority-question-add-item-box-second nz-select {
+.create-question-add-item-input nz-form-item,
+.create-question-add-item-box-second nz-select {
   width: 100%;
 }
 
-.create-priority-question-add-item-input {
+.create-question-add-item-input {
   width: 100%;
   margin-left: 1em;
 }
@@ -64,7 +65,7 @@
   width: 100%;
 }
 
-.priority-question-item {
+.question-item {
   margin-bottom: 1em;
 }
 

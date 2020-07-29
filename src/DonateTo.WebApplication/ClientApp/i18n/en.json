@@ -40,14 +40,14 @@
     "View": "View",
     "Menu": {
       "Title": {
-        "Donation": "Donations",
+        "Donation": "Donation Requests",
         "Users": "Users",
         "Organizations": "Organizations",
-        "Priority-questions": "Priority Questions"
+        "Questions": "Questions"
       }
     },
     "Donation": {
-      "Title": "Donation Request",
+      "Title": "Donation Requests",
       "Create": {
         "Title": "Create donation request",
         "AddItem": "Add Item",
@@ -73,7 +73,7 @@
         "Address": "Address",
         "AddressRequiredError": "Address is required",
         "AddressPlaceholder": "Please select a address",
-        "FinishDate": "Finish date",
+        "FinishDate": "Donation deadline",
         "DonationItem": {
           "Name": "Product",
           "NameRequiredError": "Product is required",
@@ -172,11 +172,11 @@
         }
       }
     },
-    "PriorityQuestion": {
-      "Title": "Priority Questions",
+    "Questions": {
+      "Title": "Questions",
       "Create": {
-        "Title": "Create Priority Questions",
-        "CreateRequest": "Create questions"
+        "Title": "Create Questions",
+        "CreateRequest": "Create Questions"
       },
       "Edit": {
         "Title": "Edit Question"
@@ -212,7 +212,7 @@
         "PlaceholderRequired": "Nombre marcador es requerido",
         "ControlTypeRequired": "Control Type is required",
         "AddItem": "Add Question",
-        "PriorityQuestionRequiredError": "At least 1 priority question is required and weight must reach 100%."
+        "PriorityQuestionRequiredError": "At least 1 question is required and weight must reach 100%."
       },
       "CreateConfirm": "Are you sure you want to create a new question?",
       "EditConfirm": "Are you sure you want to edit the question?"
