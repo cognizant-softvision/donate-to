@@ -64,7 +64,7 @@ export class OrganizationFormComponent implements OnInit {
   }
 
   done(): void {
-    if (this.organization.id && this.organization.id !== 0) {
+    if (this.organization && this.organization.id !== 0) {
       this.setOrganization();
       this.organizationSandbox.updateOrganization(this.organization);
     } else {
