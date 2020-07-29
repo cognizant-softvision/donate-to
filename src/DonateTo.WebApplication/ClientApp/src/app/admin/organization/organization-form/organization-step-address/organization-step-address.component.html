@@ -230,11 +230,25 @@
               <td>{{ item.city?.name }}</td>
               <td>{{ item.additionalInformation }}</td>
               <td>
-                <a (click)="editAddress(item)">{{ 'Admin.Organization.OrganizationSteps.Address.Edit' | translate }}</a>
+                <a
+                  (click)="editAddress(item)"
+                  nzTooltipTitle="{{ 'Admin.Organization.OrganizationSteps.Address.Edit' | translate }}"
+                  nzTooltipPlacement="bottom"
+                  nz-tooltip
+                  class="icon-link"
+                >
+                  <i nz-icon nzType="edit" nzTheme="outline" class="action-icon"></i>
+                </a>
                 <nz-divider nzType="vertical"></nz-divider>
-                <a (click)="removeAddress(item)">{{
-                  'Admin.Organization.OrganizationSteps.Address.Delete' | translate
-                }}</a>
+                <a
+                  (click)="removeAddress(item)"
+                  nzTooltipTitle="{{ 'Admin.Organization.OrganizationSteps.Address.Delete' | translate }}"
+                  nzTooltipPlacement="bottom"
+                  nz-tooltip
+                  class="icon-link"
+                >
+                  <i nz-icon nzType="delete" nzTheme="outline" class="action-icon"></i>
+                </a>
               </td>
             </tr>
           </tbody>

@@ -114,8 +114,9 @@
             nzTooltipTitle="{{ 'Admin.Donation.Edit.Title' | translate }}"
             nzTooltipPlacement="bottom"
             nz-tooltip
+            class="icon-link"
           >
-            <i nz-icon nzType="edit" nzTheme="outline"></i>
+            <i nz-icon nzType="edit" nzTheme="outline" class="action-icon"></i>
           </a>
           <nz-divider nzType="vertical"></nz-divider>
           <a
@@ -126,8 +127,9 @@
             nzPopconfirmTitle="{{ 'Admin.Donation.DeleteConfirmation' | translate }}"
             nzPopconfirmPlacement="bottom"
             (nzOnConfirm)="deleteDonationRequest(data)"
+            class="icon-link"
           >
-            <i nz-icon nzType="delete" nzTheme="outline"></i>
+            <i nz-icon nzType="delete" nzTheme="outline" class="action-icon"></i>
           </a>
         </td>
       </tr>
