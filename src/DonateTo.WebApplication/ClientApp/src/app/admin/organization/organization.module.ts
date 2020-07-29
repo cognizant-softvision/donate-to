@@ -40,6 +40,8 @@ import { AddressEffects } from 'src/app/shared/store/address';
 import { fromAddress, fromOrganization } from 'src/app/shared/store';
 import {
   ArrowLeftOutline,
+  DeleteOutline,
+  EditOutline,
   HomeOutline,
   InfoCircleOutline,
   SmileOutline,
@@ -49,8 +51,17 @@ import { OrganizationStepGeneralInformationComponent } from './organization-form
 import { OrganizationStepContactComponent } from './organization-form/organization-step-contact/organization-step-contact.component';
 import { OrganizationStepAddressComponent } from './organization-form/organization-step-address/organization-step-address.component';
 import { OrganizationDetailComponent } from './organization-detail/organization-detail.component';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
-const ICONS: IconDefinition[] = [ArrowLeftOutline, HomeOutline, InfoCircleOutline, UserOutline, SmileOutline];
+const ICONS: IconDefinition[] = [
+  ArrowLeftOutline,
+  HomeOutline,
+  InfoCircleOutline,
+  UserOutline,
+  SmileOutline,
+  DeleteOutline,
+  EditOutline,
+];
 
 @NgModule({
   imports: [
@@ -74,6 +85,7 @@ const ICONS: IconDefinition[] = [ArrowLeftOutline, HomeOutline, InfoCircleOutlin
     NzDropDownModule,
     NzPageHeaderModule,
     NzDescriptionsModule,
+    NzToolTipModule,
 
     FormsModule,
     CommonModule,
