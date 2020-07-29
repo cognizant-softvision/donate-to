@@ -23,6 +23,10 @@ const routes: Routes = [
         loadChildren: () =>
           import('../../../../admin/priority-questions/questions.module').then((m) => m.QuestionsModule),
       },
+      {
+        path: 'logs',
+        loadChildren: () => import('../../../../admin/log/log.module').then((m) => m.LogModule),
+      },
     ],
   },
 ];

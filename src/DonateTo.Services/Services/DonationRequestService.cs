@@ -107,7 +107,7 @@ namespace DonateTo.Services
             {
                 if (DateTime.TryParse(filter.CreatedDateEnd, out var outDate))
                 {
-                    predicate = predicate.And(p => p.CreatedDate <= outDate);
+                    predicate = predicate.And(p => p.CreatedDate < outDate.AddDays(1));
                 }
             }
 
@@ -123,7 +123,7 @@ namespace DonateTo.Services
             {
                 if (DateTime.TryParse(filter.FinishDateEnd, out var outDate))
                 {
-                    predicate = predicate.And(p => p.FinishDate <= outDate);
+                    predicate = predicate.And(p => p.FinishDate < outDate.AddDays(1));
                 }
             }
 

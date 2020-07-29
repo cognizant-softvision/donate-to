@@ -189,7 +189,8 @@
         "Donation": "Donaciones",
         "User": "Usuarios",
         "Organization": "Organización",
-        "Priority-questions": "Prioridad"
+        "Priority-questions": "Prioridad",
+        "Logs": "Logs"
       }
     },
     "Donation": {
