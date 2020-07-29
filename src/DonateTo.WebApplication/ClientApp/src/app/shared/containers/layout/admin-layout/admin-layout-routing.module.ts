@@ -19,9 +19,8 @@ const routes: Routes = [
           import('../../../../admin/organization/organization.module').then((m) => m.OrganizationModule),
       },
       {
-        path: 'priority-questions',
-        loadChildren: () =>
-          import('../../../../admin/priority-questions/questions.module').then((m) => m.QuestionsModule),
+        path: 'questions',
+        loadChildren: () => import('../../../../admin/questions/questions.module').then((m) => m.QuestionsModule),
       },
     ],
   },
