@@ -73,7 +73,7 @@
         "Address": "Dirección",
         "AddressRequiredError": "Dirección es requerido",
         "AddressPlaceholder": "Por favor ingresar una dirección",
-        "FinishDate": "Fecha fin",
+        "FinishDate": "Fecha Límite de Donación",
         "DonationItem": {
           "Name": "Producto",
           "NameRequiredError": "Producto es requerido",
