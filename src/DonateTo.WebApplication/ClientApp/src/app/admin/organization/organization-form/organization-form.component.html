@@ -1,0 +1,64 @@
+<div class="steps-container">
+  <!-- Steps Title -->
+  <nz-steps [nzCurrent]="currentStep">
+    <nz-step
+      nzTitle="{{ 'Admin.Organization.OrganizationSteps.GeneralInformation.GeneralInformation' | translate }}"
+      nzIcon="info-circle"
+      [(nzStatus)]="statusGeneralInformation"
+    >
+    </nz-step>
+
+    <nz-step
+      nzTitle="{{ 'Admin.Organization.OrganizationSteps.Contact.Contact' | translate }}"
+      nzIcon="user"
+      [(nzStatus)]="statusContact"
+    >
+    </nz-step>
+
+    <nz-step
+      nzTitle="{{ 'Admin.Organization.OrganizationSteps.Address.Address' | translate }}"
+      nzIcon="home"
+      [(nzStatus)]="statusAddress"
+    >
+    </nz-step>
+  </nz-steps>
+
+  <!-- Steps Content -->
+  <div class="steps-content">
+    <app-organization-step-general-information
+      *ngIf="currentStep === 0"
+      (isFormValid)="isGeneralInformationStepReady($event)"
+      [generalInformationModel]="generalInformationModel"
+      [isEditOrganization]="isEditOrganization"
+    >
+    </app-organization-step-general-information>
+
+    <app-organization-step-contact
+      *ngIf="currentStep === 1"
+      (isFormValid)="isContactStepReady($event)"
+      [contactModel]="contactModel"
+      [isEditOrganization]="isEditOrganization"
+    >
+    </app-organization-step-contact>
+
+    <app-organization-step-address
+      *ngIf="currentStep === 2"
+      (isFormValid)="isAddressStepReady($event)"
+      [isEditOrganization]="isEditOrganization"
+    >
+    </app-organization-step-address>
+  </div>
+
+  <!-- Steps Buttons -->
+  <div class="steps-action">
+    <button nz-button nzType="default" (click)="prev()" *ngIf="currentStep > 0">
+      <span>Previous</span>
+    </button>
+    <button nz-button nzType="default" (click)="next()" [disabled]="nextStepDisabled" *ngIf="currentStep < 2">
+      <span>Next</span>
+    </button>
+    <button nz-button nzType="primary" (click)="done()" *ngIf="currentStep === 2">
+      <span>Done</span>
+    </button>
+  </div>
+</div>

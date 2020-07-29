@@ -15,6 +15,8 @@ using System.Threading.Tasks;
 using DonateTo.ApplicationCore.Models.Filtering;
 using LinqKit;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace DonateTo.Services
 {
@@ -155,17 +157,22 @@ namespace DonateTo.Services
                     predicate = predicate.And(p => p.TimeStamp < outDate.AddDays(1));
                 }
             }
-            
+
+
             if (!string.IsNullOrEmpty(filter.Message))
             {
-                predicate = predicate.And(p => p.Message.Contains(filter.Message));
+                predicate = predicate.And(p =>
+                                EF.Functions.ILike(p.Message, string.Format(CultureInfo.CurrentCulture, "%{0}%", filter.Message)));
             }
+
 
             //Not Working for PostgreSQL jsonb fields (If needed it must be researched)
             //if (!string.IsNullOrEmpty(filter.LogEvent))
             //{
-            //    predicate = predicate.And(p => p.LogEvent.Contains(filter.LogEvent));
+            //    predicate = predicate.And(p =>
+            //                     EF.Functions.ILike(p.LogEvent, string.Format(CultureInfo.CurrentCulture, "%{0}%", filter.LogEvent)));
             //}
+
             return predicate;
         }
         #endregion

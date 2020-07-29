@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using DonateTo.ApplicationCore.Models.Filtering;
+using DonateTo.WebApi.Filters;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -50,6 +51,29 @@ namespace DonateTo.WebApi.V1.Controllers
                     return NotFound();
                 }
             }
+        }
+
+        /// <summary>
+        /// Updates an Organization
+        /// </summary>
+        /// <param name="id">Organization Id</param>
+        /// <param name="organization">Organization</param>
+        /// <returns>Updated Organization.</returns>
+        [ServiceFilter(typeof(AdminAccessFilter))]
+        public override async Task<IActionResult> Put(long id, [FromBody] Organization organization)
+        {
+            return await base.Put(id, organization).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Creates an Organization
+        /// </summary>
+        /// <param name="value">Organization</param>
+        /// <returns>New Organization.</returns>
+        [ServiceFilter(typeof(AdminAccessFilter))]
+        public override async Task<IActionResult> Post([FromBody] Organization value)
+        {
+            return await base.Post(value).ConfigureAwait(false);
         }
     }
 }

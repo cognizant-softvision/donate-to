@@ -22,7 +22,6 @@ import { NgModule } from '@angular/core';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { OrganizationEffects } from 'src/app/shared/store/organization';
-import { PlusOutline } from '@ant-design/icons-angular/icons';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StatusEffects } from 'src/app/shared/store/status';
 import { StoreModule } from '@ngrx/store';
@@ -45,11 +44,14 @@ import {
   NzTableModule,
   NzTagModule,
 } from 'ng-zorro-antd';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { DeleteOutline, EditOutline, PlusOutline } from '@ant-design/icons-angular/icons';
+import { DonationsDetailComponent } from './donations-detail/donations-detail.component';
 
 // FIX this should be moved to an upper level.
 registerLocaleData(es);
 
-const ICONS: IconDefinition[] = [PlusOutline];
+const ICONS: IconDefinition[] = [PlusOutline, EditOutline, DeleteOutline];
 
 @NgModule({
   imports: [
@@ -71,6 +73,8 @@ const ICONS: IconDefinition[] = [PlusOutline];
     NzDividerModule,
     NzDropDownModule,
     NzTableModule,
+    NzToolTipModule,
+
     EffectsModule.forFeature([OrganizationEffects, AddressEffects, UnitEffects, CategoryEffects, StatusEffects]),
     StoreModule.forFeature(fromOrganization.organizationFeatureKey, fromOrganization.reducer),
     StoreModule.forFeature(fromStatus.statusFeatureKey, fromStatus.reducer),
@@ -97,6 +101,7 @@ const ICONS: IconDefinition[] = [PlusOutline];
     DonationsEditComponent,
     DonationsFormComponent,
     DonationPriorityComponent,
+    DonationsDetailComponent,
   ],
   providers: [DonationsSandbox],
 })
