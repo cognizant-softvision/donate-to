@@ -8,7 +8,7 @@ import { getOrganization } from 'src/app/shared/store/organization';
 @Component({
   selector: 'app-organization-detail',
   templateUrl: './organization-detail.component.html',
-  styleUrls: ['./organization-detail.component.css'],
+  styleUrls: ['./organization-detail.component.scss'],
 })
 export class OrganizationDetailComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];

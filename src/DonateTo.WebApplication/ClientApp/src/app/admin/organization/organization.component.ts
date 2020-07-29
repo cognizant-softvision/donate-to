@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-organization-admin',
   templateUrl: './organization.component.html',
-  styleUrls: ['./organization.component.css'],
+  styleUrls: ['./organization.component.scss'],
 })
 export class OrganizationComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];

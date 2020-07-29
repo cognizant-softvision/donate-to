@@ -12,7 +12,7 @@ import { ControlTypeModel } from 'src/app/shared/models/control-type.model';
 @Component({
   selector: 'app-questions-create',
   templateUrl: './questions-create.component.html',
-  styleUrls: ['./questions-create.component.css'],
+  styleUrls: ['./questions-create.component.scss'],
 })
 export class QuestionsCreateComponent implements OnDestroy, OnInit {
   @ViewChild('modalContent') public modalContent: TemplateRef<any>;

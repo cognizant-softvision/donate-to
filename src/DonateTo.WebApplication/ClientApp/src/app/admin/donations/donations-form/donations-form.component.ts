@@ -10,7 +10,7 @@ import { AuthSandbox } from '../../../shared/auth/auth.sandbox';
 @Component({
   selector: 'app-donations-form',
   templateUrl: './donations-form.component.html',
-  styleUrls: ['./donations-form.component.css'],
+  styleUrls: ['./donations-form.component.scss'],
 })
 export class DonationsFormComponent implements OnInit, OnDestroy {
   @Input() donationRequest: DonationRequestModel;

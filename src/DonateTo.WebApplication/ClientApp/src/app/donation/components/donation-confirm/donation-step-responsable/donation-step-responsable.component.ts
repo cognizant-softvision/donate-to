@@ -5,7 +5,7 @@ import { ContactModel } from 'src/app/shared/models/contact.model';
 @Component({
   selector: 'app-donation-step-responsable',
   templateUrl: './donation-step-responsable.component.html',
-  styleUrls: ['./donation-step-responsable.component.css'],
+  styleUrls: ['./donation-step-responsable.component.scss'],
 })
 export class DonationStepResponsableComponent implements OnInit {
   responsableStepForm: FormGroup;

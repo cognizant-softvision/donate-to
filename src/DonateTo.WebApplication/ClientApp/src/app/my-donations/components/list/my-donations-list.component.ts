@@ -9,7 +9,7 @@ import { Status } from 'src/app/shared/models';
 @Component({
   selector: 'app-my-donation-list',
   templateUrl: './my-donations-list.component.html',
-  styleUrls: ['./my-donations-list.component.css'],
+  styleUrls: ['./my-donations-list.component.scss'],
 })
 export class MyDonationsListComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];

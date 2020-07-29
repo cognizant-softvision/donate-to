@@ -13,7 +13,7 @@ import { AvailabilityModel } from 'src/app/shared/models/availability.model';
 @Component({
   selector: 'app-donation-confirm',
   templateUrl: './donation-confirm.component.html',
-  styleUrls: ['./donation-confirm.component.css'],
+  styleUrls: ['./donation-confirm.component.scss'],
 })
 export class DonationConfirmComponent implements OnInit, OnDestroy {
   constructor(public donationSandbox: DonationSandbox) {}

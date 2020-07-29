@@ -11,7 +11,7 @@ import 'rxjs/add/operator/filter';
 @Component({
   selector: 'app-user-admin',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css'],
+  styleUrls: ['./user.component.scss'],
 })
 export class UserComponent implements OnInit, OnDestroy {
   @ViewChild(PopupModalComponent) private popUpModalComponent: PopupModalComponent;

@@ -11,7 +11,7 @@ import { NzTableQueryParams } from 'ng-zorro-antd';
 @Component({
   selector: 'app-donations-admin',
   templateUrl: './donations.component.html',
-  styleUrls: ['./donations.component.css'],
+  styleUrls: ['./donations.component.scss'],
 })
 export class DonationsComponent implements OnDestroy, OnInit {
   private subscriptions: Subscription[] = [];

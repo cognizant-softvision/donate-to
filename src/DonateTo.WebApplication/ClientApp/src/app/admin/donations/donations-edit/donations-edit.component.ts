@@ -9,7 +9,7 @@ import { first } from 'rxjs/internal/operators/first';
 @Component({
   selector: 'app-donations-edit',
   templateUrl: './donations-edit.component.html',
-  styleUrls: ['./donations-edit.component.css'],
+  styleUrls: ['./donations-edit.component.scss'],
 })
 export class DonationsEditComponent implements OnInit, OnDestroy {
   @ViewChild(DonationsFormComponent)

@@ -7,7 +7,7 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 @Component({
   selector: 'app-donations-create',
   templateUrl: './donations-create.component.html',
-  styleUrls: ['./donations-create.component.css'],
+  styleUrls: ['./donations-create.component.scss'],
 })
 export class DonationsCreateComponent implements OnDestroy {
   @ViewChild(DonationsFormComponent)

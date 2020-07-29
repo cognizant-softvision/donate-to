@@ -9,7 +9,7 @@ import { OrganizationStepContactComponent } from '../organization-step-contact/o
 @Component({
   selector: 'app-organization-step-address',
   templateUrl: './organization-step-address.component.html',
-  styleUrls: ['./organization-step-address.component.css'],
+  styleUrls: ['./organization-step-address.component.scss'],
 })
 export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
   addressStepForm: FormGroup;
