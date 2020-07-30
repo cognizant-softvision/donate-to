@@ -17,9 +17,11 @@ namespace DonateTo.ApplicationCore.Entities
         public Status Status { get; set; }
         public long OwnerId { get; set; }
         public User Owner { get; set; }
-        public IEnumerable<DonationRequestItem> DonationRequestItems { get; set; }
         public DateTime? FinishDate { get; set; }
+        public IEnumerable<DonationRequestItem> DonationRequestItems { get; set; }
+        public IEnumerable<Donation> Donations { get; set; }
+
         [NotMapped]
-        public IEnumerable<DonationRequestCategory> DonationRequestCategories { get; set; }        
+        public IEnumerable<DonationRequestCategory> DonationRequestCategories { get; set; }
     }
 }

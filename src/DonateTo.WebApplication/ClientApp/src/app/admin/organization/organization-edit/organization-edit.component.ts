@@ -65,7 +65,7 @@ export class OrganizationEditComponent implements OnInit, OnDestroy {
   }
 
   goBack() {
-    this.router.navigate(['/admin/organization']);
+    this.router.navigate(['/admin/organizations']);
   }
 
   private unregisterEvents() {

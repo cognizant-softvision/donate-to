@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DonationRequestFilter } from '../../shared/models/filters/donation-request-filter';
 import { NzTableQueryParams } from 'ng-zorro-antd';
+import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
 
 @Component({
   selector: 'app-donations-admin',
@@ -26,7 +27,6 @@ export class DonationsComponent implements OnDestroy, OnInit {
   searchFinishDateBeginValue: Date;
   searchFinishDateEndValue: Date;
   searchObservationValue = '';
-  placedDonations = '';
   titleVisible = false;
   createdDateVisible = false;
   finishDateVisible = false;
@@ -37,8 +37,13 @@ export class DonationsComponent implements OnDestroy, OnInit {
   successStatus = false;
   createdRange: Date[] = [];
   finishRange: Date[] = [];
+  dataSaved = false;
 
-  constructor(private donationSandbox: DonationsSandbox, protected router: Router) {}
+  constructor(
+    private donationSandbox: DonationsSandbox,
+    protected router: Router,
+    private dataUpdated: DataUpdatedService
+  ) {}
 
   ngOnInit(): void {
     this.donationRequestFilter = {
@@ -57,6 +62,12 @@ export class DonationsComponent implements OnDestroy, OnInit {
         this.donationRequestsList = res.results;
       })
     );
+
+    this.dataUpdated.currentStatus.subscribe((dataSaved) => (this.dataSaved = dataSaved));
+    if (this.dataSaved) {
+      this.dataUpdated.changeMessage(false);
+      window.location.reload();
+    }
   }
 
   ngOnDestroy(): void {

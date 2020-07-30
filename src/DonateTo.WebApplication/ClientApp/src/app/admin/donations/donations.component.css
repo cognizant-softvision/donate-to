@@ -20,10 +20,10 @@ label.filter {
   margin-right: 0.25em;
 }
 
-i {
+.action-icon {
   font-size: 1.5em;
 }
 
-a {
+.icon-link {
   color: grey;
 }

@@ -35,13 +35,14 @@ import {
 } from 'ng-zorro-antd';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { fromQuestion } from '../../shared/store';
-import { MinusCircleOutline, PlusOutline } from '@ant-design/icons-angular/icons';
+import { DeleteOutline, EditOutline, MinusCircleOutline, PlusOutline } from '@ant-design/icons-angular/icons';
 import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 
 // FIX this should be moved to an upper level.
 registerLocaleData(es);
 
-const ICONS = [MinusCircleOutline, PlusOutline];
+const ICONS = [MinusCircleOutline, PlusOutline, DeleteOutline, EditOutline];
 
 @NgModule({
   imports: [
@@ -64,6 +65,8 @@ const ICONS = [MinusCircleOutline, PlusOutline];
     NzDividerModule,
     NzTableModule,
     NzCheckboxModule,
+    NzToolTipModule,
+
     EffectsModule.forFeature([QuestionEffects]),
     StoreModule.forFeature(fromQuestion.questionFeatureKey, fromQuestion.reducer),
     FormsModule,

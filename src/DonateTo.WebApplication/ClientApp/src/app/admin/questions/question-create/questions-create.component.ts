@@ -36,10 +36,10 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
 
   label = '';
   placeholder = '';
-  weight = 0;
-  order = 0;
+  weight = null;
+  order = null;
   defaultValue = '';
-  controlTypeId = 0;
+  controlTypeId = null;
   questionId = 0;
   isEdit = false;
   isQuestionsValid = true;
@@ -48,13 +48,13 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   requiredWeight = 100;
 
   listOfColumns: ColumnItem[] = [
-    { name: 'Admin.PriorityQuestion.Table.LabelColumn' },
-    { name: 'Admin.PriorityQuestion.Table.PlaceholderColumn' },
-    { name: 'Admin.PriorityQuestion.Table.OrderColumnColumn' },
-    { name: 'Admin.PriorityQuestion.Table.WeightColumn' },
-    { name: 'Admin.PriorityQuestion.Table.ControlTypeColumn' },
-    { name: 'Admin.PriorityQuestion.Table.DefaultValueColumn' },
-    { name: 'Admin.PriorityQuestion.Table.OptionsColumn' },
+    { name: 'Admin.Questions.Table.LabelColumn' },
+    { name: 'Admin.Questions.Table.PlaceholderColumn' },
+    { name: 'Admin.Questions.Table.OrderColumnColumn' },
+    { name: 'Admin.Questions.Table.WeightColumn' },
+    { name: 'Admin.Questions.Table.ControlTypeColumn' },
+    { name: 'Admin.Questions.Table.DefaultValueColumn' },
+    { name: 'Admin.Questions.Table.OptionsColumn' },
     { name: 'Admin.Action' },
   ];
 
@@ -144,7 +144,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/admin/priority-questions']);
+    this.router.navigate(['/admin/questions']);
   }
 
   private validateFormGroup(formGroup: FormGroup) {

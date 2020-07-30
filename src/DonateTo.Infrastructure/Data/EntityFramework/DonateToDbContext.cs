@@ -43,8 +43,6 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
                 modelBuilder.Entity<Contact>().Property(b => b.Id).HasIdentityOptions(startValue: 20);// remove after fixing migrations sequences, they must get restrated after insertion
                 modelBuilder.Entity<Address>().Property(b => b.Id).HasIdentityOptions(startValue: 20);// remove after fixing migrations sequences, they must get restrated after insertion
 
-
-
                 modelBuilder.Entity<User>(b =>
                 {
                     // Each User can have many UserClaims
