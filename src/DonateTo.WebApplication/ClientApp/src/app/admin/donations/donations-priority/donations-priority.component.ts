@@ -23,6 +23,8 @@ export class DonationPriorityComponent implements OnInit {
         updateDate: new Date(),
         id: 1,
         order: 0,
+        min: 0,
+        max: 0,
         controlType: {
           id: 1,
           createdBy: '',
@@ -48,6 +50,8 @@ export class DonationPriorityComponent implements OnInit {
             label: 'Option 1',
             weight: 15,
             questionId: 1,
+            maximumRelative: 0,
+            minimumRelative: 0,
           },
           {
             id: 2,
@@ -59,6 +63,8 @@ export class DonationPriorityComponent implements OnInit {
             label: 'Option 2',
             weight: 15,
             questionId: 1,
+            maximumRelative: 0,
+            minimumRelative: 0,
           },
           {
             id: 3,
@@ -70,6 +76,8 @@ export class DonationPriorityComponent implements OnInit {
             label: 'Option 3',
             weight: 70,
             questionId: 1,
+            minimumRelative: 0,
+            maximumRelative: 0,
           },
         ],
       },
@@ -80,6 +88,8 @@ export class DonationPriorityComponent implements OnInit {
         updateDate: new Date(),
         id: 2,
         order: 0,
+        min: 0,
+        max: 0,
         controlType: {
           id: 1,
           createdBy: '',
@@ -105,6 +115,8 @@ export class DonationPriorityComponent implements OnInit {
             label: 'Option A',
             weight: 50,
             questionId: 2,
+            maximumRelative: 0,
+            minimumRelative: 0,
           },
           {
             id: 2,
@@ -116,6 +128,8 @@ export class DonationPriorityComponent implements OnInit {
             label: 'Option B',
             weight: 25,
             questionId: 2,
+            maximumRelative: 0,
+            minimumRelative: 0,
           },
           {
             id: 3,
@@ -127,6 +141,8 @@ export class DonationPriorityComponent implements OnInit {
             label: 'Option C',
             weight: 25,
             questionId: 2,
+            maximumRelative: 0,
+            minimumRelative: 0,
           },
         ],
       },

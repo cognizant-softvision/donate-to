@@ -74,6 +74,7 @@
         "AddressRequiredError": "Dirección es requerido",
         "AddressPlaceholder": "Por favor ingresar una dirección",
         "FinishDate": "Fecha Límite de Donación",
+        "DeleteItem": "Eliminar Item",
         "DonationItem": {
           "Name": "Producto",
           "NameRequiredError": "Producto es requerido",
@@ -122,6 +123,7 @@
       "EditConfirm": "¿Estas seguro que quieres editar esta organización?",
       "DeleteConfirmation": "¿Está seguro que desea eliminar esta organización?",
       "Edit": "Editar Organización",
+      "Detail": "Información",
       "Table": {
         "Name": "Nombre",
         "Description": "Descripción",
@@ -212,7 +214,9 @@
         "PlaceholderRequired": "Nombre marcador es requerido",
         "ControlTypeRequired": "Tipo control es requerido",
         "AddItem": "Agregar Pregunta",
-        "PriorityQuestionRequiredError": "Por lo menos una pregunta es requerida y el peso debe llegar a 100%."
+        "PriorityQuestionRequiredError": "Por lo menos una pregunta de prioridad es requerida y el peso debe llegar a 100%.",
+        "PriorityRangeError": "El rango no cubre la totalidad de valores.",
+        "PriorityWeightError": "El peso de las opciones debe sumar un total de 100."
       },
       "CreateConfirm": "Está seguro de que quiere crear una nueva pregunta?",
       "EditConfirm": "Estas seguro que quieres editar esta pregunta?"
@@ -242,11 +246,15 @@
       "Title": "Usuarios",
       "Associate": "Administrar Asociaciones",
       "SelectOrganization": "Seleccionar Organizaciones",
+      "OrganizationTitle": "Organización",
       "Table": {
         "Name": "Nombre",
         "Organization": "Organización",
         "Email": "Email",
-        "Action": "Acción"
+        "Action": "Acción",
+        "Search": "Buscar",
+        "Reset": "Reestablecer",
+        "Filtered": "Filtrada"
       }
     }
   },
