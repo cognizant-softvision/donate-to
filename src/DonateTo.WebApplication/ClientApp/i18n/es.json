@@ -74,6 +74,7 @@
         "AddressRequiredError": "Dirección es requerido",
         "AddressPlaceholder": "Por favor ingresar una dirección",
         "FinishDate": "Fecha Límite de Donación",
+        "DeleteItem": "Eliminar Item",
         "DonationItem": {
           "Name": "Producto",
           "NameRequiredError": "Producto es requerido",
@@ -122,6 +123,7 @@
       "EditConfirm": "¿Estas seguro que quieres editar esta organización?",
       "DeleteConfirmation": "¿Está seguro que desea eliminar esta organización?",
       "Edit": "Editar Organización",
+      "Detail": "Información",
       "Table": {
         "Name": "Nombre",
         "Description": "Descripción",
@@ -242,11 +244,15 @@
       "Title": "Usuarios",
       "Associate": "Administrar Asociaciones",
       "SelectOrganization": "Seleccionar Organizaciones",
+      "OrganizationTitle": "Organización",
       "Table": {
         "Name": "Nombre",
         "Organization": "Organización",
         "Email": "Email",
-        "Action": "Acción"
+        "Action": "Acción",
+        "Search": "Buscar",
+        "Reset": "Reestablecer",
+        "Filtered": "Filtrada"
       }
     }
   },
