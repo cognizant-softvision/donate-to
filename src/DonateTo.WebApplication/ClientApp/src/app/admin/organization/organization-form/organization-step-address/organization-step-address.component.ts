@@ -78,7 +78,9 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
     this.organizationSandbox.loadCountries();
 
     this.organizationSandbox.organization$.subscribe((organization) => {
-      this.addresses = [...organization.addresses];
+      if (organization) {
+        this.addresses = [...organization.addresses];
+      }
     });
   }
 
@@ -122,7 +124,7 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
   }
 
   isValidForm(): boolean {
-    return this.addressStepForm.valid;
+    return this.addressStepForm.valid && this.organizationStepContactComponent.isValidForm() ? true : false;
   }
 
   setStates(): void {
@@ -228,10 +230,12 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
   cancelEdit() {
     this.isEditAddress = false;
     this.addressStepForm.reset();
+    this.organizationStepContactComponent.responsableStepForm.reset();
   }
 
   confirmEdit() {
     this.addAddress();
     this.removeAddress(this.item);
+    this.isEditAddress = false;
   }
 }
