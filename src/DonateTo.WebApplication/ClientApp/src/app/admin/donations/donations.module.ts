@@ -47,6 +47,7 @@ import {
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { DeleteOutline, EditOutline, PlusOutline } from '@ant-design/icons-angular/icons';
 import { DonationsDetailComponent } from './donations-detail/donations-detail.component';
+import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
 
 // FIX this should be moved to an upper level.
 registerLocaleData(es);
@@ -103,6 +104,6 @@ const ICONS: IconDefinition[] = [PlusOutline, EditOutline, DeleteOutline];
     DonationPriorityComponent,
     DonationsDetailComponent,
   ],
-  providers: [DonationsSandbox],
+  providers: [DonationsSandbox, DataUpdatedService],
 })
 export class DonationsModule {}
