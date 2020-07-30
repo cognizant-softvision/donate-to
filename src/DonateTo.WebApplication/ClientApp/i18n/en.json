@@ -252,11 +252,11 @@
     },
     "Log": {
       "Title": "Logs",
-      "CreateConfirm": "Are you sure you want to create a Organization?",
       "Table": {
-        "Name": "Name",
-        "Description": "Description",
-        "ContactName": "Contact Name",
+        "Date": "Date",
+        "Message": "Message",
+        "Exception": "Exception",
+
         "Action": "Action",
         "Search": "Search",
         "Reset": "Reset",

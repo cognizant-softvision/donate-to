@@ -20,9 +20,11 @@ export class LogService extends BaseHttpClientService<LogModel> {
     const queryString = {
       pageNumber: logFilter?.pageNumber.toString() ?? '',
       pageSize: logFilter?.pageSize.toString() ?? '',
-      contactName: logFilter?.contactName ?? '',
-      name: logFilter?.name ?? '',
-      description: logFilter?.description ?? '',
+      message: logFilter?.message ?? '',
+      exception: logFilter?.exception ?? '',
+      level: logFilter?.level?.toString() ?? '',
+      timeStampBegin: logFilter?.timeStampBegin?.toDateString() ?? '',
+      timeStampEnd: logFilter?.timeStampEnd?.toDateString() ?? '',
       orderBy: logFilter?.orderBy ?? '',
       orderDirection: logFilter?.orderDirection ?? '',
     };

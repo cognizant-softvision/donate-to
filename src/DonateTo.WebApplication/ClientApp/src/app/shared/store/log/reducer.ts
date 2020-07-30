@@ -41,11 +41,6 @@ const logReducer = createReducer(
     loading: true,
     failed: false,
   })),
-  on(logActions.loadLogsByUser, (state, action) => ({
-    ...state,
-    loading: true,
-    failed: false,
-  })),
   on(logActions.loadLogsSuccess, (state, { logs }) => ({
     ...state,
     loading: false,

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DonateTo.ApplicationCore.Interfaces.Services
 {
-    public interface ILogService : IGetService<Log, LogFilterModel>
+    public interface ILogService : IGetAllService<Log, LogFilterModel>, IGetPagedFilteredService<Log, LogFilterModel>
     {
         
     }

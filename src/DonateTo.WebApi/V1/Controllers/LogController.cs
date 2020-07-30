@@ -25,70 +25,7 @@ namespace DonateTo.WebApi.V1.Controllers
         {
             _logService = logService;
         }
-
-        ///// <summary>
-        ///// Get a Log by id.
-        ///// </summary>
-        ///// <param name="id">Id</param>
-        ///// <returns>Log.</returns>
-        //[HttpGet("{id}", Name = "[controller]_[action]_Id")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "<Pending>")]
-        //public virtual async Task<ActionResult<LogModel>> Get(long id)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest();
-        //    }
-        //    else
-        //    {
-        //        var result = await _logService.GetAsync(id).ConfigureAwait(false);
-
-        //        if (result != null)
-        //        {
-        //            return Ok(result);
-        //        }
-        //        else
-        //        {
-        //            return NotFound();
-        //        }
-        //    }
-        //}
-
-        /// <summary>
-        /// Get a logs list.
-        /// </summary>
-        /// <returns>List of entities.</returns>
-        [HttpGet(Name = "[controller]_[action]")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "<Pending>")]
-        public virtual async Task<ActionResult<IEnumerable<Log>>> Get()
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-            else
-            {
-                var result = await _logService.GetAsync().ConfigureAwait(false);
-
-                if (result != null)
-                {
-                    return Ok(result);
-                }
-                else
-                {
-                    return NotFound();
-                }
-            }
-        }
-
+        
         /// <summary>
         /// Gets a paged logs list starting with given <paramref name="pageNumber"/> and with <paramref name="pageSize"/>
         /// </summary>

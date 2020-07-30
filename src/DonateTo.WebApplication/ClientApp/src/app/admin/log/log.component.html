@@ -6,7 +6,7 @@
   </div>
   <nz-table
     #organizationsTable
-    [nzData]="organizationList"
+    [nzData]="logList"
     nzTableLayout="fixed"
     [nzNoResult]="customTpl"
     [nzFrontPagination]="false"
@@ -17,71 +17,51 @@
   >
     <thead>
       <tr>
-        <th nzCustomFilter nzColumnKey="name" [nzSortOrder]="'ascend'" [nzSortFn]="true">
-          {{ 'Admin.Organization.Table.Name' | translate }}
+        <th nzCustomFilter nzColumnKey="message" [nzSortOrder]="'ascend'" [nzSortFn]="true">
+          {{ 'Admin.Log.Table.Message' | translate }}
           <label
             class="filter"
-            title="{{ 'Admin.Organization.Table.Filtered' | translate }}"
-            *ngIf="searchNameValue.length > 0 && !nameVisible"
+            title="{{ 'Admin.Log.Table.Filtered' | translate }}"
+            *ngIf="searchMessageValue.length > 0 && !messageVisible"
           >
-            ({{ searchNameValue }})
+            ({{ searchMessageValue }})
           </label>
           <nz-filter-trigger
-            [(nzVisible)]="nameVisible"
-            [nzActive]="searchNameValue.length > 0"
-            [nzDropdownMenu]="searchNameMenu"
+            [(nzVisible)]="messageVisible"
+            [nzActive]="searchMessageValue.length > 0"
+            [nzDropdownMenu]="searchMessageMenu"
           >
             <i nz-icon nzType="search"></i>
           </nz-filter-trigger>
         </th>
-        <th nzCustomFilter nzColumnKey="description" [nzSortFn]="true">
-          {{ 'Admin.Organization.Table.Description' | translate }}
+        <th nzCustomFilter nzColumnKey="exception" [nzSortFn]="true">
+          {{ 'Admin.Log.Table.Exception' | translate }}
           <label
             class="filter"
-            title="{{ 'Admin.Organization.Table.Filtered' | translate }}"
-            *ngIf="searchDescriptionValue.length > 0 && !descriptionVisible"
+            title="{{ 'Admin.Log.Table.Filtered' | translate }}"
+            *ngIf="searchExceptionValue.length > 0 && !exceptionVisible"
           >
-            ({{ searchDescriptionValue }})
+            ({{ searchExceptionValue }})
           </label>
           <nz-filter-trigger
-            [(nzVisible)]="descriptionVisible"
-            [nzActive]="searchDescriptionValue.length > 0"
-            [nzDropdownMenu]="searchDescriptionMenu"
-          >
-            <i nz-icon nzType="search"></i>
-          </nz-filter-trigger>
-        </th>
-        <th nzCustomFilter nzColumnKey="contactName" [nzSortFn]="true">
-          {{ 'Admin.Organization.Table.ContactName' | translate }}
-          <label
-            class="filter"
-            title="{{ 'Admin.Organization.Table.Filtered' | translate }}"
-            *ngIf="searchContactName.length > 0 && !contactNameVisible"
-          >
-            ({{ searchContactName }})
-          </label>
-          <nz-filter-trigger
-            [(nzVisible)]="contactNameVisible"
-            [nzActive]="searchContactNameValue.length > 0"
-            [nzDropdownMenu]="searchContactNameMenu"
+            [(nzVisible)]="exceptionVisible"
+            [nzActive]="searchExceptionValue.length > 0"
+            [nzDropdownMenu]="searchExceptionMenu"
           >
             <i nz-icon nzType="search"></i>
           </nz-filter-trigger>
         </th>
         <th>
-          {{ 'Admin.Organization.Table.Action' | translate }}
+          {{ 'Admin.Log.Table.Action' | translate }}
         </th>
       </tr>
     </thead>
     <tbody>
       <ng-container *ngFor="let data of organizationsTable.data">
         <tr>
-          <td>{{ data.name }}</td>
-          <td>{{ data.description }}</td>
-          <td>{{ data.contact?.fullName }}</td>
+          <td>{{ data.message }}</td>
+          <td>{{ data.exception }}</td>
           <td>
-            <a>{{ 'Admin.Edit' | translate }} </a>
-            <nz-divider nzType="vertical"></nz-divider>
             <a>{{ 'Admin.View' | translate }}</a>
           </td>
         </tr>
@@ -90,56 +70,38 @@
   </nz-table>
 </div>
 
-<nz-dropdown-menu #searchNameMenu="nzDropdownMenu">
+<nz-dropdown-menu #searchMessageMenu="nzDropdownMenu">
   <div class="ant-table-filter-dropdown">
     <div class="search-box">
       <input
         type="text"
         nz-input
-        placeholder="{{ 'Admin.Organization.Table.Name' | translate }}"
-        [(ngModel)]="searchNameValue"
+        placeholder="{{ 'Admin.Log.Table.Message' | translate }}"
+        [(ngModel)]="searchMessageValue"
       />
-      <button nz-button nzSize="small" nzType="primary" (click)="searchName()" class="search-button">
-        {{ 'Admin.Organization.Table.Search' | translate }}
+      <button nz-button nzSize="small" nzType="primary" (click)="searchMessage()" class="search-button">
+        {{ 'Admin.Log.Table.Search' | translate }}
       </button>
-      <button nz-button nzSize="small" (click)="resetNameSearch()">
-        {{ 'Admin.Organization.Table.Name' | translate }}
+      <button nz-button nzSize="small" (click)="resetMessageSearch()">
+        {{ 'Admin.Log.Table.Message' | translate }}
       </button>
     </div>
   </div>
 </nz-dropdown-menu>
-<nz-dropdown-menu #searchDescriptionMenu="nzDropdownMenu">
+<nz-dropdown-menu #searchExceptionMenu="nzDropdownMenu">
   <div class="ant-table-filter-dropdown">
     <div class="search-box">
       <input
         type="text"
         nz-input
-        placeholder="{{ 'Admin.Organization.Table.Description' | translate }}"
-        [(ngModel)]="searchDescriptionValue"
+        placeholder="{{ 'Admin.Log.Table.Exception' | translate }}"
+        [(ngModel)]="searchExceptionValue"
       />
-      <button nz-button nzSize="small" nzType="primary" (click)="searchDescription()" class="search-button">
-        {{ 'Admin.Organization.Table.Search' | translate }}
+      <button nz-button nzSize="small" nzType="primary" (click)="searchException()" class="search-button">
+        {{ 'Admin.Log.Table.Search' | translate }}
       </button>
-      <button nz-button nzSize="small" (click)="resetDescriptionSearch()">
-        {{ 'Admin.Organization.Table.Reset' | translate }}
-      </button>
-    </div>
-  </div>
-</nz-dropdown-menu>
-<nz-dropdown-menu #searchContactNameMenu="nzDropdownMenu">
-  <div class="ant-table-filter-dropdown">
-    <div class="search-box">
-      <input
-        type="text"
-        nz-input
-        placeholder="{{ 'Admin.Organization.Table.ContactName' | translate }}"
-        [(ngModel)]="searchContactNameValue"
-      />
-      <button nz-button nzSize="small" nzType="primary" (click)="searchContactName()" class="search-button">
-        {{ 'Admin.Organization.Table.Search' | translate }}
-      </button>
-      <button nz-button nzSize="small" (click)="resetContactNameSearch()">
-        {{ 'Admin.Organization.Table.Reset' | translate }}
+      <button nz-button nzSize="small" (click)="resetExceptionSearch()">
+        {{ 'Admin.Log.Table.Reset' | translate }}
       </button>
     </div>
   </div>

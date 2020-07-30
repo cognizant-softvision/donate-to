@@ -5,7 +5,6 @@ import { Observable, of } from 'rxjs';
 import { LogService } from '../../async-services/http/log.service';
 import {
   loadLogs,
-  loadLogsByUser,
   loadLogsFailed,
   loadLogsPagedFiltered,
   loadLogsPagedFilteredFailed,
