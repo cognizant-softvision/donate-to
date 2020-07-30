@@ -242,11 +242,15 @@
       "Title": "Usuarios",
       "Associate": "Administrar Asociaciones",
       "SelectOrganization": "Seleccionar Organizaciones",
+      "OrganizationTitle": "Organización",
       "Table": {
         "Name": "Nombre",
         "Organization": "Organización",
         "Email": "Email",
-        "Action": "Acción"
+        "Action": "Acción",
+        "Search": "Buscar",
+        "Reset": "Reestablecer",
+        "Filtered": "Filtrada"
       }
     }
   },
