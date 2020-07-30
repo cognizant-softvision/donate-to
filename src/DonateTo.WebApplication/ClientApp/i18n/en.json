@@ -86,7 +86,8 @@
           "UnitRequiredError": "Unit is required",
           "Category": "Categories",
           "CategoryRequiredError": "At least 1 category is required",
-          "CategoryPlaceholder": "Please select at least 1 category"
+          "CategoryPlaceholder": "Please select at least 1 category",
+          "DeleteItem": "Delete Item"
         },
         "OverflowTag": "+ more selected",
         "DonationItemRequiredError": "At least 1 item request is required",
@@ -122,6 +123,7 @@
       "EditConfirm": "Are you sure you want to edit an organization?",
       "DeleteConfirmation": "Are you sure you want to delete this organization?",
       "Edit": "Edit Organization",
+      "Detail": "Information",
       "Table": {
         "Name": "Name",
         "Description": "Description",
