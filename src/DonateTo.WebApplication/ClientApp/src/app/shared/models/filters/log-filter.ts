@@ -1,7 +1,10 @@
 import { BaseFilter } from './base-filter';
 
 export class LogFilter extends BaseFilter {
-  name: string;
-  description: string;
-  contactName: string;
+  message: string;
+  level: number;
+  exception: string;
+  // logEvent: string;
+  timeStampBegin: Date;
+  timeStampEnd: Date;
 }

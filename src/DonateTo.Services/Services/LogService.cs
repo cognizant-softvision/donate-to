@@ -37,20 +37,6 @@ namespace DonateTo.Services
         }
 
         ///<inheritdoc cref="ILogService"/>
-        public Log FirstOrDefault(Expression<Func<Log, bool>> filter)
-        {
-            return _logRepository.FirstOrDefault(filter);
-        }
-
-        ///<inheritdoc cref="ILogService"/>
-        public async Task<Log> FirstOrDefaultAsync(Expression<Func<Log, bool>> filter)
-        {
-            return await _logRepository.FirstOrDefaultAsync(filter).ConfigureAwait(false);
-        }
-               
-        
-
-        ///<inheritdoc cref="ILogService"/>
         public IEnumerable<Log> Get(Expression<Func<Log, bool>> filter)
         {
             var filterDest = _mapper.MapExpression<Expression<Func<Log, bool>>>(filter);
@@ -62,18 +48,6 @@ namespace DonateTo.Services
         {
             var filterDest = _mapper.MapExpression<Expression<Func<Log, bool>>>(filter);
             return await _logRepository.GetAsync(filterDest).ConfigureAwait(false);
-        }
-
-        ///<inheritdoc cref="ILogService"/>
-        public Log Get(long id)
-        {
-            return _logRepository.Get(id);
-        }
-
-        ///<inheritdoc cref="ILogService"/>
-        public async Task<Log> GetAsync(long id)
-        {
-            return await _logRepository.GetAsync(id).ConfigureAwait(false);
         }
 
         ///<inheritdoc cref="ILogService"/>
@@ -165,6 +139,16 @@ namespace DonateTo.Services
                                 EF.Functions.ILike(p.Message, string.Format(CultureInfo.CurrentCulture, "%{0}%", filter.Message)));
             }
 
+            if (!string.IsNullOrEmpty(filter.Exception))
+            {
+                predicate = predicate.And(p =>
+                                EF.Functions.ILike(p.Exception, string.Format(CultureInfo.CurrentCulture, "%{0}%", filter.Exception)));
+            }
+
+            if (filter.Level.HasValue)
+            {
+                predicate = predicate.And(p => p.Level == filter.Level);
+            }
 
             //Not Working for PostgreSQL jsonb fields (If needed it must be researched)
             //if (!string.IsNullOrEmpty(filter.LogEvent))

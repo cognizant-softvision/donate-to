@@ -16,5 +16,3 @@ export const loadLogsPagedFilteredSuccess = createAction(
   props<{ pagedLogs: PageModel<LogModel> }>()
 );
 export const loadLogsPagedFilteredFailed = createAction('[Logs] Load failed');
-
-export const loadLogsByUser = createAction('[Log] Load items from server by user', props<{ userId: number }>());

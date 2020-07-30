@@ -18,12 +18,13 @@ export class LogComponent implements OnInit, OnDestroy {
   total = 0;
   pageSize = 10;
   pageIndex = 1;
-  searchNameValue = '';
-  searchDescriptionValue = '';
-  searchContactNameValue = '';
-  nameVisible = false;
-  descriptionVisible = false;
-  contactNameVisible = false;
+  searchMessageValue = '';
+  searchExceptionValue = '';
+  // searchContactNameValue = '';
+  // searchTimeStampBeginValue || searchTimeStampEndValue) && !timeStampVisible
+  messageVisible = false;
+  exceptionVisible = false;
+  // contactNameVisible = false;
   failedStatus = false;
   successStatus = false;
 
@@ -61,75 +62,74 @@ export class LogComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.logSandbox.loadLogs();
+    this.logSandbox.loadLogsFilteredPaged(this.logFilter);
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
     const { pageSize, pageIndex, sort, filter } = params;
     const currentSort = sort.find((item) => item.value !== null);
-
     this.logFilter = {
       ...this.logFilter,
       pageSize,
       pageNumber: pageIndex,
       orderBy: (currentSort && currentSort.key) || '',
       orderDirection: (currentSort && currentSort.value) || '',
-      name: (filter && filter.find((f) => f.key === 'name')?.value) || '',
-      description: (filter && filter.find((f) => f.key === 'description')?.value) || '',
-      contactName: (filter && filter.find((f) => f.key === 'contactName')?.value) || '',
+      message: (filter && filter.find((f) => f.key === 'message')?.value) || '',
+      exception: (filter && filter.find((f) => f.key === 'exception')?.value) || '',
+      // TODO: Add the int and date filter
     };
 
     this.logSandbox.loadLogsFilteredPaged(this.logFilter);
   }
 
   reset(): void {
-    this.searchNameValue = '';
-    this.searchDescriptionValue = '';
-    this.searchContactNameValue = '';
+    this.searchMessageValue = '';
+    this.searchExceptionValue = '';
+    //   this.searchContactNameValue = '';
     this.logFilter = {
       ...this.logFilter,
-      name: this.searchNameValue,
-      description: this.searchDescriptionValue,
-      contactName: this.searchContactNameValue,
+      message: this.searchMessageValue,
+      exception: this.searchExceptionValue,
+      //      contactName: this.searchContactNameValue,
     };
     this.logSandbox.loadLogsFilteredPaged(this.logFilter);
   }
 
-  resetNameSearch(): void {
-    this.searchNameValue = '';
-    this.logFilter = { ...this.logFilter, name: this.searchNameValue };
+  resetMessageValue(): void {
+    this.searchMessageValue = '';
+    this.logFilter = { ...this.logFilter, message: this.searchMessageValue };
     this.logSandbox.loadLogsFilteredPaged(this.logFilter);
   }
 
-  resetDescriptionSearch(): void {
-    this.searchDescriptionValue = '';
-    this.logFilter = { ...this.logFilter, description: this.searchDescriptionValue };
+  resetExceptionSearch(): void {
+    this.searchExceptionValue = '';
+    this.logFilter = { ...this.logFilter, exception: this.searchExceptionValue };
     this.logSandbox.loadLogsFilteredPaged(this.logFilter);
   }
 
-  resetContactNameSearch(): void {
-    this.searchContactNameValue = '';
-    this.logFilter = { ...this.logFilter, contactName: this.searchContactNameValue };
+  // resetContactNameSearch(): void {
+  //  this.searchContactNameValue = '';
+  //  this.logFilter = { ...this.logFilter, contactName: this.searchContactNameValue };
+  //  this.logSandbox.loadLogsFilteredPaged(this.logFilter);
+  // }
+
+  searchMessage(): void {
+    this.messageVisible = false;
+    this.logFilter = { ...this.logFilter, message: this.searchMessageValue };
     this.logSandbox.loadLogsFilteredPaged(this.logFilter);
   }
 
-  searchName(): void {
-    this.nameVisible = false;
-    this.logFilter = { ...this.logFilter, name: this.searchNameValue };
+  searchException(): void {
+    this.exceptionVisible = false;
+    this.logFilter = { ...this.logFilter, exception: this.searchExceptionValue };
     this.logSandbox.loadLogsFilteredPaged(this.logFilter);
   }
 
-  searchDescription(): void {
-    this.descriptionVisible = false;
-    this.logFilter = { ...this.logFilter, description: this.searchDescriptionValue };
-    this.logSandbox.loadLogsFilteredPaged(this.logFilter);
-  }
-
-  searchContactName(): void {
-    this.contactNameVisible = false;
-    this.logFilter = { ...this.logFilter, contactName: this.searchContactNameValue };
-    this.logSandbox.loadLogsFilteredPaged(this.logFilter);
-  }
+  // searchContactName(): void {
+  //  this.contactNameVisible = false;
+  //  this.logFilter = { ...this.logFilter, contactName: this.searchContactNameValue };
+  //  this.logSandbox.loadLogsFilteredPaged(this.logFilter);
+  // }
 
   ngOnDestroy(): void {
     this.unregisterEvents();
