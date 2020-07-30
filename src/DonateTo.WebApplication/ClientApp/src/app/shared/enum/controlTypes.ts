@@ -1,12 +1,6 @@
 export enum ControlType {
-  Textbox = 'TextBox',
-  DropDown = 'DropDown',
-  RadioButton = 'RadioButton',
-  Checkbox = 'Checkbox',
+  Textbox = 1,
+  RadioButton = 2,
+  Checkbox = 3,
+  DropDown = 4,
 }
-export const ControlType2LabelMapping: Record<ControlType, string> = {
-  [ControlType.Textbox]: 'Textbox',
-  [ControlType.DropDown]: 'DropDown',
-  [ControlType.RadioButton]: 'RadioButton',
-  [ControlType.Checkbox]: 'Checkbox',
-};
