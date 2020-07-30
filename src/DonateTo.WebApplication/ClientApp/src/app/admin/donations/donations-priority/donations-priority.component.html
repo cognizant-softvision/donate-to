@@ -6,16 +6,25 @@
           <nz-form-label nzRequired>{{ question.label }}</nz-form-label>
           <br />
         </div>
+
         <nz-form-control [nzSpan]="12" nzHasFeedback>
-          <div [ngSwitch]="question.controlType">
+          <div [ngSwitch]="question.controlType.name">
             <div *ngSwitchCase="'textbox'">
-              <input nz-input [formControlName]="question.key" [id]="question.key" [type]="question.type" />
+              <input
+                nz-input
+                [formControlName]="question.key"
+                [id]="question.key"
+                [type]="question.id"
+                [ngModel]="question.label"
+              />
             </div>
             <div *ngSwitchCase="'dropdown'">
               <nz-select [id]="question.key" [formControlName]="question.key">
-                <nz-option *ngFor="let opt of question.options" [nzValue]="opt.value" [nzLabel]="opt.label"></nz-option>
+                <nz-option *ngFor="let opt of question.options" [nzValue]="opt.value" [nzLabel]="opt.label">
+                </nz-option>
               </nz-select>
             </div>
+
             <div *ngSwitchCase="'radiobutton'">
               <nz-radio-group [formControlName]="question">
                 <label nz-radio [nzValue]="opt.value" *ngFor="let opt of question.options">{{ opt.label }} </label>
