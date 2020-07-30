@@ -187,7 +187,7 @@
             </nz-form-item>
           </nz-form-item>
 
-          <nz-form-item *ngIf="controlTypeId !== controlTypeEnum.Textbox && controlTypeId > 0">
+          <nz-form-item *ngIf="controlTypeId && controlTypeId !== controlTypeEnum.Textbox">
             <nz-checkbox-wrapper>
               <nz-form-item *ngFor="let o of optionsArray?.controls; index as i">
                 <ng-container [formGroup]="o">

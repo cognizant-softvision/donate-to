@@ -6,29 +6,29 @@ namespace DonateTo.Infrastructure.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
+            migrationBuilder.AddColumn<decimal>(
                 name: "MaximumRelative",
                 table: "QuestionOption",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 0m);
 
-            migrationBuilder.AddColumn<int>(
+            migrationBuilder.AddColumn<decimal>(
                 name: "MinimumRelative",
                 table: "QuestionOption",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 0m);
 
-            migrationBuilder.AddColumn<int>(
+            migrationBuilder.AddColumn<decimal>(
                 name: "Max",
                 table: "Question",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 0m);
 
-            migrationBuilder.AddColumn<int>(
+            migrationBuilder.AddColumn<decimal>(
                 name: "Min",
                 table: "Question",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 0m);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
