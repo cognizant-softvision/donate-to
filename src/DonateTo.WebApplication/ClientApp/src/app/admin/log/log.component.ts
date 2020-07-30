@@ -95,7 +95,7 @@ export class LogComponent implements OnInit, OnDestroy {
     this.logSandbox.loadLogsFilteredPaged(this.logFilter);
   }
 
-  resetMessageValue(): void {
+  resetMessageSearch(): void {
     this.searchMessageValue = '';
     this.logFilter = { ...this.logFilter, message: this.searchMessageValue };
     this.logSandbox.loadLogsFilteredPaged(this.logFilter);
