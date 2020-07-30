@@ -124,7 +124,7 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
   }
 
   isValidForm(): boolean {
-    return this.addressStepForm.valid && this.organizationStepContactComponent.isValidForm() ? true : false;
+    return this.addressStepForm.valid && this.organizationStepContactComponent.isValidForm();
   }
 
   setStates(): void {
