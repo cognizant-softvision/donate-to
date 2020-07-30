@@ -169,6 +169,16 @@ export class OrganizationFormComponent implements OnInit {
     let addressesFromModel: AddressModel[] = [];
     addressesFromModel = this.organizationStepAddressComponent.addresses;
 
+    for (let i = 0; i < addressesFromModel.length; i++) {
+      addressesFromModel[i] = {
+        ...addressesFromModel[i],
+        country: null,
+        city: null,
+        contact: null,
+        state: null,
+      };
+    }
+
     this.organization = {
       ...this.organization,
       name: this.generalInformationModel.name,
