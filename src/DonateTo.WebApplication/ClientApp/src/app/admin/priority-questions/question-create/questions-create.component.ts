@@ -170,83 +170,14 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   addQuestion() {
     this.validateFormGroup(this.questionItemFormGroup);
     if (this.questionItemFormGroup.valid && this.validateOptions()) {
-      const questionItem = new QuestionModel();
-      let options: QuestionOption[] = [];
-
       if (this.isEdit) {
         const questionSavedItem = this.questions.find((q) => q.id === this.questionId);
-        questionSavedItem.label = this.questionItemFormGroup.controls.labelFormControl.value;
-        questionSavedItem.placeholder = this.questionItemFormGroup.controls.placeholderFormControl.value;
-        questionSavedItem.order = this.questionItemFormGroup.controls.orderFormControl.value;
-        questionSavedItem.controlTypeId = this.questionItemFormGroup.controls.controlTypeFormControl.value;
-        questionSavedItem.controlType = this.controlTypes.find(
-          (controlType) => controlType.id === questionSavedItem.controlTypeId
-        );
-        questionSavedItem.weight = this.questionItemFormGroup.controls.weightFormControl.value;
-        questionSavedItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
-
-        this.optionsArray.removeAt(this.optionsArray.length);
-        if (questionSavedItem.controlType.id !== ControlType.Textbox) {
-          for (const o of this.optionsArray.value) {
-            const questionOption = new QuestionOption();
-            questionOption.label = o.optionLabel;
-            questionOption.value = o.optionValue;
-            questionOption.weight = o.optionWeight;
-            options = [...options, questionOption];
-          }
-        } else {
-          this.optionsArray.removeAt(this.optionsArray.length);
-          questionSavedItem.min = this.questionItemFormGroup.controls.minFormControl.value;
-          questionSavedItem.max = this.questionItemFormGroup.controls.maxFormControl.value;
-          for (const o of this.optionsArray.value) {
-            const questionOption = new QuestionOption();
-            questionOption.minimumRelative = o.minRelativeFormControl;
-            questionOption.maximumRelative = o.maxRelativeFormControl;
-            questionOption.weight = o.optionWeight;
-            options = [...options, questionOption];
-          }
-        }
-        questionSavedItem.options = options;
-        questionItem.id = questionSavedItem.id;
-        questionItem.key = questionSavedItem.key;
-        questionItem.createdBy = questionSavedItem.createdBy;
-        questionItem.createdDate = questionSavedItem.createdDate;
-        questionItem.updateBy = questionSavedItem.updateBy;
-        questionItem.updateDate = questionSavedItem.updateDate;
+        this.createQuestionItem(questionSavedItem);
+        this.questions.splice(this.questions.indexOf(questionSavedItem), 1);
+        this.isEdit = false;
       } else {
-        questionItem.label = this.questionItemFormGroup.controls.labelFormControl.value;
-        questionItem.placeholder = this.questionItemFormGroup.controls.placeholderFormControl.value;
-        questionItem.order = this.questionItemFormGroup.controls.orderFormControl.value;
-        questionItem.controlType = new ControlTypeModel();
-        questionItem.controlTypeId = this.questionItemFormGroup.controls.controlTypeFormControl.value;
-        questionItem.controlType = this.controlTypes.find(
-          (controlType) => controlType.id === questionItem.controlTypeId
-        );
-        questionItem.weight = this.questionItemFormGroup.controls.weightFormControl.value;
-        questionItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
-
-        this.optionsArray.removeAt(this.optionsArray.length);
-        if (questionItem.controlType.id !== ControlType.Textbox) {
-          for (const o of this.optionsArray.value) {
-            const questionOption = new QuestionOption();
-            questionOption.label = o.optionLabel;
-            questionOption.value = o.optionValue;
-            questionOption.weight = o.optionWeight;
-            options = [...options, questionOption];
-          }
-        } else {
-          questionItem.min = this.questionItemFormGroup.controls.minFormControl.value;
-          questionItem.max = this.questionItemFormGroup.controls.maxFormControl.value;
-          for (const o of this.optionsArray.value) {
-            const questionOption = new QuestionOption();
-            questionOption.minimumRelative = o.minRelativeFormControl;
-            questionOption.maximumRelative = o.maxRelativeFormControl;
-            questionOption.weight = o.optionWeight;
-            options = [...options, questionOption];
-          }
-        }
-        questionItem.options = options;
-        this.questions = [...this.questions, questionItem];
+        const questionItem = new QuestionModel();
+        this.createQuestionItem(questionItem);
       }
       this.questionItemFormGroup.reset();
       this.optionsArray.reset();
@@ -317,5 +248,40 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
       relativeTotal = relativeTotal + (o.maxRelativeFormControl - o.minRelativeFormControl);
     }
     return relativeTotal === total;
+  }
+
+  createQuestionItem(questionItem: QuestionModel): void {
+    let options: QuestionOption[] = [];
+    questionItem.label = this.questionItemFormGroup.controls.labelFormControl.value;
+    questionItem.placeholder = this.questionItemFormGroup.controls.placeholderFormControl.value;
+    questionItem.order = this.questionItemFormGroup.controls.orderFormControl.value;
+    questionItem.controlType = new ControlTypeModel();
+    questionItem.controlTypeId = this.questionItemFormGroup.controls.controlTypeFormControl.value;
+    questionItem.controlType = this.controlTypes.find((controlType) => controlType.id === questionItem.controlTypeId);
+    questionItem.weight = this.questionItemFormGroup.controls.weightFormControl.value;
+    questionItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
+
+    this.optionsArray.removeAt(this.optionsArray.length);
+    if (questionItem.controlType.id !== ControlType.Textbox) {
+      for (const o of this.optionsArray.value) {
+        const questionOption = new QuestionOption();
+        questionOption.label = o.optionLabel;
+        questionOption.value = o.optionValue;
+        questionOption.weight = o.optionWeight;
+        options = [...options, questionOption];
+      }
+    } else {
+      questionItem.min = this.questionItemFormGroup.controls.minFormControl.value;
+      questionItem.max = this.questionItemFormGroup.controls.maxFormControl.value;
+      for (const o of this.optionsArray.value) {
+        const questionOption = new QuestionOption();
+        questionOption.minimumRelative = o.minRelativeFormControl;
+        questionOption.maximumRelative = o.maxRelativeFormControl;
+        questionOption.weight = o.optionWeight;
+        options = [...options, questionOption];
+      }
+    }
+    questionItem.options = options;
+    this.questions = [...this.questions, questionItem];
   }
 }

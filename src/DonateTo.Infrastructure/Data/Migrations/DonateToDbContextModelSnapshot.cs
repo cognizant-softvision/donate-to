@@ -579,10 +579,10 @@ namespace DonateTo.Infrastructure.Migrations
                     b.Property<string>("Label")
                         .HasColumnType("text");
 
-                    b.Property<decimal>("Max")
+                    b.Property<decimal?>("Max")
                         .HasColumnType("numeric");
 
-                    b.Property<decimal>("Min")
+                    b.Property<decimal?>("Min")
                         .HasColumnType("numeric");
 
                     b.Property<int>("Order")
@@ -623,10 +623,10 @@ namespace DonateTo.Infrastructure.Migrations
                     b.Property<string>("Label")
                         .HasColumnType("text");
 
-                    b.Property<decimal>("MaximumRelative")
+                    b.Property<decimal?>("MaximumRelative")
                         .HasColumnType("numeric");
 
-                    b.Property<decimal>("MinimumRelative")
+                    b.Property<decimal?>("MinimumRelative")
                         .HasColumnType("numeric");
 
                     b.Property<long>("QuestionId")

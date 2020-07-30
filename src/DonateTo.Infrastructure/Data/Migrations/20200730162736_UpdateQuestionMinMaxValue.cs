@@ -9,26 +9,22 @@ namespace DonateTo.Infrastructure.Migrations
             migrationBuilder.AddColumn<decimal>(
                 name: "MaximumRelative",
                 table: "QuestionOption",
-                nullable: false,
-                defaultValue: 0m);
+                nullable: true);
 
             migrationBuilder.AddColumn<decimal>(
                 name: "MinimumRelative",
                 table: "QuestionOption",
-                nullable: false,
-                defaultValue: 0m);
+                nullable: true);
 
             migrationBuilder.AddColumn<decimal>(
                 name: "Max",
                 table: "Question",
-                nullable: false,
-                defaultValue: 0m);
+                nullable: true);
 
             migrationBuilder.AddColumn<decimal>(
                 name: "Min",
                 table: "Question",
-                nullable: false,
-                defaultValue: 0m);
+                nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
