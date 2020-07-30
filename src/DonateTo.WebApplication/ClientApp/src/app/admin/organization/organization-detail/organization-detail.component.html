@@ -1,5 +1,17 @@
-<nz-page-header class="site-page-header" (nzBack)="goBack()" nzBackIcon [nzTitle]="title" [nzSubtitle]="subtitle">
-</nz-page-header>
+<div class="title">
+  <nz-page-header class="site-page-header" (nzBack)="goBack()" nzBackIcon [nzTitle]="title" [nzSubtitle]="subtitle">
+  </nz-page-header>
+  <a
+    [routerLink]="['../../../users']"
+    [queryParams]="{ organizationName: this.organization.name }"
+    nzTooltipTitle="{{ 'Admin.Menu.Title.Users' | translate }}"
+    nzTooltipPlacement="bottom"
+    nz-tooltip
+    class="users-link"
+  >
+    <i nz-icon nzType="team" nzTheme="outline" class="action-icon"></i>
+  </a>
+</div>
 
 <!-- Responsable -->
 <nz-descriptions nzTitle="{{ 'Admin.Organization.OrganizationSteps.Contact.Responsable' | translate }}" [nzColumn]="2">
