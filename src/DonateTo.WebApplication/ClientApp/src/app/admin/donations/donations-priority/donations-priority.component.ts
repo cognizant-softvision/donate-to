@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { QuestionModel } from 'src/app/shared/models';
+import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
 @Component({
   selector: 'app-donations-priority',
   templateUrl: './donations-priority.component.html',
@@ -9,10 +10,11 @@ import { QuestionModel } from 'src/app/shared/models';
 export class DonationPriorityComponent implements OnInit {
   form: FormGroup;
   questions: QuestionModel[];
+  dataSaved = false;
 
   @Output() isSubmited = new EventEmitter<number>();
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private dataUpdated: DataUpdatedService) {
     this.questions = [
       {
         createdBy: '',
@@ -84,7 +86,7 @@ export class DonationPriorityComponent implements OnInit {
           createdDate: new Date(),
           updateBy: '',
           updateDate: new Date(),
-          name: 'dropdown',
+          name: 'radiobutton',
         },
         key: '2',
         label: 'Question 2',
@@ -133,6 +135,9 @@ export class DonationPriorityComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.toFormGroup(this.questions);
+
+    // Updates table when a new donation is created
+    this.dataUpdated.currentStatus.subscribe((dataSaved) => (this.dataSaved = dataSaved));
   }
 
   average() {
@@ -156,6 +161,8 @@ export class DonationPriorityComponent implements OnInit {
     this.validateFormGroup(this.form);
     if (this.form.valid) {
       this.isSubmited.emit(this.average());
+
+      this.dataUpdated.changeMessage(true);
     }
   }
 
