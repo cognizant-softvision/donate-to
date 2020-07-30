@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { AddressModel, ContactModel, OrganizationModel } from 'src/app/shared/models';
+import { AddressModel, ContactModel, OrganizationModel } from '../../../shared/models';
 import { OrganizationSandbox } from '../organization-sandbox';
 import { OrganizationStepAddressComponent } from './organization-step-address/organization-step-address.component';
 import { Router } from '@angular/router';
@@ -72,19 +72,15 @@ export class OrganizationFormComponent implements OnInit {
   }
 
   done(): void {
-    if (this.organization && this.organization.id !== 0) {
-      this.setOrganization();
+    this.setOrganization();
+
+    if (this.organization.id !== 0) {
       this.organizationSandbox.updateOrganization(this.organization);
       this.dataUpdated.changeMessage(true);
     } else {
-      this.setOrganization();
       this.organizationSandbox.addOrganization(this.organization);
     }
 
-    this.goBack();
-  }
-
-  goBack() {
     this.router.navigate(['/admin/organizations']);
   }
 

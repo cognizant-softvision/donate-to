@@ -136,6 +136,12 @@ export class OrganizationComponent implements OnInit, OnDestroy {
     this.unregisterEvents();
   }
 
+  handleRequestResult() {
+    if (!this.failedStatus) {
+      this.organizationSandbox.loadOrganizationsFilteredPaged(this.organizationFilter);
+    }
+  }
+
   private unregisterEvents() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
