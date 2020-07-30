@@ -38,6 +38,7 @@ import { StoreModule } from '@ngrx/store';
 import { OrganizationEffects } from 'src/app/shared/store/organization';
 import { AddressEffects } from 'src/app/shared/store/address';
 import { fromAddress, fromOrganization } from 'src/app/shared/store';
+import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
 import {
   ArrowLeftOutline,
   DeleteOutline,
@@ -116,6 +117,6 @@ const ICONS: IconDefinition[] = [
     OrganizationStepAddressComponent,
     OrganizationDetailComponent,
   ],
-  providers: [OrganizationSandbox],
+  providers: [OrganizationSandbox, DataUpdatedService],
 })
 export class OrganizationModule {}

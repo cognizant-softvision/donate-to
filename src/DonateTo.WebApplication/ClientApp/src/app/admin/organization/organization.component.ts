@@ -5,6 +5,7 @@ import { OrganizationModel } from './../../shared/models';
 import { OrganizationSandbox } from './organization-sandbox';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
 
 @Component({
   selector: 'app-organization-admin',
@@ -26,8 +27,13 @@ export class OrganizationComponent implements OnInit, OnDestroy {
   contactNameVisible = false;
   failedStatus = false;
   successStatus = false;
+  dataSaved = false;
 
-  constructor(private organizationSandbox: OrganizationSandbox, public router: Router) {}
+  constructor(
+    private organizationSandbox: OrganizationSandbox,
+    public router: Router,
+    private dataUpdated: DataUpdatedService
+  ) {}
 
   ngOnInit(): void {
     this.organizationFilter = {
@@ -54,6 +60,12 @@ export class OrganizationComponent implements OnInit, OnDestroy {
         this.successStatus = status;
       })
     );
+
+    this.dataUpdated.currentStatus.subscribe((dataSaved) => (this.dataSaved = dataSaved));
+    if (this.dataSaved) {
+      this.dataUpdated.changeMessage(false);
+      window.location.reload();
+    }
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
@@ -122,6 +134,12 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.unregisterEvents();
+  }
+
+  handleRequestResult() {
+    if (!this.failedStatus) {
+      this.organizationSandbox.loadOrganizationsFilteredPaged(this.organizationFilter);
+    }
   }
 
   private unregisterEvents() {
