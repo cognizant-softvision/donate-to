@@ -4,6 +4,7 @@ import { OrganizationSandbox } from '../organization-sandbox';
 import { OrganizationStepAddressComponent } from './organization-step-address/organization-step-address.component';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
 
 @Component({
   selector: 'app-organization-form',
@@ -37,8 +38,13 @@ export class OrganizationFormComponent implements OnInit {
 
   isEditOrganization = false;
   organization: OrganizationModel;
+  dataSaved = false;
 
-  constructor(public organizationSandbox: OrganizationSandbox, private router: Router) {}
+  constructor(
+    public organizationSandbox: OrganizationSandbox,
+    private router: Router,
+    private dataUpdated: DataUpdatedService
+  ) {}
 
   ngOnInit(): void {
     if (this.id !== 0) {
@@ -50,6 +56,8 @@ export class OrganizationFormComponent implements OnInit {
         })
       );
     }
+
+    this.dataUpdated.currentStatus.subscribe((dataSaved) => (this.dataSaved = dataSaved));
   }
 
   prev(): void {
@@ -67,6 +75,7 @@ export class OrganizationFormComponent implements OnInit {
     if (this.organization && this.organization.id !== 0) {
       this.setOrganization();
       this.organizationSandbox.updateOrganization(this.organization);
+      this.dataUpdated.changeMessage(true);
     } else {
       this.setOrganization();
       this.organizationSandbox.addOrganization(this.organization);
