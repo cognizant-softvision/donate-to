@@ -220,14 +220,14 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of addresses; index as i">
+            <tr *ngFor="let item of addresses">
               <td>{{ item.street }}</td>
               <td>{{ item.postalCode }}</td>
               <td>{{ item.floor }}</td>
               <td>{{ item.appartment }}</td>
-              <td>{{ countryName[i] }}</td>
-              <td>{{ stateName[i] }}</td>
-              <td>{{ cityName[i] }}</td>
+              <td>{{ item.country?.name }}</td>
+              <td>{{ item.state?.name }}</td>
+              <td>{{ item.city?.name }}</td>
               <td>{{ item.additionalInformation }}</td>
               <td>
                 <a

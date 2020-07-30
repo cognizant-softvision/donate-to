@@ -28,10 +28,6 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
   states: StateModel[] = [];
   cities: CityModel[] = [];
 
-  countryName: string[] = [];
-  stateName: string[] = [];
-  cityName: string[] = [];
-
   contactModel: ContactModel = new ContactModel();
   item: AddressModel;
   tplModal?: NzModalRef;
@@ -150,6 +146,7 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
 
   getAddressFormModel(): AddressModel {
     const addressModel: AddressModel = new AddressModel();
+    // const country = new CountryModel();
 
     addressModel.id = this.addressId;
     addressModel.street = this.addressStepForm.value.street;
@@ -160,8 +157,10 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
     addressModel.contact = this.getContact();
 
     addressModel.countryId = this.addressStepForm.value.countryId;
+    addressModel.country = this.getCountry(addressModel.countryId);
 
     addressModel.stateId = this.addressStepForm.value.stateId;
+    addressModel.state = this.getState(addressModel.stateId);
 
     addressModel.cityId = this.addressStepForm.value.cityId;
     return addressModel;
@@ -191,11 +190,6 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
       let newAddress = new AddressModel();
       newAddress = this.getAddressFormModel();
       this.addresses = [...this.addresses, newAddress];
-
-      this.getCountryName(newAddress.countryId);
-      this.getStateName(newAddress.stateId);
-      this.getCityName(newAddress.cityId);
-      console.log(this.countryName);
 
       this.addressStepForm.reset();
       this.organizationStepContactComponent.responsableStepForm.reset();
@@ -247,21 +241,33 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
     this.isEditAddress = false;
   }
 
-  getCountryName(countryId: number) {
+  getCountry(countryId: number): CountryModel {
+    let country = new CountryModel();
     if (countryId) {
-      this.countryName = [...this.countryName, this.countries.find((country) => country.id === countryId)?.name];
+      return (country = {
+        ...country,
+        name: this.countries.find((c) => c.id === countryId)?.name,
+      });
     }
   }
 
-  getStateName(stateId: number) {
+  getState(stateId: number): StateModel {
+    let state = new StateModel();
     if (stateId) {
-      this.stateName = [...this.stateName, this.states.find((state) => state.id === stateId)?.name];
+      return (state = {
+        ...state,
+        name: this.states.find((s) => s.id === stateId)?.name,
+      });
     }
   }
 
-  getCityName(cityId: number) {
+  getCity(cityId: number): CityModel {
+    let city = new CityModel();
     if (cityId) {
-      this.cityName = [...this.cityName, this.cities.find((city) => city.id === cityId)?.name];
+      return (city = {
+        ...city,
+        name: this.cities.find((c) => c.id === cityId)?.name,
+      });
     }
   }
 }
