@@ -42,7 +42,12 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
         this.menus = [
           { title: 'Admin.Menu.Title.Donation', url: './donations', iconType: IconType.Heart, show: true },
           { title: 'Admin.Menu.Title.Users', url: './users', iconType: IconType.Team, show: true },
-          { title: 'Admin.Menu.Title.Organizations', url: './organizations', iconType: IconType.Profile, show: true },
+          {
+            title: 'Admin.Menu.Title.Organizations',
+            url: './organizations',
+            iconType: IconType.Profile,
+            show: this.isSuperAdmin,
+          },
           {
             title: 'Admin.Menu.Title.Questions',
             url: './questions',

@@ -11,8 +11,8 @@ import { Router } from '@angular/router';
 @Injectable()
 export class AuthSandbox extends Sandbox {
   private subscriptions: Subscription[] = [];
-  public isAdmin = new BehaviorSubject(true);
-  public isSuperAdmin = new BehaviorSubject(true);
+  public isAdmin = new BehaviorSubject(false);
+  public isSuperAdmin = new BehaviorSubject(false);
 
   constructor(
     protected appState$: Store<store.State>,
