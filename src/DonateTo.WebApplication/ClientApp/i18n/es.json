@@ -178,7 +178,8 @@
       "Title": "Prioridad de preguntas",
       "Create": {
         "Title": "Crear pregunta",
-        "CreateRequest": "Crear preguntas"
+        "CreateRequest": "Crear preguntas",
+        "AddField": "Agregar Campo"
       },
       "Edit": {
         "Title": "Edit Question"
@@ -208,7 +209,6 @@
         "ControlTypePlaceHolder": "Tipo Control",
         "DefaultValuePlaceHolder": "Valor default",
         "LabelRequired": "Etiqueta es requerida",
-        "DefaultValueRequired": "Valor default es requerido",
         "OrderRequired": "Orden es requerido",
         "WeightRequired": "Peso es requerido",
         "PlaceholderRequired": "Nombre marcador es requerido",

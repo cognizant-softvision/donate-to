@@ -178,7 +178,8 @@
       "Title": "Questions",
       "Create": {
         "Title": "Create Questions",
-        "CreateRequest": "Create Questions"
+        "CreateRequest": "Create Questions",
+        "AddField": "Add Field"
       },
       "Edit": {
         "Title": "Edit Question"
@@ -208,7 +209,6 @@
         "ControlTypePlaceHolder": "Control Type",
         "DefaultValuePlaceHolder": "Default Value",
         "LabelRequired": "Label is required",
-        "DefaultValueRequired": "Default Value is required",
         "OrderRequired": "Order is required",
         "WeightRequired": "Weight is required",
         "PlaceholderRequired": "Placeholder is required",
