@@ -14,7 +14,7 @@
                 nz-input
                 [formControlName]="question.key"
                 [id]="question.key"
-                [type]="question.id"
+                type="number"
                 [ngModel]="question.label"
               />
             </div>
@@ -26,8 +26,8 @@
             </div>
 
             <div *ngSwitchCase="'radiobutton'">
-              <nz-radio-group [formControlName]="question">
-                <label nz-radio [nzValue]="opt.value" *ngFor="let opt of question.options">{{ opt.label }} </label>
+              <nz-radio-group [formControlName]="question.key">
+                <label nz-radio [nzValue]="opt.value" *ngFor="let opt of question.options"> {{ opt.label }} </label>
               </nz-radio-group>
             </div>
             <div class="errorMessage" *ngIf="!isValid(question)">{{ question.label }} is required</div>

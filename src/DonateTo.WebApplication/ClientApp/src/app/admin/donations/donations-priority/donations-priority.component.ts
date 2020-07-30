@@ -86,7 +86,7 @@ export class DonationPriorityComponent implements OnInit {
           createdDate: new Date(),
           updateBy: '',
           updateDate: new Date(),
-          name: 'dropdown',
+          name: 'radiobutton',
         },
         key: '2',
         label: 'Question 2',
