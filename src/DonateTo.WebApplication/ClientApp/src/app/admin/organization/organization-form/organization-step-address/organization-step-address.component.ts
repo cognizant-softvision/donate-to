@@ -79,6 +79,17 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
 
     this.organizationSandbox.organization$.subscribe((organization) => {
       this.addresses = [...organization.addresses];
+      if (this.addresses) {
+        for (let i = 0; i < this.addresses.length; i++) {
+          this.addresses[i] = {
+            ...this.addresses[i],
+            country: null,
+            city: null,
+            contact: null,
+            state: null,
+          };
+        }
+      }
     });
   }
 
