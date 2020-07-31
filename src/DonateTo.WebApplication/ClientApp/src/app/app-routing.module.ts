@@ -2,7 +2,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from './shared/guards/auth.guard';
 import { NgModule } from '@angular/core';
-import { AuthAdminGuard } from './shared/guards/auth-admin.guard';
+import { AuthOrganizationGuard } from './shared/guards/auth-organization.guard';
 
 const appRoutes: Routes = [
   {
@@ -14,7 +14,7 @@ const appRoutes: Routes = [
     path: 'admin',
     loadChildren: () =>
       import('./shared/containers/layout/admin-layout/admin-layout.module').then((m) => m.AdminLayoutModule),
-    canLoad: [AuthAdminGuard],
+    canLoad: [AuthOrganizationGuard],
   },
   {
     path: 'donation',

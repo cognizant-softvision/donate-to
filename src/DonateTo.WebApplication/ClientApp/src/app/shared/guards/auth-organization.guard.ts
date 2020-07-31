@@ -3,22 +3,25 @@ import { CanActivate, CanLoad } from '@angular/router';
 import { AuthSandbox } from '../auth/auth.sandbox';
 
 @Injectable()
-export class AuthAdminGuard implements CanActivate, CanLoad {
+export class AuthOrganizationGuard implements CanActivate, CanLoad {
   constructor(private authSandbox: AuthSandbox) {}
 
   public canActivate() {
-    return this.checkHasAdminRole();
+    return this.checkHasOrganizationRole();
   }
 
   public canLoad() {
-    return this.checkHasAdminRole();
+    return this.checkHasOrganizationRole();
   }
 
-  private checkHasAdminRole() {
+  private checkHasOrganizationRole() {
     return new Promise<boolean>((resolve, reject) => {
       if (this.checkIsAuthenticated()) {
         this.authSandbox.isLoginProcessed$.subscribe((isLoginProcessed) => {
-          isLoginProcessed && (this.authSandbox.isAdmin.value || this.authSandbox.isSuperAdmin.value)
+          isLoginProcessed &&
+          (this.authSandbox.isOrganization.value ||
+            this.authSandbox.isAdmin.value ||
+            this.authSandbox.isSuperAdmin.value)
             ? resolve(true)
             : resolve(false);
         });

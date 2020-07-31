@@ -13,6 +13,8 @@ export class AuthSandbox extends Sandbox {
   private subscriptions: Subscription[] = [];
   public isAdmin = new BehaviorSubject(false);
   public isSuperAdmin = new BehaviorSubject(false);
+  public isOrganization = new BehaviorSubject(false);
+  public hasAdminRole = new BehaviorSubject(false);
 
   constructor(
     protected appState$: Store<store.State>,
@@ -30,13 +32,15 @@ export class AuthSandbox extends Sandbox {
   private registerEvents(): void {
     this.subscriptions.push(
       this.userRoles$.subscribe((userRoles: string[]) => {
-        this.isAdmin.next(
+        this.hasAdminRole.next(
           userRoles.length === 0 ||
             userRoles.includes(Roles.Admin) ||
             userRoles.includes(Roles.Superadmin) ||
             userRoles.includes(Roles.Organization)
         );
+        this.isAdmin.next(userRoles.length === 0 || userRoles.includes(Roles.Admin));
         this.isSuperAdmin.next(userRoles.length === 0 || userRoles.includes(Roles.Superadmin));
+        this.isOrganization.next(userRoles.length === 0 || userRoles.includes(Roles.Organization));
       })
     );
   }
