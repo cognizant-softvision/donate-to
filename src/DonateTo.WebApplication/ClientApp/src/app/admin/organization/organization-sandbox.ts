@@ -5,6 +5,7 @@ import * as store from 'src/app/shared/store';
 import { Subscription } from 'rxjs';
 import { OrganizationFilter } from 'src/app/shared/models/filters/organization-filter';
 import { OrganizationModel } from 'src/app/shared/models';
+import { AuthSandbox } from '../../shared/auth/auth.sandbox';
 
 @Injectable()
 export class OrganizationSandbox extends Sandbox implements OnDestroy {
@@ -17,8 +18,9 @@ export class OrganizationSandbox extends Sandbox implements OnDestroy {
   failAction$ = this.appState$.select(store.fromOrganization.getFailedStatus);
   loadAction$ = this.appState$.select(store.fromOrganization.getLoadingStatus);
   organizationsPagedFiltered$ = this.appState$.select(store.fromOrganization.getOrganizationsFilteredPaged);
+  isAdmin = false;
 
-  constructor(protected appState$: Store<store.State>) {
+  constructor(protected appState$: Store<store.State>, private authSandbox: AuthSandbox) {
     super(appState$);
     this.registerEvents();
   }
@@ -81,5 +83,7 @@ export class OrganizationSandbox extends Sandbox implements OnDestroy {
   /**
    * Subscribes to events
    */
-  private registerEvents(): void {}
+  private registerEvents(): void {
+    this.subscriptions.push(this.authSandbox.isAdmin$.subscribe((isAdmin) => (this.isAdmin = isAdmin)));
+  }
 }

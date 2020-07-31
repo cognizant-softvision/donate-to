@@ -10,19 +10,18 @@ import { en_US, es_ES, NzI18nService } from 'ng-zorro-antd';
 @Injectable()
 export class NavMenuSandBox extends Sandbox {
   private subscriptions: Subscription[] = [];
-  isAdmin = false;
   isSuperAdmin = false;
+  isAdmin = false;
+  isOrganization = false;
 
   constructor(
     protected appState$: Store<store.State>,
-    public authSandbox: AuthSandbox,
+    private authSandbox: AuthSandbox,
     public translateService: TranslateService,
     protected i18n: NzI18nService
   ) {
     super(appState$);
     this.registerEvents();
-    this.isAdmin = false;
-    this.isSuperAdmin = false;
   }
 
   /**
@@ -73,13 +72,20 @@ export class NavMenuSandBox extends Sandbox {
   private registerEvents(): void {
     // Subscribes to culture
     this.subscriptions.push(this.culture$.subscribe((culture: string) => (this.culture = culture)));
+
     // Subscribes to auth properties
     this.subscriptions.push(
       this.isAuthenticated$.subscribe((isAuthenticated: boolean) => (this.isAuthenticated = isAuthenticated))
     );
-    this.subscriptions.push(this.authSandbox.isAdmin.asObservable().subscribe((isAdmin) => (this.isAdmin = isAdmin)));
+
     this.subscriptions.push(
-      this.authSandbox.isSuperAdmin.asObservable().subscribe((isSuperAdmin) => (this.isSuperAdmin = isSuperAdmin))
+      this.authSandbox.isSuperAdmin$.subscribe((isSuperAdmin) => (this.isSuperAdmin = isSuperAdmin))
+    );
+
+    this.subscriptions.push(this.authSandbox.isAdmin$.subscribe((isAdmin) => (this.isAdmin = isAdmin)));
+
+    this.subscriptions.push(
+      this.authSandbox.isOrganization$.subscribe((isOrganization) => (this.isOrganization = isOrganization))
     );
   }
 }

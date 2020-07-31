@@ -93,6 +93,7 @@
           <td>{{ data.contact?.fullName }}</td>
           <td>
             <a
+              *ngIf="isAdmin"
               [routerLink]="['./edit', data.id]"
               nzTooltipTitle="{{ 'Admin.Organization.Edit' | translate }}"
               nzTooltipPlacement="bottom"

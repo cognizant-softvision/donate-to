@@ -8,10 +8,13 @@ const routes: Routes = [
     component: AdminLayoutComponent,
     children: [
       { path: '', redirectTo: 'donations', pathMatch: 'prefix' },
-      { path: 'users', loadChildren: () => import('../../../../admin/user/user.module').then((m) => m.UserModule) },
       {
         path: 'donations',
         loadChildren: () => import('../../../../admin/donations/donations.module').then((m) => m.DonationsModule),
+      },
+      {
+        path: 'users',
+        loadChildren: () => import('../../../../admin/user/user.module').then((m) => m.UserModule),
       },
       {
         path: 'organizations',

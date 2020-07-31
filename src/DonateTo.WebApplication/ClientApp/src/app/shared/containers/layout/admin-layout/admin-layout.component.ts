@@ -29,15 +29,15 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.authSandbox.isAdmin.subscribe((isAdmin) => {
-        if (!isAdmin) {
+      this.authSandbox.isOrganization$.subscribe((isOrganization) => {
+        if (!isOrganization) {
           this.router.navigate(['']);
         }
       })
     );
 
     this.subscriptions.push(
-      this.authSandbox.isSuperAdmin.subscribe((isSuperAdmin) => {
+      this.authSandbox.isSuperAdmin$.subscribe((isSuperAdmin) => {
         this.isSuperAdmin = isSuperAdmin;
         this.menus = [
           { title: 'Admin.Menu.Title.Donation', url: './donations', iconType: IconType.Heart, show: true },

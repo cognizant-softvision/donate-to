@@ -5,6 +5,7 @@ import * as store from '../../shared/store';
 import { Sandbox } from '../../shared/sandbox/base.sandbox';
 import { UserModel } from '../../shared/models';
 import { UserFilter } from '../../shared/models/filters/user-filter';
+import { AuthSandbox } from '../../shared/auth/auth.sandbox';
 
 @Injectable()
 export class UserSandbox extends Sandbox implements OnDestroy {
@@ -15,9 +16,12 @@ export class UserSandbox extends Sandbox implements OnDestroy {
   failAction$ = this.appState$.select(store.fromUser.getFailedStatus);
   loadAction$ = this.appState$.select(store.fromUser.getLoadingStatus);
   usersPagedFiltered$ = this.appState$.select(store.fromUser.getUsersFilteredPaged);
+  organization$ = this.appState$.select(store.fromOrganization.getOrganization);
+  isAdmin = false;
 
-  constructor(protected appState$: Store<store.State>) {
+  constructor(protected appState$: Store<store.State>, private authSandbox: AuthSandbox) {
     super(appState$);
+    this.subscriptions.push(this.authSandbox.isAdmin$.subscribe((isAdmin) => (this.isAdmin = isAdmin)));
   }
 
   ngOnDestroy(): void {
@@ -65,5 +69,12 @@ export class UserSandbox extends Sandbox implements OnDestroy {
 
   public loadUsersFilteredPaged(filter: UserFilter): void {
     this.appState$.dispatch(store.fromUser.loadUsersPagedFiltered({ filter }));
+  }
+
+  /**
+   * load organization by id from the server
+   */
+  public loadOrganization(organizationId: number): void {
+    this.appState$.dispatch(store.fromOrganization.loadOrganization({ organizationId }));
   }
 }

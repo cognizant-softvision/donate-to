@@ -344,6 +344,11 @@ namespace DonateTo.Services
                 predicate = predicate.Or(p => p.UpdateDate <= filter.UpdateDateEnd);
             }
 
+            if (filter.OrganizationId != 0) 
+            {
+                predicate = predicate.And(p => p.UserOrganizations.Any(uo => uo.OrganizationId == filter.OrganizationId));
+            }
+
             //EF function is the way used to compare string avoiding EF core translation issue with
             //case sensitive comparer mentioned here https://github.com/dotnet/efcore/issues/1222#issuecomment-611113142
             //Also, due to EF core restriction EF functions cannot be extracted to an extension method

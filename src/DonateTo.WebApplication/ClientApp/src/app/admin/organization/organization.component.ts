@@ -28,6 +28,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
   failedStatus = false;
   successStatus = false;
   dataSaved = false;
+  isAdmin = false;
 
   constructor(
     private organizationSandbox: OrganizationSandbox,
@@ -36,6 +37,8 @@ export class OrganizationComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.isAdmin = this.organizationSandbox.isAdmin;
+
     this.organizationFilter = {
       ...this.organizationFilter,
       pageSize: this.pageSize,
@@ -66,6 +69,10 @@ export class OrganizationComponent implements OnInit, OnDestroy {
       this.dataUpdated.changeMessage(false);
       window.location.reload();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.unregisterEvents();
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
@@ -130,10 +137,6 @@ export class OrganizationComponent implements OnInit, OnDestroy {
     this.contactNameVisible = false;
     this.organizationFilter = { ...this.organizationFilter, contactName: this.searchContactNameValue };
     this.organizationSandbox.loadOrganizationsFilteredPaged(this.organizationFilter);
-  }
-
-  ngOnDestroy(): void {
-    this.unregisterEvents();
   }
 
   handleRequestResult() {

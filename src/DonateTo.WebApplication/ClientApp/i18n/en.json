@@ -246,7 +246,7 @@
       "Title": "Users",
       "Associate": "Manage Association",
       "SelectOrganization": "Select Organizations",
-      "OrganizationTitle": "Organization",
+      "OrganizationTitleJoin": "for",
       "Table": {
         "Name": "Name",
         "Organization": "Organization",
