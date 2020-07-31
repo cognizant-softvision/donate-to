@@ -146,7 +146,6 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
 
   getAddressFormModel(): AddressModel {
     const addressModel: AddressModel = new AddressModel();
-    // const country = new CountryModel();
 
     addressModel.id = this.addressId;
     addressModel.street = this.addressStepForm.value.street;
@@ -163,6 +162,7 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
     addressModel.state = this.getState(addressModel.stateId);
 
     addressModel.cityId = this.addressStepForm.value.cityId;
+    addressModel.city = this.getCity(addressModel.cityId);
     return addressModel;
   }
 
