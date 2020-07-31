@@ -19,6 +19,7 @@ export class OrganizationSandbox extends Sandbox implements OnDestroy {
   loadAction$ = this.appState$.select(store.fromOrganization.getLoadingStatus);
   organizationsPagedFiltered$ = this.appState$.select(store.fromOrganization.getOrganizationsFilteredPaged);
   isAdmin = false;
+  isSuperAdmin = false;
 
   constructor(protected appState$: Store<store.State>, private authSandbox: AuthSandbox) {
     super(appState$);
@@ -85,5 +86,8 @@ export class OrganizationSandbox extends Sandbox implements OnDestroy {
    */
   private registerEvents(): void {
     this.subscriptions.push(this.authSandbox.isAdmin$.subscribe((isAdmin) => (this.isAdmin = isAdmin)));
+    this.subscriptions.push(
+      this.authSandbox.isSuperAdmin$.subscribe((isSuperAdmin) => (this.isSuperAdmin = isSuperAdmin))
+    );
   }
 }

@@ -29,6 +29,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
   successStatus = false;
   dataSaved = false;
   isAdmin = false;
+  isSuperAdmin = false;
 
   constructor(
     private organizationSandbox: OrganizationSandbox,
@@ -38,6 +39,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isAdmin = this.organizationSandbox.isAdmin;
+    this.isSuperAdmin = this.organizationSandbox.isSuperAdmin;
 
     this.organizationFilter = {
       ...this.organizationFilter,
