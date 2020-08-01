@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Sandbox } from '../../sandbox/base.sandbox';
-import { Subscription } from 'rxjs/internal/Subscription';
 import { Store } from '@ngrx/store';
 import * as store from '../../../shared/store';
 import { AuthSandbox } from '../../auth/auth.sandbox';
@@ -9,7 +8,6 @@ import { en_US, es_ES, NzI18nService } from 'ng-zorro-antd';
 
 @Injectable()
 export class NavMenuSandBox extends Sandbox {
-  private subscriptions: Subscription[] = [];
   isSuperAdmin = false;
   isAdmin = false;
   isOrganization = false;
@@ -69,23 +67,9 @@ export class NavMenuSandBox extends Sandbox {
   /**
    * Subscribes to events
    */
-  private registerEvents(): void {
+  registerEvents(): void {
+    super.registerEvents();
     // Subscribes to culture
     this.subscriptions.push(this.culture$.subscribe((culture: string) => (this.culture = culture)));
-
-    // Subscribes to auth properties
-    this.subscriptions.push(
-      this.isAuthenticated$.subscribe((isAuthenticated: boolean) => (this.isAuthenticated = isAuthenticated))
-    );
-
-    this.subscriptions.push(
-      this.authSandbox.isSuperAdmin$.subscribe((isSuperAdmin) => (this.isSuperAdmin = isSuperAdmin))
-    );
-
-    this.subscriptions.push(this.authSandbox.isAdmin$.subscribe((isAdmin) => (this.isAdmin = isAdmin)));
-
-    this.subscriptions.push(
-      this.authSandbox.isOrganization$.subscribe((isOrganization) => (this.isOrganization = isOrganization))
-    );
   }
 }

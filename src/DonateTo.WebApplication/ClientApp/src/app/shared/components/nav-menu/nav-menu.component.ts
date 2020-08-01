@@ -1,16 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavMenuSandBox } from './nav-menu.sandbox';
-import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-nav-menu',
   templateUrl: './nav-menu.component.html',
   styleUrls: ['./nav-menu.component.css'],
 })
-export class NavMenuComponent {
-  constructor(public navMenuSandbox: NavMenuSandBox) {}
-
+export class NavMenuComponent implements OnInit, OnDestroy {
+  subscriptions: Subscription[] = [];
+  isAuthenticated = false;
+  isOrganization = false;
   language = 'en';
+
+  constructor(private navMenuSandbox: NavMenuSandBox) {
+    this.registerEvents();
+  }
+
+  ngOnInit() {}
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((s) => s.unsubscribe());
+  }
 
   switchLanguage() {
     this.navMenuSandbox.switchLanguage(this.language);
@@ -26,5 +37,18 @@ export class NavMenuComponent {
 
   logout() {
     this.navMenuSandbox.logout();
+  }
+
+  private registerEvents() {
+    this.subscriptions.push(
+      this.navMenuSandbox.isAuthenticated$.subscribe((isAuthenticated) => {
+        this.isAuthenticated = isAuthenticated;
+      })
+    );
+    this.subscriptions.push(
+      this.navMenuSandbox.isOrganization$.subscribe((isOrganization) => {
+        this.isOrganization = isOrganization;
+      })
+    );
   }
 }

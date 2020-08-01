@@ -1,20 +1,13 @@
-import { AuthConfigService } from 'src/app/shared/auth/auth.config';
-import { Injectable, OnDestroy, OnInit } from '@angular/core';
+import { AuthConfigService } from '../../shared/auth/auth.config';
+import { Injectable } from '@angular/core';
 import { OAuthEvent, OAuthService } from 'angular-oauth2-oidc';
 import { Sandbox } from '../sandbox/base.sandbox';
 import { Store } from '@ngrx/store';
 import * as store from '../store';
-import { BehaviorSubject, Subscription } from 'rxjs';
-import { Roles } from '../enum/roles';
 import { Router } from '@angular/router';
 
 @Injectable()
-export class AuthSandbox extends Sandbox implements OnDestroy {
-  private subscriptions: Subscription[] = [];
-  public isSuperAdmin$ = new BehaviorSubject(true);
-  public isAdmin$ = new BehaviorSubject(true);
-  public isOrganization$ = new BehaviorSubject(true);
-
+export class AuthSandbox extends Sandbox {
   constructor(
     protected appState$: Store<store.State>,
     private authService: OAuthService,
@@ -22,11 +15,6 @@ export class AuthSandbox extends Sandbox implements OnDestroy {
     private router: Router
   ) {
     super(appState$);
-    this.registerEvents();
-  }
-
-  ngOnDestroy() {
-    this.unregisterEvents();
   }
 
   /**
@@ -38,8 +26,7 @@ export class AuthSandbox extends Sandbox implements OnDestroy {
     this.authService.configure(authConfig);
     this.authService.setupAutomaticSilentRefresh();
     this.appState$.dispatch(store.fromAuth.tryLogin());
-
-    this.authService.events.subscribe(this.handleAuthEvents.bind(this));
+    this.subscriptions.push(this.authService.events.subscribe(this.handleAuthEvents.bind(this)));
   }
 
   /**
@@ -88,29 +75,6 @@ export class AuthSandbox extends Sandbox implements OnDestroy {
         this.appState$.dispatch(store.fromAuth.loadUserProfile());
         break;
     }
-  }
-
-  private registerEvents(): void {
-    this.subscriptions.push(
-      this.userRoles$.subscribe((userRoles: string[]) => {
-        this.isSuperAdmin$.next(userRoles.length !== 0 && userRoles.includes(Roles.Superadmin));
-        this.isAdmin$.next(
-          userRoles.length !== 0 && (userRoles.includes(Roles.Superadmin) || userRoles.includes(Roles.Admin))
-        );
-        this.isOrganization$.next(
-          userRoles.length !== 0 &&
-            (userRoles.includes(Roles.Superadmin) ||
-              userRoles.includes(Roles.Admin) ||
-              userRoles.includes(Roles.Organization))
-        );
-      })
-    );
-  }
-
-  private unregisterEvents(): void {
-    this.subscriptions.forEach((s) => {
-      s.unsubscribe();
-    });
   }
 
   private manageRedirection(): void {

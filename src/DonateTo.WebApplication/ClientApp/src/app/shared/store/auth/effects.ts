@@ -44,6 +44,7 @@ export class AuthEffects {
             userId: +claims['sub'],
             nameUser: claims['name'],
             roles: claims['role'],
+            organizations: JSON.parse(claims['organizations']),
           });
         })
         .catch(() => loadUserProfileFailed())
