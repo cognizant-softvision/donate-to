@@ -11,6 +11,7 @@
   "EditBtn": "Edit",
   "CancelBtn": "Cancel",
   "BackBtn": "Back",
+  "CloseBtn": "Close",
   "GridEmptyLabel": "No available items",
   "MoreDetail": "More details",
   "SearchPlaceHolder": "input search text",
@@ -245,12 +246,13 @@
     },
     "Log": {
       "Title": "Logs",
+      "LogDetail": "Log detail",
       "Table": {
-        "Date": "Date",
+        "TimeStamp": "Timestamp",
         "Message": "Message",
         "Exception": "Exception",
         "Level": "Level",
-
+        "LogEvent": "Log Event",
         "Action": "Action"
       }
     }

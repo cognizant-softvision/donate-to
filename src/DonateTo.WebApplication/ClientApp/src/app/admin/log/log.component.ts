@@ -6,6 +6,7 @@ import { LogSandbox } from './log-sandbox';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LogDetailModalComponent } from './log-detail-modal/log-detail-modal/log-detail-modal.component';
+import { StringExtensions } from 'src/app/shared/utility/extensions/string-extensions';
 
 @Component({
   selector: 'app-log-admin',
@@ -16,6 +17,7 @@ export class LogComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   @ViewChild(LogDetailModalComponent)
   private logDetailModal: LogDetailModalComponent;
+  truncateMaxLength = 60;
 
   logList: LogModel[] = [];
   logFilter: LogFilter;
@@ -23,7 +25,7 @@ export class LogComponent implements OnInit, OnDestroy {
   pageSize = 10;
   pageIndex = 1;
   searchMessageValue = '';
-  searchLevelValue = '';
+  searchLevelValue = null;
   searchExceptionValue = '';
   searchTimeStampBeginValue: Date;
   searchTimeStampEndValue: Date;
@@ -31,7 +33,6 @@ export class LogComponent implements OnInit, OnDestroy {
   levelVisible = false;
   exceptionVisible = false;
   timeStampVisible = false;
-  // contactNameVisible = false;
   failedStatus = false;
   successStatus = false;
 
@@ -89,14 +90,14 @@ export class LogComponent implements OnInit, OnDestroy {
   reset(): void {
     this.searchMessageValue = '';
     this.searchExceptionValue = '';
-    this.searchLevelValue = '';
+    this.searchLevelValue = null;
     this.searchTimeStampBeginValue = null;
     this.searchTimeStampEndValue = null;
     this.logFilter = {
       ...this.logFilter,
       message: this.searchMessageValue,
       exception: this.searchExceptionValue,
-      level: parseInt(this.searchLevelValue, null),
+      level: this.searchLevelValue,
       timeStampBegin: this.searchTimeStampBeginValue,
       timeStampEnd: this.searchTimeStampEndValue,
     };
@@ -128,8 +129,8 @@ export class LogComponent implements OnInit, OnDestroy {
   }
 
   resetLevelSearch(): void {
-    this.searchLevelValue = '';
-    this.logFilter = { ...this.logFilter, level: parseInt(this.searchLevelValue, null) };
+    this.searchLevelValue = null;
+    this.logFilter = { ...this.logFilter, level: this.searchLevelValue };
     this.logSandbox.loadLogsFilteredPaged(this.logFilter);
   }
 
@@ -151,7 +152,7 @@ export class LogComponent implements OnInit, OnDestroy {
 
   searchLevel(): void {
     this.levelVisible = false;
-    this.logFilter = { ...this.logFilter, level: parseInt(this.searchLevelValue, null) };
+    this.logFilter = { ...this.logFilter, level: this.searchLevelValue };
     this.logSandbox.loadLogsFilteredPaged(this.logFilter);
   }
 
@@ -171,5 +172,9 @@ export class LogComponent implements OnInit, OnDestroy {
 
   showDetail(selectedLog: LogModel) {
     this.logDetailModal.showModal(selectedLog);
+  }
+
+  truncate(text: string, maxLength: number) {
+    return StringExtensions.truncate(text, maxLength);
   }
 }

@@ -11,6 +11,7 @@
   "EditBtn": "Editar",
   "CancelBtn": "Cancelar",
   "BackBtn": "Volver",
+  "CloseBtn": "Cerrar",
   "GridEmptyLabel": "No hay items disponibles",
   "MoreDetail": "Más detalles",
   "SearchPlaceHolder": "Escriba texto para buscar",
@@ -240,6 +241,18 @@
         "Name": "Nombre",
         "Organization": "Organización",
         "Email": "Email",
+        "Action": "Acción"
+      }
+    },
+    "Log": {
+      "Title": "Logs",
+      "LogDetail": "Detalle de Log",
+      "Table": {
+        "TimeStamp": "Timestamp",
+        "Message": "Mensaje",
+        "Exception": "Excepción",
+        "Level": "Nivel",
+        "LogEvent": "Evento de Log",
         "Action": "Acción"
       }
     }

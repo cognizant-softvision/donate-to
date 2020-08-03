@@ -1,8 +1,23 @@
 <nz-modal [(nzVisible)]="isVisible" [nzFooter]="footer" (nzOnCancel)="closeModal()">
-  <h2>Log Level:{{ log?.level }}</h2>
-  <h3>Log Message. {{ log?.message }}</h3>
+  <nz-descriptions nzTitle="{{ 'Admin.Log.LogDetail' | translate }}" [nzColumn]="1">
+    <nz-descriptions-item nzTitle="{{ 'Admin.Log.Table.TimeStamp' | translate }}">
+      {{ log?.timeStamp | date: 'yyyy-MM-dd HH:mm:ss.SS' }}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="{{ 'Admin.Log.Table.Message' | translate }}">
+      {{ log?.message }}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="{{ 'Admin.Log.Table.Level' | translate }}">
+      {{ log?.level }}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="{{ 'Admin.Log.Table.Exception' | translate }}">
+      {{ log?.exception }}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="{{ 'Admin.Log.Table.LogEvent' | translate }}">
+      {{ log?.logEvent }}
+    </nz-descriptions-item>
+  </nz-descriptions>
 
   <ng-template #footer>
-    <button nz-button nzType="default" (click)="closeModal()">Close</button>
+    <button nz-button nzType="default" (click)="closeModal()">{{ 'CloseBtn' | translate }}</button>
   </ng-template>
 </nz-modal>
