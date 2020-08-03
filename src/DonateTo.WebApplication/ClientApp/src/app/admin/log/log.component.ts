@@ -92,7 +92,7 @@ export class LogComponent implements OnInit, OnDestroy {
       ...this.logFilter,
       message: this.searchMessageValue,
       exception: this.searchExceptionValue,
-      level: parseInt(this.searchLevelValue),
+      level: parseInt(this.searchLevelValue, null),
       timeStampBegin: this.searchTimeStampBeginValue,
       timeStampEnd: this.searchTimeStampEndValue,
     };
@@ -125,7 +125,7 @@ export class LogComponent implements OnInit, OnDestroy {
 
   resetLevelSearch(): void {
     this.searchLevelValue = '';
-    this.logFilter = { ...this.logFilter, level: parseInt(this.searchLevelValue) };
+    this.logFilter = { ...this.logFilter, level: parseInt(this.searchLevelValue, null) };
     this.logSandbox.loadLogsFilteredPaged(this.logFilter);
   }
 
@@ -147,7 +147,7 @@ export class LogComponent implements OnInit, OnDestroy {
 
   searchLevel(): void {
     this.levelVisible = false;
-    this.logFilter = { ...this.logFilter, level: parseInt(this.searchLevelValue) };
+    this.logFilter = { ...this.logFilter, level: parseInt(this.searchLevelValue, null) };
     this.logSandbox.loadLogsFilteredPaged(this.logFilter);
   }
 
