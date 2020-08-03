@@ -1,0 +1,8 @@
+<nz-modal [(nzVisible)]="isVisible" [nzFooter]="footer" (nzOnCancel)="closeModal()">
+  <h2>Log Level:{{ log?.level }}</h2>
+  <h3>Log Message. {{ log?.message }}</h3>
+
+  <ng-template #footer>
+    <button nz-button nzType="default" (click)="closeModal()">Close</button>
+  </ng-template>
+</nz-modal>
