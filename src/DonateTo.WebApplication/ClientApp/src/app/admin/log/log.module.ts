@@ -34,6 +34,7 @@ import {
   NzTagModule,
 } from 'ng-zorro-antd';
 import { MinusCircleOutline, PlusOutline } from '@ant-design/icons-angular/icons';
+import { LogDetailModalComponent } from './log-detail-modal/log-detail-modal/log-detail-modal.component';
 
 // FIX this should be moved to an upper level.
 registerLocaleData(es);
@@ -76,7 +77,7 @@ const ICONS = [MinusCircleOutline, PlusOutline];
       extend: true,
     }),
   ],
-  declarations: [LogComponent],
+  declarations: [LogComponent, LogDetailModalComponent],
   providers: [LogSandbox],
 })
 export class LogModule {}
