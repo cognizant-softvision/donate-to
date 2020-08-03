@@ -216,7 +216,8 @@
         "AddItem": "Agregar Pregunta",
         "PriorityQuestionRequiredError": "Por lo menos una pregunta de prioridad es requerida y el peso debe llegar a 100%.",
         "PriorityRangeError": "El rango no cubre la totalidad de valores.",
-        "PriorityWeightError": "El peso de las opciones debe sumar un total de 100."
+        "PriorityWeightError": "El peso de las opciones debe sumar un total de 100.",
+        "OrderAlreadyExistError": "El orden seleccionado ya fue elegido, por favor elija otro."
       },
       "CreateConfirm": "Está seguro de que quiere crear una nueva pregunta?",
       "EditConfirm": "Estas seguro que quieres editar esta pregunta?"

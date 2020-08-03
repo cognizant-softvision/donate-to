@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { QuestionsSandbox } from '../questions-sandbox';
-import { NzModalRef, NzModalService } from 'ng-zorro-antd';
+import { NzModalRef } from 'ng-zorro-antd';
 import { Subscription } from 'rxjs';
 import { ColumnItem, QuestionModel } from 'src/app/shared/models';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { QuestionOption } from 'src/app/shared/models/question-option.modal';
 import { ControlTypeModel } from 'src/app/shared/models/control-type.model';
 import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
@@ -45,6 +45,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   isQuestionsValid = true;
   isWeightValid = true;
   isRangeValid = true;
+  orderExist = false;
   requiredWeight = 100;
 
   listOfColumns: ColumnItem[] = [
@@ -169,7 +170,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
 
   addQuestion() {
     this.validateFormGroup(this.questionItemFormGroup);
-    if (this.questionItemFormGroup.valid && this.validateOptions()) {
+    if (this.questionItemFormGroup.valid && this.validateOptions() && !this.existOrder()) {
       if (this.isEdit) {
         const questionSavedItem = this.questions.find((q) => q.id === this.questionId);
         this.createQuestionItem(questionSavedItem);
@@ -189,8 +190,10 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     return this.questions.map((q) => q.weight).reduce(reducer);
   }
 
-  existOrder(order: number): boolean {
-    return this.questions.map((q) => q.order).includes(order);
+  existOrder(): boolean {
+    const order: number = this.questionItemFormGroup.controls.orderFormControl.value;
+    this.orderExist = this.questions.map((q) => q.order).includes(order);
+    return this.orderExist;
   }
 
   removeQuestion(item: QuestionModel): void {
@@ -203,13 +206,6 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
 
   private unregisterEvents() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
-  }
-
-  questionWithOptions(): boolean {
-    if (this.questionItemFormGroup.controls.controlTypeFormControl.value === 'RadioButton') {
-      this.isOption = true;
-    }
-    return this.isOption;
   }
 
   addField(e?: MouseEvent): void {
