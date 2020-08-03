@@ -106,13 +106,6 @@
         "Quantitycolumn": "Quantity",
         "Categorycolumn": "Category",
         "Action": "Action",
-        "Filtered": "Filtered",
-        "Search": "Search",
-        "Reset": "Reset",
-        "CreatedFrom": "From",
-        "CreatedTo": "To",
-        "FinishFrom": "From",
-        "FinishTo": "To",
         "PlacedDonations": "Placed Donations"
       }
     },
@@ -256,11 +249,9 @@
         "Date": "Date",
         "Message": "Message",
         "Exception": "Exception",
+        "Level": "Level",
 
-        "Action": "Action",
-        "Search": "Search",
-        "Reset": "Reset",
-        "Filtered": "Filtered"
+        "Action": "Action"
       }
     }
   },
@@ -435,5 +426,14 @@
     "OldPassword": "Old Password",
     "NewPassword": "New Password",
     "RepeatPassword": "Repeat new password"
+  },
+  "SharedControls": {
+    "Search": "Search",
+    "Reset": "Reset",
+    "Filtered": "Filtered",
+    "RangeDatePicker": {
+      "From": "From",
+      "To": "To"
+    }
   }
 }

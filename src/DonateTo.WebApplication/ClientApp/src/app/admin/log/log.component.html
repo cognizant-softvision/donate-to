@@ -5,7 +5,7 @@
     <button nz-button nzType="secondary" (click)="reset()">{{ 'Admin.ClearFilter' | translate }}</button>
   </div>
   <nz-table
-    #organizationsTable
+    #logsTable
     [nzData]="logList"
     nzTableLayout="fixed"
     [nzNoResult]="customTpl"
@@ -17,11 +17,28 @@
   >
     <thead>
       <tr>
-        <th nzCustomFilter nzColumnKey="message" [nzSortOrder]="'ascend'" [nzSortFn]="true">
+        <th nzCustomFilter nzColumnKey="timestamp" [nzSortFn]="true" [nzSortOrder]="'descend'">
+          {{ 'Admin.Log.Table.Date' | translate }}
+          <label
+            class="filter"
+            title="{{ 'SharedControls.Filtered' | translate }}"
+            *ngIf="(searchTimeStampBeginValue || searchTimeStampEndValue) && !timeStampVisible"
+          >
+            ({{ searchTimeStampBeginValue | date: 'shortDate' }} - {{ searchTimeStampEndValue | date: 'shortDate' }})
+          </label>
+          <nz-filter-trigger
+            [(nzVisible)]="timeStampVisible"
+            [nzActive]="searchTimeStampBeginValue || searchTimeStampEndValue"
+            [nzDropdownMenu]="searchTimeStampMenu"
+          >
+            <i nz-icon nzType="search"></i>
+          </nz-filter-trigger>
+        </th>
+        <th nzCustomFilter nzColumnKey="message" [nzSortFn]="true">
           {{ 'Admin.Log.Table.Message' | translate }}
           <label
             class="filter"
-            title="{{ 'Admin.Log.Table.Filtered' | translate }}"
+            title="{{ 'SharedControls.Filtered' | translate }}"
             *ngIf="searchMessageValue.length > 0 && !messageVisible"
           >
             ({{ searchMessageValue }})
@@ -34,11 +51,28 @@
             <i nz-icon nzType="search"></i>
           </nz-filter-trigger>
         </th>
+        <th nzCustomFilter nzColumnKey="level" [nzSortFn]="true">
+          {{ 'Admin.Log.Table.Level' | translate }}
+          <label
+            class="filter"
+            title="{{ 'SharedControls.Filtered' | translate }}"
+            *ngIf="searchLevelValue.length > 0 && !levelVisible"
+          >
+            ({{ searchLevelValue }})
+          </label>
+          <nz-filter-trigger
+            [(nzVisible)]="levelVisible"
+            [nzActive]="searchLevelValue.length > 0"
+            [nzDropdownMenu]="searchLevelMenu"
+          >
+            <i nz-icon nzType="search"></i>
+          </nz-filter-trigger>
+        </th>
         <th nzCustomFilter nzColumnKey="exception" [nzSortFn]="true">
           {{ 'Admin.Log.Table.Exception' | translate }}
           <label
             class="filter"
-            title="{{ 'Admin.Log.Table.Filtered' | translate }}"
+            title="{{ 'SharedControls.Filtered' | translate }}"
             *ngIf="searchExceptionValue.length > 0 && !exceptionVisible"
           >
             ({{ searchExceptionValue }})
@@ -57,9 +91,11 @@
       </tr>
     </thead>
     <tbody>
-      <ng-container *ngFor="let data of organizationsTable.data">
+      <ng-container *ngFor="let data of logsTable.data">
         <tr>
+          <td>{{ data.timeStamp | date: 'yyyy-MM-dd HH:mm:ss.SS' }}</td>
           <td>{{ data.message }}</td>
+          <td>{{ data.level }}</td>
           <td>{{ data.exception }}</td>
           <td>
             <a>{{ 'Admin.View' | translate }}</a>
@@ -69,6 +105,32 @@
     </tbody>
   </nz-table>
 </div>
+
+<nz-dropdown-menu #searchTimeStampMenu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <div class="range">
+        <nz-date-picker
+          [(ngModel)]="searchTimeStampBeginValue"
+          class="from"
+          nzPlaceHolder="{{ 'SharedControls.RangeDatePicker.From' | translate }}"
+        >
+        </nz-date-picker>
+        <nz-date-picker
+          [(ngModel)]="searchTimeStampEndValue"
+          nzPlaceHolder="{{ 'SharedControls.RangeDatePicker.To' | translate }}"
+        >
+        </nz-date-picker>
+      </div>
+      <button nz-button nzSize="small" nzType="primary" (click)="searchTimeStamp()" class="search-button">
+        {{ 'SharedControls.Search' | translate }}
+      </button>
+      <button nz-button nzSize="small" (click)="resetTimeStampSearch()">
+        {{ 'SharedControls.Reset' | translate }}
+      </button>
+    </div>
+  </div>
+</nz-dropdown-menu>
 
 <nz-dropdown-menu #searchMessageMenu="nzDropdownMenu">
   <div class="ant-table-filter-dropdown">
@@ -80,10 +142,28 @@
         [(ngModel)]="searchMessageValue"
       />
       <button nz-button nzSize="small" nzType="primary" (click)="searchMessage()" class="search-button">
-        {{ 'Admin.Log.Table.Search' | translate }}
+        {{ 'SharedControls.Search' | translate }}
       </button>
       <button nz-button nzSize="small" (click)="resetMessageSearch()">
-        {{ 'Admin.Log.Table.Message' | translate }}
+        {{ 'SharedControls.Reset' | translate }}
+      </button>
+    </div>
+  </div>
+</nz-dropdown-menu>
+<nz-dropdown-menu #searchLevelMenu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input
+        type="text"
+        nz-input
+        placeholder="{{ 'Admin.Log.Table.Level' | translate }}"
+        [(ngModel)]="searchLevelValue"
+      />
+      <button nz-button nzSize="small" nzType="primary" (click)="searchLevel()" class="search-button">
+        {{ 'SharedControls.Search' | translate }}
+      </button>
+      <button nz-button nzSize="small" (click)="resetLevelSearch()">
+        {{ 'SharedControls.Reset' | translate }}
       </button>
     </div>
   </div>
@@ -98,10 +178,10 @@
         [(ngModel)]="searchExceptionValue"
       />
       <button nz-button nzSize="small" nzType="primary" (click)="searchException()" class="search-button">
-        {{ 'Admin.Log.Table.Search' | translate }}
+        {{ 'SharedControls.Search' | translate }}
       </button>
       <button nz-button nzSize="small" (click)="resetExceptionSearch()">
-        {{ 'Admin.Log.Table.Reset' | translate }}
+        {{ 'SharedControls.Reset' | translate }}
       </button>
     </div>
   </div>

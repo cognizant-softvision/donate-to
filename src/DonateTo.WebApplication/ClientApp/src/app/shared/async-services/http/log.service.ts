@@ -22,7 +22,7 @@ export class LogService extends BaseHttpClientService<LogModel> {
       pageSize: logFilter?.pageSize.toString() ?? '',
       message: logFilter?.message ?? '',
       exception: logFilter?.exception ?? '',
-      level: logFilter?.level?.toString() ?? '',
+      level: this.intFilterToString(logFilter?.level),
       timeStampBegin: logFilter?.timeStampBegin?.toDateString() ?? '',
       timeStampEnd: logFilter?.timeStampEnd?.toDateString() ?? '',
       orderBy: logFilter?.orderBy ?? '',
@@ -36,8 +36,4 @@ export class LogService extends BaseHttpClientService<LogModel> {
   getLogs() {
     return this.get();
   }
-
-  // getByUser(userId: number): Observable<OrganizationModel[]> {
-  //   return this.httpClient.get<OrganizationModel[]>(`${this.url}/${this.endpoint}/GetByUser?userId=${userId}`);
-  // }
 }

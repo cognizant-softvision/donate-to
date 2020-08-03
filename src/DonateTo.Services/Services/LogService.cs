@@ -95,15 +95,15 @@ namespace DonateTo.Services
         private string GetSort(LogFilterModel filter)
         {
             var properties = typeof(LogFilterModel).GetProperties();
-
+            //Converts to lower case as Log table has all lowercase fileds 
+            //This code should not work for column names with "_" like:  message_template or log_event
             var sort = !string.IsNullOrEmpty(filter.OrderBy)
-                && properties.Any(p => p.Name.ToUpperInvariant() == filter.OrderBy.ToUpperInvariant()
-                && p.GetCustomAttributes(typeof(NotMappedAttribute), true).Length > 1) ?
-                $"{ char.ToUpperInvariant(filter.OrderBy[0]) + filter.OrderBy.Substring(1).ToLowerInvariant() } " :
+                && properties.Any(p => p.Name.ToUpperInvariant() == filter.OrderBy.ToUpperInvariant()) ?
+                $"{ filter.OrderBy.ToLowerInvariant() } " :
                 "timestamp ";
-
+            
             sort += !string.IsNullOrEmpty(filter.OrderDirection)
-                && (filter.OrderDirection == SortDirection.Ascending || filter.OrderDirection == "ascending") ?
+                && (filter.OrderDirection == SortDirection.Ascending || filter.OrderDirection == SortDirection.Ascend || filter.OrderDirection == SortDirection.Asc) ?
                 SortDirection.Ascending :
                 SortDirection.Descending;
 
