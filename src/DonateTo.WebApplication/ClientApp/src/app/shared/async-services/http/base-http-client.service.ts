@@ -75,6 +75,6 @@ export class BaseHttpClientService<T extends BaseModel> {
    * @param num Number to convert.
    */
   protected intFilterToString(num: number): string {
-    return isNaN(num) ? '' : num.toString();
+    return num == null ? '' : num.toString();
   }
 }

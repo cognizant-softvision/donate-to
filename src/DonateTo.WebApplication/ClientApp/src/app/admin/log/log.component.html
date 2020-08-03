@@ -18,7 +18,7 @@
     <thead>
       <tr>
         <th nzCustomFilter nzColumnKey="timestamp" [nzSortFn]="true" [nzSortOrder]="'descend'">
-          {{ 'Admin.Log.Table.Date' | translate }}
+          {{ 'Admin.Log.Table.TimeStamp' | translate }}
           <label
             class="filter"
             title="{{ 'SharedControls.Filtered' | translate }}"
@@ -56,13 +56,13 @@
           <label
             class="filter"
             title="{{ 'SharedControls.Filtered' | translate }}"
-            *ngIf="searchLevelValue.length > 0 && !levelVisible"
+            *ngIf="searchLevelValue != null && !levelVisible"
           >
             ({{ searchLevelValue }})
           </label>
           <nz-filter-trigger
             [(nzVisible)]="levelVisible"
-            [nzActive]="searchLevelValue.length > 0"
+            [nzActive]="searchLevelValue != null"
             [nzDropdownMenu]="searchLevelMenu"
           >
             <i nz-icon nzType="search"></i>
@@ -94,9 +94,9 @@
       <ng-container *ngFor="let data of logsTable.data">
         <tr>
           <td>{{ data.timeStamp | date: 'yyyy-MM-dd HH:mm:ss.SS' }}</td>
-          <td>{{ data.message }}</td>
+          <td>{{ truncate(data.message, truncateMaxLength) }}</td>
           <td>{{ data.level }}</td>
-          <td>{{ data.exception }}</td>
+          <td>{{ truncate(data.exception, truncateMaxLength) }}</td>
           <td>
             <a (click)="showDetail(data)">{{ 'Admin.View' | translate }}</a>
           </td>
@@ -154,7 +154,7 @@
   <div class="ant-table-filter-dropdown">
     <div class="search-box">
       <input
-        type="text"
+        type="number"
         nz-input
         placeholder="{{ 'Admin.Log.Table.Level' | translate }}"
         [(ngModel)]="searchLevelValue"

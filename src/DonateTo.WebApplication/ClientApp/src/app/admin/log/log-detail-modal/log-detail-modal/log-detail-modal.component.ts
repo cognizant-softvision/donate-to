@@ -22,4 +22,8 @@ export class LogDetailModalComponent implements OnInit {
   closeModal() {
     this.isVisible = !this.isVisible;
   }
+
+  printLogEvent(log: LogModel): string {
+    return log.logEvent;
+  }
 }
