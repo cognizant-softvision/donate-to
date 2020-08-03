@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NzTableQueryParams } from 'ng-zorro-antd';
 import { LogFilter } from 'src/app/shared/models/filters/log-filter';
 import { LogModel } from './../../shared/models/log.model';
 import { LogSandbox } from './log-sandbox';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { LogDetailModalComponent } from './log-detail-modal/log-detail-modal/log-detail-modal.component';
 
 @Component({
   selector: 'app-log-admin',
@@ -13,6 +14,9 @@ import { Subscription } from 'rxjs';
 })
 export class LogComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
+  @ViewChild(LogDetailModalComponent)
+  private logDetailModal: LogDetailModalComponent;
+
   logList: LogModel[] = [];
   logFilter: LogFilter;
   total = 0;
@@ -163,5 +167,9 @@ export class LogComponent implements OnInit, OnDestroy {
 
   private unregisterEvents() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+  showDetail(selectedLog: LogModel) {
+    this.logDetailModal.showModal(selectedLog);
   }
 }
