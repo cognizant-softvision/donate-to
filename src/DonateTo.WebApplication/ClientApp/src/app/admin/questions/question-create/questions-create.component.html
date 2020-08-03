@@ -99,7 +99,7 @@
               <nz-select
                 #select
                 formControlName="controlTypeFormControl"
-                nzPlaceHolder="{{ 'Admin.PriorityQuestion.Form.ControlTypePlaceHolder' | translate }}"
+                nzPlaceHolder="{{ 'Admin.Questions.Form.ControlTypePlaceHolder' | translate }}"
                 [(ngModel)]="controlTypeId"
               >
                 <nz-option
@@ -156,7 +156,7 @@
                   <input
                     class="option-weight"
                     nz-input
-                    placeholder="{{ 'Admin.PriorityQuestion.Form.WeightPlaceHolder' | translate }}"
+                    placeholder="{{ 'Admin.Questions.Form.WeightPlaceHolder' | translate }}"
                     formControlName="optionWeight"
                     type="number"
                     min="1"
@@ -214,10 +214,10 @@
             </nz-form-item>
           </nz-form-item>
           <div *ngIf="!isWeightValid" class="error-required">
-            {{ 'Admin.PriorityQuestion.Form.PriorityWeightError' | translate }}"
+            {{ 'Admin.Questions.Form.PriorityWeightError' | translate }}"
           </div>
           <div *ngIf="!isRangeValid" class="error-required">
-            {{ 'Admin.PriorityQuestion.Form.PriorityRangeError' | translate }}"
+            {{ 'Admin.Questions.Form.PriorityRangeError' | translate }}"
           </div>
         </div>
       </div>
