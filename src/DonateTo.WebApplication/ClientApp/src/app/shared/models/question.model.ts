@@ -12,4 +12,6 @@ export class QuestionModel extends BaseModel {
   options: QuestionOption[];
   controlTypeId: number;
   weight: number;
+  min: number;
+  max: number;
 }

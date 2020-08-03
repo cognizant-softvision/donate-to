@@ -92,9 +92,25 @@
           <td>{{ data.description }}</td>
           <td>{{ data.contact?.fullName }}</td>
           <td>
-            <a [routerLink]="['./edit', data.id]">{{ 'Admin.Edit' | translate }} </a>
+            <a
+              [routerLink]="['./edit', data.id]"
+              nzTooltipTitle="{{ 'Admin.Organization.Edit' | translate }}"
+              nzTooltipPlacement="bottom"
+              nz-tooltip
+              class="icon-link"
+            >
+              <i nz-icon nzType="edit" nzTheme="outline" class="action-icon"></i>
+            </a>
             <nz-divider nzType="vertical"></nz-divider>
-            <a [routerLink]="['./detail', data.id]">{{ 'Admin.View' | translate }}</a>
+            <a
+              [routerLink]="['./detail', data.id]"
+              nzTooltipTitle="{{ 'Admin.Organization.Detail' | translate }}"
+              nzTooltipPlacement="bottom"
+              nz-tooltip
+              class="icon-link"
+            >
+              <i nz-icon nzType="info-circle" nzTheme="outline" class="action-icon"></i>
+            </a>
           </td>
         </tr>
       </ng-container>

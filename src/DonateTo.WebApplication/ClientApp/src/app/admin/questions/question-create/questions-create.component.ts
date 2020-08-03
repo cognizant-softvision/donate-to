@@ -4,11 +4,11 @@ import { QuestionsSandbox } from '../questions-sandbox';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { Subscription } from 'rxjs';
 import { ColumnItem, QuestionModel } from 'src/app/shared/models';
-import { ControlType2LabelMapping } from 'src/app/shared/enum/controlTypes';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { QuestionOption } from 'src/app/shared/models/question-option.modal';
 import { ControlTypeModel } from 'src/app/shared/models/control-type.model';
 import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
+import { ControlType } from 'src/app/shared/enum/controlTypes';
 
 @Component({
   selector: 'app-questions-create',
@@ -23,8 +23,10 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   private subscriptions: Subscription[] = [];
   private isSubmited = false;
   private loadingStatus = false;
-  public ControlType2LabelMapping = ControlType2LabelMapping;
   private controlTypes: ControlTypeModel[] = [];
+  get controlTypeEnum() {
+    return ControlType;
+  }
 
   isErrorModalActive = false;
   tplModal?: NzModalRef;
@@ -34,13 +36,15 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
 
   label = '';
   placeholder = '';
-  weight = 0;
-  order = 0;
+  weight = null;
+  order = null;
   defaultValue = '';
-  controlTypeId = 0;
+  controlTypeId = null;
   questionId = 0;
   isEdit = false;
   isQuestionsValid = true;
+  isWeightValid = true;
+  isRangeValid = true;
   requiredWeight = 100;
 
   listOfColumns: ColumnItem[] = [
@@ -61,13 +65,13 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     orderFormControl: new FormControl('', Validators.required),
     controlTypeFormControl: new FormControl('', Validators.required),
     defaultValueFormControl: new FormControl(''),
+    minFormControl: new FormControl(''),
+    maxFormControl: new FormControl(''),
   });
 
   constructor(
     public questionSandbox: QuestionsSandbox,
     private router: Router,
-    private modal: NzModalService,
-    private formBuilder: FormBuilder,
     private dataUpdated: DataUpdatedService
   ) {}
 
@@ -133,6 +137,12 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     this.isQuestionsValid = this.questions.length > 0 && this.sumWeight() === this.requiredWeight;
   }
 
+  validateOptions(): boolean {
+    this.isWeightValid = this.optionsWeight();
+    this.isRangeValid = this.optionsRange();
+    return this.isWeightValid && this.isRangeValid;
+  }
+
   goBack() {
     this.router.navigate(['/admin/questions']);
   }
@@ -157,86 +167,20 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     this.isEdit = true;
   }
 
-  resetForm() {
-    this.label = '';
-    this.placeholder = '';
-    this.weight = 0;
-    this.order = 0;
-    this.defaultValue = '';
-    this.controlTypeId = 0;
-    this.questionId = 0;
-    this.isEdit = false;
-    this.optionsArray = new FormArray([]);
-    this.addField();
-    this.addField();
-  }
-
   addQuestion() {
     this.validateFormGroup(this.questionItemFormGroup);
-    if (this.questionItemFormGroup.valid && this.validateOptionsWeight()) {
-      const questionItem = new QuestionModel();
-      let options: QuestionOption[] = [];
-
+    if (this.questionItemFormGroup.valid && this.validateOptions()) {
       if (this.isEdit) {
         const questionSavedItem = this.questions.find((q) => q.id === this.questionId);
-        questionSavedItem.label = this.questionItemFormGroup.controls.labelFormControl.value;
-        questionSavedItem.placeholder = this.questionItemFormGroup.controls.placeholderFormControl.value;
-        questionSavedItem.order = this.questionItemFormGroup.controls.orderFormControl.value;
-        questionSavedItem.controlTypeId = this.questionItemFormGroup.controls.controlTypeFormControl.value;
-        questionSavedItem.controlType = this.controlTypes.find(
-          (controlType) => controlType.id === questionSavedItem.controlTypeId
-        );
-        questionSavedItem.weight = this.questionItemFormGroup.controls.weightFormControl.value;
-        questionSavedItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
-
-        if (questionSavedItem.controlType.name !== 'Textbox') {
-          this.optionsArray.removeAt(this.optionsArray.length);
-          for (const o of this.optionsArray.value) {
-            const questionOption = new QuestionOption();
-            questionOption.label = o.optionLabel;
-            questionOption.value = o.optionValue;
-            questionOption.weight = o.optionWeight;
-            options = [...options, questionOption];
-          }
-          questionSavedItem.options = options;
-        }
-
-        questionItem.id = questionSavedItem.id;
-        questionItem.key = questionSavedItem.key;
-        questionItem.createdBy = questionSavedItem.createdBy;
-        questionItem.createdDate = questionSavedItem.createdDate;
-        questionItem.updateBy = questionSavedItem.updateBy;
-        questionItem.updateDate = questionSavedItem.updateDate;
+        this.createQuestionItem(questionSavedItem);
+        this.questions.splice(this.questions.indexOf(questionSavedItem), 1);
+        this.isEdit = false;
       } else {
-        questionItem.label = this.questionItemFormGroup.controls.labelFormControl.value;
-        questionItem.placeholder = this.questionItemFormGroup.controls.placeholderFormControl.value;
-        questionItem.order = this.questionItemFormGroup.controls.orderFormControl.value;
-        questionItem.controlType = new ControlTypeModel();
-        questionItem.controlTypeId = this.questionItemFormGroup.controls.controlTypeFormControl.value;
-        questionItem.controlType = this.controlTypes.find(
-          (controlType) => controlType.id === questionItem.controlTypeId
-        );
-        questionItem.weight = this.questionItemFormGroup.controls.weightFormControl.value;
-        questionItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
-
-        if (questionItem.controlType.name !== 'Textbox') {
-          this.optionsArray.removeAt(this.optionsArray.length);
-          for (const o of this.optionsArray.value) {
-            const questionOption = new QuestionOption();
-            questionOption.label = o.optionLabel;
-            questionOption.value = o.optionValue;
-            questionOption.weight = o.optionWeight;
-            options = [...options, questionOption];
-          }
-          questionItem.options = options;
-
-          this.questions = [...this.questions, questionItem];
-        } else {
-          this.questions = [...this.questions, questionItem];
-        }
+        const questionItem = new QuestionModel();
+        this.createQuestionItem(questionItem);
       }
       this.questionItemFormGroup.reset();
-      this.resetForm();
+      this.optionsArray.reset();
     }
   }
 
@@ -251,7 +195,8 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
 
   removeQuestion(item: QuestionModel): void {
     if (item.id === this.questionId) {
-      this.resetForm();
+      this.questionItemFormGroup.reset();
+      this.optionsArray.reset();
     }
     this.questions = this.questions.filter((q) => q !== item);
   }
@@ -267,17 +212,6 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     return this.isOption;
   }
 
-  validateOptionsWeight() {
-    const isValid = this.optionsWeight();
-    if (!isValid) {
-      this.modal.error({
-        nzTitle: 'Warning',
-        nzContent: 'The weight of each option must sum a total of 100',
-      });
-    }
-    return isValid;
-  }
-
   addField(e?: MouseEvent): void {
     if (e) {
       e.preventDefault();
@@ -287,6 +221,8 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
       optionLabel: new FormControl(''),
       optionValue: new FormControl(''),
       optionWeight: new FormControl(''),
+      minRelativeFormControl: new FormControl(''),
+      maxRelativeFormControl: new FormControl(''),
     });
 
     this.optionsArray.push(group);
@@ -301,5 +237,51 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
 
   optionsWeight(): boolean {
     return this.optionsArray.value.reduce((acc, cur) => acc + cur.optionWeight, 0) === this.requiredWeight;
+  }
+
+  optionsRange(): boolean {
+    const total =
+      this.questionItemFormGroup.controls.maxFormControl.value -
+      this.questionItemFormGroup.controls.minFormControl.value;
+    let relativeTotal = 0;
+    for (const o of this.optionsArray.value) {
+      relativeTotal = relativeTotal + (o.maxRelativeFormControl - o.minRelativeFormControl);
+    }
+    return relativeTotal === total;
+  }
+
+  createQuestionItem(questionItem: QuestionModel): void {
+    let options: QuestionOption[] = [];
+    questionItem.label = this.questionItemFormGroup.controls.labelFormControl.value;
+    questionItem.placeholder = this.questionItemFormGroup.controls.placeholderFormControl.value;
+    questionItem.order = this.questionItemFormGroup.controls.orderFormControl.value;
+    questionItem.controlType = new ControlTypeModel();
+    questionItem.controlTypeId = this.questionItemFormGroup.controls.controlTypeFormControl.value;
+    questionItem.controlType = this.controlTypes.find((controlType) => controlType.id === questionItem.controlTypeId);
+    questionItem.weight = this.questionItemFormGroup.controls.weightFormControl.value;
+    questionItem.defaultValue = this.questionItemFormGroup.controls.defaultValueFormControl.value;
+
+    this.optionsArray.removeAt(this.optionsArray.length);
+    if (questionItem.controlType.id !== ControlType.Textbox) {
+      for (const o of this.optionsArray.value) {
+        const questionOption = new QuestionOption();
+        questionOption.label = o.optionLabel;
+        questionOption.value = o.optionValue;
+        questionOption.weight = o.optionWeight;
+        options = [...options, questionOption];
+      }
+    } else {
+      questionItem.min = this.questionItemFormGroup.controls.minFormControl.value;
+      questionItem.max = this.questionItemFormGroup.controls.maxFormControl.value;
+      for (const o of this.optionsArray.value) {
+        const questionOption = new QuestionOption();
+        questionOption.minimumRelative = o.minRelativeFormControl;
+        questionOption.maximumRelative = o.maxRelativeFormControl;
+        questionOption.weight = o.optionWeight;
+        options = [...options, questionOption];
+      }
+    }
+    questionItem.options = options;
+    this.questions = [...this.questions, questionItem];
   }
 }
