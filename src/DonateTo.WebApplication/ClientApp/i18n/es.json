@@ -106,13 +106,6 @@
         "Quantitycolumn": "Cantidad",
         "Categorycolumn": "Categorías",
         "Action": "Action",
-        "Filtered": "Filtrada",
-        "Search": "Buscar",
-        "Reset": "Reestablecer",
-        "CreatedFrom": "Desde",
-        "CreatedTo": "Hasta",
-        "FinishFrom": "Desde",
-        "FinishTo": "Hasta",
         "PlacedDonations": "Donaciones hechas"
       }
     },
@@ -422,5 +415,14 @@
     "OldPassword": "Vieja Contraseña",
     "NewPassword": "Nueva Contraseña",
     "RepeatPassword": "Repetir nueva contraseña"
+  },
+  "SharedControls": {
+    "Search": "Buscar",
+    "Reset": "Reestablecer",
+    "Filtered": "Filtrada",
+    "RangeDatePicker": {
+      "From": "Desde",
+      "To": "Hasta"
+    }
   }
 }
