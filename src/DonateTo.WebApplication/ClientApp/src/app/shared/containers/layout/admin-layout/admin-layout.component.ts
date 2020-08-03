@@ -7,7 +7,7 @@ import { IconType } from 'src/app/shared/enum/iconTypes';
 @Component({
   selector: 'app-admin-layout',
   templateUrl: './admin-layout.component.html',
-  styleUrls: ['./admin-layout.component.scss'],
+  styleUrls: ['./admin-layout.component.less'],
   encapsulation: ViewEncapsulation.None,
 })
 export class AdminLayoutComponent implements OnInit, OnDestroy {

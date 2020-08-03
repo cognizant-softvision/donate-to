@@ -12,7 +12,7 @@ import { DonationModel } from '../shared/models/donation.model';
 @Component({
   selector: 'app-donation',
   templateUrl: './donation.component.html',
-  styleUrls: ['./donation.component.scss'],
+  styleUrls: ['./donation.component.less'],
 })
 export class DonationComponent implements OnInit, OnDestroy {
   donationId: number;

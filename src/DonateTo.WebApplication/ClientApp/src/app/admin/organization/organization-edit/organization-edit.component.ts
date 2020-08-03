@@ -7,7 +7,7 @@ import { OrganizationModel } from 'src/app/shared/models';
 @Component({
   selector: 'app-organization-edit',
   templateUrl: './organization-edit.component.html',
-  styleUrls: ['./organization-edit.component.scss'],
+  styleUrls: ['./organization-edit.component.less'],
 })
 export class OrganizationEditComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];

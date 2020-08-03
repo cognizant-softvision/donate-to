@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-donation-list',
   templateUrl: './donation-list.component.html',
-  styleUrls: ['./donation-list.component.scss'],
+  styleUrls: ['./donation-list.component.less'],
 })
 export class DonationListComponent implements OnInit, OnDestroy {
   constructor(

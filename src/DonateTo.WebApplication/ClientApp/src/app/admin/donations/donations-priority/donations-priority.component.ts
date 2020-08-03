@@ -4,7 +4,7 @@ import { QuestionModel } from 'src/app/shared/models';
 @Component({
   selector: 'app-donations-priority',
   templateUrl: './donations-priority.component.html',
-  styleUrls: ['./donations-priority.component.scss'],
+  styleUrls: ['./donations-priority.component.less'],
 })
 export class DonationPriorityComponent implements OnInit {
   form: FormGroup;

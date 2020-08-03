@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-organization-form',
   templateUrl: './organization-form.component.html',
-  styleUrls: ['./organization-form.component.scss'],
+  styleUrls: ['./organization-form.component.less'],
 })
 export class OrganizationFormComponent implements OnInit {
   @ViewChild(OrganizationStepAddressComponent)

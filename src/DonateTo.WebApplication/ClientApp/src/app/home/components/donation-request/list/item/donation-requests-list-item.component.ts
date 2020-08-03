@@ -4,7 +4,7 @@ import { DonationRequestModel } from '../../../../../shared/models';
 @Component({
   selector: 'app-donation-requests-list-item',
   templateUrl: './donation-requests-list-item.component.html',
-  styleUrls: ['./donation-requests-list-item.component.scss'],
+  styleUrls: ['./donation-requests-list-item.component.less'],
 })
 export class DonationRequestsListItemComponent implements OnInit {
   @Output() showDetail = new EventEmitter<number>();

@@ -9,7 +9,7 @@ import { QuestionsSandbox } from './questions-sandbox';
 @Component({
   selector: 'app-questions-admin',
   templateUrl: './questions.component.html',
-  styleUrls: ['./questions.component.scss'],
+  styleUrls: ['./questions.component.less'],
 })
 export class QuestionsComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];

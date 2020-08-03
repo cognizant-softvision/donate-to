@@ -11,7 +11,7 @@ import { compareDate, CompareDateResult } from 'src/app/shared/utility/dates/com
 @Component({
   selector: 'app-donation-step-finish',
   templateUrl: './donation-step-finish.component.html',
-  styleUrls: ['./donation-step-finish.component.scss'],
+  styleUrls: ['./donation-step-finish.component.less'],
 })
 export class DonationStepFinishComponent implements OnInit, OnDestroy {
   @Input() donationItems: DonationItemModel[];

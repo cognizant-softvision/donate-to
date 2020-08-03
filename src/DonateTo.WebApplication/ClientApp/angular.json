@@ -38,11 +38,7 @@
                 "output": "i18n"
               }
             ],
-            "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.scss",
-              "src/softvision-theme.scss"
-            ],
+            "styles": ["src/styles.less"],
             "scripts": []
           },
           "configurations": {
@@ -221,7 +217,7 @@
   },
   "schematics": {
     "@schematics/angular:component": {
-      "styleext": "scss"
+      "styleext": "less"
     }
   }
 }

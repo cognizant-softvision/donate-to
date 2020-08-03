@@ -9,7 +9,7 @@ import { OrganizationModel } from 'src/app/shared/models';
 @Component({
   selector: 'app-organization-create',
   templateUrl: './organization-create.component.html',
-  styleUrls: ['./organization-create.component.scss'],
+  styleUrls: ['./organization-create.component.less'],
 })
 export class OrganizationCreateComponent implements OnDestroy {
   private organizationFormComponent: OrganizationFormComponent;

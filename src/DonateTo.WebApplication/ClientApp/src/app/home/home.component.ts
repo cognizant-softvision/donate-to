@@ -8,7 +8,7 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  styleUrls: ['./home.component.less'],
 })
 export class HomeComponent implements OnInit {
   param = { value: 'world' };

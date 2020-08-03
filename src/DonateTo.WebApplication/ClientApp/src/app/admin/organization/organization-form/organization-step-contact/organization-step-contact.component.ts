@@ -6,7 +6,7 @@ import { OrganizationSandbox } from '../../organization-sandbox';
 @Component({
   selector: 'app-organization-step-contact',
   templateUrl: './organization-step-contact.component.html',
-  styleUrls: ['./organization-step-contact.component.scss'],
+  styleUrls: ['./organization-step-contact.component.less'],
 })
 export class OrganizationStepContactComponent implements OnInit {
   responsableStepForm: FormGroup;
