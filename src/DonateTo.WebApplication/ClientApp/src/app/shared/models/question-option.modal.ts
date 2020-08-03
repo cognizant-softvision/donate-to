@@ -5,4 +5,6 @@ export class QuestionOption extends BaseModel {
   value: string;
   weight: number;
   questionId: number;
+  minimumRelative: number;
+  maximumRelative: number;
 }

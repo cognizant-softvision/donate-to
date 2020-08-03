@@ -11,3 +11,11 @@
 label.filter {
   color: #bfbfbf;
 }
+
+.action-icon {
+  font-size: 1.5em;
+}
+
+.icon-link {
+  color: grey;
+}

@@ -31,11 +31,6 @@ export class OrganizationStepGeneralInformationComponent implements OnInit {
       this.description = organization?.description;
     });
 
-    // if (this.generalInformationModel && this.generalInformationModel.id !== 0) {
-    //   this.organizationName = this.generalInformationModel?.name;
-    //   this.description = this.generalInformationModel?.name;
-    // }
-
     this.generalInformationStepForm.valueChanges.subscribe(() =>
       this.isFormValid.emit({
         value: this.isValidForm(),

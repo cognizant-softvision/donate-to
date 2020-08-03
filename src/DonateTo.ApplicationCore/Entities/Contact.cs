@@ -1,4 +1,6 @@
-﻿namespace DonateTo.ApplicationCore.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace DonateTo.ApplicationCore.Entities
 {
     public class Contact : EntityBase
     {
@@ -8,5 +10,7 @@
         public string IdentityNumber { get; set; }
         public string PhoneNumber { get; set; }
         public string Position { get; set; }
+        [NotMapped]
+        public string FullName { get => FirstName + " " + LastName; }
     }
 }

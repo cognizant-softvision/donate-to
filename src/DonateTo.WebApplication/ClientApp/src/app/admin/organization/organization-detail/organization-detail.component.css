@@ -1,3 +1,13 @@
 .address-and-contact {
   margin-top: 3em;
 }
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.users-link {
+  font-size: 2em;
+}
