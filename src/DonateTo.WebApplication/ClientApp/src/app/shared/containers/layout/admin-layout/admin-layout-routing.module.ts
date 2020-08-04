@@ -1,6 +1,8 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { AdminLayoutComponent } from './admin-layout.component';
+import { AuthSuperAdminGuard } from 'src/app/shared/guards/auth-superadmin.guard';
+import { AuthAdminGuard } from 'src/app/shared/guards/auth-admin.guard';
 
 const routes: Routes = [
   {
@@ -17,10 +19,12 @@ const routes: Routes = [
         path: 'organizations',
         loadChildren: () =>
           import('../../../../admin/organization/organization.module').then((m) => m.OrganizationModule),
+        canLoad: [AuthAdminGuard, AuthSuperAdminGuard],
       },
       {
         path: 'questions',
         loadChildren: () => import('../../../../admin/questions/questions.module').then((m) => m.QuestionsModule),
+        canLoad: [AuthSuperAdminGuard],
       },
       {
         path: 'logs',
