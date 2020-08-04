@@ -51,7 +51,7 @@ namespace DonateTo.WebApi.V1.Controllers
                         return Unauthorized();
                     }
 
-                    if(value.Sum(w => w.Weight) != 100)
+                    if (value.Sum(w => w.Weight) != 100)
                     {
                         return BadRequest("Invalid batch, the sum of weights must reach 100.");
                     }
@@ -70,5 +70,36 @@ namespace DonateTo.WebApi.V1.Controllers
                 }
             }
         }
+
+        [HttpPut(Name = "[controller]_[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> CalculateWeightQuestionAsync([FromBody] IEnumerable<QuestionResult> value)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                try
+                {
+                    await _questionService.CalculateWeightQuestionAsync(value).ConfigureAwait(false);
+                    return Ok();
+                }
+                catch (ArgumentNullException ex)
+                {
+                    return NotFound(ex);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    return BadRequest(ex);
+                }
+            }
+        }
     }
+
 }

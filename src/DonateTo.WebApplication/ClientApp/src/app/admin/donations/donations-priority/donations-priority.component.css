@@ -9,3 +9,12 @@
 .nz-option {
   margin: 1em;
 }
+
+.errorMessage {
+  color: red;
+}
+
+.nz-select {
+  margin-right: 8px;
+  width: 200px;
+}

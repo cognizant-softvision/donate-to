@@ -8,26 +8,30 @@
         </div>
 
         <nz-form-control [nzSpan]="12" nzHasFeedback>
-          <div [ngSwitch]="question.controlType.name">
-            <div *ngSwitchCase="'textbox'">
+          <div [ngSwitch]="question.controlTypeId">
+            <div *ngSwitchCase="controlTypeEnum.Textbox">
               <input
                 nz-input
-                [formControlName]="question.key"
-                [id]="question.key"
+                [formControlName]="question.id"
+                [id]="question.id"
                 type="number"
+                [min]="question.min"
+                [max]="question.max"
+                [defaultValue]="question.defaultValue"
                 [ngModel]="question.label"
               />
             </div>
-            <div *ngSwitchCase="'dropdown'">
-              <nz-select [id]="question.key" [formControlName]="question.key">
-                <nz-option *ngFor="let opt of question.options" [nzValue]="opt.value" [nzLabel]="opt.label">
+
+            <div *ngSwitchCase="controlTypeEnum.DropDown">
+              <nz-select [id]="question.id" [formControlName]="question.id" [ngModel]="question.defaultValue">
+                <nz-option *ngFor="let opt of question.options" [nzValue]="opt.label" [nzLabel]="opt.label">
                 </nz-option>
               </nz-select>
             </div>
 
-            <div *ngSwitchCase="'radiobutton'">
-              <nz-radio-group [formControlName]="question.key">
-                <label nz-radio [nzValue]="opt.value" *ngFor="let opt of question.options"> {{ opt.label }} </label>
+            <div *ngSwitchCase="controlTypeEnum.RadioButton">
+              <nz-radio-group [formControlName]="question.id" [ngModel]="question.defaultValue">
+                <label nz-radio [nzValue]="opt.label" *ngFor="let opt of question.options"> {{ opt.label }} </label>
               </nz-radio-group>
             </div>
             <div class="errorMessage" *ngIf="!isValid(question)">{{ question.label }} is required</div>
@@ -36,7 +40,9 @@
       </nz-form-item>
     </div>
     <div class="form-row">
-      <button nz-button nzType="primary" nzType="primary" (click)="onSubmit()" [disabled]="!form.valid">Save</button>
+      <button nz-button nzType="primary" nzType="primary" (click)="onSubmit()" [disabled]="!form || !form.valid">
+        Save
+      </button>
     </div>
   </form>
 </div>

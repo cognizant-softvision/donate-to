@@ -1,3 +1,4 @@
+import { QuestionResult } from './../../models/question-result';
 import { BaseHttpClientService } from './base-http-client.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -38,6 +39,13 @@ export class QuestionService extends BaseHttpClientService<QuestionModel> {
     return this.httpClient.put<QuestionModel[]>(
       `${this.url}/${this.endpoint}`,
       JSON.stringify(question),
+      this.httpOptions
+    );
+  }
+  createQuestionsResult(results: QuestionResult[]): Observable<QuestionResult[]> {
+    return this.httpClient.put<QuestionResult[]>(
+      `${this.url}/${this.endpoint}`,
+      JSON.stringify(results),
       this.httpOptions
     );
   }

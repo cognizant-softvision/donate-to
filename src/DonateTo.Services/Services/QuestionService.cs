@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -81,6 +82,17 @@ namespace DonateTo.Services
             }
 
             return predicate;
+        }
+
+        public Task CalculateWeightQuestionAsync(IEnumerable<QuestionResult> questionResults)
+        {
+            decimal totalWeight = 0;
+            questionResults.ToList().ForEach(result => { 
+                var question = _questionRepository.GetAsync(result.Id).Result;
+                var option = question.Options.FirstOrDefault(opt => opt.Label == result.value);
+                totalWeight = (question.Weight / 100) * (option.Weight / 100) * 100;
+            });
+            throw new NotImplementedException();
         }
     }
 }

@@ -18,5 +18,7 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// </summary>
         /// <param name="updatedQuestions">List of questions</param>
         Task BulkUpdateAsync(IEnumerable<Question> updatedQuestions);
+
+        Task CalculateWeightQuestionAsync(IEnumerable<QuestionResult> questionResults);
     }
 }
