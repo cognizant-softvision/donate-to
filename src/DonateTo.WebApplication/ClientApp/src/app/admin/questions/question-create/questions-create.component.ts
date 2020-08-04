@@ -49,13 +49,13 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   requiredWeight = 100;
 
   listOfColumns: ColumnItem[] = [
-    { name: 'Admin.Questions.Table.LabelColumn' },
-    { name: 'Admin.Questions.Table.PlaceholderColumn' },
-    { name: 'Admin.Questions.Table.OrderColumnColumn' },
-    { name: 'Admin.Questions.Table.WeightColumn' },
-    { name: 'Admin.Questions.Table.ControlTypeColumn' },
-    { name: 'Admin.Questions.Table.DefaultValueColumn' },
-    { name: 'Admin.Questions.Table.OptionsColumn' },
+    { name: 'Admin.Questions.Table.Label' },
+    { name: 'Admin.Questions.Table.Placeholder' },
+    { name: 'Admin.Questions.Table.Order' },
+    { name: 'Admin.Questions.Table.Weight' },
+    { name: 'Admin.Questions.Table.ControlType' },
+    { name: 'Admin.Questions.Table.DefaultValue' },
+    { name: 'Admin.Questions.Table.Options' },
     { name: 'Admin.Action' },
   ];
 
