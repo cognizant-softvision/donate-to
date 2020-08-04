@@ -191,7 +191,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   }
 
   existOrder(): boolean {
-    const order: number = this.questionItemFormGroup.controls.orderFormControl.value;
+    const order = this.questionItemFormGroup.controls.orderFormControl.value;
     this.orderExist = this.questions.map((q) => q.order).includes(order);
     return this.orderExist;
   }
