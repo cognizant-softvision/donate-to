@@ -36,7 +36,7 @@
           </nz-form-item>
           <div class="item-quantity">
             <nz-form-item>
-              <nz-form-control nzErrorTip="{{ 'Admin.Questions.Form.DefaultValueRequired' | translate }}">
+              <nz-form-control>
                 <input
                   nz-input
                   placeholder="{{ 'Admin.Questions.Form.DefaultValuePlaceHolder' | translate }}"
@@ -170,7 +170,7 @@
               <nz-form-control>
                 <button nz-button nzType="dashed" class="add-button" (click)="addField($event)">
                   <i nz-icon nzType="plus"></i>
-                  Add field
+                  {{ 'Admin.Questions.Create.AddField' | translate }}
                 </button>
               </nz-form-control>
             </nz-form-item>
@@ -208,7 +208,7 @@
               <nz-form-control>
                 <button nz-button nzType="dashed" class="add-button-dropdown" (click)="addField($event)">
                   <i nz-icon nzType="plus"></i>
-                  Add field
+                  {{ 'Admin.Questions.Create.AddField' | translate }}
                 </button>
               </nz-form-control>
             </nz-form-item>
