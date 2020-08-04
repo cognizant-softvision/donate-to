@@ -8,6 +8,7 @@
       nz-input
       rows="2"
       placeholder="{{ 'RequestDonation.DonationSteps.FinishStep.ObservationPlaceHolder' | translate }}"
+      (focusout)="emitForm()"
     >
     </textarea>
   </nz-form-control>

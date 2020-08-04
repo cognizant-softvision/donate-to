@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { DonationItemModel } from 'src/app/shared/models/donation-item.model';
 import { DonationSandbox } from 'src/app/donation/donation.sandbox';
 import { Subscription } from 'rxjs';
@@ -20,7 +20,7 @@ export class DonationStepFinishComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.registerEvents();
-    this.isFormValid.emit(this.isFormValid.emit({ value: true, observation: this.observation }));
+    this.emitForm();
   }
 
   ngOnDestroy(): void {
@@ -39,5 +39,9 @@ export class DonationStepFinishComponent implements OnInit, OnDestroy {
    */
   registerEvents(): void {
     this.subscriptions.push();
+  }
+
+  emitForm() {
+    this.isFormValid.emit(this.isFormValid.emit({ value: true, observation: this.observation }));
   }
 }
