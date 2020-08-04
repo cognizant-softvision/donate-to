@@ -1,4 +1,4 @@
-<div *ngIf="outlet.isActivated == false">
+<div>
   <div class="table-operations">
     <h4 class="section-title">{{ 'Admin.Log.Title' | translate }}</h4>
     <nz-divider></nz-divider>
@@ -186,8 +186,6 @@
     </div>
   </div>
 </nz-dropdown-menu>
-
-<router-outlet #outlet="outlet"></router-outlet>
 
 <ng-template #customTpl let-name>
   <div style="text-align: center;">
