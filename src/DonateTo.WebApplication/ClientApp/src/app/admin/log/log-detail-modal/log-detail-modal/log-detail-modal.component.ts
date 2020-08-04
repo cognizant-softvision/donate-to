@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LogModel } from 'src/app/shared/models/log.model';
 
 @Component({
