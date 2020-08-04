@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './nav-menu.component.html',
   styleUrls: ['./nav-menu.component.css'],
 })
-export class NavMenuComponent implements OnInit, OnDestroy {
+export class NavMenuComponent implements OnDestroy {
   subscriptions: Subscription[] = [];
   isAuthenticated = false;
   isOrganization = false;
@@ -16,8 +16,6 @@ export class NavMenuComponent implements OnInit, OnDestroy {
   constructor(private navMenuSandbox: NavMenuSandBox) {
     this.registerEvents();
   }
-
-  ngOnInit() {}
 
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
