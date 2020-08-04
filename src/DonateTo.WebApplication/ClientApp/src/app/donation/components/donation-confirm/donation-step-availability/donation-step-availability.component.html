@@ -1,0 +1,94 @@
+<form nz-form [formGroup]="availabilityStepFormGroup">
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired>
+      {{ 'RequestDonation.DonationSteps.FinishStep.WeekDay' | translate }}
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="weekDayErrorTpl">
+      <nz-select
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="{{ 'RequestDonation.DonationSteps.FinishStep.WeekDayPlaceHolder' | translate }}"
+        formControlName="weekDayFormControl"
+      >
+        <nz-option *ngFor="let day of weekDays" [nzValue]="day.dayOfWeek" [nzLabel]="day.description"> </nz-option>
+      </nz-select>
+      <ng-template #weekDayErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          {{ 'RequestDonation.DonationSteps.FinishStep.RequiredWeekDay' | translate }}
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired nzFor="startTime">
+      {{ 'RequestDonation.DonationSteps.FinishStep.StartTime' | translate }}
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="startTimeErrorTpl">
+      <nz-time-picker formControlName="startTimeFormControl" nzFormat="HH:mm"></nz-time-picker>
+      <ng-template #startTimeErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          {{ 'RequestDonation.DonationSteps.FinishStep.RequiredStartTime' | translate }}
+        </ng-container>
+        <ng-container *ngIf="control.hasError('greater')">
+          {{ 'RequestDonation.DonationSteps.FinishStep.StartTimeGreaterThanFinishTime' | translate }}
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="7" nzRequired nzFor="finishTime">
+      {{ 'RequestDonation.DonationSteps.FinishStep.FinishTime' | translate }}
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="finishTimeErrorTpl">
+      <nz-time-picker formControlName="finishTimeFormControl" nzFormat="HH:mm"></nz-time-picker>
+      <ng-template #finishTimeErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">
+          {{ 'RequestDonation.DonationSteps.FinishStep.RequiredFinishTime' | translate }}
+        </ng-container>
+        <ng-container *ngIf="control.hasError('greater')">
+          {{ 'RequestDonation.DonationSteps.FinishStep.FinishTimeLessThanStartTime' | translate }}
+        </ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div nz-row class="ant-row-end">
+    <button nz-button nzType="primary" (click)="addAvailabilityToList()">
+      <span>{{ 'RequestDonation.DonationSteps.FinishStep.AddAvailabilityButton' | translate }}</span>
+    </button>
+  </div>
+</form>
+
+<nz-form-item>
+  <nz-form-control>
+    <div [(ngModel)]="availabilities" ngDefaultControl>
+      <nz-table
+        [nzData]="availabilities"
+        [nzShowPagination]="false"
+        [nzFrontPagination]="false"
+        [nzShowPagination]="false"
+      >
+        <thead>
+          <tr>
+            <th>{{ 'RequestDonation.DonationSteps.FinishStep.WeekDayColumn' | translate }}</th>
+            <th>{{ 'RequestDonation.DonationSteps.FinishStep.StartTimeColumn' | translate }}</th>
+            <th>{{ 'RequestDonation.DonationSteps.FinishStep.FinishTimeColumn' | translate }}</th>
+            <th>{{ 'RequestDonation.DonationSteps.FinishStep.OperationColumn' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let availability of availabilities">
+            <td>{{ dayOfWeekDescription(availability.dayOfWeek) }}</td>
+            <td>{{ availability.startTime | date: 'HH:mm' }}</td>
+            <td>{{ availability.endTime | date: 'HH:mm' }}</td>
+            <td>
+              <a (click)="removeAvailability(availability)">{{ 'Admin.Delete' | translate }}</a>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </nz-form-control>
+</nz-form-item>

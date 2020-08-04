@@ -264,6 +264,10 @@
     "Organization": "Organization",
     "DonationItemsCount": "Donated Items",
     "DonationRequest": "Donation Request",
+    "ResponsableStepTitle": "Who Am I?",
+    "AddressStepTitle": "Where do we pick up the Donation?",
+    "PickUpDateStepTitle": "Which days can we pick up the Donation?",
+    "FinishStepTitle": "Finish",
     "List": {
       "Status": "Filterd by Status"
     }

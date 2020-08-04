@@ -264,6 +264,10 @@
     "Organization": "Organización",
     "DonationItemsCount": "Items Donados",
     "DonationRequest": "Solicitud",
+    "ResponsableStepTitle": "¿Quién Soy?",
+    "AddressStepTitle": "¿Dónde retiramos la donación?",
+    "PickUpDateStepTitle": "¿Que días podemos retirarlo?",
+    "FinishStepTitle": "Finalizar",
     "List": {
       "Status": "Filtrado Por Estado"
     }

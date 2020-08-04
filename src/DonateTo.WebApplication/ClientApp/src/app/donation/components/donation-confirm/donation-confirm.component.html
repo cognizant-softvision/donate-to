@@ -1,8 +1,29 @@
 <div>
   <nz-steps nzCurrent="currentStep">
-    <nz-step nzTitle="Responsable" nzStatus="{{ currentStep >= 0 ? 'finish' : 'wait' }}" nzIcon="user"> </nz-step>
-    <nz-step nzTitle="Address" nzStatus="{{ currentStep >= 1 ? 'finish' : 'wait' }}" nzIcon="home"></nz-step>
-    <nz-step nzTitle="Finish" nzStatus="{{ currentStep >= 2 ? 'finish' : 'wait' }}" nzIcon="heart"></nz-step>
+    <nz-step
+      nzTitle="{{ 'Donation.ResponsableStepTitle' | translate }}"
+      nzStatus="{{ currentStep >= 0 ? 'finish' : 'wait' }}"
+      nzIcon="user"
+    >
+    </nz-step>
+    <nz-step
+      nzTitle="{{ 'Donation.AddressStepTitle' | translate }}"
+      nzStatus="{{ currentStep >= 1 ? 'finish' : 'wait' }}"
+      nzIcon="home"
+    ></nz-step>
+    <nz-step
+      nzTitle="{{ 'Donation.PickUpDateStepTitle' | translate }}"
+      nzStatus="{{ currentStep >= 2 ? 'finish' : 'wait' }}"
+      nzIcon="calendar"
+    ></nz-step>
+    <nz-step
+      nzTitle="{{ 'Donation.FinishStepTitle' | translate }}"
+      nzStatus="{{ currentStep >= 3 ? 'finish' : 'wait' }}"
+      [nzIcon]="finishIcon"
+    ></nz-step>
+    <ng-template #finishIcon>
+      <img src="assets/images/CSV-Communities-Guilds-Icons-17.png" class="finish-icon" />
+    </ng-template>
   </nz-steps>
 
   <div class="steps-content">
@@ -16,12 +37,16 @@
       [addressModel]="addressModel"
       *ngIf="currentStep === 1"
     ></app-donation-step-address>
+    <app-donation-step-availability
+      (isFormValid)="isAvailabilityStepReady($event)"
+      [availabilities]="availabilities"
+      *ngIf="currentStep === 2"
+    ></app-donation-step-availability>
     <app-donation-step-finish
       (isFormValid)="isFinishStepReady($event)"
       [donationItems]="donationItems"
       [observation]="observation"
-      [availabilities]="availabilities"
-      *ngIf="currentStep === 2"
+      *ngIf="currentStep === 3"
     ></app-donation-step-finish>
   </div>
 
@@ -35,7 +60,7 @@
         }}</span>
       </button>
 
-      <button nz-button nzType="default" (click)="next()" *ngIf="currentStep < 2" [disabled]="!stepsData[currentStep]">
+      <button nz-button nzType="default" (click)="next()" *ngIf="currentStep < 4" [disabled]="!stepsData[currentStep]">
         <span>{{ 'RequestDonation.DonationSteps.NextButton' | translate }}</span>
       </button>
 
@@ -43,7 +68,7 @@
         nz-button
         nzType="primary"
         (click)="done()"
-        *ngIf="currentStep === 2"
+        *ngIf="currentStep === 3"
         [disabled]="!stepsData[currentStep]"
       >
         <span>{{ 'RequestDonation.DonationSteps.DoneButton' | translate }}</span>
