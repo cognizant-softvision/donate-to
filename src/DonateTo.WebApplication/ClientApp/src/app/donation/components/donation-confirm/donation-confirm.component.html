@@ -22,7 +22,10 @@
       [nzIcon]="finishIcon"
     ></nz-step>
     <ng-template #finishIcon>
-      <img src="assets/images/CSV-Communities-Guilds-Icons-17.png" class="finish-icon" />
+      <img
+        src="assets/images/CSV-Communities-Guilds-Icons-17.png"
+        [ngClass]="currentStep === 3 ? 'finish-icon-focus' : 'finish-icon-blur'"
+      />
     </ng-template>
   </nz-steps>
 
