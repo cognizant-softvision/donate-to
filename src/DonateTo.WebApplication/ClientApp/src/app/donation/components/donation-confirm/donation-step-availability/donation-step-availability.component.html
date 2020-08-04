@@ -1,67 +1,69 @@
 <form nz-form [formGroup]="availabilityStepFormGroup">
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>
-      {{ 'RequestDonation.DonationSteps.FinishStep.WeekDay' | translate }}
-    </nz-form-label>
-    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="weekDayErrorTpl">
-      <nz-select
-        nzShowSearch
-        nzAllowClear
-        nzPlaceHolder="{{ 'RequestDonation.DonationSteps.FinishStep.WeekDayPlaceHolder' | translate }}"
-        formControlName="weekDayFormControl"
-      >
-        <nz-option *ngFor="let day of weekDays" [nzValue]="day.dayOfWeek" [nzLabel]="day.description"> </nz-option>
-      </nz-select>
-      <ng-template #weekDayErrorTpl let-control>
-        <ng-container *ngIf="control.hasError('required')">
-          {{ 'RequestDonation.DonationSteps.FinishStep.RequiredWeekDay' | translate }}
-        </ng-container>
-      </ng-template>
-    </nz-form-control>
-  </nz-form-item>
+  <div class="day-time-selection">
+    <nz-form-item class="day-time-form-item">
+      <nz-form-label nzRequired>
+        {{ 'RequestDonation.DonationSteps.AvailabilityStep.Day' | translate }}
+      </nz-form-label>
+      <nz-form-control nzHasFeedback [nzErrorTip]="weekDayErrorTpl" class="day-time-form-control">
+        <nz-select
+          nzShowSearch
+          nzAllowClear
+          nzPlaceHolder="{{ 'RequestDonation.DonationSteps.AvailabilityStep.DayPlaceHolder' | translate }}"
+          formControlName="weekDayFormControl"
+        >
+          <nz-option *ngFor="let day of weekDays" [nzValue]="day.dayOfWeek" [nzLabel]="day.description"> </nz-option>
+        </nz-select>
+        <ng-template #weekDayErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            {{ 'RequestDonation.DonationSteps.AvailabilityStep.RequiredDay' | translate }}
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
 
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired nzFor="startTime">
-      {{ 'RequestDonation.DonationSteps.FinishStep.StartTime' | translate }}
-    </nz-form-label>
-    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="startTimeErrorTpl">
-      <nz-time-picker formControlName="startTimeFormControl" nzFormat="HH:mm"></nz-time-picker>
-      <ng-template #startTimeErrorTpl let-control>
-        <ng-container *ngIf="control.hasError('required')">
-          {{ 'RequestDonation.DonationSteps.FinishStep.RequiredStartTime' | translate }}
-        </ng-container>
-        <ng-container *ngIf="control.hasError('greater')">
-          {{ 'RequestDonation.DonationSteps.FinishStep.StartTimeGreaterThanFinishTime' | translate }}
-        </ng-container>
-      </ng-template>
-    </nz-form-control>
-  </nz-form-item>
+    <nz-form-item class="day-time-form-item">
+      <nz-form-label nzRequired nzFor="startTime">
+        {{ 'RequestDonation.DonationSteps.AvailabilityStep.StartTime' | translate }}
+      </nz-form-label>
+      <nz-form-control nzHasFeedback [nzErrorTip]="startTimeErrorTpl" class="day-time-form-control">
+        <nz-time-picker formControlName="startTimeFormControl" nzFormat="HH:mm"></nz-time-picker>
+        <ng-template #startTimeErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            {{ 'RequestDonation.DonationSteps.AvailabilityStep.RequiredStartTime' | translate }}
+          </ng-container>
+          <ng-container *ngIf="control.hasError('greater')">
+            {{ 'RequestDonation.DonationSteps.AvailabilityStep.StartTimeGreaterThanFinishTime' | translate }}
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
 
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired nzFor="finishTime">
-      {{ 'RequestDonation.DonationSteps.FinishStep.FinishTime' | translate }}
-    </nz-form-label>
-    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="finishTimeErrorTpl">
-      <nz-time-picker formControlName="finishTimeFormControl" nzFormat="HH:mm"></nz-time-picker>
-      <ng-template #finishTimeErrorTpl let-control>
-        <ng-container *ngIf="control.hasError('required')">
-          {{ 'RequestDonation.DonationSteps.FinishStep.RequiredFinishTime' | translate }}
-        </ng-container>
-        <ng-container *ngIf="control.hasError('greater')">
-          {{ 'RequestDonation.DonationSteps.FinishStep.FinishTimeLessThanStartTime' | translate }}
-        </ng-container>
-      </ng-template>
-    </nz-form-control>
-  </nz-form-item>
+    <nz-form-item class="day-time-form-item">
+      <nz-form-label nzRequired nzFor="finishTime">
+        {{ 'RequestDonation.DonationSteps.AvailabilityStep.FinishTime' | translate }}
+      </nz-form-label>
+      <nz-form-control nzHasFeedback [nzErrorTip]="finishTimeErrorTpl" class="day-time-form-control">
+        <nz-time-picker formControlName="finishTimeFormControl" nzFormat="HH:mm"></nz-time-picker>
+        <ng-template #finishTimeErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            {{ 'RequestDonation.DonationSteps.AvailabilityStep.RequiredFinishTime' | translate }}
+          </ng-container>
+          <ng-container *ngIf="control.hasError('greater')">
+            {{ 'RequestDonation.DonationSteps.AvailabilityStep.FinishTimeLessThanStartTime' | translate }}
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
 
-  <div nz-row class="ant-row-end">
+  <div nz-row class="ant-row-center">
     <button nz-button nzType="primary" (click)="addAvailabilityToList()">
-      <span>{{ 'RequestDonation.DonationSteps.FinishStep.AddAvailabilityButton' | translate }}</span>
+      <span>{{ 'RequestDonation.DonationSteps.AvailabilityStep.AddAvailabilityButton' | translate }}</span>
     </button>
   </div>
 </form>
 
-<nz-form-item>
+<nz-form-item class="availability-table">
   <nz-form-control>
     <div [(ngModel)]="availabilities" ngDefaultControl>
       <nz-table
@@ -72,10 +74,10 @@
       >
         <thead>
           <tr>
-            <th>{{ 'RequestDonation.DonationSteps.FinishStep.WeekDayColumn' | translate }}</th>
-            <th>{{ 'RequestDonation.DonationSteps.FinishStep.StartTimeColumn' | translate }}</th>
-            <th>{{ 'RequestDonation.DonationSteps.FinishStep.FinishTimeColumn' | translate }}</th>
-            <th>{{ 'RequestDonation.DonationSteps.FinishStep.OperationColumn' | translate }}</th>
+            <th>{{ 'RequestDonation.DonationSteps.AvailabilityStep.DayColumn' | translate }}</th>
+            <th>{{ 'RequestDonation.DonationSteps.AvailabilityStep.StartTimeColumn' | translate }}</th>
+            <th>{{ 'RequestDonation.DonationSteps.AvailabilityStep.FinishTimeColumn' | translate }}</th>
+            <th>{{ 'RequestDonation.DonationSteps.AvailabilityStep.OperationColumn' | translate }}</th>
           </tr>
         </thead>
         <tbody>

@@ -265,8 +265,8 @@
     "DonationItemsCount": "Donated Items",
     "DonationRequest": "Donation Request",
     "ResponsableStepTitle": "Who Am I?",
-    "AddressStepTitle": "Where do we pick up the Donation?",
-    "PickUpDateStepTitle": "Which days can we pick up the Donation?",
+    "AddressStepTitle": "Where do we pick it up?",
+    "PickUpDateStepTitle": "Which days can we pick it up?",
     "FinishStepTitle": "Finish",
     "List": {
       "Status": "Filterd by Status"
@@ -339,25 +339,27 @@
         "Position": "Position",
         "PositionPlaceHolder": "Position"
       },
-      "FinishStep": {
-        "Observation": "Observation",
-        "ObservationPlaceHolder": "Observation",
-        "WeekDay": "WeekDay",
-        "WeekDayPlaceHolder": "WeekDay",
-        "RequiredWeekDay": "Please input a weekday!",
-        "StartTime": "Start Time",
-        "StartTimePlaceHolder": "Start Time",
+      "AvailabilityStep": {
+        "Day": "Day",
+        "DayPlaceHolder": "Day",
+        "RequiredDay": "Please input a day!",
+        "StartTime": "From",
+        "StartTimePlaceHolder": "From",
         "RequiredStartTime": "Please enter a start time!",
-        "FinishTime": "Finish Time",
-        "FinishTimePlaceHolder": "Finish Time",
+        "FinishTime": "To",
+        "FinishTimePlaceHolder": "To",
         "RequiredFinishTime": "Please enter a finish time!",
         "AddAvailabilityButton": "Add Availability",
-        "WeekDayColumn": "WeekDay",
-        "StartTimeColumn": "Start Time",
-        "FinishTimeColumn": "Finish Time",
-        "OperationColumn": "Operation",
+        "DayColumn": "Day",
+        "StartTimeColumn": "From",
+        "FinishTimeColumn": "To",
         "StartTimeGreaterThanFinishTime": "Start Time is greater than Finish Time!",
-        "FinishTimeLessThanStartTime": "Finish Time is less than Start Time!"
+        "FinishTimeLessThanStartTime": "Finish Time is less than Start Time!",
+        "OperationColumn": "Operation"
+      },
+      "FinishStep": {
+        "Observation": "Observation",
+        "ObservationPlaceHolder": "Observation"
       }
     },
     "DonationItemList": {
