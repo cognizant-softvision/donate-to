@@ -23,6 +23,6 @@ export class OrganizationCreateComponent implements OnDestroy {
   ngOnDestroy(): void {}
 
   goBack() {
-    this.router.navigate(['/admin/organization']);
+    this.router.navigate(['/admin/organizations']);
   }
 }

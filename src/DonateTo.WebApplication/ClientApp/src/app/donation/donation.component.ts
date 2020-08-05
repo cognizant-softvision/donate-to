@@ -28,6 +28,7 @@ export class DonationComponent implements OnInit, OnDestroy {
 
   donationItems: DonationItemModel[] = [];
   isSubmited = false;
+  priority = 0;
 
   @Input() userId: number;
   @Input() isEdit: boolean;
@@ -80,6 +81,7 @@ export class DonationComponent implements OnInit, OnDestroy {
       this.donationSandbox.donationRequest$.subscribe((donationRequest) => {
         if (!this.isEdit) {
           this.donationRequest = donationRequest;
+          this.setPriority();
         }
       })
     );
@@ -90,6 +92,7 @@ export class DonationComponent implements OnInit, OnDestroy {
           this.donation = donation;
           this.donationRequest = donation.donationRequest;
           this.donationItems = this.donation.donationItems;
+          this.setPriority();
         }
       })
     );
@@ -153,6 +156,14 @@ export class DonationComponent implements OnInit, OnDestroy {
       this.showModal();
     } else {
       this.hideModal();
+    }
+  }
+
+  setPriority() {
+    if (this.donationRequest) {
+      this.priority = this.donationRequest.priority / 20;
+    } else {
+      this.priority = 0;
     }
   }
 }

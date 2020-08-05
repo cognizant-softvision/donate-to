@@ -1,0 +1,321 @@
+<div>
+  <div class="create-question-title">
+    <h4 class="section-title">{{ 'Admin.Questions.Create.Title' | translate }}</h4>
+  </div>
+  <br />
+  <form nz-form>
+    <div [formGroup]="questionItemFormGroup" class="create-question-add-item-container">
+      <div class="create-question-add-item-box-first">
+        <div class="create-item-container">
+          <nz-form-label class="question-item">{{ 'Admin.Questions.Form.Label' | translate }}</nz-form-label>
+          <nz-form-label class="question-item">{{ 'Admin.Questions.Form.Placeholder' | translate }}</nz-form-label>
+          <nz-form-label class="question-item">{{ 'Admin.Questions.Form.DefaultValue' | translate }}</nz-form-label>
+        </div>
+        <div class="create-item-container create-question-add-item-input">
+          <nz-form-item>
+            <nz-form-control nzErrorTip="{{ 'Admin.Questions.Form.LabelRequired' | translate }}">
+              <input
+                nz-input
+                placeholder="{{ 'Admin.Questions.Form.LabelPlaceHolder' | translate }}"
+                formControlName="labelFormControl"
+                type="text"
+                [(ngModel)]="label"
+              />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-control nzErrorTip="{{ 'Admin.Questions.Form.PlaceholderRequired' | translate }}">
+              <input
+                nz-input
+                placeholder="{{ 'Admin.Questions.Form.PlaceholderPlaceHolder' | translate }}"
+                formControlName="placeholderFormControl"
+                type="text"
+                [(ngModel)]="placeholder"
+              />
+            </nz-form-control>
+          </nz-form-item>
+          <div class="item-quantity">
+            <nz-form-item>
+              <nz-form-control>
+                <input
+                  nz-input
+                  placeholder="{{ 'Admin.Questions.Form.DefaultValuePlaceHolder' | translate }}"
+                  formControlName="defaultValueFormControl"
+                  type="text"
+                  [disabled]="
+                    select.activatedValue == 'RadioButton' ||
+                    select.activatedValue == 'Checkbox' ||
+                    select.activatedValue == 'DropDown'
+                  "
+                  [(ngModel)]="defaultValue"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </div>
+
+      <div class="create-question-add-item-box-second">
+        <div class="create-item-container">
+          <nz-form-label class="question-item">{{ 'Admin.Questions.Form.Order' | translate }}</nz-form-label>
+          <nz-form-label class="question-item">{{ 'Admin.Questions.Form.Weight' | translate }}</nz-form-label>
+          <nz-form-label class="question-item">{{ 'Admin.Questions.Form.ControlType' | translate }}</nz-form-label>
+        </div>
+        <div class="create-item-container create-question-add-item-input">
+          <div class="item-quantity">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="{{ 'Admin.Questions.Form.OrderRequired' | translate }}">
+                <input
+                  nz-input
+                  placeholder="{{ 'Admin.Questions.Form.OrderPlaceHolder' | translate }}"
+                  formControlName="orderFormControl"
+                  type="number"
+                  [(ngModel)]="order"
+                  min="1"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="item-quantity">
+            <nz-form-item>
+              <nz-form-control nzErrorTip="{{ 'Admin.Questions.Form.WeightRequired' | translate }}">
+                <input
+                  nz-input
+                  placeholder="{{ 'Admin.Questions.Form.WeightPlaceHolder' | translate }}"
+                  formControlName="weightFormControl"
+                  type="number"
+                  min="1"
+                  [(ngModel)]="weight"
+                  max="100"
+                  [ngModel]="weight"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <nz-form-item>
+            <nz-form-control nzErrorTip="{{ 'Admin.Questions.Form.ControlTypeRequired' | translate }}">
+              <nz-select
+                #select
+                formControlName="controlTypeFormControl"
+                nzPlaceHolder="{{ 'Admin.Questions.Form.ControlTypePlaceHolder' | translate }}"
+                [(ngModel)]="controlTypeId"
+              >
+                <nz-option
+                  *ngFor="let controlType of this.questionSandbox.controlTypes$ | async"
+                  [nzLabel]="controlType.name"
+                  [nzValue]="controlType.id"
+                ></nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+
+          <!-- textbox -->
+          <nz-form-item *ngIf="controlTypeId === controlTypeEnum.Textbox">
+            <div class="item-quantity-range">
+              <input
+                class="option-input-textbox"
+                nz-input
+                placeholder="Min Value"
+                formControlName="minFormControl"
+                type="number"
+                min="0"
+              />
+              <input
+                class="option-input-textbox"
+                nz-input
+                placeholder="Max Value"
+                formControlName="maxFormControl"
+                type="number"
+                min="0"
+              />
+            </div>
+            <nz-form-item *ngFor="let o of optionsArray?.controls; index as i">
+              <ng-container [formGroup]="o">
+                <nz-form-control
+                  nzErrorTip="Please input option for this question or delete this field."
+                  class="option-input-form"
+                >
+                  <input
+                    class="option-input-textbox"
+                    nz-input
+                    placeholder="Min Relative"
+                    formControlName="minRelativeFormControl"
+                    type="number"
+                    min="0"
+                  />
+                  <input
+                    class="option-input-textbox"
+                    nz-input
+                    placeholder="Max Relative"
+                    formControlName="maxRelativeFormControl"
+                    type="number"
+                    min="0"
+                  />
+                  <input
+                    class="option-weight"
+                    nz-input
+                    placeholder="{{ 'Admin.Questions.Form.WeightPlaceHolder' | translate }}"
+                    formControlName="optionWeight"
+                    type="number"
+                    min="1"
+                  />
+                </nz-form-control>
+                <i nz-icon nzType="minus-circle-o" class="dynamic-delete-button" (click)="removeField(i, $event)"></i>
+              </ng-container>
+            </nz-form-item>
+
+            <nz-form-item>
+              <nz-form-control>
+                <button nz-button nzType="dashed" class="add-button" (click)="addField($event)">
+                  <i nz-icon nzType="plus"></i>
+                  {{ 'Admin.Questions.Create.AddField' | translate }}
+                </button>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-form-item>
+
+          <nz-form-item *ngIf="controlTypeId && controlTypeId !== controlTypeEnum.Textbox">
+            <nz-checkbox-wrapper>
+              <nz-form-item *ngFor="let o of optionsArray?.controls; index as i">
+                <ng-container [formGroup]="o">
+                  <nz-form-control
+                    nzErrorTip="Please input option for this question or delete this field."
+                    class="option-input-form"
+                  >
+                    <input class="option-input" nz-input placeholder="Enter an option" formControlName="optionLabel" />
+                    <input
+                      class="option-weight"
+                      nz-input
+                      placeholder="{{ 'Admin.Questions.Form.WeightPlaceHolder' | translate }}"
+                      formControlName="optionWeight"
+                      type="number"
+                      min="1"
+                    />
+                    <i
+                      nz-icon
+                      nzType="minus-circle-o"
+                      class="dynamic-delete-button"
+                      (click)="removeField(i, $event)"
+                    ></i>
+                  </nz-form-control>
+                </ng-container>
+              </nz-form-item>
+            </nz-checkbox-wrapper>
+
+            <nz-form-item>
+              <nz-form-control>
+                <button nz-button nzType="dashed" class="add-button-dropdown" (click)="addField($event)">
+                  <i nz-icon nzType="plus"></i>
+                  {{ 'Admin.Questions.Create.AddField' | translate }}
+                </button>
+              </nz-form-control>
+            </nz-form-item>
+          </nz-form-item>
+          <div *ngIf="!isWeightValid" class="error-required">
+            {{ 'Admin.Questions.Form.PriorityWeightError' | translate }}
+          </div>
+          <div *ngIf="!isRangeValid" class="error-required">
+            {{ 'Admin.Questions.Form.PriorityRangeError' | translate }}
+          </div>
+          <div *ngIf="orderExist" class="error-required">
+            {{ 'Admin.Questions.Form.OrderAlreadyExistError' | translate }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="create-question-form-buttons">
+      <button type="button" class="question-request-item-add" (click)="addQuestion()" nz-button nzType="primary">
+        {{ 'Admin.Questions.Form.AddItem' | translate }}
+      </button>
+    </div>
+  </form>
+
+  <span class="item-required">{{ 'Admin.Questions.Form.PriorityQuestionRequiredError' | translate }}</span>
+  <br />
+  <nz-table
+    [nzData]="questions"
+    [nzShowPagination]="false"
+    [nzFrontPagination]="false"
+    [nzShowPagination]="false"
+    [nzNoResult]="customTpl"
+  >
+    <thead>
+      <tr>
+        <th *ngFor="let column of listOfColumns">
+          {{ column.name | translate }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of questions">
+        <td>{{ item.label }}</td>
+        <td>{{ item.placeholder }}</td>
+        <td>{{ item.order }}</td>
+        <td>{{ item.weight }}</td>
+        <td>{{ item.controlType?.name }}</td>
+        <td>{{ item.defaultValue }}</td>
+        <td>
+          <span *ngFor="let option of item.options"> {{ option.label }} </span>
+        </td>
+        <td>
+          <a
+            (click)="editQuestion(item)"
+            nzTooltipTitle="{{ 'Admin.Questions.Table.EditQuestion' | translate }}"
+            nzTooltipPlacement="bottom"
+            nz-tooltip
+            class="icon-link"
+          >
+            <i nz-icon nzType="edit" nzTheme="outline" class="action-icon"></i>
+          </a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a
+            (click)="removeQuestion(item)"
+            nzTooltipTitle="{{ 'Admin.Questions.Table.DeleteQuestion' | translate }}"
+            nzTooltipPlacement="bottom"
+            nz-tooltip
+            class="icon-link"
+          >
+            <i nz-icon nzType="delete" nzTheme="outline" class="action-icon"></i>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+  <div *ngIf="!isQuestionsValid" class="error-required">
+    {{ 'Admin.Questions.Form.PriorityQuestionRequiredError' | translate }}"
+  </div>
+  <ng-template #customTpl let-name>
+    <div style="text-align: center;">
+      <nz-empty [nzNotFoundContent]="null"></nz-empty>
+      <p>{{ 'NoEntries' | translate }}</p>
+    </div>
+  </ng-template>
+
+  <br />
+  <div class="create-question-form-buttons">
+    <button
+      nz-popconfirm
+      nzPopconfirmTitle="{{ 'Admin.Questions.CreateConfirm' | translate }}"
+      nzPopconfirmPlacement="bottom"
+      (nzOnConfirm)="createQuestions()"
+      nz-button
+      nzType="primary"
+      type="submit"
+    >
+      {{ 'Admin.Questions.Create.CreateRequest' | translate }}
+    </button>
+    <button
+      nz-popconfirm
+      nzPopconfirmTitle="{{ 'Admin.Donation.BackConfirm' | translate }}"
+      nzPopconfirmPlacement="bottom"
+      (nzOnConfirm)="goBack()"
+      nz-button
+      nzType="primary"
+    >
+      {{ 'BackBtn' | translate }}
+    </button>
+  </div>
+</div>

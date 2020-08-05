@@ -6,7 +6,7 @@
         nz-popconfirm
         nzPopconfirmTitle="{{ 'Admin.Organization.CreateConfirm' | translate }}"
         nzPopconfirmPlacement="bottom"
-        (nzOnConfirm)="router.navigate(['admin/organization/create'])"
+        (nzOnConfirm)="router.navigate(['admin/organizations/create'])"
         nz-button
         nzType="primary"
       >
@@ -92,9 +92,25 @@
           <td>{{ data.description }}</td>
           <td>{{ data.contact?.fullName }}</td>
           <td>
-            <a [routerLink]="['./edit', data.id]">{{ 'Admin.Edit' | translate }} </a>
+            <a
+              [routerLink]="['./edit', data.id]"
+              nzTooltipTitle="{{ 'Admin.Organization.Edit' | translate }}"
+              nzTooltipPlacement="bottom"
+              nz-tooltip
+              class="icon-link"
+            >
+              <i nz-icon nzType="edit" nzTheme="outline" class="action-icon"></i>
+            </a>
             <nz-divider nzType="vertical"></nz-divider>
-            <a [routerLink]="['./detail', data.id]">{{ 'Admin.View' | translate }}</a>
+            <a
+              [routerLink]="['./detail', data.id]"
+              nzTooltipTitle="{{ 'Admin.Organization.Detail' | translate }}"
+              nzTooltipPlacement="bottom"
+              nz-tooltip
+              class="icon-link"
+            >
+              <i nz-icon nzType="info-circle" nzTheme="outline" class="action-icon"></i>
+            </a>
           </td>
         </tr>
       </ng-container>
@@ -111,7 +127,7 @@
         placeholder="{{ 'Admin.Organization.Table.Name' | translate }}"
         [(ngModel)]="searchNameValue"
       />
-      <button nz-button nzSize="small" nzType="primary" (click)="searchName()" class="search-button">
+      <button nz-button nzSize="small" nzType="primary" (click)="searchName()">
         {{ 'Admin.Organization.Table.Search' | translate }}
       </button>
       <button nz-button nzSize="small" (click)="resetNameSearch()">
@@ -129,7 +145,7 @@
         placeholder="{{ 'Admin.Organization.Table.Description' | translate }}"
         [(ngModel)]="searchDescriptionValue"
       />
-      <button nz-button nzSize="small" nzType="primary" (click)="searchDescription()" class="search-button">
+      <button nz-button nzSize="small" nzType="primary" (click)="searchDescription()">
         {{ 'Admin.Organization.Table.Search' | translate }}
       </button>
       <button nz-button nzSize="small" (click)="resetDescriptionSearch()">
@@ -147,7 +163,7 @@
         placeholder="{{ 'Admin.Organization.Table.ContactName' | translate }}"
         [(ngModel)]="searchContactNameValue"
       />
-      <button nz-button nzSize="small" nzType="primary" (click)="searchContactName()" class="search-button">
+      <button nz-button nzSize="small" nzType="primary" (click)="searchContactName()">
         {{ 'Admin.Organization.Table.Search' | translate }}
       </button>
       <button nz-button nzSize="small" (click)="resetContactNameSearch()">

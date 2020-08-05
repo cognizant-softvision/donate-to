@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DonationRequestFilter } from '../../shared/models/filters/donation-request-filter';
 import { NzTableQueryParams } from 'ng-zorro-antd';
+import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
 
 @Component({
   selector: 'app-donations-admin',
@@ -30,13 +31,19 @@ export class DonationsComponent implements OnDestroy, OnInit {
   createdDateVisible = false;
   finishDateVisible = false;
   observationVisible = false;
+  placedDonationsVisible = false;
   donationRequestFilter = new DonationRequestFilter();
   failedStatus = false;
   successStatus = false;
   createdRange: Date[] = [];
   finishRange: Date[] = [];
+  dataSaved = false;
 
-  constructor(private donationSandbox: DonationsSandbox, protected router: Router) {}
+  constructor(
+    private donationSandbox: DonationsSandbox,
+    protected router: Router,
+    private dataUpdated: DataUpdatedService
+  ) {}
 
   ngOnInit(): void {
     this.donationRequestFilter = {
@@ -55,6 +62,12 @@ export class DonationsComponent implements OnDestroy, OnInit {
         this.donationRequestsList = res.results;
       })
     );
+
+    this.dataUpdated.currentStatus.subscribe((dataSaved) => (this.dataSaved = dataSaved));
+    if (this.dataSaved) {
+      this.dataUpdated.changeMessage(false);
+      window.location.reload();
+    }
   }
 
   ngOnDestroy(): void {
@@ -62,7 +75,7 @@ export class DonationsComponent implements OnDestroy, OnInit {
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
-    const { pageSize, pageIndex, sort, filter } = params;
+    const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
 
     this.donationRequestFilter = {
@@ -71,12 +84,6 @@ export class DonationsComponent implements OnDestroy, OnInit {
       pageNumber: pageIndex,
       orderBy: (currentSort && currentSort.key) || '',
       orderDirection: (currentSort && currentSort.value) || '',
-      title: (filter && filter.find((f) => f.key === 'title')?.value) || '',
-      observation: (filter && filter.find((f) => f.key === 'observation')?.value) || '',
-      createdDateBegin: (filter && filter.find((f) => f.key === 'createdDateBegin')?.value) || null,
-      createdDateEnd: (filter && filter.find((f) => f.key === 'createdDateEnd')?.value) || null,
-      finishDateBegin: (filter && filter.find((f) => f.key === 'finishDateBegin')?.value) || null,
-      finishDateEnd: (filter && filter.find((f) => f.key === 'finishDateEnd')?.value) || null,
     };
 
     this.donationSandbox.loadDonationRequestsFilteredPaged(this.donationRequestFilter);

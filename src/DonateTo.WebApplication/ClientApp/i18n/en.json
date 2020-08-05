@@ -40,14 +40,14 @@
     "View": "View",
     "Menu": {
       "Title": {
-        "Donation": "Donations",
+        "Donation": "Donation Requests",
         "Users": "Users",
         "Organizations": "Organizations",
-        "Priority-questions": "Priority Questions"
+        "Questions": "Questions"
       }
     },
     "Donation": {
-      "Title": "Donations",
+      "Title": "Donation Requests",
       "Create": {
         "Title": "Create donation request",
         "AddItem": "Add Item",
@@ -73,7 +73,7 @@
         "Address": "Address",
         "AddressRequiredError": "Address is required",
         "AddressPlaceholder": "Please select a address",
-        "FinishDate": "Finish date",
+        "FinishDate": "Donation deadline",
         "DonationItem": {
           "Name": "Product",
           "NameRequiredError": "Product is required",
@@ -86,7 +86,8 @@
           "UnitRequiredError": "Unit is required",
           "Category": "Categories",
           "CategoryRequiredError": "At least 1 category is required",
-          "CategoryPlaceholder": "Please select at least 1 category"
+          "CategoryPlaceholder": "Please select at least 1 category",
+          "DeleteItem": "Delete Item"
         },
         "OverflowTag": "+ more selected",
         "DonationItemRequiredError": "At least 1 item request is required",
@@ -96,10 +97,11 @@
       "CreateConfirm": "Are you sure you want to create a donation request?",
       "EditConfirm": "Are you sure you want to edit a donation request?",
       "DeleteConfirmation": "Are you sure you want to delete this donation request?",
+      "Delete": "Delete Donation Request",
       "Table": {
-        "Itemcolumn": "Item",
+        "Itemcolumn": "Request Name",
         "CreatedColumn": "Created Date",
-        "Finishcolumn": "Finish Date",
+        "Finishcolumn": "Donation Deadline",
         "Observationcolumn": "Observation",
         "Quantitycolumn": "Quantity",
         "Categorycolumn": "Category",
@@ -110,7 +112,8 @@
         "CreatedFrom": "From",
         "CreatedTo": "To",
         "FinishFrom": "From",
-        "FinishTo": "To"
+        "FinishTo": "To",
+        "PlacedDonations": "Placed Donations"
       }
     },
     "Organization": {
@@ -120,6 +123,7 @@
       "EditConfirm": "Are you sure you want to edit an organization?",
       "DeleteConfirmation": "Are you sure you want to delete this organization?",
       "Edit": "Edit Organization",
+      "Detail": "Information",
       "Table": {
         "Name": "Name",
         "Description": "Description",
@@ -170,25 +174,39 @@
         }
       }
     },
-    "PriorityQuestion": {
-      "Title": "Priority Questions",
+    "Questions": {
+      "Title": "Questions",
+      "CreateConfirm": "Are you sure you want to create a new question?",
+      "EditConfirm": "Are you sure you want to edit the question?",
       "Create": {
-        "Title": "Create Priority Questions",
-        "CreateRequest": "Create questions"
+        "Title": "Create Questions",
+        "CreateRequest": "Create Questions",
+        "AddField": "Add Field"
       },
       "Edit": {
         "Title": "Edit Question"
       },
       "Table": {
-        "LabelColumn": "Label",
-        "PlaceholderColumn": "Placeholder",
-        "OrderColumnColumn": "Order",
-        "WeightColumn": "Weight",
-        "ControlTypeColumn": "Control Type",
-        "DefaultValueColumn": "Default Value",
-        "OptionsColumn": "Options",
+        "Label": "Label",
+        "Placeholder": "Placeholder",
+        "Order": "Order",
+        "Weight": "Weight",
+        "ControlType": "Control Type",
+        "DefaultValue": "Default Value",
+        "Options": "Options",
         "DeleteQuestion": "Delete",
-        "EditQuestion": "Edit"
+        "EditQuestion": "Edit",
+        "Type": "Type",
+        "Action": "Action",
+        "Search": "Search",
+        "Reset": "Reset",
+        "Filtered": "Filtered",
+        "OptionsTitle": "Options",
+        "Option": {
+          "Label": "Label",
+          "Value": "Value",
+          "Weight": "Weight"
+        }
       },
       "Form": {
         "Label": "Label",
@@ -204,47 +222,30 @@
         "ControlTypePlaceHolder": "Control Type",
         "DefaultValuePlaceHolder": "Default Value",
         "LabelRequired": "Label is required",
-        "DefaultValueRequired": "Default Value is required",
         "OrderRequired": "Order is required",
         "WeightRequired": "Weight is required",
-        "PlaceholderRequired": "Nombre marcador es requerido",
+        "PlaceholderRequired": "Placeholder is required",
         "ControlTypeRequired": "Control Type is required",
         "AddItem": "Add Question",
-        "PriorityQuestionRequiredError": "At least 1 priority question is required and weight must reach 100%."
-      },
-      "CreateConfirm": "Are you sure you want to create a new question?",
-      "EditConfirm": "Are you sure you want to edit the question?"
-    },
-    "Question": {
-      "Title": "Questions",
-      "CreateConfirm": "Are you sure you want to create a question?",
-      "Table": {
-        "Label": "Label",
-        "Type": "Type",
-        "Placeholder": "Placeholder",
-        "Weight": "Weight",
-        "Order": "Order",
-        "Action": "Action",
-        "Search": "Search",
-        "Reset": "Reset",
-        "Filtered": "Filtered",
-        "OptionsTitle": "Options",
-        "Option": {
-          "Label": "Label",
-          "Value": "Value",
-          "Weight": "Weight"
-        }
+        "PriorityQuestionRequiredError": "At least 1 priority question is required and weight must reach 100%.",
+        "PriorityRangeError": "The range does not cover the entire value.",
+        "PriorityWeightError": "The weight of each option must sum a total of 100",
+        "OrderAlreadyExistError": "Order was already selected, please choose another"
       }
     },
     "User": {
       "Title": "Users",
       "Associate": "Manage Association",
       "SelectOrganization": "Select Organizations",
+      "OrganizationTitle": "Organization",
       "Table": {
         "Name": "Name",
         "Organization": "Organization",
         "Email": "Email",
-        "Action": "Action"
+        "Action": "Action",
+        "Search": "Search",
+        "Reset": "Reset",
+        "Filtered": "Filtered"
       }
     }
   },
@@ -254,6 +255,10 @@
     "Organization": "Organization",
     "DonationItemsCount": "Donated Items",
     "DonationRequest": "Donation Request",
+    "ResponsableStepTitle": "Who Am I?",
+    "AddressStepTitle": "Where do we pick it up?",
+    "PickUpDateStepTitle": "Which days can we pick it up?",
+    "FinishStepTitle": "Finish",
     "List": {
       "Status": "Filterd by Status"
     }
@@ -325,25 +330,27 @@
         "Position": "Position",
         "PositionPlaceHolder": "Position"
       },
-      "FinishStep": {
-        "Observation": "Observation",
-        "ObservationPlaceHolder": "Observation",
-        "WeekDay": "WeekDay",
-        "WeekDayPlaceHolder": "WeekDay",
-        "RequiredWeekDay": "Please input a weekday!",
-        "StartTime": "Start Time",
-        "StartTimePlaceHolder": "Start Time",
+      "AvailabilityStep": {
+        "Day": "Day",
+        "DayPlaceHolder": "Day",
+        "RequiredDay": "Please input a day!",
+        "StartTime": "From",
+        "StartTimePlaceHolder": "From",
         "RequiredStartTime": "Please enter a start time!",
-        "FinishTime": "Finish Time",
-        "FinishTimePlaceHolder": "Finish Time",
+        "FinishTime": "To",
+        "FinishTimePlaceHolder": "To",
         "RequiredFinishTime": "Please enter a finish time!",
         "AddAvailabilityButton": "Add Availability",
-        "WeekDayColumn": "WeekDay",
-        "StartTimeColumn": "Start Time",
-        "FinishTimeColumn": "Finish Time",
-        "OperationColumn": "Operation",
+        "DayColumn": "Day",
+        "StartTimeColumn": "From",
+        "FinishTimeColumn": "To",
         "StartTimeGreaterThanFinishTime": "Start Time is greater than Finish Time!",
-        "FinishTimeLessThanStartTime": "Finish Time is less than Start Time!"
+        "FinishTimeLessThanStartTime": "Finish Time is less than Start Time!",
+        "OperationColumn": "Operation"
+      },
+      "FinishStep": {
+        "Observation": "Observation",
+        "ObservationPlaceHolder": "Observation"
       }
     },
     "DonationItemList": {

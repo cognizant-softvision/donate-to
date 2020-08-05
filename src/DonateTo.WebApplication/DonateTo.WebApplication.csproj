@@ -91,7 +91,7 @@
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --prod" Condition="'$(Configuration)' == 'Release'" />
-	<Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:stage" Condition="'$(Configuration)' == 'QA'"/>
+	<Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:staging" Condition="'$(Configuration)' == 'QA'"/>
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:dev" Condition="'$(Configuration)' == 'Dev'" />
     <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr -- --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
 

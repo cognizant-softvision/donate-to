@@ -18,3 +18,5 @@ export * from './user.model';
 export * from './admin-table-item.model';
 export * from './admin-column-item.model';
 export * from './question.model';
+export * from './question-result.model';
+export * from './question-answer.model';

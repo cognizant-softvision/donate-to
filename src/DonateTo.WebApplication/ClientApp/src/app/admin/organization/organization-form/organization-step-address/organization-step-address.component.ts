@@ -27,9 +27,9 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
   countries: CountryModel[] = [];
   states: StateModel[] = [];
   cities: CityModel[] = [];
+
   contactModel: ContactModel = new ContactModel();
   item: AddressModel;
-
   tplModal?: NzModalRef;
 
   listOfColumns: ColumnItem[] = [
@@ -78,7 +78,9 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
     this.organizationSandbox.loadCountries();
 
     this.organizationSandbox.organization$.subscribe((organization) => {
-      this.addresses = [...organization.addresses];
+      if (organization) {
+        this.addresses = [...organization.addresses];
+      }
     });
   }
 
@@ -122,7 +124,7 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
   }
 
   isValidForm(): boolean {
-    return this.addressStepForm.valid;
+    return this.addressStepForm.valid && this.organizationStepContactComponent.isValidForm();
   }
 
   setStates(): void {
@@ -154,11 +156,13 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
     addressModel.contact = this.getContact();
 
     addressModel.countryId = this.addressStepForm.value.countryId;
+    addressModel.country = this.getCountry(addressModel.countryId);
 
     addressModel.stateId = this.addressStepForm.value.stateId;
+    addressModel.state = this.getState(addressModel.stateId);
 
     addressModel.cityId = this.addressStepForm.value.cityId;
-
+    addressModel.city = this.getCity(addressModel.cityId);
     return addressModel;
   }
 
@@ -228,10 +232,42 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
   cancelEdit() {
     this.isEditAddress = false;
     this.addressStepForm.reset();
+    this.organizationStepContactComponent.responsableStepForm.reset();
   }
 
   confirmEdit() {
     this.addAddress();
     this.removeAddress(this.item);
+    this.isEditAddress = false;
+  }
+
+  getCountry(countryId: number): CountryModel {
+    let country = new CountryModel();
+    if (countryId) {
+      return (country = {
+        ...country,
+        name: this.countries.find((c) => c.id === countryId)?.name,
+      });
+    }
+  }
+
+  getState(stateId: number): StateModel {
+    let state = new StateModel();
+    if (stateId) {
+      return (state = {
+        ...state,
+        name: this.states.find((s) => s.id === stateId)?.name,
+      });
+    }
+  }
+
+  getCity(cityId: number): CityModel {
+    let city = new CityModel();
+    if (cityId) {
+      return (city = {
+        ...city,
+        name: this.cities.find((c) => c.id === cityId)?.name,
+      });
+    }
   }
 }

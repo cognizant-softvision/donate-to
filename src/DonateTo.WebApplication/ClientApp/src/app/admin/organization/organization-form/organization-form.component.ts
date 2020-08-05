@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { AddressModel, ContactModel, OrganizationModel } from 'src/app/shared/models';
+import { AddressModel, ContactModel, OrganizationModel } from '../../../shared/models';
 import { OrganizationSandbox } from '../organization-sandbox';
 import { OrganizationStepAddressComponent } from './organization-step-address/organization-step-address.component';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
 
 @Component({
   selector: 'app-organization-form',
@@ -37,8 +38,13 @@ export class OrganizationFormComponent implements OnInit {
 
   isEditOrganization = false;
   organization: OrganizationModel;
+  dataSaved = false;
 
-  constructor(public organizationSandbox: OrganizationSandbox, private router: Router) {}
+  constructor(
+    public organizationSandbox: OrganizationSandbox,
+    private router: Router,
+    private dataUpdated: DataUpdatedService
+  ) {}
 
   ngOnInit(): void {
     if (this.id !== 0) {
@@ -50,6 +56,8 @@ export class OrganizationFormComponent implements OnInit {
         })
       );
     }
+
+    this.dataUpdated.currentStatus.subscribe((dataSaved) => (this.dataSaved = dataSaved));
   }
 
   prev(): void {
@@ -64,19 +72,16 @@ export class OrganizationFormComponent implements OnInit {
   }
 
   done(): void {
-    if (this.organization.id && this.organization.id !== 0) {
-      this.setOrganization();
+    this.setOrganization();
+
+    if (this.organization.id) {
       this.organizationSandbox.updateOrganization(this.organization);
+      this.dataUpdated.changeMessage(true);
     } else {
-      this.setOrganization();
       this.organizationSandbox.addOrganization(this.organization);
     }
 
-    this.goBack();
-  }
-
-  goBack() {
-    this.router.navigate(['/admin/organization']);
+    this.router.navigate(['/admin/organizations']);
   }
 
   changeStatus() {
@@ -163,6 +168,15 @@ export class OrganizationFormComponent implements OnInit {
   setOrganization() {
     let addressesFromModel: AddressModel[] = [];
     addressesFromModel = this.organizationStepAddressComponent.addresses;
+
+    for (let i = 0; i < addressesFromModel.length; i++) {
+      addressesFromModel[i] = {
+        ...addressesFromModel[i],
+        country: null,
+        city: null,
+        state: null,
+      };
+    }
 
     this.organization = {
       ...this.organization,

@@ -76,7 +76,7 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
-    const { pageSize, pageIndex, sort, filter } = params;
+    const { pageSize, pageIndex, sort } = params;
     const currentSort = sort.find((item) => item.value !== null);
 
     this.userFilter = {
@@ -85,9 +85,6 @@ export class UserComponent implements OnInit, OnDestroy {
       pageNumber: pageIndex,
       orderBy: (currentSort && currentSort.key) || '',
       orderDirection: (currentSort && currentSort.value) || '',
-      fullName: (filter && filter.find((f) => f.key === 'fullName')?.value) || '',
-      email: (filter && filter.find((f) => f.key === 'email')?.value) || '',
-      organization: (filter && filter.find((f) => f.key === 'organization')?.value) || this.organizationName,
     };
 
     this.userSandbox.loadUsersFilteredPaged(this.userFilter);

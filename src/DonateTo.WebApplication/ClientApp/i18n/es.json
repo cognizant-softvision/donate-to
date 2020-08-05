@@ -40,14 +40,14 @@
     "View": "Vista",
     "Menu": {
       "Title": {
-        "Donation": "Donaciones",
+        "Donation": "Solicitud de Donaciones",
         "Users": "Usuarios",
         "Organizations": "Organizaciones",
-        "Priority-questions": "Prioridad"
+        "Questions": "Preguntas"
       }
     },
     "Donation": {
-      "Title": "Donaciones",
+      "Title": "Solicitud de Donaciones",
       "Create": {
         "Title": "Crear Donación",
         "AddItem": "Agregar Item",
@@ -73,7 +73,8 @@
         "Address": "Dirección",
         "AddressRequiredError": "Dirección es requerido",
         "AddressPlaceholder": "Por favor ingresar una dirección",
-        "FinishDate": "Fecha fin",
+        "FinishDate": "Fecha Límite de Donación",
+        "DeleteItem": "Eliminar Item",
         "DonationItem": {
           "Name": "Producto",
           "NameRequiredError": "Producto es requerido",
@@ -96,10 +97,11 @@
       "CreateConfirm": "Estas seguro que quieres crear una solicitud de donación?",
       "EditConfirm": "Estas seguro que quieres editar esta solicitud de donación?",
       "DeleteConfirmation": "Está seguro que desea eliminar esta solicitud de donación?",
+      "Delete": "Eliminar Solicitud de Donación",
       "Table": {
-        "Itemcolumn": "Item",
+        "Itemcolumn": "Nombre de solicitud",
         "CreatedColumn": "Fecha de Creación",
-        "Finishcolumn": "Fecha Fin",
+        "Finishcolumn": "Fecha Límite de Donación",
         "Observationcolumn": "Observación",
         "Quantitycolumn": "Cantidad",
         "Categorycolumn": "Categorías",
@@ -110,7 +112,8 @@
         "CreatedFrom": "Desde",
         "CreatedTo": "Hasta",
         "FinishFrom": "Desde",
-        "FinishTo": "Hasta"
+        "FinishTo": "Hasta",
+        "PlacedDonations": "Donaciones hechas"
       }
     },
     "Organization": {
@@ -120,6 +123,7 @@
       "EditConfirm": "¿Estas seguro que quieres editar esta organización?",
       "DeleteConfirmation": "¿Está seguro que desea eliminar esta organización?",
       "Edit": "Editar Organización",
+      "Detail": "Información",
       "Table": {
         "Name": "Nombre",
         "Description": "Descripción",
@@ -170,25 +174,39 @@
         }
       }
     },
-    "PriorityQuestion": {
+    "Questions": {
       "Title": "Prioridad de preguntas",
+      "CreateConfirm": "Está seguro de que quiere crear una nueva pregunta?",
+      "EditConfirm": "Estas seguro que quieres editar esta pregunta?",
       "Create": {
-        "Title": "Crear pregunta de prioridad",
-        "CreateRequest": "Crear preguntas"
+        "Title": "Crear pregunta",
+        "CreateRequest": "Crear preguntas",
+        "AddField": "Agregar Campo"
       },
       "Edit": {
         "Title": "Edit Question"
       },
       "Table": {
-        "LabelColumn": "Etiqueta",
-        "PlaceholderColumn": "Marcador",
-        "OrderColumnColumn": "Orden",
-        "WeightColumn": "Peso",
-        "ControlTypeColumn": "Tipo Control",
-        "DefaultValueColumn": "Valor default",
-        "OptionsColumn": "Opciones",
+        "Label": "Etiqueta",
+        "Placeholder": "Marcador",
+        "Order": "Orden",
+        "Weight": "Peso",
+        "ControlType": "Tipo Control",
+        "DefaultValue": "Valor default",
+        "Options": "Opciones",
         "DeleteQuestion": "Eliminar",
-        "EditQuestion": "Editar"
+        "EditQuestion": "Editar",
+        "Type": "Tipo",
+        "Action": "Acción",
+        "Search": "Buscar",
+        "Reset": "Reestablecer",
+        "Filtered": "Filtrada",
+        "OptionsTitle": "Opciones",
+        "Option": {
+          "Label": "Título",
+          "Value": "Valor",
+          "Weight": "Peso"
+        }
       },
       "Form": {
         "Label": "Etiqueta",
@@ -204,47 +222,30 @@
         "ControlTypePlaceHolder": "Tipo Control",
         "DefaultValuePlaceHolder": "Valor default",
         "LabelRequired": "Etiqueta es requerida",
-        "DefaultValueRequired": "Valor default es requerido",
         "OrderRequired": "Orden es requerido",
         "WeightRequired": "Peso es requerido",
         "PlaceholderRequired": "Nombre marcador es requerido",
         "ControlTypeRequired": "Tipo control es requerido",
         "AddItem": "Agregar Pregunta",
-        "PriorityQuestionRequiredError": "Por lo menos una pregunta de prioridad es requerida y el peso debe llegar a 100%."
-      },
-      "CreateConfirm": "Está seguro de que quiere crear una nueva pregunta?",
-      "EditConfirm": "Estas seguro que quieres editar esta pregunta?"
-    },
-    "Question": {
-      "Title": "Preguntas",
-      "CreateConfirm": "Estas seguro que quieres crear una pregunta?",
-      "Table": {
-        "Label": "Título",
-        "Type": "Tipo",
-        "Placeholder": "Marcador",
-        "Weight": "Peso",
-        "Order": "Órden",
-        "Action": "Acción",
-        "Search": "Buscar",
-        "Reset": "Reestablecer",
-        "Filtered": "Filtrada",
-        "OptionsTitle": "Opciones",
-        "Option": {
-          "Label": "Título",
-          "Value": "Valor",
-          "Weight": "Peso"
-        }
+        "PriorityQuestionRequiredError": "Por lo menos una pregunta de prioridad es requerida y el peso debe llegar a 100%.",
+        "PriorityRangeError": "El rango no cubre la totalidad de valores.",
+        "PriorityWeightError": "El peso de las opciones debe sumar un total de 100.",
+        "OrderAlreadyExistError": "El Orden ingresado ya fue seleccionado, por favor elija otro."
       }
     },
     "User": {
       "Title": "Usuarios",
       "Associate": "Administrar Asociaciones",
       "SelectOrganization": "Seleccionar Organizaciones",
+      "OrganizationTitle": "Organización",
       "Table": {
         "Name": "Nombre",
         "Organization": "Organización",
         "Email": "Email",
-        "Action": "Acción"
+        "Action": "Acción",
+        "Search": "Buscar",
+        "Reset": "Reestablecer",
+        "Filtered": "Filtrada"
       }
     }
   },
@@ -254,6 +255,10 @@
     "Organization": "Organización",
     "DonationItemsCount": "Items Donados",
     "DonationRequest": "Solicitud",
+    "ResponsableStepTitle": "¿Quién Soy?",
+    "AddressStepTitle": "¿Dónde retiramos la donación?",
+    "PickUpDateStepTitle": "¿Que días podemos retirarlo?",
+    "FinishStepTitle": "Finalizar",
     "List": {
       "Status": "Filtrado Por Estado"
     }
@@ -325,25 +330,27 @@
         "Position": "Posición",
         "PositionPlaceHolder": "Posición"
       },
-      "FinishStep": {
-        "Observation": "Observación",
-        "ObservationPlaceHolder": "Observación",
-        "WeekDay": "Día de semana",
-        "WeekDayPlaceHolder": "Día de semana",
-        "RequiredWeekDay": "Por favor ingrese un día de la semana!",
-        "StartTime": "Horario inicial",
-        "StartTimePlaceHolder": "Horario inicial",
+      "AvailabilityStep": {
+        "Day": "Día",
+        "DayPlaceHolder": "Día",
+        "RequiredDay": "Por favor ingrese un día!",
+        "StartTime": "Desde",
+        "StartTimePlaceHolder": "Desde",
         "RequiredStartTime": "Por favor ingrese un horario inicial!",
-        "FinishTime": "Horario final",
-        "FinishTimePlaceHolder": "Horario final",
+        "FinishTime": "Hasta",
+        "FinishTimePlaceHolder": "Hasta",
         "RequiredFinishTime": "Por favor ingrese un horario final!",
         "AddAvailabilityButton": "Agregar disponibilidad",
-        "WeekDayColumn": "Día de semana",
-        "StartTimeColumn": "Horario inicial",
-        "FinishTimeColumn": "Horario final",
+        "DayColumn": "Día",
+        "StartTimeColumn": "Desde",
+        "FinishTimeColumn": "Hasta",
         "OperationColumn": "Operación",
         "StartTimeGreaterThanFinishTime": "El horario inicial es mayor al horario final!",
         "FinishTimeLessThanStartTime": "El horario final es menor al inicial!"
+      },
+      "FinishStep": {
+        "Observation": "Observación",
+        "ObservationPlaceHolder": "Observación"
       }
     },
     "DonationItemList": {

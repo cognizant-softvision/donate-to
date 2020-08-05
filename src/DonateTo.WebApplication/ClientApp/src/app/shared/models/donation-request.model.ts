@@ -5,6 +5,7 @@ import { StatusModel } from './status.model';
 import { DonationRequestItemModel } from './donation-request-item.model';
 import { DonationRequestCategoryModel } from './donation-request-category.model';
 import { UserModel } from './user.model';
+import { DonationModel } from './donation.model';
 
 export class DonationRequestModel extends BaseModel {
   title: string;
@@ -18,7 +19,8 @@ export class DonationRequestModel extends BaseModel {
   status: StatusModel;
   ownerId: number;
   owner: UserModel;
-  donationRequestItems: DonationRequestItemModel[];
   finishDate: Date;
+  donations: DonationModel[];
+  donationRequestItems: DonationRequestItemModel[];
   donationRequestCategories: DonationRequestCategoryModel[];
 }

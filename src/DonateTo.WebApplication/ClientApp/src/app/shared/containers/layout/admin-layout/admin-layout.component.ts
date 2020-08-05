@@ -12,6 +12,7 @@ import { IconType } from 'src/app/shared/enum/iconTypes';
 })
 export class AdminLayoutComponent implements OnInit, OnDestroy {
   isSuperAdmin: boolean;
+  isAdmin: boolean;
 
   menus: Array<{ title: string; url: string; iconType: string; show: boolean }> = [];
 
@@ -29,8 +30,8 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.authSandbox.isAdmin.subscribe((isAdmin) => {
-        if (!isAdmin) {
+      this.authSandbox.hasAdminRole.subscribe((hasAdminRole) => {
+        if (!hasAdminRole) {
           this.router.navigate(['']);
         }
       })
@@ -39,18 +40,33 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.authSandbox.isSuperAdmin.subscribe((isSuperAdmin) => {
         this.isSuperAdmin = isSuperAdmin;
-        this.menus = [
-          { title: 'Admin.Menu.Title.Donation', url: './donations', iconType: IconType.Heart, show: true },
-          { title: 'Admin.Menu.Title.Users', url: './users', iconType: IconType.Team, show: true },
-          { title: 'Admin.Menu.Title.Organizations', url: './organizations', iconType: IconType.Profile, show: true },
-          {
-            title: 'Admin.Menu.Title.Priority-questions',
-            url: './priority-questions',
-            iconType: IconType.Star,
-            show: this.isSuperAdmin,
-          },
-        ];
+        this.updateMenu();
       })
     );
+    this.subscriptions.push(
+      this.authSandbox.isAdmin.subscribe((isAdmin) => {
+        this.isAdmin = isAdmin;
+        this.updateMenu();
+      })
+    );
+  }
+
+  private updateMenu(): void {
+    this.menus = [
+      { title: 'Admin.Menu.Title.Donation', url: './donations', iconType: IconType.Heart, show: true },
+      { title: 'Admin.Menu.Title.Users', url: './users', iconType: IconType.Team, show: true },
+      {
+        title: 'Admin.Menu.Title.Organizations',
+        url: './organizations',
+        iconType: IconType.Profile,
+        show: this.isAdmin || this.isSuperAdmin,
+      },
+      {
+        title: 'Admin.Menu.Title.Questions',
+        url: './questions',
+        iconType: IconType.Star,
+        show: this.isSuperAdmin,
+      },
+    ];
   }
 }
