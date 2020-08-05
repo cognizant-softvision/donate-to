@@ -132,7 +132,7 @@
         placeholder="{{ 'Admin.Donation.Table.Itemcolumn' | translate }}"
         [(ngModel)]="searchTitleValue"
       />
-      <button nz-button nzSize="small" nzType="primary" (click)="searchTitle()" class="search-button">
+      <button nz-button nzSize="small" nzType="primary" (click)="searchTitle()">
         {{ 'Admin.Donation.Table.Search' | translate }}
       </button>
       <button nz-button nzSize="small" (click)="resetTitleSearch()">
@@ -158,7 +158,7 @@
         >
         </nz-date-picker>
       </div>
-      <button nz-button nzSize="small" nzType="primary" (click)="searchCreatedDate()" class="search-button">
+      <button nz-button nzSize="small" nzType="primary" (click)="searchCreatedDate()">
         {{ 'Admin.Donation.Table.Search' | translate }}
       </button>
       <button nz-button nzSize="small" (click)="resetCreatedDateSearch()">
@@ -184,7 +184,7 @@
         >
         </nz-date-picker>
       </div>
-      <button nz-button nzSize="small" nzType="primary" (click)="searchFinishDate()" class="search-button">
+      <button nz-button nzSize="small" nzType="primary" (click)="searchFinishDate()">
         {{ 'Admin.Donation.Table.Search' | translate }}
       </button>
       <button nz-button nzSize="small" (click)="resetFinishDateSearch()">
@@ -203,7 +203,7 @@
         placeholder="{{ 'Admin.Donation.Table.Observationcolumn' | translate }}"
         [(ngModel)]="searchObservationValue"
       />
-      <button nz-button nzSize="small" nzType="primary" (click)="searchObservation()" class="search-button">
+      <button nz-button nzSize="small" nzType="primary" (click)="searchObservation()">
         {{ 'Admin.Donation.Table.Search' | translate }}
       </button>
       <button nz-button nzSize="small" (click)="resetObservationSearch()">

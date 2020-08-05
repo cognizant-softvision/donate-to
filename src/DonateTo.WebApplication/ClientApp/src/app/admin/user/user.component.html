@@ -98,7 +98,7 @@
         placeholder="{{ 'Admin.User.Table.Name' | translate }}"
         [(ngModel)]="searchNameValue"
       />
-      <button nz-button nzSize="small" nzType="primary" (click)="searchName()" class="search-button">
+      <button nz-button nzSize="small" nzType="primary" (click)="searchName()">
         {{ 'Admin.User.Table.Search' | translate }}
       </button>
       <button nz-button nzSize="small" (click)="resetNameSearch()">
@@ -117,7 +117,7 @@
         placeholder="{{ 'Admin.User.Table.Organization' | translate }}"
         [(ngModel)]="searchOrganizationValue"
       />
-      <button nz-button nzSize="small" nzType="primary" (click)="searchOrganization()" class="search-button">
+      <button nz-button nzSize="small" nzType="primary" (click)="searchOrganization()">
         {{ 'Admin.User.Table.Search' | translate }}
       </button>
       <button nz-button nzSize="small" (click)="resetOrganizationSearch()">
@@ -136,7 +136,7 @@
         placeholder="{{ 'Admin.User.Table.Email' | translate }}"
         [(ngModel)]="searchEmailValue"
       />
-      <button nz-button nzSize="small" nzType="primary" (click)="searchEmail()" class="search-button">
+      <button nz-button nzSize="small" nzType="primary" (click)="searchEmail()">
         {{ 'Admin.User.Table.Search' | translate }}
       </button>
       <button nz-button nzSize="small" (click)="resetEmailSearch()">

@@ -1,4 +1,5 @@
-import { QuestionModel } from '../../shared/models/question.model';
+import { QuestionResult } from '../../shared/models/question-result.model';
+import { QuestionModel } from './../../shared/models/question.model';
 import * as store from '../../shared/store';
 import { Injectable } from '@angular/core';
 import { Sandbox } from '../../shared/sandbox/base.sandbox';
@@ -31,5 +32,9 @@ export class QuestionsSandbox extends Sandbox {
 
   public loadQuestionsFilteredPaged(questionFilter: QuestionFilter): void {
     this.appState$.dispatch(store.fromQuestion.loadQuestionsPagedFiltered({ questionFilter }));
+  }
+
+  updateQuestionsResult(results: QuestionResult): void {
+    this.appState$.dispatch(store.fromQuestion.addResults({ results }));
   }
 }

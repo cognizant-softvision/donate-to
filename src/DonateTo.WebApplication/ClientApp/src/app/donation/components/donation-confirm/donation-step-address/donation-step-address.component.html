@@ -17,48 +17,50 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>
-      {{ 'RequestDonation.DonationSteps.AddressStep.PostalCode' | translate }}
-    </nz-form-label>
-    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="postalCodeErrorTpl">
-      <input
-        nz-input
-        formControlName="postalCode"
-        placeholder="{{ 'RequestDonation.DonationSteps.AddressStep.PostalCodePlaceHolder' | translate }}"
-      />
-      <ng-template #postalCodeErrorTpl let-control>
-        <ng-container *ngIf="control.hasError('required')">
-          {{ 'RequestDonation.DonationSteps.AddressStep.RequiredPostalCode' | translate }}
-        </ng-container>
-      </ng-template>
-    </nz-form-control>
-  </nz-form-item>
+  <div class="floor-appartment-cp" nz-col [nzSpan]="12">
+    <nz-form-item nz-col>
+      <nz-form-label [nzSpan]="7">{{ 'RequestDonation.DonationSteps.AddressStep.Floor' | translate }}</nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <input
+          nz-input
+          type="number"
+          formControlName="floor"
+          placeholder="{{ 'RequestDonation.DonationSteps.AddressStep.FloorPlaceHolder' | translate }}"
+        />
+      </nz-form-control>
+    </nz-form-item>
 
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7">{{ 'RequestDonation.DonationSteps.AddressStep.Floor' | translate }}</nz-form-label>
-    <nz-form-control [nzSpan]="12">
-      <input
-        nz-input
-        type="number"
-        formControlName="floor"
-        placeholder="{{ 'RequestDonation.DonationSteps.AddressStep.FloorPlaceHolder' | translate }}"
-      />
-    </nz-form-control>
-  </nz-form-item>
+    <nz-form-item>
+      <nz-form-label>
+        {{ 'RequestDonation.DonationSteps.AddressStep.Appartment' | translate }}
+      </nz-form-label>
+      <nz-form-control [nzSpan]="12">
+        <input
+          nz-input
+          formControlName="appartment"
+          placeholder="{{ 'RequestDonation.DonationSteps.AddressStep.AppartmentPlaceHolder' | translate }}"
+        />
+      </nz-form-control>
+    </nz-form-item>
 
-  <nz-form-item>
-    <nz-form-label [nzSpan]="7">
-      {{ 'RequestDonation.DonationSteps.AddressStep.Appartment' | translate }}
-    </nz-form-label>
-    <nz-form-control [nzSpan]="12">
-      <input
-        nz-input
-        formControlName="appartment"
-        placeholder="{{ 'RequestDonation.DonationSteps.AddressStep.AppartmentPlaceHolder' | translate }}"
-      />
-    </nz-form-control>
-  </nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzRequired>
+        {{ 'RequestDonation.DonationSteps.AddressStep.PostalCode' | translate }}
+      </nz-form-label>
+      <nz-form-control nzHasFeedback [nzErrorTip]="postalCodeErrorTpl" [nzSpan]="12">
+        <input
+          nz-input
+          formControlName="postalCode"
+          placeholder="{{ 'RequestDonation.DonationSteps.AddressStep.PostalCodePlaceHolder' | translate }}"
+        />
+        <ng-template #postalCodeErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            {{ 'RequestDonation.DonationSteps.AddressStep.RequiredPostalCode' | translate }}
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
 
   <nz-form-item>
     <nz-form-label [nzSpan]="7" nzRequired>

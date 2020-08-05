@@ -39,35 +39,38 @@ export class DonationsCreateComponent implements OnDestroy {
         this.isSubmited = false;
         this.switchErrorModal();
       } else {
-        this.goBack();
+        this.showModal();
       }
     }
   }
-  submitPriority(priority: number): void {
+  submitPriority(value: boolean): void {
     this.hideModal();
-    this.donationsFormComponent.donationRequest.priority = priority;
-    this.createDonationRequest();
+    this.goBack();
   }
+
   openDonationPriority(): void {
     this.donationsFormComponent.validateForm();
     if (this.donationsFormComponent.donationRequestFormGroup.valid) {
-      this.showModal();
+      this.donationsFormComponent.donationRequest.priority = 0;
+      this.createDonationRequest();
     }
   }
   showModal() {
     this.createTplModal(this.modalContent);
   }
   createTplModal(tplContent: TemplateRef<{}>): void {
-    this.tplModal = this.modal.create({
-      nzContent: tplContent,
-      nzFooter: null,
-      nzClosable: true,
-      nzTitle: 'Questions',
-      nzStyle: {
-        top: '2em;',
-      },
-      nzWidth: '60%',
-    });
+    if (!this.tplModal) {
+      this.tplModal = this.modal.create({
+        nzContent: tplContent,
+        nzFooter: null,
+        nzClosable: true,
+        nzTitle: 'Questions',
+        nzStyle: {
+          top: '2em;',
+        },
+        nzWidth: '60%',
+      });
+    }
   }
   hideModal() {
     this.tplModal?.destroy();

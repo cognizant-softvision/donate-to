@@ -18,9 +18,12 @@ namespace DonateTo.WebApi.V1.Controllers
     public class QuestionController : BaseApiController<Question, QuestionFilterModel>
     {
         private readonly IQuestionService _questionService;
-        public QuestionController(IQuestionService questionService) : base(questionService)
+        private readonly IDonationRequestService _donationRequestService;
+        private const string messageErrorWeight = "Invalid batch, the sum of weights must reach 100.";
+        public QuestionController(IQuestionService questionService, IDonationRequestService donationRequestService) : base(questionService)
         {
             _questionService = questionService;
+            _donationRequestService = donationRequestService;
         }
 
         /// <summary>
@@ -51,9 +54,9 @@ namespace DonateTo.WebApi.V1.Controllers
                         return Unauthorized();
                     }
 
-                    if(value.Sum(w => w.Weight) != 100)
+                    if (value.Sum(w => w.Weight) != 100)
                     {
-                        return BadRequest("Invalid batch, the sum of weights must reach 100.");
+                        return BadRequest(messageErrorWeight);
                     }
 
                     await _questionService.BulkUpdateAsync(value).ConfigureAwait(false);
@@ -70,5 +73,40 @@ namespace DonateTo.WebApi.V1.Controllers
                 }
             }
         }
+
+        [HttpPut("CalculateWeightQuestionAsync")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> CalculateWeightQuestionAsync([FromBody] QuestionResult value)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                try
+                {
+                    var priorityValue = _questionService.CalculateWeightQuestionAsync(value);
+                    var donationRequest = await _donationRequestService.GetAsync(value.DonationRequestId).ConfigureAwait(false);
+                    var username = User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserName)?.Value;
+                    donationRequest.Priority = Convert.ToInt32(priorityValue);
+                    await _donationRequestService.UpdateAsync(donationRequest,donationRequest.Id, username).ConfigureAwait(false);
+                    return Ok(value);
+                }
+                catch (ArgumentNullException ex)
+                {
+                    return NotFound(ex);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    return BadRequest(ex);
+                }
+            }
+        }
     }
+
 }
