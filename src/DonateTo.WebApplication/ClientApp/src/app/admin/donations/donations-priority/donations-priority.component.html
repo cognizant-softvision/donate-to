@@ -17,24 +17,22 @@
                 type="number"
                 [min]="question.min"
                 [max]="question.max"
-                [defaultValue]="question.defaultValue"
-                [ngModel]="question.label"
               />
             </div>
 
             <div *ngSwitchCase="controlTypeEnum.DropDown">
-              <nz-select [id]="question.id" [formControlName]="question.id" [ngModel]="question.defaultValue">
+              <nz-select class="drop-label" [id]="question.id" [formControlName]="question.id">
                 <nz-option *ngFor="let opt of question.options" [nzValue]="opt.label" [nzLabel]="opt.label">
                 </nz-option>
               </nz-select>
             </div>
 
             <div *ngSwitchCase="controlTypeEnum.RadioButton">
-              <nz-radio-group [formControlName]="question.id" [ngModel]="question.defaultValue">
+              <nz-radio-group [formControlName]="question.id">
                 <label nz-radio [nzValue]="opt.label" *ngFor="let opt of question.options"> {{ opt.label }} </label>
               </nz-radio-group>
             </div>
-            <div class="errorMessage" *ngIf="!isValid(question)">{{ question.label }} is required</div>
+            <div class="errorMessage" *ngIf="!valid">{{ question.label }} is required</div>
           </div>
         </nz-form-control>
       </nz-form-item>

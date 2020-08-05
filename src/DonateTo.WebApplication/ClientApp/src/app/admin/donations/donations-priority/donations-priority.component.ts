@@ -19,11 +19,9 @@ export class DonationPriorityComponent implements OnInit, OnDestroy {
   form: FormGroup;
   questions: QuestionModel[];
   questionResult: QuestionResult;
-  dataSaved = false;
   private subscriptions: Subscription[] = [];
-  failedStatus = false;
-  successStatus = false;
   private donationRequest: DonationRequestModel;
+  valid = true;
 
   get controlTypeEnum() {
     return ControlType;
@@ -73,7 +71,7 @@ export class DonationPriorityComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.validateFormGroup(this.form);
-    if (this.isValid) {
+    if (this.valid) {
       this.addQuestionsSubmited();
       this.questionSandbox.updateQuestionsResult(this.questionResult);
       this.dataUpdated.changeMessage(true);
@@ -90,7 +88,7 @@ export class DonationPriorityComponent implements OnInit, OnDestroy {
   }
 
   isValid(question: QuestionModel) {
-    return this.form.controls[question.id].valid;
+    this.valid = this.form.controls[question.id].valid;
   }
 
   addQuestionsSubmited(): void {
@@ -102,7 +100,7 @@ export class DonationPriorityComponent implements OnInit, OnDestroy {
       answerQuestion.value = this.form.controls[question.id].value;
       answersQuestion = [...answersQuestion, answerQuestion];
     });
-    this.questionResult.donationRequestId = 0;
+    this.questionResult.donationRequestId = this.donationRequest.id;
     this.questionResult.questionAnswers = answersQuestion;
   }
 }

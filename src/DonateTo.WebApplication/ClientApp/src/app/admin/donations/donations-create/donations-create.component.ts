@@ -43,7 +43,7 @@ export class DonationsCreateComponent implements OnDestroy {
       }
     }
   }
-  submitPriority(value: any): void {
+  submitPriority(value: boolean): void {
     this.hideModal();
     this.goBack();
   }

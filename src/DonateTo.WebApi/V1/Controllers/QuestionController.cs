@@ -19,9 +19,11 @@ namespace DonateTo.WebApi.V1.Controllers
     {
         private readonly IQuestionService _questionService;
         private readonly IDonationRequestService _donationRequestService;
-        public QuestionController(IQuestionService questionService) : base(questionService)
+        private const string messageErrorWeight = "Invalid batch, the sum of weights must reach 100.";
+        public QuestionController(IQuestionService questionService, IDonationRequestService donationRequestService) : base(questionService)
         {
             _questionService = questionService;
+            _donationRequestService = donationRequestService;
         }
 
         /// <summary>
@@ -54,7 +56,7 @@ namespace DonateTo.WebApi.V1.Controllers
 
                     if (value.Sum(w => w.Weight) != 100)
                     {
-                        return BadRequest("Invalid batch, the sum of weights must reach 100.");
+                        return BadRequest(messageErrorWeight);
                     }
 
                     await _questionService.BulkUpdateAsync(value).ConfigureAwait(false);

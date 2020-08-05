@@ -14,7 +14,6 @@
   color: red;
 }
 
-.nz-select {
-  margin-right: 8px;
-  width: 200px;
+.drop-label {
+  width: 10em;
 }
