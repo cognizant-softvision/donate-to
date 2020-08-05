@@ -21,10 +21,45 @@
 @gradient-warm1:linear-gradient (to right,#FF8F1C , #F4633A);
 @gradient-warm2:linear-gradient (to right,#F4633A , #C800A1);
 @gradient-warm3:linear-gradient (to right,#C800A1 , #0033A0);
-
 @gradient-cold1:linear-gradient (to right,#0033A0 , #00BB50);
 @gradient-cold2:linear-gradient (to right,#0033A0 , #0066FF,#66FFCC);
 @gradient-cold2:linear-gradient (to right,#FF8F1C , #C800A1,#5C068C);
+
+// Custom css
+// --- Menu Bottom
+.sv-link-wrapper {
+  background: @gradient-warm2;
+  padding-left: 0px;
+  padding-right: 0px;
+  border-bottom: none !important;
+  margin-bottom: 1px !important;
+}
+
+.sv-link-wrapper:hover {
+  padding-bottom: 0.4em;
+}
+
+.sv-link {
+  width: 100%;
+  height: 100%;
+  background: @primary-ghost-white;
+}
+
+.sv-margin-x {
+  margin: 0 0.25em 0 0.25em;
+}
+
+a {
+  font-weight: 600;
+}
+
+// Switch Radio Botom
+// ---
+.ant-radio-button-wrapper-checked {
+  background: @gradient-warm3!important;
+  border-color: @primary-magenta!important;
+  background-color: @primary-magenta!important;
+}
 
 // -------- Colors -----------
 @primary-color: @primary-lead-black;
@@ -158,7 +193,7 @@
 @shadow-2: 0 4px 12px @shadow-color;
 
 // Buttons
-@btn-font-weight: 900;
+@btn-font-weight: 600;
 @btn-border-radius-base: @border-radius-base;
 @btn-border-radius-sm: @border-radius-base;
 @btn-border-width: @border-width-base;
@@ -542,7 +577,7 @@
 @tabs-hover-color: @primary-5;
 @tabs-active-color: @primary-7;
 @tabs-card-gutter: 2px;
-@tabs-card-tab-active-border-top: 2px solid transparent;
+@tabs-card-tab-active-border-top: 2px none transparent;
 
 // BackTop
 // ---
@@ -576,7 +611,7 @@
 @pagination-item-size: 32px;
 @pagination-item-size-sm: 24px;
 @pagination-font-family: Arial;
-@pagination-font-weight-active: 500;
+@pagination-font-weight-active: 600;
 @pagination-item-bg-active: @component-background;
 
 // PageHeader

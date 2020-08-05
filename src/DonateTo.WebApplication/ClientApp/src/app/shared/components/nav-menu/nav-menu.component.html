@@ -3,29 +3,27 @@
     <a routerLink="/">Donate</a>
   </div>
   <ul nz-menu nzMode="horizontal">
-    <li nz-menu-item *ngIf="!navMenuSandbox.isAuthenticated">
-      <a (click)="register()"> {{ 'Auth.Register.Title' | translate }} </a>
+    <li nz-menu-item class="sv-margin-x sv-link-wrapper" *ngIf="!navMenuSandbox.isAuthenticated">
+      <a class="sv-link" (click)="register()"> {{ 'Auth.Register.Title' | translate }} </a>
     </li>
-    <li nz-menu-item *ngIf="!navMenuSandbox.isAuthenticated">
-      <a (click)="login()"> {{ 'Auth.Login.Title' | translate }} </a>
+    <li nz-menu-item class="sv-margin-x sv-link-wrapper" *ngIf="!navMenuSandbox.isAuthenticated">
+      <a class="sv-link" (click)="login()"> {{ 'Auth.Login.Title' | translate }} </a>
     </li>
-    <li nz-menu-item *ngIf="navMenuSandbox.isAuthenticated">
+    <li nz-menu-item class="sv-margin-x" *ngIf="navMenuSandbox.isAuthenticated">
       <a [routerLink]="['/donation/my-donations']"> {{ 'NavBar.MyDonations' | translate }} </a>
     </li>
-    <li nz-menu-item *ngIf="navMenuSandbox.isAuthenticated">
+    <li nz-menu-item class="sv-margin-x" *ngIf="navMenuSandbox.isAuthenticated">
       <a [routerLink]="['/my-profile']">{{ 'UserProfile.MyProfile' | translate }}</a>
     </li>
-    <li nz-menu-item *ngIf="navMenuSandbox.isAuthenticated && navMenuSandbox.isAdmin">
+    <li nz-menu-item class="sv-margin-x" *ngIf="navMenuSandbox.isAuthenticated && navMenuSandbox.isAdmin">
       <a href="/admin"> Admin </a>
     </li>
-    <li nz-menu-item *ngIf="navMenuSandbox.isAuthenticated">
+    <li nz-menu-item class="sv-margin-x sv-bottom-border" *ngIf="navMenuSandbox.isAuthenticated">
       <a (click)="logout()">{{ 'ProfileActionBar.Logout' | translate }}</a>
     </li>
-    <li nz-menu-item>
-      <nz-radio-group [(ngModel)]="language" nzButtonStyle="solid" (ngModelChange)="switchLanguage()">
-        <label nz-radio-button nzValue="en">En</label>
-        <label nz-radio-button nzValue="es">Es</label>
-      </nz-radio-group>
-    </li>
   </ul>
+  <nz-radio-group class="sv-margin-x" [(ngModel)]="language" nzButtonStyle="solid" (ngModelChange)="switchLanguage()">
+    <label class="sv-switch" nz-radio-button nzValue="en">En</label>
+    <label nz-radio-button nzValue="es">Es</label>
+  </nz-radio-group>
 </nz-header>
