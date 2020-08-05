@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DonateTo.ApplicationCore.Interfaces.Services
 {
-    public interface IGetService<T, TFilter> : IGetAllService<T, TFilter>, IGetPagedFilteredService<T, TFilter>
+    public interface IGetService<T, TFilter> : IGetPagedFilteredService<T, TFilter>
         where T : class 
         where TFilter : BaseFilterModel
     {
