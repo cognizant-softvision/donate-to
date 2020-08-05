@@ -27,16 +27,21 @@
 
 // Custom css
 // --- Menu Bottom
+
+.ant-menu-item:after,
+.ant-menu-item-selected,
 .sv-link-wrapper {
   background: linear-gradient(90deg, #f4633a 0%, #c800a1 100%);
   padding-left: 0px;
   padding-right: 0px;
   border-bottom: none !important;
+  border-right: none !important;
   margin-bottom: 1px !important;
 }
 
+.ant-menu-item-selected,
 .sv-link-wrapper:hover {
-  padding-bottom: 0.4em;
+  padding-bottom: 0.4em !important;
 }
 
 .sv-link {
@@ -47,6 +52,10 @@
 
 .sv-margin-x {
   margin: 0 0.25em 0 0.25em;
+}
+
+.sv-margin-y {
+  margin: 0.25em 0 0.25em 0;
 }
 
 a {
