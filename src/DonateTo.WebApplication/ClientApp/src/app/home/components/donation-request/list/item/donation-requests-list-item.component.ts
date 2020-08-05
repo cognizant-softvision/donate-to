@@ -23,5 +23,12 @@ export class DonationRequestsListItemComponent implements OnInit {
     this.showDetail.emit(this.item.id);
   }
 
+  getPriority() {
+    if (this.item) {
+      return this.item.priority / 20;
+    } else {
+      return 0;
+    }
+  }
   ngOnInit(): void {}
 }

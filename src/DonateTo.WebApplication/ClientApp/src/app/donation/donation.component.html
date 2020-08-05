@@ -11,7 +11,7 @@
       <div nz-row>
         <span>
           {{ 'RequestDonation.Priority' | translate }}:
-          <nz-rate [ngModel]="donationRequest.priority" nzAllowHalf [nzCharacter]="heartIcon" disabled></nz-rate>
+          <nz-rate [ngModel]="priority" nzAllowHalf [nzCharacter]="heartIcon" disabled></nz-rate>
           <ng-template #heartIcon><i nz-icon nzType="heart" nzTheme="fill" className="rate-icon"></i></ng-template>
         </span>
       </div>
