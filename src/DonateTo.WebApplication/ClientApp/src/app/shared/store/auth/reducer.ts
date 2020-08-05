@@ -14,7 +14,6 @@ export class AuthState {
 
 const INITIAL_STATE: AuthState = {
   isAuthenticated: false,
-
   access_token: undefined,
   isLoginProcessed: false,
   userId: undefined,

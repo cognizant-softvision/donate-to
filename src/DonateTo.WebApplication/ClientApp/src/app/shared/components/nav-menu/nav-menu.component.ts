@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { NavMenuSandBox } from './nav-menu.sandbox';
 import { Subscription } from 'rxjs';
 

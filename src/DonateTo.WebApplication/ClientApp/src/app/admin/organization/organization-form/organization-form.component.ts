@@ -74,7 +74,7 @@ export class OrganizationFormComponent implements OnInit {
   done(): void {
     this.setOrganization();
 
-    if (this.organization.id !== 0) {
+    if (this.organization.id) {
       this.organizationSandbox.updateOrganization(this.organization);
       this.dataUpdated.changeMessage(true);
     } else {
@@ -174,7 +174,6 @@ export class OrganizationFormComponent implements OnInit {
         ...addressesFromModel[i],
         country: null,
         city: null,
-        contact: null,
         state: null,
       };
     }
