@@ -2,15 +2,8 @@
   <div class="table-operations">
     <h4 class="section-title">{{ 'Admin.Organization.Title' | translate }}</h4>
     <div class="create-button">
-      <button
-        nz-popconfirm
-        nzPopconfirmTitle="{{ 'Admin.Organization.CreateConfirm' | translate }}"
-        nzPopconfirmPlacement="bottom"
-        (nzOnConfirm)="router.navigate(['admin/organizations/create'])"
-        nz-button
-        nzType="primary"
-      >
-        {{ 'Admin.Create' | translate }}
+      <button (click)="router.navigate(['admin/organizations/create'])" nz-button nzType="primary">
+        {{ 'Admin.Organization.CreateOrganization' | translate }}
       </button>
     </div>
     <nz-divider></nz-divider>
@@ -47,24 +40,6 @@
           </nz-filter-trigger>
         </th>
 
-        <!-- USERS QUANTITY -->
-        <th nzCustomFilter nzColumnKey="usersQuantity" [nzSortOrder]="'ascend'" [nzSortFn]="true">
-          {{ 'Admin.Organization.Table.UsersQuantity' | translate }}
-          <label
-            class="filter"
-            title="{{ 'Admin.Organization.Table.Filtered' | translate }}"
-            *ngIf="searchUsersQuantityValue.length > 0 && !usersQuantityVisible"
-          >
-            ({{ searchNameValue }})
-          </label>
-          <nz-filter-trigger
-            [(nzVisible)]="usersQuantityVisible"
-            [nzActive]="searchUsersQuantityValue.length > 0"
-            [nzDropdownMenu]="searchUsersQuantityMenu"
-          >
-            <i nz-icon nzType="search"></i>
-          </nz-filter-trigger>
-        </th>
         <th nzCustomFilter nzColumnKey="contactName" [nzSortFn]="true">
           {{ 'Admin.Organization.Table.ContactName' | translate }}
           <label
@@ -82,21 +57,52 @@
             <i nz-icon nzType="search"></i>
           </nz-filter-trigger>
         </th>
+
+        <th nzCustomFilter nzColumnKey="usersQuantity" [nzSortOrder]="'ascend'" [nzSortFn]="true">
+          {{ 'Admin.Organization.Table.UsersQuantity' | translate }}
+          <label
+            class="filter"
+            title="{{ 'Admin.Organization.Table.Filtered' | translate }}"
+            *ngIf="searchUsersQuantityValue.length > 0 && !usersQuantityVisible"
+          >
+            ({{ searchNameValue }})
+          </label>
+          <nz-filter-trigger
+            [(nzVisible)]="usersQuantityVisible"
+            [nzActive]="searchUsersQuantityValue.length > 0"
+            [nzDropdownMenu]="searchUsersQuantityMenu"
+          >
+            <i nz-icon nzType="search"></i>
+          </nz-filter-trigger>
+        </th>
+
+        <th nzCustomFilter nzColumnKey="usersQuantity" [nzSortOrder]="'ascend'" [nzSortFn]="true">
+          {{ 'Admin.Organization.Table.Branches' | translate }}
+        </th>
+
         <th>
           {{ 'Admin.Organization.Table.Action' | translate }}
         </th>
       </tr>
     </thead>
+
     <tbody>
       <ng-container *ngFor="let data of organizationsTable.data">
         <tr>
           <td>{{ data.name }}</td>
+
+          <td>{{ data.contact?.fullName }}</td>
+
           <td>
             <a (click)="seeAssociatedUsers(data.name)">
               {{ data.userOrganizations?.length }}
             </a>
           </td>
-          <td>{{ data.contact?.fullName }}</td>
+
+          <td>
+            {{ data.addresses.length }}
+          </td>
+
           <td>
             <a
               [routerLink]="['./edit', data.id]"

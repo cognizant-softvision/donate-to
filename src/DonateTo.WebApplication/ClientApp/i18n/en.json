@@ -119,6 +119,7 @@
     "Organization": {
       "Title": "Organizations",
       "BackConfirm": "Are you sure you want to go back?",
+      "CreateOrganization": "Create Organization",
       "CreateConfirm": "Are you sure you want to create an organization?",
       "EditConfirm": "Are you sure you want to edit an organization?",
       "DeleteConfirmation": "Are you sure you want to delete this organization?",
@@ -129,6 +130,7 @@
         "Description": "Description",
         "UsersQuantity": "Number of Associated Users",
         "ContactName": "Owner",
+        "Branches": "Number of Addresses",
         "Action": "Action",
         "Search": "Search",
         "Reset": "Reset",
