@@ -150,13 +150,6 @@ namespace DonateTo.Services
                 predicate = predicate.And(p => p.Level == filter.Level);
             }
 
-            //Not Working for PostgreSQL jsonb fields (If needed it must be researched)
-            //if (!string.IsNullOrEmpty(filter.LogEvent))
-            //{
-            //    predicate = predicate.And(p =>
-            //                     EF.Functions.ILike(p.LogEvent, string.Format(CultureInfo.CurrentCulture, "%{0}%", filter.LogEvent)));
-            //}
-
             return predicate;
         }
         #endregion
