@@ -1,0 +1,96 @@
+<form nz-form [formGroup]="availabilityStepFormGroup">
+  <div class="day-time-selection">
+    <nz-form-item class="day-time-form-item">
+      <nz-form-label nzRequired>
+        {{ 'RequestDonation.DonationSteps.AvailabilityStep.Day' | translate }}
+      </nz-form-label>
+      <nz-form-control nzHasFeedback [nzErrorTip]="weekDayErrorTpl" class="day-time-form-control">
+        <nz-select
+          nzShowSearch
+          nzAllowClear
+          nzPlaceHolder="{{ 'RequestDonation.DonationSteps.AvailabilityStep.DayPlaceHolder' | translate }}"
+          formControlName="weekDayFormControl"
+        >
+          <nz-option *ngFor="let day of weekDays" [nzValue]="day.dayOfWeek" [nzLabel]="day.description"> </nz-option>
+        </nz-select>
+        <ng-template #weekDayErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            {{ 'RequestDonation.DonationSteps.AvailabilityStep.RequiredDay' | translate }}
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="day-time-form-item">
+      <nz-form-label nzRequired nzFor="startTime">
+        {{ 'RequestDonation.DonationSteps.AvailabilityStep.StartTime' | translate }}
+      </nz-form-label>
+      <nz-form-control nzHasFeedback [nzErrorTip]="startTimeErrorTpl" class="day-time-form-control">
+        <nz-time-picker formControlName="startTimeFormControl" nzFormat="HH:mm"></nz-time-picker>
+        <ng-template #startTimeErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            {{ 'RequestDonation.DonationSteps.AvailabilityStep.RequiredStartTime' | translate }}
+          </ng-container>
+          <ng-container *ngIf="control.hasError('greater')">
+            {{ 'RequestDonation.DonationSteps.AvailabilityStep.StartTimeGreaterThanFinishTime' | translate }}
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="day-time-form-item">
+      <nz-form-label nzRequired nzFor="finishTime">
+        {{ 'RequestDonation.DonationSteps.AvailabilityStep.FinishTime' | translate }}
+      </nz-form-label>
+      <nz-form-control nzHasFeedback [nzErrorTip]="finishTimeErrorTpl" class="day-time-form-control">
+        <nz-time-picker formControlName="finishTimeFormControl" nzFormat="HH:mm"></nz-time-picker>
+        <ng-template #finishTimeErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            {{ 'RequestDonation.DonationSteps.AvailabilityStep.RequiredFinishTime' | translate }}
+          </ng-container>
+          <ng-container *ngIf="control.hasError('greater')">
+            {{ 'RequestDonation.DonationSteps.AvailabilityStep.FinishTimeLessThanStartTime' | translate }}
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <div nz-row class="ant-row-center">
+    <button nz-button nzType="primary" (click)="addAvailabilityToList()">
+      <span>{{ 'RequestDonation.DonationSteps.AvailabilityStep.AddAvailabilityButton' | translate }}</span>
+    </button>
+  </div>
+</form>
+
+<nz-form-item class="availability-table">
+  <nz-form-control>
+    <div [(ngModel)]="availabilities" ngDefaultControl>
+      <nz-table
+        [nzData]="availabilities"
+        [nzShowPagination]="false"
+        [nzFrontPagination]="false"
+        [nzShowPagination]="false"
+      >
+        <thead>
+          <tr>
+            <th>{{ 'RequestDonation.DonationSteps.AvailabilityStep.DayColumn' | translate }}</th>
+            <th>{{ 'RequestDonation.DonationSteps.AvailabilityStep.StartTimeColumn' | translate }}</th>
+            <th>{{ 'RequestDonation.DonationSteps.AvailabilityStep.FinishTimeColumn' | translate }}</th>
+            <th>{{ 'RequestDonation.DonationSteps.AvailabilityStep.OperationColumn' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let availability of availabilities">
+            <td>{{ dayOfWeekDescription(availability.dayOfWeek) }}</td>
+            <td>{{ availability.startTime | date: 'HH:mm' }}</td>
+            <td>{{ availability.endTime | date: 'HH:mm' }}</td>
+            <td>
+              <a (click)="removeAvailability(availability)">{{ 'Admin.Delete' | translate }}</a>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </nz-form-control>
+</nz-form-item>

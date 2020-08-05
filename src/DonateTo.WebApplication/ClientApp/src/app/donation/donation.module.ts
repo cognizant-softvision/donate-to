@@ -28,6 +28,7 @@ import {
   NzTimePickerModule,
 } from 'ng-zorro-antd';
 import {
+  CalendarOutline,
   CheckCircleTwoTone,
   CloseCircleTwoTone,
   HeartFill,
@@ -45,12 +46,14 @@ import { DonationListComponent } from './components/donation/list/donation-list.
 import { DonationConfirmComponent } from './components/donation-confirm/donation-confirm.component';
 import { DonationStepAddressComponent } from './components/donation-confirm/donation-step-address/donation-step-address.component';
 import { DonationStepResponsableComponent } from './components/donation-confirm/donation-step-responsable/donation-step-responsable.component';
+import { DonationStepAvailabilityComponent } from './components/donation-confirm/donation-step-availability/donation-step-availability.component';
 import { DonationStepFinishComponent } from './components/donation-confirm/donation-step-finish/donation-step-finish.component';
 
 // FIX this should be moved to an upper level.
 registerLocaleData(es);
 
 const icons = [
+  CalendarOutline,
   HeartFill,
   SearchOutline,
   UserOutline,
@@ -95,6 +98,7 @@ const icons = [
     DonationConfirmComponent,
     DonationStepAddressComponent,
     DonationStepResponsableComponent,
+    DonationStepAvailabilityComponent,
     DonationStepFinishComponent,
   ],
   providers: [DonationSandbox],
