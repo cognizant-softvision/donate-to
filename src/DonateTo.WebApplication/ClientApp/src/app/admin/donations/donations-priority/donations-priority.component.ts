@@ -1,38 +1,43 @@
 import { QuestionsSandbox } from './../../questions/questions-sandbox';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { QuestionModel } from 'src/app/shared/models';
+import { DonationRequestModel, QuestionModel } from 'src/app/shared/models';
 import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
 import { Subscription } from 'rxjs';
 import { ControlType } from 'src/app/shared/enum/controlTypes';
-import { QuestionResult } from 'src/app/shared/models/question-result';
+import { QuestionResult } from 'src/app/shared/models/question-result.model';
+import { QuestionAnswer } from 'src/app/shared/models/question-answer.model';
+import { DonationsSandbox } from '../donations-sandbox';
 @Component({
   selector: 'app-donations-priority',
   templateUrl: './donations-priority.component.html',
   styleUrls: ['./donations-priority.component.css'],
 })
 export class DonationPriorityComponent implements OnInit, OnDestroy {
-  @Output() isSubmited = new EventEmitter<number>();
+  @Output() isSubmited = new EventEmitter<boolean>();
 
   form: FormGroup;
   questions: QuestionModel[];
-  submitedQuestions: QuestionResult[];
+  questionResult: QuestionResult;
   dataSaved = false;
   private subscriptions: Subscription[] = [];
   failedStatus = false;
   successStatus = false;
+  private donationRequest: DonationRequestModel;
 
   get controlTypeEnum() {
     return ControlType;
   }
 
-  constructor(private dataUpdated: DataUpdatedService, public questionSandbox: QuestionsSandbox) {}
+  constructor(
+    private dataUpdated: DataUpdatedService,
+    public questionSandbox: QuestionsSandbox,
+    public donationSandbox: DonationsSandbox
+  ) {}
 
   ngOnInit(): void {
     this.questionSandbox.loadQuestions();
     this.registerEvents();
-    // Updates table when a new donation is created
-    // this.dataUpdated.currentStatus.subscribe((dataSaved) => (this.dataSaved = dataSaved));
   }
 
   ngOnDestroy(): void {
@@ -44,6 +49,11 @@ export class DonationPriorityComponent implements OnInit, OnDestroy {
       this.questionSandbox.questions$.subscribe((questions) => {
         this.questions = questions;
         this.form = this.toFormGroup(this.questions);
+      })
+    );
+    this.subscriptions.push(
+      this.donationSandbox.donationRequest$.subscribe((donationRequest) => {
+        this.donationRequest = donationRequest;
       })
     );
   }
@@ -65,8 +75,9 @@ export class DonationPriorityComponent implements OnInit, OnDestroy {
     this.validateFormGroup(this.form);
     if (this.isValid) {
       this.addQuestionsSubmited();
-      this.questionSandbox.updateQuestionsResult(this.submitedQuestions);
+      this.questionSandbox.updateQuestionsResult(this.questionResult);
       this.dataUpdated.changeMessage(true);
+      this.isSubmited.emit(true);
     }
   }
 
@@ -83,11 +94,15 @@ export class DonationPriorityComponent implements OnInit, OnDestroy {
   }
 
   addQuestionsSubmited(): void {
+    this.questionResult = new QuestionResult();
+    let answersQuestion: QuestionAnswer[] = [];
     this.questions.forEach((question) => {
-      const submitQuestion = new QuestionResult();
-      submitQuestion.id = question.id;
-      submitQuestion.value = this.form.controls[question.id].value;
-      this.submitedQuestions = [...this.submitedQuestions, submitQuestion];
+      const answerQuestion = new QuestionAnswer();
+      answerQuestion.idQuestion = question.id;
+      answerQuestion.value = this.form.controls[question.id].value;
+      answersQuestion = [...answersQuestion, answerQuestion];
     });
+    this.questionResult.donationRequestId = 0;
+    this.questionResult.questionAnswers = answersQuestion;
   }
 }

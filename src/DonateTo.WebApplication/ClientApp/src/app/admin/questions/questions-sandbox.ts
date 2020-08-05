@@ -1,4 +1,4 @@
-import { QuestionResult } from './../../shared/models/question-result';
+import { QuestionResult } from '../../shared/models/question-result.model';
 import { QuestionModel } from './../../shared/models/question.model';
 import * as store from '../../shared/store';
 import { Subscription } from 'rxjs';
@@ -44,7 +44,7 @@ export class QuestionsSandbox extends Sandbox implements OnDestroy {
     this.appState$.dispatch(store.fromQuestion.loadQuestionsPagedFiltered({ questionFilter }));
   }
 
-  updateQuestionsResult(results: QuestionResult[]): void {
+  updateQuestionsResult(results: QuestionResult): void {
     this.appState$.dispatch(store.fromQuestion.addResults({ results }));
   }
 }

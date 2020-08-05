@@ -18,6 +18,7 @@ namespace DonateTo.WebApi.V1.Controllers
     public class QuestionController : BaseApiController<Question, QuestionFilterModel>
     {
         private readonly IQuestionService _questionService;
+        private readonly IDonationRequestService _donationRequestService;
         public QuestionController(IQuestionService questionService) : base(questionService)
         {
             _questionService = questionService;
@@ -71,13 +72,13 @@ namespace DonateTo.WebApi.V1.Controllers
             }
         }
 
-        [HttpPut(Name = "[controller]_[action]")]
+        [HttpPut("CalculateWeightQuestionAsync")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CalculateWeightQuestionAsync([FromBody] IEnumerable<QuestionResult> value)
+        public async Task<IActionResult> CalculateWeightQuestionAsync([FromBody] QuestionResult value)
         {
             if (!ModelState.IsValid)
             {
@@ -87,8 +88,12 @@ namespace DonateTo.WebApi.V1.Controllers
             {
                 try
                 {
-                    await _questionService.CalculateWeightQuestionAsync(value).ConfigureAwait(false);
-                    return Ok();
+                    var priorityValue = _questionService.CalculateWeightQuestionAsync(value);
+                    var donationRequest = await _donationRequestService.GetAsync(value.DonationRequestId).ConfigureAwait(false);
+                    var username = User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserName)?.Value;
+                    donationRequest.Priority = Convert.ToInt32(priorityValue);
+                    await _donationRequestService.UpdateAsync(donationRequest,donationRequest.Id, username).ConfigureAwait(false);
+                    return Ok(value);
                 }
                 catch (ArgumentNullException ex)
                 {
