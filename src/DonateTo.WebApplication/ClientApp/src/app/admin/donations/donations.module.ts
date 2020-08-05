@@ -1,3 +1,4 @@
+import { QuestionEffects } from './../../shared/store/question/effects';
 import * as fromAddress from 'src/app/shared/store/address';
 import * as fromCategory from 'src/app/shared/store/category';
 import * as fromOrganization from 'src/app/shared/store/organization';
@@ -14,7 +15,7 @@ import { DonationsRoutingModule } from './donations-routing.module';
 import { DonationsSandbox } from './donations-sandbox';
 import { EffectsModule } from '@ngrx/effects';
 import { FormsModule } from '@angular/forms';
-import { fromStatus, fromUnit } from 'src/app/shared/store';
+import { fromQuestion, fromStatus, fromUnit } from 'src/app/shared/store';
 import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { IconDefinition } from '@ant-design/icons-angular';
@@ -48,6 +49,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { DeleteOutline, EditOutline, PlusOutline } from '@ant-design/icons-angular/icons';
 import { DonationsDetailComponent } from './donations-detail/donations-detail.component';
 import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
+import { QuestionsSandbox } from '../questions/questions-sandbox';
 
 // FIX this should be moved to an upper level.
 registerLocaleData(es);
@@ -76,12 +78,20 @@ const ICONS: IconDefinition[] = [PlusOutline, EditOutline, DeleteOutline];
     NzTableModule,
     NzToolTipModule,
 
-    EffectsModule.forFeature([OrganizationEffects, AddressEffects, UnitEffects, CategoryEffects, StatusEffects]),
+    EffectsModule.forFeature([
+      OrganizationEffects,
+      AddressEffects,
+      UnitEffects,
+      CategoryEffects,
+      StatusEffects,
+      QuestionEffects,
+    ]),
     StoreModule.forFeature(fromOrganization.organizationFeatureKey, fromOrganization.reducer),
     StoreModule.forFeature(fromStatus.statusFeatureKey, fromStatus.reducer),
     StoreModule.forFeature(fromAddress.addressFeatureKey, fromAddress.reducer),
     StoreModule.forFeature(fromCategory.categoryFeatureKey, fromCategory.reducer),
     StoreModule.forFeature(fromUnit.unitFeatureKey, fromUnit.reducer),
+    StoreModule.forFeature(fromQuestion.questionFeatureKey, fromQuestion.reducer),
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
@@ -104,6 +114,6 @@ const ICONS: IconDefinition[] = [PlusOutline, EditOutline, DeleteOutline];
     DonationPriorityComponent,
     DonationsDetailComponent,
   ],
-  providers: [DonationsSandbox, DataUpdatedService],
+  providers: [DonationsSandbox, DataUpdatedService, QuestionsSandbox],
 })
 export class DonationsModule {}
