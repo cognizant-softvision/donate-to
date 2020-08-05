@@ -2,6 +2,9 @@ import {
   addQuestions,
   addQuestionsFailed,
   addQuestionsSuccess,
+  addResults,
+  addResultsFailed,
+  addResultsSuccess,
   loadControlTypes,
   loadControlTypesFailed,
   loadControlTypesSuccess,
@@ -60,6 +63,17 @@ export class QuestionEffects {
       this.controlTypeService.getControlTypes().pipe(
         map((controlTypes) => loadControlTypesSuccess({ controlTypes })),
         catchError(() => of(loadControlTypesFailed()))
+      )
+    )
+  );
+
+  @Effect()
+  addResults$: Observable<{}> = this.actions$.pipe(
+    ofType(addResults),
+    switchMap(({ results }) =>
+      this.questionService.createQuestionsResult(results).pipe(
+        map(() => addResultsSuccess({ results })),
+        catchError(() => of(addResultsFailed()))
       )
     )
   );

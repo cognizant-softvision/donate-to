@@ -1,0 +1,23 @@
+.day-time-selection {
+  display: flex;
+  justify-content: center;
+}
+
+.day-time-form-item {
+  margin-left: 4em;
+  margin-right: 4em;
+}
+
+nz-form-label {
+  width: 6em;
+}
+
+.day-time-form-control {
+  width: 10em;
+}
+
+.availability-table {
+  margin-top: 4em;
+  margin-left: 4em;
+  margin-right: 4em;
+}

@@ -86,6 +86,7 @@ const donationRequestReducer = createReducer(
     loading: false,
     failed: false,
     items: [...state.items, donationRequest],
+    donationRequest,
   })),
   on(donationRequestActions.addDonationRequestFailed, (state) => ({
     ...state,

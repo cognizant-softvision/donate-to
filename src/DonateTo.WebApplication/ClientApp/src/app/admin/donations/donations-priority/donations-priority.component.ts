@@ -1,167 +1,63 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { QuestionModel } from 'src/app/shared/models';
+import { QuestionsSandbox } from './../../questions/questions-sandbox';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { DonationRequestModel, QuestionModel } from 'src/app/shared/models';
 import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
+import { Subscription } from 'rxjs';
+import { ControlType } from 'src/app/shared/enum/controlTypes';
+import { QuestionResult } from 'src/app/shared/models/question-result.model';
+import { QuestionAnswer } from 'src/app/shared/models/question-answer.model';
+import { DonationsSandbox } from '../donations-sandbox';
 @Component({
   selector: 'app-donations-priority',
   templateUrl: './donations-priority.component.html',
   styleUrls: ['./donations-priority.component.css'],
 })
-export class DonationPriorityComponent implements OnInit {
+export class DonationPriorityComponent implements OnInit, OnDestroy {
+  @Output() isSubmited = new EventEmitter<boolean>();
+
   form: FormGroup;
   questions: QuestionModel[];
-  dataSaved = false;
+  questionResult: QuestionResult;
+  private subscriptions: Subscription[] = [];
+  private donationRequest: DonationRequestModel;
+  valid = true;
 
-  @Output() isSubmited = new EventEmitter<number>();
-
-  constructor(private formBuilder: FormBuilder, private dataUpdated: DataUpdatedService) {
-    this.questions = [
-      {
-        createdBy: '',
-        createdDate: new Date(),
-        updateBy: '',
-        updateDate: new Date(),
-        id: 1,
-        order: 0,
-        min: 0,
-        max: 0,
-        controlType: {
-          id: 1,
-          createdBy: '',
-          createdDate: new Date(),
-          updateBy: '',
-          updateDate: new Date(),
-          name: 'dropdown',
-        },
-        key: '1',
-        label: 'Question 1',
-        placeholder: '',
-        weight: 1,
-        defaultValue: '',
-        controlTypeId: 1,
-        options: [
-          {
-            id: 1,
-            createdBy: '',
-            createdDate: new Date(),
-            updateBy: '',
-            updateDate: new Date(),
-            value: '1',
-            label: 'Option 1',
-            weight: 15,
-            questionId: 1,
-            maximumRelative: 0,
-            minimumRelative: 0,
-          },
-          {
-            id: 2,
-            createdBy: '',
-            createdDate: new Date(),
-            updateBy: '',
-            updateDate: new Date(),
-            value: '2',
-            label: 'Option 2',
-            weight: 15,
-            questionId: 1,
-            maximumRelative: 0,
-            minimumRelative: 0,
-          },
-          {
-            id: 3,
-            createdBy: '',
-            createdDate: new Date(),
-            updateBy: '',
-            updateDate: new Date(),
-            value: '3',
-            label: 'Option 3',
-            weight: 70,
-            questionId: 1,
-            minimumRelative: 0,
-            maximumRelative: 0,
-          },
-        ],
-      },
-      {
-        createdBy: '',
-        createdDate: new Date(),
-        updateBy: '',
-        updateDate: new Date(),
-        id: 2,
-        order: 0,
-        min: 0,
-        max: 0,
-        controlType: {
-          id: 1,
-          createdBy: '',
-          createdDate: new Date(),
-          updateBy: '',
-          updateDate: new Date(),
-          name: 'radiobutton',
-        },
-        key: '2',
-        label: 'Question 2',
-        placeholder: '',
-        weight: 1,
-        defaultValue: '',
-        controlTypeId: 1,
-        options: [
-          {
-            id: 1,
-            createdBy: '',
-            createdDate: new Date(),
-            updateBy: '',
-            updateDate: new Date(),
-            value: '4',
-            label: 'Option A',
-            weight: 50,
-            questionId: 2,
-            maximumRelative: 0,
-            minimumRelative: 0,
-          },
-          {
-            id: 2,
-            createdBy: '',
-            createdDate: new Date(),
-            updateBy: '',
-            updateDate: new Date(),
-            value: '5',
-            label: 'Option B',
-            weight: 25,
-            questionId: 2,
-            maximumRelative: 0,
-            minimumRelative: 0,
-          },
-          {
-            id: 3,
-            createdBy: '',
-            createdDate: new Date(),
-            updateBy: '',
-            updateDate: new Date(),
-            value: '6',
-            label: 'Option C',
-            weight: 25,
-            questionId: 2,
-            maximumRelative: 0,
-            minimumRelative: 0,
-          },
-        ],
-      },
-    ];
+  get controlTypeEnum() {
+    return ControlType;
   }
 
-  ngOnInit() {
-    this.form = this.toFormGroup(this.questions);
+  constructor(
+    private dataUpdated: DataUpdatedService,
+    public questionSandbox: QuestionsSandbox,
+    public donationSandbox: DonationsSandbox
+  ) {}
 
-    // Updates table when a new donation is created
-    this.dataUpdated.currentStatus.subscribe((dataSaved) => (this.dataSaved = dataSaved));
+  ngOnInit(): void {
+    this.questionSandbox.loadQuestions();
+    this.registerEvents();
   }
 
-  average() {
-    let sum = 0;
-    this.questions.forEach((element) => {
-      sum += this.form.controls[element.key].value;
-    });
-    return sum;
+  ngOnDestroy(): void {
+    this.unregisterEvents();
+  }
+
+  registerEvents(): void {
+    this.subscriptions.push(
+      this.questionSandbox.questions$.subscribe((questions) => {
+        this.questions = questions;
+        this.form = this.toFormGroup(this.questions);
+      })
+    );
+    this.subscriptions.push(
+      this.donationSandbox.donationRequest$.subscribe((donationRequest) => {
+        this.donationRequest = donationRequest;
+      })
+    );
+  }
+
+  private unregisterEvents() {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   private validateFormGroup(formGroup: FormGroup) {
@@ -175,22 +71,36 @@ export class DonationPriorityComponent implements OnInit {
 
   onSubmit() {
     this.validateFormGroup(this.form);
-    if (this.form.valid) {
-      this.isSubmited.emit(this.average());
-
+    if (this.valid) {
+      this.addQuestionsSubmited();
+      this.questionSandbox.updateQuestionsResult(this.questionResult);
       this.dataUpdated.changeMessage(true);
+      this.isSubmited.emit(true);
     }
   }
 
   toFormGroup(questions: QuestionModel[]) {
     const group: any = {};
     questions.forEach((question) => {
-      group[question.key] = new FormControl('', Validators.required);
+      group[question.id] = new FormControl('', Validators.required);
     });
-    return this.formBuilder.group(group);
+    return new FormGroup(group);
   }
 
   isValid(question: QuestionModel) {
-    return this.form.controls[question.key].valid;
+    this.valid = this.form.controls[question.id].valid;
+  }
+
+  addQuestionsSubmited(): void {
+    this.questionResult = new QuestionResult();
+    let answersQuestion: QuestionAnswer[] = [];
+    this.questions.forEach((question) => {
+      const answerQuestion = new QuestionAnswer();
+      answerQuestion.idQuestion = question.id;
+      answerQuestion.value = this.form.controls[question.id].value;
+      answersQuestion = [...answersQuestion, answerQuestion];
+    });
+    this.questionResult.donationRequestId = this.donationRequest.id;
+    this.questionResult.questionAnswers = answersQuestion;
   }
 }
