@@ -1,14 +1,8 @@
-<nz-header
-  class="header"
-  nz-menu
-  nzTheme="dark"
-  nzMode="horizontal"
-  [style]="{ position: 'fixed', zIndex: 1, width: '100%' }"
->
+<nz-header class="header" nz-menu nzMode="horizontal">
   <div class="logo">
     <a routerLink="/">Donate</a>
   </div>
-  <ul nz-menu nzTheme="dark" nzMode="horizontal" class="float-right">
+  <ul nz-menu nzMode="horizontal">
     <li nz-menu-item *ngIf="!navMenuSandbox.isAuthenticated">
       <a (click)="register()"> {{ 'Auth.Register.Title' | translate }} </a>
     </li>
