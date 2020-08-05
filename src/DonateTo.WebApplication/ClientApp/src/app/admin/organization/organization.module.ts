@@ -53,6 +53,7 @@ import { OrganizationStepContactComponent } from './organization-form/organizati
 import { OrganizationStepAddressComponent } from './organization-form/organization-step-address/organization-step-address.component';
 import { OrganizationDetailComponent } from './organization-detail/organization-detail.component';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { FilterService } from 'src/app/shared/async-services/filter.service';
 
 const ICONS: IconDefinition[] = [
   ArrowLeftOutline,

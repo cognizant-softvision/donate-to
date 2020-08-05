@@ -125,9 +125,10 @@
       "Edit": "Edit Organization",
       "Detail": "Information",
       "Table": {
-        "Name": "Name",
+        "Name": "Organization",
         "Description": "Description",
-        "ContactName": "Contact Name",
+        "UsersQuantity": "Number of Associated Users",
+        "ContactName": "Owner",
         "Action": "Action",
         "Search": "Search",
         "Reset": "Reset",

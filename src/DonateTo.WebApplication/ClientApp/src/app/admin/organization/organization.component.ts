@@ -6,6 +6,7 @@ import { OrganizationSandbox } from './organization-sandbox';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
+import { FilterService } from 'src/app/shared/async-services/filter.service';
 
 @Component({
   selector: 'app-organization-admin',
@@ -20,19 +21,21 @@ export class OrganizationComponent implements OnInit, OnDestroy {
   pageSize = 10;
   pageIndex = 1;
   searchNameValue = '';
-  searchDescriptionValue = '';
+  searchUsersQuantityValue = '';
   searchContactNameValue = '';
   nameVisible = false;
-  descriptionVisible = false;
+  usersQuantityVisible = false;
   contactNameVisible = false;
   failedStatus = false;
   successStatus = false;
   dataSaved = false;
+  filter: string;
 
   constructor(
     private organizationSandbox: OrganizationSandbox,
     public router: Router,
-    private dataUpdated: DataUpdatedService
+    private dataUpdated: DataUpdatedService,
+    private filterUsers: FilterService
   ) {}
 
   ngOnInit(): void {
@@ -85,12 +88,12 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 
   reset(): void {
     this.searchNameValue = '';
-    this.searchDescriptionValue = '';
+    this.searchUsersQuantityValue = '';
     this.searchContactNameValue = '';
     this.organizationFilter = {
       ...this.organizationFilter,
       name: this.searchNameValue,
-      description: this.searchDescriptionValue,
+      description: this.searchUsersQuantityValue,
       contactName: this.searchContactNameValue,
     };
     this.organizationSandbox.loadOrganizationsFilteredPaged(this.organizationFilter);
@@ -103,8 +106,8 @@ export class OrganizationComponent implements OnInit, OnDestroy {
   }
 
   resetDescriptionSearch(): void {
-    this.searchDescriptionValue = '';
-    this.organizationFilter = { ...this.organizationFilter, description: this.searchDescriptionValue };
+    this.searchUsersQuantityValue = '';
+    this.organizationFilter = { ...this.organizationFilter };
     this.organizationSandbox.loadOrganizationsFilteredPaged(this.organizationFilter);
   }
 
@@ -121,8 +124,8 @@ export class OrganizationComponent implements OnInit, OnDestroy {
   }
 
   searchDescription(): void {
-    this.descriptionVisible = false;
-    this.organizationFilter = { ...this.organizationFilter, description: this.searchDescriptionValue };
+    this.usersQuantityVisible = false;
+    this.organizationFilter = { ...this.organizationFilter };
     this.organizationSandbox.loadOrganizationsFilteredPaged(this.organizationFilter);
   }
 
@@ -144,5 +147,10 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 
   private unregisterEvents() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+  seeAssociatedUsers(organizationName: string) {
+    this.filterUsers.changeFilter(organizationName);
+    this.router.navigate(['./admin/users']);
   }
 }

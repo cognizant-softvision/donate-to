@@ -74,11 +74,13 @@ export class OrganizationFormComponent implements OnInit {
   done(): void {
     this.setOrganization();
 
-    if (this.organization.id) {
-      this.organizationSandbox.updateOrganization(this.organization);
-      this.dataUpdated.changeMessage(true);
-    } else {
-      this.organizationSandbox.addOrganization(this.organization);
+    if (this.organization.addresses.length > 0) {
+      if (this.organization.id) {
+        this.organizationSandbox.updateOrganization(this.organization);
+        this.dataUpdated.changeMessage(true);
+      } else {
+        this.organizationSandbox.addOrganization(this.organization);
+      }
     }
 
     this.router.navigate(['/admin/organizations']);
