@@ -5,17 +5,37 @@
 // An override for the html selector for theme prefixes
 @html-selector: html;
 
+// Softvision Color Pallet
+@primary-lead-black: #222222;
+@primary-ghost-white: #f2f2f2;
+@primary-orange: #ff8f1c;
+@primary-dark-orange: #f4633a;
+@primary-magenta: #c800a1;
+@primary-purple: #5c068c;
+
+@secondary-neutral-gray: #c4c4c4;
+@secondary-green: #00bb50;
+
+// Softvision Gradients
+@gradient-warm1:linear-gradient (to right,#FF8F1C , #F4633A);
+@gradient-warm2:linear-gradient (to right,#F4633A , #C800A1);
+@gradient-warm3:linear-gradient (to right,#C800A1 , #0033A0);
+
+@gradient-cold1:linear-gradient (to right,#0033A0 , #00BB50);
+@gradient-cold2:linear-gradient (to right,#0033A0 , #0066FF,#66FFCC);
+@gradient-cold2:linear-gradient (to right,#FF8F1C , #C800A1,#5C068C);
+
 // -------- Colors -----------
-@primary-color: @blue-6;
-@info-color: @blue-6;
+@primary-color: @primary-lead-black;
+@info-color: @primary-lead-black;
 @success-color: @green-6;
-@processing-color: @blue-6;
+@processing-color: @primary-lead-black;
 @error-color: @red-6;
 @highlight-color: @red-6;
 @warning-color: @gold-6;
-@normal-color: #d9d9d9;
-@white: #fff;
-@black: #000;
+@normal-color: @primary-lead-black;
+@white: @primary-ghost-white;
+@black: @primary-lead-black;
 
 // Color used by default to control hover and active backgrounds and for
 // alert info backgrounds.
@@ -36,12 +56,12 @@
 // ---
 
 // Background color for `<body>`
-@body-background: #fff;
+@body-background: @primary-ghost-white;
 // Base background color for most components
-@component-background: #fff;
-@font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
-  'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-@code-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+@component-background: @primary-ghost-white;
+@font-family: 'Proxima Nova', 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue',
+  Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+@code-family: 'Proxima Nova', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
 @text-color: fade(@black, 65%);
 @text-color-secondary: fade(@black, 45%);
 @text-color-inverse: @white;
@@ -54,15 +74,15 @@
 @text-selection-bg: @primary-color;
 @font-variant-base: tabular-nums;
 @font-feature-settings-base: 'tnum';
-@font-size-base: 14px;
+@font-size-base: 20px;
 @font-size-lg: @font-size-base + 2px;
-@font-size-sm: 12px;
+@font-size-sm: 18px;
 @heading-1-size: ceil(@font-size-base * 2.71);
 @heading-2-size: ceil(@font-size-base * 2.14);
 @heading-3-size: ceil(@font-size-base * 1.71);
 @heading-4-size: ceil(@font-size-base * 1.42);
 @line-height-base: 1.5;
-@border-radius-base: 4px;
+@border-radius-base: 2px;
 @border-radius-sm: 2px;
 
 // vertical paddings
@@ -124,7 +144,7 @@
 // Disabled states
 @disabled-color: fade(#000, 25%);
 @disabled-bg: @background-color-base;
-@disabled-color-dark: fade(#fff, 35%);
+@disabled-color-dark: fade(@primary-ghost-white, 35%);
 
 // Shadow
 @shadow-color: rgba(0, 0, 0, 0.15);
@@ -184,11 +204,11 @@
 // Checkbox
 @checkbox-size: 16px;
 @checkbox-color: @primary-color;
-@checkbox-check-color: #fff;
+@checkbox-check-color: @primary-ghost-white;
 @checkbox-border-width: @border-width-base;
 
 // Descriptions
-@descriptions-bg: #fafafa;
+@descriptions-bg: @primary-ghost-white;
 
 // Dropdown
 @dropdown-selected-color: @primary-color;
@@ -244,7 +264,7 @@
 @grid-gutter-width: 0;
 
 // Layout
-@layout-body-background: #f0f2f5;
+@layout-body-background: @primary-ghost-white;
 @layout-header-background: #001529;
 @layout-footer-background: @layout-body-background;
 @layout-header-height: 64px;
@@ -253,12 +273,12 @@
 @layout-sider-background: @layout-header-background;
 @layout-trigger-height: 48px;
 @layout-trigger-background: #002140;
-@layout-trigger-color: #fff;
+@layout-trigger-color: @primary-ghost-white;
 @layout-zero-trigger-width: 36px;
 @layout-zero-trigger-height: 42px;
 // Layout light theme
-@layout-sider-background-light: #fff;
-@layout-trigger-background-light: #fff;
+@layout-sider-background-light: @primary-ghost-white;
+@layout-trigger-background-light: @primary-ghost-white;
 @layout-trigger-color-light: @text-color;
 
 // z-index list, order by `z-index`
@@ -317,7 +337,7 @@
 @input-color: @text-color;
 @input-border-color: @border-color-base;
 @input-bg: @component-background;
-@input-number-handler-active-bg: #f4f4f4;
+@input-number-handler-active-bg: @primary-ghost-white;
 @input-number-handler-hover-bg: @primary-5;
 @input-number-handler-bg: @component-background;
 @input-number-handler-border-color: @border-color-base;
@@ -343,7 +363,7 @@
 // Tooltip max width
 @tooltip-max-width: 250px;
 // Tooltip text color
-@tooltip-color: #fff;
+@tooltip-color: @primary-ghost-white;
 // Tooltip background color
 @tooltip-bg: rgba(0, 0, 0, 0.75);
 // Tooltip arrow width
@@ -413,9 +433,9 @@
 // dark theme
 @menu-dark-color: @text-color-secondary-dark;
 @menu-dark-bg: @layout-header-background;
-@menu-dark-arrow-color: #fff;
+@menu-dark-arrow-color: @primary-ghost-white;
 @menu-dark-submenu-bg: #000c17;
-@menu-dark-highlight-color: #fff;
+@menu-dark-highlight-color: @primary-ghost-white;
 @menu-dark-item-active-bg: @primary-color;
 @menu-dark-selected-item-icon-color: @white;
 @menu-dark-selected-item-text-color: @white;
@@ -525,7 +545,7 @@
 
 // BackTop
 // ---
-@back-top-color: #fff;
+@back-top-color: @primary-ghost-white;
 @back-top-bg: @text-color-secondary;
 @back-top-hover-bg: @text-color;
 
@@ -538,7 +558,7 @@
 @avatar-font-size-lg: 24px;
 @avatar-font-size-sm: 14px;
 @avatar-bg: #ccc;
-@avatar-color: #fff;
+@avatar-color: @primary-ghost-white;
 @avatar-border-radius: @border-radius-base;
 
 // Switch
@@ -600,7 +620,7 @@
 // ---
 @tree-title-height: 24px;
 @tree-child-padding: 18px;
-@tree-directory-selected-color: #fff;
+@tree-directory-selected-color: @primary-ghost-white;
 @tree-directory-selected-bg: @primary-color;
 @tree-node-hover-bg: @item-hover-bg;
 @tree-node-selected-bg: @primary-2;
@@ -615,7 +635,7 @@
 
 // Skeleton
 // ---
-@skeleton-color: #f2f2f2;
+@skeleton-color: @primary-ghost-white;
 
 // Transfer
 // ---
