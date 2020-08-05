@@ -17,18 +17,18 @@
 @secondary-neutral-gray: #c4c4c4;
 @secondary-green: #00bb50;
 
-// Softvision Gradients
-@gradient-warm1:linear-gradient (to right,#FF8F1C , #F4633A);
-@gradient-warm2:linear-gradient (to right,#F4633A , #C800A1);
-@gradient-warm3:linear-gradient (to right,#C800A1 , #0033A0);
-@gradient-cold1:linear-gradient (to right,#0033A0 , #00BB50);
-@gradient-cold2:linear-gradient (to right,#0033A0 , #0066FF,#66FFCC);
-@gradient-cold2:linear-gradient (to right,#FF8F1C , #C800A1,#5C068C);
+// Softvision Gradients reference
+@gradient-warm1:linear-gradient (90deg,#FF8F1C 0%, #F4633A);
+@gradient-warm2:linear-gradient (90deg, #F4633A 0%, #C800A1 100%);
+@gradient-warm3:linear-gradient (90deg,#C800A1 0%, #0033A0 100%);
+@gradient-cold1:linear-gradient (90deg,#0033A0 0%, #00BB50 100%);
+@gradient-cold2:linear-gradient (90deg,#0033A0 0%, #0066FF,#66FFCC 100%);
+@gradient-cold2:linear-gradient (90deg,#FF8F1C 0%, #C800A1,#5C068C 100%);
 
 // Custom css
 // --- Menu Bottom
 .sv-link-wrapper {
-  background: @gradient-warm2;
+  background: linear-gradient(90deg, #f4633a 0%, #c800a1 100%);
   padding-left: 0px;
   padding-right: 0px;
   border-bottom: none !important;
@@ -56,7 +56,7 @@ a {
 // Switch Radio Botom
 // ---
 .ant-radio-button-wrapper-checked {
-  background: @gradient-warm3!important;
+  background: linear-gradient(90deg, #c800a1 0%, #0033a0 100%) !important;
   border-color: @primary-magenta!important;
   background-color: @primary-magenta!important;
 }
