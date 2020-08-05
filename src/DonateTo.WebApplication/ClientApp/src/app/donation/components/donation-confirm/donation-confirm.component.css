@@ -7,6 +7,17 @@
   text-align: center;
   padding-top: 1em;
 }
+
 .steps-action {
   margin-top: 24px;
+}
+
+.finish-icon-blur {
+  height: 1.2em;
+  filter: invert(92%) sepia(0%) saturate(0%) hue-rotate(173deg) brightness(87%) contrast(93%);
+}
+
+.finish-icon-focus {
+  height: 1.2em;
+  filter: invert(53%) sepia(34%) saturate(7226%) hue-rotate(191deg) brightness(100%) contrast(105%);
 }
