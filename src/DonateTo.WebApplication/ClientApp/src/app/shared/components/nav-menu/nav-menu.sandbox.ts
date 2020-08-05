@@ -9,8 +9,6 @@ import { en_US, es_ES, NzI18nService } from 'ng-zorro-antd';
 @Injectable()
 export class NavMenuSandBox extends Sandbox {
   isSuperAdmin = false;
-  isAdmin = false;
-  isOrganization = false;
 
   constructor(
     protected appState$: Store<store.State>,

@@ -12,7 +12,6 @@ import { IconType } from 'src/app/shared/enum/iconTypes';
 })
 export class AdminLayoutComponent implements OnInit, OnDestroy {
   isSuperAdmin: boolean;
-  isAdmin: boolean;
 
   menus: Array<{ title: string; url: string; iconType: string; show: boolean }> = [];
 
