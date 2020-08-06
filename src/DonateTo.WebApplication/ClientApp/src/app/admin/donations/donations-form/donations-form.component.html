@@ -62,7 +62,9 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label nzFor="observations">{{ 'Admin.Donation.Form.Observations' | translate }}</nz-form-label>
+    <nz-form-label class="observations" nzFor="observations">{{
+      'Admin.Donation.Form.Observations' | translate
+    }}</nz-form-label>
     <nz-form-control>
       <textarea
         [(ngModel)]="observations"
@@ -91,7 +93,7 @@
   <div [formGroup]="donationRequestItemFormGroup" class="create-donation-add-item-container">
     <div class="create-donation-add-item-box-first">
       <div class="create-item-container">
-        <nz-form-label class="donation-item">{{ 'Admin.Donation.Form.DonationItem.Name' | translate }}</nz-form-label>
+        <nz-form-label class="donations-item">{{ 'Admin.Donation.Form.DonationItem.Name' | translate }}</nz-form-label>
         <nz-form-label>{{ 'Admin.Donation.Form.DonationItem.Observation' | translate }}</nz-form-label>
       </div>
       <div class="create-item-container create-donation-add-item-input">
@@ -123,7 +125,7 @@
     </div>
     <div class="create-donation-add-item-box-second">
       <div class="create-item-container">
-        <nz-form-label class="donation-item">{{
+        <nz-form-label class="donations-item">{{
           'Admin.Donation.Form.DonationItem.Quantity' | translate
         }}</nz-form-label>
         <nz-form-label>{{ 'Admin.Donation.Form.DonationItem.Category' | translate }}</nz-form-label>

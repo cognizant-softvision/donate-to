@@ -1,6 +1,6 @@
 <div>
   <div class="create-donation-title">
-    <h4 class="section-title">{{ 'Admin.Donation.Create.Title' | translate }}</h4>
+    <h2 class="section-title">{{ 'Admin.Donation.Create.Title' | translate }}</h2>
   </div>
   <br />
   <app-donations-form></app-donations-form>
@@ -15,7 +15,7 @@
       nzPopconfirmPlacement="bottom"
       (nzOnConfirm)="goBack()"
       nz-button
-      nzType="primary"
+      nzType="secondary"
     >
       {{ 'BackBtn' | translate }}
     </button>

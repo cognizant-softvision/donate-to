@@ -14,6 +14,8 @@
 @primary-magenta: #c800a1;
 @primary-purple: #5c068c;
 
+@sv-hover:rgba (0,0,0,.02);
+
 @secondary-neutral-gray: #c4c4c4;
 @secondary-green: #00bb50;
 
@@ -26,7 +28,7 @@
 @gradient-cold2:linear-gradient (90deg,#FF8F1C 0%, #C800A1,#5C068C 100%);
 
 // Custom css
-// --- Menu Bottom
+// --- Menu
 
 .ant-menu-item:after,
 .ant-menu-item-selected,
@@ -70,6 +72,73 @@ a {
   background-color: @primary-magenta!important;
 }
 
+// Bottoms
+// ---
+.ant-btn {
+  border: 2px solid @primary-lead-black;
+  text-transform: uppercase;
+}
+
+.ant-btn:hover {
+  background: @primary-lead-black;
+  border: 2px solid @primary-lead-black;
+  color: @primary-ghost-white;
+}
+
+.ant-btn-primary:not(disabled) {
+  background: linear-gradient(90deg, #f4633a 0%, #c800a1 100%);
+  border: 2px solid @primary-dark-orange;
+}
+.ant-btn-primary:active,
+.ant-btn-primary:focus,
+.ant-btn-primary:hover {
+  background: @primary-ghost-white;
+  color: @primary-dark-orange;
+  border: 2px solid @primary-dark-orange;
+}
+
+.ant-btn:disabled {
+  color: rgba(0, 0, 0, 0.25) !important;
+  background-color: #f5f5f5 !important;
+  border-color: #d9d9d9 !important;
+  text-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.ant-btn-sm {
+  font-size: 15px;
+}
+
+svg:hover {
+  color: @primary-magenta;
+}
+
+// Hover
+// ---
+
+.ant-select-item-option-active {
+  background: @sv-hover!important;
+}
+
+//Pagination
+// ---
+.ant-pagination-item-link,
+.ant-pagination-prev,
+.ant-pagination-next,
+.ant-pagination-item {
+  background: #ffffff;
+  border: 1px solid #f2f2f2;
+  box-shadow: 0px 7px 64px rgba(0, 0, 0, 0.07);
+  border-radius: 8px !important;
+}
+
+.ant-pagination-next:hover,
+.ant-pagination-prev:hover,
+.ant-pagination-item:hover a,
+.ant-pagination-item-active a {
+  color: @primary-magenta!important;
+}
+
 // -------- Colors -----------
 @primary-color: @primary-lead-black;
 @info-color: @primary-lead-black;
@@ -84,15 +153,15 @@ a {
 
 // Color used by default to control hover and active backgrounds and for
 // alert info backgrounds.
-@primary-1: color(~`colorPalette('@{primary-color}', 1) `); // replace tint(@primary-color, 90%)
-@primary-2: color(~`colorPalette('@{primary-color}', 2) `); // replace tint(@primary-color, 80%)
+@primary-1: color(~`colorPalette('@{sv-hover}', 1) `); // replace tint(@primary-color, 90%)
+@primary-2: color(~`colorPalette('@{sv-hover}', 2) `); // replace tint(@primary-color, 80%)
 @primary-3: color(~`colorPalette('@{primary-color}', 3) `); // unused
 @primary-4: color(~`colorPalette('@{primary-color}', 4) `); // unused
 @primary-5: color(
   ~`colorPalette('@{primary-color}', 5) `
 ); // color used to control the text color in many active and hover states, replace tint(@primary-color, 20%)
-@primary-6: @primary-color; // color used to control the text color of active buttons, don't use, use @primary-color
-@primary-7: color(~`colorPalette('@{primary-color}', 7) `); // replace shade(@primary-color, 5%)
+@primary-6: @sv-hover; // color used to control the text color of active buttons, don't use, use @primary-color
+@primary-7: color(~`colorPalette('@{sv-hover}', 7) `); // replace shade(@primary-color, 5%)
 @primary-8: color(~`colorPalette('@{primary-color}', 8) `); // unused
 @primary-9: color(~`colorPalette('@{primary-color}', 9) `); // unused
 @primary-10: color(~`colorPalette('@{primary-color}', 10) `); // unused
@@ -121,7 +190,7 @@ a {
 @font-feature-settings-base: 'tnum';
 @font-size-base: 20px;
 @font-size-lg: @font-size-base + 2px;
-@font-size-sm: 18px;
+@font-size-sm: 15px;
 @heading-1-size: ceil(@font-size-base * 2.71);
 @heading-2-size: ceil(@font-size-base * 2.14);
 @heading-3-size: ceil(@font-size-base * 1.71);
@@ -493,11 +562,11 @@ a {
 
 // Table
 // --
-@table-header-bg: @background-color-light;
+@table-header-bg: @sv-hover;
 @table-header-color: @heading-color;
-@table-header-sort-bg: @background-color-base;
+@table-header-sort-bg: @sv-hover;
 @table-body-sort-bg: rgba(0, 0, 0, 0.01);
-@table-row-hover-bg: @primary-1;
+@table-row-hover-bg: @sv-hover;
 @table-selected-row-color: inherit;
 @table-selected-row-bg: #fafafa;
 @table-body-selected-sort-bg: @table-selected-row-bg;
@@ -619,8 +688,8 @@ a {
 // ---
 @pagination-item-size: 32px;
 @pagination-item-size-sm: 24px;
-@pagination-font-family: Arial;
-@pagination-font-weight-active: 600;
+@pagination-font-family: @font-family;
+@pagination-font-weight-active: 400;
 @pagination-item-bg-active: @component-background;
 
 // PageHeader

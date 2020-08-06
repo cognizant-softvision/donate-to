@@ -4,7 +4,9 @@
   <span>
     {{ 'RequestDonation.Priority' | translate }}:
     <nz-rate [ngModel]="getPriority()" nzAllowHalf [nzCharacter]="heartIcon" disabled></nz-rate>
-    <ng-template #heartIcon><i nz-icon nzType="heart" nzTheme="fill" className="rate-icon"></i></ng-template>
+    <ng-template #heartIcon
+      ><i nz-icon nzType="heart" class="hearts" nzTheme="fill" className="rate-icon"></i
+    ></ng-template>
   </span>
   <br />
   <span>{{ 'RequestDonation.CreatedOn' | translate }}: {{ item.createdDate | date: 'fullDate' }}</span
