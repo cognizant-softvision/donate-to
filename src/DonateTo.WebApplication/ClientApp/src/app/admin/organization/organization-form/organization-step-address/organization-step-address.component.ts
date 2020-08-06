@@ -77,11 +77,13 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
     this.registerEvents();
     this.organizationSandbox.loadCountries();
 
-    this.organizationSandbox.organization$.subscribe((organization) => {
-      if (organization) {
-        this.addresses = [...organization.addresses];
-      }
-    });
+    if (this.isEditOrganization) {
+      this.organizationSandbox.organization$.subscribe((organization) => {
+        if (organization) {
+          this.addresses = [...organization.addresses];
+        }
+      });
+    }
   }
 
   ngOnDestroy(): void {

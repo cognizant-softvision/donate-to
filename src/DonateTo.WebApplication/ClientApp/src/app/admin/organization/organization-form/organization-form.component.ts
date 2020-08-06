@@ -5,6 +5,7 @@ import { OrganizationStepAddressComponent } from './organization-step-address/or
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
+import { OrganizationStepGeneralInformationComponent } from './organization-step-general-information/organization-step-general-information.component';
 
 @Component({
   selector: 'app-organization-form',
@@ -12,6 +13,9 @@ import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.s
   styleUrls: ['./organization-form.component.css'],
 })
 export class OrganizationFormComponent implements OnInit {
+  @ViewChild(OrganizationStepGeneralInformationComponent)
+  private organizationStepGeneralInformationComponent: OrganizationStepGeneralInformationComponent;
+
   @ViewChild(OrganizationStepAddressComponent)
   private organizationStepAddressComponent: OrganizationStepAddressComponent;
 
@@ -55,6 +59,8 @@ export class OrganizationFormComponent implements OnInit {
           this.organization = o;
         })
       );
+
+      this.isEditOrganization = true;
     }
 
     this.dataUpdated.currentStatus.subscribe((dataSaved) => (this.dataSaved = dataSaved));
@@ -80,6 +86,7 @@ export class OrganizationFormComponent implements OnInit {
         this.dataUpdated.changeMessage(true);
       } else {
         this.organizationSandbox.addOrganization(this.organization);
+        this.dataUpdated.changeMessage(true);
       }
     }
 
