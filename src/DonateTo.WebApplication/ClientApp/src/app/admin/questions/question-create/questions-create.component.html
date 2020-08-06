@@ -36,7 +36,7 @@
           </nz-form-item>
           <div class="item-quantity">
             <nz-form-item>
-              <nz-form-control nzErrorTip="{{ 'Admin.Questions.Form.DefaultValueRequired' | translate }}">
+              <nz-form-control>
                 <input
                   nz-input
                   placeholder="{{ 'Admin.Questions.Form.DefaultValuePlaceHolder' | translate }}"
@@ -166,11 +166,11 @@
               </ng-container>
             </nz-form-item>
 
-            <nz-form-item class="option-list">
+            <nz-form-item>
               <nz-form-control>
                 <button nz-button nzType="dashed" class="add-button" (click)="addField($event)">
                   <i nz-icon nzType="plus"></i>
-                  Add field
+                  {{ 'Admin.Questions.Create.AddField' | translate }}
                 </button>
               </nz-form-control>
             </nz-form-item>
@@ -204,20 +204,23 @@
               </nz-form-item>
             </nz-checkbox-wrapper>
 
-            <nz-form-item class="option-list">
+            <nz-form-item>
               <nz-form-control>
                 <button nz-button nzType="dashed" class="add-button-dropdown" (click)="addField($event)">
                   <i nz-icon nzType="plus"></i>
-                  Add field
+                  {{ 'Admin.Questions.Create.AddField' | translate }}
                 </button>
               </nz-form-control>
             </nz-form-item>
           </nz-form-item>
           <div *ngIf="!isWeightValid" class="error-required">
-            {{ 'Admin.Questions.Form.PriorityWeightError' | translate }}"
+            {{ 'Admin.Questions.Form.PriorityWeightError' | translate }}
           </div>
           <div *ngIf="!isRangeValid" class="error-required">
-            {{ 'Admin.Questions.Form.PriorityRangeError' | translate }}"
+            {{ 'Admin.Questions.Form.PriorityRangeError' | translate }}
+          </div>
+          <div *ngIf="orderExist" class="error-required">
+            {{ 'Admin.Questions.Form.OrderAlreadyExistError' | translate }}
           </div>
         </div>
       </div>

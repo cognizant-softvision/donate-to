@@ -176,23 +176,37 @@
     },
     "Questions": {
       "Title": "Prioridad de preguntas",
+      "CreateConfirm": "Está seguro de que quiere crear una nueva pregunta?",
+      "EditConfirm": "Estas seguro que quieres editar esta pregunta?",
       "Create": {
         "Title": "Crear pregunta",
-        "CreateRequest": "Crear preguntas"
+        "CreateRequest": "Crear preguntas",
+        "AddField": "Agregar Campo"
       },
       "Edit": {
         "Title": "Edit Question"
       },
       "Table": {
-        "LabelColumn": "Etiqueta",
-        "PlaceholderColumn": "Marcador",
-        "OrderColumnColumn": "Orden",
-        "WeightColumn": "Peso",
-        "ControlTypeColumn": "Tipo Control",
-        "DefaultValueColumn": "Valor default",
-        "OptionsColumn": "Opciones",
+        "Label": "Etiqueta",
+        "Placeholder": "Marcador",
+        "Order": "Orden",
+        "Weight": "Peso",
+        "ControlType": "Tipo Control",
+        "DefaultValue": "Valor default",
+        "Options": "Opciones",
         "DeleteQuestion": "Eliminar",
-        "EditQuestion": "Editar"
+        "EditQuestion": "Editar",
+        "Type": "Tipo",
+        "Action": "Acción",
+        "Search": "Buscar",
+        "Reset": "Reestablecer",
+        "Filtered": "Filtrada",
+        "OptionsTitle": "Opciones",
+        "Option": {
+          "Label": "Título",
+          "Value": "Valor",
+          "Weight": "Peso"
+        }
       },
       "Form": {
         "Label": "Etiqueta",
@@ -208,7 +222,6 @@
         "ControlTypePlaceHolder": "Tipo Control",
         "DefaultValuePlaceHolder": "Valor default",
         "LabelRequired": "Etiqueta es requerida",
-        "DefaultValueRequired": "Valor default es requerido",
         "OrderRequired": "Orden es requerido",
         "WeightRequired": "Peso es requerido",
         "PlaceholderRequired": "Nombre marcador es requerido",
@@ -216,30 +229,8 @@
         "AddItem": "Agregar Pregunta",
         "PriorityQuestionRequiredError": "Por lo menos una pregunta de prioridad es requerida y el peso debe llegar a 100%.",
         "PriorityRangeError": "El rango no cubre la totalidad de valores.",
-        "PriorityWeightError": "El peso de las opciones debe sumar un total de 100."
-      },
-      "CreateConfirm": "Está seguro de que quiere crear una nueva pregunta?",
-      "EditConfirm": "Estas seguro que quieres editar esta pregunta?"
-    },
-    "Question": {
-      "Title": "Preguntas",
-      "CreateConfirm": "Estas seguro que quieres crear una pregunta?",
-      "Table": {
-        "Label": "Título",
-        "Type": "Tipo",
-        "Placeholder": "Marcador",
-        "Weight": "Peso",
-        "Order": "Órden",
-        "Action": "Acción",
-        "Search": "Buscar",
-        "Reset": "Reestablecer",
-        "Filtered": "Filtrada",
-        "OptionsTitle": "Opciones",
-        "Option": {
-          "Label": "Título",
-          "Value": "Valor",
-          "Weight": "Peso"
-        }
+        "PriorityWeightError": "El peso de las opciones debe sumar un total de 100.",
+        "OrderAlreadyExistError": "El Orden ingresado ya fue seleccionado, por favor elija otro."
       }
     },
     "User": {
@@ -264,6 +255,10 @@
     "Organization": "Organización",
     "DonationItemsCount": "Items Donados",
     "DonationRequest": "Solicitud",
+    "ResponsableStepTitle": "¿Quién Soy?",
+    "AddressStepTitle": "¿Dónde retiramos la donación?",
+    "PickUpDateStepTitle": "¿Que días podemos retirarlo?",
+    "FinishStepTitle": "Finalizar",
     "List": {
       "Status": "Filtrado Por Estado"
     }
@@ -335,25 +330,27 @@
         "Position": "Posición",
         "PositionPlaceHolder": "Posición"
       },
-      "FinishStep": {
-        "Observation": "Observación",
-        "ObservationPlaceHolder": "Observación",
-        "WeekDay": "Día de semana",
-        "WeekDayPlaceHolder": "Día de semana",
-        "RequiredWeekDay": "Por favor ingrese un día de la semana!",
-        "StartTime": "Horario inicial",
-        "StartTimePlaceHolder": "Horario inicial",
+      "AvailabilityStep": {
+        "Day": "Día",
+        "DayPlaceHolder": "Día",
+        "RequiredDay": "Por favor ingrese un día!",
+        "StartTime": "Desde",
+        "StartTimePlaceHolder": "Desde",
         "RequiredStartTime": "Por favor ingrese un horario inicial!",
-        "FinishTime": "Horario final",
-        "FinishTimePlaceHolder": "Horario final",
+        "FinishTime": "Hasta",
+        "FinishTimePlaceHolder": "Hasta",
         "RequiredFinishTime": "Por favor ingrese un horario final!",
         "AddAvailabilityButton": "Agregar disponibilidad",
-        "WeekDayColumn": "Día de semana",
-        "StartTimeColumn": "Horario inicial",
-        "FinishTimeColumn": "Horario final",
+        "DayColumn": "Día",
+        "StartTimeColumn": "Desde",
+        "FinishTimeColumn": "Hasta",
         "OperationColumn": "Operación",
         "StartTimeGreaterThanFinishTime": "El horario inicial es mayor al horario final!",
         "FinishTimeLessThanStartTime": "El horario final es menor al inicial!"
+      },
+      "FinishStep": {
+        "Observation": "Observación",
+        "ObservationPlaceHolder": "Observación"
       }
     },
     "DonationItemList": {

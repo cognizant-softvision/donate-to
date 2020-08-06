@@ -2,6 +2,7 @@
 using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Interfaces.Repositories;
 using DonateTo.ApplicationCore.Interfaces.Services;
+using DonateTo.ApplicationCore.Models;
 using DonateTo.ApplicationCore.Models.Filtering;
 using DonateTo.ApplicationCore.Models.Pagination;
 using LinqKit;
@@ -9,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -81,6 +83,29 @@ namespace DonateTo.Services
             }
 
             return predicate;
+        }
+
+        public decimal CalculateWeightQuestionAsync(QuestionResult questionResults)
+        {
+            decimal totalWeight = 0;
+            CultureInfo culture = new CultureInfo("en-US");
+            questionResults.QuestionAnswers.ToList().ForEach(result =>
+            {
+                var question = _questionRepository.GetAsync(q => q.Id == result.IdQuestion).Result.FirstOrDefault();
+                var option = new QuestionOption();
+                if (question.ControlTypeId == ControlTypes.Textbox)
+                {
+                    var decimalValue = Convert.ToDecimal(result.Value, culture);
+                    option = question.Options.ToList().FirstOrDefault(opt => (opt.MinimumRelative <= decimalValue && decimalValue <= opt.MaximumRelative));
+                }
+                else
+                {
+                    option = question.Options.FirstOrDefault(opt => opt.Label == result.Value);
+                }
+                totalWeight += (question.Weight / 100) * (option.Weight / 100) * 100;
+            });
+
+            return totalWeight;
         }
     }
 }
