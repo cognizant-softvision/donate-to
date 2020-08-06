@@ -1,9 +1,9 @@
-.steps-container {
+.tabs-container {
   max-width: 100em;
   margin: auto;
 }
 
-.steps-action {
+.finish-button {
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;

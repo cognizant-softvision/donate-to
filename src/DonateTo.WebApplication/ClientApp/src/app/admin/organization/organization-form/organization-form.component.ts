@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AddressModel, ContactModel, OrganizationModel } from '../../../shared/models';
 import { OrganizationSandbox } from '../organization-sandbox';
 import { OrganizationStepAddressComponent } from './organization-step-address/organization-step-address.component';
@@ -6,15 +6,21 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
 import { OrganizationStepGeneralInformationComponent } from './organization-step-general-information/organization-step-general-information.component';
+import { NzTabsCanDeactivateFn } from 'ng-zorro-antd';
+import { OrganizationStepContactComponent } from './organization-step-contact/organization-step-contact.component';
 
 @Component({
   selector: 'app-organization-form',
   templateUrl: './organization-form.component.html',
   styleUrls: ['./organization-form.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrganizationFormComponent implements OnInit {
   @ViewChild(OrganizationStepGeneralInformationComponent)
   private organizationStepGeneralInformationComponent: OrganizationStepGeneralInformationComponent;
+
+  @ViewChild(OrganizationStepContactComponent)
+  private organizationStepContactComponent: OrganizationStepContactComponent;
 
   @ViewChild(OrganizationStepAddressComponent)
   private organizationStepAddressComponent: OrganizationStepAddressComponent;
@@ -24,9 +30,6 @@ export class OrganizationFormComponent implements OnInit {
 
   // Step status
   currentStep = 0;
-  statusGeneralInformation = 'process';
-  statusContact = 'wait';
-  statusAddress = 'wait';
   nextStepDisabled = true;
 
   // Child component form
@@ -43,6 +46,29 @@ export class OrganizationFormComponent implements OnInit {
   isEditOrganization = false;
   organization: OrganizationModel;
   dataSaved = false;
+
+  // Tabs
+  generalInformationTabDisabled = false;
+  tabs = [
+    {
+      disabled: false,
+      name: 'Admin.Organization.OrganizationSteps.GeneralInformation.GeneralInformation',
+      icon: 'info-circle',
+      currentStep: 0,
+    },
+    {
+      disabled: false,
+      name: 'Admin.Organization.OrganizationSteps.Contact.Contact',
+      icon: 'user',
+      currentStep: 1,
+    },
+    {
+      disabled: false,
+      name: 'Admin.Organization.OrganizationSteps.Address.Address',
+      icon: 'home',
+      currentStep: 2,
+    },
+  ];
 
   constructor(
     public organizationSandbox: OrganizationSandbox,
@@ -66,17 +92,6 @@ export class OrganizationFormComponent implements OnInit {
     this.dataUpdated.currentStatus.subscribe((dataSaved) => (this.dataSaved = dataSaved));
   }
 
-  prev(): void {
-    this.currentStep -= 1;
-    this.changeStatus();
-  }
-
-  next(): void {
-    this.currentStep += 1;
-    this.changeStatus();
-    this.nextStepDisabled = true;
-  }
-
   done(): void {
     this.setOrganization();
 
@@ -91,29 +106,6 @@ export class OrganizationFormComponent implements OnInit {
     }
 
     this.router.navigate(['/admin/organizations']);
-  }
-
-  changeStatus() {
-    switch (this.currentStep) {
-      case 0: {
-        this.statusGeneralInformation = 'process';
-        this.statusContact = 'wait';
-        this.statusAddress = 'wait';
-        break;
-      }
-      case 1: {
-        this.statusGeneralInformation = 'finish';
-        this.statusContact = 'process';
-        this.statusAddress = 'wait';
-        break;
-      }
-      case 2: {
-        this.statusGeneralInformation = 'finish';
-        this.statusContact = 'finish';
-        this.statusAddress = 'process';
-        break;
-      }
-    }
   }
 
   updateStepsData(): void {
@@ -197,4 +189,41 @@ export class OrganizationFormComponent implements OnInit {
 
     return this.organization;
   }
+
+  canDeactivate: NzTabsCanDeactivateFn = (fromIndex: number, toIndex: number) => {
+    switch (fromIndex) {
+      case 0:
+        if (this._isGeneralInformationStepReady) {
+          if (toIndex === 2 && this._isContactStepReady) {
+            this.currentStep = toIndex;
+            return toIndex === 2;
+          }
+          this.currentStep = 1;
+          return toIndex === 1;
+        } else {
+          this.organizationStepGeneralInformationComponent.validateForm();
+          this.currentStep = 0;
+          return toIndex === 0;
+        }
+      case 1:
+        if (toIndex === 0) {
+          this.currentStep = 0;
+          return toIndex === 0;
+        }
+
+        if (toIndex === 2 && this._isContactStepReady) {
+          this.currentStep = 2;
+          return toIndex === 2;
+        } else {
+          this.organizationStepContactComponent.validateForm();
+          this.currentStep = 1;
+          return toIndex === 1;
+        }
+      case 2:
+        this.currentStep = toIndex;
+        return true;
+      default:
+        return true;
+    }
+  };
 }

@@ -130,7 +130,7 @@
         "Description": "Descripción",
         "UsersQuantity": "Cantidad de Usuarios Asociados",
         "ContactName": "Nombre del Responsable",
-        "Branches": "Cantidad de Direcciones",
+        "Branches": "Direcciones",
         "Action": "Acción",
         "Search": "Buscar",
         "Reset": "Reestablecer",
@@ -140,6 +140,8 @@
         "Title": "Crear Organización"
       },
       "OrganizationSteps": {
+        "CreateOrganizationButton": "Crear Organización",
+        "FinishEditOrganizationButton": "Finalizar Edición",
         "GeneralInformation": {
           "GeneralInformation": "Información General",
           "OrganizationName": "Nombre de la Organización",

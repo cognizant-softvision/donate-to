@@ -130,7 +130,7 @@
         "Description": "Description",
         "UsersQuantity": "Number of Associated Users",
         "ContactName": "Owner",
-        "Branches": "Number of Addresses",
+        "Branches": "Branches",
         "Action": "Action",
         "Search": "Search",
         "Reset": "Reset",
@@ -140,6 +140,8 @@
         "Title": "Create Organization"
       },
       "OrganizationSteps": {
+        "CreateOrganizationButton": "Create Organization",
+        "FinishEditOrganizationButton": "Finish Editing",
         "GeneralInformation": {
           "GeneralInformation": "General Information",
           "OrganizationName": "Organization Name",
