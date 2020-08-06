@@ -11,7 +11,7 @@ import { UserModel } from 'src/app/shared/models';
 export class MyProfileComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
-  listOfRow: Array<{ row: string; value: string }> = [];
+  listOfRow: Array<{ row: string; value: string; required: boolean }> = [];
   user = new UserModel();
 
   @ViewChildren('userData') inputs;
@@ -43,10 +43,10 @@ export class MyProfileComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.userSandbox.user$.subscribe((user) => {
         this.listOfRow = [
-          { row: 'UserProfile.FirstName', value: user.firstName },
-          { row: 'UserProfile.LastName', value: user.lastName },
-          { row: 'UserProfile.IdentityNumber', value: user.identityNumber },
-          { row: 'UserProfile.PhoneNumber', value: user.phoneNumber },
+          { row: 'UserProfile.FirstName', value: user.firstName, required: true },
+          { row: 'UserProfile.LastName', value: user.lastName, required: true },
+          { row: 'UserProfile.IdentityNumber', value: user.identityNumber, required: false },
+          { row: 'UserProfile.PhoneNumber', value: user.phoneNumber, required: false },
         ];
 
         this.user = { ...user };
