@@ -1,14 +1,12 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { Sandbox } from 'src/app/shared/sandbox/base.sandbox';
+import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import * as store from 'src/app/shared/store';
-import { Subscription } from 'rxjs';
-import { OrganizationFilter } from 'src/app/shared/models/filters/organization-filter';
-import { OrganizationModel } from 'src/app/shared/models';
+import * as store from '../../shared/store';
+import { OrganizationFilter } from '../../shared/models/filters/organization-filter';
+import { OrganizationModel } from '../../shared/models';
+import { Sandbox } from '../../shared/sandbox/base.sandbox';
 
 @Injectable()
-export class OrganizationSandbox extends Sandbox implements OnDestroy {
-  private subscriptions: Subscription[] = [];
+export class OrganizationSandbox extends Sandbox {
   countries$ = this.appState$.select(store.fromAddress.getCountries);
   states$ = this.appState$.select(store.fromAddress.getStates);
   cities$ = this.appState$.select(store.fromAddress.getCities);
@@ -20,11 +18,6 @@ export class OrganizationSandbox extends Sandbox implements OnDestroy {
 
   constructor(protected appState$: Store<store.State>) {
     super(appState$);
-    this.registerEvents();
-  }
-
-  ngOnDestroy(): void {
-    this.unregisterEvents();
   }
 
   /**
@@ -70,16 +63,4 @@ export class OrganizationSandbox extends Sandbox implements OnDestroy {
   public loadOrganization(organizationId: number): void {
     this.appState$.dispatch(store.fromOrganization.loadOrganization({ organizationId }));
   }
-
-  /**
-   * Unsubscribes from events
-   */
-  public unregisterEvents() {
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
-  }
-
-  /**
-   * Subscribes to events
-   */
-  private registerEvents(): void {}
 }

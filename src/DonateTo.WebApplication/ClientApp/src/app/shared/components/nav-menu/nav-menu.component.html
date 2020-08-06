@@ -9,22 +9,22 @@
     <a routerLink="/">Donate</a>
   </div>
   <ul nz-menu nzTheme="dark" nzMode="horizontal" class="float-right">
-    <li nz-menu-item *ngIf="!navMenuSandbox.isAuthenticated">
+    <li nz-menu-item *ngIf="!isAuthenticated">
       <a (click)="register()"> {{ 'Auth.Register.Title' | translate }} </a>
     </li>
-    <li nz-menu-item *ngIf="!navMenuSandbox.isAuthenticated">
+    <li nz-menu-item *ngIf="!isAuthenticated">
       <a (click)="login()"> {{ 'Auth.Login.Title' | translate }} </a>
     </li>
-    <li nz-menu-item *ngIf="navMenuSandbox.isAuthenticated">
+    <li nz-menu-item *ngIf="isAuthenticated">
       <a [routerLink]="['/donation/my-donations']"> {{ 'NavBar.MyDonations' | translate }} </a>
     </li>
-    <li nz-menu-item *ngIf="navMenuSandbox.isAuthenticated">
+    <li nz-menu-item *ngIf="isAuthenticated">
       <a [routerLink]="['/my-profile']">{{ 'UserProfile.MyProfile' | translate }}</a>
     </li>
-    <li nz-menu-item *ngIf="navMenuSandbox.isAuthenticated && navMenuSandbox.hasAdminRole">
+    <li nz-menu-item *ngIf="isAuthenticated && isOrganization">
       <a href="/admin"> Admin </a>
     </li>
-    <li nz-menu-item *ngIf="navMenuSandbox.isAuthenticated">
+    <li nz-menu-item *ngIf="isAuthenticated">
       <a (click)="logout()">{{ 'ProfileActionBar.Logout' | translate }}</a>
     </li>
     <li nz-menu-item>

@@ -1,7 +1,6 @@
 import { DonationRequestModel } from '../shared/models';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
 import { Sandbox } from '../shared/sandbox/base.sandbox';
 import * as store from '../shared/store';
 import { AuthSandbox } from '../shared/auth/auth.sandbox';
@@ -13,11 +12,8 @@ export class HomeSandbox extends Sandbox {
   donationRequestsPaged$ = this.appState$.select(store.fromDonationRequest.getAllDonationRequestsPaged);
   donationRequestsSearchPaged$ = this.appState$.select(store.fromDonationRequest.getAllDonationRequestsSearchPaged);
 
-  private subscriptions: Subscription[] = [];
-
   constructor(protected appState$: Store<store.State>, public authSandbox: AuthSandbox) {
     super(appState$);
-    this.registerEvents();
   }
 
   /**
@@ -70,14 +66,5 @@ export class HomeSandbox extends Sandbox {
    */
   public unregisterEvents() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
-  }
-
-  /**
-   * Subscribes to events
-   */
-  private registerEvents(): void {
-    this.subscriptions.push(
-      this.isAuthenticated$.subscribe((isAuthenticated) => (this.isAuthenticated = isAuthenticated))
-    );
   }
 }
