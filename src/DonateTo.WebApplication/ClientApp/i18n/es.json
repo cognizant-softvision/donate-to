@@ -232,7 +232,7 @@
       "Title": "Usuarios",
       "Associate": "Administrar Asociaciones",
       "SelectOrganization": "Seleccionar Organizaciones",
-      "OrganizationTitle": "Organización",
+      "OrganizationTitleJoin": "para",
       "Table": {
         "Name": "Nombre",
         "Organization": "Organización",

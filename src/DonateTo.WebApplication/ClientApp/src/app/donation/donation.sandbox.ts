@@ -1,6 +1,5 @@
 import { Injectable, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
 import { Sandbox } from '../shared/sandbox/base.sandbox';
 import * as store from '../shared/store';
 import { DonationModel } from '../shared/models/donation.model';
@@ -17,11 +16,8 @@ export class DonationSandbox extends Sandbox {
   cities$ = this.appState$.select(store.fromAddress.getCities);
   newDonationLoading$ = this.appState$.select(store.fromDonation.getNewDonationLoading);
 
-  private subscriptions: Subscription[] = [];
-
   constructor(protected appState$: Store<store.State>) {
     super(appState$);
-    this.registerEvents();
   }
 
   /**
@@ -72,16 +68,4 @@ export class DonationSandbox extends Sandbox {
   public loadCitiesByState(stateId: number): void {
     this.appState$.dispatch(store.fromAddress.loadCities({ stateId }));
   }
-
-  /**
-   * Unsubscribes from events
-   */
-  public unregisterEvents() {
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
-  }
-
-  /**
-   * Subscribes to events
-   */
-  private registerEvents(): void {}
 }

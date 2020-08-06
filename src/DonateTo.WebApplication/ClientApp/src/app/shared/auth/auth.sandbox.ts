@@ -1,21 +1,13 @@
-import { AuthConfigService } from 'src/app/shared/auth/auth.config';
+import { AuthConfigService } from '../../shared/auth/auth.config';
 import { Injectable } from '@angular/core';
 import { OAuthEvent, OAuthService } from 'angular-oauth2-oidc';
 import { Sandbox } from '../sandbox/base.sandbox';
 import { Store } from '@ngrx/store';
 import * as store from '../store';
-import { BehaviorSubject, Subscription } from 'rxjs';
-import { Roles } from '../enum/roles';
 import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthSandbox extends Sandbox {
-  private subscriptions: Subscription[] = [];
-  public isAdmin = new BehaviorSubject(false);
-  public isSuperAdmin = new BehaviorSubject(false);
-  public isOrganization = new BehaviorSubject(false);
-  public hasAdminRole = new BehaviorSubject(false);
-
   constructor(
     protected appState$: Store<store.State>,
     private authService: OAuthService,
@@ -23,26 +15,6 @@ export class AuthSandbox extends Sandbox {
     private router: Router
   ) {
     super(appState$);
-    this.registerEvents();
-  }
-
-  /**
-   * Subscribes to events
-   */
-  private registerEvents(): void {
-    this.subscriptions.push(
-      this.userRoles$.subscribe((userRoles: string[]) => {
-        this.hasAdminRole.next(
-          userRoles.length === 0 ||
-            userRoles.includes(Roles.Admin) ||
-            userRoles.includes(Roles.Superadmin) ||
-            userRoles.includes(Roles.Organization)
-        );
-        this.isAdmin.next(userRoles.length === 0 || userRoles.includes(Roles.Admin));
-        this.isSuperAdmin.next(userRoles.length === 0 || userRoles.includes(Roles.Superadmin));
-        this.isOrganization.next(userRoles.length === 0 || userRoles.includes(Roles.Organization));
-      })
-    );
   }
 
   /**
@@ -54,8 +26,7 @@ export class AuthSandbox extends Sandbox {
     this.authService.configure(authConfig);
     this.authService.setupAutomaticSilentRefresh();
     this.appState$.dispatch(store.fromAuth.tryLogin());
-
-    this.authService.events.subscribe(this.handleAuthEvents.bind(this));
+    this.subscriptions.push(this.authService.events.subscribe(this.handleAuthEvents.bind(this)));
   }
 
   /**

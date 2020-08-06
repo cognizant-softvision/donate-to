@@ -10,6 +10,7 @@ export const isLoginProcessed = createSelector(getAuthState, (state: AuthState) 
 export const getUserId = createSelector(getAuthState, (state: AuthState) => state.userId);
 export const getUserName = createSelector(getAuthState, (state: AuthState) => state.nameUser);
 export const getUserRoles = createSelector(getAuthState, (state: AuthState) => state.roles);
+export const getOrganizations = createSelector(getAuthState, (state: AuthState) => state.organizations);
 
 @Injectable()
 export class AuthSelectors {
@@ -21,4 +22,5 @@ export class AuthSelectors {
   userId$ = this.store.select(getUserId);
   userName$ = this.store.select(getUserName);
   userRoles$ = this.store.select(getUserRoles);
+  organizations$ = this.store.select(getOrganizations);
 }
