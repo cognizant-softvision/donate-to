@@ -244,7 +244,8 @@ namespace DonateTo.Services
                 throw new InvalidOperationException(_matchingIdException);
             }
 
-            var entity = _mapper.Map<UserModel, User>(model);
+            var entity = await GetUserAsync(id).ConfigureAwait(false);
+            MapModelUserToEntity(model, entity);            
 
             entity.UpdateBy = username;
             entity.UpdateDate = DateTime.UtcNow;
@@ -438,7 +439,19 @@ namespace DonateTo.Services
 
             return predicate;
         }
-               
+
+        private async Task<User> GetUserAsync(long id)
+        {
+            return await _userRepository.GetAsync(id).ConfigureAwait(false);
+        }
+
+        private void MapModelUserToEntity(UserModel userModel, User user)
+        {
+            user.FirstName = userModel.FirstName;
+            user.LastName = userModel.LastName;
+            user.IdentityNumber = userModel.IdentityNumber;
+            user.PhoneNumber = userModel.PhoneNumber;            
+        }
         #endregion
     }
 }
