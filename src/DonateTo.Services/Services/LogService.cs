@@ -3,10 +3,8 @@ using AutoMapper.Extensions.ExpressionMapping;
 using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Interfaces.Services;
-using DonateTo.ApplicationCore.Models;
 using DonateTo.ApplicationCore.Models.Pagination;
 using DonateTo.ApplicationCore.Common;
-using DonateTo.Services.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +12,6 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using DonateTo.ApplicationCore.Models.Filtering;
 using LinqKit;
-using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 

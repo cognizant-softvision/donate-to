@@ -6,8 +6,8 @@ import { Store } from '@ngrx/store';
 import { LogFilter } from 'src/app/shared/models/filters/log-filter';
 
 @Injectable()
-export class LogSandbox extends Sandbox implements OnDestroy {
-  private subscriptions: Subscription[] = [];
+export class LogsSandbox extends Sandbox implements OnDestroy {
+  public subscriptions: Subscription[] = [];
 
   logs$ = this.appState$.select(store.fromLog.getAllLogs);
   failAction$ = this.appState$.select(store.fromLog.getFailedStatus);

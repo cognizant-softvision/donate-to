@@ -1,13 +1,7 @@
 ﻿using DonateTo.ApplicationCore.Interfaces.Services;
-using DonateTo.ApplicationCore.Models;
 using DonateTo.ApplicationCore.Models.Pagination;
-using DonateTo.ApplicationCore.Common;
-using DonateTo.WebApi.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using DonateTo.ApplicationCore.Models.Filtering;
 using DonateTo.ApplicationCore.Entities;

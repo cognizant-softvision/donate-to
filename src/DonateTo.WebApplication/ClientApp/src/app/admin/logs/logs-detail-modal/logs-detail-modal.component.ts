@@ -1,18 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { LogModel } from 'src/app/shared/models/log.model';
 
 @Component({
   selector: 'app-log-detail-modal',
-  templateUrl: './log-detail-modal.component.html',
-  styleUrls: ['./log-detail-modal.component.css'],
+  templateUrl: './logs-detail-modal.component.html',
+  styleUrls: ['./logs-detail-modal.component.css'],
 })
-export class LogDetailModalComponent implements OnInit {
+export class LogsDetailModalComponent {
   log: LogModel;
   isVisible = false;
 
   constructor() {}
-
-  ngOnInit(): void {}
 
   showModal(log: LogModel) {
     this.log = log;
