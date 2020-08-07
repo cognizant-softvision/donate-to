@@ -9,10 +9,10 @@
     <li nz-menu-item class="sv-margin-x sv-link-wrapper" *ngIf="!isAuthenticated">
       <a class="sv-link" (click)="login()"> {{ 'Auth.Login.Title' | translate }} </a>
     </li>
-    <li nz-menu-item class="sv-margin-x sv-link-wrapper" *ngIf="!isAuthenticated">
+    <li nz-menu-item class="sv-margin-x sv-link-wrapper" *ngIf="isAuthenticated">
       <a class="sv-link" [routerLink]="['/donation/my-donations']"> {{ 'NavBar.MyDonations' | translate }} </a>
     </li>
-    <li nz-menu-item class="sv-margin-x sv-link-wrapper" *ngIf="!isAuthenticated">
+    <li nz-menu-item class="sv-margin-x sv-link-wrapper" *ngIf="isAuthenticated">
       <a class="sv-link" [routerLink]="['/my-profile']">{{ 'UserProfile.MyProfile' | translate }}</a>
     </li>
     <li nz-menu-item class="sv-margin-x sv-link-wrapper" nz-menu-item *ngIf="isAuthenticated && isOrganization">
