@@ -5,11 +5,11 @@
 
 <div class="container-message">
     <div class="message-box">
-        <h4>Signed Up!!!</h4>
+        <h2>Signed Up!!!</h2>
         @if (User.IsInRole(Roles.Superadmin))
         {
             <br>
-            <a href="@Url.Action("Index","Home")">Go to home page </a>
+            <a class="btn btn-lg btn-primary btn-block submit-button" href="@Url.Action("Index","Home")">Go to home page </a>
         }
     </div>
 </div>
