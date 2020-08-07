@@ -32,15 +32,20 @@
 
         <nz-descriptions [hidden]="!isEdit">
           <nz-descriptions-item
-            *ngFor="let data of listOfRow"
+            *ngFor="let data of listOfRow; let i = index"
             class="editable-row"
             nzTitle="{{ data.row | translate }}"
           >
             <input
               nz-input
-              placeholder="{{ data.value | translate }}"
-              value="{{ data.value | translate }}"
+              name="userData{{ i }}"
+              ngModel
+              #userData="ngModel"
+              id="userData"
+              placeholder="{{ data.value }}"
+              value="{{ data.value }}"
               nzSize="small"
+              required="{{ data.required }}"
             />
           </nz-descriptions-item>
         </nz-descriptions>
