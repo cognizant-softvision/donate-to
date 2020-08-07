@@ -202,6 +202,37 @@ namespace DonateTo.Services
         }
 
         ///<inheritdoc cref="IUserService"/>
+        /// <summary>
+        /// Update an user linked roles.
+        /// </summary>
+        /// <param name="userId">User Id.</param>
+        /// <param name="rolesIds">Roles id list.</param>
+        /// <returns></returns>
+        public void UpdateUserRoles(long userId, IEnumerable<long> rolesIds)
+        {
+            var user =_userRepository.Get(userId);
+            user.UserRoles = FilterUserRoles(user.UserRoles, userId, rolesIds);
+            _userRepository.Update(user);
+            _unitOfWork.Save();
+        }
+
+        ///<inheritdoc cref="IUserService"/>
+        /// <summary>
+        /// Update an user linked roles async.
+        /// </summary>
+        /// <param name="userId">User Id.</param>
+        /// <param name="rolesIds">Roles id list.</param>
+        /// <returns></returns>
+        public async Task UpdateUserRolesAsync(long userId, IEnumerable<long> rolesIds)
+        {
+            var user = await _userRepository.GetAsync(userId).ConfigureAwait(false);
+            user.UserRoles = FilterUserRoles(user.UserRoles, userId, rolesIds);
+            await _userRepository.UpdateAsync(user).ConfigureAwait(false);
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
+        }
+
+
+        ///<inheritdoc cref="IUserService"/>
         public virtual async Task<UserModel> UpdateAsync(UserModel model, long id, string username = null)
         {
             if (model == null)
@@ -213,7 +244,8 @@ namespace DonateTo.Services
                 throw new InvalidOperationException(_matchingIdException);
             }
 
-            var entity = _mapper.Map<UserModel, User>(model);
+            var entity = await GetUserAsync(id).ConfigureAwait(false);
+            MapModelUserToEntity(model, entity);            
 
             entity.UpdateBy = username;
             entity.UpdateDate = DateTime.UtcNow;
@@ -301,6 +333,41 @@ namespace DonateTo.Services
             return currentOrganizations;
         }
 
+        private ICollection<UserRole> FilterUserRoles(ICollection<UserRole> userRoles, long userId, IEnumerable<long> rolesId)
+        {
+            List<UserRole> newRoles = new List<UserRole>();
+            var currentRoles = userRoles.ToList();
+
+            if (currentRoles.Any())
+            {
+                newRoles.AddRange(
+                    rolesId.Where(id => !currentRoles
+                    .Any(co => co.RoleId == id))
+                    .Select(id => new UserRole { UserId = userId, RoleId = id }));
+
+                var removedRoles = userRoles
+                    .Where(userRole => !rolesId
+                    .Contains(userRole.RoleId));
+
+                foreach (var userRole in removedRoles)
+                {
+                    currentRoles.Remove(userRole);
+                }
+            }
+            else
+            {
+                newRoles = rolesId
+               .Select(o => new UserRole { UserId = userId, RoleId = o }).ToList();
+            }
+
+            if (newRoles.Any())
+            {
+                currentRoles.AddRange(newRoles);
+            }
+
+            return currentRoles;
+        }
+
         /// <summary>
         /// Returns sort string from filter model
         /// </summary>
@@ -371,6 +438,19 @@ namespace DonateTo.Services
             }
 
             return predicate;
+        }
+
+        private async Task<User> GetUserAsync(long id)
+        {
+            return await _userRepository.GetAsync(id).ConfigureAwait(false);
+        }
+
+        private void MapModelUserToEntity(UserModel userModel, User user)
+        {
+            user.FirstName = userModel.FirstName;
+            user.LastName = userModel.LastName;
+            user.IdentityNumber = userModel.IdentityNumber;
+            user.PhoneNumber = userModel.PhoneNumber;            
         }
         #endregion
     }

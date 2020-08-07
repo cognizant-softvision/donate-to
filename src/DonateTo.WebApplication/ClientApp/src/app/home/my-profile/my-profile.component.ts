@@ -1,21 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChildren } from '@angular/core';
+import { UserSandbox } from 'src/app/admin/user/user.sandbox';
+import { Subscription } from 'rxjs';
+import { UserModel } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.component.html',
   styleUrls: ['./my-profile.component.css'],
 })
-export class MyProfileComponent implements OnInit {
-  listOfRow = [
-    { row: 'UserProfile.Name', value: 'Charly Brown' },
-    { row: 'UserProfile.Phone', value: '5472323456' },
-    { row: 'UserProfile.Country', value: 'United State' },
-    { row: 'UserProfile.State', value: 'Ohio' },
-    { row: 'UserProfile.Apartment', value: 'Columbus' },
-    { row: 'UserProfile.Street', value: 'National Rd SE 32' },
-    { row: 'UserProfile.PostalCode', value: '4212' },
-    { row: 'UserProfile.AdditionalInformation', value: 'N/A' },
-  ];
+export class MyProfileComponent implements OnInit, OnDestroy {
+  subscriptions: Subscription[] = [];
+
+  listOfRow: Array<{ row: string; value: string; required: boolean }> = [];
+  user = new UserModel();
+
+  @ViewChildren('userData') inputs;
 
   listChangePassword = [
     { row: 'UserProfile.OldPassword', value: '' },
@@ -26,9 +25,42 @@ export class MyProfileComponent implements OnInit {
   isEdit = false;
   isEnable = false;
 
-  constructor() {}
+  constructor(public userSandbox: UserSandbox) {}
 
-  ngOnInit(): void {}
+  ngOnDestroy(): void {
+    this.unregisterEvents();
+  }
+
+  ngOnInit(): void {
+    this.registerEvents();
+  }
+
+  unregisterEvents() {
+    this.subscriptions.forEach((s) => s.unsubscribe());
+  }
+
+  registerEvents() {
+    this.subscriptions.push(
+      this.userSandbox.user$.subscribe((user) => {
+        this.listOfRow = [
+          { row: 'UserProfile.FirstName', value: user.firstName, required: true },
+          { row: 'UserProfile.LastName', value: user.lastName, required: true },
+          { row: 'UserProfile.IdentityNumber', value: user.identityNumber, required: false },
+          { row: 'UserProfile.PhoneNumber', value: user.phoneNumber, required: false },
+        ];
+
+        this.user = { ...user };
+      })
+    );
+
+    this.subscriptions.push(
+      this.userSandbox.userId$.subscribe((userId) => {
+        if (userId) {
+          this.userSandbox.loadUser(userId);
+        }
+      })
+    );
+  }
 
   toggleEdit() {
     this.isEnable = !this.isEnable;
@@ -37,8 +69,14 @@ export class MyProfileComponent implements OnInit {
   edit() {
     this.isEdit = true;
   }
+
   saveGeneralInformation() {
     this.isEdit = false;
+    this.user.firstName = this.inputs._results[0].viewModel;
+    this.user.lastName = this.inputs._results[1].viewModel;
+    this.user.identityNumber = this.inputs._results[2].viewModel;
+    this.user.phoneNumber = this.inputs._results[3].viewModel;
+    this.userSandbox.updateUser(this.user);
   }
 
   cancelGeneralInformation() {

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { NzButtonModule, NzInputModule, NzLayoutModule, NzTableModule } from 'ng-zorro-antd';
+import { NzButtonModule, NzFormModule, NzInputModule, NzLayoutModule, NzTableModule } from 'ng-zorro-antd';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
@@ -15,6 +15,11 @@ import { HttpClient } from '@angular/common/http';
 import { MyProfileComponent } from './my-profile.component';
 import { ProfileLayoutRoutingModule } from './my-profile-layout-routing.module';
 import { ComponentsModule } from 'src/app/shared/components';
+import { UserSandbox } from 'src/app/admin/user/user.sandbox';
+import { EffectsModule } from '@ngrx/effects';
+import { UserEffects } from 'src/app/shared/store/user';
+import { StoreModule } from '@ngrx/store';
+import { fromUser } from 'src/app/shared/store';
 
 const icons = [SmileTwoTone, SettingTwoTone, EditTwoTone];
 @NgModule({
@@ -28,9 +33,13 @@ const icons = [SmileTwoTone, SettingTwoTone, EditTwoTone];
     NzInputModule,
     NzDescriptionsModule,
     NzPageHeaderModule,
+    NzFormModule,
     NzTabsModule,
+    ReactiveFormsModule,
     NzIconModule.forChild(icons),
     ProfileLayoutRoutingModule,
+    EffectsModule.forFeature([UserEffects]),
+    StoreModule.forFeature(fromUser.userFeatureKey, fromUser.reducer),
     TranslateModule.forChild({
       defaultLanguage: 'en',
       loader: {
@@ -43,5 +52,6 @@ const icons = [SmileTwoTone, SettingTwoTone, EditTwoTone];
     ComponentsModule,
   ],
   declarations: [MyProfileComponent],
+  providers: [UserSandbox],
 })
 export class ProfileLayoutModule {}

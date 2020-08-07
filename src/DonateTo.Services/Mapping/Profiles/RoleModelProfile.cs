@@ -8,9 +8,14 @@ namespace DonateTo.Services.Mapping.Profiles
     {
         public RoleModelProfile()
         {
-            CreateMap<Role, RoleModel>();
+            CreateMapRoleToRoleModel(this);
+        }
 
-            CreateMap<UserRole, RoleModel>()
+        public static void CreateMapRoleToRoleModel(Profile profile)
+        {
+            profile.CreateMap<Role, RoleModel>();
+
+            profile.CreateMap<UserRole, RoleModel>()
                 .ForMember(m => m.Id, opt => opt.MapFrom(src => src.RoleId))
                 .ForMember(m => m.Name, opt => opt.MapFrom(src => src.Role != null ? src.Role.Name : ""))
                 .ReverseMap()

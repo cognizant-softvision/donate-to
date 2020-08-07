@@ -25,6 +25,9 @@ using DonateTo.Mailer;
 using IdentityModel;
 using System.IdentityModel.Tokens.Jwt;
 using DonateTo.Infrastructure.Logging;
+using DonateTo.IdentityServer.Services.Interfaces;
+using DonateTo.ApplicationCore.Interfaces;
+using DonateTo.Infrastructure.Data.Repositories;
 
 namespace DonateTo.IdentityServer
 {
@@ -57,6 +60,8 @@ namespace DonateTo.IdentityServer
 
             services.AddTransient<IClientService, ClientService>();
             services.AddTransient<IClientRepository, ClientRepository>();
+            services.AddTransient<IUserRoleService, UserRoleService>();
+            services.AddTransient<IRepository<Role>, RoleRepository>();
 
             var identityOptions = Configuration.GetSection("Identity").GetSection("Options");
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
