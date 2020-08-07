@@ -53,7 +53,6 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
 
   private updateMenu(): void {
     this.menus = [
-      { title: 'Admin.Menu.Title.Donation', url: './donations', iconType: IconType.Heart, show: true },
       { title: 'Admin.Menu.Title.Users', url: './users', iconType: IconType.Team, show: true },
       {
         title: 'Admin.Menu.Title.Organizations',

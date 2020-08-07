@@ -6,9 +6,6 @@
   <app-donations-form></app-donations-form>
   <br />
   <div class="create-donation-form-buttons">
-    <button (click)="openDonationPriority()" nz-button nzType="primary" type="submit">
-      {{ 'Admin.Donation.Create.CreateRequest' | translate }}
-    </button>
     <button
       nz-popconfirm
       nzPopconfirmTitle="{{ 'Admin.Donation.BackConfirm' | translate }}"
@@ -17,7 +14,10 @@
       nz-button
       nzType="primary"
     >
-      {{ 'BackBtn' | translate }}
+      {{ 'CancelBtn' | translate }}
+    </button>
+    <button (click)="openDonationPriority()" nz-button nzType="primary" type="submit">
+      {{ 'Admin.Donation.Create.CreateRequest' | translate }}
     </button>
   </div>
   <nz-modal

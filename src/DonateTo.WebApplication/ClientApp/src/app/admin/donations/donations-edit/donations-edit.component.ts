@@ -18,6 +18,7 @@ export class DonationsEditComponent implements OnInit, OnDestroy {
   private isSubmited = false;
   private failedStatus = false;
   isErrorModalActive = false;
+  isLoading = true;
   donationRequest: DonationRequestModel;
   id: number;
 
@@ -49,9 +50,9 @@ export class DonationsEditComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.donationSandbox.donationRequest$.subscribe((donationRequest) => {
         this.donationRequest = donationRequest;
+        this.isLoading = false;
       })
     );
-
     this.donationSandbox.loadDonationRequest(this.id);
   }
 

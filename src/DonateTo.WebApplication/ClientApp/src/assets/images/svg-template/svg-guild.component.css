@@ -1,0 +1,11 @@
+svg {
+  margin: -4.5em;
+  height: 1.2em;
+  filter: invert(92%) sepia(0%) saturate(0%) hue-rotate(173deg) brightness(35%) contrast(100%);
+  width: 10em;
+}
+
+svg:hover {
+  height: 1.2em;
+  filter: invert(53%) sepia(34%) saturate(7226%) hue-rotate(191deg) brightness(85%) contrast(105%);
+}

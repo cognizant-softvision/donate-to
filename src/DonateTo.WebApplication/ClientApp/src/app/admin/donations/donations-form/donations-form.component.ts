@@ -3,7 +3,7 @@ import { DonationsSandbox } from '../donations-sandbox';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NzI18nService } from 'ng-zorro-antd';
 import { Subscription } from 'rxjs';
-import { CategoryModel, ColumnItem, DonationRequestItemModel, DonationRequestModel } from 'src/app/shared/models';
+import { ColumnItem, DonationRequestItemModel, DonationRequestModel } from 'src/app/shared/models';
 import { compareDate } from 'src/app/shared/utility/dates/compare-dates';
 import { AuthSandbox } from '../../../shared/auth/auth.sandbox';
 
@@ -19,14 +19,12 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   disabledDates: (current: Date) => boolean;
   addressId: number;
-  categories: CategoryModel[] = [];
   donationRequestItems: DonationRequestItemModel[] = [];
   finishDate: Date;
   observations: string;
   organizationId: number;
   priority: number;
   statusId = 2;
-  selectedItemCategories: CategoryModel[] = [];
   title: string;
   ownerId: number;
   isEdit = false;
@@ -35,7 +33,6 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
     { name: 'Admin.Donation.Table.Itemcolumn' },
     { name: 'Admin.Donation.Table.Quantitycolumn' },
     { name: 'Admin.Donation.Table.Observationcolumn' },
-    { name: 'Admin.Donation.Table.Categorycolumn' },
     { name: 'Admin.Action' },
   ];
 
@@ -51,7 +48,6 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
 
   donationRequestItemFormGroup = new FormGroup({
     nameFormControl: new FormControl('', Validators.required),
-    itemCategoryFormControl: new FormControl(this.selectedItemCategories, Validators.required),
     observationFormControl: new FormControl(),
     quantityFormControl: new FormControl('', Validators.required),
     unitFormControl: new FormControl('', Validators.required),
@@ -82,8 +78,6 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
       });
     }
 
-    this.sandBoxSubscriptionInit();
-
     this.disabledDates = (current: Date): boolean => {
       return compareDate(current, new Date()) < 0;
     };
@@ -101,28 +95,10 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
     this.unregisterEvents();
   }
 
-  private sandBoxSubscriptionInit() {
-    this.subscriptions.push(
-      this.donationSandbox.categories$.subscribe((categories) => {
-        this.categories = categories;
-      })
-    );
-  }
-
   setOrganization() {
     if (this.organizationId >= 0) {
       this.donationSandbox.loadAddressesByOrganization(this.organizationId);
     }
-  }
-
-  getCategoryName(categoryId) {
-    if (this.categories && this.categories.length > 0) {
-      return this.categories.find((c) => c.id === categoryId).name;
-    }
-  }
-
-  isItemCategorySelected(category: CategoryModel) {
-    return this.selectedItemCategories.indexOf(category) === -1;
   }
 
   removeDonationRequestItem(donationRequestItemTarget: DonationRequestItemModel) {
@@ -154,9 +130,6 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
       donationRequestItem.observation = this.donationRequestItemFormGroup.controls.observationFormControl.value;
       donationRequestItem.finishQuantity = this.donationRequestItemFormGroup.controls.quantityFormControl.value;
       donationRequestItem.unitId = this.donationRequestItemFormGroup.controls.unitFormControl.value;
-      donationRequestItem.donationRequestItemCategories = this.donationSandbox.mapCategoriesToDonationRequestItemCategories(
-        this.selectedItemCategories
-      );
 
       this.donationRequestItems = [...this.donationRequestItems, donationRequestItem];
     }
