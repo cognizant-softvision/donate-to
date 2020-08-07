@@ -21,7 +21,7 @@ namespace DonateTo.Infrastructure.Data.Repositories
         public override ApplicationCore.Models.Pagination.PagedResult<Log>
             GetPaged(int page, int pageSize, Expression<Func<Log, bool>> filter = null, string sort = "")
         {
-            var logs = GetHydratedLog()
+            var logs = DbContext.Set<Log>()
                 .FilterAndSort(filter, sort);
 
             return logs.GetPaged(page, pageSize);
@@ -31,17 +31,10 @@ namespace DonateTo.Infrastructure.Data.Repositories
         public override async Task<ApplicationCore.Models.Pagination.PagedResult<Log>>
             GetPagedAsync(int page, int pageSize, Expression<Func<Log, bool>> filter = null, string sort = "")
         {
-            var logs = GetHydratedLog()
+            var logs = DbContext.Set<Log>()
                 .FilterAndSort(filter, sort);
 
             return await logs.GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
-
-        #region private
-        private IQueryable<Log> GetHydratedLog()
-        {
-            return DbContext.Set<Log>();
-        }
-        #endregion
     }
 }
