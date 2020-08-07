@@ -60,6 +60,12 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
         iconType: IconType.Star,
         show: this.isSuperAdmin,
       },
+      {
+        title: 'Admin.Menu.Title.Logs',
+        url: './logs',
+        iconType: IconType.Profile,
+        show: this.isSuperAdmin,
+      },
     ];
   }
 }

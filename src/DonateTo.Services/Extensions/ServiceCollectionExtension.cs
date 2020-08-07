@@ -37,6 +37,7 @@ namespace DonateTo.Services.Extensions
             service.AddTransient<IMailSender, MailSender>();
             service.AddTransient<IQuestionService, QuestionService>();
             service.AddTransient<IBaseService<ControlType, BaseFilterModel>, ControlTypeService>();
+            service.AddTransient<ILogService, LogService>();
 
             service.AddAutoMapper(typeof(Startup));
         }
