@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { QuestionsSandbox } from '../questions-sandbox';
-import { NzModalRef } from 'ng-zorro-antd';
+import { QuestionsSandbox } from '../questions.sandbox';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { Subscription } from 'rxjs';
 import { ColumnItem, QuestionModel } from 'src/app/shared/models';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';

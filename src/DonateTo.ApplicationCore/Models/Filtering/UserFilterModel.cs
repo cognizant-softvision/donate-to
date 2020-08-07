@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DonateTo.ApplicationCore.Models.Filtering
+﻿namespace DonateTo.ApplicationCore.Models.Filtering
 {
     public class UserFilterModel : BaseFilterModel
     {
@@ -11,5 +7,7 @@ namespace DonateTo.ApplicationCore.Models.Filtering
         public string Email { get; set; }
 
         public string Organization { get; set; }
+
+        public long OrganizationId { get; set; }
     }
 }

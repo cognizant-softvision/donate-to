@@ -35,6 +35,8 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { UserComponent } from './user.component';
 import { UserRoutingModule } from './user-routing.module';
 import { PopupModalComponent } from './components/popup-modal/popup-modal.component';
+import { OrganizationSandbox } from '../organization/organization-sandbox';
+import { AuthSandbox } from '../../shared/auth/auth.sandbox';
 
 // FIX this should be moved to an upper level.
 registerLocaleData(es);
@@ -79,6 +81,6 @@ const ICONS: IconDefinition[] = [PlusOutline];
     }),
   ],
   declarations: [UserComponent, PopupModalComponent],
-  providers: [UserSandbox],
+  providers: [UserSandbox, OrganizationSandbox, AuthSandbox],
 })
 export class UserModule {}

@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NzTableQueryParams } from 'ng-zorro-antd';
-import { OrganizationFilter } from 'src/app/shared/models/filters/organization-filter';
+import { OrganizationFilter } from '../../shared/models/filters/organization-filter';
 import { OrganizationModel } from './../../shared/models';
 import { OrganizationSandbox } from './organization-sandbox';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
+import { DataUpdatedService } from '../../shared/async-services/data-updated.service';
 
 @Component({
   selector: 'app-organization-admin',
@@ -28,44 +28,35 @@ export class OrganizationComponent implements OnInit, OnDestroy {
   failedStatus = false;
   successStatus = false;
   dataSaved = false;
+  isAdmin: boolean;
+  isSuperAdmin: boolean;
+  userId: number;
+  validOrganizations: OrganizationModel[] = [];
 
   constructor(
     private organizationSandbox: OrganizationSandbox,
     public router: Router,
     private dataUpdated: DataUpdatedService
-  ) {}
+  ) {
+    this.registerEvents();
+  }
 
   ngOnInit(): void {
     this.organizationFilter = {
       ...this.organizationFilter,
       pageSize: this.pageSize,
       pageNumber: this.pageIndex,
+      userId: this.userId,
     };
 
-    this.subscriptions.push(
-      this.organizationSandbox.organizationsPagedFiltered$.subscribe((res) => {
-        this.total = res.rowCount;
-        this.organizationList = res.results;
-      })
-    );
-
-    this.subscriptions.push(
-      this.organizationSandbox.failAction$.subscribe((status) => {
-        this.failedStatus = status;
-      })
-    );
-
-    this.subscriptions.push(
-      this.organizationSandbox.loadAction$.subscribe((status) => {
-        this.successStatus = status;
-      })
-    );
-
-    this.dataUpdated.currentStatus.subscribe((dataSaved) => (this.dataSaved = dataSaved));
     if (this.dataSaved) {
       this.dataUpdated.changeMessage(false);
       window.location.reload();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.unregisterEvents();
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
@@ -76,11 +67,16 @@ export class OrganizationComponent implements OnInit, OnDestroy {
       ...this.organizationFilter,
       pageSize,
       pageNumber: pageIndex,
+      userId: this.userId,
       orderBy: (currentSort && currentSort.key) || '',
       orderDirection: (currentSort && currentSort.value) || '',
     };
 
     this.organizationSandbox.loadOrganizationsFilteredPaged(this.organizationFilter);
+  }
+
+  canEdit(organizationId: number) {
+    return this.isAdmin && this.validOrganizations?.some((o) => o.id === organizationId);
   }
 
   reset(): void {
@@ -132,14 +128,61 @@ export class OrganizationComponent implements OnInit, OnDestroy {
     this.organizationSandbox.loadOrganizationsFilteredPaged(this.organizationFilter);
   }
 
-  ngOnDestroy(): void {
-    this.unregisterEvents();
-  }
-
   handleRequestResult() {
     if (!this.failedStatus) {
       this.organizationSandbox.loadOrganizationsFilteredPaged(this.organizationFilter);
     }
+  }
+
+  private registerEvents() {
+    this.subscriptions.push(
+      this.dataUpdated.currentStatus.subscribe((dataSaved) => {
+        this.dataSaved = dataSaved;
+      })
+    );
+
+    this.subscriptions.push(
+      this.organizationSandbox.organizationsPagedFiltered$.subscribe((res) => {
+        this.total = res.rowCount;
+        this.organizationList = res.results;
+      })
+    );
+
+    this.subscriptions.push(
+      this.organizationSandbox.failAction$.subscribe((status) => {
+        this.failedStatus = status;
+      })
+    );
+
+    this.subscriptions.push(
+      this.organizationSandbox.loadAction$.subscribe((status) => {
+        this.successStatus = status;
+      })
+    );
+
+    this.subscriptions.push(
+      this.organizationSandbox.isAdmin$.subscribe((isAdmin) => {
+        this.isAdmin = isAdmin;
+      })
+    );
+
+    this.subscriptions.push(
+      this.organizationSandbox.isSuperAdmin$.subscribe((isSuperAdmin) => {
+        this.isSuperAdmin = isSuperAdmin;
+      })
+    );
+
+    this.subscriptions.push(
+      this.organizationSandbox.userId$.subscribe((userId) => {
+        this.userId = userId;
+      })
+    );
+
+    this.subscriptions.push(
+      this.organizationSandbox.userOrganizations$.subscribe((organizations) => {
+        this.validOrganizations = organizations;
+      })
+    );
   }
 
   private unregisterEvents() {

@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using DonateTo.ApplicationCore.Models.Filtering;
 using DonateTo.WebApi.Filters;
+using DonateTo.ApplicationCore.Models.Pagination;
+using System.Linq;
+using DonateTo.WebApi.Common;
+using System.Globalization;
+using System;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -74,6 +79,16 @@ namespace DonateTo.WebApi.V1.Controllers
         public override async Task<IActionResult> Post([FromBody] Organization value)
         {
             return await base.Post(value).ConfigureAwait(false);
+        }
+
+        ///<inheritdoc cref="BaseApiController{Organization, OrganizationFilterModel}"/>
+        public override Task<ActionResult<PagedResult<Organization>>> GetPagedFiltered([FromQuery] OrganizationFilterModel filter)
+        {
+            filter.UserId = long.Parse(
+                User.Claims.FirstOrDefault(claim => 
+                    claim.Type.Contains(Claims.UserId, StringComparison.InvariantCulture))?.Value, CultureInfo.InvariantCulture);
+
+            return base.GetPagedFiltered(filter);
         }
     }
 }

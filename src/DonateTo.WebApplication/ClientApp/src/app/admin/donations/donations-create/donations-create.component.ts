@@ -59,16 +59,18 @@ export class DonationsCreateComponent implements OnDestroy {
     this.createTplModal(this.modalContent);
   }
   createTplModal(tplContent: TemplateRef<{}>): void {
-    this.tplModal = this.modal.create({
-      nzContent: tplContent,
-      nzFooter: null,
-      nzClosable: true,
-      nzTitle: 'Questions',
-      nzStyle: {
-        top: '2em;',
-      },
-      nzWidth: '60%',
-    });
+    if (!this.tplModal) {
+      this.tplModal = this.modal.create({
+        nzContent: tplContent,
+        nzFooter: null,
+        nzClosable: true,
+        nzTitle: 'Questions',
+        nzStyle: {
+          top: '2em;',
+        },
+        nzWidth: '60%',
+      });
+    }
   }
   hideModal() {
     this.tplModal?.destroy();
