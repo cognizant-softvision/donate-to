@@ -2,10 +2,7 @@
 using DonateTo.Infrastructure.Data.EntityFramework;
 using DonateTo.Infrastructure.Data.Extensions;
 using DonateTo.Infrastructure.Extensions;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Linq;
-using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 

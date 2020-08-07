@@ -4,15 +4,14 @@ import { EffectsModule } from '@ngrx/effects';
 import { FormsModule } from '@angular/forms';
 import { fromLog } from '../../shared/store';
 import { HttpClient } from '@angular/common/http';
-import { IconDefinition } from '@ant-design/icons-angular';
 import { HttpLoaderFactory } from '../../app.module';
 import { NgModule } from '@angular/core';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { LogComponent } from './log.component';
+import { LogsComponent } from './logs.component';
 import { LogEffects } from '../../shared/store/log/effects';
-import { LogRoutingModule } from './log-routing.module';
-import { LogSandbox } from './log-sandbox';
+import { LogsRoutingModule } from './logs-routing.module';
+import { LogsSandbox } from './logs-sandbox';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -34,7 +33,7 @@ import {
   NzTagModule,
 } from 'ng-zorro-antd';
 import { MinusCircleOutline, PlusOutline } from '@ant-design/icons-angular/icons';
-import { LogDetailModalComponent } from './log-detail-modal/log-detail-modal/log-detail-modal.component';
+import { LogsDetailModalComponent } from './logs-detail-modal/logs-detail-modal.component';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 
 // FIX this should be moved to an upper level.
@@ -68,7 +67,7 @@ const ICONS = [MinusCircleOutline, PlusOutline];
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
-    LogRoutingModule,
+    LogsRoutingModule,
     TranslateModule.forChild({
       defaultLanguage: 'en',
       loader: {
@@ -79,7 +78,7 @@ const ICONS = [MinusCircleOutline, PlusOutline];
       extend: true,
     }),
   ],
-  declarations: [LogComponent, LogDetailModalComponent],
-  providers: [LogSandbox],
+  declarations: [LogsComponent, LogsDetailModalComponent],
+  providers: [LogsSandbox],
 })
 export class LogModule {}

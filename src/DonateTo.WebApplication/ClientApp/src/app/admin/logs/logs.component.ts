@@ -1,22 +1,22 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NzTableQueryParams } from 'ng-zorro-antd';
 import { LogFilter } from 'src/app/shared/models/filters/log-filter';
-import { LogModel } from './../../shared/models/log.model';
-import { LogSandbox } from './log-sandbox';
+import { LogModel } from '../../shared/models/log.model';
+import { LogsSandbox } from './logs-sandbox';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { LogDetailModalComponent } from './log-detail-modal/log-detail-modal/log-detail-modal.component';
+import { LogsDetailModalComponent } from './logs-detail-modal/logs-detail-modal.component';
 import { StringExtensions } from 'src/app/shared/utility/extensions/string-extensions';
 
 @Component({
   selector: 'app-log-admin',
-  templateUrl: './log.component.html',
-  styleUrls: ['./log.component.css'],
+  templateUrl: './logs.component.html',
+  styleUrls: ['./logs.component.css'],
 })
-export class LogComponent implements OnInit, OnDestroy {
+export class LogsComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
-  @ViewChild(LogDetailModalComponent)
-  private logDetailModal: LogDetailModalComponent;
+  @ViewChild(LogsDetailModalComponent)
+  private logDetailModal: LogsDetailModalComponent;
   truncateMaxLength = 60;
 
   logList: LogModel[] = [];
@@ -36,7 +36,7 @@ export class LogComponent implements OnInit, OnDestroy {
   failedStatus = false;
   successStatus = false;
 
-  constructor(private logSandbox: LogSandbox, public router: Router) {}
+  constructor(private logsSandbox: LogsSandbox, public router: Router) {}
 
   ngOnInit(): void {
     this.logFilter = {
@@ -46,31 +46,31 @@ export class LogComponent implements OnInit, OnDestroy {
     };
 
     this.subscriptions.push(
-      this.logSandbox.logsPagedFiltered$.subscribe((res) => {
+      this.logsSandbox.logsPagedFiltered$.subscribe((res) => {
         this.total = res.rowCount;
         this.logList = res.results;
       })
     );
 
     this.subscriptions.push(
-      this.logSandbox.logs$.subscribe((logs) => {
+      this.logsSandbox.logs$.subscribe((logs) => {
         this.logList = logs;
       })
     );
 
     this.subscriptions.push(
-      this.logSandbox.failAction$.subscribe((status) => {
+      this.logsSandbox.failAction$.subscribe((status) => {
         this.failedStatus = status;
       })
     );
 
     this.subscriptions.push(
-      this.logSandbox.loadAction$.subscribe((status) => {
+      this.logsSandbox.loadAction$.subscribe((status) => {
         this.successStatus = status;
       })
     );
 
-    this.logSandbox.loadLogsFilteredPaged(this.logFilter);
+    this.logsSandbox.loadLogsFilteredPaged(this.logFilter);
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
@@ -84,7 +84,7 @@ export class LogComponent implements OnInit, OnDestroy {
       orderDirection: (currentSort && currentSort.value) || '',
     };
 
-    this.logSandbox.loadLogsFilteredPaged(this.logFilter);
+    this.logsSandbox.loadLogsFilteredPaged(this.logFilter);
   }
 
   reset(): void {
@@ -101,7 +101,7 @@ export class LogComponent implements OnInit, OnDestroy {
       timeStampBegin: this.searchTimeStampBeginValue,
       timeStampEnd: this.searchTimeStampEndValue,
     };
-    this.logSandbox.loadLogsFilteredPaged(this.logFilter);
+    this.logsSandbox.loadLogsFilteredPaged(this.logFilter);
   }
 
   resetTimeStampSearch(): void {
@@ -113,25 +113,25 @@ export class LogComponent implements OnInit, OnDestroy {
       timeStampBegin: this.searchTimeStampBeginValue,
       timeStampEnd: this.searchTimeStampEndValue,
     };
-    this.logSandbox.loadLogsFilteredPaged(this.logFilter);
+    this.logsSandbox.loadLogsFilteredPaged(this.logFilter);
   }
 
   resetMessageSearch(): void {
     this.searchMessageValue = '';
     this.logFilter = { ...this.logFilter, message: this.searchMessageValue };
-    this.logSandbox.loadLogsFilteredPaged(this.logFilter);
+    this.logsSandbox.loadLogsFilteredPaged(this.logFilter);
   }
 
   resetExceptionSearch(): void {
     this.searchExceptionValue = '';
     this.logFilter = { ...this.logFilter, exception: this.searchExceptionValue };
-    this.logSandbox.loadLogsFilteredPaged(this.logFilter);
+    this.logsSandbox.loadLogsFilteredPaged(this.logFilter);
   }
 
   resetLevelSearch(): void {
     this.searchLevelValue = null;
     this.logFilter = { ...this.logFilter, level: this.searchLevelValue };
-    this.logSandbox.loadLogsFilteredPaged(this.logFilter);
+    this.logsSandbox.loadLogsFilteredPaged(this.logFilter);
   }
 
   searchTimeStamp(): void {
@@ -141,25 +141,25 @@ export class LogComponent implements OnInit, OnDestroy {
       timeStampBegin: this.searchTimeStampBeginValue,
       timeStampEnd: this.searchTimeStampEndValue,
     };
-    this.logSandbox.loadLogsFilteredPaged(this.logFilter);
+    this.logsSandbox.loadLogsFilteredPaged(this.logFilter);
   }
 
   searchMessage(): void {
     this.messageVisible = false;
     this.logFilter = { ...this.logFilter, message: this.searchMessageValue };
-    this.logSandbox.loadLogsFilteredPaged(this.logFilter);
+    this.logsSandbox.loadLogsFilteredPaged(this.logFilter);
   }
 
   searchLevel(): void {
     this.levelVisible = false;
     this.logFilter = { ...this.logFilter, level: this.searchLevelValue };
-    this.logSandbox.loadLogsFilteredPaged(this.logFilter);
+    this.logsSandbox.loadLogsFilteredPaged(this.logFilter);
   }
 
   searchException(): void {
     this.exceptionVisible = false;
     this.logFilter = { ...this.logFilter, exception: this.searchExceptionValue };
-    this.logSandbox.loadLogsFilteredPaged(this.logFilter);
+    this.logsSandbox.loadLogsFilteredPaged(this.logFilter);
   }
 
   ngOnDestroy(): void {

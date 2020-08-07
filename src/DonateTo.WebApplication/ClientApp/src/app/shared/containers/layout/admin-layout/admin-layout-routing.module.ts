@@ -27,7 +27,7 @@ const routes: Routes = [
       },
       {
         path: 'logs',
-        loadChildren: () => import('../../../../admin/log/log.module').then((m) => m.LogModule),
+        loadChildren: () => import('../../../../admin/logs/logs.module').then((m) => m.LogModule),
       },
     ],
   },
