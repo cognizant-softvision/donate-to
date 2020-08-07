@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { UserSandbox } from './user.sandbox';
 import { UserFilter } from '../../shared/models/filters/user-filter';
 import { NzTableQueryParams } from 'ng-zorro-antd';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import 'rxjs/add/operator/filter';
 
 @Component({
@@ -32,32 +32,41 @@ export class UserComponent implements OnInit, OnDestroy {
   userFilter = new UserFilter();
   failedStatus = false;
   successStatus = false;
-  organizationName: '';
+  organizationId = 0;
+  organizationName = '';
+  isAdmin = false;
 
-  constructor(private userSandbox: UserSandbox, private route: ActivatedRoute) {}
-
-  ngOnDestroy(): void {
-    this.unregisterEvents();
-  }
+  constructor(private userSandbox: UserSandbox, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     this.route.queryParams
-      .filter((params) => params.organizationName)
+      .filter((params) => params.organizationId)
       .subscribe((params) => {
-        this.organizationName = params.organizationName;
+        this.organizationId = +params.organizationId;
 
         this.userFilter = {
           ...this.userFilter,
           pageSize: this.pageSize,
           pageNumber: this.pageIndex,
-          organization: this.organizationName,
+          organizationId: this.organizationId,
         };
       });
+
+    if (this.organizationId !== 0) {
+      this.subscriptions.push(
+        this.userSandbox.organization$.subscribe((organization) => {
+          this.organizationName = organization?.name;
+        })
+      );
+    }
 
     this.subscriptions.push(
       this.userSandbox.usersPagedFiltered$.subscribe((res) => {
         this.total = res.rowCount;
         this.usersList = res.results;
+        if (this.organizationId !== 0) {
+          this.userSandbox.loadOrganization(this.organizationId);
+        }
       })
     );
 
@@ -73,6 +82,12 @@ export class UserComponent implements OnInit, OnDestroy {
         this.handleRequestResult();
       })
     );
+
+    this.isAdmin = this.userSandbox.isAdmin;
+  }
+
+  ngOnDestroy(): void {
+    this.unregisterEvents();
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
@@ -85,13 +100,10 @@ export class UserComponent implements OnInit, OnDestroy {
       pageNumber: pageIndex,
       orderBy: (currentSort && currentSort.key) || '',
       orderDirection: (currentSort && currentSort.value) || '',
+      organizationId: this.organizationId,
     };
 
     this.userSandbox.loadUsersFilteredPaged(this.userFilter);
-  }
-
-  private unregisterEvents() {
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   editUser(user: UserModel) {
@@ -116,16 +128,24 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   reset(): void {
-    this.organizationName = '';
+    if (this.isAdmin) {
+      this.organizationName = '';
+      this.organizationId = 0;
+      this.router.navigate(['/admin/users']);
+    }
+
     this.searchNameValue = '';
     this.searchOrganizationValue = '';
     this.searchEmailValue = '';
+
     this.userFilter = {
       ...this.userFilter,
       fullName: this.searchNameValue,
       organization: this.searchOrganizationValue,
       email: this.searchEmailValue,
+      organizationId: this.organizationId,
     };
+
     this.userSandbox.loadUsersFilteredPaged(this.userFilter);
   }
 
@@ -163,5 +183,9 @@ export class UserComponent implements OnInit, OnDestroy {
     this.searchEmailVisible = false;
     this.userFilter = { ...this.userFilter, email: this.searchEmailValue };
     this.userSandbox.loadUsersFilteredPaged(this.userFilter);
+  }
+
+  private unregisterEvents() {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 }

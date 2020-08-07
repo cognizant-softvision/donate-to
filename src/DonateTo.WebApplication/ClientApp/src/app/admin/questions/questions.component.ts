@@ -4,7 +4,7 @@ import { QuestionFilter } from 'src/app/shared/models/filters/question-filter';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { NzTableQueryParams } from 'ng-zorro-antd';
-import { QuestionsSandbox } from './questions-sandbox';
+import { QuestionsSandbox } from './questions.sandbox';
 import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
 
 @Component({

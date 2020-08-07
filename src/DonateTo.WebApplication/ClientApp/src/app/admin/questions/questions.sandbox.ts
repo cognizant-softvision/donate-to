@@ -1,15 +1,13 @@
 import { QuestionResult } from '../../shared/models/question-result.model';
 import { QuestionModel } from './../../shared/models/question.model';
 import * as store from '../../shared/store';
-import { Subscription } from 'rxjs';
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Sandbox } from '../../shared/sandbox/base.sandbox';
 import { Store } from '@ngrx/store';
 import { QuestionFilter } from '../../shared/models/filters/question-filter';
 
 @Injectable()
-export class QuestionsSandbox extends Sandbox implements OnDestroy {
-  private subscriptions: Subscription[] = [];
+export class QuestionsSandbox extends Sandbox {
   questions$ = this.appState$.select(store.fromQuestion.getAllQuestions);
   failAction$ = this.appState$.select(store.fromQuestion.getFailedStatus);
   loadAction$ = this.appState$.select(store.fromQuestion.getLoadingStatus);
@@ -18,14 +16,6 @@ export class QuestionsSandbox extends Sandbox implements OnDestroy {
 
   constructor(protected appState$: Store<store.State>) {
     super(appState$);
-  }
-
-  ngOnDestroy(): void {
-    this.unregisterEvents();
-  }
-
-  private unregisterEvents() {
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   loadQuestions(): void {

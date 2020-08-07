@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { HomeSandbox } from './home.sandbox';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
@@ -10,12 +10,12 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.less'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   param = { value: 'world' };
   requests: any[];
-
   tplModal?: NzModalRef;
   item: any = null;
+  isAuthenticated = false;
 
   @ViewChild('modalContent') public modalContent: TemplateRef<any>;
   @ViewChild('modalFooter') public modalFooter: TemplateRef<any>;
@@ -38,7 +38,13 @@ export class HomeComponent implements OnInit {
 
   subscriptions: Subscription[] = [];
 
-  ngOnInit(): void {}
+  ngOnInit() {
+    this.registerEvents();
+  }
+
+  ngOnDestroy() {
+    this.unregisterEvents();
+  }
 
   onChange() {
     if (this.searchValue.length >= this.searchLength) {
@@ -72,11 +78,23 @@ export class HomeComponent implements OnInit {
 
   goToDonate(donationRequestId: any) {
     const path = 'donation';
-    if (this.homeSandbox.isAuthenticated) {
+    if (this.isAuthenticated) {
       this.hideModal();
       this.router.navigate([path, donationRequestId]);
     } else {
       this.homeSandbox.login(path.concat('/').concat(donationRequestId));
     }
+  }
+
+  private registerEvents() {
+    this.subscriptions.push(
+      this.homeSandbox.isAuthenticated$.subscribe((isAuthenticated) => {
+        this.isAuthenticated = isAuthenticated;
+      })
+    );
+  }
+
+  private unregisterEvents() {
+    this.subscriptions.forEach((s) => s.unsubscribe());
   }
 }

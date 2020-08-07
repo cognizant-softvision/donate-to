@@ -1,5 +1,6 @@
 import * as authActions from './actions';
 import { Action, createReducer, on } from '@ngrx/store';
+import { OrganizationModel } from '../../models';
 
 export class AuthState {
   isAuthenticated: boolean;
@@ -7,6 +8,7 @@ export class AuthState {
   isLoginProcessed: boolean;
   userId: number;
   nameUser: string;
+  organizations: OrganizationModel[];
   roles: string[];
 }
 
@@ -16,6 +18,7 @@ const INITIAL_STATE: AuthState = {
   isLoginProcessed: false,
   userId: undefined,
   nameUser: undefined,
+  organizations: undefined,
   roles: [],
 };
 
@@ -28,6 +31,7 @@ const authReducer = createReducer(
     userId: action.userId,
     nameUser: action.nameUser,
     roles: action.roles,
+    organizations: action.organizations,
     isLoginProcessed: true,
   })),
   on(authActions.doLoginFailed, (state) => ({

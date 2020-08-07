@@ -1,7 +1,7 @@
 <div *ngIf="outlet.isActivated == false">
   <div class="table-operations">
     <h2 class="section-title">{{ 'Admin.Organization.Title' | translate }}</h2>
-    <div class="create-button">
+    <div class="create-button" *ngIf="isSuperAdmin">
       <button
         nz-popconfirm
         nzPopconfirmTitle="{{ 'Admin.Organization.CreateConfirm' | translate }}"
@@ -93,6 +93,7 @@
           <td>{{ data.contact?.fullName }}</td>
           <td>
             <a
+              *ngIf="canEdit(data.id)"
               [routerLink]="['./edit', data.id]"
               nzTooltipTitle="{{ 'Admin.Organization.Edit' | translate }}"
               nzTooltipPlacement="bottom"
