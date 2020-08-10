@@ -46,6 +46,7 @@ export class OrganizationFormComponent implements OnInit {
   isEditOrganization = false;
   organization: OrganizationModel;
   dataSaved = false;
+  viewAddAddressWarning = false;
 
   // Tabs
   generalInformationTabDisabled = false;
@@ -103,9 +104,11 @@ export class OrganizationFormComponent implements OnInit {
         this.organizationSandbox.addOrganization(this.organization);
         this.dataUpdated.changeMessage(true);
       }
-    }
 
-    this.router.navigate(['/admin/organizations']);
+      this.router.navigate(['/admin/organizations']);
+    } else {
+      this.viewAddAddressWarning = true;
+    }
   }
 
   updateStepsData(): void {

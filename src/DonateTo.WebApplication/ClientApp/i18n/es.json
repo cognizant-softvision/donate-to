@@ -181,7 +181,10 @@
           "ConfirmEdit": "Confirmar edición",
           "Next": "Próximo",
           "Previous": "Anterior",
-          "Create": "Crear"
+          "Create": "Crear",
+          "AddressModalStep": "¿Cuál es la dirección de la rama?",
+          "ContactModalStep": "¿Cuál es la persona a contactar?",
+          "AddAddressWarning": "Agregar al menos una dirección"
         }
       }
     },

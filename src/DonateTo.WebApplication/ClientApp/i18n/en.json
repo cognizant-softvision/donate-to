@@ -181,7 +181,10 @@
           "ConfirmEdit": "Confirm edit",
           "Next": "Next",
           "Previous": "Previous",
-          "Create": "Create"
+          "Create": "Create",
+          "AddressModalStep": "What is the address of the branch?",
+          "ContactModalStep": "Who is the contact person?",
+          "AddAddressWarning": "Add at least one address"
         }
       }
     },

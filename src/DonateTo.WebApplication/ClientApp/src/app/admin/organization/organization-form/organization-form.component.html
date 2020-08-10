@@ -36,6 +36,10 @@
     </nz-tab>
   </nz-tabset>
 
+  <span class="add-address-warning" *ngIf="viewAddAddressWarning">{{
+    'Admin.Organization.OrganizationSteps.Address.AddAddressWarning' | translate
+  }}</span>
+
   <!-- Steps Buttons -->
   <div class="finish-button">
     <button nz-button nzType="primary" (click)="done()" *ngIf="currentStep === 2 && !isEditOrganization">

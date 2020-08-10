@@ -8,3 +8,8 @@
   align-items: flex-end;
   justify-content: flex-end;
 }
+
+.add-address-warning {
+  color: red;
+  font-style: italic;
+}
