@@ -4,4 +4,5 @@ export class UserFilter extends BaseFilter {
   fullName: string;
   email: string;
   organization: string;
+  organizationId: number;
 }
