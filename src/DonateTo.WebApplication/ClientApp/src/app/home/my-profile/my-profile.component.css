@@ -43,3 +43,8 @@ nz-descriptions {
   padding-left: 2em;
   padding-right: 2em;
 }
+
+.errorMessage {
+  color: red;
+  margin-left: 2em;
+}

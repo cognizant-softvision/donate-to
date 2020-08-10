@@ -428,7 +428,8 @@
     "PhoneNumber": "Número de teléfono",
     "OldPassword": "Vieja Contraseña",
     "NewPassword": "Nueva Contraseña",
-    "RepeatPassword": "Repetir nueva contraseña"
+    "RepeatPassword": "Repetir nueva contraseña",
+    "ValidateForm": "Todos los campos son requeridos"
   },
   "SharedControls": {
     "Search": "Buscar",
