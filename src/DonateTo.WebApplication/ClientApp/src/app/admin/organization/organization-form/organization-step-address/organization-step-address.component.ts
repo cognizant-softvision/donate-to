@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { OrganizationSandbox } from '../../organization-sandbox';
 import { NzModalRef } from 'ng-zorro-antd';
 import { OrganizationStepContactComponent } from '../organization-step-contact/organization-step-contact.component';
+import { BranchModalComponent } from './branch-modal/branch-modal.component';
 
 @Component({
   selector: 'app-organization-step-address',
@@ -22,6 +23,9 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
 
   @ViewChild(OrganizationStepContactComponent)
   private organizationStepContactComponent: OrganizationStepContactComponent;
+
+  @ViewChild(BranchModalComponent)
+  private branchModalComponent: BranchModalComponent;
 
   subscriptions: Subscription[] = [];
   countries: CountryModel[] = [];
@@ -59,6 +63,8 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
   addressId = 0;
 
   isEditAddress = false;
+  modalIsVisible = false;
+  isOkLoading = false;
 
   constructor(private fb: FormBuilder, public organizationSandbox: OrganizationSandbox) {}
 
@@ -150,20 +156,20 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
     const addressModel: AddressModel = new AddressModel();
 
     addressModel.id = this.addressId;
-    addressModel.street = this.addressStepForm.value.street;
-    addressModel.postalCode = this.addressStepForm.value.postalCode;
-    addressModel.floor = this.addressStepForm.value.floor;
-    addressModel.appartment = this.addressStepForm.value.appartment;
-    addressModel.additionalInformation = this.addressStepForm.value.additionalInformation;
+    addressModel.street = this.branchModalComponent.addressModel.street;
+    addressModel.postalCode = this.branchModalComponent.addressModel.postalCode;
+    addressModel.floor = this.branchModalComponent.addressModel.floor;
+    addressModel.appartment = this.branchModalComponent.addressModel.appartment;
+    addressModel.additionalInformation = this.branchModalComponent.addressModel.additionalInformation;
     addressModel.contact = this.getContact();
 
-    addressModel.countryId = this.addressStepForm.value.countryId;
+    addressModel.countryId = this.branchModalComponent.addressModel.countryId;
     addressModel.country = this.getCountry(addressModel.countryId);
 
-    addressModel.stateId = this.addressStepForm.value.stateId;
+    addressModel.stateId = this.branchModalComponent.addressModel.stateId;
     addressModel.state = this.getState(addressModel.stateId);
 
-    addressModel.cityId = this.addressStepForm.value.cityId;
+    addressModel.cityId = this.branchModalComponent.addressModel.cityId;
     addressModel.city = this.getCity(addressModel.cityId);
     return addressModel;
   }
@@ -171,12 +177,12 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
   getContact(): ContactModel {
     const contact: ContactModel = new ContactModel();
 
-    contact.firstName = this.contactModel.firstName;
-    contact.lastName = this.contactModel.lastName;
-    contact.email = this.contactModel.email;
-    contact.identityNumber = this.contactModel.identityNumber;
-    contact.phoneNumber = this.contactModel.phoneNumber;
-    contact.position = this.contactModel.position;
+    contact.firstName = this.branchModalComponent.contactModel.firstName;
+    contact.lastName = this.branchModalComponent.contactModel.lastName;
+    contact.email = this.branchModalComponent.contactModel.email;
+    contact.identityNumber = this.branchModalComponent.contactModel.identityNumber;
+    contact.phoneNumber = this.branchModalComponent.contactModel.phoneNumber;
+    contact.position = this.branchModalComponent.contactModel.position;
 
     return contact;
   }
@@ -188,47 +194,54 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
   }
 
   addAddress() {
-    if (this.isValidForm()) {
-      let newAddress = new AddressModel();
-      newAddress = this.getAddressFormModel();
-      this.addresses = [...this.addresses, newAddress];
+    let newAddress = new AddressModel();
+    newAddress = this.getAddressFormModel();
+    this.addresses = [...this.addresses, newAddress];
+  }
 
-      this.addressStepForm.reset();
-      this.organizationStepContactComponent.responsableStepForm.reset();
-    } else {
-      this.organizationStepContactComponent.validateForm();
-      this.validateForm();
+  removeAddress(event: any) {
+    if (event) {
+      this.addresses = this.addresses.filter((a) => a !== event);
     }
   }
 
-  removeAddress(item: AddressModel) {
-    this.addresses = this.addresses.filter((a) => a !== item);
+  editAddress(item) {
+    let editedAddress = new AddressModel();
+    editedAddress = this.editedAddress(item.editedAddress);
+    this.addresses.splice(item.itemIndex, 1);
+    this.addresses = [...this.addresses, editedAddress];
   }
 
-  editAddress(item: AddressModel) {
-    this.isEditAddress = true;
+  editedAddress(item): AddressModel {
+    const addressModel: AddressModel = new AddressModel();
 
-    this.addressId = item.id;
-    this.street = item.street;
-    this.postalCode = item.postalCode;
-    this.floor = item.floor;
-    this.appartment = item.appartment;
-    this.country = item.countryId;
-    this.state = item.stateId;
-    this.city = item.cityId;
-    this.additionalInformation = item.additionalInformation;
+    addressModel.id = item.id;
+    addressModel.street = item.street;
+    addressModel.postalCode = item.postalCode;
+    addressModel.floor = item.floor;
+    addressModel.appartment = item.appartment;
+    addressModel.additionalInformation = item.additionalInformation;
 
-    this.organizationStepContactComponent.firstName = item.contact.firstName;
-    this.organizationStepContactComponent.lastName = item.contact.lastName;
-    this.organizationStepContactComponent.identityNumber = item.contact.identityNumber;
-    this.organizationStepContactComponent.email = item.contact.email;
-    this.organizationStepContactComponent.phoneNumber = item.contact.phoneNumber;
-    this.organizationStepContactComponent.position = item.contact.position;
+    const contact: ContactModel = new ContactModel();
+    contact.id = item.contact.id;
+    contact.firstName = item.contact.firstName;
+    contact.lastName = item.contact.lastName;
+    contact.email = item.contact.email;
+    contact.identityNumber = item.contact.identityNumber;
+    contact.phoneNumber = item.contact.phoneNumber;
+    contact.position = item.contact.position;
+    addressModel.contact = contact;
+    addressModel.contactId = item.contact.id;
 
-    this.item = item;
+    addressModel.countryId = item.countryId;
+    addressModel.country = this.getCountry(addressModel.countryId);
 
-    this.organizationSandbox.loadStatesByCountry(item.countryId);
-    this.organizationSandbox.loadCitiesByState(item.stateId);
+    addressModel.stateId = item.stateId;
+    addressModel.state = this.getState(addressModel.stateId);
+
+    addressModel.cityId = item.cityId;
+    addressModel.city = this.getCity(addressModel.cityId);
+    return addressModel;
   }
 
   cancelEdit() {
@@ -271,5 +284,26 @@ export class OrganizationStepAddressComponent implements OnInit, OnDestroy {
         name: this.cities.find((c) => c.id === cityId)?.name,
       });
     }
+  }
+
+  addBranch() {
+    this.modalIsVisible = true;
+  }
+
+  handleOk(): void {
+    this.isOkLoading = true;
+    setTimeout(() => {
+      this.modalIsVisible = false;
+      this.isOkLoading = false;
+    }, 3000);
+  }
+
+  handleCancel(): void {
+    this.modalIsVisible = false;
+  }
+
+  done() {
+    this.addAddress();
+    this.modalIsVisible = false;
   }
 }

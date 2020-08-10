@@ -160,10 +160,13 @@
           "Position": "Position"
         },
         "Address": {
+          "StepTitle": "Branches",
           "Address": "Address",
           "Edit": "Edit",
           "Delete": "Delete",
+          "AddNewBranch": "Add New Branch",
           "AddAddress": "Add Address",
+          "EditBranch": "Edit Branch",
           "Information": "Enter organization's address. Multiple addresses can be associated to an organization.",
           "Contact": "Enter a contact for this address",
           "Street": "Street",
@@ -175,7 +178,10 @@
           "PostalCode": "Postal Code",
           "AdditionalInformation": "Additional Information",
           "CancelEdit": "Cancel edit",
-          "ConfirmEdit": "Confirm edit"
+          "ConfirmEdit": "Confirm edit",
+          "Next": "Next",
+          "Previous": "Previous",
+          "Create": "Create"
         }
       }
     },

@@ -162,7 +162,6 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
     }
     this.isSubmited.emit(true);
 
-    console.log('Donation to submit', donation);
     if (this.isEdit) {
       this.donationSandbox.updateDonation(donation);
     } else {

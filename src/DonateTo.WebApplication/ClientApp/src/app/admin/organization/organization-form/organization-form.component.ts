@@ -64,7 +64,7 @@ export class OrganizationFormComponent implements OnInit {
     },
     {
       disabled: false,
-      name: 'Admin.Organization.OrganizationSteps.Address.Address',
+      name: 'Admin.Organization.OrganizationSteps.Address.StepTitle',
       icon: 'home',
       currentStep: 2,
     },
@@ -225,5 +225,6 @@ export class OrganizationFormComponent implements OnInit {
       default:
         return true;
     }
+    // tslint:disable-next-line: semicolon
   };
 }

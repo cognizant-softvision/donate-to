@@ -160,10 +160,13 @@
           "Position": "Posición"
         },
         "Address": {
+          "StepTitle": "Ramas",
           "Address": "Dirección",
           "Edit": "Editar",
           "Delete": "Eliminar",
+          "AddNewBranch": "Añadir Nueva Rama",
           "AddAddress": "Agregar Dirección",
+          "EditBranch": "Editar Rama",
           "Information": "Ingrese una dirección para la organización. Se pueden asociar más de una dirección a una organización.",
           "Contact": "Ingrese un contacto para esta dirección",
           "Street": "Calle",
@@ -175,7 +178,10 @@
           "PostalCode": "Código Postal",
           "AdditionalInformation": "Información Adicional",
           "CancelEdit": "Cancelar edición",
-          "ConfirmEdit": "Confirmar edición"
+          "ConfirmEdit": "Confirmar edición",
+          "Next": "Próximo",
+          "Previous": "Anterior",
+          "Create": "Crear"
         }
       }
     },

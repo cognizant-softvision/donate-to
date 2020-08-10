@@ -33,3 +33,9 @@
 .icon-link {
   color: grey;
 }
+
+.add-new-branch-button {
+  display: flex;
+  margin: auto;
+  margin-top: 1em;
+}

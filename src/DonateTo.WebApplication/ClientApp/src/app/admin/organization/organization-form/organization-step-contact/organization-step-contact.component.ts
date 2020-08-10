@@ -14,6 +14,7 @@ export class OrganizationStepContactComponent implements OnInit {
   @Output() isFormValid = new EventEmitter();
   @Input() contactModel: ContactModel;
   @Input() isEditOrganization: boolean;
+  @Input() contactForBranch: boolean;
 
   organizationToEdit: OrganizationModel;
 
@@ -36,6 +37,14 @@ export class OrganizationStepContactComponent implements OnInit {
       email: [this.contactModel?.email, [Validators.required, Validators.email]],
       position: [this.contactModel?.position],
     });
+
+    this.firstName = this.contactModel?.firstName;
+    this.lastName = this.contactModel?.lastName;
+    this.identityNumber = this.contactModel?.identityNumber;
+    this.email = this.contactModel?.email;
+    this.phoneNumber = this.contactModel?.phoneNumber;
+    this.position = this.contactModel?.position;
+    this.contactId = this.contactModel?.id;
 
     if (this.isEditOrganization) {
       this.organizationSandbox.organization$.subscribe((organization) => {

@@ -3,3 +3,19 @@ form {
   margin: auto;
   margin-top: 4em;
 }
+
+.contact-column-title {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.contact-column-information {
+  margin-left: 1em;
+  font-size: 0.8em;
+  color: gray;
+}
+
+.contact-for-branch-form {
+  width: 70%;
+  margin: auto;
+}

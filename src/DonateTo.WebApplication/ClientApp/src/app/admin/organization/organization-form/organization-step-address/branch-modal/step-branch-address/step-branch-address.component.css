@@ -1,0 +1,15 @@
+.address-form {
+  width: 100%;
+  margin: auto;
+}
+
+.address-column-title {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.address-column-information {
+  margin-left: 1em;
+  font-size: 0.8em;
+  color: gray;
+}
