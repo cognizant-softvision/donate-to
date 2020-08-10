@@ -1,4 +1,4 @@
-<div *ngIf="outlet.isActivated == false">
+<div *ngIf="!outlet.isActivated">
   <div class="table-operations">
     <i nz-icon nzType="arrow-left" nzTheme="outline" (click)="goBack()" class="back-button"></i>
     <h4 class="section-title">{{ 'Admin.Donation.Detail.Title' | translate }}</h4>

@@ -97,8 +97,8 @@
       },
       "Detail": {
         "Title": "Donations",
-        "MoreInformationToolTipTitle": "More Information",
-        "MoreInformationTitle": "More Information",
+        "MoreInformationToolTipTitle": "More information",
+        "MoreInformationTitle": "More information",
         "AvailabilitiesTitle": "Availabilities",
         "AddressTitle": "Address",
         "Address": {
@@ -106,7 +106,7 @@
           "PostalCode": "Postal Code",
           "Floor": "Floor",
           "Appartment": "Appartment",
-          "AdditionalInformation": "Additional Information",
+          "AdditionalInformation": "Additional information",
           "City": "City",
           "State": "State",
           "Country": "Country"
