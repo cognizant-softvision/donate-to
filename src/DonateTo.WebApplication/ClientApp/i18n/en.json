@@ -93,6 +93,29 @@
         "DonationItemRequiredError": "At least 1 item request is required",
         "DeleteItemConfirmation": "Are you sure delete this item request?"
       },
+      "Detail": {
+        "Title": "Donations",
+        "MoreInformationToolTipTitle": "More Information",
+        "MoreInformationTitle": "More Information",
+        "AvailabilitiesTitle": "Availabilities",
+        "AddressTitle": "Address",
+        "Address": {
+          "Street": "Street",
+          "PostalCode": "Postal Code",
+          "Floor": "Floor",
+          "Appartment": "Appartment",
+          "AdditionalInformation": "Additional Information",
+          "City": "City",
+          "State": "State",
+          "Country": "Country"
+        },
+        "ContactTitle": "Contact",
+        "Contact": {
+          "FullName": "Name",
+          "Email": "Email",
+          "PhoneNumber": "Phone Number"
+        }
+      },
       "BackConfirm": "Are you sure you want to go back?",
       "CreateConfirm": "Are you sure you want to create a donation request?",
       "EditConfirm": "Are you sure you want to edit a donation request?",
@@ -113,7 +136,22 @@
         "CreatedTo": "To",
         "FinishFrom": "From",
         "FinishTo": "To",
-        "PlacedDonations": "Placed Donations"
+        "PlacedDonations": "Placed Donations",
+        "Observation": "Observation",
+        "Items": "Items",
+        "Status": "Status",
+        "Donor": "Donor",
+        "DonationItemsTitle": "Donation Items",
+        "DonationItemColumn": "Item Name",
+        "DonationItem": {
+          "Name": "Name",
+          "Quantity": "Quantity",
+          "Unit": "Unit",
+          "Status": "Status"
+        },
+        "DayColumn": "Day",
+        "StartTimeColumn": "From",
+        "FinishTimeColumn": "To"
       }
     },
     "Organization": {

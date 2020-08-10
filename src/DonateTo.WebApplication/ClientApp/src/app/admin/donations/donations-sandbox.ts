@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { CategorySerializer } from '../../shared/utility/serializers/category-serializer';
 import { DonationRequestItemCategoryModel, DonationRequestModel } from '../../shared/models';
 import { DonationRequestFilter } from '../../shared/models/filters/donation-request-filter';
+import { DonationFilter } from 'src/app/shared/models/filters/donation-filter';
 
 @Injectable()
 export class DonationsSandbox extends Sandbox implements OnDestroy {
@@ -22,6 +23,7 @@ export class DonationsSandbox extends Sandbox implements OnDestroy {
   failAction$ = this.appState$.select(store.fromDonationRequest.getFailedStatus);
   loadAction$ = this.appState$.select(store.fromDonationRequest.getLoadingStatus);
   donationRequestsPagedFiltered$ = this.appState$.select(store.fromDonationRequest.getDonationRequestsFilteredPaged);
+  donationsPagedFiltered$ = this.appState$.select(store.fromDonation.getDonations);
 
   constructor(protected appState$: Store<store.State>) {
     super(appState$);
@@ -99,6 +101,13 @@ export class DonationsSandbox extends Sandbox implements OnDestroy {
    */
   public loadUnits(): void {
     this.appState$.dispatch(store.fromUnit.loadUnits());
+  }
+
+  /**
+   * Loads Donations Paged Filtered By DonationRequestId from the server
+   */
+  public loadPagedFilteredDonationByDonationRequestId(donationFilter: DonationFilter): void {
+    this.appState$.dispatch(store.fromDonation.loadPagedFilteredDonationsByDonationRequestId({ donationFilter }));
   }
 
   /**
