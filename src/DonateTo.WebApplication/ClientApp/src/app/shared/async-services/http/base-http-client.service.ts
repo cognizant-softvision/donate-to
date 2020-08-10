@@ -68,4 +68,13 @@ export class BaseHttpClientService<T extends BaseModel> {
   delete(item: T) {
     return this.httpClient.delete<T>(`${this.url}/${this.endpoint}/${item.id}`, this.httpOptions);
   }
+
+  /**
+   * Converts a number type filter property (if it is a valid number) into a string.
+   * Usage example: intFilterToString(filter?.numProperty)
+   * @param num Number to convert.
+   */
+  protected intFilterToString(num: number): string {
+    return num == null ? '' : num.toString();
+  }
 }

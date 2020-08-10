@@ -50,7 +50,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { ArrowLeftOutline, DeleteOutline, EditOutline, PlusOutline } from '@ant-design/icons-angular/icons';
 import { DonationsDetailComponent } from './donations-detail/donations-detail.component';
 import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
-import { QuestionsSandbox } from '../questions/questions-sandbox';
+import { QuestionsSandbox } from '../questions/questions.sandbox';
 
 // FIX this should be moved to an upper level.
 registerLocaleData(es);

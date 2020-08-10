@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using DonateTo.ApplicationCore.Common;
 using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Interfaces.Services;
@@ -18,15 +19,18 @@ namespace DonateTo.Services
     public class OrganizationService : BaseService<Organization, OrganizationFilterModel>, IOrganizationService
     {
         private readonly IRepository<Organization> _organizationRepository;
+        private readonly IRepository<Role> _roleRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
         public OrganizationService(
             IRepository<Organization> organizationRepository,
+            IRepository<Role> roleRepository,
             IUnitOfWork unitOfWork,
             IMapper mapper) : base(organizationRepository, unitOfWork)
         {
             _organizationRepository = organizationRepository;
+            _roleRepository = roleRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
@@ -60,6 +64,17 @@ namespace DonateTo.Services
         {
             var predicate = GetPredicate(filter);
 
+            var roles = _roleRepository.Get(r => r.UserRoles.Any(u => u.UserId == filter.UserId)).ToList();
+
+            if (roles.Count == 1 && roles.Any(r => r.Name == Roles.Donor))
+            {
+                return new PagedResult<Organization>();
+            }
+            else if (!roles.Any(r => r.Name == Roles.Admin || r.Name == Roles.Superadmin))
+            {
+                predicate = predicate.And(p => p.UserOrganizations.Any(uo => uo.UserId == filter.UserId));
+            }
+            
             return await _organizationRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicate, GetSort(filter)).ConfigureAwait(false);
         }
 

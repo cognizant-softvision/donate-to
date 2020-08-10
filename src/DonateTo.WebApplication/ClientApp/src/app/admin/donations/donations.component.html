@@ -28,7 +28,7 @@
           {{ 'Admin.Donation.Table.Itemcolumn' | translate }}
           <label
             class="filter"
-            title="{{ 'Admin.Donation.Table.Filtered' | translate }}"
+            title="{{ 'SharedControls.Filtered' | translate }}"
             *ngIf="searchTitleValue.length > 0 && !titleVisible"
           >
             ({{ searchTitleValue }})
@@ -45,7 +45,7 @@
           {{ 'Admin.Donation.Table.CreatedColumn' | translate }}
           <label
             class="filter"
-            title="{{ 'Admin.Donation.Table.Filtered' | translate }}"
+            title="{{ 'SharedControls.Filtered' | translate }}"
             *ngIf="(searchCreatedDateBeginValue || searchCreatedDateEndValue) && !createdDateVisible"
           >
             ({{ searchCreatedDateBeginValue | date: 'shortDate' }} -
@@ -63,7 +63,7 @@
           {{ 'Admin.Donation.Table.Finishcolumn' | translate }}
           <label
             class="filter"
-            title="{{ 'Admin.Donation.Table.Filtered' | translate }}"
+            title="{{ 'SharedControls.Filtered' | translate }}"
             *ngIf="(searchFinishDateBeginValue || searchFinishDateEndValue) && !finishDateVisible"
           >
             ({{ searchFinishDateBeginValue | date: 'shortDate' }} - {{ searchFinishDateEndValue | date: 'shortDate' }})
@@ -132,11 +132,11 @@
         placeholder="{{ 'Admin.Donation.Table.Itemcolumn' | translate }}"
         [(ngModel)]="searchTitleValue"
       />
-      <button nz-button nzSize="small" nzType="primary" (click)="searchTitle()">
-        {{ 'Admin.Donation.Table.Search' | translate }}
+      <button nz-button nzSize="small" nzType="primary" (click)="searchTitle()" class="search-button">
+        {{ 'SharedControls.Search' | translate }}
       </button>
       <button nz-button nzSize="small" (click)="resetTitleSearch()">
-        {{ 'Admin.Donation.Table.Reset' | translate }}
+        {{ 'SharedControls.Reset' | translate }}
       </button>
     </div>
   </div>
@@ -149,20 +149,20 @@
         <nz-date-picker
           [(ngModel)]="searchCreatedDateBeginValue"
           class="from"
-          nzPlaceHolder="{{ 'Admin.Donation.Table.CreatedFrom' | translate }}"
+          nzPlaceHolder="{{ 'SharedControls.RangeDatePicker.From' | translate }}"
         >
         </nz-date-picker>
         <nz-date-picker
           [(ngModel)]="searchCreatedDateEndValue"
-          nzPlaceHolder="{{ 'Admin.Donation.Table.CreatedTo' | translate }}"
+          nzPlaceHolder="{{ 'SharedControls.RangeDatePicker.To' | translate }}"
         >
         </nz-date-picker>
       </div>
-      <button nz-button nzSize="small" nzType="primary" (click)="searchCreatedDate()">
-        {{ 'Admin.Donation.Table.Search' | translate }}
+      <button nz-button nzSize="small" nzType="primary" (click)="searchCreatedDate()" class="search-button">
+        {{ 'SharedControls.Search' | translate }}
       </button>
       <button nz-button nzSize="small" (click)="resetCreatedDateSearch()">
-        {{ 'Admin.Donation.Table.Reset' | translate }}
+        {{ 'SharedControls.Reset' | translate }}
       </button>
     </div>
   </div>
@@ -175,20 +175,20 @@
         <nz-date-picker
           [(ngModel)]="searchFinishDateBeginValue"
           class="from"
-          nzPlaceHolder="{{ 'Admin.Donation.Table.FinishFrom' | translate }}"
+          nzPlaceHolder="{{ 'SharedControls.RangeDatePicker.From' | translate }}"
         >
         </nz-date-picker>
         <nz-date-picker
           [(ngModel)]="searchFinishDateEndValue"
-          nzPlaceHolder="{{ 'Admin.Donation.Table.FinishTo' | translate }}"
+          nzPlaceHolder="{{ 'SharedControls.RangeDatePicker.To' | translate }}"
         >
         </nz-date-picker>
       </div>
-      <button nz-button nzSize="small" nzType="primary" (click)="searchFinishDate()">
-        {{ 'Admin.Donation.Table.Search' | translate }}
+      <button nz-button nzSize="small" nzType="primary" (click)="searchFinishDate()" class="search-button">
+        {{ 'SharedControls.Search' | translate }}
       </button>
       <button nz-button nzSize="small" (click)="resetFinishDateSearch()">
-        {{ 'Admin.Donation.Table.Reset' | translate }}
+        {{ 'SharedControls.Reset' | translate }}
       </button>
     </div>
   </div>
@@ -203,11 +203,11 @@
         placeholder="{{ 'Admin.Donation.Table.Observationcolumn' | translate }}"
         [(ngModel)]="searchObservationValue"
       />
-      <button nz-button nzSize="small" nzType="primary" (click)="searchObservation()">
-        {{ 'Admin.Donation.Table.Search' | translate }}
+      <button nz-button nzSize="small" nzType="primary" (click)="searchObservation()" class="search-button">
+        {{ 'SharedControls.Search' | translate }}
       </button>
       <button nz-button nzSize="small" (click)="resetObservationSearch()">
-        {{ 'Admin.Donation.Table.Reset' | translate }}
+        {{ 'SharedControls.Reset' | translate }}
       </button>
     </div>
   </div>

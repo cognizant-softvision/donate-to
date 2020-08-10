@@ -45,7 +45,7 @@ namespace DonateTo.IdentityServer.Services
 
             if (userOrganizations.Any())
             {
-                claims.AddRange(userOrganizations.Select(o => new Claim("organization", JsonConvert.SerializeObject(new { o.Id, o.Name }))));
+                claims.Add(new Claim("organizations", JsonConvert.SerializeObject(userOrganizations.Select(o => new { id = o.Id, name = o.Name }).ToArray())));
             }
 
             var roleClaimName = JwtClaimTypes.Role;

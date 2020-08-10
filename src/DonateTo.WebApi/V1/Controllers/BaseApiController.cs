@@ -228,7 +228,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<PagedResult<T>>> GetPagedFiltered([FromQuery] TFilter filter)
+        public virtual async Task<ActionResult<PagedResult<T>>> GetPagedFiltered([FromQuery] TFilter filter)
         {
             if (!ModelState.IsValid)
             {

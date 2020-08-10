@@ -1,6 +1,5 @@
 import * as store from '../../shared/store';
-import { Subscription } from 'rxjs';
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Sandbox } from '../../shared/sandbox/base.sandbox';
 import { Store } from '@ngrx/store';
 import { CategorySerializer } from '../../shared/utility/serializers/category-serializer';
@@ -9,10 +8,8 @@ import { DonationRequestFilter } from '../../shared/models/filters/donation-requ
 import { DonationFilter } from 'src/app/shared/models/filters/donation-filter';
 
 @Injectable()
-export class DonationsSandbox extends Sandbox implements OnDestroy {
+export class DonationsSandbox extends Sandbox {
   private categorySerializer: CategorySerializer = new CategorySerializer();
-  private subscriptions: Subscription[] = [];
-
   donationRequests$ = this.appState$.select(store.fromDonationRequest.getAllDonationRequests);
   organizations$ = this.appState$.select(store.fromOrganization.getAllOrganizations);
   status$ = this.appState$.select(store.fromStatus.getAllStatus);
@@ -27,10 +24,6 @@ export class DonationsSandbox extends Sandbox implements OnDestroy {
 
   constructor(protected appState$: Store<store.State>) {
     super(appState$);
-  }
-
-  ngOnDestroy(): void {
-    this.unregisterEvents();
   }
 
   /**
@@ -119,9 +112,5 @@ export class DonationsSandbox extends Sandbox implements OnDestroy {
 
   public loadDonationRequestsFilteredPaged(donationRequestFilter: DonationRequestFilter): void {
     this.appState$.dispatch(store.fromDonationRequest.loadDonationRequestsPagedFiltered({ donationRequestFilter }));
-  }
-
-  private unregisterEvents() {
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 }

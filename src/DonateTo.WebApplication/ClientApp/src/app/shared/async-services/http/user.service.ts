@@ -38,6 +38,7 @@ export class UserService extends BaseHttpClientService<UserModel> {
       fullName: userFilter?.fullName ?? '',
       email: userFilter?.email ?? '',
       organization: userFilter?.organization ?? '',
+      organizationId: userFilter?.organizationId.toString() ?? '',
       orderBy: userFilter?.orderBy ?? '',
       orderDirection: userFilter?.orderDirection ?? '',
     };

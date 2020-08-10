@@ -14,7 +14,7 @@ const INITIAL_STATE: UserState = {
   loading: false,
   failed: false,
   items: [],
-  user: undefined,
+  user: new UserModel(),
   pagedItems: new PageModel<UserModel>(),
 };
 
@@ -69,12 +69,13 @@ const userReducer = createReducer(
     loading: true,
     failed: false,
   })),
-  on(userActions.updateUser, (state) => ({
+  on(userActions.updateUserSuccess, (state, { user }) => ({
     ...state,
     loading: false,
     failed: false,
+    user,
   })),
-  on(userActions.updateUser, (state) => ({
+  on(userActions.updateUserFailed, (state) => ({
     ...state,
     loading: false,
     failed: true,
