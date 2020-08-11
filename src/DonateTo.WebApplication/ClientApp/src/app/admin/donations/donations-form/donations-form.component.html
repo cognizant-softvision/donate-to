@@ -128,7 +128,6 @@
         <nz-form-label class="donations-item">{{
           'Admin.Donation.Form.DonationItem.Quantity' | translate
         }}</nz-form-label>
-        <nz-form-label>{{ 'Admin.Donation.Form.DonationItem.Category' | translate }}</nz-form-label>
       </div>
       <div class="create-item-container create-donation-add-item-input">
         <div class="item-quantity">
@@ -158,39 +157,17 @@
             </nz-form-control>
           </nz-form-item>
         </div>
-        <nz-form-item>
-          <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.DonationItem.CategoryRequiredError' | translate }}">
-            <nz-select
-              [nzMaxTagCount]="2"
-              [(ngModel)]="selectedItemCategories"
-              formControlName="itemCategoryFormControl"
-              [nzMaxTagPlaceholder]="categoryItemTagPlaceHolder"
-              nzMode="multiple"
-              nzPlaceHolder="{{ 'Admin.Donation.Form.DonationItem.CategoryPlaceholder' | translate }}"
-            >
-              <nz-option
-                *ngFor="let category of this.donationSandbox.categories$ | async"
-                [nzLabel]="category.name"
-                [nzValue]="category"
-                [nzHide]="!isItemCategorySelected(category)"
-              ></nz-option>
-            </nz-select>
-            <ng-template #categoryItemTagPlaceHolder let-selectedItemList>
-              {{ selectedItemList.length }} {{ 'Admin.Donation.Form.OverflowTag' | translate }}
-            </ng-template>
-          </nz-form-control>
-        </nz-form-item>
+        <button
+          type="button"
+          class="donation-request-item-add"
+          (click)="addDonationRequestItem()"
+          nz-button
+          nzType="primary"
+        >
+          {{ 'Admin.Donation.Create.AddItem' | translate }}
+        </button>
       </div>
     </div>
-    <button
-      type="button"
-      class="donation-request-item-add"
-      (click)="addDonationRequestItem()"
-      nz-button
-      nzType="primary"
-    >
-      {{ 'Admin.Donation.Create.AddItem' | translate }}
-    </button>
   </div>
   <span class="item-required">{{ 'Admin.Donation.Form.DonationItemRequiredError' | translate }}</span>
   <br />
@@ -216,11 +193,6 @@
               <td>{{ item.name }}</td>
               <td>{{ item.finishQuantity }}</td>
               <td>{{ item.observation }}</td>
-              <td>
-                <nz-tag *ngFor="let itemCategory of item.donationRequestItemCategories">
-                  {{ getCategoryName(itemCategory.categoryId) }}
-                </nz-tag>
-              </td>
               <td>
                 <a
                   class="icon-link"

@@ -42,6 +42,7 @@ import {
   NzRadioModule,
   NzRateModule,
   NzSelectModule,
+  NzSpinModule,
   NzTableModule,
   NzTagModule,
 } from 'ng-zorro-antd';
@@ -77,6 +78,7 @@ const ICONS: IconDefinition[] = [PlusOutline, EditOutline, DeleteOutline];
     NzDropDownModule,
     NzTableModule,
     NzToolTipModule,
+    NzSpinModule,
 
     EffectsModule.forFeature([
       OrganizationEffects,

@@ -8,7 +8,12 @@ namespace DonateTo.Services.Mapping.Profiles
     {
         public UserModelProfile()
         {
-            CreateMap<User, UserModel>()
+            CreateMapUserToUserModel(this);
+        }
+
+        public static void CreateMapUserToUserModel(Profile profile)
+        {
+            profile.CreateMap<User, UserModel>()
                 .ForMember(m => m.Roles, opt => opt.MapFrom(src => src.UserRoles))
                 .ForMember(m => m.Organizations, opt => opt.MapFrom(src => src.UserOrganizations))
                 .ReverseMap()

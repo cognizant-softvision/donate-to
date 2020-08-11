@@ -5,6 +5,7 @@ using System;
 using IdentityServer4.EntityFramework.Entities;
 using System.Collections.Generic;
 using System.Linq;
+using DonateTo.Services.Mapping.Profiles;
 
 namespace DonateTo.IdentityServer.Mapping
 {
@@ -44,6 +45,10 @@ namespace DonateTo.IdentityServer.Mapping
 
             CreateMap<ClientListItem, Client>();
             CreateMap<Client, ClientListItem>();
+            UserModelProfile.CreateMapUserToUserModel(this);
+            RoleModelProfile.CreateMapRoleToRoleModel(this);
+            OrganizationProfile.CreateMapOrganizationToOrganizationModel(this);
+            CreateMap<Role, RoleModelView>();
         }
 
         private Dictionary<string, string>[] ObjectToDict<T>(IEnumerable<T> objs)

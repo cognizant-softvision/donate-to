@@ -40,6 +40,7 @@ namespace DonateTo.Infrastructure.Extensions
             services.AddScoped<ISearchRepository, PostgresSearchRepository>();
             services.AddScoped<IQuestionRepository, QuestionRepository>();
             services.AddScoped<IRepository<ControlType>, ControlTypeRepository>();
+            services.AddScoped<IRepository<Log>, LogRepository>();            
         }
     }
 }
