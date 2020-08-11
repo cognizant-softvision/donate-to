@@ -30,6 +30,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { UnitEffects } from 'src/app/shared/store/unit';
 import {
   NzDatePickerModule,
+  NzDescriptionsModule,
   NzDropDownModule,
   NzEmptyModule,
   NzFormModule,
@@ -47,7 +48,7 @@ import {
   NzTagModule,
 } from 'ng-zorro-antd';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
-import { DeleteOutline, EditOutline, PlusOutline } from '@ant-design/icons-angular/icons';
+import { ArrowLeftOutline, DeleteOutline, EditOutline, PlusOutline } from '@ant-design/icons-angular/icons';
 import { DonationsDetailComponent } from './donations-detail/donations-detail.component';
 import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
 import { QuestionsSandbox } from '../questions/questions.sandbox';
@@ -55,7 +56,7 @@ import { QuestionsSandbox } from '../questions/questions.sandbox';
 // FIX this should be moved to an upper level.
 registerLocaleData(es);
 
-const ICONS: IconDefinition[] = [PlusOutline, EditOutline, DeleteOutline];
+const ICONS: IconDefinition[] = [PlusOutline, EditOutline, DeleteOutline, ArrowLeftOutline];
 
 @NgModule({
   imports: [
@@ -69,6 +70,7 @@ const ICONS: IconDefinition[] = [PlusOutline, EditOutline, DeleteOutline];
     NzFormModule,
     NzTableModule,
     NzTagModule,
+    NzDescriptionsModule,
     NzRadioModule,
     NzDatePickerModule,
     NzButtonModule,

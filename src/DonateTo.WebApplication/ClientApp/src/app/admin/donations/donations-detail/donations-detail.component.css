@@ -1,0 +1,38 @@
+.search-box {
+  padding: 0.5em;
+}
+
+.search-box div.range {
+  padding-bottom: 0.5em;
+}
+
+.search-box input {
+  width: 12em;
+  margin-bottom: 0.5em;
+  display: block;
+}
+
+label.filter {
+  color: #bfbfbf;
+}
+
+.from {
+  margin-right: 0.25em;
+}
+
+.action-icon {
+  font-size: 1.5em;
+}
+
+.icon-link {
+  color: grey;
+}
+
+.back-button {
+  font-size: 1.5em;
+  margin-right: 0.5em;
+}
+
+.back-button:hover {
+  cursor: pointer;
+}
