@@ -11,24 +11,19 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./branch-modal.component.css'],
 })
 export class BranchModalComponent implements OnInit {
-  @Input() id: number;
   @Input() isBranchEdit: boolean;
-  @Output() validationResult = new EventEmitter<OrganizationModel>();
   @Output() saveDone: EventEmitter<any> = new EventEmitter<any>();
   @Output() editDone: EventEmitter<any> = new EventEmitter<any>();
+  @Input() contactModel: ContactModel;
+  @Input() addressModel: AddressModel;
+  @Input() addressId: number;
 
-  // Step status
   currentStep = 0;
   statusContact = 'wait';
   statusAddress = 'process';
   nextStepDisabled = true;
   submitBranchDisabled = true;
   contactForBranch = true;
-
-  // Child component form
-  @Input() contactModel: ContactModel;
-  @Input() addressModel: AddressModel;
-  @Input() addressId: number;
 
   _isContactStepReady = false;
   _isAddressStepReady = false;

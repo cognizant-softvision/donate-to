@@ -20,6 +20,7 @@
             <ng-container *ngFor="let item of addresses; index as i">
               <tr>
                 <td [nzExpand]="expandSet.has(item.id)" (nzExpandChange)="onExpandChange(item.id, $event)"></td>
+                <td>{{ item.name }}</td>
                 <td>{{ item.street }}</td>
                 <td>{{ item.postalCode }}</td>
                 <td>{{ item.floor }}</td>

@@ -24,6 +24,7 @@ export class StepBranchAddressComponent implements OnInit, OnDestroy {
   states: StateModel[] = [];
   cities: CityModel[] = [];
 
+  name = '';
   street = '';
   postalCode = '';
   floor = '';
@@ -40,6 +41,7 @@ export class StepBranchAddressComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.addressStepForm = this.fb.group({
+      name: [this.addressModel?.name, [Validators.required]],
       street: [this.addressModel?.street, [Validators.required]],
       postalCode: [this.addressModel?.postalCode, [Validators.required]],
       floor: [this.addressModel?.floor],
@@ -52,6 +54,7 @@ export class StepBranchAddressComponent implements OnInit, OnDestroy {
 
     this.registerEvents();
     this.organizationSandbox.loadCountries();
+    this.name = this.addressModel?.name;
     this.street = this.addressModel?.street;
     this.postalCode = this.addressModel?.postalCode;
     this.appartment = this.addressModel?.appartment;
@@ -125,6 +128,7 @@ export class StepBranchAddressComponent implements OnInit, OnDestroy {
     const addressModel: AddressModel = new AddressModel();
 
     addressModel.id = this.addressId;
+    addressModel.name = this.addressStepForm.value.name;
     addressModel.street = this.addressStepForm.value.street;
     addressModel.postalCode = this.addressStepForm.value.postalCode;
     addressModel.floor = this.addressStepForm.value.floor;

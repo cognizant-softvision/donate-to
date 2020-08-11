@@ -7,6 +7,25 @@
   <form nz-form [formGroup]="addressStepForm">
     <nz-form-item>
       <nz-form-label [nzSpan]="7" nzRequired>
+        {{ 'Admin.Organization.OrganizationSteps.Address.Name' | translate }}
+      </nz-form-label>
+      <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="streetErrorTpl">
+        <input
+          nz-input
+          formControlName="name"
+          placeholder="{{ 'Admin.Organization.OrganizationSteps.Address.Name' | translate }}"
+          [(ngModel)]="name"
+        />
+        <ng-template #streetErrorTpl let-control>
+          <ng-container *ngIf="control.hasError('required')">
+            {{ 'Admin.Organization.OrganizationSteps.Address.RequiredName' | translate }}
+          </ng-container>
+        </ng-template>
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSpan]="7" nzRequired>
         {{ 'RequestDonation.DonationSteps.AddressStep.Street' | translate }}
       </nz-form-label>
       <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="streetErrorTpl">

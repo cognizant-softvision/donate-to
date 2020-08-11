@@ -19,3 +19,7 @@ label.filter {
 .icon-link {
   color: grey;
 }
+
+a {
+  color: #0366d6;
+}

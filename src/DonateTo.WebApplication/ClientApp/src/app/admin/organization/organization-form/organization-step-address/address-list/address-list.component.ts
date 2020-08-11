@@ -18,6 +18,7 @@ export class AddressListComponent implements OnInit {
   addressModel: AddressModel;
   contactModel: ContactModel;
 
+  name = '';
   street = '';
   postalCode = '';
   floor = '';
@@ -39,14 +40,15 @@ export class AddressListComponent implements OnInit {
 
   listOfColumns: ColumnItem[] = [
     { name: '' },
-    { name: 'RequestDonation.DonationSteps.AddressStep.Street' },
-    { name: 'RequestDonation.DonationSteps.AddressStep.PostalCode' },
-    { name: 'RequestDonation.DonationSteps.AddressStep.Floor' },
-    { name: 'RequestDonation.DonationSteps.AddressStep.Appartment' },
-    { name: 'RequestDonation.DonationSteps.AddressStep.Country' },
-    { name: 'RequestDonation.DonationSteps.AddressStep.State' },
-    { name: 'RequestDonation.DonationSteps.AddressStep.City' },
-    { name: 'RequestDonation.DonationSteps.AddressStep.AdditionalInformation' },
+    { name: 'Admin.Organization.OrganizationSteps.Address.Name' },
+    { name: 'Admin.Organization.OrganizationSteps.Address.Street' },
+    { name: 'Admin.Organization.OrganizationSteps.Address.PostalCode' },
+    { name: 'Admin.Organization.OrganizationSteps.Address.Floor' },
+    { name: 'Admin.Organization.OrganizationSteps.Address.Appartment' },
+    { name: 'Admin.Organization.OrganizationSteps.Address.Country' },
+    { name: 'Admin.Organization.OrganizationSteps.Address.State' },
+    { name: 'Admin.Organization.OrganizationSteps.Address.City' },
+    { name: 'Admin.Organization.OrganizationSteps.Address.AdditionalInformation' },
     { name: 'Admin.Action' },
   ];
 
