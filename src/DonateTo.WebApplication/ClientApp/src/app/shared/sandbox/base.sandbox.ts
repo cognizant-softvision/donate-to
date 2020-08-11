@@ -14,6 +14,7 @@ export abstract class Sandbox implements OnDestroy {
   public accessToken$ = this.appState$.select(store.fromAuth.getAccessToken);
   public isAuthenticated$ = this.appState$.select(store.fromAuth.isAuthenticated);
   public isLoginProcessed$ = this.appState$.select(store.fromAuth.isLoginProcessed);
+  public isRoleProcessed$ = this.appState$.select(store.fromAuth.isRoleProcessed);
   public userId$ = this.appState$.select(store.fromAuth.getUserId);
   public userName$ = this.appState$.select(store.fromAuth.getUserName);
   public userRoles$ = this.appState$.select(store.fromAuth.getUserRoles);

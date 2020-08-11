@@ -29,8 +29,8 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.authSandbox.isOrganization$.subscribe((isOrganization) => {
-        if (!isOrganization) {
+      this.authSandbox.isRoleProcessed$.subscribe((isRoleProcessed) => {
+        if (isRoleProcessed && !this.authSandbox.isOrganization$.value) {
           this.router.navigate(['']);
         }
       })
