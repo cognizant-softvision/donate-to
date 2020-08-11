@@ -43,3 +43,7 @@ nz-descriptions {
   padding-left: 2em;
   padding-right: 2em;
 }
+
+.center-align {
+  text-align: center;
+}
