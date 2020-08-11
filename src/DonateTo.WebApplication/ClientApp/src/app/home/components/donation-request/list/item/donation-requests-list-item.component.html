@@ -3,7 +3,7 @@
   <p class="item.observation">{{ item.observation }}</p>
   <span>
     {{ 'RequestDonation.Priority' | translate }}:
-    <nz-rate [ngModel]="item.priority" nzAllowHalf [nzCharacter]="heartIcon" disabled></nz-rate>
+    <nz-rate [ngModel]="getPriority()" nzAllowHalf [nzCharacter]="heartIcon" disabled></nz-rate>
     <ng-template #heartIcon><i nz-icon nzType="heart" nzTheme="fill" className="rate-icon"></i></ng-template>
   </span>
   <br />

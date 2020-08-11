@@ -11,6 +11,7 @@
   "EditBtn": "Editar",
   "CancelBtn": "Cancelar",
   "BackBtn": "Volver",
+  "CloseBtn": "Cerrar",
   "GridEmptyLabel": "No hay items disponibles",
   "MoreDetail": "Más detalles",
   "SearchPlaceHolder": "Escriba texto para buscar",
@@ -43,7 +44,8 @@
         "Donation": "Solicitud de Donaciones",
         "Users": "Usuarios",
         "Organizations": "Organizaciones",
-        "Questions": "Preguntas"
+        "Questions": "Preguntas",
+        "Logs": "Logs"
       }
     },
     "Donation": {
@@ -106,13 +108,6 @@
         "Quantitycolumn": "Cantidad",
         "Categorycolumn": "Categorías",
         "Action": "Action",
-        "Filtered": "Filtrada",
-        "Search": "Buscar",
-        "Reset": "Reestablecer",
-        "CreatedFrom": "Desde",
-        "CreatedTo": "Hasta",
-        "FinishFrom": "Desde",
-        "FinishTo": "Hasta",
         "PlacedDonations": "Donaciones hechas"
       }
     },
@@ -253,7 +248,7 @@
       "Title": "Usuarios",
       "Associate": "Administrar Asociaciones",
       "SelectOrganization": "Seleccionar Organizaciones",
-      "OrganizationTitle": "Organización",
+      "OrganizationTitleJoin": "para",
       "Table": {
         "Name": "Nombre",
         "Organization": "Organización",
@@ -262,6 +257,18 @@
         "Search": "Buscar",
         "Reset": "Reestablecer",
         "Filtered": "Filtrada"
+      }
+    },
+    "Log": {
+      "Title": "Logs",
+      "LogDetail": "Detalle de Log",
+      "Table": {
+        "TimeStamp": "Timestamp",
+        "Message": "Mensaje",
+        "Exception": "Excepción",
+        "Level": "Nivel",
+        "LogEvent": "Evento de Log",
+        "Action": "Acción"
       }
     }
   },
@@ -431,16 +438,21 @@
     "MyProfile": "Mi Perfil",
     "GeneralInformation": "Información General",
     "ChangePassword": "Cambiar Contraseña",
-    "Name": "Nombre",
-    "Phone": "Teléfono",
-    "Country": "País",
-    "State": "Provincia",
-    "Apartment": "Localidad",
-    "Street": "Dirección",
-    "PostalCode": "Código Postal",
-    "AdditionalInformation": "Información Adicional",
+    "FirstName": "Nombre",
+    "LastName": "Apellido",
+    "IdentityNumber": "Número de identidad",
+    "PhoneNumber": "Número de teléfono",
     "OldPassword": "Vieja Contraseña",
     "NewPassword": "Nueva Contraseña",
     "RepeatPassword": "Repetir nueva contraseña"
+  },
+  "SharedControls": {
+    "Search": "Buscar",
+    "Reset": "Reestablecer",
+    "Filtered": "Filtrada",
+    "RangeDatePicker": {
+      "From": "Desde",
+      "To": "Hasta"
+    }
   }
 }

@@ -5,7 +5,7 @@ import es from '@angular/common/locales/es';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { QuestionsComponent } from './questions.component';
 import { QuestionsRoutingModule } from './questions-routing.module';
-import { QuestionsSandbox } from './questions-sandbox';
+import { QuestionsSandbox } from './questions.sandbox';
 import { EffectsModule } from '@ngrx/effects';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';

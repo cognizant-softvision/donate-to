@@ -11,6 +11,7 @@
   "EditBtn": "Edit",
   "CancelBtn": "Cancel",
   "BackBtn": "Back",
+  "CloseBtn": "Close",
   "GridEmptyLabel": "No available items",
   "MoreDetail": "More details",
   "SearchPlaceHolder": "input search text",
@@ -43,7 +44,8 @@
         "Donation": "Donation Requests",
         "Users": "Users",
         "Organizations": "Organizations",
-        "Questions": "Questions"
+        "Questions": "Questions",
+        "Logs": "Logs"
       }
     },
     "Donation": {
@@ -106,13 +108,6 @@
         "Quantitycolumn": "Quantity",
         "Categorycolumn": "Category",
         "Action": "Action",
-        "Filtered": "Filtered",
-        "Search": "Search",
-        "Reset": "Reset",
-        "CreatedFrom": "From",
-        "CreatedTo": "To",
-        "FinishFrom": "From",
-        "FinishTo": "To",
         "PlacedDonations": "Placed Donations"
       }
     },
@@ -253,7 +248,7 @@
       "Title": "Users",
       "Associate": "Manage Association",
       "SelectOrganization": "Select Organizations",
-      "OrganizationTitle": "Organization",
+      "OrganizationTitleJoin": "for",
       "Table": {
         "Name": "Name",
         "Organization": "Organization",
@@ -262,6 +257,18 @@
         "Search": "Search",
         "Reset": "Reset",
         "Filtered": "Filtered"
+      }
+    },
+    "Log": {
+      "Title": "Logs",
+      "LogDetail": "Log detail",
+      "Table": {
+        "TimeStamp": "Timestamp",
+        "Message": "Message",
+        "Exception": "Exception",
+        "Level": "Level",
+        "LogEvent": "Log Event",
+        "Action": "Action"
       }
     }
   },
@@ -431,16 +438,21 @@
     "MyProfile": "My Profile",
     "GeneralInformation": "General Information",
     "ChangePassword": "Change Password",
-    "Name": "Name",
-    "Phone": "Phone",
-    "Country": "Country",
-    "State": "State",
-    "Apartment": "Apartment",
-    "Street": "Street",
-    "PostalCode": "Postal Code",
-    "AdditionalInformation": "Additional Information",
+    "FirstName": "First Name",
+    "LastName": "Last Name",
+    "IdentityNumber": "Identity Number",
+    "PhoneNumber": "Phone Number",
     "OldPassword": "Old Password",
     "NewPassword": "New Password",
     "RepeatPassword": "Repeat new password"
+  },
+  "SharedControls": {
+    "Search": "Search",
+    "Reset": "Reset",
+    "Filtered": "Filtered",
+    "RangeDatePicker": {
+      "From": "From",
+      "To": "To"
+    }
   }
 }

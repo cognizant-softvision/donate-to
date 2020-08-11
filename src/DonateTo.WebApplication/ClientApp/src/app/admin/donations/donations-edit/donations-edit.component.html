@@ -3,6 +3,7 @@
     <h4 class="section-title">{{ 'Admin.Donation.Edit.Title' | translate }}</h4>
   </div>
   <br />
+  <nz-spin *ngIf="this.isLoading" nzTip="Loading..."> </nz-spin>
   <app-donations-form
     *ngIf="this.donationRequest"
     (validationResult)="updateDonationRequest($event)"
@@ -10,17 +11,6 @@
   ></app-donations-form>
   <br />
   <div class="create-donation-form-buttons">
-    <button
-      nz-popconfirm
-      nzPopconfirmTitle="{{ 'Admin.Donation.EditConfirm' | translate }}"
-      nzPopconfirmPlacement="bottom"
-      (nzOnConfirm)="validateDonationRequestForm()"
-      nz-button
-      nzType="primary"
-      type="submit"
-    >
-      {{ 'Admin.Donation.Edit.Save' | translate }}
-    </button>
     <button
       nz-popconfirm
       nzPopconfirmTitle="{{ 'Admin.Donation.BackConfirm' | translate }}"
@@ -31,7 +21,18 @@
       nz-button
       nzType="primary"
     >
-      {{ 'BackBtn' | translate }}
+      {{ 'CancelBtn' | translate }}
+    </button>
+    <button
+      nz-popconfirm
+      nzPopconfirmTitle="{{ 'Admin.Donation.EditConfirm' | translate }}"
+      nzPopconfirmPlacement="bottom"
+      (nzOnConfirm)="validateDonationRequestForm()"
+      nz-button
+      nzType="primary"
+      type="submit"
+    >
+      {{ 'Admin.Donation.Edit.Save' | translate }}
     </button>
   </div>
 </div>
