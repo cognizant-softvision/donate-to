@@ -6,7 +6,7 @@ import { NzModalService } from 'ng-zorro-antd';
 @Component({
   selector: 'app-popup-modal',
   templateUrl: './popup-modal.component.html',
-  styleUrls: ['./popup-modal.component.css'],
+  styleUrls: ['./popup-modal.component.less'],
 })
 export class PopupModalComponent implements OnInit {
   @Output() associateResult = new EventEmitter<boolean>();

@@ -9,7 +9,7 @@ import { DonationModel } from '../shared/models/donation.model';
 @Component({
   selector: 'app-my-donation',
   templateUrl: './my-donation.component.html',
-  styleUrls: ['./my-donation.component.css'],
+  styleUrls: ['./my-donation.component.less'],
 })
 export class MyDonationsComponent implements OnInit, OnDestroy {
   constructor(

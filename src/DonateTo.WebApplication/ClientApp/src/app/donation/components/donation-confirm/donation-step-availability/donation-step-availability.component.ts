@@ -11,7 +11,7 @@ import { compareDate, CompareDateResult } from 'src/app/shared/utility/dates/com
 @Component({
   selector: 'app-donation-step-availability',
   templateUrl: './donation-step-availability.component.html',
-  styleUrls: ['./donation-step-availability.component.css'],
+  styleUrls: ['./donation-step-availability.component.less'],
 })
 export class DonationStepAvailabilityComponent implements OnInit, OnDestroy {
   @Output() isFormValid = new EventEmitter();

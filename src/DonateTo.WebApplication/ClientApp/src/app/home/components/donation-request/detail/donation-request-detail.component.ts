@@ -7,7 +7,7 @@ import { ConfigService } from 'src/app/app-config.service';
 @Component({
   selector: 'app-donation-request-detail',
   templateUrl: './donation-request-detail.component.html',
-  styleUrls: ['./donation-request-detail.component.css'],
+  styleUrls: ['./donation-request-detail.component.less'],
 })
 export class DonationRequestDetailComponent implements OnInit {
   @Input() item = null;

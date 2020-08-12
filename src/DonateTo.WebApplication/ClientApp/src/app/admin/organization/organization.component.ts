@@ -10,7 +10,7 @@ import { DataUpdatedService } from '../../shared/async-services/data-updated.ser
 @Component({
   selector: 'app-organization-admin',
   templateUrl: './organization.component.html',
-  styleUrls: ['./organization.component.css'],
+  styleUrls: ['./organization.component.less'],
 })
 export class OrganizationComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
