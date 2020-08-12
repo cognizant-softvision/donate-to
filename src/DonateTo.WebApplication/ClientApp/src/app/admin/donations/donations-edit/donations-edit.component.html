@@ -1,6 +1,6 @@
 <div>
   <div class="create-donation-title">
-    <h4 class="section-title">{{ 'Admin.Donation.Edit.Title' | translate }}</h4>
+    <h2 class="section-title">{{ 'Admin.Donation.Edit.Title' | translate }}</h2>
   </div>
   <br />
   <nz-spin *ngIf="this.isLoading" nzTip="Loading..."> </nz-spin>
@@ -17,9 +17,8 @@
       nzPopconfirmPlacement="bottom"
       (nzOnConfirm)="goBack()"
       nz-button
-      nzType="primary"
+      nzType="secondary"
       nz-button
-      nzType="primary"
     >
       {{ 'CancelBtn' | translate }}
     </button>

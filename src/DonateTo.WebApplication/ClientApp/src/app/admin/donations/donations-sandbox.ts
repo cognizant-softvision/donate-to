@@ -79,7 +79,7 @@ export class DonationsSandbox extends Sandbox {
    * Deletes a Donation from the server
    */
   public deleteDonationRequest(donationRequest: DonationRequestModel) {
-    // this.appState$.dispatch(store.fromDonationRequest.removeDonationRequest({ donationRequest }));
+    this.appState$.dispatch(store.fromDonationRequest.removeDonationRequest({ donationRequest }));
   }
 
   /**

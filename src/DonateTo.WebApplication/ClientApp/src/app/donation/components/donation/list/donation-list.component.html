@@ -35,11 +35,11 @@
     <tr class="ant-row-end">
       <td colspan="6">
         <div class="donate">
-          <a nz-button nzType="primary" [routerLink]="['/donation/my-donations']" class="back-button">
+          <a nz-button nzType="secondary" [routerLink]="['/donation/my-donations']" class="back-button">
             <span *ngIf="isEdit">{{ 'BackBtn' | translate }}</span>
             <ng-template #notEditBlock>{{ 'RequestDonation.DonationItemList.DonateButton' | translate }}</ng-template>
           </a>
-          <button nz-button nzType="primary" (click)="donationConfirm()">
+          <button nz-button nzType="secondary" (click)="donationConfirm()">
             <span *ngIf="isEdit; else notEditBlock">{{
               'RequestDonation.DonationItemList.MoreOptions' | translate
             }}</span>

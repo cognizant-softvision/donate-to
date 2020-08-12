@@ -10,7 +10,7 @@ import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.s
 @Component({
   selector: 'app-donations-admin',
   templateUrl: './donations.component.html',
-  styleUrls: ['./donations.component.css'],
+  styleUrls: ['./donations.component.less'],
 })
 export class DonationsComponent implements OnDestroy, OnInit {
   private subscriptions: Subscription[] = [];
@@ -36,6 +36,7 @@ export class DonationsComponent implements OnDestroy, OnInit {
   createdRange: Date[] = [];
   finishRange: Date[] = [];
   dataSaved = false;
+  isDeleteProcess = false;
 
   constructor(
     private donationSandbox: DonationsSandbox,
@@ -66,6 +67,15 @@ export class DonationsComponent implements OnDestroy, OnInit {
       this.dataUpdated.changeMessage(false);
       window.location.reload();
     }
+
+    this.subscriptions.push(
+      this.donationSandbox.loadAction$.subscribe((isLoading) => {
+        if (!isLoading && this.isDeleteProcess) {
+          this.isDeleteProcess = false;
+          this.donationSandbox.loadDonationRequestsFilteredPaged(this.donationRequestFilter);
+        }
+      })
+    );
   }
 
   ngOnDestroy(): void {
@@ -89,6 +99,7 @@ export class DonationsComponent implements OnDestroy, OnInit {
 
   deleteDonationRequest(donationRequest: DonationRequestModel) {
     this.donationSandbox.deleteDonationRequest(donationRequest);
+    this.isDeleteProcess = true;
   }
 
   reset(): void {

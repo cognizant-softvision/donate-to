@@ -10,7 +10,7 @@ import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.s
 @Component({
   selector: 'app-questions-admin',
   templateUrl: './questions.component.html',
-  styleUrls: ['./questions.component.css'],
+  styleUrls: ['./questions.component.less'],
 })
 export class QuestionsComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
