@@ -10,7 +10,7 @@ import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.s
 @Component({
   selector: 'app-donations-admin',
   templateUrl: './donations.component.html',
-  styleUrls: ['./donations.component.css'],
+  styleUrls: ['./donations.component.less'],
 })
 export class DonationsComponent implements OnDestroy, OnInit {
   private subscriptions: Subscription[] = [];

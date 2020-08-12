@@ -4,7 +4,7 @@ import { LogModel } from 'src/app/shared/models/log.model';
 @Component({
   selector: 'app-log-detail-modal',
   templateUrl: './logs-detail-modal.component.html',
-  styleUrls: ['./logs-detail-modal.component.css'],
+  styleUrls: ['./logs-detail-modal.component.less'],
 })
 export class LogsDetailModalComponent {
   log: LogModel;

@@ -7,7 +7,7 @@ import { NzModalRef } from 'ng-zorro-antd/modal';
 @Component({
   selector: 'app-my-donations-list-item',
   templateUrl: './my-donations-list-item.component.html',
-  styleUrls: ['./my-donations-list-item.component.css'],
+  styleUrls: ['./my-donations-list-item.component.less'],
 })
 export class MyDonationsListItemComponent implements OnInit {
   @Input() item: DonationModel;
