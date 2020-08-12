@@ -9,7 +9,7 @@ import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.s
 @Component({
   selector: 'app-organization-form',
   templateUrl: './organization-form.component.html',
-  styleUrls: ['./organization-form.component.css'],
+  styleUrls: ['./organization-form.component.less'],
 })
 export class OrganizationFormComponent implements OnInit {
   @ViewChild(OrganizationStepAddressComponent)

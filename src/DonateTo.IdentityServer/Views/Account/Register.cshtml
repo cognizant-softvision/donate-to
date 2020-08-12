@@ -25,17 +25,15 @@
         <input asp-for="Password" id="password" class="form-control" oninput="CheckPasswordCriteria(this.value)" placeholder="Password">
         <i class="glyphicon glyphicon-heart"></i>
         <span asp-validation-for="Password"></span>
-        <small class="form-text text-muted">
+        <small>
             The password must have at least 8 characters, 1 number, 1 uppercase letter, 1 lowercase letter.
         </small>
-
-
         <label asp-for="ConfirmPassword" class="sr-only">Re-enter Password</label>
         <input type="password" id="confirmPassword" asp-for="ConfirmPassword" class="form-control" oninput="CheckPasswordMatch(this.value)" placeholder="Re-enter Password">
         <span asp-validation-for="ConfirmPassword"></span>
 
         <br />
-        <div asp-validation-summary="All" class="text-danger"></div>
+        <div asp-validation-summary="All"></div>
         <br />
         <div class="form-group">
             <input type="submit" value="Submit" class="btn btn-lg btn-primary btn-block submit-button" />

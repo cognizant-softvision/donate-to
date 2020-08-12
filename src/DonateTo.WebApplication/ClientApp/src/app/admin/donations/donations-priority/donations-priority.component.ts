@@ -11,7 +11,7 @@ import { QuestionsSandbox } from '../../questions/questions.sandbox';
 @Component({
   selector: 'app-donations-priority',
   templateUrl: './donations-priority.component.html',
-  styleUrls: ['./donations-priority.component.css'],
+  styleUrls: ['./donations-priority.component.less'],
 })
 export class DonationPriorityComponent implements OnInit, OnDestroy {
   @Output() isSubmited = new EventEmitter<boolean>();
