@@ -53,6 +53,14 @@ export class OrganizationComponent implements OnInit, OnDestroy {
       this.dataUpdated.changeMessage(false);
       window.location.reload();
     }
+
+    this.subscriptions.push(
+      this.organizationSandbox.isRoleProcessed$.subscribe((isRoleProcessed) => {
+        if (isRoleProcessed && !this.organizationSandbox.isSuperAdmin$.value) {
+          this.router.navigate(['']);
+        }
+      })
+    );
   }
 
   ngOnDestroy(): void {
