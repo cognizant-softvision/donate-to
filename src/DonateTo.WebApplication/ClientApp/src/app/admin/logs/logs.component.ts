@@ -11,7 +11,7 @@ import { StringExtensions } from 'src/app/shared/utility/extensions/string-exten
 @Component({
   selector: 'app-log-admin',
   templateUrl: './logs.component.html',
-  styleUrls: ['./logs.component.css'],
+  styleUrls: ['./logs.component.less'],
 })
 export class LogsComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
