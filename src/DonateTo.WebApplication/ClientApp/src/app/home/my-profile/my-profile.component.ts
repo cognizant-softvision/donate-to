@@ -72,13 +72,9 @@ export class MyProfileComponent implements OnInit, OnDestroy {
   }
 
   validateForm() {
-    for (const i in this.inputs._results) {
-      if (this.inputs._results[i].viewModel === '') {
-        this.isValid = false;
-      } else {
-        this.isValid = true;
-      }
-    }
+    this.inputs._results.forEach((result) => {
+      this.isValid = result.viewModel !== '';
+    });
   }
 
   saveGeneralInformation() {
