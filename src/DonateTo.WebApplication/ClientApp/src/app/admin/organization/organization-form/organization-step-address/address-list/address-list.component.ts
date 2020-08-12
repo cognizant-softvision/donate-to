@@ -7,7 +7,7 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 @Component({
   selector: 'app-address-list',
   templateUrl: './address-list.component.html',
-  styleUrls: ['./address-list.component.css'],
+  styleUrls: ['./address-list.component.less'],
 })
 export class AddressListComponent {
   @Input() isEditOrganization: boolean;

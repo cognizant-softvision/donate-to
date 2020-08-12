@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-branch-modal',
   templateUrl: './branch-modal.component.html',
-  styleUrls: ['./branch-modal.component.css'],
+  styleUrls: ['./branch-modal.component.less'],
 })
 export class BranchModalComponent implements OnInit {
   @Input() isBranchEdit: boolean;

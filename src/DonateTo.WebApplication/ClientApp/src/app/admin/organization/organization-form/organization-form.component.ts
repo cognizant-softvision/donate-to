@@ -12,7 +12,7 @@ import { OrganizationStepContactComponent } from './organization-step-contact/or
 @Component({
   selector: 'app-organization-form',
   templateUrl: './organization-form.component.html',
-  styleUrls: ['./organization-form.component.css'],
+  styleUrls: ['./organization-form.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrganizationFormComponent implements OnInit {

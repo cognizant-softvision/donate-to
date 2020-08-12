@@ -8,7 +8,7 @@ import { OrganizationStepContactComponent } from '../../../organization-step-con
 @Component({
   selector: 'app-step-branch-address',
   templateUrl: './step-branch-address.component.html',
-  styleUrls: ['./step-branch-address.component.css'],
+  styleUrls: ['./step-branch-address.component.less'],
 })
 export class StepBranchAddressComponent implements OnInit, OnDestroy {
   @ViewChild(OrganizationStepContactComponent)

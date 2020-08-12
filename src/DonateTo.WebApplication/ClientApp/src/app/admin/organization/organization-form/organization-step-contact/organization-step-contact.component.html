@@ -1,12 +1,4 @@
 <form nz-form [formGroup]="responsableStepForm" [ngClass]="contactForBranch ? 'contact-for-branch-form' : ''">
-  <div *ngIf="contactForBranch">
-    <span class="contact-column-title">{{
-      'Admin.Organization.OrganizationSteps.Contact.Responsable' | translate
-    }}</span>
-    <span class="contact-column-information">{{
-      'Admin.Organization.OrganizationSteps.Address.Contact' | translate
-    }}</span>
-  </div>
   <nz-form-item>
     <nz-form-label [nzSpan]="7" nzRequired>
       {{ 'RequestDonation.DonationSteps.ResponsableStep.FirstName' | translate }}
