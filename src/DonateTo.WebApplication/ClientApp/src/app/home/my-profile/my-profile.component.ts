@@ -6,7 +6,7 @@ import { UserModel } from 'src/app/shared/models';
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.component.html',
-  styleUrls: ['./my-profile.component.css'],
+  styleUrls: ['./my-profile.component.less'],
 })
 export class MyProfileComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];

@@ -1,8 +1,8 @@
 <div class="table-operations">
-  <h4 class="section-title">
+  <h2 class="section-title">
     {{ 'Admin.User.Title' | translate }}
     <span *ngIf="organizationName">{{ 'Admin.User.OrganizationTitleJoin' | translate }} {{ organizationName }}</span>
-  </h4>
+  </h2>
   <nz-divider></nz-divider>
   <button nz-button nzType="secondary" (click)="reset()">{{ 'Admin.ClearFilter' | translate }}</button>
 </div>

@@ -1,23 +1,23 @@
 <div>
   <div class="create-donation-title">
-    <h4 class="section-title">{{ 'Admin.Donation.Create.Title' | translate }}</h4>
+    <h2 class="section-title">{{ 'Admin.Donation.Create.Title' | translate }}</h2>
   </div>
   <br />
   <app-donations-form></app-donations-form>
   <br />
   <div class="create-donation-form-buttons">
-    <button (click)="openDonationPriority()" nz-button nzType="primary" type="submit">
-      {{ 'Admin.Donation.Create.CreateRequest' | translate }}
-    </button>
     <button
       nz-popconfirm
       nzPopconfirmTitle="{{ 'Admin.Donation.BackConfirm' | translate }}"
       nzPopconfirmPlacement="bottom"
       (nzOnConfirm)="goBack()"
       nz-button
-      nzType="primary"
+      nzType="secondary"
     >
-      {{ 'BackBtn' | translate }}
+      {{ 'CancelBtn' | translate }}
+    </button>
+    <button (click)="openDonationPriority()" nz-button nzType="primary" type="submit">
+      {{ 'Admin.Donation.Create.CreateRequest' | translate }}
     </button>
   </div>
   <nz-modal

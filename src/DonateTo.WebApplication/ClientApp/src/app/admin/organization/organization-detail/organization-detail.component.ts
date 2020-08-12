@@ -7,7 +7,7 @@ import { OrganizationSandbox } from '../organization-sandbox';
 @Component({
   selector: 'app-organization-detail',
   templateUrl: './organization-detail.component.html',
-  styleUrls: ['./organization-detail.component.css'],
+  styleUrls: ['./organization-detail.component.less'],
 })
 export class OrganizationDetailComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];

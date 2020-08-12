@@ -95,6 +95,29 @@
         "DonationItemRequiredError": "Al menos 1 item es requerido",
         "DeleteItemConfirmation": "Está seguro que desea eliminar este item?"
       },
+      "Detail": {
+        "Title": "Donaciones",
+        "MoreInformationToolTipTitle": "Más información",
+        "MoreInformationTitle": "Más información",
+        "AvailabilitiesTitle": "Disponibilidades",
+        "AddressTitle": "Dirección",
+        "Address": {
+          "Street": "Calle",
+          "PostalCode": "Código postal",
+          "Floor": "Piso",
+          "Appartment": "Departamento",
+          "AdditionalInformation": "Información adicional",
+          "City": "Ciudad",
+          "State": "Provincia",
+          "Country": "País"
+        },
+        "ContactTitle": "Contacto",
+        "Contact": {
+          "FullName": "Nombre",
+          "Email": "Email",
+          "PhoneNumber": "Número de teléfono"
+        }
+      },
       "BackConfirm": "Estas seguro que quieres volver?",
       "CreateConfirm": "Estas seguro que quieres crear una solicitud de donación?",
       "EditConfirm": "Estas seguro que quieres editar esta solicitud de donación?",
@@ -108,7 +131,29 @@
         "Quantitycolumn": "Cantidad",
         "Categorycolumn": "Categorías",
         "Action": "Action",
-        "PlacedDonations": "Donaciones hechas"
+        "Filtered": "Filtrada",
+        "Search": "Buscar",
+        "Reset": "Reestablecer",
+        "CreatedFrom": "Desde",
+        "CreatedTo": "Hasta",
+        "FinishFrom": "Desde",
+        "FinishTo": "Hasta",
+        "PlacedDonations": "Donaciones hechas",
+        "Observation": "Observaciín",
+        "Items": "Items",
+        "Status": "Estado",
+        "Donor": "Donador",
+        "DonationItemsTitle": "Items de la donación",
+        "DonationItemColumn": "Nombre del item",
+        "DonationItem": {
+          "Name": "Nombre",
+          "Quantity": "Cantidad",
+          "Unit": "Unidad",
+          "Status": "Estado"
+        },
+        "DayColumn": "Día",
+        "StartTimeColumn": "Desde",
+        "FinishTimeColumn": "Hasta"
       }
     },
     "Organization": {

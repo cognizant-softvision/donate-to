@@ -8,7 +8,7 @@ import { NzConfigService } from 'ng-zorro-antd';
 @Component({
   selector: 'app-donation-requests-list',
   templateUrl: './donation-requests-list.component.html',
-  styleUrls: ['./donation-requests-list.component.css'],
+  styleUrls: ['./donation-requests-list.component.less'],
 })
 export class DonationRequestsListComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];

@@ -7,6 +7,7 @@ export const getAuthState = createFeatureSelector<AuthState>('auth');
 export const getAccessToken = createSelector(getAuthState, (state: AuthState) => state.access_token);
 export const isAuthenticated = createSelector(getAuthState, (state: AuthState) => state.isAuthenticated);
 export const isLoginProcessed = createSelector(getAuthState, (state: AuthState) => state.isLoginProcessed);
+export const isRoleProcessed = createSelector(getAuthState, (state: AuthState) => state.isRoleProcessed);
 export const getUserId = createSelector(getAuthState, (state: AuthState) => state.userId);
 export const getUserName = createSelector(getAuthState, (state: AuthState) => state.nameUser);
 export const getUserRoles = createSelector(getAuthState, (state: AuthState) => state.roles);
@@ -19,6 +20,7 @@ export class AuthSelectors {
   accessToken$ = this.store.select(getAccessToken);
   isAuthenticated$ = this.store.select(isAuthenticated);
   isLoginProcessed$ = this.store.select(isLoginProcessed);
+  isRoleProcessed$ = this.store.select(isRoleProcessed);
   userId$ = this.store.select(getUserId);
   userName$ = this.store.select(getUserName);
   userRoles$ = this.store.select(getUserRoles);

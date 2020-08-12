@@ -7,7 +7,7 @@ import { DonationSandbox } from 'src/app/donation/donation.sandbox';
 @Component({
   selector: 'app-donation-step-address',
   templateUrl: './donation-step-address.component.html',
-  styleUrls: ['./donation-step-address.component.css'],
+  styleUrls: ['./donation-step-address.component.less'],
 })
 export class DonationStepAddressComponent implements OnInit, OnDestroy {
   addressStepForm: FormGroup;

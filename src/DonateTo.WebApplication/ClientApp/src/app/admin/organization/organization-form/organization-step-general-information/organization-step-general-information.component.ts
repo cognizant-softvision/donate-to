@@ -6,7 +6,7 @@ import { OrganizationSandbox } from '../../organization-sandbox';
 @Component({
   selector: 'app-organization-step-general-information',
   templateUrl: './organization-step-general-information.component.html',
-  styleUrls: ['./organization-step-general-information.component.css'],
+  styleUrls: ['./organization-step-general-information.component.less'],
 })
 export class OrganizationStepGeneralInformationComponent implements OnInit {
   generalInformationStepForm: FormGroup;

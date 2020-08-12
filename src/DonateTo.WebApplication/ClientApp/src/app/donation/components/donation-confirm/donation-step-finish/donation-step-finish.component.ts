@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-donation-step-finish',
   templateUrl: './donation-step-finish.component.html',
-  styleUrls: ['./donation-step-finish.component.css'],
+  styleUrls: ['./donation-step-finish.component.less'],
 })
 export class DonationStepFinishComponent implements OnInit, OnDestroy {
   @Input() donationItems: DonationItemModel[];

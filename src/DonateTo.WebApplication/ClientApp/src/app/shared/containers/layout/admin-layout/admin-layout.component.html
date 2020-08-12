@@ -1,10 +1,19 @@
-<nz-layout id="main-layout">
+<nz-layout class="container">
   <app-nav-menu></app-nav-menu>
-  <nz-layout class="admin-layout">
-    <nz-sider nzCollapsible nzTheme="light">
-      <ul nz-menu nzMode="inline">
-        <li *ngFor="let menu of menus" nz-menu-item>
-          <a *ngIf="menu.show" class="menu-link" routerLink="{{ menu.url }}">
+  <nz-layout>
+    <nz-sider class="side-nav">
+      <ul nz-menu>
+        <li class="sv-link-wrapper sv-margin-y" nz-menu-item>
+          <a class="sv-link" routerLink="./donations">
+            <i nz-icon [nzTheme]="'outline'">
+              <app-svg></app-svg>
+            </i>
+            <span>{{ 'Admin.Menu.Title.Donation' | translate }}</span>
+          </a>
+        </li>
+
+        <li class="sv-link-wrapper sv-margin-y" *ngFor="let menu of menus" nz-menu-item>
+          <a *ngIf="menu.show" class="sv-link" routerLink="{{ menu.url }}">
             <i nz-icon [nzTheme]="'outline'" nzType="{{ menu.iconType }}"></i>
             <span>{{ menu.title | translate }}</span>
           </a>

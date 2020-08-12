@@ -5,6 +5,7 @@ import { ConfigService } from 'src/app/app-config.service';
 import { Observable } from 'rxjs';
 import { DonationModel } from '../../models/donation.model';
 import { PageModel } from '../../models';
+import { DonationFilter } from '../../models/filters/donation-filter';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,20 @@ export class DonationService extends BaseHttpClientService<DonationModel> {
 
   createDonation(donation: DonationModel): Observable<DonationModel> {
     return this.create(donation);
+  }
+
+  getPagedFilteredByDonationRequestId(donationFilter: DonationFilter): Observable<PageModel<DonationModel>> {
+    const queryString = {
+      pageNumber: donationFilter?.pageNumber.toString() ?? '',
+      pageSize: donationFilter?.pageSize.toString() ?? '',
+      itemName: donationFilter?.itemName ?? '',
+      donationRequestId: donationFilter?.donationRequestId.toString() ?? '',
+      orderBy: donationFilter?.orderBy ?? '',
+      orderDirection: donationFilter?.orderDirection ?? '',
+    };
+    return this.httpClient.get<PageModel<DonationModel>>(`${this.url}/${this.endpoint}/pagedFiltered`, {
+      params: queryString,
+    });
   }
 
   loadDonationByUserPaged(

@@ -1,9 +1,9 @@
 <div *ngIf="outlet.isActivated == false">
   <div class="table-operations">
-    <h4 class="section-title">{{ 'Admin.Donation.Title' | translate }}</h4>
+    <h2 class="section-title">{{ 'Admin.Donation.Title' | translate }}</h2>
     <div class="create-button">
       <button (click)="router.navigate(['admin/donations/create'])" nz-button nzType="primary">
-        {{ 'Admin.Create' | translate }}
+        {{ 'Admin.Donation.Create.Title' | translate }}
       </button>
     </div>
     <nz-divider></nz-divider>
