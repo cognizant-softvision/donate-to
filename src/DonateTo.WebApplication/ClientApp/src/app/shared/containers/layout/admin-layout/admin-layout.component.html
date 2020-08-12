@@ -3,21 +3,25 @@
   <nz-layout class="admin-layout">
     <nz-sider nzCollapsible nzTheme="light">
       <ul nz-menu nzMode="inline">
-        <li nz-menu-item>
-          <a class="menu-link" routerLink="./donations">
-            <i nz-icon [nzTheme]="'outline'">
-              <app-svg></app-svg>
-            </i>
-            <span>{{ 'Admin.Menu.Title.Donation' | translate }}</span>
-          </a>
-        </li>
+        <ng-container>
+          <li nz-menu-item>
+            <a class="menu-link" routerLink="./donations">
+              <i nz-icon [nzTheme]="'outline'">
+                <app-svg></app-svg>
+              </i>
+              <span>{{ 'Admin.Menu.Title.Donation' | translate }}</span>
+            </a>
+          </li>
+        </ng-container>
 
-        <li *ngFor="let menu of menus" nz-menu-item>
-          <a *ngIf="menu.show" class="menu-link" routerLink="{{ menu.url }}">
-            <i nz-icon [nzTheme]="'outline'" nzType="{{ menu.iconType }}"></i>
-            <span>{{ menu.title | translate }}</span>
-          </a>
-        </li>
+        <ng-container *ngFor="let menu of menus">
+          <li nz-menu-item *ngIf="menu.show">
+            <a class="menu-link" routerLink="{{ menu.url }}">
+              <i nz-icon [nzTheme]="'outline'" nzType="{{ menu.iconType }}"></i>
+              <span>{{ menu.title | translate }}</span>
+            </a>
+          </li>
+        </ng-container>
       </ul>
     </nz-sider>
     <nz-layout class="section-layout">
