@@ -44,6 +44,7 @@
             />
           </nz-descriptions-item>
         </nz-descriptions>
+        <div class="errorMessage" *ngIf="!isValid">{{ 'UserProfile.ValidateForm' | translate }}</div>
         <div class="button-div" [hidden]="!isEdit">
           <button nz-button class="buttons" nzType="default" (click)="cancelGeneralInformation()">
             {{ 'CancelBtn' | translate }}

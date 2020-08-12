@@ -13,6 +13,7 @@ export class MyProfileComponent implements OnInit, OnDestroy {
 
   listOfRow: Array<{ row: string; value: string; required: boolean }> = [];
   user = new UserModel();
+  isValid = true;
 
   @ViewChildren('userData') inputs;
 
@@ -64,13 +65,22 @@ export class MyProfileComponent implements OnInit, OnDestroy {
     this.isEdit = true;
   }
 
+  validateForm() {
+    this.inputs._results.forEach((result) => {
+      this.isValid = result.viewModel !== '';
+    });
+  }
+
   saveGeneralInformation() {
-    this.isEdit = false;
-    this.user.firstName = this.inputs._results[0].viewModel;
-    this.user.lastName = this.inputs._results[1].viewModel;
-    this.user.identityNumber = this.inputs._results[2].viewModel;
-    this.user.phoneNumber = this.inputs._results[3].viewModel;
-    this.userSandbox.updateUser(this.user);
+    this.validateForm();
+    if (this.isValid) {
+      this.isEdit = false;
+      this.user.firstName = this.inputs._results[0].viewModel;
+      this.user.lastName = this.inputs._results[1].viewModel;
+      this.user.identityNumber = this.inputs._results[2].viewModel;
+      this.user.phoneNumber = this.inputs._results[3].viewModel;
+      this.userSandbox.updateUser(this.user);
+    }
   }
 
   cancelGeneralInformation() {
