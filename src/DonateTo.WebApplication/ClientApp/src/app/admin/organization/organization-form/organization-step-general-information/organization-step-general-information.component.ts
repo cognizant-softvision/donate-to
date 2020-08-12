@@ -39,12 +39,6 @@ export class OrganizationStepGeneralInformationComponent implements OnInit {
         generalInformationFormModel: this.getOrganizationFormModel(),
       })
     );
-
-    if (!this.isEditOrganization) {
-      // this.organizationName = '';
-      // this.description = '';
-      // this.generalInformationStepForm.reset(this.generalInformationStepForm.value);
-    }
   }
 
   validateForm(): void {

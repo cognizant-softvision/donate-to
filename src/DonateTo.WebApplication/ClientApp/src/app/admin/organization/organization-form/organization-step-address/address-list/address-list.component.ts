@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 import { AddressModel, ColumnItem, ContactModel } from 'src/app/shared/models';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { OrganizationSandbox } from '../../../organization-sandbox';
@@ -9,7 +9,7 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd';
   templateUrl: './address-list.component.html',
   styleUrls: ['./address-list.component.css'],
 })
-export class AddressListComponent implements OnInit {
+export class AddressListComponent {
   @Input() isEditOrganization: boolean;
   @Input() addresses: AddressModel[];
   @Output() deleteAddress: EventEmitter<AddressModel> = new EventEmitter<AddressModel>();
@@ -60,8 +60,6 @@ export class AddressListComponent implements OnInit {
     public organizationSandbox: OrganizationSandbox,
     private modal: NzModalService
   ) {}
-
-  ngOnInit(): void {}
 
   editAddress(item: AddressModel, index: number) {
     this.itemIndex = index;
