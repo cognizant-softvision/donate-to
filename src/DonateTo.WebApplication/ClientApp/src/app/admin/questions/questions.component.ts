@@ -69,6 +69,14 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       })
     );
 
+    this.subscriptions.push(
+      this.questionSandbox.isRoleProcessed$.subscribe((isRoleProcessed) => {
+        if (isRoleProcessed && !this.questionSandbox.isSuperAdmin$.value) {
+          this.router.navigate(['']);
+        }
+      })
+    );
+
     this.questionSandbox.loadQuestions();
 
     this.dataUpdated.currentStatus.subscribe((dataSaved) => (this.dataSaved = dataSaved));
