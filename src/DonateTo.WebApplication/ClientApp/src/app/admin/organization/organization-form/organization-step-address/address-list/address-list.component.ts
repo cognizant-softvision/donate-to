@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '
 import { AddressModel, ColumnItem, ContactModel } from 'src/app/shared/models';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { OrganizationSandbox } from '../../../organization-sandbox';
-import { NzModalRef, NzModalService } from 'ng-zorro-antd';
+import { NzModalRef, NzModalService, NzTableQueryParams } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-address-list',
@@ -32,6 +32,9 @@ export class AddressListComponent {
   isOkLoading = false;
   isBranchEdit = false;
   itemIndex: number;
+  total = 0;
+  pageSize = 10;
+  pageIndex = 1;
 
   expandSet = new Set<number>();
   addressItemFormGroup = new FormGroup({

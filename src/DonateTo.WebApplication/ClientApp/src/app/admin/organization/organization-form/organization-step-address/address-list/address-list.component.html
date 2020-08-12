@@ -3,11 +3,14 @@
     <nz-form-control nzErrorTip="{{ 'Admin.Questions.Form.PriorityQuestionRequiredError' | translate }}">
       <div [(ngModel)]="addresses" ngDefaultControl formControlName="itemsFormControl">
         <nz-table
+          #addressTable
+          nzTableLayout="fixed"
           [nzData]="addresses"
-          [nzShowPagination]="false"
-          [nzFrontPagination]="false"
-          [nzShowPagination]="false"
           [nzNoResult]="customTpl"
+          [nzShowPagination]="true"
+          [nzTotal]="total"
+          [nzPageSize]="pageSize"
+          [nzPageIndex]="pageIndex"
         >
           <thead>
             <tr>
@@ -17,7 +20,7 @@
             </tr>
           </thead>
           <tbody>
-            <ng-container *ngFor="let item of addresses; index as i">
+            <ng-container *ngFor="let item of addressTable.data; index as i">
               <tr>
                 <td [nzExpand]="expandSet.has(item.id)" (nzExpandChange)="onExpandChange(item.id, $event)"></td>
                 <td>{{ item.name }}</td>
