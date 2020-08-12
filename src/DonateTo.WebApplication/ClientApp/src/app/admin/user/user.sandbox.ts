@@ -67,4 +67,8 @@ export class UserSandbox extends Sandbox {
   public loadOrganization(organizationId: number): void {
     this.appState$.dispatch(store.fromOrganization.loadOrganization({ organizationId }));
   }
+
+  public forgotPassword(): void {
+    this.authSandbox.forgotPassword();
+  }
 }

@@ -40,6 +40,10 @@ export class AuthSandbox extends Sandbox {
     document.location.href = this.authService.issuer + '/Account/Register?returnUrl=' + this.authService.redirectUri;
   }
 
+  public forgotPassword(): void {
+    document.location.href = this.authService.issuer + '/Account/ForgotPassword';
+  }
+
   /**
    * Dispatches a logout action to redirect to identity provider logout page
    */
