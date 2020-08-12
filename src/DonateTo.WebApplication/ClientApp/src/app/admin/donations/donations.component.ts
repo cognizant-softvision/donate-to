@@ -1,7 +1,5 @@
 import { DonationRequestModel } from '../../shared/models';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { compareDate } from '../../shared/utility/dates/compare-dates';
-
 import { DonationsSandbox } from './donations-sandbox';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';

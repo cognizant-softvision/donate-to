@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DonateTo.ApplicationCore.Interfaces.Services
 {
-    public interface IDonationService : IBaseService<Donation, BaseFilterModel>
+    public interface IDonationService : IBaseService<Donation, DonationFilterModel>
     {
         /// <summary>
         /// Send Created donation info mail to user
