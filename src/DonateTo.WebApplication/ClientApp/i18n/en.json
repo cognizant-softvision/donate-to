@@ -473,7 +473,8 @@
     "PhoneNumber": "Phone Number",
     "OldPassword": "Old Password",
     "NewPassword": "New Password",
-    "RepeatPassword": "Repeat new password"
+    "RepeatPassword": "Repeat new password",
+    "ValidateForm": "All fields are required"
   },
   "SharedControls": {
     "Search": "Search",
