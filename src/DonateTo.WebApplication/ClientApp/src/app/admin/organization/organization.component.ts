@@ -11,7 +11,7 @@ import { FilterService } from 'src/app/shared/async-services/filter.service';
 @Component({
   selector: 'app-organization-admin',
   templateUrl: './organization.component.html',
-  styleUrls: ['./organization.component.css'],
+  styleUrls: ['./organization.component.less'],
 })
 export class OrganizationComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
@@ -69,6 +69,14 @@ export class OrganizationComponent implements OnInit, OnDestroy {
       this.dataUpdated.changeMessage(false);
       window.location.reload();
     }
+
+    this.subscriptions.push(
+      this.organizationSandbox.isRoleProcessed$.subscribe((isRoleProcessed) => {
+        if (isRoleProcessed && !this.organizationSandbox.isSuperAdmin$.value) {
+          this.router.navigate(['']);
+        }
+      })
+    );
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {

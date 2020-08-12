@@ -12,7 +12,7 @@ import { FilterService } from 'src/app/shared/async-services/filter.service';
 @Component({
   selector: 'app-user-admin',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css'],
+  styleUrls: ['./user.component.less'],
 })
 export class UserComponent implements OnInit, OnDestroy {
   @ViewChild(PopupModalComponent) private popUpModalComponent: PopupModalComponent;

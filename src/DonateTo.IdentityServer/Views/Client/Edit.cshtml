@@ -4,138 +4,138 @@
     var isEdit = Model.Id > 0;
     ViewData["Title"] = isEdit ? "Edit Client": "Create Client";
 }
+<div class="client-card">
+    <h1 class="card-title">@(isEdit ? "Edit Client": "Create Client")</h1>
 
-    <h1>@(isEdit ? "Edit Client": "Create Client")</h1>
+    <hr />   
+    <form  asp-action="@(isEdit?"Update":"Create")">
+        <div class="row">
+            <div class="col-md-6">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                @if (isEdit)
+                {
+                    <div class="form-group">
+                        <label asp-for="Created" class="control-label"></label>
+                        <input asp-for="Created" class="form-input" disabled />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Updated" class="control-label"></label>
+                        <input asp-for="Updated" class="form-input" disabled />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Id" class="control-label"></label>
+                        <input asp-for="Id" class="form-input" readonly />
+                    </div>
+                }
+                <div class="form-group">
+                    <label asp-for="ClientId" class="control-label"></label>
+                    <input asp-for="ClientId" class="form-control" />
+                    <span asp-validation-for="ClientId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ClientName" class="control-label"></label>
+                    <input asp-for="ClientName" class="form-control" />
+                    <span asp-validation-for="ClientName" class="text-danger"></span>
+                </div>
 
-<hr />   
-<form  asp-action="@(isEdit?"Update":"Create")">
-    <div class="row">
-        <div class="col-md-6">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @if (isEdit)
-            {
                 <div class="form-group">
-                    <label asp-for="Created" class="control-label"></label>
-                    <input asp-for="Created" class="form-control" disabled />
+                    <label asp-for="AllowedScopes" class="control-label"></label>
+                    @await Html.PartialAsync("_NavigationList",
+                             new NavigationListViewModel
+                             {
+                                 Dict = Model.AllowedScopes,
+                                 FieldName = "AllowedScopes",
+                                 FieldNames = new List<string> { "Scope" }
+                             })
                 </div>
+
                 <div class="form-group">
-                    <label asp-for="Updated" class="control-label"></label>
-                    <input asp-for="Updated" class="form-control" disabled />
+                    <label asp-for="AllowedCorsOrigins" class="control-label"></label>
+                    @await Html.PartialAsync("_NavigationList",
+                        new NavigationListViewModel
+                        {
+                            Dict = Model.AllowedCorsOrigins,
+                            FieldName = "AllowedCorsOrigins",
+                            FieldNames = new List<string> { "Origin" }
+                        })
                 </div>
+
                 <div class="form-group">
-                    <label asp-for="Id" class="control-label"></label>
-                    <input asp-for="Id" class="form-control" readonly />
+                    <label asp-for="ClientSecrets" class="control-label"></label>
+                    @await Html.PartialAsync("_NavigationList",
+                        new NavigationListViewModel
+                        {
+                            Dict = Model.ClientSecrets,
+                            FieldName = "ClientSecrets",
+                            FieldNames = new List<string> { "Value", "Description" }
+                        })
                 </div>
-            }
-            <div class="form-group">
-                <label asp-for="ClientId" class="control-label"></label>
-                <input asp-for="ClientId" class="form-control" />
-                <span asp-validation-for="ClientId" class="text-danger"></span>
+
             </div>
-            <div class="form-group">
-                <label asp-for="ClientName" class="control-label"></label>
-                <input asp-for="ClientName" class="form-control" />
-                <span asp-validation-for="ClientName" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="AllowedScopes" class="control-label"></label>
-                @await Html.PartialAsync("_NavigationList",
-                         new NavigationListViewModel
-                         {
-                             Dict = Model.AllowedScopes,
-                             FieldName = "AllowedScopes",
-                             FieldNames = new List<string> { "Scope" }
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Claims" class="control-label"></label>
+                    @await Html.PartialAsync("_NavigationList",
+                             new NavigationListViewModel
+                             {
+                                 Dict = Model.Claims,
+                                 FieldName = "Claims",
+                                 FieldNames = new List<string> { "Type", "Value" }
                          })
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="AllowedGrantTypes" class="control-label"></label>
+                    @await Html.PartialAsync("_NavigationList",
+                        new NavigationListViewModel
+                        {
+                            Dict = Model.AllowedGrantTypes,
+                            FieldName = "AllowedGrantTypes",
+                            FieldNames = new List<string> { "GrantType" }
+                        })
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="RedirectUris" class="control-label"></label>
+                    @await Html.PartialAsync("_NavigationList",
+                        new NavigationListViewModel
+                        {
+                            Dict = Model.RedirectUris,
+                            FieldName = "RedirectUris",
+                            FieldNames = new List<string> { "RedirectUri" }
+                        })
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="PostLogoutRedirectUris" class="control-label"></label>
+                    @await Html.PartialAsync("_NavigationList",
+                        new NavigationListViewModel
+                        {
+                            Dict = Model.PostLogoutRedirectUris,
+                            FieldName = "PostLogoutRedirectUris",
+                            FieldNames = new List<string> { "PostLogoutRedirectUri" }
+                        })
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary btn-save" />
+                </div>
             </div>
-
-            <div class="form-group">
-                <label asp-for="AllowedCorsOrigins" class="control-label"></label>
-                @await Html.PartialAsync("_NavigationList",
-                    new NavigationListViewModel
-                    {
-                        Dict = Model.AllowedCorsOrigins,
-                        FieldName = "AllowedCorsOrigins",
-                        FieldNames = new List<string> { "Origin" }
-                    })
             </div>
-
-            <div class="form-group">
-                <label asp-for="ClientSecrets" class="control-label"></label>
-                @await Html.PartialAsync("_NavigationList",
-                    new NavigationListViewModel
-                    {
-                        Dict = Model.ClientSecrets,
-                        FieldName = "ClientSecrets",
-                        FieldNames = new List<string> { "Value", "Description" }
-                    })
-            </div>
-
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label asp-for="Claims" class="control-label"></label>
-                @await Html.PartialAsync("_NavigationList",
-                         new NavigationListViewModel
-                         {
-                             Dict = Model.Claims,
-                             FieldName = "Claims",
-                             FieldNames = new List<string> { "Type", "Value" }
-                     })
-            </div>
-
-            <div class="form-group">
-                <label asp-for="AllowedGrantTypes" class="control-label"></label>
-                @await Html.PartialAsync("_NavigationList",
-                    new NavigationListViewModel
-                    {
-                        Dict = Model.AllowedGrantTypes,
-                        FieldName = "AllowedGrantTypes",
-                        FieldNames = new List<string> { "GrantType" }
-                    })
-            </div>
-
-            <div class="form-group">
-                <label asp-for="RedirectUris" class="control-label"></label>
-                @await Html.PartialAsync("_NavigationList",
-                    new NavigationListViewModel
-                    {
-                        Dict = Model.RedirectUris,
-                        FieldName = "RedirectUris",
-                        FieldNames = new List<string> { "RedirectUri" }
-                    })
-            </div>
-
-            <div class="form-group">
-                <label asp-for="PostLogoutRedirectUris" class="control-label"></label>
-                @await Html.PartialAsync("_NavigationList",
-                    new NavigationListViewModel
-                    {
-                        Dict = Model.PostLogoutRedirectUris,
-                        FieldName = "PostLogoutRedirectUris",
-                        FieldNames = new List<string> { "PostLogoutRedirectUri" }
-                    })
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </div>
-        </div>
-</form>
-    
+    </form>
 
 
-<div>
-    <a asp-action="List">Back to List</a>
+
+    <div>
+        <a class="btn btn-lg btn-primary btn-block submit-button" asp-action="List">Back to List</a>
+    </div>
 </div>
-
 <script src="~/js/edit-client.js" asp-append-version="true"></script>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

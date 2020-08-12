@@ -11,7 +11,7 @@ import { StringExtensions } from 'src/app/shared/utility/extensions/string-exten
 @Component({
   selector: 'app-log-admin',
   templateUrl: './logs.component.html',
-  styleUrls: ['./logs.component.css'],
+  styleUrls: ['./logs.component.less'],
 })
 export class LogsComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
@@ -67,6 +67,14 @@ export class LogsComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.logsSandbox.loadAction$.subscribe((status) => {
         this.successStatus = status;
+      })
+    );
+
+    this.subscriptions.push(
+      this.logsSandbox.isRoleProcessed$.subscribe((isRoleProcessed) => {
+        if (isRoleProcessed && !this.logsSandbox.isSuperAdmin$.value) {
+          this.router.navigate(['']);
+        }
       })
     );
 

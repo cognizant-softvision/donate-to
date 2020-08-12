@@ -2,19 +2,23 @@
     ViewData["Title"] = "Home Page";
 }
     <div class="form-card" asp-action="Register">
-        <h3 class="mb-3 font-weight-normal card-title">Admin</h3>
+        <h1 class="mb-3 font-weight-normal card-title">Admin</h1>
+        <br>
+        <br>
         <div class="form-group">
             @Html.ActionLink("Login", "Login", "Account", null, new { @class = "btn btn-lg btn-primary btn-block submit-button" })
         </div>
         <div class="form-group">
             @Html.ActionLink("Register", "Register", "Account", null, new { @class = "btn btn-lg btn-primary btn-block submit-button" })
         </div>
-        <div class="form-group">
-            @Html.ActionLink("Logout", "Logout", "Account", null, new { @class = "btn btn-lg btn-primary btn-block submit-button" })
-        </div>
-        <br />
          <div class="form-group">
            @Html.ActionLink("Clients", "List", "Client", null, new { @class = "btn btn-lg btn-primary btn-block submit-button" })
+        </div>
+        <div class="form-group">
+            @Html.ActionLink("Users Roles", "List", "UserRole", null, new { @class = "btn btn-lg btn-primary btn-block submit-button" })
+        </div>
+        <div class="form-group">
+            @Html.ActionLink("Logout", "Logout", "Account", null, new { @class = "btn btn-lg btn-primary btn-block submit-button" })
         </div>
         <br />
     </div>

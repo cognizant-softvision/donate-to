@@ -14,6 +14,9 @@ import {
   loadDonationRequest,
   loadDonationRequestFailed,
   loadDonationRequestSuccess,
+  loadPagedFilteredDonationsByDonationRequestId,
+  loadPagedFilteredDonationsByDonationRequestIdFailed,
+  loadPagedFilteredDonationsByDonationRequestIdSuccess,
   updateDonation,
   updateDonationFailed,
   updateDonationSuccess,
@@ -92,6 +95,18 @@ export class DonationRequestEffects {
       )
     )
   );
+
+  @Effect()
+  loadPagedFilteredDonationsByDonationRequestId$: Observable<{}> = this.actions$.pipe(
+    ofType(loadPagedFilteredDonationsByDonationRequestId),
+    switchMap(({ donationFilter }) =>
+      this.donationService.getPagedFilteredByDonationRequestId(donationFilter).pipe(
+        map((donations) => loadPagedFilteredDonationsByDonationRequestIdSuccess({ donations })),
+        catchError(() => of(loadPagedFilteredDonationsByDonationRequestIdFailed()))
+      )
+    )
+  );
+
   constructor(
     private actions$: Actions,
     private donationRequestService: DonationRequestService,

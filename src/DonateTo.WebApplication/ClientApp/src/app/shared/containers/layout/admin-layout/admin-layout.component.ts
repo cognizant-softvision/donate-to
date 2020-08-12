@@ -7,7 +7,7 @@ import { IconType } from 'src/app/shared/enum/iconTypes';
 @Component({
   selector: 'app-admin-layout',
   templateUrl: './admin-layout.component.html',
-  styleUrls: ['./admin-layout.component.css'],
+  styleUrls: ['./admin-layout.component.less'],
   encapsulation: ViewEncapsulation.None,
 })
 export class AdminLayoutComponent implements OnInit, OnDestroy {
@@ -29,8 +29,8 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.push(
-      this.authSandbox.isOrganization$.subscribe((isOrganization) => {
-        if (!isOrganization) {
+      this.authSandbox.isRoleProcessed$.subscribe((isRoleProcessed) => {
+        if (isRoleProcessed && !this.authSandbox.isOrganization$.value) {
           this.router.navigate(['']);
         }
       })

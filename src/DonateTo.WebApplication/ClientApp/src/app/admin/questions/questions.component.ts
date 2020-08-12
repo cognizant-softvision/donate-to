@@ -10,7 +10,7 @@ import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.s
 @Component({
   selector: 'app-questions-admin',
   templateUrl: './questions.component.html',
-  styleUrls: ['./questions.component.css'],
+  styleUrls: ['./questions.component.less'],
 })
 export class QuestionsComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
@@ -66,6 +66,14 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.questionSandbox.loadAction$.subscribe((status) => {
         this.successStatus = status;
+      })
+    );
+
+    this.subscriptions.push(
+      this.questionSandbox.isRoleProcessed$.subscribe((isRoleProcessed) => {
+        if (isRoleProcessed && !this.questionSandbox.isSuperAdmin$.value) {
+          this.router.navigate(['']);
+        }
       })
     );
 
