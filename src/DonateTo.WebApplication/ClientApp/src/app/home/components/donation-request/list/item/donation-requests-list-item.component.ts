@@ -25,7 +25,7 @@ export class DonationRequestsListItemComponent implements OnInit {
 
   getPriority() {
     if (this.item) {
-      return this.item.priority / 20;
+      return Math.round(this.item.priority / 20);
     } else {
       return 0;
     }

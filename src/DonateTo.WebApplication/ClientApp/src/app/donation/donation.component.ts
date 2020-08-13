@@ -161,7 +161,7 @@ export class DonationComponent implements OnInit, OnDestroy {
 
   setPriority() {
     if (this.donationRequest) {
-      this.priority = this.donationRequest.priority / 20;
+      this.priority = Math.round(this.donationRequest.priority / 20);
     } else {
       this.priority = 0;
     }
