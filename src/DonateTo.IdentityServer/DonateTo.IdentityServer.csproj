@@ -46,6 +46,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\Images\logotype-black.png" />
+    <None Include="wwwroot\Images\logotype-white.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="tempkey.rsa">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

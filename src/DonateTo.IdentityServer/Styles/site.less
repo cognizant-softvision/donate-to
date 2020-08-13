@@ -14,7 +14,7 @@ body {
   display: -ms-flexbox flex;
   -ms-flex-align: center;
   align-items: center;
-  background-color: #f5f5f5;
+  background-color: #f4f4f4;
 }
 
 .footer {
@@ -35,28 +35,21 @@ body {
   padding: 2%;
   color: white;
   margin: auto;
-  background: linear-gradient(90deg, #f4633a 0%, #c800a1 100%);
+  border-radius: 5px;
+  border-color: #c4c4c4;
+  background: #fff;
 
   .checkbox {
     font-weight: 400;
   }
 
-  input {
-    background: transparent !important;
-  }
-
-  ::placeholder {
-    color: white;
-    opacity: 1; /* Firefox */
-  }
-
   .form-input {
     background: transparent !important;
     border: none;
-    color: white !important;
-    border-bottom: solid;
-    border-radius: 0em;
-    border-color: white;
+    border-bottom: 2px solid #222222;
+    border-radius: 0;
+    max-width: 80%;
+    margin: 1.5em auto;
   }
 
   .form-control {
@@ -72,16 +65,22 @@ body {
   }
 
   input {
-    margin-top: 0.62em;
+    margin-top: 2em;
   }
 }
-
+.card-subtitle {
+  text-align: left;
+  max-width: 80%;
+  margin: 0 auto;
+  color: #000;
+}
 a {
-  color: #222;
+  color: #c800a1;
 }
 
 a:hover {
-  color: white;
+  color: #c800a1;
+  text-decoration: none;
 }
 
 label {
@@ -98,10 +97,30 @@ label {
 .btn,
 .btn-primary,
 .submit-button {
-  background-color: white;
-  border-color: white;
-  color: #c4c4c4;
-  font-weight: 800;
+  background: linear-gradient(90deg, #f4633a, #c800a1);
+  border: none;
+  color: #fff;
+  font-weight: 400;
+  max-width: 50%;
+  border-radius: 2px;
+  margin: 0 auto;
+}
+
+.logo {
+  margin-top: 2em;
+  img {
+    width: 14em;
+  }
+}
+
+.nav-link {
+  color: #c800a1;
+}
+
+span {
+  color: #000;
+  font-weight: normal;
+  font-size: 1em;
 }
 
 .cancel-button {
@@ -111,9 +130,8 @@ label {
 
 .btn-primary:active,
 .btn-primary:hover {
-  color: #222;
-  background-color: white;
-  border-color: #222;
+  border: none;
+  background: linear-gradient(90deg, #c800a1, #0033a0);
 }
 
 .field-validation-error {
