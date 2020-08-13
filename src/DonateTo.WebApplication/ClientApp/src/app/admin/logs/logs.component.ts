@@ -70,6 +70,14 @@ export class LogsComponent implements OnInit, OnDestroy {
       })
     );
 
+    this.subscriptions.push(
+      this.logsSandbox.isRoleProcessed$.subscribe((isRoleProcessed) => {
+        if (isRoleProcessed && !this.logsSandbox.isSuperAdmin$.value) {
+          this.router.navigate(['']);
+        }
+      })
+    );
+
     this.logsSandbox.loadLogsFilteredPaged(this.logFilter);
   }
 

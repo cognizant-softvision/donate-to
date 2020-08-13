@@ -17,12 +17,6 @@ export class MyProfileComponent implements OnInit, OnDestroy {
 
   @ViewChildren('userData') inputs;
 
-  listChangePassword = [
-    { row: 'UserProfile.OldPassword', value: '' },
-    { row: 'UserProfile.NewPassword', value: '' },
-    { row: 'UserProfile.RepeatPassword', value: '' },
-  ];
-
   isEdit = false;
   isEnable = false;
 
@@ -94,12 +88,7 @@ export class MyProfileComponent implements OnInit, OnDestroy {
     this.isEdit = false;
   }
 
-  cancelPassword() {
-    this.listChangePassword = [
-      { row: 'UserProfile.OldPassword', value: '' },
-      { row: 'UserProfile.NewPassword', value: '' },
-      { row: 'UserProfile.RepeatPassword', value: '' },
-    ];
+  changePassword(): void {
+    this.userSandbox.forgotPassword();
   }
-  saveNewPassword() {}
 }

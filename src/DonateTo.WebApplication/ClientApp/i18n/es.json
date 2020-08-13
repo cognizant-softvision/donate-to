@@ -471,9 +471,6 @@
     "LastName": "Apellido",
     "IdentityNumber": "Número de identidad",
     "PhoneNumber": "Número de teléfono",
-    "OldPassword": "Vieja Contraseña",
-    "NewPassword": "Nueva Contraseña",
-    "RepeatPassword": "Repetir nueva contraseña",
     "ValidateForm": "Todos los campos son requeridos"
   },
   "SharedControls": {
