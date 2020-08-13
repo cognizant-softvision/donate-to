@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { LogModel } from '../../models/log.model';
 import { PageModel } from '../../models/page.model';
 import { Observable } from 'rxjs/internal/Observable';
-import { LogFilter } from '../../models/filters/Log-filter';
+import { LogFilter } from '../../models/filters/log-filter';
 
 @Injectable({
   providedIn: 'root',
