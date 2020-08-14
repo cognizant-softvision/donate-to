@@ -18,6 +18,10 @@
                 [min]="question.min"
                 [max]="question.max"
               />
+              <div class="errorMessage" *ngIf="!textboxRangeValid">
+                {{ 'Admin.Donation.Create.TextboxRangeValueError' | translate }} {{ question.min }}
+                {{ 'Admin.Donation.Create.And' | translate }} {{ question.max }}
+              </div>
             </div>
 
             <div *ngSwitchCase="controlTypeEnum.DropDown">
@@ -32,14 +36,16 @@
                 <label nz-radio [nzValue]="opt.label" *ngFor="let opt of question.options"> {{ opt.label }} </label>
               </nz-radio-group>
             </div>
-            <div class="errorMessage" *ngIf="!valid">{{ question.label }} is required</div>
+            <div class="errorMessage" *ngIf="!valid">
+              {{ question.label }} {{ 'Admin.Donation.IsRequired' | translate }}
+            </div>
           </div>
         </nz-form-control>
       </nz-form-item>
     </div>
     <div class="form-row">
       <button nz-button nzType="primary" nzType="primary" (click)="onSubmit()" [disabled]="!form || !form.valid">
-        Save
+        {{ 'Admin.Donation.Save' | translate }}
       </button>
     </div>
   </form>

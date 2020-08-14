@@ -8,6 +8,7 @@ import { QuestionResult } from 'src/app/shared/models/question-result.model';
 import { QuestionAnswer } from 'src/app/shared/models/question-answer.model';
 import { DonationsSandbox } from '../donations-sandbox';
 import { QuestionsSandbox } from '../../questions/questions.sandbox';
+import { ControlTypeModel } from 'src/app/shared/models/control-type.model';
 @Component({
   selector: 'app-donations-priority',
   templateUrl: './donations-priority.component.html',
@@ -22,6 +23,7 @@ export class DonationPriorityComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   private donationRequest: DonationRequestModel;
   valid = true;
+  textboxRangeValid = true;
 
   get controlTypeEnum() {
     return ControlType;
@@ -71,7 +73,7 @@ export class DonationPriorityComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.validateFormGroup(this.form);
-    if (this.valid) {
+    if (this.valid && this.validTexboxAnswer()) {
       this.addQuestionsSubmited();
       this.questionSandbox.updateQuestionsResult(this.questionResult);
       this.dataUpdated.changeMessage(true);
@@ -89,6 +91,26 @@ export class DonationPriorityComponent implements OnInit, OnDestroy {
 
   isValid(question: QuestionModel) {
     this.valid = this.form.controls[question.id].valid;
+  }
+
+  /**
+   * Validates that the textbox answer is between the max and min value
+   * @returns boolean
+   */
+  validTexboxAnswer(): boolean {
+    let result = true;
+
+    this.questions.forEach((question) => {
+      if (question.controlTypeId === ControlType.Textbox) {
+        const value = this.form.controls[question.id].value;
+        if (value < question.min || value > question.max) {
+          result = false;
+          this.textboxRangeValid = false;
+        }
+      }
+    });
+
+    return result;
   }
 
   addQuestionsSubmited(): void {

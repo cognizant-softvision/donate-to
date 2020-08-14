@@ -53,7 +53,9 @@
       "Create": {
         "Title": "Crear Donación",
         "AddItem": "Agregar Item",
-        "CreateRequest": "Crear Solicitud"
+        "CreateRequest": "Crear Solicitud",
+        "TextboxRangeValueError": "El rango elegido está fuera del límite. El valor debe estar entre",
+        "And": "y"
       },
       "Edit": {
         "Title": "Editar Solicitud",
@@ -123,6 +125,8 @@
       "EditConfirm": "Estas seguro que quieres editar esta solicitud de donación?",
       "DeleteConfirmation": "Está seguro que desea eliminar esta solicitud de donación?",
       "Delete": "Eliminar Solicitud de Donación",
+      "IsRequired": "es requerido",
+      "Save": "Guardar",
       "Table": {
         "Itemcolumn": "Nombre de solicitud",
         "CreatedColumn": "Fecha de Creación",
