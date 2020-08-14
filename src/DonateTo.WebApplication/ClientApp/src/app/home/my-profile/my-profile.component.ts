@@ -68,7 +68,7 @@ export class MyProfileComponent implements OnInit, OnDestroy {
   validateForm() {
     this.isValid = true;
     this.inputs._results.forEach((result) => {
-      this.isValid = this.isValid && result.viewModel !== '';
+      this.isValid = this.isValid && result.viewModel;
     });
   }
 
