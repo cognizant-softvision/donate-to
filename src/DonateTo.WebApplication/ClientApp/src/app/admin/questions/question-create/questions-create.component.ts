@@ -295,8 +295,6 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
    * @returns boolean
    */
   textboxQuestionOptionValidation(): boolean {
-    console.log(this.optionsArray.value);
-
     return this.textboxQuestionOption() && this.textboxQuestionsOptions();
   }
 
@@ -314,7 +312,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
       }
     });
 
-    result ? (this.questionOptionValid = true) : (this.questionOptionValid = false);
+    this.minValueEqualsMaxValue = !result;
     return result;
   }
 
