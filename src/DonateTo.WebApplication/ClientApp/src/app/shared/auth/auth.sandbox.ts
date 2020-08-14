@@ -41,7 +41,7 @@ export class AuthSandbox extends Sandbox {
   }
 
   public forgotPassword(): void {
-    document.location.href = this.authService.issuer + '/Account/ForgotPassword';
+    document.location.href = this.authService.issuer + '/Account/ChangePassword?returnUrl=' + window.location.href;
   }
 
   /**
