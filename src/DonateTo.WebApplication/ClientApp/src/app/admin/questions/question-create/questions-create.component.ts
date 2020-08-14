@@ -166,8 +166,13 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     this.defaultValue = item.defaultValue;
     this.controlTypeId = item.controlTypeId;
     this.questionId = item.id;
-    this.isEdit = true;
     this.editIndex = index;
+    this.isEdit = true;
+    this.optionsArray = new FormArray([]);
+
+    for (const option of item.options) {
+      this.addEditField(option);
+    }
   }
 
   addQuestion() {
@@ -227,6 +232,19 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     this.optionsArray.push(group);
   }
 
+  addEditField(option: QuestionOption) {
+    const group = new FormGroup({
+      optionId: new FormControl(option.id),
+      optionLabel: new FormControl(option.label),
+      optionValue: new FormControl(option.value),
+      optionWeight: new FormControl(option.weight),
+      minRelativeFormControl: new FormControl(option.minimumRelative),
+      maxRelativeFormControl: new FormControl(option.maximumRelative),
+    });
+
+    this.optionsArray.push(group);
+  }
+
   removeField(i: number, e: MouseEvent): void {
     e.preventDefault();
     if (this.optionsArray.length > 2) {
@@ -264,6 +282,9 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     if (questionItem.controlType.id !== ControlType.Textbox) {
       for (const o of this.optionsArray.value) {
         const questionOption = new QuestionOption();
+        if (this.isEdit) {
+          questionOption.id = o.optionId;
+        }
         questionOption.label = o.optionLabel;
         questionOption.value = o.optionValue;
         questionOption.weight = o.optionWeight;
@@ -274,6 +295,9 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
       questionItem.max = this.questionItemFormGroup.controls.maxFormControl.value;
       for (const o of this.optionsArray.value) {
         const questionOption = new QuestionOption();
+        if (this.isEdit) {
+          questionOption.id = o.optionId;
+        }
         questionOption.minimumRelative = o.minRelativeFormControl;
         questionOption.maximumRelative = o.maxRelativeFormControl;
         questionOption.weight = o.optionWeight;
