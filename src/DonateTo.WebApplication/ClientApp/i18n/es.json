@@ -270,7 +270,9 @@
         "PriorityQuestionRequiredError": "Por lo menos una pregunta de prioridad es requerida y el peso debe llegar a 100%.",
         "PriorityRangeError": "El rango no cubre la totalidad de valores.",
         "PriorityWeightError": "El peso de las opciones debe sumar un total de 100.",
-        "OrderAlreadyExistError": "El Orden ingresado ya fue seleccionado, por favor elija otro."
+        "OrderAlreadyExistError": "El Orden ingresado ya fue seleccionado, por favor elija otro.",
+        "QuestionOptionError": "El valor de Max Relativo no debe ser menor o igual al valor de Min Relative",
+        "MinValueEqualsMaxValueError": "Un valor de un Min Relativo no debe ser igual al valor de un Max Relativo"
       }
     },
     "User": {
