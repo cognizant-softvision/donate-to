@@ -4,7 +4,9 @@ html {
   padding-bottom: 10%;
 }
 body {
-  background-image: url(../bg.webp);
+  font-family: "Proxima Nova", "Segoe UI", "PingFang SC", "Hiragino Sans GB",
+    "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   background-size: cover;
   min-height: 100%;
   padding-top: 10%;
@@ -13,69 +15,94 @@ body {
   align-items: center;
   background-color: #f5f5f5;
 }
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 3.75em;
+  line-height: 3.75em;
+  background-color: #222;
+  color: #fff;
+  text-align: left;
+  padding-left: 2.5%;
+}
 .form-card {
   width: 100%;
   max-width: 50%;
   padding: 2%;
+  color: #fff;
   margin: auto;
-  background-color: #f5f5f5;
+  background: linear-gradient(90deg, #f4633a 0, #c800a1 100%);
 }
 .form-card .checkbox {
   font-weight: 400;
+}
+.form-card input {
+  background: 0 0 !important;
+}
+.form-card ::placeholder {
+  color: #fff;
+  opacity: 1;
+}
+.form-card .form-input {
+  background: 0 0 !important;
+  border: none;
+  color: #fff !important;
+  border-bottom: solid;
+  border-radius: 0;
+  border-color: #fff;
 }
 .form-card .form-control {
   position: relative;
   box-sizing: border-box;
   height: auto;
-  padding: 10px;
-  font-size: 16px;
+  padding: 0.62em;
+  font-size: 1em;
 }
 .form-card .form-control:focus {
   z-index: 2;
 }
 .form-card input {
-  margin-top: 10px;
-}
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 60px;
-  line-height: 60px;
-  background-color: #f5f5f5;
-  text-align: left;
-  padding-left: 2.5%;
+  margin-top: 0.62em;
 }
 a {
-  color: #1da57a;
+  color: #222;
+}
+a:hover {
+  color: #fff;
+}
+label {
+  color: #fff;
 }
 .card-title {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  color: #fff;
   text-align: center;
+  font-size: 3em;
+  font-weight: 800 !important;
 }
+.btn,
+.btn-primary,
 .submit-button {
-  background-color: #1da57a;
-  border-color: #1da57a;
+  background-color: #fff;
+  border-color: #fff;
+  color: #c4c4c4;
+  font-weight: 800;
 }
 .cancel-button {
   background-color: #b4c6da;
   border-color: #b4c6da;
 }
+.btn-primary:active,
 .btn-primary:hover {
-  color: #fff;
-  background-color: #3db389;
-  border-color: #3db389;
+  color: #222;
+  background-color: #fff;
+  border-color: #222;
 }
 .field-validation-error {
-  color: #721c24;
-  background-color: #f8d7da;
-  border-color: #f5c6cb;
+  color: #fff;
   position: relative;
   padding: 0.75rem 1.25rem;
   margin-bottom: 1rem;
-  border: 1px solid transparent;
-  border-bottom-left-radius: 0.25rem;
-  border-bottom-right-radius: 0.25rem;
   display: flex;
   justify-content: center;
 }
@@ -84,10 +111,17 @@ a {
   align-items: center;
 }
 .message-box {
-  background-color: #f5f5f5;
-  border-radius: 117px 117px 117px 117px;
+  background: linear-gradient(90deg, #f4633a 0, #c800a1 100%);
   padding: 1.5em;
   border: 0.3em;
+  color: #fff;
   width: auto;
   margin: 0 auto;
+}
+.client-card {
+  background: linear-gradient(90deg, #f4633a 0, #c800a1 100%);
+  padding: 1.5em;
+}
+.btn-save {
+  width: 100%;
 }
