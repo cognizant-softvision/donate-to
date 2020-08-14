@@ -42,6 +42,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   controlTypeId = null;
   questionId = 0;
   isEdit = false;
+  editIndex = null;
   isQuestionsValid = true;
   isWeightValid = true;
   isRangeValid = true;
@@ -157,7 +158,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     }
   }
 
-  editQuestion(item: QuestionModel) {
+  editQuestion(item: QuestionModel, index: number) {
     this.label = item.label;
     this.placeholder = item.placeholder;
     this.weight = item.weight;
@@ -165,6 +166,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     this.defaultValue = item.defaultValue;
     this.controlTypeId = item.controlTypeId;
     this.questionId = item.id;
+    this.editIndex = index;
     this.isEdit = true;
     this.optionsArray = new FormArray([]);
 
@@ -177,9 +179,9 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     this.validateFormGroup(this.questionItemFormGroup);
     if (this.questionItemFormGroup.valid && this.validateOptions() && !this.existOrder()) {
       if (this.isEdit) {
-        const questionSavedItem = this.questions.find((q) => q.id === this.questionId);
+        const questionSavedItem = this.questions[this.editIndex];
         this.createQuestionItem(questionSavedItem);
-        this.questions.splice(this.questions.indexOf(questionSavedItem), 1);
+        this.questions.splice(this.editIndex, 1);
         this.isEdit = false;
       } else {
         const questionItem = new QuestionModel();
@@ -197,7 +199,8 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
 
   existOrder(): boolean {
     const order = this.questionItemFormGroup.controls.orderFormControl.value;
-    this.orderExist = this.questions.map((q) => q.order).includes(order);
+    this.orderExist =
+      order !== this.questions[this.editIndex]?.order && this.questions.map((q) => q.order).includes(order);
     return this.orderExist;
   }
 

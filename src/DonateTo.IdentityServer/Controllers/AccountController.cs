@@ -317,6 +317,56 @@ namespace DonateTo.IdentityServer.Controllers
         }
 
         [HttpGet]
+        public IActionResult ChangePassword(string returnUrl)
+        {
+            var model = new ChangePasswordViewModel()
+            {
+                ReturnUrl = returnUrl
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return View("Error");
+            }
+
+            var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+
+
+            if (!result.Succeeded)
+            {
+                ModelErrorsHandler(result.Errors);
+                return View(model);
+            }         
+            if (!Url.IsLocalUrl(model.ReturnUrl))
+            {
+                return Redirect(model.ReturnUrl);
+            } 
+            else if (string.IsNullOrEmpty(model.ReturnUrl))
+            {
+                return Redirect("~/");
+            }
+            else
+            {
+                // user might have clicked on a malicious link - should be logged
+                throw new Exception("Invalid return URL");
+            }
+        }
+
+        [HttpGet]
         public async Task<IActionResult> ConfirmEmail(string token, string email, string redirectUrl)
         {
             var user = await _userManager.FindByEmailAsync(email);
