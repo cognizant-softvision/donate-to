@@ -25,7 +25,7 @@ namespace DonateTo.Infrastructure.Logging
             {
                 Log.Logger = new LoggerConfiguration()
                     .Enrich.FromLogContext()
-                    .MinimumLevel.Debug()
+                    .MinimumLevel.Error()
                     .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
                     .WriteTo.PostgreSQL(connectionString, "\"Log\"", needAutoCreateTable: autoCreateTable)
                     .WriteTo.Providers(provider)

@@ -12,10 +12,10 @@
 <form class="form-card" asp-route="Login" id="login-form">
     <input type="hidden" asp-for="ReturnUrl" />
 
-    <h3 class="mb-3 font-weight-normal card-title">Donate</h3>
+    <div class="logo"><img src="~/Images/logotype-black.png"></div>
 
     <label asp-for="Email" class="sr-only">Email address</label>
-    <input type="email" asp-for="Email" class="form-input form-control" placeholder="Your E-mail" autofocus required>
+    <input type="email" asp-for="Email" class="form-input form-control inputs" placeholder="Your E-mail" autofocus required>
 
     <label asp-for="Password" class="sr-only">Password</label>
     <input type="password" class="form-input form-control"  asp-for="Password" placeholder="Password" required>
@@ -25,12 +25,12 @@
         <div class="alert alert-danger">Incorrect user or password</div>
     }
 
-    <input class="btn btn-lg btn-primary btn-block submit-button" name="button" type="submit" value="Log in" />
+    <input class="btn btn-lg btn-primary btn-block submit-button" name="button" type="submit" value="LOG IN" />
 
     <div class="form-group">
         <a class="nav-link" asp-area="" asp-controller="Account" asp-action="ForgotPassword" asp-all-route-data="parms">Forgot Password?</a>
     </div>
     <div class="form-group">
-        Don't have an account? <a asp-area="" asp-controller="Account" asp-action="Register" asp-all-route-data="parms">Join Now</a>
+        <span>Don't have an account?</span> <a asp-area="" asp-controller="Account" asp-action="Register" asp-all-route-data="parms">Join Now</a>
     </div>
 </form>

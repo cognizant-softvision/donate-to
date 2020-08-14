@@ -1,0 +1,13 @@
+{
+  "name": "Donate",
+  "short_name": "Donate",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "sizes": "512x512"
+    }
+  ],
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "display": "fullscreen"
+}
