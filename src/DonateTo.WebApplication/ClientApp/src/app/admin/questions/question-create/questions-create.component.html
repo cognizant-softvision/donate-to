@@ -262,7 +262,7 @@
         </td>
         <td>
           <a
-            (click)="editQuestion(item)"
+            (click)="editQuestion(item, questions.indexOf(item))"
             nzTooltipTitle="{{ 'Admin.Questions.Table.EditQuestion' | translate }}"
             nzTooltipPlacement="bottom"
             nz-tooltip
