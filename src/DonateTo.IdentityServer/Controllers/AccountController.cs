@@ -74,7 +74,7 @@ namespace DonateTo.IdentityServer.Controllers
             var context = await _interactionService.GetAuthorizationContextAsync(model.ReturnUrl);
 
             // the user clicked the "cancel" button
-            if (button != "Log in")
+            if (button != "LOG IN")
             {
                 if (context != null)
                 {
