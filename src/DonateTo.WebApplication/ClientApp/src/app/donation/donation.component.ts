@@ -29,6 +29,7 @@ export class DonationComponent implements OnInit, OnDestroy {
   donationItems: DonationItemModel[] = [];
   isSubmited = false;
   priority = 0;
+  proportionalPercentage = 20;
 
   @Input() userId: number;
   @Input() isEdit: boolean;
@@ -161,7 +162,7 @@ export class DonationComponent implements OnInit, OnDestroy {
 
   setPriority() {
     if (this.donationRequest) {
-      this.priority = Math.round(this.donationRequest.priority / 20);
+      this.priority = Math.round(this.donationRequest.priority / this.proportionalPercentage);
     } else {
       this.priority = 0;
     }

@@ -10,6 +10,7 @@ export class DonationRequestsListItemComponent implements OnInit {
   @Output() showDetail = new EventEmitter<number>();
   @Input() item: DonationRequestModel;
   @Input() loading = true;
+  proportionalPercentage = 20;
 
   constructor() {}
 
@@ -25,7 +26,7 @@ export class DonationRequestsListItemComponent implements OnInit {
 
   getPriority() {
     if (this.item) {
-      return Math.round(this.item.priority / 20);
+      return Math.round(this.item.priority / this.proportionalPercentage);
     } else {
       return 0;
     }
