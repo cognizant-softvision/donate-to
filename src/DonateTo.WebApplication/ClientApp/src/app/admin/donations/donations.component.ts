@@ -39,7 +39,7 @@ export class DonationsComponent implements OnDestroy, OnInit {
   isDeleteProcess = false;
 
   constructor(
-    private donationSandbox: DonationsSandbox,
+    public donationSandbox: DonationsSandbox,
     protected router: Router,
     private dataUpdated: DataUpdatedService
   ) {}

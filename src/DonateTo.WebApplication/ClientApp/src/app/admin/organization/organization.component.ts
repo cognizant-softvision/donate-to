@@ -32,7 +32,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
   filter: string;
 
   constructor(
-    private organizationSandbox: OrganizationSandbox,
+    public organizationSandbox: OrganizationSandbox,
     public router: Router,
     private dataUpdated: DataUpdatedService,
     private filterUsers: FilterService

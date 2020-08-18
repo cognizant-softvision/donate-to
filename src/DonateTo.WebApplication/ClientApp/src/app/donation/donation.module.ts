@@ -22,6 +22,7 @@ import {
   NzRateModule,
   NzSelectModule,
   NzSkeletonModule,
+  NzSpinModule,
   NzStepsModule,
   NzTableModule,
   NzTagModule,
@@ -91,6 +92,7 @@ const icons = [
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
+    NzSpinModule,
   ],
   declarations: [
     DonationComponent,

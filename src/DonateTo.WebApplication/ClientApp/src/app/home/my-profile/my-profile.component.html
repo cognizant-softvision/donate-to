@@ -1,6 +1,7 @@
 <nz-layout>
   <app-nav-menu></app-nav-menu>
   <nz-layout class="container">
+    <nz-spin *ngIf="this.userSandbox.loadAction$ | async" nzTip="Loading..."> </nz-spin>
     <div>
       <h2>{{ 'UserProfile.MyProfile' | translate }}</h2>
     </div>
@@ -44,6 +45,7 @@
             />
           </nz-descriptions-item>
         </nz-descriptions>
+        <div class="errorMessage" *ngIf="!isValid">{{ 'UserProfile.ValidateForm' | translate }}</div>
         <div class="button-div" [hidden]="!isEdit">
           <button nz-button class="buttons" nzType="default" (click)="cancelGeneralInformation()">
             {{ 'CancelBtn' | translate }}
@@ -61,33 +63,9 @@
           >{{ 'UserProfile.ChangePassword' | translate }}
         </ng-template>
 
-        <nz-page-header
-          class="site-page-header"
-          nzTitle="{{ 'UserProfile.ChangePassword' | translate }}"
-        ></nz-page-header>
-
-        <nz-descriptions class="descriptions">
-          <nz-descriptions-item
-            *ngFor="let data of listChangePassword"
-            class="editable-row"
-            nzTitle="{{ data.row | translate }}"
-          >
-            <input
-              nz-input
-              placeholder="{{ data.value | translate }}"
-              value="{{ data.value | translate }}"
-              nzSize="small"
-              type="password"
-            />
-          </nz-descriptions-item>
-        </nz-descriptions>
-
-        <div class="button-div">
-          <button nz-button class="buttons" nzType="default" (click)="cancelPassword()">
-            {{ 'CancelBtn' | translate }}
-          </button>
-          <button nz-button class="buttons" nzType="primary" (click)="saveNewPassword()">
-            {{ 'SaveBtn' | translate }}
+        <div class="center-align">
+          <button nz-button class="buttons" nzType="primary" (click)="changePassword()">
+            {{ 'UserProfile.ChangePassword' | translate }}
           </button>
         </div>
       </nz-tab>

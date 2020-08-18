@@ -42,6 +42,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   controlTypeId = null;
   questionId = 0;
   isEdit = false;
+  editIndex = null;
   isQuestionsValid = true;
   isWeightValid = true;
   isRangeValid = true;
@@ -157,7 +158,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     }
   }
 
-  editQuestion(item: QuestionModel) {
+  editQuestion(item: QuestionModel, index: number) {
     this.label = item.label;
     this.placeholder = item.placeholder;
     this.weight = item.weight;
@@ -165,16 +166,22 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     this.defaultValue = item.defaultValue;
     this.controlTypeId = item.controlTypeId;
     this.questionId = item.id;
+    this.editIndex = index;
     this.isEdit = true;
+    this.optionsArray = new FormArray([]);
+
+    for (const option of item.options) {
+      this.addEditField(option);
+    }
   }
 
   addQuestion() {
     this.validateFormGroup(this.questionItemFormGroup);
     if (this.questionItemFormGroup.valid && this.validateOptions() && !this.existOrder()) {
       if (this.isEdit) {
-        const questionSavedItem = this.questions.find((q) => q.id === this.questionId);
+        const questionSavedItem = this.questions[this.editIndex];
         this.createQuestionItem(questionSavedItem);
-        this.questions.splice(this.questions.indexOf(questionSavedItem), 1);
+        this.questions.splice(this.editIndex, 1);
         this.isEdit = false;
       } else {
         const questionItem = new QuestionModel();
@@ -192,7 +199,8 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
 
   existOrder(): boolean {
     const order = this.questionItemFormGroup.controls.orderFormControl.value;
-    this.orderExist = this.questions.map((q) => q.order).includes(order);
+    this.orderExist =
+      order !== this.questions[this.editIndex]?.order && this.questions.map((q) => q.order).includes(order);
     return this.orderExist;
   }
 
@@ -219,6 +227,19 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
       optionWeight: new FormControl(''),
       minRelativeFormControl: new FormControl(''),
       maxRelativeFormControl: new FormControl(''),
+    });
+
+    this.optionsArray.push(group);
+  }
+
+  addEditField(option: QuestionOption) {
+    const group = new FormGroup({
+      optionId: new FormControl(option.id),
+      optionLabel: new FormControl(option.label),
+      optionValue: new FormControl(option.value),
+      optionWeight: new FormControl(option.weight),
+      minRelativeFormControl: new FormControl(option.minimumRelative),
+      maxRelativeFormControl: new FormControl(option.maximumRelative),
     });
 
     this.optionsArray.push(group);
@@ -261,6 +282,9 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     if (questionItem.controlType.id !== ControlType.Textbox) {
       for (const o of this.optionsArray.value) {
         const questionOption = new QuestionOption();
+        if (this.isEdit) {
+          questionOption.id = o.optionId;
+        }
         questionOption.label = o.optionLabel;
         questionOption.value = o.optionValue;
         questionOption.weight = o.optionWeight;
@@ -271,6 +295,9 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
       questionItem.max = this.questionItemFormGroup.controls.maxFormControl.value;
       for (const o of this.optionsArray.value) {
         const questionOption = new QuestionOption();
+        if (this.isEdit) {
+          questionOption.id = o.optionId;
+        }
         questionOption.minimumRelative = o.minRelativeFormControl;
         questionOption.maximumRelative = o.maxRelativeFormControl;
         questionOption.weight = o.optionWeight;
