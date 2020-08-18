@@ -1,5 +1,5 @@
 <div class="search">
-  <nz-spin *ngIf="this.isLoading" nzTip="Loading..."> </nz-spin>
+  <nz-spin *ngIf="this.homeSandbox.donationRequestsLoading$ | async" nzTip="Loading..."> </nz-spin>
   <nz-input-group [nzSuffix]="suffixIconSearch">
     <input
       type="text"

@@ -25,7 +25,6 @@ export class DonationsDetailComponent implements OnInit, OnDestroy {
   total = 0;
   pageSize = 10;
   pageIndex = 1;
-  isLoading = true;
 
   expandSet = new Set<number>();
 
@@ -67,7 +66,6 @@ export class DonationsDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.isLoading = true;
     this.registerEvents();
   }
 
@@ -75,7 +73,6 @@ export class DonationsDetailComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.donationSandbox.donationRequest$.subscribe((donationRequest) => {
         this.donationRequest = donationRequest;
-        this.isLoading = false;
       })
     );
 
@@ -83,7 +80,6 @@ export class DonationsDetailComponent implements OnInit, OnDestroy {
       this.donationSandbox.donationsPagedFiltered$.subscribe((res) => {
         this.total = res.rowCount;
         this.donationsList = res.results;
-        this.isLoading = false;
       })
     );
   }

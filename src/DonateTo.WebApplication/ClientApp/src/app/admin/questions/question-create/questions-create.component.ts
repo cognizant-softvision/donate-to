@@ -45,7 +45,6 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   isQuestionsValid = true;
   isWeightValid = true;
   isRangeValid = true;
-  isLoading = true;
   orderExist = false;
   requiredWeight = 100;
 
@@ -78,7 +77,6 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.isLoading = true;
     this.questionSandbox.loadControlTypes();
     this.questionSandbox.loadQuestions();
     this.registerEvents();
@@ -96,7 +94,6 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     this.subscriptions.push(
       this.questionSandbox.controlTypes$.subscribe((controlTypes) => {
         this.controlTypes = JSON.parse(JSON.stringify(controlTypes));
-        this.isLoading = false;
       })
     );
 
@@ -104,7 +101,6 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
       this.questionSandbox.questions$.subscribe((questions) => {
         this.questions = [];
         this.questions = JSON.parse(JSON.stringify(questions));
-        this.isLoading = false;
       })
     );
 
@@ -112,7 +108,6 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
       this.questionSandbox.loadAction$.subscribe((loading) => {
         this.loadingStatus = loading;
         this.handleRequestResult();
-        this.isLoading = false;
       })
     );
   }
@@ -127,7 +122,6 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   }
 
   createQuestions() {
-    this.isLoading = true;
     this.isSubmited = true;
     this.validateQuestions();
     if (this.isQuestionsValid) {
@@ -138,7 +132,6 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
 
       this.dataUpdated.changeMessage(true);
     }
-    this.isLoading = false;
   }
 
   validateQuestions() {

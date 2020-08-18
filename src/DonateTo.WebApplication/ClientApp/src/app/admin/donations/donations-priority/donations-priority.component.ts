@@ -22,7 +22,6 @@ export class DonationPriorityComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   private donationRequest: DonationRequestModel;
   valid = true;
-  isLoading = true;
 
   get controlTypeEnum() {
     return ControlType;
@@ -35,7 +34,6 @@ export class DonationPriorityComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.isLoading = true;
     this.questionSandbox.loadQuestions();
     this.registerEvents();
   }
@@ -49,13 +47,11 @@ export class DonationPriorityComponent implements OnInit, OnDestroy {
       this.questionSandbox.questions$.subscribe((questions) => {
         this.questions = questions;
         this.form = this.toFormGroup(this.questions);
-        this.isLoading = false;
       })
     );
     this.subscriptions.push(
       this.donationSandbox.donationRequest$.subscribe((donationRequest) => {
         this.donationRequest = donationRequest;
-        this.isLoading = false;
       })
     );
   }
@@ -74,7 +70,6 @@ export class DonationPriorityComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.isLoading = true;
     this.validateFormGroup(this.form);
     if (this.valid) {
       this.addQuestionsSubmited();
@@ -82,7 +77,6 @@ export class DonationPriorityComponent implements OnInit, OnDestroy {
       this.dataUpdated.changeMessage(true);
       this.isSubmited.emit(true);
     }
-    this.isLoading = false;
   }
 
   toFormGroup(questions: QuestionModel[]) {

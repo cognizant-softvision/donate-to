@@ -16,7 +16,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   tplModal?: NzModalRef;
   item: any = null;
   isAuthenticated = false;
-  isLoading = true;
 
   @ViewChild('modalContent') public modalContent: TemplateRef<any>;
   @ViewChild('modalFooter') public modalFooter: TemplateRef<any>;
@@ -40,7 +39,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
 
   ngOnInit() {
-    this.isLoading = true;
     this.registerEvents();
   }
 
@@ -92,7 +90,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.homeSandbox.isAuthenticated$.subscribe((isAuthenticated) => {
         this.isAuthenticated = isAuthenticated;
-        this.isLoading = false;
       })
     );
   }

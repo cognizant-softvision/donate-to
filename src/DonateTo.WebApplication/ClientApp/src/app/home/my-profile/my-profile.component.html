@@ -1,7 +1,7 @@
 <nz-layout>
   <app-nav-menu></app-nav-menu>
   <nz-layout class="container">
-    <nz-spin *ngIf="this.isLoading" nzTip="Loading..."> </nz-spin>
+    <nz-spin *ngIf="this.userSandbox.loadAction$ | async" nzTip="Loading..."> </nz-spin>
     <div>
       <h2>{{ 'UserProfile.MyProfile' | translate }}</h2>
     </div>

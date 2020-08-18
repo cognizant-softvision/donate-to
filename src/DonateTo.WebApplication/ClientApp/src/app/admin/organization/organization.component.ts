@@ -34,7 +34,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
   validOrganizations: OrganizationModel[] = [];
 
   constructor(
-    private organizationSandbox: OrganizationSandbox,
+    public organizationSandbox: OrganizationSandbox,
     public router: Router,
     private dataUpdated: DataUpdatedService
   ) {

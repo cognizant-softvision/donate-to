@@ -1,5 +1,5 @@
 <div class="container">
-  <nz-spin *ngIf="this.isLoading" nzTip="Loading..."> </nz-spin>
+  <nz-spin *ngIf="this.donationSandbox.donationRequestLoading$ | async" nzTip="Loading..."> </nz-spin>
   <nz-skeleton [nzLoading]="this.donationSandbox.donationRequestLoading$ | async" [nzActive]="true">
     <div *ngIf="donationRequest">
       <div nz-row>

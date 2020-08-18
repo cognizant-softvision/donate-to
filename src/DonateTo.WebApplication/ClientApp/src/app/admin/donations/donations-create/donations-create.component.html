@@ -3,7 +3,7 @@
     <h2 class="section-title">{{ 'Admin.Donation.Create.Title' | translate }}</h2>
   </div>
   <br />
-  <nz-spin *ngIf="this.isLoading" nzTip="Loading..."> </nz-spin>
+  <nz-spin *ngIf="this.donationSandbox.loadAction$ | async" nzTip="Loading..."> </nz-spin>
   <app-donations-form></app-donations-form>
   <br />
   <div class="create-donation-form-buttons">

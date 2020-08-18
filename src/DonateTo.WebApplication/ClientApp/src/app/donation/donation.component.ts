@@ -28,7 +28,6 @@ export class DonationComponent implements OnInit, OnDestroy {
 
   donationItems: DonationItemModel[] = [];
   isSubmited = false;
-  isLoading = true;
   priority = 0;
 
   @Input() userId: number;
@@ -47,7 +46,6 @@ export class DonationComponent implements OnInit, OnDestroy {
   private donationListComponent: DonationListComponent;
 
   ngOnInit(): void {
-    this.isLoading = true;
     this.registerEvents();
   }
 
@@ -76,7 +74,6 @@ export class DonationComponent implements OnInit, OnDestroy {
           this.donationSandbox.loadDonation(this.donationId);
           this.isEdit = true;
         }
-        this.isLoading = false;
       })
     );
 
@@ -86,7 +83,6 @@ export class DonationComponent implements OnInit, OnDestroy {
           this.donationRequest = donationRequest;
           this.setPriority();
         }
-        this.isLoading = false;
       })
     );
 
@@ -98,7 +94,6 @@ export class DonationComponent implements OnInit, OnDestroy {
           this.donationItems = this.donation.donationItems;
           this.setPriority();
         }
-        this.isLoading = false;
       })
     );
 
@@ -108,7 +103,6 @@ export class DonationComponent implements OnInit, OnDestroy {
           this.hideModal();
           this.route.navigate(['']);
         }
-        this.isLoading = false;
       })
     );
   }

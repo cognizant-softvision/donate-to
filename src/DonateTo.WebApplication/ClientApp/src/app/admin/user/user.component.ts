@@ -36,7 +36,7 @@ export class UserComponent implements OnInit, OnDestroy {
   organizationName = '';
   isAdmin = false;
 
-  constructor(private userSandbox: UserSandbox, private route: ActivatedRoute, private router: Router) {}
+  constructor(public userSandbox: UserSandbox, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     this.route.queryParams
