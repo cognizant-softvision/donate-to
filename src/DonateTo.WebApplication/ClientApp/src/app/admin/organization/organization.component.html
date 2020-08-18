@@ -1,4 +1,5 @@
 <div *ngIf="outlet.isActivated == false">
+  <nz-spin *ngIf="this.organizationSandbox.loadAction$ | async" nzTip="Loading..."> </nz-spin>
   <div class="table-operations">
     <h2 class="section-title">{{ 'Admin.Organization.Title' | translate }}</h2>
     <div class="create-button" *ngIf="isSuperAdmin">

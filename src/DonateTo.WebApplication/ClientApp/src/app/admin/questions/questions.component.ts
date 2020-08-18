@@ -32,7 +32,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   dataSaved = false;
 
   constructor(
-    private questionSandbox: QuestionsSandbox,
+    public questionSandbox: QuestionsSandbox,
     public router: Router,
     private dataUpdated: DataUpdatedService
   ) {}

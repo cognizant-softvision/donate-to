@@ -1,7 +1,14 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { NzButtonModule, NzFormModule, NzInputModule, NzLayoutModule, NzTableModule } from 'ng-zorro-antd';
+import {
+  NzButtonModule,
+  NzFormModule,
+  NzInputModule,
+  NzLayoutModule,
+  NzSpinModule,
+  NzTableModule,
+} from 'ng-zorro-antd';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
@@ -35,6 +42,7 @@ const icons = [SmileTwoTone, SettingTwoTone, EditTwoTone];
     NzPageHeaderModule,
     NzFormModule,
     NzTabsModule,
+    NzSpinModule,
     ReactiveFormsModule,
     NzIconModule.forChild(icons),
     ProfileLayoutRoutingModule,

@@ -1,4 +1,5 @@
 <div>
+  <nz-spin *ngIf="this.questionSandbox.loadAction$ | async" nzTip="Loading..."> </nz-spin>
   <div class="create-question-title">
     <h2 class="section-title">{{ 'Admin.Questions.Create.Title' | translate }}</h2>
   </div>
