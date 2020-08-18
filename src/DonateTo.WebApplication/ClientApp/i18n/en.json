@@ -241,7 +241,7 @@
       "Create": {
         "Title": "Create Questions",
         "CreateRequest": "Create Questions",
-        "AddField": "Add Field"
+        "AddField": "Add Question Option"
       },
       "Edit": {
         "Title": "Edit Question"
@@ -290,7 +290,9 @@
         "PriorityQuestionRequiredError": "At least 1 priority question is required and weight must reach 100%.",
         "PriorityRangeError": "The range does not cover the entire value.",
         "PriorityWeightError": "The weight of each option must sum a total of 100",
-        "OrderAlreadyExistError": "Order was already selected, please choose another"
+        "OrderAlreadyExistError": "Order was already selected, please choose another",
+        "QuestionOptionError": "Min Relative value must not be greater or equal to Max Relative value",
+        "MinValueEqualsMaxValueError": "A Min Relative value must not be equal to a Max Relative value"
       }
     },
     "User": {
