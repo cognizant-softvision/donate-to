@@ -30,6 +30,7 @@ import {
   NzRadioModule,
   NzRateModule,
   NzSelectModule,
+  NzSpinModule,
   NzTableModule,
   NzTagModule,
 } from 'ng-zorro-antd';
@@ -66,6 +67,7 @@ const ICONS = [MinusCircleOutline, PlusOutline, DeleteOutline, EditOutline];
     NzTableModule,
     NzCheckboxModule,
     NzToolTipModule,
+    NzSpinModule,
 
     EffectsModule.forFeature([QuestionEffects]),
     StoreModule.forFeature(fromQuestion.questionFeatureKey, fromQuestion.reducer),

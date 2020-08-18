@@ -1,4 +1,6 @@
 <div>
+  <nz-spin *ngIf="this.donationSandbox.loadAction$ || this.questionSandbox.loadAction$ | async" nzTip="Loading...">
+  </nz-spin>
   <form nz-form [formGroup]="form">
     <div *ngFor="let question of questions" class="form-row">
       <nz-form-item>
@@ -6,7 +8,6 @@
           <nz-form-label nzRequired>{{ question.label }}</nz-form-label>
           <br />
         </div>
-
         <nz-form-control [nzSpan]="12" nzHasFeedback>
           <div [ngSwitch]="question.controlTypeId">
             <div *ngSwitchCase="controlTypeEnum.Textbox">

@@ -16,6 +16,7 @@ export class DonationsCreateComponent implements OnDestroy {
   private isSubmited = false;
   private failedStatus = false;
   isErrorModalActive = false;
+
   @ViewChild('modalContent') public modalContent: TemplateRef<any>;
   tplModal?: NzModalRef;
   constructor(public donationSandbox: DonationsSandbox, private router: Router, private modal: NzModalService) {

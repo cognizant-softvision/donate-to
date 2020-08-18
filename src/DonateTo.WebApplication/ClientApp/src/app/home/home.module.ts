@@ -17,6 +17,7 @@ import {
   NzPaginationModule,
   NzRateModule,
   NzSkeletonModule,
+  NzSpinModule,
   NzTagModule,
 } from 'ng-zorro-antd';
 import { HeartFill, SearchOutline } from '@ant-design/icons-angular/icons';
@@ -47,6 +48,7 @@ const icons = [HeartFill, SearchOutline];
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    NzSpinModule,
   ],
   declarations: [
     HomeComponent,

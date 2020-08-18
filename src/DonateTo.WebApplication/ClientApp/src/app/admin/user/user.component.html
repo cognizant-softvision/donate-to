@@ -1,4 +1,5 @@
 <div class="table-operations">
+  <nz-spin *ngIf="this.userSandbox.loadAction$ | async" nzTip="Loading..."> </nz-spin>
   <h2 class="section-title">
     {{ 'Admin.User.Title' | translate }}
     <span *ngIf="organizationName">{{ 'Admin.User.OrganizationTitleJoin' | translate }} {{ organizationName }}</span>
