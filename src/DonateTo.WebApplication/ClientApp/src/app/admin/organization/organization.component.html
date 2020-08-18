@@ -1,17 +1,10 @@
 <div *ngIf="outlet.isActivated == false">
   <nz-spin *ngIf="this.organizationSandbox.loadAction$ | async" nzTip="Loading..."> </nz-spin>
   <div class="table-operations">
-    <h2 class="section-title">{{ 'Admin.Organization.Title' | translate }}</h2>
-    <div class="create-button" *ngIf="isSuperAdmin">
-      <button
-        nz-popconfirm
-        nzPopconfirmTitle="{{ 'Admin.Organization.CreateConfirm' | translate }}"
-        nzPopconfirmPlacement="bottom"
-        (nzOnConfirm)="router.navigate(['admin/organizations/create'])"
-        nz-button
-        nzType="primary"
-      >
-        {{ 'Admin.Create' | translate }}
+    <h4 class="section-title">{{ 'Admin.Organization.Title' | translate }}</h4>
+    <div class="create-button">
+      <button (click)="router.navigate(['admin/organizations/create'])" nz-button nzType="primary">
+        {{ 'Admin.Organization.CreateOrganization' | translate }}
       </button>
     </div>
     <nz-divider></nz-divider>
@@ -47,23 +40,7 @@
             <i nz-icon nzType="search"></i>
           </nz-filter-trigger>
         </th>
-        <th nzCustomFilter nzColumnKey="description" [nzSortFn]="true">
-          {{ 'Admin.Organization.Table.Description' | translate }}
-          <label
-            class="filter"
-            title="{{ 'Admin.Organization.Table.Filtered' | translate }}"
-            *ngIf="searchDescriptionValue.length > 0 && !descriptionVisible"
-          >
-            ({{ searchDescriptionValue }})
-          </label>
-          <nz-filter-trigger
-            [(nzVisible)]="descriptionVisible"
-            [nzActive]="searchDescriptionValue.length > 0"
-            [nzDropdownMenu]="searchDescriptionMenu"
-          >
-            <i nz-icon nzType="search"></i>
-          </nz-filter-trigger>
-        </th>
+
         <th nzCustomFilter nzColumnKey="contactName" [nzSortFn]="true">
           {{ 'Admin.Organization.Table.ContactName' | translate }}
           <label
@@ -81,20 +58,54 @@
             <i nz-icon nzType="search"></i>
           </nz-filter-trigger>
         </th>
+
+        <th nzCustomFilter nzColumnKey="usersQuantity" [nzSortOrder]="'ascend'" [nzSortFn]="true">
+          {{ 'Admin.Organization.Table.UsersQuantity' | translate }}
+          <label
+            class="filter"
+            title="{{ 'Admin.Organization.Table.Filtered' | translate }}"
+            *ngIf="searchUsersQuantityValue.length > 0 && !usersQuantityVisible"
+          >
+            ({{ searchNameValue }})
+          </label>
+          <nz-filter-trigger
+            [(nzVisible)]="usersQuantityVisible"
+            [nzActive]="searchUsersQuantityValue.length > 0"
+            [nzDropdownMenu]="searchUsersQuantityMenu"
+          >
+            <i nz-icon nzType="search"></i>
+          </nz-filter-trigger>
+        </th>
+
+        <th nzCustomFilter nzColumnKey="usersQuantity" [nzSortOrder]="'ascend'" [nzSortFn]="true">
+          {{ 'Admin.Organization.Table.Branches' | translate }}
+        </th>
+
         <th>
           {{ 'Admin.Organization.Table.Action' | translate }}
         </th>
       </tr>
     </thead>
+
     <tbody>
       <ng-container *ngFor="let data of organizationsTable.data">
         <tr>
           <td>{{ data.name }}</td>
-          <td>{{ data.description }}</td>
+
           <td>{{ data.contact?.fullName }}</td>
+
+          <td>
+            <a (click)="seeAssociatedUsers(data.name)">
+              {{ data.userOrganizations?.length }}
+            </a>
+          </td>
+
+          <td>
+            {{ data.addresses.length }}
+          </td>
+
           <td>
             <a
-              *ngIf="canEdit(data.id)"
               [routerLink]="['./edit', data.id]"
               nzTooltipTitle="{{ 'Admin.Organization.Edit' | translate }}"
               nzTooltipPlacement="bottom"
@@ -138,14 +149,15 @@
     </div>
   </div>
 </nz-dropdown-menu>
-<nz-dropdown-menu #searchDescriptionMenu="nzDropdownMenu">
+
+<nz-dropdown-menu #searchUsersQuantityMenu="nzDropdownMenu">
   <div class="ant-table-filter-dropdown">
     <div class="search-box">
       <input
         type="text"
         nz-input
-        placeholder="{{ 'Admin.Organization.Table.Description' | translate }}"
-        [(ngModel)]="searchDescriptionValue"
+        placeholder="{{ 'Admin.Organization.Table.UsersQuantity' | translate }}"
+        [(ngModel)]="searchUsersQuantityValue"
       />
       <button nz-button nzSize="small" nzType="primary" (click)="searchDescription()">
         {{ 'Admin.Organization.Table.Search' | translate }}
@@ -156,6 +168,7 @@
     </div>
   </div>
 </nz-dropdown-menu>
+
 <nz-dropdown-menu #searchContactNameMenu="nzDropdownMenu">
   <div class="ant-table-filter-dropdown">
     <div class="search-box">

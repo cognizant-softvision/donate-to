@@ -1,266 +1,41 @@
-<div nz-row class="form">
-  <!-- Address -->
-  <div nz-col nzSpan="12" class="address-column-form">
-    <span class="address-column-title">{{ 'Admin.Organization.OrganizationSteps.Address.Address' | translate }}</span>
-    <span class="address-column-information">{{
-      'Admin.Organization.OrganizationSteps.Address.Information' | translate
-    }}</span>
-    <form nz-form [formGroup]="addressStepForm">
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired>
-          {{ 'RequestDonation.DonationSteps.AddressStep.Street' | translate }}
-        </nz-form-label>
-        <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="streetErrorTpl">
-          <input
-            nz-input
-            formControlName="street"
-            placeholder="{{ 'RequestDonation.DonationSteps.AddressStep.StreetPlaceholder' | translate }}"
-            [(ngModel)]="street"
-          />
-          <ng-template #streetErrorTpl let-control>
-            <ng-container *ngIf="control.hasError('required')">
-              {{ 'RequestDonation.DonationSteps.AddressStep.RequiredStreet' | translate }}
-            </ng-container>
-          </ng-template>
-        </nz-form-control>
-      </nz-form-item>
+<button nz-button nzType="dashed" class="add-button" (click)="addBranch()" class="add-new-branch-button">
+  <i nz-icon nzType="plus"></i>
+  {{ 'Admin.Organization.OrganizationSteps.Address.AddNewBranch' | translate }}
+</button>
+<nz-modal
+  [(nzVisible)]="modalIsVisible"
+  [nzTitle]="isEditAddress ? editTitle : createTitle"
+  [nzOkLoading]="isOkLoading"
+  nzWidth="1000"
+  [nzFooter]="modalFooter"
+  (nzOnCancel)="handleCancel()"
+>
+  <ng-template #createTitle>
+    {{ 'Admin.Organization.OrganizationSteps.Address.AddNewBranch' | translate }}
+  </ng-template>
+  <ng-template #editTitle>
+    {{ 'Admin.Organization.OrganizationSteps.Address.EditBranch' | translate }}
+  </ng-template>
 
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired>
-          {{ 'RequestDonation.DonationSteps.AddressStep.PostalCode' | translate }}
-        </nz-form-label>
-        <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="postalCodeErrorTpl">
-          <input
-            nz-input
-            formControlName="postalCode"
-            placeholder="{{ 'RequestDonation.DonationSteps.AddressStep.PostalCodePlaceHolder' | translate }}"
-            [(ngModel)]="postalCode"
-          />
-          <ng-template #postalCodeErrorTpl let-control>
-            <ng-container *ngIf="control.hasError('required')">
-              {{ 'RequestDonation.DonationSteps.AddressStep.RequiredPostalCode' | translate }}
-            </ng-container>
-          </ng-template>
-        </nz-form-control>
-      </nz-form-item>
+  <ng-template #modalFooter>
+    <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
+  </ng-template>
 
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7">{{ 'RequestDonation.DonationSteps.AddressStep.Floor' | translate }}</nz-form-label>
-        <nz-form-control [nzSpan]="12">
-          <input
-            nz-input
-            type="number"
-            formControlName="floor"
-            placeholder="{{ 'RequestDonation.DonationSteps.AddressStep.FloorPlaceHolder' | translate }}"
-            [(ngModel)]="floor"
-          />
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7">
-          {{ 'RequestDonation.DonationSteps.AddressStep.Appartment' | translate }}
-        </nz-form-label>
-        <nz-form-control [nzSpan]="12">
-          <input
-            nz-input
-            formControlName="appartment"
-            placeholder="{{ 'RequestDonation.DonationSteps.AddressStep.AppartmentPlaceHolder' | translate }}"
-            [(ngModel)]="appartment"
-          />
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired>
-          {{ 'RequestDonation.DonationSteps.AddressStep.Country' | translate }}
-        </nz-form-label>
-        <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="countryErrorTpl">
-          <nz-select
-            nzShowSearch
-            nzAllowClear
-            nzPlaceHolder="{{ 'RequestDonation.DonationSteps.AddressStep.CountryPlaceHolder' | translate }}"
-            formControlName="countryId"
-            [(ngModel)]="country"
-            (ngModelChange)="setStates()"
-          >
-            <nz-option
-              *ngFor="let country of this.organizationSandbox.countries$ | async"
-              [nzValue]="country.id"
-              [nzLabel]="country.name"
-            >
-            </nz-option>
-          </nz-select>
-          <ng-template #countryErrorTpl let-control>
-            <ng-container *ngIf="control.hasError('required')">
-              {{ 'RequestDonation.DonationSteps.AddressStep.RequiredCountry' | translate }}
-            </ng-container>
-          </ng-template>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired>
-          {{ 'RequestDonation.DonationSteps.AddressStep.State' | translate }}
-        </nz-form-label>
-        <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="stateErrorTpl">
-          <nz-select
-            nzShowSearch
-            nzAllowClear
-            nzPlaceHolder="{{ 'RequestDonation.DonationSteps.AddressStep.StatePlaceHolder' | translate }}"
-            formControlName="stateId"
-            [(ngModel)]="state"
-            (ngModelChange)="setCities()"
-          >
-            <nz-option
-              *ngFor="let state of this.organizationSandbox.states$ | async"
-              [nzValue]="state.id"
-              [nzLabel]="state.name"
-            >
-            </nz-option>
-          </nz-select>
-          <ng-template #stateErrorTpl let-control>
-            <ng-container *ngIf="control.hasError('required')">
-              {{ 'RequestDonation.DonationSteps.AddressStep.RequiredState' | translate }}
-            </ng-container>
-          </ng-template>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7" nzRequired>
-          {{ 'RequestDonation.DonationSteps.AddressStep.City' | translate }}
-        </nz-form-label>
-        <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="cityErrorTpl">
-          <nz-select
-            nzShowSearch
-            nzAllowClear
-            [(ngModel)]="city"
-            nzPlaceHolder="{{ 'RequestDonation.DonationSteps.AddressStep.CityPlaceHolder' | translate }}"
-            formControlName="cityId"
-          >
-            <nz-option
-              *ngFor="let city of this.organizationSandbox.cities$ | async"
-              [nzValue]="city.id"
-              [nzLabel]="city.name"
-            >
-            </nz-option>
-          </nz-select>
-          <ng-template #cityErrorTpl let-control>
-            <ng-container *ngIf="control.hasError('required')">
-              {{ 'RequestDonation.DonationSteps.AddressStep.RequiredCity' | translate }}
-            </ng-container>
-          </ng-template>
-        </nz-form-control>
-      </nz-form-item>
-
-      <nz-form-item>
-        <nz-form-label [nzSpan]="7">
-          {{ 'RequestDonation.DonationSteps.AddressStep.AdditionalInformation' | translate }}
-        </nz-form-label>
-        <nz-form-control [nzSpan]="12">
-          <textarea
-            formControlName="additionalInformation"
-            [(ngModel)]="additionalInformation"
-            nz-input
-            rows="2"
-            placeholder="{{ 'RequestDonation.DonationSteps.AddressStep.AdditionalInformationPlaceHolder' | translate }}"
-          ></textarea>
-        </nz-form-control>
-      </nz-form-item>
-    </form>
-  </div>
-
-  <!-- Contact for this address -->
-  <div nz-col nzSpan="12">
-    <span class="address-column-title">{{ 'Admin.Organization.OrganizationSteps.Contact.Contact' | translate }}</span>
-    <span class="address-column-information">{{
-      'Admin.Organization.OrganizationSteps.Address.Contact' | translate
-    }}</span>
-    <app-organization-step-contact (isFormValid)="isContactStepReady($event)" [contactModel]="contactModel">
-    </app-organization-step-contact>
-  </div>
-</div>
-
-<div class="add-address-button" *ngIf="!isEditAddress; else isEditAddressTemplate">
-  <button type="button" (click)="addAddress()" nz-button nzType="primary">
-    {{ 'Admin.Organization.OrganizationSteps.Address.AddAddress' | translate }}
-  </button>
-</div>
-
-<ng-template #isEditAddressTemplate>
-  <div class="add-address-button">
-    <button type="button" (click)="cancelEdit()" nz-button nzType="primary">
-      {{ 'Admin.Organization.OrganizationSteps.Address.CancelEdit' | translate }}
-    </button>
-    <button type="button" (click)="confirmEdit()" nz-button nzType="primary">
-      {{ 'Admin.Organization.OrganizationSteps.Address.ConfirmEdit' | translate }}
-    </button>
-  </div>
-</ng-template>
+  <app-branch-modal
+    (saveDone)="done()"
+    [addressModel]="addressModel"
+    [contactModel]="contactModel"
+    [isBranchEdit]="false"
+  >
+  </app-branch-modal>
+</nz-modal>
 
 <br />
 <!-- Table -->
-<form [formGroup]="addressItemFormGroup" class="address-table">
-  <nz-form-item>
-    <nz-form-control nzErrorTip="{{ 'Admin.Questions.Form.PriorityQuestionRequiredError' | translate }}">
-      <div [(ngModel)]="addresses" ngDefaultControl formControlName="itemsFormControl">
-        <nz-table
-          [nzData]="addresses"
-          [nzShowPagination]="false"
-          [nzFrontPagination]="false"
-          [nzShowPagination]="false"
-          [nzNoResult]="customTpl"
-        >
-          <thead>
-            <tr>
-              <th *ngFor="let column of listOfColumns">
-                {{ column.name | translate }}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of addresses">
-              <td>{{ item.street }}</td>
-              <td>{{ item.postalCode }}</td>
-              <td>{{ item.floor }}</td>
-              <td>{{ item.appartment }}</td>
-              <td>{{ item.country?.name }}</td>
-              <td>{{ item.state?.name }}</td>
-              <td>{{ item.city?.name }}</td>
-              <td>{{ item.additionalInformation }}</td>
-              <td>
-                <a
-                  (click)="editAddress(item)"
-                  nzTooltipTitle="{{ 'Admin.Organization.OrganizationSteps.Address.Edit' | translate }}"
-                  nzTooltipPlacement="bottom"
-                  nz-tooltip
-                  class="icon-link"
-                >
-                  <i nz-icon nzType="edit" nzTheme="outline" class="action-icon"></i>
-                </a>
-                <nz-divider nzType="vertical"></nz-divider>
-                <a
-                  (click)="removeAddress(item)"
-                  nzTooltipTitle="{{ 'Admin.Organization.OrganizationSteps.Address.Delete' | translate }}"
-                  nzTooltipPlacement="bottom"
-                  nz-tooltip
-                  class="icon-link"
-                >
-                  <i nz-icon nzType="delete" nzTheme="outline" class="action-icon"></i>
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </nz-table>
-      </div>
-    </nz-form-control>
-  </nz-form-item>
-</form>
-
-<ng-template #customTpl let-name>
-  <div style="text-align: center;">
-    <nz-empty [nzNotFoundContent]="null"></nz-empty>
-    <p>{{ 'NoEntries' | translate }}</p>
-  </div>
-</ng-template>
+<app-address-list
+  [isEditOrganization]="isEditOrganization"
+  [addresses]="addresses"
+  (deleteAddress)="removeAddress($event)"
+  (isEditAddress)="editAddress($event)"
+>
+</app-address-list>

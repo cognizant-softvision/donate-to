@@ -16,7 +16,6 @@ import {
   NzRadioModule,
   NzRateModule,
   NzSelectModule,
-  NzSpinModule,
   NzTableModule,
   NzTagModule,
 } from 'ng-zorro-antd';
@@ -46,6 +45,7 @@ import {
   EditOutline,
   HomeOutline,
   InfoCircleOutline,
+  PlusOutline,
   SmileOutline,
   UserOutline,
 } from '@ant-design/icons-angular/icons';
@@ -54,6 +54,10 @@ import { OrganizationStepContactComponent } from './organization-form/organizati
 import { OrganizationStepAddressComponent } from './organization-form/organization-step-address/organization-step-address.component';
 import { OrganizationDetailComponent } from './organization-detail/organization-detail.component';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { AddressListComponent } from './organization-form/organization-step-address/address-list/address-list.component';
+import { StepBranchAddressComponent } from './organization-form/organization-step-address/branch-modal/step-branch-address/step-branch-address.component';
+import { BranchModalComponent } from './organization-form/organization-step-address/branch-modal/branch-modal.component';
 
 const ICONS: IconDefinition[] = [
   ArrowLeftOutline,
@@ -63,6 +67,7 @@ const ICONS: IconDefinition[] = [
   SmileOutline,
   DeleteOutline,
   EditOutline,
+  PlusOutline,
 ];
 
 @NgModule({
@@ -88,7 +93,7 @@ const ICONS: IconDefinition[] = [
     NzPageHeaderModule,
     NzDescriptionsModule,
     NzToolTipModule,
-    NzSpinModule,
+    NzTabsModule,
 
     FormsModule,
     CommonModule,
@@ -118,6 +123,9 @@ const ICONS: IconDefinition[] = [
     OrganizationStepContactComponent,
     OrganizationStepAddressComponent,
     OrganizationDetailComponent,
+    AddressListComponent,
+    StepBranchAddressComponent,
+    BranchModalComponent,
   ],
   providers: [OrganizationSandbox, DataUpdatedService],
 })
