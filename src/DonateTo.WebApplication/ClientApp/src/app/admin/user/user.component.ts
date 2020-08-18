@@ -39,7 +39,7 @@ export class UserComponent implements OnInit, OnDestroy {
   search = '';
 
   constructor(
-    private userSandbox: UserSandbox,
+    public userSandbox: UserSandbox,
     private route: ActivatedRoute,
     private router: Router,
     private filterUsers: FilterService
