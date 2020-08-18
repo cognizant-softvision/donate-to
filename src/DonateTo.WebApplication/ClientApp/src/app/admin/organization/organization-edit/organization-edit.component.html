@@ -1,5 +1,6 @@
 <div>
   <div class="create-donation-title">
+    <nz-spin *ngIf="this.isLoading" nzTip="Loading..."> </nz-spin>
     <i nz-icon nzType="arrow-left" nzTheme="outline" (click)="goBack()" class="back-button"></i>
     <h2 class="section-title">{{ 'Admin.Organization.Edit' | translate }}</h2>
   </div>

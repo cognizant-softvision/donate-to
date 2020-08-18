@@ -47,13 +47,14 @@ export class DonationsEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.subscriptions.push(
       this.donationSandbox.donationRequest$.subscribe((donationRequest) => {
         this.donationRequest = donationRequest;
-        this.isLoading = false;
       })
     );
     this.donationSandbox.loadDonationRequest(this.id);
+    this.isLoading = false;
   }
 
   handleRequestResult() {
@@ -72,9 +73,11 @@ export class DonationsEditComponent implements OnInit, OnDestroy {
   }
 
   updateDonationRequest(updatedDonationRequest: DonationRequestModel) {
+    this.isLoading = true;
     this.isSubmited = true;
     this.donationSandbox.updateDonationRequest(updatedDonationRequest);
     this.donationSandbox.loadAction$.pipe(first()).subscribe((_) => this.donationSandbox.loadDonationRequests());
+    this.isLoading = false;
   }
 
   goBack() {

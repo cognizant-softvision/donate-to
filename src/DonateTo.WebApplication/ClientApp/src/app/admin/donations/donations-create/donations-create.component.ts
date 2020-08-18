@@ -16,17 +16,21 @@ export class DonationsCreateComponent implements OnDestroy {
   private isSubmited = false;
   private failedStatus = false;
   isErrorModalActive = false;
+  isLoading = true;
+
   @ViewChild('modalContent') public modalContent: TemplateRef<any>;
   tplModal?: NzModalRef;
   constructor(public donationSandbox: DonationsSandbox, private router: Router, private modal: NzModalService) {
     this.subscriptions.push(
       this.donationSandbox.failAction$.subscribe((status) => {
         this.failedStatus = status;
+        this.isLoading = false;
       })
     );
     this.subscriptions.push(
       this.donationSandbox.loadAction$.subscribe((_) => {
         this.handleRequestResult();
+        this.isLoading = false;
       })
     );
   }
@@ -49,11 +53,13 @@ export class DonationsCreateComponent implements OnDestroy {
   }
 
   openDonationPriority(): void {
+    this.isLoading = true;
     this.donationsFormComponent.validateForm();
     if (this.donationsFormComponent.donationRequestFormGroup.valid) {
       this.donationsFormComponent.donationRequest.priority = 0;
       this.createDonationRequest();
     }
+    this.isLoading = false;
   }
   showModal() {
     this.createTplModal(this.modalContent);

@@ -26,7 +26,7 @@ export class DonationListComponent implements OnInit, OnDestroy {
   @Input() isEdit: boolean;
 
   isSubmited = false;
-
+  isLoading = true;
   subscriptions: Subscription[] = [];
 
   editCache: Array<{ edit: boolean; id: number; item: DonationRequestItemModel; quantityToDonate: number }> = [];

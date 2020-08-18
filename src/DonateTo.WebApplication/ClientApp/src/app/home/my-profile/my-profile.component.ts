@@ -14,6 +14,7 @@ export class MyProfileComponent implements OnInit, OnDestroy {
   listOfRow: Array<{ row: string; value: string; required: boolean }> = [];
   user = new UserModel();
   isValid = true;
+  isLoading = true;
 
   @ViewChildren('userData') inputs;
 
@@ -27,6 +28,7 @@ export class MyProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.registerEvents();
   }
 
@@ -45,6 +47,7 @@ export class MyProfileComponent implements OnInit, OnDestroy {
         ];
 
         this.user = { ...user };
+        this.isLoading = false;
       })
     );
 
@@ -53,6 +56,7 @@ export class MyProfileComponent implements OnInit, OnDestroy {
         if (userId) {
           this.userSandbox.loadUser(userId);
         }
+        this.isLoading = false;
       })
     );
   }
@@ -73,6 +77,7 @@ export class MyProfileComponent implements OnInit, OnDestroy {
   }
 
   saveGeneralInformation() {
+    this.isLoading = true;
     this.validateForm();
     if (this.isValid) {
       this.isEdit = false;
@@ -82,6 +87,7 @@ export class MyProfileComponent implements OnInit, OnDestroy {
       this.user.phoneNumber = this.inputs._results[3].viewModel;
       this.userSandbox.updateUser(this.user);
     }
+    this.isLoading = false;
   }
 
   cancelGeneralInformation() {

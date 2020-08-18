@@ -15,6 +15,7 @@ export class OrganizationEditComponent implements OnInit, OnDestroy {
   private failedStatus = false;
   private isSubmited = false;
   isErrorModalActive = false;
+  isLoading = true;
   id: number;
 
   organizationToEdit = new OrganizationModel();
@@ -27,18 +28,21 @@ export class OrganizationEditComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.activeRoute.params.subscribe((param) => {
         this.id = parseInt(param['Id'], 10);
+        this.isLoading = false;
       })
     );
 
     this.subscriptions.push(
       this.organizationSandbox.failAction$.subscribe((status) => {
         this.failedStatus = status;
+        this.isLoading = false;
       })
     );
 
     this.subscriptions.push(
       this.organizationSandbox.loadAction$.subscribe((_) => {
         this.handleRequestResult();
+        this.isLoading = false;
       })
     );
   }

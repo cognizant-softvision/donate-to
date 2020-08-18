@@ -21,6 +21,7 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
   private failedStatus = false;
   private isSubmited = false;
   isErrorModalActive = false;
+  isLoading = true;
   id: number;
 
   title: string;
@@ -51,6 +52,7 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.registerEvents();
     this.organizationSandbox.loadOrganization(this.id);
   }
@@ -64,6 +66,7 @@ export class OrganizationDetailComponent implements OnInit, OnDestroy {
       this.organizationSandbox.organization$.subscribe((organization) => {
         this.organization = organization;
         this.showDetail();
+        this.isLoading = false;
       })
     );
   }

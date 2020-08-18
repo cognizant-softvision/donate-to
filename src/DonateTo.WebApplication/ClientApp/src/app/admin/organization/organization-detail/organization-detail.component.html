@@ -13,7 +13,7 @@
     <i nz-icon nzType="team" nzTheme="outline" class="action-icon"></i>
   </a>
 </div>
-
+<nz-spin *ngIf="this.isLoading" nzTip="Loading..."> </nz-spin>
 <!-- Responsable -->
 <nz-descriptions nzTitle="{{ 'Admin.Organization.OrganizationSteps.Contact.Responsable' | translate }}" [nzColumn]="2">
   <nz-descriptions-item nzTitle="{{ 'Admin.Organization.OrganizationSteps.Contact.FirstName' | translate }}">
