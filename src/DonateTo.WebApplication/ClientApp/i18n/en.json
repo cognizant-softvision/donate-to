@@ -267,6 +267,8 @@
         "PlaceholderRequired": "Placeholder is required",
         "ControlTypeRequired": "Control Type is required",
         "AddItem": "Add Question",
+        "UpdateItem": "Update Question",
+        "Cancel": "Cancel",
         "PriorityQuestionRequiredError": "At least 1 priority question is required and weight must reach 100%.",
         "PriorityRangeError": "The range does not cover the entire value.",
         "PriorityWeightError": "The weight of each option must sum a total of 100",
