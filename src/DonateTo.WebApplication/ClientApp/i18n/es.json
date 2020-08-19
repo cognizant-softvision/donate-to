@@ -287,6 +287,8 @@
         "PlaceholderRequired": "Nombre marcador es requerido",
         "ControlTypeRequired": "Tipo control es requerido",
         "AddItem": "Agregar Pregunta",
+        "UpdateItem": "Actualizar Pregunta",
+        "Cancel": "Cancelar",
         "PriorityQuestionRequiredError": "Por lo menos una pregunta de prioridad es requerida y el peso debe llegar a 100%.",
         "PriorityRangeError": "El rango no cubre la totalidad de valores.",
         "PriorityWeightError": "El peso de las opciones debe sumar un total de 100.",

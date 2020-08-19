@@ -233,9 +233,17 @@
       </div>
     </div>
 
-    <div class="create-question-form-buttons">
-      <button type="button" class="question-request-item-add" (click)="addQuestion()" nz-button nzType="primary">
+    <div *ngIf="!isEdit" class="create-question-form-buttons">
+      <button type="button" class="question-request-item-add" (click)="updateQuestion()" nz-button nzType="primary">
         {{ 'Admin.Questions.Form.AddItem' | translate }}
+      </button>
+    </div>
+    <div *ngIf="isEdit" class="create-question-form-buttons">
+      <button type="button" class="question-request-item-add" (click)="updateQuestion()" nz-button nzType="primary">
+        {{ 'Admin.Questions.Form.UpdateItem' | translate }}
+      </button>
+      <button type="button" class="question-request-item-add" (click)="resetForm()" nz-button nzType="secondary">
+        {{ 'Admin.Questions.Form.Cancel' | translate }}
       </button>
     </div>
   </form>
@@ -269,7 +277,7 @@
         </td>
         <td>
           <a
-            (click)="editQuestion(item, questions.indexOf(item))"
+            (click)="editQuestion(item)"
             nzTooltipTitle="{{ 'Admin.Questions.Table.EditQuestion' | translate }}"
             nzTooltipPlacement="bottom"
             nz-tooltip
@@ -307,7 +315,7 @@
       nz-popconfirm
       nzPopconfirmTitle="{{ 'Admin.Questions.CreateConfirm' | translate }}"
       nzPopconfirmPlacement="bottom"
-      (nzOnConfirm)="createQuestions()"
+      (nzOnConfirm)="submitQuestions()"
       nz-button
       nzType="primary"
       type="submit"
