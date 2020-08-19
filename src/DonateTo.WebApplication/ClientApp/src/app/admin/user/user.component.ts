@@ -7,6 +7,7 @@ import { UserFilter } from '../../shared/models/filters/user-filter';
 import { NzTableQueryParams } from 'ng-zorro-antd';
 import { ActivatedRoute, Router } from '@angular/router';
 import 'rxjs/add/operator/filter';
+import { FilterService } from 'src/app/shared/async-services/filter.service';
 
 @Component({
   selector: 'app-user-admin',
@@ -35,8 +36,14 @@ export class UserComponent implements OnInit, OnDestroy {
   organizationId = 0;
   organizationName = '';
   isAdmin = false;
+  search = '';
 
-  constructor(public userSandbox: UserSandbox, private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    public userSandbox: UserSandbox,
+    private route: ActivatedRoute,
+    private router: Router,
+    private filterUsers: FilterService
+  ) {}
 
   ngOnInit(): void {
     this.route.queryParams
@@ -88,6 +95,23 @@ export class UserComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.unregisterEvents();
+
+    this.filterUsers.currentFilter.subscribe((filter) => {
+      this.search = filter;
+    });
+
+    if (this.search) {
+      this.userFilter = {
+        ...this.userFilter,
+        pageSize: this.pageSize,
+        pageNumber: this.pageIndex,
+        organization: this.organizationName,
+      };
+
+      this.searchOrganizationValue = this.search;
+      this.searchOrganization();
+      this.filterUsers.changeFilter('');
+    }
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {

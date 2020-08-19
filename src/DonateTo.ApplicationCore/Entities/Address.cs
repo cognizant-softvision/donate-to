@@ -2,6 +2,7 @@
 {
     public class Address : EntityBase
     {
+        public string Name { get; set; }
         public string Street { get; set; }
         public string PostalCode { get; set; }
         public string Floor { get; set; }

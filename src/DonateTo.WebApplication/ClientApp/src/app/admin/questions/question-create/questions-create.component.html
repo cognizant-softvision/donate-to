@@ -223,6 +223,12 @@
           <div *ngIf="orderExist" class="error-required">
             {{ 'Admin.Questions.Form.OrderAlreadyExistError' | translate }}
           </div>
+          <div *ngIf="!questionOptionValid" class="error-required">
+            {{ 'Admin.Questions.Form.QuestionOptionError' | translate }}
+          </div>
+          <div *ngIf="minValueEqualsMaxValue" class="error-required">
+            {{ 'Admin.Questions.Form.MinValueEqualsMaxValueError' | translate }}
+          </div>
         </div>
       </div>
     </div>

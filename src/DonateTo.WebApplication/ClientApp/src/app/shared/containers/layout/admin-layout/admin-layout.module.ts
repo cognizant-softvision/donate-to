@@ -22,6 +22,7 @@ import { AdminLayoutRoutingModule } from './admin-layout-routing.module';
 import { HttpLoaderFactory } from '../../../../app.module';
 import { HttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FilterService } from 'src/app/shared/async-services/filter.service';
 
 const ICONS: IconDefinition[] = [HeartOutline, TeamOutline, ProfileOutline, StarOutline];
 
@@ -49,5 +50,6 @@ const ICONS: IconDefinition[] = [HeartOutline, TeamOutline, ProfileOutline, Star
     ReactiveFormsModule,
   ],
   declarations: [AdminLayoutComponent, SvgGuildComponent],
+  providers: [FilterService],
 })
 export class AdminLayoutModule {}

@@ -46,6 +46,9 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   isQuestionsValid = true;
   isWeightValid = true;
   isRangeValid = true;
+  textboxQuestionOptionValid = true;
+  questionOptionValid = true;
+  minValueEqualsMaxValue = false;
   orderExist = false;
   requiredWeight = 100;
 
@@ -208,12 +211,6 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     this.isQuestionsValid = this.questions.length > 0 && this.sumWeight() === this.requiredWeight;
   }
 
-  private validateOptions(): boolean {
-    this.isWeightValid = this.optionsWeight();
-    this.isRangeValid = this.optionsRange();
-    return this.isWeightValid && this.isRangeValid;
-  }
-
   private validateFormGroup(formGroup: FormGroup) {
     for (const i in formGroup.controls) {
       if (formGroup.controls.hasOwnProperty(i)) {
@@ -304,6 +301,18 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
+  validateOptions(): boolean {
+    this.isWeightValid = this.optionsWeight();
+    this.isRangeValid = this.optionsRange();
+
+    if (this.questionItemFormGroup.value.controlTypeFormControl === ControlType.Textbox) {
+      this.textboxQuestionOptionValid = this.textboxQuestionOptionValidation();
+      return this.isWeightValid && this.isRangeValid && this.textboxQuestionOptionValid;
+    } else {
+      return this.isWeightValid && this.isRangeValid;
+    }
+  }
+
   private optionsWeight(): boolean {
     return this.optionsArray.value.reduce((acc, cur) => acc + cur.optionWeight, 0) === this.requiredWeight;
   }
@@ -317,6 +326,54 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
       relativeTotal = relativeTotal + (o.maxRelativeFormControl - o.minRelativeFormControl);
     }
     return relativeTotal === total;
+  }
+
+  /**
+   * Validates the questions options added for a textbox
+   * @returns boolean
+   */
+  private textboxQuestionOptionValidation(): boolean {
+    return this.textboxQuestionOption() && this.textboxQuestionsOptions();
+  }
+
+  /**
+   * Validates in a same question option that the max relative value is greater or different than the min relative value
+   * @returns boolean
+   */
+  private textboxQuestionOption(): boolean {
+    const questionOptions = this.optionsArray.value;
+    let result = true; // returning something inside forEach doesn't break the loop
+
+    questionOptions.forEach((questionOption) => {
+      if (questionOption.maxRelativeFormControl <= questionOption.minRelativeFormControl) {
+        result = false;
+      }
+    });
+
+    this.minValueEqualsMaxValue = !result;
+    return result;
+  }
+
+  /**
+   * Validates in list of question options that:
+   *  - a minimun value from an option must not be equal to a maximun of another option
+   * @returns boolean
+   */
+  private textboxQuestionsOptions(): boolean {
+    const questionOptions = this.optionsArray.value;
+    let result = true; // returning something inside forEach doesn't break the loop
+
+    questionOptions.forEach((questionOption) => {
+      questionOptions.forEach((maxValue) => {
+        if (questionOption.minRelativeFormControl === maxValue.maxRelativeFormControl) {
+          console.log(questionOption.minRelativeFormControl, maxValue.maxRelativeFormControl);
+          result = false;
+        }
+      });
+    });
+
+    result ? (this.minValueEqualsMaxValue = false) : (this.minValueEqualsMaxValue = true);
+    return result;
   }
 
   goBack() {

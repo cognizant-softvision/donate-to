@@ -26,10 +26,12 @@ export class OrganizationStepGeneralInformationComponent implements OnInit {
       description: [this.generalInformationModel?.description, [Validators.required]],
     });
 
-    this.organizationSandbox.organization$.subscribe((organization) => {
-      this.organizationName = organization?.name;
-      this.description = organization?.description;
-    });
+    if (this.isEditOrganization) {
+      this.organizationSandbox.organization$.subscribe((organization) => {
+        this.organizationName = organization?.name;
+        this.description = organization?.description;
+      });
+    }
 
     this.generalInformationStepForm.valueChanges.subscribe(() =>
       this.isFormValid.emit({

@@ -51,7 +51,8 @@ namespace DonateTo.Infrastructure.Data.Repositories
                 .Include(a => a.Addresses).ThenInclude(c => c.Country)
                 .Include(a => a.Addresses).ThenInclude(s => s.State)
                 .Include(a => a.Addresses).ThenInclude(c => c.City)
-                .Include(c => c.Contact);
+                .Include(c => c.Contact)
+                .Include(u => u.UserOrganizations);
         }
         #endregion
     }

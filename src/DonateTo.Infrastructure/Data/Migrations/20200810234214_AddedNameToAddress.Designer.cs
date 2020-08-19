@@ -3,15 +3,17 @@ using System;
 using DonateTo.Infrastructure.Data.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DonateTo.Infrastructure.Migrations
 {
     [DbContext(typeof(DonateToDbContext))]
-    partial class DonateToDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200810234214_AddedNameToAddress")]
+    partial class AddedNameToAddress
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -523,37 +525,6 @@ namespace DonateTo.Infrastructure.Migrations
                     b.HasIndex("DonationRequestItemId");
 
                     b.ToTable("DonationRequestItemCategory");
-                });
-
-            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Log", b =>
-                {
-                    b.Property<DateTime>("TimeStamp")
-                        .HasColumnName("timestamp")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Exception")
-                        .HasColumnName("exception")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Level")
-                        .HasColumnName("level")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("LogEvent")
-                        .HasColumnName("log_event")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Message")
-                        .HasColumnName("message")
-                        .HasColumnType("text");
-
-                    b.Property<string>("MessageTemplate")
-                        .HasColumnName("message_template")
-                        .HasColumnType("text");
-
-                    b.HasKey("TimeStamp");
-
-                    b.ToTable("Log");
                 });
 
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Organization", b =>

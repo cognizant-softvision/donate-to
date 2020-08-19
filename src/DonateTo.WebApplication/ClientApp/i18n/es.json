@@ -163,15 +163,18 @@
     "Organization": {
       "Title": "Organizaciones",
       "BackConfirm": "¿Estas seguro que quieres volver?",
+      "CreateOrganization": "Crear Organización",
       "CreateConfirm": "¿Estas seguro que quieres crear una organización?",
       "EditConfirm": "¿Estas seguro que quieres editar esta organización?",
       "DeleteConfirmation": "¿Está seguro que desea eliminar esta organización?",
       "Edit": "Editar Organización",
       "Detail": "Información",
       "Table": {
-        "Name": "Nombre",
+        "Name": "Organización",
         "Description": "Descripción",
-        "ContactName": "Contacto",
+        "UsersQuantity": "Cantidad de Usuarios Asociados",
+        "ContactName": "Nombre del Responsable",
+        "Branches": "Direcciones",
         "Action": "Acción",
         "Search": "Buscar",
         "Reset": "Reestablecer",
@@ -181,6 +184,8 @@
         "Title": "Crear Organización"
       },
       "OrganizationSteps": {
+        "CreateOrganizationButton": "Crear Organización",
+        "FinishEditOrganizationButton": "Finalizar Edición",
         "GeneralInformation": {
           "GeneralInformation": "Información General",
           "OrganizationName": "Nombre de la Organización",
@@ -199,10 +204,13 @@
           "Position": "Posición"
         },
         "Address": {
+          "StepTitle": "Ramas",
           "Address": "Dirección",
           "Edit": "Editar",
           "Delete": "Eliminar",
+          "AddNewBranch": "Añadir Nueva Rama",
           "AddAddress": "Agregar Dirección",
+          "EditBranch": "Editar Rama",
           "Information": "Ingrese una dirección para la organización. Se pueden asociar más de una dirección a una organización.",
           "Contact": "Ingrese un contacto para esta dirección",
           "Street": "Calle",
@@ -214,7 +222,15 @@
           "PostalCode": "Código Postal",
           "AdditionalInformation": "Información Adicional",
           "CancelEdit": "Cancelar edición",
-          "ConfirmEdit": "Confirmar edición"
+          "ConfirmEdit": "Confirmar edición",
+          "Next": "Próximo",
+          "Previous": "Anterior",
+          "Create": "Crear",
+          "AddressModalStep": "¿Cuál es la dirección de la rama?",
+          "ContactModalStep": "¿Cuál es la persona a contactar?",
+          "AddAddressWarning": "Agregar al menos una dirección",
+          "Name": "Nombre",
+          "RequiredName": "Es requerido un nombre para esta dirección"
         }
       }
     },
@@ -276,7 +292,9 @@
         "PriorityQuestionRequiredError": "Por lo menos una pregunta de prioridad es requerida y el peso debe llegar a 100%.",
         "PriorityRangeError": "El rango no cubre la totalidad de valores.",
         "PriorityWeightError": "El peso de las opciones debe sumar un total de 100.",
-        "OrderAlreadyExistError": "El Orden ingresado ya fue seleccionado, por favor elija otro."
+        "OrderAlreadyExistError": "El Orden ingresado ya fue seleccionado, por favor elija otro.",
+        "QuestionOptionError": "El valor de Max Relativo no debe ser menor o igual al valor de Min Relative",
+        "MinValueEqualsMaxValueError": "Un valor de un Min Relativo no debe ser igual al valor de un Max Relativo"
       }
     },
     "User": {

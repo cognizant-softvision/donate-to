@@ -1,4 +1,4 @@
-<form nz-form [formGroup]="responsableStepForm">
+<form nz-form [formGroup]="responsableStepForm" [ngClass]="contactForBranch ? 'contact-for-branch-form' : ''">
   <nz-form-item>
     <nz-form-label [nzSpan]="7" nzRequired>
       {{ 'RequestDonation.DonationSteps.ResponsableStep.FirstName' | translate }}
