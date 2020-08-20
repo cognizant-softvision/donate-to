@@ -75,26 +75,30 @@ a {
 // Bottoms
 // ---
 .ant-btn {
-  border: 0.125em solid @primary-lead-black;
   text-transform: uppercase;
+  border-radius: @border-radius-base;
+  font-weight: 400;
+  padding: 0em 1.5em;
 }
 
 .ant-btn:hover {
   background: @primary-lead-black;
-  border: 0.125em solid @primary-lead-black;
   color: @primary-ghost-white;
+  border-radius: @border-radius-base;
+  font-weight: 400;
+  padding: 0em 1.5em;
 }
 
 .ant-btn-primary:not(disabled) {
   background: linear-gradient(90deg, #f4633a 0%, #c800a1 100%);
-  border: 0.125em solid @primary-dark-orange;
+  border: none;
 }
 .ant-btn-primary:active,
 .ant-btn-primary:focus,
 .ant-btn-primary:hover {
-  background: @primary-ghost-white;
-  color: @primary-dark-orange;
-  border: 0.125em solid @primary-dark-orange;
+  background: linear-gradient(90deg, #c800a1, #0033a0);
+  color: @primary-ghost-white;
+  border: none;
 }
 
 .ant-btn:disabled {
@@ -819,3 +823,92 @@ svg:hover {
 // Typography
 // ---
 @typography-title-font-weight: 600;
+@typography-color: #000;
+
+h1 {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 100px;
+  line-height: 97px;
+
+  display: flex;
+  align-items: flex-end;
+  letter-spacing: -0.02em;
+  text-transform: capitalize;
+
+  color: @typography-color;
+}
+
+h2 {
+  font-size: 64px;
+  line-height: 64px;
+
+  display: flex;
+  align-items: flex-end;
+  letter-spacing: -2px;
+
+  color: @typography-color;
+}
+
+h3 {
+  font-size: 44px;
+  line-height: 45px;
+
+  display: flex;
+  align-items: flex-end;
+  letter-spacing: -0.02em;
+
+  color: @typography-color;
+}
+
+h4 {
+  font-size: 40px;
+  line-height: 40px;
+
+  display: flex;
+  align-items: flex-end;
+
+  color: @typography-color;
+}
+
+h5 {
+  font-size: 36px;
+  line-height: 36px;
+
+  display: flex;
+  align-items: flex-end;
+
+  color: @typography-color;
+}
+
+h6 {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 20px;
+
+  display: flex;
+  align-items: flex-end;
+  letter-spacing: -0.666667px;
+
+  color: @typography-color;
+}
+
+p {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 30px;
+
+  display: flex;
+  align-items: flex-end;
+
+  color: @typography-color;
+}
+
+li {
+  display: flex;
+  align-items: flex-end;
+
+  color: @typography-color;
+}

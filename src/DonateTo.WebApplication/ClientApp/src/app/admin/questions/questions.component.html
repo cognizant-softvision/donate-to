@@ -1,7 +1,7 @@
 <div *ngIf="outlet.isActivated == false">
   <nz-spin *ngIf="this.questionSandbox.loadAction$ | async" nzTip="Loading..."> </nz-spin>
   <div class="table-operations">
-    <h2 class="section-title">{{ 'Admin.Questions.Title' | translate }}</h2>
+    <h4 class="section-title">{{ 'Admin.Questions.Title' | translate }}</h4>
     <div class="create-button">
       <button
         nz-popconfirm
