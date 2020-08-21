@@ -18,6 +18,12 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// <returns></returns>
         Task SendNewRequestMailToOrganizationUsersAsync(DonationRequest donationRequest, IEnumerable<UserModel> users, string client);
 
+        /// <summary>
+        /// Get Donation Request filtered by user role
+        /// </summary>
+        /// <param name="filter">DonationRequestFilterModel</param>
+        /// <param name="userId">long</Users></param>
+        /// <returns></returns>
         Task<PagedResult<DonationRequest>> GetPagedFilteredByOrganizationAsync(DonationRequestFilterModel filter, long userId);
 
     }
