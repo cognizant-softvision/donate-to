@@ -9,6 +9,10 @@ using Microsoft.AspNetCore.Authorization;
 using DonateTo.WebApi.Common;
 using DonateTo.WebApi.Filters;
 using DonateTo.ApplicationCore.Models.Filtering;
+using DonateTo.ApplicationCore.Models.Pagination;
+using System.Globalization;
+using DonateTo.ApplicationCore.Common;
+using System;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -81,6 +85,52 @@ namespace DonateTo.WebApi.V1.Controllers
         public override Task<IActionResult> Delete(long id)
         {
             return base.Delete(id);
+        }
+
+        ///<inheritdoc cref="BaseApiController{DonationRequest, DonationRequestFilterModel}"/>
+        public override async Task<ActionResult<PagedResult<DonationRequest>>> GetPagedFiltered([FromQuery] DonationRequestFilterModel filter)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                var userRole = User.Claims.FirstOrDefault(claim => claim.Type.Contains(Claims.Role))?.Value;
+
+                if (userRole == Roles.Superadmin)
+                {
+                    var result = await _donationRequestService.GetPagedFilteredAsync(filter).ConfigureAwait(false);
+
+                    if (result != null)
+                    {
+                        return Ok(result);
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                } else if (userRole == Roles.Admin || userRole == Roles.Organization) {
+                    // Obtengo mi userId
+                    var userId = long.Parse(
+                                 User.Claims.FirstOrDefault(
+                                 claim => claim.Type.Contains(Claims.UserId, StringComparison.InvariantCulture))?.Value, CultureInfo.InvariantCulture);
+
+                    var result = await _donationRequestService.GetPagedFilteredByOrganizationAsync(filter, userId).ConfigureAwait(false);
+
+                    if (result != null)
+                    {
+                        return Ok(result);
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                } else
+                {
+                    return Unauthorized();
+                }
+            }
         }
     }
 }

@@ -67,4 +67,23 @@ export class DonationRequestService extends BaseHttpClientService<DonationReques
       params: queryString,
     });
   }
+
+  loadDonationRequestByOrganizationPaged(
+    pageNumber: number,
+    pageSize: number,
+    userId: number,
+    statusId: number
+  ): Observable<PageModel<DonationRequestModel>> {
+    const queryString = {
+      pageNumber: pageNumber.toString(),
+      pageSize: pageSize.toString(),
+      statusId: statusId.toString(),
+    };
+    if (userId) {
+      queryString['userId'] = userId.toString();
+    }
+    return this.httpClient.get<PageModel<DonationRequestModel>>(`${this.url}/${this.endpoint}/pagedByOrganization`, {
+      params: queryString,
+    });
+  }
 }
