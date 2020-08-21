@@ -348,6 +348,7 @@
   },
   "RequestDonation": {
     "Donate": "Donar",
+    "Observation": "Observación",
     "ResourcesNeeded": "Recursos necesitados",
     "Priority": "Prioridad",
     "CreatedOn": "Creado",

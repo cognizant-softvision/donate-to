@@ -313,6 +313,16 @@
   <div class="create-question-form-buttons">
     <button
       nz-popconfirm
+      nzPopconfirmTitle="{{ 'Admin.Donation.BackConfirm' | translate }}"
+      nzPopconfirmPlacement="bottom"
+      (nzOnConfirm)="goBack()"
+      nz-button
+      nzType="secondary"
+    >
+      {{ 'BackBtn' | translate }}
+    </button>
+    <button
+      nz-popconfirm
       nzPopconfirmTitle="{{ 'Admin.Questions.CreateConfirm' | translate }}"
       nzPopconfirmPlacement="bottom"
       (nzOnConfirm)="submitQuestions()"
@@ -321,16 +331,6 @@
       type="submit"
     >
       {{ 'Admin.Questions.Create.CreateRequest' | translate }}
-    </button>
-    <button
-      nz-popconfirm
-      nzPopconfirmTitle="{{ 'Admin.Donation.BackConfirm' | translate }}"
-      nzPopconfirmPlacement="bottom"
-      (nzOnConfirm)="goBack()"
-      nz-button
-      nzType="secondary"
-    >
-      {{ 'BackBtn' | translate }}
     </button>
   </div>
 </div>

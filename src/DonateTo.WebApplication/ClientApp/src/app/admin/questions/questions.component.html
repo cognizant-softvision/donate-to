@@ -3,14 +3,7 @@
   <div class="table-operations">
     <h4 class="section-title">{{ 'Admin.Questions.Title' | translate }}</h4>
     <div class="create-button">
-      <button
-        nz-popconfirm
-        nzPopconfirmTitle="{{ 'Admin.Questions.CreateConfirm' | translate }}"
-        nzPopconfirmPlacement="bottom"
-        (nzOnConfirm)="router.navigate(['admin/questions/create'])"
-        nz-button
-        nzType="primary"
-      >
+      <button nz-button nzType="primary" (click)="router.navigate(['admin/questions/create'])">
         {{ 'Admin.Edit' | translate }}
       </button>
     </div>
