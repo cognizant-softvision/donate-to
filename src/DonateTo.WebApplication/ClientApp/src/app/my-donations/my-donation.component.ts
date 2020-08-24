@@ -1,8 +1,7 @@
-import { Component, Input, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { MyDonationSandbox } from './my-donation.sandbox';
-import { MyDonationsListComponent } from './components/list/my-donations-list.component';
 import { TranslateService } from '@ngx-translate/core';
 import { DonationModel } from '../shared/models/donation.model';
 
@@ -27,9 +26,6 @@ export class MyDonationsComponent implements OnInit, OnDestroy {
 
   subscriptions: Subscription[] = [];
 
-  @ViewChild(MyDonationsListComponent)
-  private donationListComponent: MyDonationsListComponent;
-
   ngOnInit(): void {
     this.registerEvents();
   }
@@ -49,11 +45,13 @@ export class MyDonationsComponent implements OnInit, OnDestroy {
    * Subscribes to events
    */
   registerEvents(): void {
-    // this.subscriptions.push(
-    //   this.donationSandbox.donations$.subscribe((donations) => {
-    //     this.donations = donations.results;
-    //   })
-    // );
+    this.subscriptions.push(
+      this.donationSandbox.isRoleProcessed$.subscribe((isRoleProcessed) => {
+        if (isRoleProcessed && !this.donationSandbox.isDonor$.value) {
+          this.route.navigate(['']);
+        }
+      })
+    );
   }
 
   submited(value: boolean): void {

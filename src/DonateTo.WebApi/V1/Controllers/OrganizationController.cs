@@ -11,12 +11,14 @@ using System.Linq;
 using DonateTo.WebApi.Common;
 using System.Globalization;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [Authorize]
     public class OrganizationController : BaseApiController<Organization, OrganizationFilterModel>
     {
         private readonly IOrganizationService _organizationService;
@@ -37,6 +39,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "<Pending>")]
+        [ServiceFilter(typeof(OrganizationAccessFilter))]
         public async Task<ActionResult<IEnumerable<Organization>>> GetByUserId(long userId)
         {
             if (!ModelState.IsValid)
@@ -67,6 +70,13 @@ namespace DonateTo.WebApi.V1.Controllers
         [ServiceFilter(typeof(AdminAccessFilter))]
         public override async Task<IActionResult> Put(long id, [FromBody] Organization organization)
         {
+            var organizations = await _organizationService.GetByUserIdAsync(GetUserId()).ConfigureAwait(false);
+
+            if (!organizations.Any(o => o.Id == id))
+            {
+                return Unauthorized();
+            }
+
             return await base.Put(id, organization).ConfigureAwait(false);
         }
 
@@ -82,13 +92,19 @@ namespace DonateTo.WebApi.V1.Controllers
         }
 
         ///<inheritdoc cref="BaseApiController{Organization, OrganizationFilterModel}"/>
+        [ServiceFilter(typeof(OrganizationAccessFilter))]
         public override Task<ActionResult<PagedResult<Organization>>> GetPagedFiltered([FromQuery] OrganizationFilterModel filter)
         {
-            filter.UserId = long.Parse(
-                User.Claims.FirstOrDefault(claim => 
-                    claim.Type.Contains(Claims.UserId, StringComparison.InvariantCulture))?.Value, CultureInfo.InvariantCulture);
+            filter.UserId = GetUserId();
 
             return base.GetPagedFiltered(filter);
+        }
+
+        private long GetUserId()
+        {
+            return long.Parse(
+                User.Claims.FirstOrDefault(claim =>
+                    claim.Type.Contains(Claims.UserId, StringComparison.InvariantCulture))?.Value, CultureInfo.InvariantCulture);
         }
     }
 }

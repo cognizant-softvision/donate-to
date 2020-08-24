@@ -72,7 +72,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(
       this.organizationSandbox.isRoleProcessed$.subscribe((isRoleProcessed) => {
-        if (isRoleProcessed && !this.organizationSandbox.isSuperAdmin$.value) {
+        if (isRoleProcessed && !this.organizationSandbox.isOrganization$.value) {
           this.router.navigate(['']);
         }
       })

@@ -12,6 +12,7 @@ import { IconType } from 'src/app/shared/enum/iconTypes';
 })
 export class AdminLayoutComponent implements OnInit, OnDestroy {
   isSuperAdmin: boolean;
+  isAdmin: boolean;
 
   menus: Array<{ title: string; url: string; iconType: string; show: boolean }> = [];
 
@@ -42,6 +43,13 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
         this.updateMenu();
       })
     );
+
+    this.subscriptions.push(
+      this.authSandbox.isAdmin$.subscribe((isAdmin) => {
+        this.isAdmin = isAdmin;
+        this.updateMenu();
+      })
+    );
   }
 
   private updateMenu(): void {
@@ -51,7 +59,7 @@ export class AdminLayoutComponent implements OnInit, OnDestroy {
         title: 'Admin.Menu.Title.Organizations',
         url: './organizations',
         iconType: IconType.Profile,
-        show: this.isSuperAdmin,
+        show: this.isAdmin,
       },
       {
         title: 'Admin.Menu.Title.Questions',

@@ -5,12 +5,15 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using DonateTo.ApplicationCore.Models.Filtering;
 using DonateTo.ApplicationCore.Entities;
+using DonateTo.WebApi.Filters;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [Authorize]
     public class LogController : ControllerBase
     {
         private readonly ILogService _logService;
@@ -30,6 +33,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ServiceFilter(typeof(SuperAdminAccessFilter))]
         public async Task<ActionResult<PagedResult<Log>>> GetPaged(int pageNumber, int pageSize)
         {
             if (!ModelState.IsValid)
@@ -60,6 +64,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ServiceFilter(typeof(SuperAdminAccessFilter))]
         public async Task<ActionResult<PagedResult<Log>>> GetPagedFiltered([FromQuery] LogFilterModel filter)
         {
             if (!ModelState.IsValid)

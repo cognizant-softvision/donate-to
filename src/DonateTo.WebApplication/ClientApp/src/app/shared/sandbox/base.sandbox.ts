@@ -23,6 +23,7 @@ export abstract class Sandbox implements OnDestroy {
   public isSuperAdmin$ = new BehaviorSubject<boolean>(false);
   public isAdmin$ = new BehaviorSubject<boolean>(false);
   public isOrganization$ = new BehaviorSubject<boolean>(false);
+  public isDonor$ = new BehaviorSubject<boolean>(false);
 
   constructor(protected appState$: Store<store.State>) {
     this.registerEvents();
@@ -46,6 +47,13 @@ export abstract class Sandbox implements OnDestroy {
             (userRoles.includes(Roles.Superadmin) ||
               userRoles.includes(Roles.Admin) ||
               userRoles.includes(Roles.Organization))
+        );
+        this.isDonor$.next(
+          (userRoles.length !== 0 &&
+            (userRoles.includes(Roles.Superadmin) ||
+              userRoles.includes(Roles.Admin) ||
+              userRoles.includes(Roles.Organization))) ||
+            userRoles.includes(Roles.Donor)
         );
       })
     );
