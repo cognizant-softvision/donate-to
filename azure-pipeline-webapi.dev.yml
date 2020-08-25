@@ -34,7 +34,7 @@ steps:
         dotnet tool install -g dotnet-ef --version 3.0.0
         dotnet ef migrations script  --project "$(Build.SourcesDirectory)\src\DonateTo.WebApi\DonateTo.WebApi.csproj" -s "$(Build.SourcesDirectory)\src\DonateTo.WebApi\DonateTo.WebApi.csproj" --output "$(build.artifactstagingdirectory)\SQL\migrations.sql" --idempotent --verbose --no-build --configuration $(BuildConfiguration) --context "DonateToDbContext"
         dotnet ef database update
-        
+
   - task: DotNetCoreCLI@2
     displayName: Test
     inputs:
