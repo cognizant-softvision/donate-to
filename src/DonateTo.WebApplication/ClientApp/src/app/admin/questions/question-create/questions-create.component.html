@@ -1,7 +1,7 @@
 <div>
   <nz-spin *ngIf="this.questionSandbox.loadAction$ | async" nzTip="Loading..."> </nz-spin>
   <div class="create-question-title">
-    <h2 class="section-title">{{ 'Admin.Questions.Create.Title' | translate }}</h2>
+    <h4 class="section-title">{{ 'Admin.Questions.Create.Title' | translate }}</h4>
   </div>
   <br />
   <form nz-form>
@@ -313,6 +313,16 @@
   <div class="create-question-form-buttons">
     <button
       nz-popconfirm
+      nzPopconfirmTitle="{{ 'Admin.Donation.BackConfirm' | translate }}"
+      nzPopconfirmPlacement="bottom"
+      (nzOnConfirm)="goBack()"
+      nz-button
+      nzType="secondary"
+    >
+      {{ 'BackBtn' | translate }}
+    </button>
+    <button
+      nz-popconfirm
       nzPopconfirmTitle="{{ 'Admin.Questions.CreateConfirm' | translate }}"
       nzPopconfirmPlacement="bottom"
       (nzOnConfirm)="submitQuestions()"
@@ -321,16 +331,6 @@
       type="submit"
     >
       {{ 'Admin.Questions.Create.CreateRequest' | translate }}
-    </button>
-    <button
-      nz-popconfirm
-      nzPopconfirmTitle="{{ 'Admin.Donation.BackConfirm' | translate }}"
-      nzPopconfirmPlacement="bottom"
-      (nzOnConfirm)="goBack()"
-      nz-button
-      nzType="secondary"
-    >
-      {{ 'BackBtn' | translate }}
     </button>
   </div>
 </div>

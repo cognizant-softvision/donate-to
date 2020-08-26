@@ -336,7 +336,7 @@
     "PickUpDateStepTitle": "Which days can we pick it up?",
     "FinishStepTitle": "Finish",
     "List": {
-      "Status": "Filterd by Status"
+      "Status": "Filtered by Status"
     }
   },
   "Home": {
@@ -348,6 +348,7 @@
   },
   "RequestDonation": {
     "Donate": "Donate",
+    "Observation": "Observation",
     "ResourcesNeeded": "Resources needed",
     "Priority": "Priority",
     "CreatedOn": "Created on",
