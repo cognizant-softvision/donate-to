@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -20,17 +21,37 @@ namespace DonateTo.Services
     {
         private readonly IMailSender _mailSender;
         private readonly IRepository<DonationRequest> _donationRequestRepository;
+        private readonly IRepository<UserOrganization> _userOrganizationRepository;
         private readonly IOrganizationService _organizationService;
 
         public DonationRequestService(
             IMailSender mailSender,
             IOrganizationService organizationService,
-            IRepository<DonationRequest> donationRequestRepository, 
+            IRepository<DonationRequest> donationRequestRepository,
+            IRepository<UserOrganization> userOrganizationRepository,
             IUnitOfWork unitOfWork) : base(donationRequestRepository, unitOfWork)
         {
             _mailSender = mailSender;
             _donationRequestRepository = donationRequestRepository;
+            _userOrganizationRepository = userOrganizationRepository;
             _organizationService = organizationService;
+        }
+
+        public async Task<PagedResult<DonationRequest>> GetPagedFilteredByOrganizationAsync(DonationRequestFilterModel filter, long userId)
+        {
+            // Get the organizations I am assocciated to
+            var associatedOrganizations = await _userOrganizationRepository.GetAsync(x => x.UserId == userId).ConfigureAwait(false);
+
+            // Get the donation requests
+            if(associatedOrganizations != null)
+            {
+                var predicateWithOrganizationIds = GetPredicateWithOrganizationIds(filter, associatedOrganizations.ToList());
+                return await _donationRequestRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicateWithOrganizationIds, GetSort(filter)).ConfigureAwait(false);
+            }
+
+            var predicate = GetPredicate(filter);
+
+            return await _donationRequestRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicate, GetSort(filter)).ConfigureAwait(false);
         }
 
         ///<inheritdoc cref="IDonationService"/>
@@ -135,5 +156,22 @@ namespace DonateTo.Services
 
             return predicate;
         }
+
+        protected Expression<Func<DonationRequest, bool>> GetPredicateWithOrganizationIds(DonationRequestFilterModel filter, List<UserOrganization> associatedOrganizations)
+        {
+            var predicate = GetPredicate(filter);
+
+            if (associatedOrganizations != null)
+            {
+                foreach (var id in associatedOrganizations)
+                {
+                    predicate = predicate.And(p => p.OrganizationId == id.OrganizationId);
+                }
+                
+            }
+
+            return predicate;
+        }
+
     }
 }

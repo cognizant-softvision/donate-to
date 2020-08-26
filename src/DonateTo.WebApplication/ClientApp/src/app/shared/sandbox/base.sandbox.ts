@@ -37,16 +37,18 @@ export abstract class Sandbox implements OnDestroy {
   protected registerEvents() {
     this.subscriptions.push(
       this.userRoles$.subscribe((userRoles: string[]) => {
-        this.isSuperAdmin$.next(userRoles.length !== 0 && userRoles.includes(Roles.Superadmin));
-        this.isAdmin$.next(
-          userRoles.length !== 0 && (userRoles.includes(Roles.Superadmin) || userRoles.includes(Roles.Admin))
-        );
-        this.isOrganization$.next(
-          userRoles.length !== 0 &&
-            (userRoles.includes(Roles.Superadmin) ||
-              userRoles.includes(Roles.Admin) ||
-              userRoles.includes(Roles.Organization))
-        );
+        if (userRoles) {
+          this.isSuperAdmin$.next(userRoles.length !== 0 && userRoles.includes(Roles.Superadmin));
+          this.isAdmin$.next(
+            userRoles.length !== 0 && (userRoles.includes(Roles.Superadmin) || userRoles.includes(Roles.Admin))
+          );
+          this.isOrganization$.next(
+            userRoles.length !== 0 &&
+              (userRoles.includes(Roles.Superadmin) ||
+                userRoles.includes(Roles.Admin) ||
+                userRoles.includes(Roles.Organization))
+          );
+        }
       })
     );
   }
