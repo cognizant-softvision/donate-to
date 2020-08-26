@@ -1,3 +1,4 @@
+import { DonationSandbox } from 'src/app/donation/donation.sandbox';
 import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,6 +9,7 @@ import { DonationModel } from 'src/app/shared/models/donation.model';
 import { NzModalRef, NzModalService, NzTableQueryParams } from 'ng-zorro-antd';
 import { TranslateService } from '@ngx-translate/core';
 import { WeekDays } from 'src/app/shared/enum/weekdays';
+import { DonationItemModel } from 'src/app/shared/models/donation-item.model';
 
 @Component({
   selector: 'app-donations-detail',
@@ -20,6 +22,8 @@ export class DonationsDetailComponent implements OnInit, OnDestroy {
   donationRequest: DonationRequestModel;
   donationsList: DonationModel[] = [];
   donationDetail = new DonationModel();
+  itemDetail = new DonationItemModel();
+  idModifyStatus: number;
 
   donationFilter = new DonationFilter();
   total = 0;
@@ -41,11 +45,13 @@ export class DonationsDetailComponent implements OnInit, OnDestroy {
 
   tplModal?: NzModalRef;
   @ViewChild('modalContent') public modalContent: TemplateRef<any>;
+  @ViewChild('modalStatusContent') public modalStatusContent: TemplateRef<any>;
 
   constructor(
     private activeRoute: ActivatedRoute,
     private router: Router,
-    public donationSandbox: DonationsSandbox,
+    public donationRequestSandbox: DonationsSandbox,
+    public donationSandbox: DonationSandbox,
     private modal: NzModalService,
     private translateService: TranslateService
   ) {
@@ -59,8 +65,8 @@ export class DonationsDetailComponent implements OnInit, OnDestroy {
       this.activeRoute.params.subscribe((param) => {
         this.id = parseInt(param['Id'], 10);
         this.donationFilter.donationRequestId = this.id;
-        this.donationSandbox.loadDonationRequest(this.id);
-        this.donationSandbox.loadPagedFilteredDonationByDonationRequestId(this.donationFilter);
+        this.donationRequestSandbox.loadDonationRequest(this.id);
+        this.donationRequestSandbox.loadPagedFilteredDonationByDonationRequestId(this.donationFilter);
       })
     );
   }
@@ -71,17 +77,19 @@ export class DonationsDetailComponent implements OnInit, OnDestroy {
 
   registerEvents(): void {
     this.subscriptions.push(
-      this.donationSandbox.donationRequest$.subscribe((donationRequest) => {
+      this.donationRequestSandbox.donationRequest$.subscribe((donationRequest) => {
         this.donationRequest = donationRequest;
       })
     );
 
     this.subscriptions.push(
-      this.donationSandbox.donationsPagedFiltered$.subscribe((res) => {
+      this.donationRequestSandbox.donationsPagedFiltered$.subscribe((res) => {
         this.total = res.rowCount;
         this.donationsList = res.results;
       })
     );
+
+    this.donationRequestSandbox.loadStatus();
   }
 
   ngOnDestroy(): void {
@@ -99,7 +107,7 @@ export class DonationsDetailComponent implements OnInit, OnDestroy {
       itemName: this.itemNameValue,
     };
 
-    this.donationSandbox.loadPagedFilteredDonationByDonationRequestId(this.donationFilter);
+    this.donationRequestSandbox.loadPagedFilteredDonationByDonationRequestId(this.donationFilter);
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
@@ -114,20 +122,20 @@ export class DonationsDetailComponent implements OnInit, OnDestroy {
       orderDirection: (currentSort && currentSort.value) || '',
     };
 
-    this.donationSandbox.loadPagedFilteredDonationByDonationRequestId(this.donationFilter);
+    this.donationRequestSandbox.loadPagedFilteredDonationByDonationRequestId(this.donationFilter);
   }
 
   resetItemNameSearch(): void {
     this.itemNameVisible = false;
     this.itemNameValue = '';
     this.donationFilter = { ...this.donationFilter, itemName: this.itemNameValue };
-    this.donationSandbox.loadPagedFilteredDonationByDonationRequestId(this.donationFilter);
+    this.donationRequestSandbox.loadPagedFilteredDonationByDonationRequestId(this.donationFilter);
   }
 
   searchItemName(): void {
     this.itemNameVisible = false;
     this.donationFilter = { ...this.donationFilter, itemName: this.itemNameValue };
-    this.donationSandbox.loadPagedFilteredDonationByDonationRequestId(this.donationFilter);
+    this.donationRequestSandbox.loadPagedFilteredDonationByDonationRequestId(this.donationFilter);
   }
 
   goBack(): void {
@@ -158,6 +166,63 @@ export class DonationsDetailComponent implements OnInit, OnDestroy {
       },
       nzWidth: '80%',
     });
+  }
+
+  createStatusModal(tplContent: TemplateRef<{}>): void {
+    this.tplModal = this.modal.create({
+      nzTitle: this.translateService.instant('Admin.Donation.Detail.ChangeStatusTitle'),
+      nzContent: tplContent,
+      nzFooter: null,
+      nzClosable: false,
+      nzStyle: {
+        top: '2em;',
+      },
+      nzWidth: '25%',
+    });
+  }
+
+  changeDonationStatus(donationId: number) {
+    this.donationDetail = this.donationsList.find((d) => d.id === donationId);
+    this.createStatusModal(this.modalStatusContent);
+  }
+
+  changeItemStatus(donationId: number, donationItem: number) {
+    this.donationDetail = this.donationsList.find((d) => d.id === donationId);
+    this.itemDetail = this.donationDetail.donationItems.find((i) => i.id === donationItem);
+    this.createStatusModal(this.modalStatusContent);
+  }
+
+  saveStatus() {
+    this.donationSandbox.updateDonation(this.updateDonation());
+    this.itemDetail = null;
+    this.tplModal.destroy();
+  }
+
+  updateDonation(): DonationModel {
+    const donation = new DonationModel();
+    Object.entries(this.donationDetail).forEach((kv) => {
+      if (['string', 'number', 'Date'].includes(typeof kv[1])) {
+        donation[kv[0]] = kv[1];
+      }
+    });
+    donation.id = this.donationDetail.id;
+    donation.observation = this.donationDetail.observation;
+    donation.donationRequestId = this.donationDetail.donationRequest.id;
+    donation.addressId = this.donationDetail.addressId;
+    donation.availabilities = [...this.donationDetail.availabilities];
+    donation.donationItems = this.donationDetail.donationItems.map((item) => {
+      const donationItem: DonationItemModel = new DonationItemModel();
+      Object.assign(donationItem, item);
+      donationItem.status = undefined;
+      return donationItem;
+    });
+    if (this.itemDetail.id) {
+      donation.statusId = this.donationDetail.statusId;
+      donation.donationItems.find((item) => item.id === this.itemDetail.id).statusId = this.idModifyStatus;
+    } else {
+      donation.statusId = this.idModifyStatus;
+    }
+    return donation;
   }
 
   dayOfWeekDescription(dayOfWeek: number): string {

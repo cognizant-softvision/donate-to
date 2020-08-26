@@ -14,6 +14,9 @@
         <nz-form-label class="donation-label" nzRequired nzFor="title">{{
           'Admin.Donation.Form.Title' | translate
         }}</nz-form-label>
+        <nz-form-label class="donation-label" *ngIf="donationRequest?.id" nzRequired nzFor="status">{{
+          'Admin.Donation.Form.Status' | translate
+        }}</nz-form-label>
         <nz-form-label class="donation-label" nzFor="observations">{{
           'Admin.Donation.Form.Observations' | translate
         }}</nz-form-label>
@@ -82,6 +85,19 @@
           </nz-form-control>
         </nz-form-item>
 
+        <nz-form-item *ngIf="donationRequest?.id">
+          <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.Status' | translate }}">
+            <nz-select [(ngModel)]="statusId" formControlName="statusFormControl">
+              <nz-option
+                *ngFor="let state of this.donationSandbox.status$ | async"
+                [nzValue]="state.id"
+                [nzLabel]="state.name"
+              >
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
         <nz-form-item>
           <nz-form-control>
             <textarea
@@ -92,19 +108,6 @@
               name="observations"
               id="observations"
             ></textarea>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item *ngIf="donationRequest?.id">
-          <nz-form-label nzRequired nzFor="status">{{ 'Admin.Donation.Form.Status' | translate }}</nz-form-label>
-          <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.Status' | translate }}">
-            <nz-select [(ngModel)]="statusId" formControlName="statusFormControl">
-              <nz-option
-                *ngFor="let state of this.donationSandbox.status$ | async"
-                [nzValue]="state.id"
-                [nzLabel]="state.name"
-              >
-              </nz-option>
-            </nz-select>
           </nz-form-control>
         </nz-form-item>
       </div>
