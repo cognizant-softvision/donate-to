@@ -32,7 +32,7 @@ steps:
       targetType: "inline"
       script: |
         dotnet tool install -g dotnet-ef --version 3.0.0
-        dotnet ef database update --project "$(Build.SourcesDirectory)\src\DonateTo.WebApi\DonateTo.WebApi.csproj" -s "$(Build.SourcesDirectory)\src\DonateTo.WebApi\DonateTo.WebApi.csproj" --context "DonateToDbContext" --connection $(ConnectionStrings.PostgreSQL)
+        dotnet ef database update --project "$(Build.SourcesDirectory)\src\DonateTo.WebApi\DonateTo.WebApi.csproj" -s "$(Build.SourcesDirectory)\src\DonateTo.WebApi\DonateTo.WebApi.csproj" --context "DonateToDbContext" --connection "$(ConnectionStrings.PostgreSQL)"
 
   - task: DotNetCoreCLI@2
     displayName: Test
