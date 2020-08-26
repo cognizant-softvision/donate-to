@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using DonateTo.ApplicationCore.Interfaces;
+using System.Collections.Generic;
 
 namespace DonateTo.ApplicationCore.Entities
 {
-    public class Organization : EntityBase
+    public class Organization : EntityBase, IIsDeleted
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -10,5 +11,6 @@ namespace DonateTo.ApplicationCore.Entities
         public Contact Contact { get; set; }
         public IEnumerable<Address> Addresses { get; set; }
         public ICollection<UserOrganization> UserOrganizations { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

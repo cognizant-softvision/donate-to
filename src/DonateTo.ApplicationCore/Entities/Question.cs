@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using DonateTo.ApplicationCore.Interfaces;
+using System.Collections.Generic;
 
 namespace DonateTo.ApplicationCore.Entities
 {
-    public class Question : EntityBase
+    public class Question : EntityBase, IIsDeleted
     {
         public string Label { get; set; }
         public int Order { get; set; }
@@ -14,5 +15,6 @@ namespace DonateTo.ApplicationCore.Entities
         public long ControlTypeId { get; set; }
         public ControlType ControlType { get; set; }
         public IEnumerable<QuestionOption> Options { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

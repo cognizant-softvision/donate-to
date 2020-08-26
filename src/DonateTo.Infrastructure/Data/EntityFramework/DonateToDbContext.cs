@@ -163,6 +163,30 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
                 modelBuilder.Entity<UserOrganization>().HasKey
                     (uo => new { uo.UserId, uo.OrganizationId });
 
+                // Code to query objects from de db where IsDeleted = false
+                modelBuilder.Entity<Donation>()
+                    .HasQueryFilter(d => !d.IsDeleted);
+
+                modelBuilder.Entity<DonationItem>()
+                    .HasQueryFilter(di => !di.IsDeleted);
+
+                modelBuilder.Entity<DonationRequest>()
+                    .HasQueryFilter(dr => !dr.IsDeleted);
+
+                modelBuilder.Entity<DonationRequestItem>()
+                    .HasQueryFilter(dri => !dri.IsDeleted);
+
+                modelBuilder.Entity<Organization>()
+                    .HasQueryFilter(o => !o.IsDeleted);
+
+                modelBuilder.Entity<Address>()
+                    .HasQueryFilter(a => !a.IsDeleted);
+
+                modelBuilder.Entity<Question>()
+                    .HasQueryFilter(q => !q.IsDeleted);
+
+                modelBuilder.Entity<QuestionOption>()
+                    .HasQueryFilter(qo => !qo.IsDeleted);
                 #endregion
             }
         }
