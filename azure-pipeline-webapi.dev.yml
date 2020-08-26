@@ -31,13 +31,8 @@ steps:
     inputs:
       targetType: "inline"
       script: |
-        dotnet tool install -g dotnet-ef --version 5.0.0
-        dir $(Build.SourcesDirectory)
-        dir $(Build.SourcesDirectory)\src\
-        dir $(Build.SourcesDirectory)\src\DonateTo.WebApi
-        Write-Output "$(ConnectionStrings.PostgreSQL)"
-        echo "$(ConnectionStrings.PostgreSQL)"
-        dotnet ef database update --project "$(Build.SourcesDirectory)\src\DonateTo.WebApi\DonateTo.WebApi.csproj" -s "$(Build.SourcesDirectory)\src\DonateTo.WebApi\DonateTo.WebApi.csproj" --context "DonateToDbContext" --connection "$(ConnectionStrings.PostgreSQL)"
+        dotnet tool install -g dotnet-ef --version 5.0.0-preview.8.20407.4
+        dotnet ef database update --project "$(Build.SourcesDirectory)\src\DonateTo.WebApi\DonateTo.WebApi.csproj" -s "$(Build.SourcesDirectory)\src\DonateTo.WebApi\DonateTo.WebApi.csproj" --context "DonateToDbContext" --connection "$(ConnectionStrings.PostgreSQL)" --no-build 
 
   - task: DotNetCoreCLI@2
     displayName: Test
