@@ -1,10 +1,9 @@
 <nz-spin *ngIf="this.donationSandbox.donationsLoading$ | async" nzTip="Loading..."> </nz-spin>
-<b
-  >{{ 'Donation.List.Status' | translate }}:
-  <nz-select [(ngModel)]="statusId" [ngClass]="'w-25'" (ngModelChange)="onSelectedStatus($event)">
-    <nz-option *ngFor="let status of statusList" [nzValue]="status.value" [nzLabel]="status.label"></nz-option>
-  </nz-select>
-</b>
+<span> {{ 'Donation.List.Status' | translate }}: </span>
+<nz-select [(ngModel)]="statusId" [ngClass]="'w-25'" (ngModelChange)="onSelectedStatus($event)">
+  <nz-option *ngFor="let status of statusList" [nzValue]="status.value" [nzLabel]="status.label"></nz-option>
+</nz-select>
+
 <br />
 <br />
 <nz-list

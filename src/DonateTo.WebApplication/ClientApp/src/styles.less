@@ -57,7 +57,7 @@
 }
 
 .sv-margin-y {
-  margin: 0.25em 0 0.25em 0;
+  margin: 1em 0 1em 0;
 }
 
 a {
@@ -67,34 +67,36 @@ a {
 // Switch Radio Botom
 // ---
 .ant-radio-button-wrapper-checked {
-  background: linear-gradient(90deg, #c800a1 0%, #0033a0 100%) !important;
-  border-color: @primary-magenta!important;
-  background-color: @primary-magenta!important;
+  border-radius: @border-radius-base;
 }
 
 // Bottoms
 // ---
 .ant-btn {
-  border: 0.125em solid @primary-lead-black;
   text-transform: uppercase;
+  border-radius: @border-radius-base;
+  font-weight: 400;
+  padding: 0em 1.5em;
 }
 
 .ant-btn:hover {
   background: @primary-lead-black;
-  border: 0.125em solid @primary-lead-black;
   color: @primary-ghost-white;
+  border-radius: @border-radius-base;
+  font-weight: 400;
+  padding: 0em 1.5em;
 }
 
 .ant-btn-primary:not(disabled) {
   background: linear-gradient(90deg, #f4633a 0%, #c800a1 100%);
-  border: 0.125em solid @primary-dark-orange;
+  border: none;
 }
 .ant-btn-primary:active,
 .ant-btn-primary:focus,
 .ant-btn-primary:hover {
-  background: @primary-ghost-white;
-  color: @primary-dark-orange;
-  border: 0.125em solid @primary-dark-orange;
+  background: linear-gradient(90deg, #c800a1, #0033a0);
+  color: @primary-ghost-white;
+  border: none;
 }
 
 .ant-btn:disabled {
@@ -819,3 +821,80 @@ svg:hover {
 // Typography
 // ---
 @typography-title-font-weight: 600;
+@typography-color: #000;
+
+h1 {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 6.25em;
+  line-height: 6.0625em;
+
+  display: flex;
+  align-items: flex-end;
+  letter-spacing: -0.02em;
+  text-transform: capitalize;
+
+  color: @typography-color;
+}
+
+h2 {
+  font-size: 4em;
+  line-height: 4em;
+
+  display: flex;
+  align-items: flex-end;
+  letter-spacing: -0.125em;
+
+  color: @typography-color;
+}
+
+h3 {
+  font-size: 2.75em;
+  line-height: 2.75em;
+
+  display: flex;
+  align-items: flex-end;
+  letter-spacing: -0.02em;
+
+  color: @typography-color;
+}
+
+h4 {
+  font-size: 2em;
+  line-height: 1em;
+
+  display: flex;
+  align-items: flex-end;
+
+  color: @typography-color;
+}
+
+h5 {
+  font-size: 1.75em;
+  line-height: 0.75em;
+
+  display: flex;
+  align-items: flex-end;
+
+  color: @typography-color;
+}
+
+h6 {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1em;
+  line-height: 1em;
+
+  display: flex;
+  align-items: flex-end;
+  letter-spacing: -0.0375em;
+
+  color: @typography-color;
+}
+
+li {
+  display: flex;
+  align-items: flex-end;
+
+  color: @typography-color;
+}
