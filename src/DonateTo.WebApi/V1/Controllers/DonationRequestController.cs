@@ -82,5 +82,19 @@ namespace DonateTo.WebApi.V1.Controllers
         {
             return base.Delete(id);
         }
+
+        /// <summary>
+        /// Updates a DonationRequest
+        /// </summary>
+        /// <param name="id">DonationRequest Id</param>
+        /// <param name="donationRequest">DonationRequest</param>
+        /// <returns>DonationRequest soft deleted.</returns>
+        [HttpPut(Name = "[controller]_[action]")]
+        [ServiceFilter(typeof(OrganizationAccessFilter))]
+        public async Task SoftDelete(long id, [FromBody] DonationRequest donationRequest)
+        {
+            await _donationRequestService.SoftDelete(donationRequest).ConfigureAwait(false);
+            //return base.Put(donationRequest.Id, donationRequest);
+        }
     }
 }

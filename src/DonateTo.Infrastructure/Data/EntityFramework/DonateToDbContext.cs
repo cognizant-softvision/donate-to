@@ -1,6 +1,10 @@
 ﻿using DonateTo.ApplicationCore.Entities;
+using DonateTo.ApplicationCore.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DonateTo.Infrastructure.Data.EntityFramework
 {
@@ -122,7 +126,6 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
                 }
 
                 #region Many to many relationships
-
                 // Code to set up many to many relationships
                 modelBuilder.Entity<DonationRequestCategory>()
                     .HasOne<Category>(c => c.Category)
@@ -162,6 +165,7 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
 
                 modelBuilder.Entity<UserOrganization>().HasKey
                     (uo => new { uo.UserId, uo.OrganizationId });
+                #endregion
 
                 // Code to query objects from de db where IsDeleted = false
                 modelBuilder.Entity<Donation>()
@@ -187,8 +191,34 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
 
                 modelBuilder.Entity<QuestionOption>()
                     .HasQueryFilter(qo => !qo.IsDeleted);
-                #endregion
             }
+        }
+
+        /// <summary>
+        /// Marks any "Removed" Entities as "Modified" and then sets the Db [IsDeleted] Flag to true
+        /// </summary>
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            ChangeTracker.DetectChanges();
+
+            var markedAsDeleted = ChangeTracker.Entries().Where(x => x.State == EntityState.Deleted);
+
+            foreach (var item in markedAsDeleted)
+            {
+                //if(item.State == EntityState.Deleted)
+                //{
+                //    item.State = EntityState.Modified;
+                //    item.CurrentValues["IsDeleted"] = true;
+                //}
+                if (item.Entity is IIsDeleted entity)
+                {
+                    // Set the entity to unchanged (if we mark the whole entity as Modified, every field gets sent to Db as an update)
+                    item.State = EntityState.Unchanged;
+                    // Only update the IsDeleted flag - only this will get sent to the Db
+                    entity.IsDeleted = true;
+                }
+            }
+            return await base.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
         }
     }
 }

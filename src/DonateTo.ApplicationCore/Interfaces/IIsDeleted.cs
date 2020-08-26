@@ -6,6 +6,6 @@ namespace DonateTo.ApplicationCore.Interfaces
 {
     public interface IIsDeleted
     {
-        bool IsDeleted { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

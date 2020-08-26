@@ -67,4 +67,12 @@ export class DonationRequestService extends BaseHttpClientService<DonationReques
       params: queryString,
     });
   }
+
+  deleteDonationRequest(donationRequest: DonationRequestModel): Observable<DonationRequestModel> {
+    return this.httpClient.put<DonationRequestModel>(
+      `${this.url}/${this.endpoint}/?id=${donationRequest.id}`,
+      donationRequest,
+      this.httpOptions
+    );
+  }
 }

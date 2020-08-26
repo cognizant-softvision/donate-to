@@ -104,7 +104,7 @@ export class DonationRequestEffects {
   removeDonationRequest$: Observable<{}> = this.actions$.pipe(
     ofType(removeDonationRequest),
     switchMap((data: any) =>
-      this.donationRequestService.delete(data.donationRequest).pipe(
+      this.donationRequestService.deleteDonationRequest(data.donationRequest).pipe(
         map((donationRequest) => removeDonationRequestSuccess({ donationRequest })),
         catchError(() => of(removeDonationRequestFailed()))
       )
