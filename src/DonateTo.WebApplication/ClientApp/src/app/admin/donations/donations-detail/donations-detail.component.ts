@@ -24,6 +24,8 @@ export class DonationsDetailComponent implements OnInit, OnDestroy {
   donationDetail = new DonationModel();
   itemDetail = new DonationItemModel();
   idModifyStatus: number;
+  isLoading = false;
+  isItem = false;
 
   donationFilter = new DonationFilter();
   total = 0;
@@ -189,13 +191,24 @@ export class DonationsDetailComponent implements OnInit, OnDestroy {
   changeItemStatus(donationId: number, donationItem: number) {
     this.donationDetail = this.donationsList.find((d) => d.id === donationId);
     this.itemDetail = this.donationDetail.donationItems.find((i) => i.id === donationItem);
+    this.isItem = true;
     this.createStatusModal(this.modalStatusContent);
   }
 
   saveStatus() {
+    this.isLoading = true;
     this.donationSandbox.updateDonation(this.updateDonation());
-    this.itemDetail = null;
+    this.isItem = false;
     this.tplModal.destroy();
+
+    this.subscriptions.push(
+      this.donationSandbox.donationsLoading$.subscribe((loading) => {
+        if (!loading && this.isLoading) {
+          this.isLoading = false;
+          this.donationRequestSandbox.loadPagedFilteredDonationByDonationRequestId(this.donationFilter);
+        }
+      })
+    );
   }
 
   updateDonation(): DonationModel {
@@ -214,9 +227,11 @@ export class DonationsDetailComponent implements OnInit, OnDestroy {
       const donationItem: DonationItemModel = new DonationItemModel();
       Object.assign(donationItem, item);
       donationItem.status = undefined;
+      donationItem.donation = undefined;
+      donationItem.unit = undefined;
       return donationItem;
     });
-    if (this.itemDetail.id) {
+    if (this.isItem) {
       donation.statusId = this.donationDetail.statusId;
       donation.donationItems.find((item) => item.id === this.itemDetail.id).statusId = this.idModifyStatus;
     } else {

@@ -88,12 +88,10 @@
         <nz-form-item *ngIf="donationRequest?.id">
           <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.Status' | translate }}">
             <nz-select [(ngModel)]="statusId" formControlName="statusFormControl">
-              <nz-option
-                *ngFor="let state of this.donationSandbox.status$ | async"
-                [nzValue]="state.id"
-                [nzLabel]="state.name"
-              >
-              </nz-option>
+              <ng-container *ngFor="let state of this.donationSandbox.status$ | async">
+                <nz-option *ngIf="state.id != statusEnum.Rejected" [nzValue]="state.id" [nzLabel]="state.name">
+                </nz-option>
+              </ng-container>
             </nz-select>
           </nz-form-control>
         </nz-form-item>
