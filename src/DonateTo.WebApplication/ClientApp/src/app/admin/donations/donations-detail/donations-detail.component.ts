@@ -162,7 +162,7 @@ export class DonationsDetailComponent implements OnInit, OnDestroy {
       nzTitle: this.translateService.instant('Admin.Donation.Detail.MoreInformationTitle'),
       nzContent: tplContent,
       nzFooter: null,
-      nzClosable: false,
+      nzClosable: true,
       nzStyle: {
         top: '2em;',
       },
@@ -175,7 +175,7 @@ export class DonationsDetailComponent implements OnInit, OnDestroy {
       nzTitle: this.translateService.instant('Admin.Donation.Detail.ChangeStatusTitle'),
       nzContent: tplContent,
       nzFooter: null,
-      nzClosable: false,
+      nzClosable: true,
       nzStyle: {
         top: '2em;',
       },
