@@ -31,7 +31,7 @@ steps:
     inputs:
       targetType: "inline"
       script: |
-        dotnet tool install -g dotnet-ef --version 3.0.0
+        dotnet tool install -g dotnet-ef --version 5.0.0
         dir $(Build.SourcesDirectory)
         dir $(Build.SourcesDirectory)\src\
         dir $(Build.SourcesDirectory)\src\DonateTo.WebApi
