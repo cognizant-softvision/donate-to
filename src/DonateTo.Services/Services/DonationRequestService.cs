@@ -68,6 +68,38 @@ namespace DonateTo.Services
             await _mailSender.SendMultipleAsync(messages).ConfigureAwait(false);
         }
 
+        ///<inheritdoc cref="IDonationService"/>
+        public async Task SendDeleteRequestMailToOrganizationUsersAsync(DonationRequest donationRequest, IEnumerable<UserModel> users, string client)
+        {
+            if (donationRequest.Organization == null)
+            {
+                donationRequest.Organization = _organizationService.Get(donationRequest.OrganizationId);
+            }
+
+            var messages = new List<Message>();
+            var body = @"<p>Hi {0}!</p>
+                            <p>A new Donation Request has been cancelled to {1}</p>
+                            <p>Check it <a href='{2}'>here</a></p>";
+
+            foreach (var user in users)
+            {
+                var bodyMessage = new MessageBody()
+                {
+                    HtmlBody = string.Format(CultureInfo.InvariantCulture, body,
+                                             user.FullName,
+                                             donationRequest.Organization.Name,
+                                             client)
+                };
+
+                var to = new List<string>();
+                to.Add(user.Email);
+
+                messages.Add(new Message(to, "Cancelled donation request!", bodyMessage));
+            }
+
+            await _mailSender.SendMultipleAsync(messages).ConfigureAwait(false);
+        }
+
         ///<inheritdoc cref="BaseService{DonationRequest, DonationRequestFilterModel}"/>
         public override PagedResult<DonationRequest> GetPagedFiltered(DonationRequestFilterModel filter)
         {

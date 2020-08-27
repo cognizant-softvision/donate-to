@@ -56,6 +56,31 @@ namespace DonateTo.Services
 
             await _mailSender.SendAsync(message).ConfigureAwait(false);
         }
+        public async Task SendDeletedDonationMailAsync(IEnumerable<UserModel> users, string client)
+        {
+            var messages = new List<Message>();
+            var body = @"<p>Hi {0}!</p>
+                            <p>The donation has been cancelled.</p>
+                            <p>Check it <a href='{1}'>here</a></p>";
+
+            foreach (var user in users)
+            {
+                var bodyMessage = new MessageBody()
+                {
+                    HtmlBody = string.Format(CultureInfo.InvariantCulture, body,
+                                                user.FullName,
+                                                client)
+                };
+
+                var to = new List<string>();
+                to.Add(user.Email);
+
+                messages.Add(new Message(to, "Cancelled donation!", bodyMessage));
+            }
+
+            await _mailSender.SendMultipleAsync(messages).ConfigureAwait(false);
+        }
+
 
         ///<inheritdoc cref="BaseService{Donation, DonationFilterModel}"/>
         public override PagedResult<Donation> GetPagedFiltered(DonationFilterModel filter)
