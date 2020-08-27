@@ -16,6 +16,7 @@ import {
   NzRadioModule,
   NzRateModule,
   NzSelectModule,
+  NzSpinModule,
   NzTableModule,
   NzTagModule,
 } from 'ng-zorro-antd';
@@ -94,6 +95,7 @@ const ICONS: IconDefinition[] = [
     NzDescriptionsModule,
     NzToolTipModule,
     NzTabsModule,
+    NzSpinModule,
 
     FormsModule,
     CommonModule,
