@@ -2,6 +2,7 @@
 using DonateTo.ApplicationCore.Common;
 using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces;
+using DonateTo.ApplicationCore.Interfaces.Repositories;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models.Filtering;
 using DonateTo.ApplicationCore.Models.Pagination;
@@ -18,13 +19,13 @@ namespace DonateTo.Services
 {
     public class OrganizationService : BaseService<Organization, OrganizationFilterModel>, IOrganizationService
     {
-        private readonly IRepository<Organization> _organizationRepository;
+        private readonly IOrganizationRepository _organizationRepository;
         private readonly IRepository<Role> _roleRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
         public OrganizationService(
-            IRepository<Organization> organizationRepository,
+            IOrganizationRepository organizationRepository,
             IRepository<Role> roleRepository,
             IUnitOfWork unitOfWork,
             IMapper mapper) : base(organizationRepository, unitOfWork)
@@ -78,7 +79,7 @@ namespace DonateTo.Services
             return await _organizationRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicate, GetSort(filter)).ConfigureAwait(false);
         }
 
-        public Task SoftDelete(Organization organization)
+        public async Task SoftDelete(Organization organization)
         {
             await _organizationRepository.SoftDeleteOrganization(organization).ConfigureAwait(false);
 

@@ -30,7 +30,7 @@ namespace DonateTo.Services.Extensions
             service.AddTransient<IBaseService<Country, BaseFilterModel>, CountryService>();
             service.AddTransient<ISearchService, SearchService>();
             service.AddTransient<IOrganizationService, OrganizationService>();
-            service.AddTransient<IBaseService<Address, BaseFilterModel>, AddressService>();
+            service.AddTransient<IAddressService, AddressService>();
             service.AddTransient<IBaseService<Category, BaseFilterModel>, CategoryService>();
             service.AddTransient<IBaseService<Unit, BaseFilterModel>, UnitService>();
             service.AddTransient<IBaseService<Status, BaseFilterModel>, StatusService>();
