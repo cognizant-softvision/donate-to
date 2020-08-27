@@ -23,14 +23,17 @@ namespace DonateTo.Services
     {
         private readonly IMailSender _mailSender;
         private readonly IDonationRepository _donationRepository;
+        private readonly IDonationRequestRepository _donationRequestRepository;
 
         public DonationService(
             IMailSender mailSender,
             IDonationRepository donationRepository,
+            IDonationRequestRepository donationRequestRepository,
             IUnitOfWork unitOfWork) : base(donationRepository, unitOfWork)
         {
             _mailSender = mailSender;
             _donationRepository = donationRepository;
+            _donationRequestRepository = donationRequestRepository;
         }
 
         ///<inheritdoc cref="IDonationService"/>
@@ -56,6 +59,7 @@ namespace DonateTo.Services
 
             await _mailSender.SendAsync(message).ConfigureAwait(false);
         }
+
         public async Task SendDeletedDonationMailAsync(UserModel user, string client)
         {
             var body = @"<p>Hi {0}!</p>
@@ -78,7 +82,6 @@ namespace DonateTo.Services
 
             await _mailSender.SendAsync(message).ConfigureAwait(false);
         }
-
 
         ///<inheritdoc cref="BaseService{Donation, DonationFilterModel}"/>
         public override PagedResult<Donation> GetPagedFiltered(DonationFilterModel filter)
@@ -125,5 +128,12 @@ namespace DonateTo.Services
         {
             await _donationRepository.SoftDeleteDonation(donation).ConfigureAwait(false);
         }
+
+        public IEnumerable<User> GetDonorsByDonationRequestItemId(long donationRequestItemId)
+        {
+            return _donationRepository.GetDonors(donationRequestItemId);
+        }
+
+
     }
 }

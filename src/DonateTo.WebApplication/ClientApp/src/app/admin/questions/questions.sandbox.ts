@@ -34,6 +34,10 @@ export class QuestionsSandbox extends Sandbox {
     this.appState$.dispatch(store.fromQuestion.loadQuestionsPagedFiltered({ questionFilter }));
   }
 
+  updateQuestionsResult(results: QuestionResult): void {
+    this.appState$.dispatch(store.fromQuestion.addResults({ results }));
+  }
+
   /**
    * Soft Deletes a Question from the server
    */
