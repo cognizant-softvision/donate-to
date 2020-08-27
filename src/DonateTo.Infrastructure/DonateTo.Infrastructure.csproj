@@ -34,5 +34,11 @@
     <ProjectReference Include="..\DonateTo.ApplicationCore\DonateTo.ApplicationCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Data\Seed\ControlType2.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 
 </Project>

@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { DonationRequestModel, PageModel } from '../../models';
+import { DonationRequestItemModel, DonationRequestModel, PageModel } from '../../models';
 import { DonationRequestFilter } from '../../models/filters/donation-request-filter';
 
 export const addDonationRequest = createAction(
@@ -41,6 +41,16 @@ export const removeDonationRequestSuccess = createAction(
   props<{ donationRequest: DonationRequestModel }>()
 );
 export const removeDonationRequestFailed = createAction('[Donation Request] Remove failed');
+
+export const removeDonationRequestItem = createAction(
+  '[Donation Request Item] Remove',
+  props<{ donationRequestItem: DonationRequestItemModel }>()
+);
+export const removeDonationRequestItemSuccess = createAction(
+  '[Donation Request Item] Remove success',
+  props<{ donationRequestItem: DonationRequestItemModel }>()
+);
+export const removeDonationRequestItemFailed = createAction('[Donation Request Item] Remove failed');
 
 export const loadDonationRequests = createAction('[Donation Request] Load items from server');
 export const loadDonationRequestsSuccess = createAction(

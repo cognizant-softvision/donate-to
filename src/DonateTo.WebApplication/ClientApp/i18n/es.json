@@ -101,6 +101,7 @@
         "Title": "Donaciones",
         "MoreInformationToolTipTitle": "Más información",
         "MoreInformationTitle": "Más información",
+        "ChangeStatusTitle": "Cambiar estado",
         "AvailabilitiesTitle": "Disponibilidades",
         "AddressTitle": "Dirección",
         "Address": {
@@ -169,6 +170,7 @@
       "DeleteConfirmation": "¿Está seguro que desea eliminar esta organización?",
       "Edit": "Editar Organización",
       "Detail": "Información",
+      "Delete": "Eliminar",
       "Table": {
         "Name": "Organización",
         "Description": "Descripción",
@@ -230,7 +232,8 @@
           "ContactModalStep": "¿Cuál es la persona a contactar?",
           "AddAddressWarning": "Agregar al menos una dirección",
           "Name": "Nombre",
-          "RequiredName": "Es requerido un nombre para esta dirección"
+          "RequiredName": "Es requerido un nombre para esta dirección",
+          "DeleteConfirmation": "¿Está seguro que quiere eliminar esta dirección?"
         }
       }
     },
@@ -348,6 +351,7 @@
   },
   "RequestDonation": {
     "Donate": "Donar",
+    "Observation": "Observación",
     "ResourcesNeeded": "Recursos necesitados",
     "Priority": "Prioridad",
     "CreatedOn": "Creado",

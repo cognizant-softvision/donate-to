@@ -1,9 +1,9 @@
 <div class="table-operations">
   <nz-spin *ngIf="this.userSandbox.loadAction$ | async" nzTip="Loading..."> </nz-spin>
-  <h2 class="section-title">
+  <h4 class="section-title">
     {{ 'Admin.User.Title' | translate }}
     <span *ngIf="organizationName">{{ 'Admin.User.OrganizationTitleJoin' | translate }} {{ organizationName }}</span>
-  </h2>
+  </h4>
   <nz-divider></nz-divider>
   <button nz-button nzType="secondary" (click)="reset()">{{ 'Admin.ClearFilter' | translate }}</button>
 </div>

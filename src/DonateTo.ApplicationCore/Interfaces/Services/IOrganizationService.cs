@@ -27,5 +27,12 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// <param name="organization">Organization</param>
         /// <returns></returns>
         Task SoftDelete(Organization organization);
+
+        /// <summary>
+        /// Soft deletes an Address
+        /// </summary>
+        /// <param name="address">Address</param>
+        /// <returns></returns>
+        Task SoftDeleteAddress(Address address);
     }
 }

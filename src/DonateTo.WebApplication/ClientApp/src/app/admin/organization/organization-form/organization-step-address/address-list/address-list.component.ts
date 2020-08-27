@@ -79,8 +79,12 @@ export class AddressListComponent {
   }
 
   removeAddress(item: AddressModel) {
-    this.addresses = this.addresses.filter((a) => a !== item);
-    this.deleteAddress.emit(item);
+    if (!this.isEditOrganization) {
+      this.addresses = this.addresses.filter((a) => a !== item);
+      this.deleteAddress.emit(item);
+    } else {
+      this.organizationSandbox.deleteAddress(item);
+    }
   }
 
   onExpandChange(id: number, checked: boolean): void {

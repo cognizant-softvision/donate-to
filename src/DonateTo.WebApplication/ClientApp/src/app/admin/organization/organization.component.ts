@@ -161,4 +161,8 @@ export class OrganizationComponent implements OnInit, OnDestroy {
     this.filterUsers.changeFilter(organizationName);
     this.router.navigate(['./admin/users']);
   }
+
+  deleteOrganization(organization: OrganizationModel) {
+    this.organizationSandbox.deleteOrganization(organization);
+  }
 }

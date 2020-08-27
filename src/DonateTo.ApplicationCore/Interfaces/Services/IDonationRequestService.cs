@@ -1,6 +1,7 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Models;
 using DonateTo.ApplicationCore.Models.Filtering;
+using DonateTo.ApplicationCore.Models.Pagination;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -18,6 +19,14 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         Task SendNewRequestMailToOrganizationUsersAsync(DonationRequest donationRequest, IEnumerable<UserModel> users, string client);
 
         /// <summary>
+        /// Get Donation Request filtered by user role
+        /// </summary>
+        /// <param name="filter">DonationRequestFilterModel</param>
+        /// <param name="userId">long</Users></param>
+        /// <returns></returns>
+        Task<PagedResult<DonationRequest>> GetPagedFilteredByOrganizationAsync(DonationRequestFilterModel filter, long userId);
+
+        /// <summary>
         /// Send Deleted request info mail to all users of the organization
         /// </summary>
         /// <param name="donationRequest">DonationRequest</param>
@@ -32,5 +41,12 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// <param name="donationRequest">DonationRequest</param>
         /// <returns></returns>
         Task SoftDelete(DonationRequest donationRequest);
+
+        /// <summary>
+        /// Soft deletes a Donation Request Item
+        /// </summary>
+        /// <param name="donationRequestItem">DonationRequestItem</param>
+        /// <returns></returns>
+        Task SoftDelete(DonationRequestItem donationRequestItem);
     }
 }
