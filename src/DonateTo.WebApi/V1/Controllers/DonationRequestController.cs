@@ -22,13 +22,16 @@ namespace DonateTo.WebApi.V1.Controllers
     {
         private readonly IDonationRequestService _donationRequestService;
         private readonly IUserService _userService;
+        private readonly IDonationService _donationService;
 
         public DonationRequestController(
             IDonationRequestService donationRequestService,
-            IUserService userService) : base(donationRequestService)
+            IUserService userService, 
+            IDonationService donationService) : base(donationRequestService)
         {
             _donationRequestService = donationRequestService;
             _userService = userService;
+            _donationService = donationService;
         }
 
         /// <summary>
@@ -101,7 +104,19 @@ namespace DonateTo.WebApi.V1.Controllers
             {
                 try
                 {
+                    StringValues client;
+                    Request.Headers.TryGetValue("Origin", out client);
+
                     await _donationRequestService.SoftDelete(donationRequest).ConfigureAwait(false);
+
+                    var donations = await _donationService.GetAsync((donation => donation.DonationRequestId == donationRequest.Id)).ConfigureAwait(false);
+                    donations = donations.Where(donation => donation.StatusId != 4);
+                    
+                    if (donations.Count() > 0)
+                    {
+                        var users = await _userService.GetByOrganizationIdAsync(donationRequest.OrganizationId).ConfigureAwait(false);
+                        await _donationRequestService.SendDeleteRequestMailToOrganizationUsersAsync(donationRequest, users, client).ConfigureAwait(false);
+                    }
 
                     return Ok();
                 }
