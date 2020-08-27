@@ -38,6 +38,7 @@ namespace DonateTo.Services.Extensions
             service.AddTransient<IQuestionService, QuestionService>();
             service.AddTransient<IBaseService<ControlType, BaseFilterModel>, ControlTypeService>();
             service.AddTransient<ILogService, LogService>();
+            service.AddTransient<IContactService, ContactService>();
 
             service.AddAutoMapper(typeof(Startup));
         }

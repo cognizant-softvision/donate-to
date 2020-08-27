@@ -42,7 +42,7 @@ namespace DonateTo.Services
             _mailSender = mailSender;
         }
 
-        public async Task SendDeletedOrganizationMailAsync(UserModel user, string client)
+        public async Task SendDeletedOrganizationMailAsync(Contact contact, string client)
         {
             var body = @"<p>Hi {0}!</p>
                             <p>An organization has been deleted</p>
@@ -51,13 +51,13 @@ namespace DonateTo.Services
             var bodyMessage = new MessageBody()
             {
                 HtmlBody = string.Format(CultureInfo.InvariantCulture, body,
-                                            user.FullName,
+                                            contact.FullName,
                                             client)
             };
 
             var to = new List<string>
             {
-                user.Email
+                contact.Email
             };
 
             var message = new Message(to, "An organization has been deleted", bodyMessage);

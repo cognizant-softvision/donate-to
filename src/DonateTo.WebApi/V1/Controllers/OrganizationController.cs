@@ -11,6 +11,7 @@ using System.Linq;
 using DonateTo.WebApi.Common;
 using System.Globalization;
 using System;
+using Microsoft.Extensions.Primitives;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -20,10 +21,12 @@ namespace DonateTo.WebApi.V1.Controllers
     public class OrganizationController : BaseApiController<Organization, OrganizationFilterModel>
     {
         private readonly IOrganizationService _organizationService;
+        private readonly IContactService _contactService;
 
-        public OrganizationController(IOrganizationService organizationService) : base(organizationService)
+        public OrganizationController(IOrganizationService organizationService, IContactService contactService) : base(organizationService)
         {
             _organizationService = organizationService;
+            _contactService = contactService;
         }
 
         /// <summary>
@@ -109,7 +112,13 @@ namespace DonateTo.WebApi.V1.Controllers
             {
                 try
                 {
+                    StringValues client;
+                    Request.Headers.TryGetValue("Origin", out client);
+
                     await _organizationService.SoftDelete(organization).ConfigureAwait(false);
+
+                    var contact = await _contactService.GetAsync(organization.ContactId).ConfigureAwait(false);
+                    await _organizationService.SendDeletedOrganizationMailAsync(contact, client).ConfigureAwait(false);
 
                     return Ok();
                 }

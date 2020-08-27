@@ -1,4 +1,5 @@
 ﻿using DonateTo.ApplicationCore.Entities;
+using DonateTo.ApplicationCore.Models;
 using DonateTo.ApplicationCore.Models.Filtering;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -34,5 +35,14 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// <param name="address">Address</param>
         /// <returns></returns>
         Task SoftDeleteAddress(Address address);
+
+        /// <summary>
+        /// Send Deleted organization info mail to owner of this organization
+        /// </summary>
+        /// <param name="user">IEnumerable<Users></Users></param>
+        /// <param name="client">Client</param>
+        /// <returns></returns>
+        Task SendDeletedOrganizationMailAsync(Contact contact, string client);
+
     }
 }
