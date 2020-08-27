@@ -76,6 +76,7 @@ namespace DonateTo.Infrastructure.Data.Repositories
                 .Include(d => d.Availabilities)
                 .Include(d => d.Status)
                 .Include(d => d.DonationItems).ThenInclude(di => di.Unit)
+                .Include(d => d.DonationItems).ThenInclude(di => di.Status)
                 .Include(d => d.DonationRequest.DonationRequestItems).ThenInclude(dri => dri.Unit)
                 .Include(d => d.DonationRequest.DonationRequestCategories).ThenInclude(drc => drc.Category)
                 .Include(d => d.DonationRequest.Organization)

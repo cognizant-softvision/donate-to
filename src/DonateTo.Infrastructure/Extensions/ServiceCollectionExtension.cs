@@ -41,6 +41,7 @@ namespace DonateTo.Infrastructure.Extensions
             services.AddScoped<IQuestionRepository, QuestionRepository>();
             services.AddScoped<IRepository<ControlType>, ControlTypeRepository>();
             services.AddScoped<IRepository<Log>, LogRepository>();            
+            services.AddScoped<IRepository<UserOrganization>, UserOrganizationRepository>();            
         }
     }
 }

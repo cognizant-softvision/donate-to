@@ -1,3 +1,4 @@
+import { StatusType } from './../../../shared/enum/statusType';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { DonationsSandbox } from '../donations-sandbox';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -28,6 +29,10 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
   title: string;
   ownerId: number;
   isEdit = false;
+
+  get statusEnum() {
+    return StatusType;
+  }
 
   listOfColumns: ColumnItem[] = [
     { name: 'Admin.Donation.Table.Itemcolumn' },
