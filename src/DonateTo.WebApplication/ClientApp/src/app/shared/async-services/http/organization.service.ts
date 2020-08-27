@@ -50,4 +50,12 @@ export class OrganizationService extends BaseHttpClientService<OrganizationModel
   getOrganization(id: number): Observable<OrganizationModel> {
     return this.getById(id);
   }
+
+  deleteOrganization(organization: OrganizationModel): Observable<OrganizationModel> {
+    return this.httpClient.put<OrganizationModel>(
+      `${this.url}/${this.endpoint}/?id=${organization.id}`,
+      organization,
+      this.httpOptions
+    );
+  }
 }

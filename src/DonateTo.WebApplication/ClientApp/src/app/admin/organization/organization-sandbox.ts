@@ -63,4 +63,11 @@ export class OrganizationSandbox extends Sandbox {
   public loadOrganization(organizationId: number): void {
     this.appState$.dispatch(store.fromOrganization.loadOrganization({ organizationId }));
   }
+
+  /**
+   * Soft deletes an organization
+   */
+  public deleteOrganization(organization: OrganizationModel): void {
+    this.appState$.dispatch(store.fromOrganization.deleteOrganization({ organization }));
+  }
 }

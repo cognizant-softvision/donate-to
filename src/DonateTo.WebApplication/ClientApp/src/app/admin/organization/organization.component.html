@@ -124,6 +124,16 @@
             >
               <i nz-icon nzType="info-circle" nzTheme="outline" class="action-icon"></i>
             </a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a
+              (click)="deleteOrganization(data)"
+              nzTooltipTitle="{{ 'Admin.Organization.Delete' | translate }}"
+              nzTooltipPlacement="bottom"
+              nz-tooltip
+              class="icon-link"
+            >
+              <i nz-icon nzType="delete" nzTheme="outline" class="action-icon"></i>
+            </a>
           </td>
         </tr>
       </ng-container>

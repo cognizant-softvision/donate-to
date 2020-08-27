@@ -170,6 +170,7 @@
       "DeleteConfirmation": "¿Está seguro que desea eliminar esta organización?",
       "Edit": "Editar Organización",
       "Detail": "Información",
+      "Delete": "Eliminar",
       "Table": {
         "Name": "Organización",
         "Description": "Descripción",

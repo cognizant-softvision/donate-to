@@ -13,6 +13,7 @@ using DonateTo.ApplicationCore.Models.Pagination;
 using System.Globalization;
 using DonateTo.ApplicationCore.Common;
 using System;
+using System.Collections.Generic;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -134,7 +135,7 @@ namespace DonateTo.WebApi.V1.Controllers
         }
 
         /// <summary>
-        /// Updates a DonationRequest
+        /// Soft Deletes a DonationRequest
         /// </summary>
         /// <param name="id">DonationRequest Id</param>
         /// <param name="donationRequest">DonationRequest</param>

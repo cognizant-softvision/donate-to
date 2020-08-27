@@ -53,3 +53,10 @@ export const loadOrganizationSuccess = createAction(
   props<{ organization: OrganizationModel }>()
 );
 export const loadOrganizationFailed = createAction('[Organization] Load organization failed');
+
+export const deleteOrganization = createAction('[Organization] Delete', props<{ organization: OrganizationModel }>());
+export const deleteOrganizationSuccess = createAction(
+  '[Organization] Delete success',
+  props<{ organization: OrganizationModel }>()
+);
+export const deleteOrganizationFailed = createAction('[Organization] Delete failed');
