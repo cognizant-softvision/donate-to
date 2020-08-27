@@ -56,29 +56,27 @@ namespace DonateTo.Services
 
             await _mailSender.SendAsync(message).ConfigureAwait(false);
         }
-        public async Task SendDeletedDonationMailAsync(IEnumerable<UserModel> users, string client)
+        public async Task SendDeletedDonationMailAsync(UserModel user, string client)
         {
-            var messages = new List<Message>();
             var body = @"<p>Hi {0}!</p>
-                            <p>The donation has been cancelled.</p>
+                            <p>A Donation has been cancelled.</p>
                             <p>Check it <a href='{1}'>here</a></p>";
 
-            foreach (var user in users)
+            var bodyMessage = new MessageBody()
             {
-                var bodyMessage = new MessageBody()
-                {
-                    HtmlBody = string.Format(CultureInfo.InvariantCulture, body,
-                                                user.FullName,
-                                                client)
-                };
+                HtmlBody = string.Format(CultureInfo.InvariantCulture, body,
+                                            user.FullName,
+                                            client)
+            };
 
-                var to = new List<string>();
-                to.Add(user.Email);
+            var to = new List<string>
+            {
+                user.Email
+            };
 
-                messages.Add(new Message(to, "Cancelled donation!", bodyMessage));
-            }
+            var message = new Message(to, "Cancelled donation!", bodyMessage);
 
-            await _mailSender.SendMultipleAsync(messages).ConfigureAwait(false);
+            await _mailSender.SendAsync(message).ConfigureAwait(false);
         }
 
 
