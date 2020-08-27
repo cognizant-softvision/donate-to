@@ -159,13 +159,16 @@ namespace DonateTo.WebApi.V1.Controllers
 
                     await _donationRequestService.SoftDelete(donationRequest).ConfigureAwait(false);
 
-                    var donations = await _donationService.GetAsync((donation => donation.DonationRequestId == donationRequest.Id)).ConfigureAwait(false);
-                    donations = donations.Where(donation => donation.StatusId != 4);
-                    
-                    if (donations.Count() > 0)
+                    if(donationRequest.StatusId != StatusType.Completed)
                     {
-                        var users = await _userService.GetByOrganizationIdAsync(donationRequest.OrganizationId).ConfigureAwait(false);
-                        await _donationRequestService.SendDeleteRequestMailToOrganizationUsersAsync(donationRequest, users, client).ConfigureAwait(false);
+                        var donations = await _donationService.GetAsync((donation => donation.DonationRequestId == donationRequest.Id)).ConfigureAwait(false);
+                        donations = donations.Where(donation => donation.StatusId != StatusType.Completed);
+                    
+                        if (donations.Count() > 0)
+                        {
+                            var users = await _userService.GetByOrganizationIdAsync(donationRequest.OrganizationId).ConfigureAwait(false);
+                            await _donationRequestService.SendDeleteRequestMailToOrganizationUsersAsync(donationRequest, users, client).ConfigureAwait(false);
+                        }
                     }
 
                     return Ok();
