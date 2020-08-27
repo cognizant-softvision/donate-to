@@ -233,7 +233,9 @@
           "AddAddressWarning": "Agregar al menos una dirección",
           "Name": "Nombre",
           "RequiredName": "Es requerido un nombre para esta dirección",
-          "DeleteConfirmation": "¿Está seguro que quiere eliminar esta dirección?"
+          "DeleteConfirmation": "¿Está seguro que quiere eliminar esta dirección?",
+          "Warning": "Warning",
+          "OneAddressRemainWarningMessage": "At least one address must remain in the organization"
         }
       }
     },

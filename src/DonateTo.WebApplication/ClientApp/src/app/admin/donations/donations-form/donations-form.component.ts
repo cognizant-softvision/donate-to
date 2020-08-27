@@ -107,11 +107,10 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
   }
 
   removeDonationRequestItem(donationRequestItemTarget: DonationRequestItemModel) {
-    if (!this.isEdit) {
-      this.donationRequestItems = this.donationRequestItems.filter((item) => item !== donationRequestItemTarget);
-    } else {
+    if (this.isEdit) {
       this.donationSandbox.deleteDonationRequestItem(donationRequestItemTarget);
     }
+    this.donationRequestItems = this.donationRequestItems.filter((item) => item !== donationRequestItemTarget);
   }
 
   validateForm() {
