@@ -30,6 +30,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
   successStatus = false;
   dataSaved = false;
   filter: string;
+  isDeleteProcess = false;
 
   constructor(
     public organizationSandbox: OrganizationSandbox,
@@ -74,6 +75,15 @@ export class OrganizationComponent implements OnInit, OnDestroy {
       this.organizationSandbox.isRoleProcessed$.subscribe((isRoleProcessed) => {
         if (isRoleProcessed && !this.organizationSandbox.isSuperAdmin$.value) {
           this.router.navigate(['']);
+        }
+      })
+    );
+
+    this.subscriptions.push(
+      this.organizationSandbox.loadAction$.subscribe((isLoading) => {
+        if (!isLoading && this.isDeleteProcess) {
+          this.isDeleteProcess = false;
+          this.organizationSandbox.loadOrganizationsFilteredPaged(this.organizationFilter);
         }
       })
     );
@@ -164,5 +174,6 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 
   deleteOrganization(organization: OrganizationModel) {
     this.organizationSandbox.deleteOrganization(organization);
+    this.isDeleteProcess = true;
   }
 }

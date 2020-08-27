@@ -9,6 +9,8 @@ using System;
 using System.Linq.Dynamic.Core;
 using DonateTo.Infrastructure.Extensions;
 using DonateTo.ApplicationCore.Interfaces.Repositories;
+using System.Collections.Generic;
+using DonateTo.ApplicationCore.Common;
 
 namespace DonateTo.Infrastructure.Data.Repositories
 {
@@ -62,6 +64,24 @@ namespace DonateTo.Infrastructure.Data.Repositories
                 await transaction.RollbackAsync().ConfigureAwait(false);
                 throw;
             }
+        }
+
+        public IEnumerable<User> GetDonors(long donationRequestItemId)
+        {
+            var donationRequestId = DbContext.DonationRequests
+                .Include(d => d.DonationRequestItems
+                    .Where(d => d.Id == donationRequestItemId))
+                .Select(d => d.Id)
+                .FirstOrDefault();
+
+            var donors = Get(null)
+                .Include(d => d.OwnerId)
+                .Where(d => (d.DonationRequestId == donationRequestId) &&
+                            (d.StatusId == StatusType.Pending))
+                .Select(d => d.Owner)
+                .ToList();
+
+            return donors;
         }
 
         #region private

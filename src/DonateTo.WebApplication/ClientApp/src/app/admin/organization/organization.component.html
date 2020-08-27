@@ -126,10 +126,13 @@
             </a>
             <nz-divider nzType="vertical"></nz-divider>
             <a
-              (click)="deleteOrganization(data)"
               nzTooltipTitle="{{ 'Admin.Organization.Delete' | translate }}"
               nzTooltipPlacement="bottom"
               nz-tooltip
+              nz-popconfirm
+              nzPopconfirmTitle="{{ 'Admin.Organization.DeleteConfirmation' | translate }}"
+              nzPopconfirmPlacement="bottom"
+              (nzOnConfirm)="deleteOrganization(data)"
               class="icon-link"
             >
               <i nz-icon nzType="delete" nzTheme="outline" class="action-icon"></i>
