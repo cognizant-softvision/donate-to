@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using DonateTo.WebApi.Common;
 using DonateTo.WebApi.Filters;
 using DonateTo.ApplicationCore.Models.Filtering;
+using System.Collections.Generic;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -91,10 +92,24 @@ namespace DonateTo.WebApi.V1.Controllers
         /// <returns>DonationRequest soft deleted.</returns>
         [HttpPut(Name = "[controller]_[action]")]
         [ServiceFilter(typeof(OrganizationAccessFilter))]
-        public async Task SoftDelete(long id, [FromBody] DonationRequest donationRequest)
+        public async Task<IActionResult> SoftDelete(long id, [FromBody] DonationRequest donationRequest)
         {
-            await _donationRequestService.SoftDelete(donationRequest).ConfigureAwait(false);
-            //return base.Put(donationRequest.Id, donationRequest);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            } else
+            {
+                try
+                {
+                    await _donationRequestService.SoftDelete(donationRequest).ConfigureAwait(false);
+
+                    return Ok();
+                }
+                catch (KeyNotFoundException ex)
+                {
+                    return NotFound(ex);
+                }
+            }
         }
     }
 }

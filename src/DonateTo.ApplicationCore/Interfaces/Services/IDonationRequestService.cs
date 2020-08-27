@@ -17,6 +17,11 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// <returns></returns>
         Task SendNewRequestMailToOrganizationUsersAsync(DonationRequest donationRequest, IEnumerable<UserModel> users, string client);
 
+        /// <summary>
+        /// Soft deletes a Donation Request
+        /// </summary>
+        /// <param name="donationRequest">DonationRequest</param>
+        /// <returns></returns>
         Task SoftDelete(DonationRequest donationRequest);
     }
 }

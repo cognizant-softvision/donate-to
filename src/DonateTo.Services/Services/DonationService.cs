@@ -1,5 +1,6 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces;
+using DonateTo.ApplicationCore.Interfaces.Repositories;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models;
 using DonateTo.ApplicationCore.Models.Filtering;
@@ -21,11 +22,11 @@ namespace DonateTo.Services
     public class DonationService: BaseService<Donation, DonationFilterModel>, IDonationService
     {
         private readonly IMailSender _mailSender;
-        private readonly IRepository<Donation> _donationRepository;
+        private readonly IDonationRepository _donationRepository;
 
         public DonationService(
             IMailSender mailSender,
-            IRepository<Donation> donationRepository,
+            IDonationRepository donationRepository,
             IUnitOfWork unitOfWork) : base(donationRepository, unitOfWork)
         {
             _mailSender = mailSender;
@@ -95,6 +96,11 @@ namespace DonateTo.Services
             }
 
             return predicate;
+        }
+
+        public async Task SoftDelete(Donation donation)
+        {
+            await _donationRepository.SoftDeleteDonation(donation).ConfigureAwait(false);
         }
     }
 }

@@ -205,15 +205,10 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
 
             foreach (var item in markedAsDeleted)
             {
-                //if(item.State == EntityState.Deleted)
-                //{
-                //    item.State = EntityState.Modified;
-                //    item.CurrentValues["IsDeleted"] = true;
-                //}
                 if (item.Entity is IIsDeleted entity)
                 {
-                    // Set the entity to unchanged (if we mark the whole entity as Modified, every field gets sent to Db as an update)
-                    item.State = EntityState.Unchanged;
+                    // Set the entity to modified
+                    item.State = EntityState.Modified;
                     // Only update the IsDeleted flag - only this will get sent to the Db
                     entity.IsDeleted = true;
                 }

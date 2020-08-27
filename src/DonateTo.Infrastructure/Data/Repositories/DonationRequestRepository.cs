@@ -56,13 +56,17 @@ namespace DonateTo.Infrastructure.Data.Repositories
             try
             {
                 var donationRequestToSoftDelete = Get(null)
+                    .Include(d => d.DonationRequestItems)
                     .Where(d => d.Id == donationRequest.Id)
                     .FirstOrDefault();
 
-                //donationRequestToSoftDelete.IsDeleted = true;
-                DbContext.Remove(donationRequestToSoftDelete);
-                //await UpdateAsync(donationRequestToSoftDelete).ConfigureAwait(false);
+                if(donationRequestToSoftDelete.DonationRequestItems.ToList().Count > 0)
+                {
+                    donationRequestToSoftDelete.DonationRequestItems.ToList().ForEach(i => DbContext.DonationRequestItems.Remove(i));
+                }
+                DbContext.DonationRequests.Remove(donationRequestToSoftDelete);
                 await DbContext.SaveChangesAsync().ConfigureAwait(false);
+                await transaction.CommitAsync().ConfigureAwait(false);
             }
             catch (Exception)
             {

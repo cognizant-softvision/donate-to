@@ -8,10 +8,11 @@ using System.Linq.Expressions;
 using System;
 using System.Linq.Dynamic.Core;
 using DonateTo.Infrastructure.Extensions;
+using DonateTo.ApplicationCore.Interfaces.Repositories;
 
 namespace DonateTo.Infrastructure.Data.Repositories
 {
-    public class DonationRepository : EntityFrameworkRepository<Donation, DonateToDbContext>
+    public class DonationRepository : EntityFrameworkRepository<Donation, DonateToDbContext>, IDonationRepository
     {
         public DonationRepository(DonateToDbContext dbContext) : base(dbContext)
         {
@@ -40,6 +41,27 @@ namespace DonateTo.Infrastructure.Data.Repositories
             GetPagedAsync(int page, int pageSize, Expression<Func<Donation, bool>> filter = null, string sort = "")
         {
             return await GetHydratedDonations().FilterAndSort(filter, sort).GetPagedAsync(page, pageSize).ConfigureAwait(false);
+        }
+
+        public async Task SoftDeleteDonation(Donation donation)
+        {
+            using var transaction = await DbContext.Database.BeginTransactionAsync().ConfigureAwait(false);
+
+            try
+            {
+                var donationToSoftDelete = Get(null)
+                    .Where(d => d.Id == donation.Id)
+                    .FirstOrDefault();
+
+                DbContext.Donations.Remove(donationToSoftDelete);
+                await DbContext.SaveChangesAsync().ConfigureAwait(false);
+                await transaction.CommitAsync().ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync().ConfigureAwait(false);
+                throw;
+            }
         }
 
         #region private

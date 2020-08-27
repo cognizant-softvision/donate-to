@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace DonateTo.ApplicationCore.Interfaces.Repositories
 {
-    public interface IDonationRequestRepository : IRepository<DonationRequest>
+    public interface IDonationRepository : IRepository<Donation>
     {
-        Task SoftDeleteDonationRequest(DonationRequest donationRequest);
+        Task SoftDeleteDonation(Donation donation);
     }
 }
