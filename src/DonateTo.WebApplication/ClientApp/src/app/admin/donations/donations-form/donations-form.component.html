@@ -1,94 +1,116 @@
 <form [formGroup]="donationRequestFormGroup" nz-form>
-  <nz-form-item>
-    <nz-form-label nzRequired nzFor="organization">{{ 'Admin.Donation.Form.Organization' | translate }}</nz-form-label>
-    <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.OrganizationRequiredError' | translate }}">
-      <nz-select
-        nzPlaceHolder="{{ 'Admin.Donation.Form.OrganizationPlaceholder' | translate }}"
-        [(ngModel)]="organizationId"
-        (ngModelChange)="setOrganization()"
-        formControlName="organizationFormControl"
-        [nzDisabled]="isEdit"
-      >
-        <nz-option
-          *ngFor="let organization of this.donationSandbox.organizations$ | async"
-          [nzValue]="organization.id"
-          [nzLabel]="organization.name"
-        >
-        </nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
+  <div class="create-donation-add-item-container">
+    <div class="create-donation-add-item-box">
+      <div class="create-item-container-first">
+        <nz-form-label class="donation-label" nzRequired nzFor="organization">{{
+          'Admin.Donation.Form.Organization' | translate
+        }}</nz-form-label>
+        <nz-form-label class="donation-label" nzRequired nzFor="address">{{
+          'Admin.Donation.Form.Address' | translate
+        }}</nz-form-label>
+        <nz-form-label class="donation-label" nzFor="finishDate">{{
+          'Admin.Donation.Form.FinishDate' | translate
+        }}</nz-form-label>
+        <nz-form-label class="donation-label" nzRequired nzFor="title">{{
+          'Admin.Donation.Form.Title' | translate
+        }}</nz-form-label>
+        <nz-form-label class="donation-label" *ngIf="donationRequest?.id" nzRequired nzFor="status">{{
+          'Admin.Donation.Form.Status' | translate
+        }}</nz-form-label>
+        <nz-form-label class="donation-label" nzFor="observations">{{
+          'Admin.Donation.Form.Observations' | translate
+        }}</nz-form-label>
+      </div>
 
-  <nz-form-item>
-    <nz-form-label nzRequired nzFor="address">{{ 'Admin.Donation.Form.Address' | translate }}</nz-form-label>
-    <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.AddressRequiredError' | translate }}">
-      <nz-select
-        nzPlaceHolder="{{ 'Admin.Donation.Form.AddressPlaceholder' | translate }}"
-        [(ngModel)]="addressId"
-        formControlName="addressFormControl"
-        nzDisabled="{{ (this.donationSandbox.addressesByOrganization$ | async).length == 0 }}"
-      >
-        <nz-option
-          *ngFor="let address of this.donationSandbox.addressesByOrganization$ | async"
-          [nzValue]="address.id"
-          [nzLabel]="address.street"
-        >
-        </nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
+      <div class="create-item-container create-donation-add-item-input">
+        <nz-form-item>
+          <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.OrganizationRequiredError' | translate }}">
+            <nz-select
+              nzPlaceHolder="{{ 'Admin.Donation.Form.OrganizationPlaceholder' | translate }}"
+              [(ngModel)]="organizationId"
+              (ngModelChange)="setOrganization()"
+              formControlName="organizationFormControl"
+              [nzDisabled]="isEdit"
+            >
+              <nz-option
+                *ngFor="let organization of this.donationSandbox.organizations$ | async"
+                [nzValue]="organization.id"
+                [nzLabel]="organization.name"
+              >
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
 
-  <nz-form-item>
-    <nz-form-label nzFor="finishDate">{{ 'Admin.Donation.Form.FinishDate' | translate }}</nz-form-label>
-    <nz-form-control>
-      <nz-date-picker [nzDisabledDate]="disabledDates" [(ngModel)]="finishDate" formControlName="finishDateFormControl">
-      </nz-date-picker>
-    </nz-form-control>
-  </nz-form-item>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.AddressRequiredError' | translate }}">
+            <nz-select
+              nzPlaceHolder="{{ 'Admin.Donation.Form.AddressPlaceholder' | translate }}"
+              [(ngModel)]="addressId"
+              formControlName="addressFormControl"
+              nzDisabled="{{ (this.donationSandbox.addressesByOrganization$ | async).length == 0 }}"
+            >
+              <nz-option
+                *ngFor="let address of this.donationSandbox.addressesByOrganization$ | async"
+                [nzValue]="address.id"
+                [nzLabel]="address.street"
+              >
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
 
-  <nz-form-item>
-    <nz-form-label nzRequired nzFor="title">{{ 'Admin.Donation.Form.Title' | translate }}</nz-form-label>
-    <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.TitleRequiredError' | translate }}">
-      <input
-        nz-input
-        placeholder="{{ 'Admin.Donation.Form.TitlePlaceholder' | translate }}"
-        [(ngModel)]="title"
-        formControlName="titleFormControl"
-        name="title"
-        type="text"
-        id="title"
-      />
-    </nz-form-control>
-  </nz-form-item>
+        <nz-form-item>
+          <nz-form-control>
+            <nz-date-picker
+              [nzDisabledDate]="disabledDates"
+              [(ngModel)]="finishDate"
+              formControlName="finishDateFormControl"
+            >
+            </nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
 
-  <nz-form-item>
-    <nz-form-label class="observations" nzFor="observations">{{
-      'Admin.Donation.Form.Observations' | translate
-    }}</nz-form-label>
-    <nz-form-control>
-      <textarea
-        [(ngModel)]="observations"
-        nz-input
-        placeholder="{{ 'Admin.Donation.Form.ObservationsPlaceholder' | translate }}"
-        formControlName="observationsFormControl"
-        name="observations"
-        id="observations"
-      ></textarea>
-    </nz-form-control>
-  </nz-form-item>
-  <nz-form-item *ngIf="donationRequest?.id">
-    <nz-form-label nzRequired nzFor="status">{{ 'Admin.Donation.Form.Status' | translate }}</nz-form-label>
-    <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.Status' | translate }}">
-      <nz-select [(ngModel)]="statusId" formControlName="statusFormControl">
-        <nz-option
-          *ngFor="let state of this.donationSandbox.status$ | async"
-          [nzValue]="state.id"
-          [nzLabel]="state.name"
-        >
-        </nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.TitleRequiredError' | translate }}">
+            <input
+              nz-input
+              placeholder="{{ 'Admin.Donation.Form.TitlePlaceholder' | translate }}"
+              [(ngModel)]="title"
+              formControlName="titleFormControl"
+              name="title"
+              type="text"
+              id="title"
+            />
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item *ngIf="donationRequest?.id">
+          <nz-form-control nzErrorTip="{{ 'Admin.Donation.Form.Status' | translate }}">
+            <nz-select [(ngModel)]="statusId" formControlName="statusFormControl">
+              <ng-container *ngFor="let state of this.donationSandbox.status$ | async">
+                <nz-option *ngIf="state.id != statusEnum.Rejected" [nzValue]="state.id" [nzLabel]="state.name">
+                </nz-option>
+              </ng-container>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control>
+            <textarea
+              [(ngModel)]="observations"
+              nz-input
+              placeholder="{{ 'Admin.Donation.Form.ObservationsPlaceholder' | translate }}"
+              formControlName="observationsFormControl"
+              name="observations"
+              id="observations"
+            ></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </div>
 
   <div [formGroup]="donationRequestItemFormGroup" class="create-donation-add-item-container">
     <div class="create-donation-add-item-box-first">
