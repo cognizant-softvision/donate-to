@@ -52,6 +52,7 @@ import { ArrowLeftOutline, DeleteOutline, EditOutline, PlusOutline } from '@ant-
 import { DonationsDetailComponent } from './donations-detail/donations-detail.component';
 import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
 import { QuestionsSandbox } from '../questions/questions.sandbox';
+import { DonationSandbox } from 'src/app/donation/donation.sandbox';
 
 // FIX this should be moved to an upper level.
 registerLocaleData(es);
@@ -118,6 +119,6 @@ const ICONS: IconDefinition[] = [PlusOutline, EditOutline, DeleteOutline, ArrowL
     DonationPriorityComponent,
     DonationsDetailComponent,
   ],
-  providers: [DonationsSandbox, DataUpdatedService, QuestionsSandbox],
+  providers: [DonationsSandbox, DataUpdatedService, QuestionsSandbox, DonationSandbox],
 })
 export class DonationsModule {}
