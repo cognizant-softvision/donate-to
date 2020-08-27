@@ -27,12 +27,13 @@ steps:
       projects: "src/DonateTo.WebApi/*.csproj"
       arguments: "--configuration $(BuildConfiguration)"
 
-  #- task: PowerShell@2
-  #inputs:
-  #targetType: "inline"
-  #script: |
-  #dotnet tool install -g dotnet-ef --version 3.0.0
-  #dotnet ef database update --project "$(Build.SourcesDirectory)\src\DonateTo.WebApi\DonateTo.WebApi.csproj" -s "$(Build.SourcesDirectory)\src\DonateTo.WebApi\DonateTo.WebApi.csproj" --context "DonateToDbContext" --connection "$(ConnectionStrings.PostgreSQL)"
+  - task: PowerShell@2
+    displayName: Create Sql Migration File
+    inputs:
+      targetType: "inline"
+      script: |
+        dotnet tool install -g dotnet-ef --version 3.0.0
+        dotnet ef migrations script  --project "$(Build.SourcesDirectory)\src\DonateTo.WebApi\DonateTo.WebApi.csproj" -s "$(Build.SourcesDirectory)\src\DonateTo.WebApi\DonateTo.WebApi.csproj" --output "$(build.artifactstagingdirectory)\SQL\migrations.sql" --idempotent --verbose --no-build --configuration $(BuildConfiguration) --context "DonateToDbContext"
 
   - task: DotNetCoreCLI@2
     displayName: Test
