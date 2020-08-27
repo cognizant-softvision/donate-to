@@ -10,16 +10,13 @@ namespace DonateTo.Services
     public class AddressService : BaseService<Address, BaseFilterModel>, IAddressService
     {
         private readonly IAddressRepository _addressRepository;
-        private readonly IAddressService _addressService;
         private readonly IUnitOfWork _unitOfWork;
 
         public AddressService(
             IAddressRepository addressRepository,
-            IAddressService addressService,
             IUnitOfWork unitOfWork) : base(addressRepository, unitOfWork)
         {
             _addressRepository = addressRepository;
-            _addressService = addressService;
             _unitOfWork = unitOfWork;
         }
 
