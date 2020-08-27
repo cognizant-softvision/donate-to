@@ -7,6 +7,9 @@ import {
   addOrganization,
   addOrganizationFailed,
   addOrganizationSuccess,
+  deleteAddress,
+  deleteAddressFailed,
+  deleteAddressSuccess,
   deleteOrganization,
   deleteOrganizationFailed,
   deleteOrganizationSuccess,
@@ -100,6 +103,17 @@ export class OrganizationEffects {
       this.organizationService.deleteOrganization(data.organization).pipe(
         map((organization) => deleteOrganizationSuccess({ organization })),
         catchError(() => of(deleteOrganizationFailed()))
+      )
+    )
+  );
+
+  @Effect()
+  deleteAddress$: Observable<{}> = this.actions$.pipe(
+    ofType(deleteAddress),
+    switchMap((data: any) =>
+      this.organizationService.deleteAddress(data.address).pipe(
+        map((address) => deleteAddressSuccess({ address })),
+        catchError(() => of(deleteAddressFailed()))
       )
     )
   );

@@ -213,5 +213,9 @@ namespace DonateTo.Services
             await _donationRequestRepository.SoftDeleteDonationRequest(donationRequest).ConfigureAwait(false);
         }
 
+        public async Task SoftDelete(DonationRequestItem donationRequestItem)
+        {
+            await _donationRequestRepository.SoftDeleteDonationRequestItem(donationRequestItem).ConfigureAwait(false);
+        }
     }
 }

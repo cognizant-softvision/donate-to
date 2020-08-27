@@ -2,7 +2,7 @@ import { BaseHttpClientService } from './base-http-client.service';
 import { ConfigService } from 'src/app/app-config.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { OrganizationModel, PageModel } from '../../models';
+import { AddressModel, OrganizationModel, PageModel } from '../../models';
 import { Observable } from 'rxjs/internal/Observable';
 import { OrganizationFilter } from '../../models/filters/organization-filter';
 
@@ -55,6 +55,14 @@ export class OrganizationService extends BaseHttpClientService<OrganizationModel
     return this.httpClient.put<OrganizationModel>(
       `${this.url}/${this.endpoint}/?id=${organization.id}`,
       organization,
+      this.httpOptions
+    );
+  }
+
+  deleteAddress(address: AddressModel): Observable<AddressModel> {
+    return this.httpClient.put<AddressModel>(
+      `${this.url}/${this.endpoint}/softDeleteAddress`,
+      address,
       this.httpOptions
     );
   }

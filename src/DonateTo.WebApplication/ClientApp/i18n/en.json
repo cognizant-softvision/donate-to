@@ -232,7 +232,8 @@
           "ContactModalStep": "Who is the contact person?",
           "AddAddressWarning": "Add at least one address",
           "Name": "Name",
-          "RequiredName": "A name for this address is required"
+          "RequiredName": "A name for this address is required",
+          "DeleteConfirmation": "Are you sure you want to delete this address?"
         }
       }
     },

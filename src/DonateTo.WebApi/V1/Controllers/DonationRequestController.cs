@@ -161,5 +161,33 @@ namespace DonateTo.WebApi.V1.Controllers
                 }
             }
         }
+
+        /// <summary>
+        /// Soft Deletes a DonationRequestItem
+        /// </summary>
+        /// <param name="donationRequestItem">DonationRequestItem</param>
+        /// <returns>DonationRequestItem soft deleted.</returns>
+        [HttpPut("softDeleteItem", Name = "[controller]_[action]")]
+        [ServiceFilter(typeof(OrganizationAccessFilter))]
+        public async Task<IActionResult> SoftDeleteRequestItem([FromBody] DonationRequestItem donationRequestItem)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                try
+                {
+                    await _donationRequestService.SoftDelete(donationRequestItem).ConfigureAwait(false);
+
+                    return Ok();
+                }
+                catch (KeyNotFoundException ex)
+                {
+                    return NotFound(ex);
+                }
+            }
+        }
     }
 }

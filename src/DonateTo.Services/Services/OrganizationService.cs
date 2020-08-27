@@ -144,5 +144,10 @@ namespace DonateTo.Services
 
             return predicate;
         }
+
+        public async Task SoftDeleteAddress(Address address)
+        {
+            await _organizationRepository.SoftDeleteAddress(address).ConfigureAwait(false);
+        }
     }
 }

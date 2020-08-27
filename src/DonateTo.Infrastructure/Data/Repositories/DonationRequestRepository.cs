@@ -75,6 +75,27 @@ namespace DonateTo.Infrastructure.Data.Repositories
             }            
         }
 
+        public async Task SoftDeleteDonationRequestItem(DonationRequestItem donationRequestItem)
+        {
+            using var transaction = await DbContext.Database.BeginTransactionAsync().ConfigureAwait(false);
+
+            try
+            {
+                var donationRequestItemToSoftDelete = DbContext.DonationRequestItems
+                    .Where(d => d.Id == donationRequestItem.Id)
+                    .FirstOrDefault();
+
+                DbContext.DonationRequestItems.Remove(donationRequestItemToSoftDelete);
+                await DbContext.SaveChangesAsync().ConfigureAwait(false);
+                await transaction.CommitAsync().ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync().ConfigureAwait(false);
+                throw;
+            }
+        }
+
         #region private
         private IQueryable<DonationRequest> GetHydratedDonationRequests()
         {

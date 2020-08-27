@@ -119,5 +119,33 @@ namespace DonateTo.WebApi.V1.Controllers
                 }
             }
         }
+
+        /// <summary>
+        /// Soft Deletes a Address
+        /// </summary>
+        /// <param name="address">Address</param>
+        /// <returns>Address soft deleted.</returns>
+        [HttpPut("softDeleteAddress", Name = "[controller]_[action]")]
+        [ServiceFilter(typeof(OrganizationAccessFilter))]
+        public async Task<IActionResult> SoftDeleteAddress([FromBody] Address address)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                try
+                {
+                    await _organizationService.SoftDeleteAddress(address).ConfigureAwait(false);
+
+                    return Ok();
+                }
+                catch (KeyNotFoundException ex)
+                {
+                    return NotFound(ex);
+                }
+            }
+        }
     }
 }

@@ -32,5 +32,12 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// <param name="donationRequest">DonationRequest</param>
         /// <returns></returns>
         Task SoftDelete(DonationRequest donationRequest);
+
+        /// <summary>
+        /// Soft deletes a Donation Request Item
+        /// </summary>
+        /// <param name="donationRequestItem">DonationRequestItem</param>
+        /// <returns></returns>
+        Task SoftDelete(DonationRequestItem donationRequestItem);
     }
 }

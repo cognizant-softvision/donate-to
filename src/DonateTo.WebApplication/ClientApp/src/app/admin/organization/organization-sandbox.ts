@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as store from '../../shared/store';
 import { OrganizationFilter } from '../../shared/models/filters/organization-filter';
-import { OrganizationModel } from '../../shared/models';
+import { AddressModel, OrganizationModel } from '../../shared/models';
 import { Sandbox } from '../../shared/sandbox/base.sandbox';
 
 @Injectable()
@@ -69,5 +69,12 @@ export class OrganizationSandbox extends Sandbox {
    */
   public deleteOrganization(organization: OrganizationModel): void {
     this.appState$.dispatch(store.fromOrganization.deleteOrganization({ organization }));
+  }
+
+  /**
+   * Soft deletes an address
+   */
+  public deleteAddress(address: AddressModel): void {
+    this.appState$.dispatch(store.fromOrganization.deleteAddress({ address }));
   }
 }
