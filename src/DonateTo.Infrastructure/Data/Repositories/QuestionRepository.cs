@@ -136,8 +136,14 @@ namespace DonateTo.Infrastructure.Data.Repositories
             try
             {
                 var questionToSoftDelete = Get(null)
+                    .Include(q => q.Options)
                     .Where(q => q.Id == q.Id)
                     .FirstOrDefault();
+
+                if (questionToSoftDelete.Options.ToList().Count > 0)
+                {
+                    questionToSoftDelete.Options.ToList().ForEach(qo => DbContext.QuestionOption.Remove(qo));
+                }
 
                 DbContext.Question.Remove(questionToSoftDelete);
                 await DbContext.SaveChangesAsync().ConfigureAwait(false);

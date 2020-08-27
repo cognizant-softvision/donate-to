@@ -35,6 +35,7 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
         public DbSet<UserToken> UserTokens { get; set; }
         public DbSet<UserOrganization> UserOrganizations { get; set; }
         public DbSet<Question> Question { get; set; }
+        public DbSet<QuestionOption> QuestionOption { get; set; }
         public DbSet<Log> Logs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
