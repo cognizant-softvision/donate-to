@@ -7,7 +7,7 @@ namespace DonateTo.Infrastructure.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql(File.ReadAllText("../DonateTo.Infrastructure/Data/Seed/ControlType2.sql"));
+            migrationBuilder.Sql(File.ReadAllText("./Data/Seed/ControlType2.sql"));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
