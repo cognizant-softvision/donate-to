@@ -20,5 +20,12 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// <param name="userId">User Id</param>
         /// <returns>IEnumerable of User.</returns>
         Task<IEnumerable<Organization>> GetByUserIdAsync(long userId);
+
+        /// <summary>
+        /// Soft deletes an Organization
+        /// </summary>
+        /// <param name="organization">Organization</param>
+        /// <returns></returns>
+        Task SoftDelete(Organization organization);
     }
 }

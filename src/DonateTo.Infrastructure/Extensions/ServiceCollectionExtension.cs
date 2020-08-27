@@ -29,7 +29,7 @@ namespace DonateTo.Infrastructure.Extensions
             services.AddScoped<IRepository<DonationItem>, DonationItemRepository>();
             services.AddScoped<IDonationRequestRepository, DonationRequestRepository>();
             services.AddScoped<IRepository<DonationRequestItem>, DonationRequestItemRepository>();
-            services.AddScoped<IRepository<Organization>, OrganizationRepository>();
+            services.AddScoped<IOrganizationRepository, OrganizationRepository>();
             services.AddScoped<IRepository<Role>, RoleRepository>();
             services.AddScoped<IRepository<Status>, StatusRepository>();
             services.AddScoped<IRepository<Unit>, UnitRepository>();

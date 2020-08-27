@@ -1,4 +1,5 @@
 ﻿using DonateTo.ApplicationCore.Entities;
+using DonateTo.ApplicationCore.Interfaces.Repositories;
 using DonateTo.Infrastructure.Data.EntityFramework;
 using DonateTo.Infrastructure.Data.Extensions;
 using DonateTo.Infrastructure.Extensions;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace DonateTo.Infrastructure.Data.Repositories
 {
-    public class OrganizationRepository : EntityFrameworkRepository<Organization, DonateToDbContext>
+    public class OrganizationRepository : EntityFrameworkRepository<Organization, DonateToDbContext>, IOrganizationRepository
     {
         public OrganizationRepository(DonateToDbContext dbContext) : base(dbContext)
         {
@@ -41,6 +42,27 @@ namespace DonateTo.Infrastructure.Data.Repositories
         public override async Task<Organization> GetAsync(long id)
         {
             return await GetHydratedOrganization().FirstOrDefaultAsync(x => x.Id == id).ConfigureAwait(false);
+        }
+
+        public async Task SoftDeleteOrganization(Organization organization)
+        {
+            using var transaction = await DbContext.Database.BeginTransactionAsync().ConfigureAwait(false);
+
+            try
+            {
+                var organizationToSoftDelete = Get(null)
+                    .Where(o => o.Id == organization.Id)
+                    .FirstOrDefault();
+
+                DbContext.Organizations.Remove(organizationToSoftDelete);
+                await DbContext.SaveChangesAsync().ConfigureAwait(false);
+                await transaction.CommitAsync().ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync().ConfigureAwait(false);
+                throw;
+            }
         }
 
         #region private

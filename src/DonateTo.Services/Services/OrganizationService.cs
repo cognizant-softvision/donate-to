@@ -78,6 +78,12 @@ namespace DonateTo.Services
             return await _organizationRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicate, GetSort(filter)).ConfigureAwait(false);
         }
 
+        public Task SoftDelete(Organization organization)
+        {
+            await _organizationRepository.SoftDeleteOrganization(organization).ConfigureAwait(false);
+
+        }
+
         ///<inheritdoc cref="BaseService{DonationRequest, DonationRequestFilterModel}"/>
         protected override Expression<Func<Organization, bool>> GetPredicate(OrganizationFilterModel filter)
         {
