@@ -106,6 +106,7 @@
 
           <td>
             <a
+              *ngIf="this.isAdmin"
               [routerLink]="['./edit', data.id]"
               nzTooltipTitle="{{ 'Admin.Organization.Edit' | translate }}"
               nzTooltipPlacement="bottom"
@@ -114,7 +115,7 @@
             >
               <i nz-icon nzType="edit" nzTheme="outline" class="action-icon"></i>
             </a>
-            <nz-divider nzType="vertical"></nz-divider>
+            <nz-divider *ngIf="this.isAdmin" nzType="vertical"></nz-divider>
             <a
               [routerLink]="['./detail', data.id]"
               nzTooltipTitle="{{ 'Admin.Organization.Detail' | translate }}"
