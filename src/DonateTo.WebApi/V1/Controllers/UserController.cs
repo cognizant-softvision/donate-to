@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using DonateTo.ApplicationCore.Models.Filtering;
 using Microsoft.AspNetCore.Authorization;
 using DonateTo.WebApi.Filters;
+using DonateTo.ApplicationCore.Common;
+using Newtonsoft.Json;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -37,7 +39,6 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ServiceFilter(typeof(OrganizationAccessFilter))]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "<Pending>")]
         public virtual async Task<ActionResult<UserModel>> Get(long id)
         {
@@ -236,6 +237,13 @@ namespace DonateTo.WebApi.V1.Controllers
             }
             else
             {
+                var roles = User.Claims.Select(c => c.Value).ToList();
+                //if (roles.Contains(Roles.Organization))
+                //{
+                //    var organizations = JsonConvert.SerializeObject(User.Claims.Where(claim => claim.Type == "organizations").Select(claim => claim.Value));
+                //    var organizationClaim = JsonConvert.DeserializeObject<List<OrganizationClaim>>(organizations);
+                //    filter.OrganizationIds = organizationClaim.Select(oc => oc.Id).ToList();
+                //}
                 var result = await _userService.GetPagedFilteredAsync(filter).ConfigureAwait(false);
 
                 if (result != null)

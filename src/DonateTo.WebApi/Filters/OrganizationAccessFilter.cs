@@ -40,21 +40,7 @@ namespace DonateTo.WebApi.Filters
             {
                 case Roles.Superadmin:
                 case Roles.Admin:
-                    break;
                 case Roles.Organization:                    
-                    var donationRequest = (DonationRequest)context.ActionArguments.FirstOrDefault(arg => arg.Value is DonationRequest).Value;
-
-                    if (donationRequest == null)
-                    {
-                        context.Result = new BadRequestResult();
-                    }
-
-                    var userId = long.Parse(user.Claims.FirstOrDefault(claim => claim.Type == Claims.UserId).Value, CultureInfo.InvariantCulture);
-
-                    if (!_organizationService.GetByUserId(userId).Any(o => o.Id == donationRequest.OrganizationId))
-                    {
-                        context.Result = new UnauthorizedObjectResult("User is not part of the organization.");
-                    }
                     break;
                 case Roles.Donor:
                     context.Result = new UnauthorizedObjectResult("User does not have access privileges.");
