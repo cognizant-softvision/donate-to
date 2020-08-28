@@ -107,5 +107,10 @@ namespace DonateTo.Services
 
             return totalWeight;
         }
+
+        public async Task SoftDelete(Question question)
+        {
+            await _questionRepository.SoftDeleteQuestion(question).ConfigureAwait(false);
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces;
+using DonateTo.ApplicationCore.Interfaces.Repositories;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models;
 using DonateTo.ApplicationCore.Models.Filtering;
@@ -20,14 +21,15 @@ namespace DonateTo.Services
     public class DonationRequestService: BaseService<DonationRequest, DonationRequestFilterModel>, IDonationRequestService
     {
         private readonly IMailSender _mailSender;
-        private readonly IRepository<DonationRequest> _donationRequestRepository;
+        private readonly IDonationRequestRepository _donationRequestRepository;
         private readonly IRepository<UserOrganization> _userOrganizationRepository;
         private readonly IOrganizationService _organizationService;
+        private readonly IUnitOfWork _unitOfWork;
 
         public DonationRequestService(
             IMailSender mailSender,
             IOrganizationService organizationService,
-            IRepository<DonationRequest> donationRequestRepository,
+            IDonationRequestRepository donationRequestRepository,
             IRepository<UserOrganization> userOrganizationRepository,
             IUnitOfWork unitOfWork) : base(donationRequestRepository, unitOfWork)
         {
@@ -35,6 +37,7 @@ namespace DonateTo.Services
             _donationRequestRepository = donationRequestRepository;
             _userOrganizationRepository = userOrganizationRepository;
             _organizationService = organizationService;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<PagedResult<DonationRequest>> GetPagedFilteredByOrganizationAsync(DonationRequestFilterModel filter, long userId)
@@ -82,6 +85,38 @@ namespace DonateTo.Services
 
                 messages.Add(new Message(to, "New donation request!", bodyMessage));
             } 
+
+            await _mailSender.SendMultipleAsync(messages).ConfigureAwait(false);
+        }
+
+        ///<inheritdoc cref="IDonationService"/>
+        public async Task SendDeleteRequestMailToOrganizationUsersAsync(DonationRequest donationRequest, IEnumerable<UserModel> users, string client)
+        {
+            if (donationRequest.Organization == null)
+            {
+                donationRequest.Organization = _organizationService.Get(donationRequest.OrganizationId);
+            }
+
+            var messages = new List<Message>();
+            var body = @"<p>Hi {0}!</p>
+                            <p>A new Donation Request has been cancelled to {1}</p>
+                            <p>Check it <a href='{2}'>here</a></p>";
+
+            foreach (var user in users)
+            {
+                var bodyMessage = new MessageBody()
+                {
+                    HtmlBody = string.Format(CultureInfo.InvariantCulture, body,
+                                             user.FullName,
+                                             donationRequest.Organization.Name,
+                                             client)
+                };
+
+                var to = new List<string>();
+                to.Add(user.Email);
+
+                messages.Add(new Message(to, "Cancelled donation request!", bodyMessage));
+            }
 
             await _mailSender.SendMultipleAsync(messages).ConfigureAwait(false);
         }
@@ -179,5 +214,40 @@ namespace DonateTo.Services
             return predicate;
         }
 
+        public async Task SoftDelete(DonationRequest donationRequest)
+        {
+            await _donationRequestRepository.SoftDeleteDonationRequest(donationRequest).ConfigureAwait(false);
+        }
+
+        public async Task SoftDelete(DonationRequestItem donationRequestItem)
+        {
+            await _donationRequestRepository.SoftDeleteDonationRequestItem(donationRequestItem).ConfigureAwait(false);
+        }
+
+        public async Task SendDeletedDonationRequestItemMailAsync(DonationRequestItem donationRequestItem, IEnumerable<User> users, string client)
+        {
+            var messages = new List<Message>();
+            var body = @"<p>Hi {0}!</p>
+                            <p>A Donation Item has been cancelled.</p>
+                            <p>Check it <a href='{1}'>here</a></p>";
+
+            foreach (var user in users)
+            {
+                var bodyMessage = new MessageBody()
+                {
+                    HtmlBody = string.Format(CultureInfo.InvariantCulture, body,
+                                             user.FullName,
+                                             donationRequestItem.Name,
+                                             client)
+                };
+
+                var to = new List<string>();
+                to.Add(user.Email);
+
+                messages.Add(new Message(to, "Cancelled donation request!", bodyMessage));
+            }
+
+            await _mailSender.SendMultipleAsync(messages).ConfigureAwait(false);
+        }
     }
 }

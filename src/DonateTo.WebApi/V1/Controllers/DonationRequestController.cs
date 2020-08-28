@@ -13,6 +13,7 @@ using DonateTo.ApplicationCore.Models.Pagination;
 using System.Globalization;
 using DonateTo.ApplicationCore.Common;
 using System;
+using System.Collections.Generic;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -25,13 +26,16 @@ namespace DonateTo.WebApi.V1.Controllers
     {
         private readonly IDonationRequestService _donationRequestService;
         private readonly IUserService _userService;
+        private readonly IDonationService _donationService;
 
         public DonationRequestController(
             IDonationRequestService donationRequestService,
-            IUserService userService) : base(donationRequestService)
+            IUserService userService, 
+            IDonationService donationService) : base(donationRequestService)
         {
             _donationRequestService = donationRequestService;
             _userService = userService;
+            _donationService = donationService;
         }
 
         /// <summary>
@@ -129,6 +133,83 @@ namespace DonateTo.WebApi.V1.Controllers
                 } else
                 {
                     return Unauthorized();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Soft Deletes a DonationRequest
+        /// </summary>
+        /// <param name="id">DonationRequest Id</param>
+        /// <param name="donationRequest">DonationRequest</param>
+        /// <returns>DonationRequest soft deleted.</returns>
+        [HttpPut(Name = "[controller]_[action]")]
+        [ServiceFilter(typeof(OrganizationAccessFilter))]
+        public async Task<IActionResult> SoftDelete(long id, [FromBody] DonationRequest donationRequest)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            } else
+            {
+                try
+                {
+                    StringValues client;
+                    Request.Headers.TryGetValue("Origin", out client);
+
+                    await _donationRequestService.SoftDelete(donationRequest).ConfigureAwait(false);
+
+                    if(donationRequest.StatusId != StatusType.Completed)
+                    {
+                        var donations = await _donationService.GetAsync((donation => donation.DonationRequestId == donationRequest.Id)).ConfigureAwait(false);
+                        donations = donations.Where(donation => donation.StatusId != StatusType.Completed);
+                    
+                        if (donations.Count() > 0)
+                        {
+                            var users = await _userService.GetByOrganizationIdAsync(donationRequest.OrganizationId).ConfigureAwait(false);
+                            await _donationRequestService.SendDeleteRequestMailToOrganizationUsersAsync(donationRequest, users, client).ConfigureAwait(false);
+                        }
+                    }
+
+                    return Ok();
+                }
+                catch (KeyNotFoundException ex)
+                {
+                    return NotFound(ex);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Soft Deletes a DonationRequestItem
+        /// </summary>
+        /// <param name="donationRequestItem">DonationRequestItem</param>
+        /// <returns>DonationRequestItem soft deleted.</returns>
+        [HttpPut("softDeleteItem", Name = "[controller]_[action]")]
+        [ServiceFilter(typeof(OrganizationAccessFilter))]
+        public async Task<IActionResult> SoftDeleteRequestItem([FromBody] DonationRequestItem donationRequestItem)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                try
+                {
+                    StringValues client;
+                    Request.Headers.TryGetValue("Origin", out client);
+
+                    await _donationRequestService.SoftDelete(donationRequestItem).ConfigureAwait(false);
+
+                    var donors = _donationService.GetDonorsByDonationRequestItemId(donationRequestItem.Id);
+                    await _donationRequestService.SendDeletedDonationRequestItemMailAsync(donationRequestItem, donors, client).ConfigureAwait(false);
+
+                    return Ok();
+                }
+                catch (KeyNotFoundException ex)
+                {
+                    return NotFound(ex);
                 }
             }
         }

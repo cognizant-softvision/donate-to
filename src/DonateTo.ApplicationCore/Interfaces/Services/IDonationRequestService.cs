@@ -26,5 +26,35 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// <returns></returns>
         Task<PagedResult<DonationRequest>> GetPagedFilteredByOrganizationAsync(DonationRequestFilterModel filter, long userId);
 
+        /// <summary>
+        /// Send Deleted request info mail to all users of the organization
+        /// </summary>
+        /// <param name="donationRequest">DonationRequest</param>
+        /// <param name="users">IEnumerable<Users></Users></param>
+        /// <param name="client">Client</param>
+        /// <returns></returns>
+        Task SendDeleteRequestMailToOrganizationUsersAsync(DonationRequest donationRequest, IEnumerable<UserModel> users, string client);
+
+        /// <summary>
+        /// Soft deletes a Donation Request
+        /// </summary>
+        /// <param name="donationRequest">DonationRequest</param>
+        /// <returns></returns>
+        Task SoftDelete(DonationRequest donationRequest);
+
+        /// <summary>
+        /// Soft deletes a Donation Request Item
+        /// </summary>
+        /// <param name="donationRequestItem">DonationRequestItem</param>
+        /// <returns></returns>
+        Task SoftDelete(DonationRequestItem donationRequestItem);
+
+        /// <summary>
+        /// Send Deleted request item info mail to all donors
+        /// </summary>
+        /// <param name="users">IEnumerable<Users></param>
+        /// <param name="client">Client</param>
+        /// <returns></returns>
+        public Task SendDeletedDonationRequestItemMailAsync(DonationRequestItem donationRequestItem, IEnumerable<User> users, string client);
     }
 }

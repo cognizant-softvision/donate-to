@@ -105,6 +105,36 @@ const organizationReducer = createReducer(
     loading: false,
     failed: true,
     organization: new OrganizationModel(),
+  })),
+  on(organizationActions.deleteOrganization, (state) => ({
+    ...state,
+    loading: true,
+    failed: false,
+  })),
+  on(organizationActions.deleteOrganizationSuccess, (state) => ({
+    ...state,
+    loading: false,
+    failed: false,
+  })),
+  on(organizationActions.deleteOrganizationFailed, (state) => ({
+    ...state,
+    loading: false,
+    failed: true,
+  })),
+  on(organizationActions.deleteAddress, (state) => ({
+    ...state,
+    loading: true,
+    failed: false,
+  })),
+  on(organizationActions.deleteAddressSuccess, (state) => ({
+    ...state,
+    loading: false,
+    failed: false,
+  })),
+  on(organizationActions.deleteAddressFailed, (state) => ({
+    ...state,
+    loading: false,
+    failed: true,
   }))
 );
 

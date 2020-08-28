@@ -5,6 +5,9 @@ import {
   addResults,
   addResultsFailed,
   addResultsSuccess,
+  deleteQuestion,
+  deleteQuestionFailed,
+  deleteQuestionSuccess,
   loadControlTypes,
   loadControlTypesFailed,
   loadControlTypesSuccess,
@@ -74,6 +77,17 @@ export class QuestionEffects {
       this.questionService.createQuestionsResult(results).pipe(
         map(() => addResultsSuccess({ results })),
         catchError(() => of(addResultsFailed()))
+      )
+    )
+  );
+
+  @Effect()
+  deleteQuestion$: Observable<{}> = this.actions$.pipe(
+    ofType(deleteQuestion),
+    switchMap((data: any) =>
+      this.questionService.deleteQuestion(data.question).pipe(
+        map((question) => deleteQuestionSuccess({ question })),
+        catchError(() => of(deleteQuestionFailed()))
       )
     )
   );

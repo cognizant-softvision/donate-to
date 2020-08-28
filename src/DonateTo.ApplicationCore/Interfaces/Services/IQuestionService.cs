@@ -25,5 +25,12 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// <param name="questionResults"> List of questions answers</param>
         /// <returns></returns>
         decimal CalculateWeightQuestionAsync(QuestionResult questionResults);
+
+        /// <summary>
+        /// Soft deletes a Question
+        /// </summary>
+        /// <param name="question">Question</param>
+        /// <returns></returns>
+        Task SoftDelete(Question question);
     }
 }

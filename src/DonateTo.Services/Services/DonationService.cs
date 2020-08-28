@@ -1,5 +1,6 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces;
+using DonateTo.ApplicationCore.Interfaces.Repositories;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models;
 using DonateTo.ApplicationCore.Models.Filtering;
@@ -21,15 +22,18 @@ namespace DonateTo.Services
     public class DonationService: BaseService<Donation, DonationFilterModel>, IDonationService
     {
         private readonly IMailSender _mailSender;
-        private readonly IRepository<Donation> _donationRepository;
+        private readonly IDonationRepository _donationRepository;
+        private readonly IDonationRequestRepository _donationRequestRepository;
 
         public DonationService(
             IMailSender mailSender,
-            IRepository<Donation> donationRepository,
+            IDonationRepository donationRepository,
+            IDonationRequestRepository donationRequestRepository,
             IUnitOfWork unitOfWork) : base(donationRepository, unitOfWork)
         {
             _mailSender = mailSender;
             _donationRepository = donationRepository;
+            _donationRequestRepository = donationRequestRepository;
         }
 
         ///<inheritdoc cref="IDonationService"/>
@@ -52,6 +56,29 @@ namespace DonateTo.Services
             };
 
             var message = new Message(to, "You've made a new donation!", bodyMessage);
+
+            await _mailSender.SendAsync(message).ConfigureAwait(false);
+        }
+
+        public async Task SendDeletedDonationMailAsync(UserModel user, string client)
+        {
+            var body = @"<p>Hi {0}!</p>
+                            <p>A Donation has been cancelled.</p>
+                            <p>Check it <a href='{1}'>here</a></p>";
+
+            var bodyMessage = new MessageBody()
+            {
+                HtmlBody = string.Format(CultureInfo.InvariantCulture, body,
+                                            user.FullName,
+                                            client)
+            };
+
+            var to = new List<string>
+            {
+                user.Email
+            };
+
+            var message = new Message(to, "Cancelled donation!", bodyMessage);
 
             await _mailSender.SendAsync(message).ConfigureAwait(false);
         }
@@ -96,5 +123,17 @@ namespace DonateTo.Services
 
             return predicate;
         }
+
+        public async Task SoftDelete(Donation donation)
+        {
+            await _donationRepository.SoftDeleteDonation(donation).ConfigureAwait(false);
+        }
+
+        public IEnumerable<User> GetDonorsByDonationRequestItemId(long donationRequestItemId)
+        {
+            return _donationRepository.GetDonors(donationRequestItemId);
+        }
+
+
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace DonateTo.ApplicationCore.Entities
+﻿using DonateTo.ApplicationCore.Interfaces;
+
+namespace DonateTo.ApplicationCore.Entities
 {
-    public class DonationItem : EntityBase
+    public class DonationItem : EntityBase, IIsDeleted
     {
         public decimal Quantity { get; set; }
         public string Observation { get; set; }
@@ -12,5 +14,6 @@
         public DonationRequestItem DonationRequestItem { get; set; }
         public Unit Unit { get; set; }
         public Status Status { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }
