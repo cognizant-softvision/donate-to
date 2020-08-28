@@ -157,8 +157,8 @@ export class OrganizationComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
-  seeAssociatedUsers(organizationName: string) {
-    this.filterUsers.changeFilter(organizationName);
+  seeAssociatedUsers(organizationId: number) {
+    this.filterUsers.changeFilter(organizationId);
     this.router.navigate(['./admin/users']);
   }
 }
