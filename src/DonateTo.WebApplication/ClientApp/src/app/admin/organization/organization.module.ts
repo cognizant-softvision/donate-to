@@ -96,6 +96,7 @@ const ICONS: IconDefinition[] = [
     NzDescriptionsModule,
     NzToolTipModule,
     NzTabsModule,
+    NzSpinModule,
 
     FormsModule,
     CommonModule,

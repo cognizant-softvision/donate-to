@@ -70,12 +70,6 @@ namespace DonateTo.WebApi
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
         {
-            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-            {
-                var context = serviceScope.ServiceProvider.GetRequiredService<DonateToDbContext>();
-                context.Database.Migrate();
-            }
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
