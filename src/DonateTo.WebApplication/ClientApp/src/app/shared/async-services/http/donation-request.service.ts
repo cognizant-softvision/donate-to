@@ -62,6 +62,7 @@ export class DonationRequestService extends BaseHttpClientService<DonationReques
       observation: donationRequestFilter?.observation ?? '',
       orderBy: donationRequestFilter?.orderBy ?? '',
       orderDirection: donationRequestFilter?.orderDirection ?? '',
+      organizationName: donationRequestFilter?.organizationName ?? '',
     };
     return this.httpClient.get<PageModel<DonationRequestModel>>(`${this.url}/${this.endpoint}/pagedFiltered`, {
       params: queryString,

@@ -130,6 +130,7 @@
       "Save": "Save",
       "Table": {
         "Itemcolumn": "Request Name",
+        "OrganizationColumn": "Organization",
         "CreatedColumn": "Created Date",
         "Finishcolumn": "Donation Deadline",
         "Observationcolumn": "Observation",

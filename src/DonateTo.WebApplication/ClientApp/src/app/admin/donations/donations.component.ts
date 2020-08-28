@@ -25,11 +25,13 @@ export class DonationsComponent implements OnDestroy, OnInit {
   searchFinishDateBeginValue: Date;
   searchFinishDateEndValue: Date;
   searchObservationValue = '';
+  searchOrganizationValue = '';
   titleVisible = false;
   createdDateVisible = false;
   finishDateVisible = false;
   observationVisible = false;
   placedDonationsVisible = false;
+  organizationVisible = false;
   donationRequestFilter = new DonationRequestFilter();
   failedStatus = false;
   successStatus = false;
@@ -53,6 +55,7 @@ export class DonationsComponent implements OnDestroy, OnInit {
       createdDateEnd: null,
       finishDateBegin: null,
       finishDateEnd: null,
+      organizationName: null,
     };
 
     this.subscriptions.push(
@@ -117,6 +120,7 @@ export class DonationsComponent implements OnDestroy, OnInit {
       finishDateBegin: this.searchFinishDateBeginValue,
       finishDateEnd: this.searchFinishDateEndValue,
       observation: this.searchObservationValue,
+      organizationName: this.searchOrganizationValue,
     };
 
     this.donationSandbox.loadDonationRequestsFilteredPaged(this.donationRequestFilter);
@@ -126,6 +130,13 @@ export class DonationsComponent implements OnDestroy, OnInit {
     this.titleVisible = false;
     this.searchTitleValue = '';
     this.donationRequestFilter = { ...this.donationRequestFilter, title: this.searchTitleValue };
+    this.donationSandbox.loadDonationRequestsFilteredPaged(this.donationRequestFilter);
+  }
+
+  resetOrganizationSearch(): void {
+    this.organizationVisible = false;
+    this.searchOrganizationValue = '';
+    this.donationRequestFilter = { ...this.donationRequestFilter, title: this.searchOrganizationValue };
     this.donationSandbox.loadDonationRequestsFilteredPaged(this.donationRequestFilter);
   }
 
@@ -163,6 +174,12 @@ export class DonationsComponent implements OnDestroy, OnInit {
   searchTitle(): void {
     this.titleVisible = false;
     this.donationRequestFilter = { ...this.donationRequestFilter, title: this.searchTitleValue };
+    this.donationSandbox.loadDonationRequestsFilteredPaged(this.donationRequestFilter);
+  }
+
+  searchOrganization(): void {
+    this.organizationVisible = false;
+    this.donationRequestFilter = { ...this.donationRequestFilter, organizationName: this.searchOrganizationValue };
     this.donationSandbox.loadDonationRequestsFilteredPaged(this.donationRequestFilter);
   }
 
