@@ -96,9 +96,9 @@ namespace DonateTo.WebApi.V1.Controllers
             }
             else
             {
-                var userRole = User.Claims.FirstOrDefault(claim => claim.Type.Contains(Claims.Role))?.Value;
+                var userRole = User.Claims.Select(c => c.Value).ToList();
 
-                if (userRole == Roles.Superadmin)
+                if (userRole.Contains(Roles.Superadmin))
                 {
                     var result = await _donationRequestService.GetPagedFilteredAsync(filter).ConfigureAwait(false);
 
@@ -110,7 +110,7 @@ namespace DonateTo.WebApi.V1.Controllers
                     {
                         return NotFound();
                     }
-                } else if (userRole == Roles.Admin || userRole == Roles.Organization) {
+                } else if (userRole.Contains(Roles.Admin) || userRole.Contains(Roles.Organization)) {
                     // Obtengo mi userId
                     var userId = long.Parse(
                                  User.Claims.FirstOrDefault(
