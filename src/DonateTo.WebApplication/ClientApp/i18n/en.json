@@ -197,6 +197,7 @@
         },
         "Contact": {
           "Contact": "Contact",
+          "Owner": "Owner",
           "Responsable": "Responsable",
           "FirstName": "First Name",
           "LastName": "Last Name",
