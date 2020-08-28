@@ -16,8 +16,11 @@ namespace DonateTo.WebApi.V1.Controllers
     [ApiController]
     public class AddressController : BaseApiController<Address, BaseFilterModel>
     {
-        public AddressController(IBaseService<Address, BaseFilterModel> addressService) : base(addressService)
+        private readonly IAddressService _addressService;
+
+        public AddressController(IAddressService addressService) : base(addressService)
         {
+            _addressService = addressService;   
         }
 
         /// <summary>
@@ -34,7 +37,7 @@ namespace DonateTo.WebApi.V1.Controllers
         {
             try
             {
-                var result = await _baseService.GetAsync(x => x.OrganizationId == organizationId).ConfigureAwait(false);
+                var result = await _addressService.GetAsync(x => x.OrganizationId == organizationId).ConfigureAwait(false);
 
                 if(!result.Any())
                 {
