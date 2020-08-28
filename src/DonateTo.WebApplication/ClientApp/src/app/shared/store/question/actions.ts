@@ -28,3 +28,7 @@ export const loadControlTypesFailed = createAction('[Control Types] Load failed'
 export const addResults = createAction('[Questions] Add results from server', props<{ results: QuestionResult }>());
 export const addResultsSuccess = createAction('[Questions] Add result success', props<{ results: QuestionResult }>());
 export const addResultsFailed = createAction('[Questions] Add result failed');
+
+export const deleteQuestion = createAction('[Question] Remove', props<{ question: QuestionModel }>());
+export const deleteQuestionSuccess = createAction('[Question] Remove success', props<{ question: QuestionModel }>());
+export const deleteQuestionFailed = createAction('[Question] Remove failed');

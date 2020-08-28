@@ -37,4 +37,11 @@ export class QuestionsSandbox extends Sandbox {
   updateQuestionsResult(results: QuestionResult): void {
     this.appState$.dispatch(store.fromQuestion.addResults({ results }));
   }
+
+  /**
+   * Soft Deletes a Question from the server
+   */
+  public deleteQuestion(question: QuestionModel) {
+    this.appState$.dispatch(store.fromQuestion.deleteQuestion({ question }));
+  }
 }

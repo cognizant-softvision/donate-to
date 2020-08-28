@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Sandbox } from '../../shared/sandbox/base.sandbox';
 import { Store } from '@ngrx/store';
 import { CategorySerializer } from '../../shared/utility/serializers/category-serializer';
-import { DonationRequestItemCategoryModel, DonationRequestModel } from '../../shared/models';
+import { DonationRequestItemCategoryModel, DonationRequestItemModel, DonationRequestModel } from '../../shared/models';
 import { DonationRequestFilter } from '../../shared/models/filters/donation-request-filter';
 import { DonationFilter } from 'src/app/shared/models/filters/donation-filter';
 
@@ -76,10 +76,17 @@ export class DonationsSandbox extends Sandbox {
   }
 
   /**
-   * Deletes a Donation from the server
+   * Soft Deletes a Donation from the server
    */
   public deleteDonationRequest(donationRequest: DonationRequestModel) {
     this.appState$.dispatch(store.fromDonationRequest.removeDonationRequest({ donationRequest }));
+  }
+
+  /**
+   * Soft Deletes a Donation Item from the server
+   */
+  public deleteDonationRequestItem(donationRequestItem: DonationRequestItemModel) {
+    this.appState$.dispatch(store.fromDonationRequest.removeDonationRequestItem({ donationRequestItem }));
   }
 
   /**

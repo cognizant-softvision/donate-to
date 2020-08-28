@@ -1,6 +1,8 @@
-﻿namespace DonateTo.ApplicationCore.Entities
+﻿using DonateTo.ApplicationCore.Interfaces;
+
+namespace DonateTo.ApplicationCore.Entities
 {
-    public class Address : EntityBase
+    public class Address : EntityBase, IIsDeleted
     {
         public string Name { get; set; }
         public string Street { get; set; }
@@ -19,5 +21,6 @@
         public Country Country { get; set; }
         public Contact Contact { get; set; }
         public Organization Organization { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

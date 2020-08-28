@@ -59,7 +59,7 @@ export class OrganizationFormComponent implements OnInit {
     },
     {
       disabled: false,
-      name: 'Admin.Organization.OrganizationSteps.Contact.Contact',
+      name: 'Admin.Organization.OrganizationSteps.Contact.Owner',
       icon: 'user',
       currentStep: 1,
     },

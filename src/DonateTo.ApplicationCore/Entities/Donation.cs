@@ -1,9 +1,10 @@
-﻿using System;
+﻿using DonateTo.ApplicationCore.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace DonateTo.ApplicationCore.Entities
 {
-    public class Donation : EntityBase
+    public class Donation : EntityBase, IIsDeleted
     {
         public string Observation { get; set; }
         public long DonationRequestId { get; set; }
@@ -17,5 +18,6 @@ namespace DonateTo.ApplicationCore.Entities
         public DateTime PickUpDate { get; set; }
         public IEnumerable<DonationItem> DonationItems { get; set; }
         public IEnumerable<Availability> Availabilities { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

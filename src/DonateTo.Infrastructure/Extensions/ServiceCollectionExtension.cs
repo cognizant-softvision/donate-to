@@ -23,13 +23,13 @@ namespace DonateTo.Infrastructure.Extensions
             );
 
             services.AddScoped<IUnitOfWork, EntityFrameworkUnitOfWork<DonateToDbContext>>();
-            services.AddScoped<IRepository<Address>, AddressRepository>();
+            services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IRepository<Category>, CategoryRepository>();
-            services.AddScoped<IRepository<Donation>, DonationRepository>();
+            services.AddScoped<IDonationRepository, DonationRepository>();
             services.AddScoped<IRepository<DonationItem>, DonationItemRepository>();
-            services.AddScoped<IRepository<DonationRequest>, DonationRequestRepository>();
+            services.AddScoped<IDonationRequestRepository, DonationRequestRepository>();
             services.AddScoped<IRepository<DonationRequestItem>, DonationRequestItemRepository>();
-            services.AddScoped<IRepository<Organization>, OrganizationRepository>();
+            services.AddScoped<IOrganizationRepository, OrganizationRepository>();
             services.AddScoped<IRepository<Role>, RoleRepository>();
             services.AddScoped<IRepository<Status>, StatusRepository>();
             services.AddScoped<IRepository<Unit>, UnitRepository>();
@@ -41,7 +41,8 @@ namespace DonateTo.Infrastructure.Extensions
             services.AddScoped<IQuestionRepository, QuestionRepository>();
             services.AddScoped<IRepository<ControlType>, ControlTypeRepository>();
             services.AddScoped<IRepository<Log>, LogRepository>();            
-            services.AddScoped<IRepository<UserOrganization>, UserOrganizationRepository>();            
+            services.AddScoped<IRepository<UserOrganization>, UserOrganizationRepository>();
+            services.AddScoped<IRepository<Contact>, ContactRepository>();
         }
     }
 }

@@ -1,7 +1,7 @@
 import { BaseHttpClientService } from './base-http-client.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { DonationRequestModel, PageModel } from '../../models';
+import { DonationRequestItemModel, DonationRequestModel, PageModel } from '../../models';
 import { SearchHttpClientService } from './search-http-client.service';
 import { ConfigService } from '../../../app-config.service';
 import { Observable } from 'rxjs';
@@ -62,10 +62,27 @@ export class DonationRequestService extends BaseHttpClientService<DonationReques
       observation: donationRequestFilter?.observation ?? '',
       orderBy: donationRequestFilter?.orderBy ?? '',
       orderDirection: donationRequestFilter?.orderDirection ?? '',
+      organizationName: donationRequestFilter?.organizationName ?? '',
     };
     return this.httpClient.get<PageModel<DonationRequestModel>>(`${this.url}/${this.endpoint}/pagedFiltered`, {
       params: queryString,
     });
+  }
+
+  deleteDonationRequest(donationRequest: DonationRequestModel): Observable<DonationRequestModel> {
+    return this.httpClient.put<DonationRequestModel>(
+      `${this.url}/${this.endpoint}/?id=${donationRequest.id}`,
+      donationRequest,
+      this.httpOptions
+    );
+  }
+
+  deleteDonationRequestItem(donationRequestItem: DonationRequestItemModel): Observable<DonationRequestItemModel> {
+    return this.httpClient.put<DonationRequestItemModel>(
+      `${this.url}/${this.endpoint}/softDeleteItem`,
+      donationRequestItem,
+      this.httpOptions
+    );
   }
 
   loadDonationRequestByOrganizationPaged(

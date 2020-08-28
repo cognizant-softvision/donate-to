@@ -3,6 +3,7 @@ import { AddressModel, ColumnItem, ContactModel } from 'src/app/shared/models';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { OrganizationSandbox } from '../../../organization-sandbox';
 import { NzModalRef, NzModalService, NzTableQueryParams } from 'ng-zorro-antd';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-address-list',
@@ -61,7 +62,8 @@ export class AddressListComponent {
   constructor(
     private fb: FormBuilder,
     public organizationSandbox: OrganizationSandbox,
-    private modal: NzModalService
+    private modal: NzModalService,
+    private translateService: TranslateService
   ) {}
 
   editAddress(item: AddressModel, index: number) {
@@ -79,8 +81,20 @@ export class AddressListComponent {
   }
 
   removeAddress(item: AddressModel) {
-    this.addresses = this.addresses.filter((a) => a !== item);
-    this.deleteAddress.emit(item);
+    if (this.isEditOrganization) {
+      if (this.addresses.length < 2) {
+        this.modal.warning({
+          nzTitle: this.translateService.instant('Admin.Organization.OrganizationSteps.Address.Warning'),
+          nzContent: this.translateService.instant(
+            'Admin.Organization.OrganizationSteps.Address.OneAddressRemainWarningMessage'
+          ),
+        });
+        this.addresses = this.addresses.filter((a) => a !== item);
+        this.deleteAddress.emit(item);
+      } else {
+        this.organizationSandbox.deleteAddress(item);
+      }
+    }
   }
 
   onExpandChange(id: number, checked: boolean): void {

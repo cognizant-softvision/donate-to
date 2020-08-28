@@ -17,7 +17,7 @@
         <nz-list-item>
           <nz-list-item-meta [nzDescription]="requestItem.observation" [nzTitle]="requestItem.name">
           </nz-list-item-meta>
-          <span>{{ requestItem.currentQuantity }} {{ requestItem.unit.name }}</span>
+          <span>{{ requestItem.finishQuantity - requestItem.currentQuantity }} {{ requestItem.unit.name }}</span>
         </nz-list-item>
       </ng-template>
       <ng-template #requestPagination>

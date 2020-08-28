@@ -46,6 +46,10 @@ export class UserComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.filterUsers.currentFilter.subscribe((filter) => {
+      this.organizationId = filter;
+    });
+
     this.route.queryParams
       .filter((params) => params.organizationId)
       .subscribe((params) => {
@@ -96,10 +100,6 @@ export class UserComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.unregisterEvents();
 
-    this.filterUsers.currentFilter.subscribe((filter) => {
-      this.search = filter;
-    });
-
     if (this.search) {
       this.userFilter = {
         ...this.userFilter,
@@ -110,7 +110,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
       this.searchOrganizationValue = this.search;
       this.searchOrganization();
-      this.filterUsers.changeFilter('');
+      this.filterUsers.changeFilter(0);
     }
   }
 

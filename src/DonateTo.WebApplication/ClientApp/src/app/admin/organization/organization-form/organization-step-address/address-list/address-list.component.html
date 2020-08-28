@@ -44,10 +44,15 @@
                   </a>
                   <nz-divider nzType="vertical"></nz-divider>
                   <a
-                    (click)="removeAddress(item)"
+                    nz-tooltip
                     nzTooltipTitle="{{ 'Admin.Organization.OrganizationSteps.Address.Delete' | translate }}"
                     nzTooltipPlacement="bottom"
-                    nz-tooltip
+                    nz-popconfirm
+                    nzPopconfirmTitle="{{
+                      'Admin.Organization.OrganizationSteps.Address.DeleteConfirmation' | translate
+                    }}"
+                    nzPopconfirmPlacement="bottom"
+                    (nzOnConfirm)="removeAddress(item)"
                     class="icon-link"
                   >
                     <i nz-icon nzType="delete" nzTheme="outline" class="action-icon"></i>

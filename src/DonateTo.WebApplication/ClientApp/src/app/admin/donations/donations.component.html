@@ -42,6 +42,25 @@
             <i nz-icon nzType="search"></i>
           </nz-filter-trigger>
         </th>
+
+        <th nzCustomFilter nzColumnKey="organization" [nzSortOrder]="'ascend'" [nzSortFn]="true">
+          {{ 'Admin.Donation.Table.OrganizationColumn' | translate }}
+          <label
+            class="filter"
+            title="{{ 'SharedControls.Filtered' | translate }}"
+            *ngIf="searchOrganizationValue.length > 0 && !organizationVisible"
+          >
+            ({{ searchOrganizationValue }})
+          </label>
+          <nz-filter-trigger
+            [(nzVisible)]="organizationVisible"
+            [nzActive]="searchOrganizationValue.length > 0"
+            [nzDropdownMenu]="searchOrganizationMenu"
+          >
+            <i nz-icon nzType="search"></i>
+          </nz-filter-trigger>
+        </th>
+
         <th nzCustomFilter nzColumnKey="createdDate" [nzSortFn]="true">
           {{ 'Admin.Donation.Table.CreatedColumn' | translate }}
           <label
@@ -88,6 +107,7 @@
     <tbody>
       <tr *ngFor="let data of donationTable.data">
         <td>{{ data.title }}</td>
+        <td>{{ data.organization.name }}</td>
         <td>{{ data.createdDate | date: 'longDate' }}</td>
         <td>{{ data.finishDate | date: 'longDate' }}</td>
         <td>
@@ -137,6 +157,25 @@
         {{ 'SharedControls.Search' | translate }}
       </button>
       <button nz-button nzSize="small" (click)="resetTitleSearch()">
+        {{ 'SharedControls.Reset' | translate }}
+      </button>
+    </div>
+  </div>
+</nz-dropdown-menu>
+
+<nz-dropdown-menu #searchOrganizationMenu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input
+        type="text"
+        nz-input
+        placeholder="{{ 'Admin.Donation.Table.OrganizationColumn' | translate }}"
+        [(ngModel)]="searchOrganizationValue"
+      />
+      <button nz-button nzSize="small" nzType="primary" (click)="searchOrganization()" class="search-button">
+        {{ 'SharedControls.Search' | translate }}
+      </button>
+      <button nz-button nzSize="small" (click)="resetOrganizationSearch()">
         {{ 'SharedControls.Reset' | translate }}
       </button>
     </div>

@@ -11,6 +11,7 @@ using System.Linq;
 using DonateTo.WebApi.Common;
 using System.Globalization;
 using System;
+using Microsoft.Extensions.Primitives;
 using Microsoft.AspNetCore.Authorization;
 
 namespace DonateTo.WebApi.V1.Controllers
@@ -22,10 +23,12 @@ namespace DonateTo.WebApi.V1.Controllers
     public class OrganizationController : BaseApiController<Organization, OrganizationFilterModel>
     {
         private readonly IOrganizationService _organizationService;
+        private readonly IContactService _contactService;
 
-        public OrganizationController(IOrganizationService organizationService) : base(organizationService)
+        public OrganizationController(IOrganizationService organizationService, IContactService contactService) : base(organizationService)
         {
             _organizationService = organizationService;
+            _contactService = contactService;
         }
 
         /// <summary>
@@ -105,6 +108,69 @@ namespace DonateTo.WebApi.V1.Controllers
             return long.Parse(
                 User.Claims.FirstOrDefault(claim =>
                     claim.Type.Contains(Claims.UserId, StringComparison.InvariantCulture))?.Value, CultureInfo.InvariantCulture);
+        }
+
+        /// <summary>
+        /// Soft Deletes an Organization
+        /// </summary>
+        /// <param name="id">Organization Id</param>
+        /// <param name=organization">Organization</param>
+        /// <returns>Organization soft deleted.</returns>
+        [HttpPut(Name = "[controller]_[action]")]
+        [ServiceFilter(typeof(OrganizationAccessFilter))]
+        public async Task<IActionResult> SoftDelete(long id, [FromBody] Organization organization)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                try
+                {
+                    StringValues client;
+                    Request.Headers.TryGetValue("Origin", out client);
+
+                    await _organizationService.SoftDelete(organization).ConfigureAwait(false);
+
+                    var contact = await _contactService.GetAsync(organization.ContactId).ConfigureAwait(false);
+                    await _organizationService.SendDeletedOrganizationMailAsync(contact, client).ConfigureAwait(false);
+
+                    return Ok();
+                }
+                catch (KeyNotFoundException ex)
+                {
+                    return NotFound(ex);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Soft Deletes a Address
+        /// </summary>
+        /// <param name="address">Address</param>
+        /// <returns>Address soft deleted.</returns>
+        [HttpPut("softDeleteAddress", Name = "[controller]_[action]")]
+        [ServiceFilter(typeof(OrganizationAccessFilter))]
+        public async Task<IActionResult> SoftDeleteAddress([FromBody] Address address)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                try
+                {
+                    await _organizationService.SoftDeleteAddress(address).ConfigureAwait(false);
+
+                    return Ok();
+                }
+                catch (KeyNotFoundException ex)
+                {
+                    return NotFound(ex);
+                }
+            }
         }
     }
 }

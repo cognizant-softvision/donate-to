@@ -2,9 +2,13 @@
 using DonateTo.ApplicationCore.Common;
 using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces;
+using DonateTo.ApplicationCore.Interfaces.Repositories;
 using DonateTo.ApplicationCore.Interfaces.Services;
+using DonateTo.ApplicationCore.Models;
 using DonateTo.ApplicationCore.Models.Filtering;
 using DonateTo.ApplicationCore.Models.Pagination;
+using DonateTo.Mailer.Entities;
+using DonateTo.Mailer.Interfaces;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -18,21 +22,47 @@ namespace DonateTo.Services
 {
     public class OrganizationService : BaseService<Organization, OrganizationFilterModel>, IOrganizationService
     {
-        private readonly IRepository<Organization> _organizationRepository;
+        private readonly IOrganizationRepository _organizationRepository;
         private readonly IRepository<Role> _roleRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IMailSender _mailSender;
 
         public OrganizationService(
-            IRepository<Organization> organizationRepository,
+            IOrganizationRepository organizationRepository,
             IRepository<Role> roleRepository,
             IUnitOfWork unitOfWork,
-            IMapper mapper) : base(organizationRepository, unitOfWork)
+            IMapper mapper,
+            IMailSender mailSender) : base(organizationRepository, unitOfWork)
         {
             _organizationRepository = organizationRepository;
             _roleRepository = roleRepository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _mailSender = mailSender;
+        }
+
+        public async Task SendDeletedOrganizationMailAsync(Contact contact, string client)
+        {
+            var body = @"<p>Hi {0}!</p>
+                            <p>An organization has been deleted</p>
+                            <p>Check it <a href='{1}'>here</a></p>";
+
+            var bodyMessage = new MessageBody()
+            {
+                HtmlBody = string.Format(CultureInfo.InvariantCulture, body,
+                                            contact.FullName,
+                                            client)
+            };
+
+            var to = new List<string>
+            {
+                contact.Email
+            };
+
+            var message = new Message(to, "An organization has been deleted", bodyMessage);
+
+            await _mailSender.SendAsync(message).ConfigureAwait(false);
         }
 
         ///<inheritdoc cref="IOrganizationService"/>
@@ -78,6 +108,12 @@ namespace DonateTo.Services
             return await _organizationRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicate, GetSort(filter)).ConfigureAwait(false);
         }
 
+        public async Task SoftDelete(Organization organization)
+        {
+            await _organizationRepository.SoftDeleteOrganization(organization).ConfigureAwait(false);
+
+        }
+
         ///<inheritdoc cref="BaseService{DonationRequest, DonationRequestFilterModel}"/>
         protected override Expression<Func<Organization, bool>> GetPredicate(OrganizationFilterModel filter)
         {
@@ -107,6 +143,11 @@ namespace DonateTo.Services
             }
 
             return predicate;
+        }
+
+        public async Task SoftDeleteAddress(Address address)
+        {
+            await _organizationRepository.SoftDeleteAddress(address).ConfigureAwait(false);
         }
     }
 }

@@ -95,7 +95,7 @@
           <td>{{ data.contact?.fullName }}</td>
 
           <td>
-            <a (click)="seeAssociatedUsers(data.name)">
+            <a (click)="seeAssociatedUsers(data.id)">
               {{ data.userOrganizations?.length }}
             </a>
           </td>
@@ -124,6 +124,19 @@
               class="icon-link"
             >
               <i nz-icon nzType="info-circle" nzTheme="outline" class="action-icon"></i>
+            </a>
+            <nz-divider nzType="vertical"></nz-divider>
+            <a
+              nzTooltipTitle="{{ 'Admin.Organization.Delete' | translate }}"
+              nzTooltipPlacement="bottom"
+              nz-tooltip
+              nz-popconfirm
+              nzPopconfirmTitle="{{ 'Admin.Organization.DeleteConfirmation' | translate }}"
+              nzPopconfirmPlacement="bottom"
+              (nzOnConfirm)="deleteOrganization(data)"
+              class="icon-link"
+            >
+              <i nz-icon nzType="delete" nzTheme="outline" class="action-icon"></i>
             </a>
           </td>
         </tr>

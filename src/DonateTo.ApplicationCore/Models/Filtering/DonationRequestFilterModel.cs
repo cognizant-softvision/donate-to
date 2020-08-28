@@ -8,5 +8,6 @@
         public string FinishDateBegin { get; set; }
         public string FinishDateEnd { get; set; }
         public string Observation { get; set; }
+        public string OrganizationName { get; set; }
     }
 }

@@ -7,4 +7,5 @@ export class DonationRequestFilter extends BaseFilter {
   createdDateEnd: Date;
   finishDateBegin: Date;
   finishDateEnd: Date;
+  organizationName: string;
 }
