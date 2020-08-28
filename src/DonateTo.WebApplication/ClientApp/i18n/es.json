@@ -130,6 +130,7 @@
       "Save": "Guardar",
       "Table": {
         "Itemcolumn": "Nombre de solicitud",
+        "OrganizationColumn": "Organización",
         "CreatedColumn": "Fecha de Creación",
         "Finishcolumn": "Fecha Límite de Donación",
         "Observationcolumn": "Observación",

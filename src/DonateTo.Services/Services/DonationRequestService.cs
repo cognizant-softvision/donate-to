@@ -116,6 +116,12 @@ namespace DonateTo.Services
                                 EF.Functions.ILike(p.Title, string.Format(CultureInfo.CurrentCulture, "%{0}%", filter.Title)));
             }
 
+            if (!string.IsNullOrEmpty(filter.OrganizationName))
+            {
+                predicate = predicate.And(p =>
+                                EF.Functions.ILike(p.Organization.Name, string.Format(CultureInfo.CurrentCulture, "%{0}%", filter.OrganizationName)));
+            }
+
             if (!string.IsNullOrEmpty(filter.Observation))
             {
                 predicate = predicate.And(p =>
