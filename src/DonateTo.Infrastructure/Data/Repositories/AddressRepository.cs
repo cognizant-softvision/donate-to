@@ -20,23 +20,12 @@ namespace DonateTo.Infrastructure.Data.Repositories
 
         public async Task SoftDeleteAddress(Address address)
         {
-            using var transaction = await DbContext.Database.BeginTransactionAsync().ConfigureAwait(false);
+            var addressToSoftDelete = Get(null)
+                .Where(a => a.Id == address.Id)
+                .FirstOrDefault();
 
-            try
-            {
-                var addressToSoftDelete = Get(null)
-                    .Where(a => a.Id == address.Id)
-                    .FirstOrDefault();
-
-                DbContext.Addresses.Remove(addressToSoftDelete);
-                await DbContext.SaveChangesAsync().ConfigureAwait(false);
-                await transaction.CommitAsync().ConfigureAwait(false);
-            }
-            catch (Exception)
-            {
-                await transaction.RollbackAsync().ConfigureAwait(false);
-                throw;
-            }
+            DbContext.Addresses.Remove(addressToSoftDelete);
+            await DbContext.SaveChangesAsync().ConfigureAwait(false);        
         }
     }
 }

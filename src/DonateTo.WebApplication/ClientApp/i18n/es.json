@@ -234,7 +234,7 @@
           "Name": "Nombre",
           "RequiredName": "Es requerido un nombre para esta dirección",
           "DeleteConfirmation": "¿Está seguro que quiere eliminar esta dirección?",
-          "Warning": "Warning",
+          "Warning": "Advertencia",
           "OneAddressRemainWarningMessage": "At least one address must remain in the organization"
         }
       }
