@@ -1,3 +1,4 @@
+import { AuthSandbox } from './../../shared/auth/auth.sandbox';
 import { OrganizationModel, UserModel } from './../../shared/models';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { PopupModalComponent } from './components/popup-modal/popup-modal.component';
@@ -40,6 +41,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
   constructor(
     public userSandbox: UserSandbox,
+    public authSandbox: AuthSandbox,
     private route: ActivatedRoute,
     private router: Router,
     private filterUsers: FilterService
@@ -94,7 +96,11 @@ export class UserComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.isAdmin = this.userSandbox.isAdmin;
+    this.subscriptions.push(
+      this.authSandbox.isAdmin$.subscribe((isAdmin) => {
+        this.isAdmin = isAdmin;
+      })
+    );
   }
 
   ngOnDestroy(): void {

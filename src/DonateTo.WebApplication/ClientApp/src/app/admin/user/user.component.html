@@ -74,7 +74,7 @@
         </nz-filter-trigger>
       </th>
 
-      <th>{{ 'Admin.User.Table.Action' | translate }}</th>
+      <th *ngIf="this.isAdmin">{{ 'Admin.User.Table.Action' | translate }}</th>
     </tr>
   </thead>
 
@@ -83,7 +83,7 @@
       <td>{{ data.fullName }}</td>
       <td>{{ showOrganizations(data.organizations) }}</td>
       <td>{{ data.email }}</td>
-      <td>
+      <td *ngIf="this.isAdmin">
         <a (click)="editUser(data)">{{ 'Admin.User.Associate' | translate }}</a>
       </td>
     </tr>
