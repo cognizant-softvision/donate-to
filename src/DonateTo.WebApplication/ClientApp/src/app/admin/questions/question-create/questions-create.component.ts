@@ -247,6 +247,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
       this.resetForm();
     } else {
       this.questionSandbox.deleteQuestion(item);
+      this.resetForm();
     }
     this.questions = this.questions.filter((q) => q !== item);
   }
