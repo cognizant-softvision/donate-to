@@ -111,11 +111,10 @@ namespace DonateTo.WebApi.V1.Controllers
         /// <summary>
         /// Soft Deletes a Question
         /// </summary>
-        /// <param name="id">Question Id</param>
         /// <param name="question">Question</param>
         /// <returns>Question soft deleted.</returns>
-        [HttpPut(Name = "[controller]_[action]")]
-        public async Task<IActionResult> SoftDelete(long id, [FromBody] Question question)
+        [HttpDelete("{id}", Name = "[controller]_[action]")]
+        public async Task<IActionResult> SoftDelete(long id)
         {
             if (!ModelState.IsValid)
             {
@@ -125,7 +124,7 @@ namespace DonateTo.WebApi.V1.Controllers
             {
                 try
                 {
-                    await _questionService.SoftDelete(question).ConfigureAwait(false);
+                    await _questionService.SoftDelete(id).ConfigureAwait(false);
 
                     return Ok();
                 }

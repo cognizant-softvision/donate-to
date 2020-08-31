@@ -51,10 +51,6 @@ export class QuestionService extends BaseHttpClientService<QuestionModel> {
   }
 
   deleteQuestion(question: QuestionModel): Observable<QuestionModel> {
-    return this.httpClient.put<QuestionModel>(
-      `${this.url}/${this.endpoint}/?id=${question.id}`,
-      question,
-      this.httpOptions
-    );
+    return this.httpClient.delete<QuestionModel>(`${this.url}/${this.endpoint}/${question.id}`, this.httpOptions);
   }
 }
