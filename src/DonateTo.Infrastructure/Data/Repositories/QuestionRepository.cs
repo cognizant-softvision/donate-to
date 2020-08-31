@@ -129,7 +129,7 @@ namespace DonateTo.Infrastructure.Data.Repositories
             return await questions.GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
 
-        public async Task SoftDeleteQuestion(Question question)
+        public async Task SoftDeleteQuestion(long questionId)
         {
             using var transaction = await DbContext.Database.BeginTransactionAsync().ConfigureAwait(false);
 
@@ -137,7 +137,7 @@ namespace DonateTo.Infrastructure.Data.Repositories
             {
                 var questionToSoftDelete = Get(null)
                     .Include(q => q.Options)
-                    .Where(q => q.Id == q.Id)
+                    .Where(q => q.Id == questionId)
                     .FirstOrDefault();
 
                 if (questionToSoftDelete.Options.ToList().Count > 0)

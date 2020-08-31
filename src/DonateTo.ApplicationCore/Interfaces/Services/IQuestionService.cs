@@ -31,6 +31,6 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// </summary>
         /// <param name="question">Question</param>
         /// <returns></returns>
-        Task SoftDelete(Question question);
+        Task SoftDelete(long questionId);
     }
 }
