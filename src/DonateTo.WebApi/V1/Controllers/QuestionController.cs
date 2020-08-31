@@ -47,9 +47,9 @@ namespace DonateTo.WebApi.V1.Controllers
             {
                 try
                 {
-                    var userRole = User.Claims.FirstOrDefault(claim => claim.Type.Contains(Claims.Role))?.Value;
+                    var userRole = User.Claims.Select(c => c.Value).ToList();
 
-                    if (userRole != Roles.Superadmin && userRole != Roles.Admin)
+                    if (!userRole.Contains(Roles.Superadmin) && !userRole.Contains(Roles.Admin))
                     {
                         return Unauthorized();
                     }
