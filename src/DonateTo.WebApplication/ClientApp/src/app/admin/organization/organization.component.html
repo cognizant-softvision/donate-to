@@ -3,7 +3,12 @@
   <div class="table-operations">
     <h4 class="section-title">{{ 'Admin.Organization.Title' | translate }}</h4>
     <div class="create-button">
-      <button (click)="router.navigate(['admin/organizations/create'])" nz-button nzType="primary">
+      <button
+        *ngIf="this.isSuperAdmin"
+        (click)="router.navigate(['admin/organizations/create'])"
+        nz-button
+        nzType="primary"
+      >
         {{ 'Admin.Organization.CreateOrganization' | translate }}
       </button>
     </div>
@@ -106,17 +111,6 @@
 
           <td>
             <a
-              *ngIf="this.isAdmin"
-              [routerLink]="['./edit', data.id]"
-              nzTooltipTitle="{{ 'Admin.Organization.Edit' | translate }}"
-              nzTooltipPlacement="bottom"
-              nz-tooltip
-              class="icon-link"
-            >
-              <i nz-icon nzType="edit" nzTheme="outline" class="action-icon"></i>
-            </a>
-            <nz-divider *ngIf="this.isAdmin" nzType="vertical"></nz-divider>
-            <a
               [routerLink]="['./detail', data.id]"
               nzTooltipTitle="{{ 'Admin.Organization.Detail' | translate }}"
               nzTooltipPlacement="bottom"
@@ -125,19 +119,33 @@
             >
               <i nz-icon nzType="info-circle" nzTheme="outline" class="action-icon"></i>
             </a>
-            <nz-divider nzType="vertical"></nz-divider>
-            <a
-              nzTooltipTitle="{{ 'Admin.Organization.Delete' | translate }}"
-              nzTooltipPlacement="bottom"
-              nz-tooltip
-              nz-popconfirm
-              nzPopconfirmTitle="{{ 'Admin.Organization.DeleteConfirmation' | translate }}"
-              nzPopconfirmPlacement="bottom"
-              (nzOnConfirm)="deleteOrganization(data)"
-              class="icon-link"
-            >
-              <i nz-icon nzType="delete" nzTheme="outline" class="action-icon"></i>
-            </a>
+            <ng-container *ngIf="this.isAdmin">
+              <nz-divider nzType="vertical"></nz-divider>
+              <a
+                [routerLink]="['./edit', data.id]"
+                nzTooltipTitle="{{ 'Admin.Organization.Edit' | translate }}"
+                nzTooltipPlacement="bottom"
+                nz-tooltip
+                class="icon-link"
+              >
+                <i nz-icon nzType="edit" nzTheme="outline" class="action-icon"></i>
+              </a>
+            </ng-container>
+            <ng-container *ngIf="this.isSuperAdmin">
+              <nz-divider nzType="vertical"></nz-divider>
+              <a
+                nzTooltipTitle="{{ 'Admin.Organization.Delete' | translate }}"
+                nzTooltipPlacement="bottom"
+                nz-tooltip
+                nz-popconfirm
+                nzPopconfirmTitle="{{ 'Admin.Organization.DeleteConfirmation' | translate }}"
+                nzPopconfirmPlacement="bottom"
+                (nzOnConfirm)="deleteOrganization(data)"
+                class="icon-link"
+              >
+                <i nz-icon nzType="delete" nzTheme="outline" class="action-icon"></i>
+              </a>
+            </ng-container>
           </td>
         </tr>
       </ng-container>

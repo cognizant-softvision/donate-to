@@ -31,6 +31,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
   successStatus = false;
   dataSaved = false;
   isAdmin = false;
+  isSuperAdmin = false;
   filter: string;
   isDeleteProcess = false;
 
@@ -94,6 +95,12 @@ export class OrganizationComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.authSandbox.isAdmin$.subscribe((isAdmin) => {
         this.isAdmin = isAdmin;
+      })
+    );
+
+    this.subscriptions.push(
+      this.authSandbox.isSuperAdmin$.subscribe((isSuperAdmin) => {
+        this.isSuperAdmin = isSuperAdmin;
       })
     );
   }
