@@ -5,22 +5,24 @@
     </a>
   </div>
 
-  <!-- <div>
-    <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
-      Click me
-      <i nz-icon nzType="down"></i>
+  <div class="avatar"></div>
+
+  <div>
+    <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu" class="dropdown-menu">
+      <div class="user-name">Click me</div>
+      <div><i nz-icon nzType="caret-down" nzTheme="outline"></i></div>
     </a>
+  </div>
 
-    <nz-dropdown-menu #menu="nzDropdownMenu">
-      <ul nz-menu>
-        <li nz-menu-item>1st menu item length</li>
-        <li nz-menu-item>2nd menu item length</li>
-        <li nz-menu-item>3rd menu item length</li>
-      </ul>
-    </nz-dropdown-menu>
-  </div> -->
+  <nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu>
+      <li nz-menu-item class="menu-item">1st menu item length</li>
+      <li nz-menu-item class="menu-item">2nd menu item length</li>
+      <li nz-menu-item class="menu-item">3rd menu item length</li>
+    </ul>
+  </nz-dropdown-menu>
 
-  <ul nz-menu nzMode="horizontal">
+  <!-- <ul nz-menu nzMode="horizontal">
     <li nz-menu-item class="sv-margin-x sv-link-wrapper" *ngIf="!isAuthenticated">
       <a class="sv-link" (click)="register()"> {{ 'Auth.Register.Title' | translate }} </a>
     </li>
@@ -39,7 +41,7 @@
     <li nz-menu-item class="sv-margin-x sv-link-wrapper" *ngIf="isAuthenticated">
       <a class="sv-link" (click)="logout()">{{ 'ProfileActionBar.Logout' | translate }}</a>
     </li>
-  </ul>
+  </ul> -->
   <nz-radio-group class="radio-group" [(ngModel)]="language" nzButtonStyle="solid" (ngModelChange)="switchLanguage()">
     <label nz-radio-button nzValue="en" class="language-label">English</label>
     <label nz-radio-button nzValue="es">Spanish</label>
