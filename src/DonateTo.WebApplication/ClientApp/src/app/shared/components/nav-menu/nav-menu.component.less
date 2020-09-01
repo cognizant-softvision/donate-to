@@ -1,4 +1,4 @@
-@import '../../../../styles.less';
+// @import '../../../../styles.less';
 
 @color-neutral-white: #ffffff;
 @color-neutral-dark: #1a051d;
@@ -13,15 +13,7 @@
   // position: relative;
   display: flex;
   align-items: center;
-  background-color: @avatar-bg;
 }
-
-// ul {
-//   height: 100%;
-//   border-bottom: none;
-//   display: flex;
-//   margin-bottom: 0.062em;
-// }
 
 // Donate Logo
 .logo {
@@ -37,7 +29,6 @@
 
 // Avatar
 .container-username {
-  // width: @avata
   display: flex;
   flex-direction: row;
 }
@@ -134,13 +125,19 @@
   width: 4.75em;
   height: 2.334em;
 
+  color: @color-neutral-dark;
   font-family: @font-family;
   font-style: normal;
   font-weight: normal;
   font-size: 0.6em;
-  line-height: 1em;
-  color: @color-neutral-dark;
   margin-bottom: 23px;
+  line-height: 1em;
+  padding-top: 5px;
+  padding-left: 10px;
+}
+
+.ant-radio-button-wrapper:not(:first-child)::before {
+  background-color: @color-neutral-white;
 }
 
 .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
@@ -148,10 +145,6 @@
   line-height: 1em;
 
   color: @color-neutral-white;
-}
-
-.ant-radio-button-wrapper:not(:first-child)::before {
-  background-color: @color-neutral-white;
 }
 
 .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)::before {
