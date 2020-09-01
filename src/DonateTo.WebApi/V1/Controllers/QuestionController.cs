@@ -113,8 +113,7 @@ namespace DonateTo.WebApi.V1.Controllers
         /// </summary>
         /// <param name="question">Question</param>
         /// <returns>Question soft deleted.</returns>
-        [HttpDelete("{id}", Name = "[controller]_[action]")]
-        public async Task<IActionResult> SoftDelete(long id)
+        public override async Task<IActionResult> Delete(long id)
         {
             if (!ModelState.IsValid)
             {
