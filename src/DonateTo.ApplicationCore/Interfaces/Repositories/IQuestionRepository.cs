@@ -18,7 +18,7 @@ namespace DonateTo.ApplicationCore.Interfaces.Repositories
         /// <param name="updatedQuestions">updatedQuestions.</param>
         Task BulkUpdateAsync(IEnumerable<Question> updatedQuestions);
 
-        Task SoftDeleteQuestion(Question question);
+        Task SoftDeleteQuestion(long questionId);
 
     }
 }

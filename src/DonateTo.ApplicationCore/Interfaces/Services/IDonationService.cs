@@ -15,6 +15,15 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// <param name="client">Client</param>
         /// <returns></returns>
         Task SendNewDonationMailAsync(Donation donation, UserModel user, string client);
+        
+        /// <summary>
+        /// Send Donation status changed mail to user
+        /// </summary>
+        /// <param name="donation">Donation</param>
+        /// <param name="user">User</param>
+        /// <param name="client">Client</param>
+        /// <returns></returns>
+        Task SendDonationStatusChangeMailAsync(Donation donation, UserModel user, string client);
 
         /// <summary>
         /// Soft deletes a Donation
