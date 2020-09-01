@@ -5,6 +5,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 
 import { NzButtonModule, NzLayoutModule, NzMenuModule, NzRadioModule } from 'ng-zorro-antd';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { NavMenuSandBox } from './nav-menu/nav-menu.sandbox';
@@ -22,6 +23,7 @@ export const COMPONENTS = [NavMenuComponent];
     TranslateModule,
     RouterModule,
     NzRadioModule,
+    NzDropDownModule,
   ],
   declarations: COMPONENTS,
   exports: COMPONENTS,

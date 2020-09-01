@@ -4,6 +4,22 @@
       <img src="assets/images/logo/logotype-black.png" />
     </a>
   </div>
+
+  <!-- <div>
+    <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu">
+      Click me
+      <i nz-icon nzType="down"></i>
+    </a>
+
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <li nz-menu-item>1st menu item length</li>
+        <li nz-menu-item>2nd menu item length</li>
+        <li nz-menu-item>3rd menu item length</li>
+      </ul>
+    </nz-dropdown-menu>
+  </div> -->
+
   <ul nz-menu nzMode="horizontal">
     <li nz-menu-item class="sv-margin-x sv-link-wrapper" *ngIf="!isAuthenticated">
       <a class="sv-link" (click)="register()"> {{ 'Auth.Register.Title' | translate }} </a>
@@ -24,8 +40,8 @@
       <a class="sv-link" (click)="logout()">{{ 'ProfileActionBar.Logout' | translate }}</a>
     </li>
   </ul>
-  <nz-radio-group class="sv-margin-x" [(ngModel)]="language" nzButtonStyle="solid" (ngModelChange)="switchLanguage()">
-    <label class="sv-switch" nz-radio-button nzValue="en">En</label>
-    <label nz-radio-button nzValue="es">Es</label>
+  <nz-radio-group class="radio-group" [(ngModel)]="language" nzButtonStyle="solid" (ngModelChange)="switchLanguage()">
+    <label nz-radio-button nzValue="en" class="language-label">English</label>
+    <label nz-radio-button nzValue="es">Spanish</label>
   </nz-radio-group>
 </nz-header>

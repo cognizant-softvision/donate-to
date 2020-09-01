@@ -1,9 +1,18 @@
+@color-neutral-white: #ffffff;
+@color-neutral-dark: #1a051d;
+@color-gray-1: #333333;
+@primary-ghost-white: #fefefe;
+@font-family: 'Proxima Nova', 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue',
+  Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+
 .logo {
   width: 100%;
-  padding-left: 1.4em;
-  font-size: 2em;
   img {
-    width: 3.5em;
+    position: absolute;
+    top: 1.1em;
+    left: 1.4em;
+    bottom: 1.05em;
+    width: 7.5em;
   }
 }
 
@@ -25,4 +34,40 @@ li a {
 
 a {
   font-weight: 600;
+}
+
+// Language buttons
+.radio-group {
+  margin-right: 1.6em;
+}
+
+.ant-radio-button-wrapper {
+  background: @color-neutral-white;
+  border: @color-neutral-white;
+  border-radius: 0.3em;
+  width: 4.75em;
+  height: 2.334em;
+
+  font-family: @font-family;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 0.6em;
+  line-height: 1em;
+  color: @color-neutral-dark;
+  margin-bottom: 23px;
+}
+
+.ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+  background: @color-gray-1;
+  line-height: 1em;
+
+  color: @color-neutral-white;
+}
+
+.ant-radio-button-wrapper:not(:first-child)::before {
+  background-color: @color-neutral-white;
+}
+
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)::before {
+  background-color: @color-neutral-white;
 }
