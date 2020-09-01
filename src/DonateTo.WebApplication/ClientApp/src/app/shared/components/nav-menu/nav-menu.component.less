@@ -1,3 +1,5 @@
+// @import "../styles.less";
+
 @color-neutral-white: #ffffff;
 @color-neutral-dark: #1a051d;
 @color-gray-1: #333333;
@@ -20,14 +22,6 @@
 //   margin-bottom: 0.062em;
 // }
 
-li a {
-  padding: 0.5em;
-}
-
-a {
-  font-weight: 600;
-}
-
 // Donate Logo
 .logo {
   width: 100%;
@@ -42,6 +36,7 @@ a {
 
 // Avatar
 .container-username {
+  // width: @avata
   display: flex;
   flex-direction: row;
 }
@@ -54,6 +49,28 @@ a {
   position: relative;
   z-index: 2;
   left: 0.5em;
+  span {
+    color: @color-neutral-white;
+    position: relative;
+    left: 6px;
+    bottom: 2px;
+  }
+}
+
+// Links
+.menu-link {
+  font-family: @font-family;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.ant-btn:hover {
+  color: #f2f2f2;
 }
 
 // Dropdown Menu
