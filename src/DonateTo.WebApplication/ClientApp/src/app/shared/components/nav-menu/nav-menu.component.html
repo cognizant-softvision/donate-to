@@ -5,13 +5,15 @@
     </a>
   </div>
 
-  <div class="avatar"></div>
+  <div class="container-username">
+    <div class="avatar"></div>
 
-  <div>
-    <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu" class="dropdown-menu">
-      <div class="user-name">Click me</div>
-      <div><i nz-icon nzType="caret-down" nzTheme="outline"></i></div>
-    </a>
+    <div>
+      <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu" class="dropdown-menu">
+        <div class="user-name">Click me</div>
+        <div><i nz-icon nzType="caret-down" nzTheme="outline"></i></div>
+      </a>
+    </div>
   </div>
 
   <nz-dropdown-menu #menu="nzDropdownMenu">
