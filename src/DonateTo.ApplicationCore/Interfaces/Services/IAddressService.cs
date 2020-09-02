@@ -11,6 +11,6 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// </summary>
         /// <param name="address">Address</param>
         /// <returns></returns>
-        Task SoftDelete(Address address);
+        Task SoftDeleteAddress(long addressId);
     }
 }

@@ -53,9 +53,9 @@ namespace DonateTo.WebApi.V1.Controllers
                     StringValues client;
                     Request.Headers.TryGetValue("Origin", out client);
 
-                    await _donationRequestItemService.SoftDelete(id).ConfigureAwait(false);
-
                     var donationRequestItem = await _donationRequestItemService.GetAsync(id).ConfigureAwait(false);
+
+                    await _donationRequestItemService.SoftDelete(id).ConfigureAwait(false);
 
                     var donors = _donationService.GetDonorsByDonationRequestItemId(id);
                     await _donationRequestItemService.SendDeletedDonationRequestItemMailAsync(donationRequestItem, donors, client).ConfigureAwait(false);

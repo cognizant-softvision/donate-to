@@ -1,4 +1,7 @@
 import {
+  deleteAddress,
+  deleteAddressFailed,
+  deleteAddressSuccess,
   loadAddressesByOrganizationId,
   loadAddressesByOrganizationIdFailed,
   loadAddressesByOrganizationIdSuccess,
@@ -63,6 +66,17 @@ export class AddressEffects {
       this.addressService.getAddressesByOrganizationId(data.organizationId).pipe(
         map((addresses) => loadAddressesByOrganizationIdSuccess({ addresses })),
         catchError(() => of(loadAddressesByOrganizationIdFailed()))
+      )
+    )
+  );
+
+  @Effect()
+  deleteAddress$: Observable<{}> = this.actions$.pipe(
+    ofType(deleteAddress),
+    switchMap((data: any) =>
+      this.addressService.deleteAddress(data.address).pipe(
+        map((address) => deleteAddressSuccess({ address })),
+        catchError(() => of(deleteAddressFailed()))
       )
     )
   );

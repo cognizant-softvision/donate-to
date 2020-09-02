@@ -75,6 +75,6 @@ export class OrganizationSandbox extends Sandbox {
    * Soft deletes an address
    */
   public deleteAddress(address: AddressModel): void {
-    this.appState$.dispatch(store.fromOrganization.deleteAddress({ address }));
+    this.appState$.dispatch(store.fromAddress.deleteAddress({ address }));
   }
 }

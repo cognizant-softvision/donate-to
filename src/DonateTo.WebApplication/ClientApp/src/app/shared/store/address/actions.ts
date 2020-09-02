@@ -25,3 +25,7 @@ export const loadAddressesByOrganizationIdSuccess = createAction(
   props<{ addresses: AddressModel[] }>()
 );
 export const loadAddressesByOrganizationIdFailed = createAction('[AddressesByOrganizationId] Load failed');
+
+export const deleteAddress = createAction('[Address] Delete', props<{ address: AddressModel }>());
+export const deleteAddressSuccess = createAction('[Address] Delete success', props<{ address: AddressModel }>());
+export const deleteAddressFailed = createAction('[Address] Delete failed');
