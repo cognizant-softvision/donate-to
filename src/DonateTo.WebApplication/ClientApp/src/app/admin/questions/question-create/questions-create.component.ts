@@ -321,12 +321,10 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   }
 
   private optionsRange(): boolean {
-    const total =
-      this.questionItemFormGroup.controls.maxFormControl.value -
-      this.questionItemFormGroup.controls.minFormControl.value;
+    const total = this.questionItemFormGroup.controls.maxFormControl.value;
     let relativeTotal = 0;
     for (const o of this.optionsArray.value) {
-      relativeTotal = relativeTotal + (o.maxRelativeFormControl - o.minRelativeFormControl);
+      relativeTotal = relativeTotal + (o.maxRelativeFormControl - o.minRelativeFormControl) + 1;
     }
     return relativeTotal === total;
   }
