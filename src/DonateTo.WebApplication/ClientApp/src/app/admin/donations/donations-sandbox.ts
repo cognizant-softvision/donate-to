@@ -86,7 +86,7 @@ export class DonationsSandbox extends Sandbox {
    * Soft Deletes a Donation Item from the server
    */
   public deleteDonationRequestItem(donationRequestItem: DonationRequestItemModel) {
-    this.appState$.dispatch(store.fromDonationRequest.removeDonationRequestItem({ donationRequestItem }));
+    this.appState$.dispatch(store.fromDonationRequestItem.removeDonationRequestItem({ donationRequestItem }));
   }
 
   /**

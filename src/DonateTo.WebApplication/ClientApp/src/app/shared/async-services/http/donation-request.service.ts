@@ -70,20 +70,19 @@ export class DonationRequestService extends BaseHttpClientService<DonationReques
   }
 
   deleteDonationRequest(donationRequest: DonationRequestModel): Observable<DonationRequestModel> {
-    return this.httpClient.put<DonationRequestModel>(
-      `${this.url}/${this.endpoint}/?id=${donationRequest.id}`,
-      donationRequest,
+    return this.httpClient.delete<DonationRequestModel>(
+      `${this.url}/${this.endpoint}/${donationRequest.id}`,
       this.httpOptions
     );
   }
 
-  deleteDonationRequestItem(donationRequestItem: DonationRequestItemModel): Observable<DonationRequestItemModel> {
-    return this.httpClient.put<DonationRequestItemModel>(
-      `${this.url}/${this.endpoint}/softDeleteItem`,
-      donationRequestItem,
-      this.httpOptions
-    );
-  }
+  // deleteDonationRequestItem(donationRequestItem: DonationRequestItemModel): Observable<DonationRequestItemModel> {
+  //   return this.httpClient.put<DonationRequestItemModel>(
+  //     `${this.url}/${this.endpoint}/softDeleteItem`,
+  //     donationRequestItem,
+  //     this.httpOptions
+  //   );
+  // }
 
   loadDonationRequestByOrganizationPaged(
     pageNumber: number,

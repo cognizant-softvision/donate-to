@@ -214,40 +214,9 @@ namespace DonateTo.Services
             return predicate;
         }
 
-        public async Task SoftDelete(DonationRequest donationRequest)
+        public async Task SoftDelete(long donationRequestId)
         {
-            await _donationRequestRepository.SoftDeleteDonationRequest(donationRequest).ConfigureAwait(false);
-        }
-
-        public async Task SoftDelete(DonationRequestItem donationRequestItem)
-        {
-            await _donationRequestRepository.SoftDeleteDonationRequestItem(donationRequestItem).ConfigureAwait(false);
-        }
-
-        public async Task SendDeletedDonationRequestItemMailAsync(DonationRequestItem donationRequestItem, IEnumerable<User> users, string client)
-        {
-            var messages = new List<Message>();
-            var body = @"<p>Hi {0}!</p>
-                            <p>A Donation Item has been cancelled.</p>
-                            <p>Check it <a href='{1}'>here</a></p>";
-
-            foreach (var user in users)
-            {
-                var bodyMessage = new MessageBody()
-                {
-                    HtmlBody = string.Format(CultureInfo.InvariantCulture, body,
-                                             user.FullName,
-                                             donationRequestItem.Name,
-                                             client)
-                };
-
-                var to = new List<string>();
-                to.Add(user.Email);
-
-                messages.Add(new Message(to, "Cancelled donation request!", bodyMessage));
-            }
-
-            await _mailSender.SendMultipleAsync(messages).ConfigureAwait(false);
+            await _donationRequestRepository.SoftDeleteDonationRequest(donationRequestId).ConfigureAwait(false);
         }
     }
 }
