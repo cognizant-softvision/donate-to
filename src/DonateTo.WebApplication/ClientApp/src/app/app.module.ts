@@ -25,6 +25,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpAuthInterceptor } from './shared/async-services/http/http-auth.interceptor';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
 
 // AoT requires an exported function for factories. load translations from "/assets/i18n/[lang].json"
 export function HttpLoaderFactory(http: HttpClient) {
@@ -38,6 +39,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     FormsModule,
     CommonModule,
+    NzLayoutModule,
 
     // Third party modules
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

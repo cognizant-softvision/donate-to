@@ -33,7 +33,7 @@
 .ant-menu-item:after,
 .ant-menu-item-selected,
 .sv-link-wrapper {
-  background: linear-gradient(90deg, #f4633a 0%, #c800a1 100%);
+  background: linear-gradient(180deg, #f4633a 0%, #c800a1 100%);
   padding-left: 0em;
   padding-right: 0em;
   border-bottom: none !important;
@@ -43,7 +43,7 @@
 
 .ant-menu-item-selected,
 .sv-link-wrapper:hover {
-  padding-bottom: 0.4em !important;
+  padding-left: 0.4em !important;
 }
 
 .sv-link {
@@ -62,6 +62,26 @@
 
 a {
   font-weight: 600;
+}
+
+// Label
+label {
+  font-size: initial !important;
+}
+
+// Inputs
+
+input,
+textarea,
+nz-select-top-control,
+nz-date-picker,
+nz-input-group {
+  border: 0.08em solid #c4c4c4 !important;
+  border-radius: 6px !important;
+}
+
+nz-select-top-control {
+  height: 2em !important;
 }
 
 // Switch Radio Botom
@@ -119,6 +139,22 @@ svg:hover {
 // ---
 .ant-select-item-option-active {
   background: @sv-hover!important;
+}
+
+input:focus,
+input:hover,
+textarea:focus,
+textarea:hover,
+select :focus,
+nz-select-top-control:hover,
+nz-date-picker:hover,
+nz-input-group:hover {
+  border: 0.08em solid #c800a1 !important;
+  border-radius: 6px !important;
+}
+
+nz-select-top-control:hover {
+  height: 2em !important;
 }
 
 //Pagination
@@ -895,6 +931,10 @@ h6 {
 li {
   display: flex;
   align-items: flex-end;
-
   color: @typography-color;
+}
+
+a {
+  color: #c800a1;
+  font-weight: 400;
 }
