@@ -52,17 +52,8 @@ export class OrganizationService extends BaseHttpClientService<OrganizationModel
   }
 
   deleteOrganization(organization: OrganizationModel): Observable<OrganizationModel> {
-    return this.httpClient.put<OrganizationModel>(
-      `${this.url}/${this.endpoint}/?id=${organization.id}`,
-      organization,
-      this.httpOptions
-    );
-  }
-
-  deleteAddress(address: AddressModel): Observable<AddressModel> {
-    return this.httpClient.put<AddressModel>(
-      `${this.url}/${this.endpoint}/softDeleteAddress`,
-      address,
+    return this.httpClient.delete<OrganizationModel>(
+      `${this.url}/${this.endpoint}/${organization.id}`,
       this.httpOptions
     );
   }

@@ -18,10 +18,10 @@ namespace DonateTo.Infrastructure.Data.Repositories
         {
         }
 
-        public async Task SoftDeleteAddress(Address address)
+        public async Task SoftDeleteAddress(long addressId)
         {
             var addressToSoftDelete = Get(null)
-                .Where(a => a.Id == address.Id)
+                .Where(a => a.Id == addressId)
                 .FirstOrDefault();
 
             DbContext.Addresses.Remove(addressToSoftDelete);

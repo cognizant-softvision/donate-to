@@ -24,9 +24,10 @@ namespace DonateTo.Services
             _mapper = mapper;
         }
 
-        public async Task SoftDelete(Address address)
+        public async Task SoftDeleteAddress(long addressId)
         {
-            await _addressRepository.SoftDeleteAddress(address).ConfigureAwait(false);
+            await _addressRepository.SoftDeleteAddress(addressId).ConfigureAwait(false);
         }
+
     }
 }

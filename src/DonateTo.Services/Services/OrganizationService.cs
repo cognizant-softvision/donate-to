@@ -108,9 +108,9 @@ namespace DonateTo.Services
             return await _organizationRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicate, GetSort(filter)).ConfigureAwait(false);
         }
 
-        public async Task SoftDelete(Organization organization)
+        public async Task SoftDelete(long organizationId)
         {
-            await _organizationRepository.SoftDeleteOrganization(organization).ConfigureAwait(false);
+            await _organizationRepository.SoftDeleteOrganization(organizationId).ConfigureAwait(false);
 
         }
 

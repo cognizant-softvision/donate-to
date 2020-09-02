@@ -28,7 +28,7 @@ namespace DonateTo.Infrastructure.Extensions
             services.AddScoped<IDonationRepository, DonationRepository>();
             services.AddScoped<IRepository<DonationItem>, DonationItemRepository>();
             services.AddScoped<IDonationRequestRepository, DonationRequestRepository>();
-            services.AddScoped<IRepository<DonationRequestItem>, DonationRequestItemRepository>();
+            services.AddScoped<IDonationRequestItemRepository, DonationRequestItemRepository>();
             services.AddScoped<IOrganizationRepository, OrganizationRepository>();
             services.AddScoped<IRepository<Role>, RoleRepository>();
             services.AddScoped<IRepository<Status>, StatusRepository>();

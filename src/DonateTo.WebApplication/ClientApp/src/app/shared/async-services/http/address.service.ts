@@ -19,4 +19,8 @@ export class AddressService extends BaseHttpClientService<AddressModel> {
       `${this.url}/${this.endpoint}/GetByOrganization?organizationId=${organizationId.toString()}`
     );
   }
+
+  deleteAddress(address: AddressModel): Observable<AddressModel> {
+    return this.httpClient.delete<AddressModel>(`${this.url}/${this.endpoint}/${address.id}`, this.httpOptions);
+  }
 }

@@ -93,6 +93,8 @@ export class AddressListComponent {
         this.deleteAddress.emit(item);
       } else {
         this.organizationSandbox.deleteAddress(item);
+        this.addresses = this.addresses.filter((a) => a !== item);
+        this.deleteAddress.emit(item);
       }
     }
   }

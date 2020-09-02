@@ -112,7 +112,7 @@ namespace DonateTo.WebApi.V1.Controllers
         /// Soft Deletes a Question
         /// </summary>
         /// <param name="question">Question</param>
-        /// <returns>Question soft deleted.</returns>
+        /// <returns>IActionResult</returns>
         public override async Task<IActionResult> Delete(long id)
         {
             if (!ModelState.IsValid)

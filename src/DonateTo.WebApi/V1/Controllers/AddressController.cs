@@ -51,5 +51,31 @@ namespace DonateTo.WebApi.V1.Controllers
                 return BadRequest();
             }
         }
+
+        /// <summary>
+        /// Soft Deletes a Address
+        /// </summary>
+        /// <param name="address">Address</param>
+        /// <returns>IActionResult</returns>
+        public override async Task<IActionResult> Delete(long id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                try
+                {
+                    await _addressService.SoftDeleteAddress(id).ConfigureAwait(false);
+
+                    return Ok();
+                }
+                catch (KeyNotFoundException ex)
+                {
+                    return NotFound(ex);
+                }
+            }
+        }
     }
 }

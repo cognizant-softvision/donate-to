@@ -70,17 +70,8 @@ export class DonationRequestService extends BaseHttpClientService<DonationReques
   }
 
   deleteDonationRequest(donationRequest: DonationRequestModel): Observable<DonationRequestModel> {
-    return this.httpClient.put<DonationRequestModel>(
-      `${this.url}/${this.endpoint}/?id=${donationRequest.id}`,
-      donationRequest,
-      this.httpOptions
-    );
-  }
-
-  deleteDonationRequestItem(donationRequestItem: DonationRequestItemModel): Observable<DonationRequestItemModel> {
-    return this.httpClient.put<DonationRequestItemModel>(
-      `${this.url}/${this.endpoint}/softDeleteItem`,
-      donationRequestItem,
+    return this.httpClient.delete<DonationRequestModel>(
+      `${this.url}/${this.endpoint}/${donationRequest.id}`,
       this.httpOptions
     );
   }

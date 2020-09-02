@@ -49,7 +49,7 @@ namespace DonateTo.Infrastructure.Data.Repositories
             return await questions.GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
 
-        public async Task SoftDeleteDonationRequest(DonationRequest donationRequest)
+        public async Task SoftDeleteDonationRequest(long donationRequestId)
         {
             using var transaction = await DbContext.Database.BeginTransactionAsync().ConfigureAwait(false);
 
@@ -57,7 +57,7 @@ namespace DonateTo.Infrastructure.Data.Repositories
             {
                 var donationRequestToSoftDelete = Get(null)
                     .Include(d => d.DonationRequestItems)
-                    .Where(d => d.Id == donationRequest.Id)
+                    .Where(d => d.Id == donationRequestId)
                     .FirstOrDefault();
 
                 if(donationRequestToSoftDelete.DonationRequestItems.ToList().Count > 0)
@@ -73,16 +73,6 @@ namespace DonateTo.Infrastructure.Data.Repositories
                 await transaction.RollbackAsync().ConfigureAwait(false);
                 throw;
             }            
-        }
-
-        public async Task SoftDeleteDonationRequestItem(DonationRequestItem donationRequestItem)
-        {
-            var donationRequestItemToSoftDelete = DbContext.DonationRequestItems
-                .Where(d => d.Id == donationRequestItem.Id)
-                .FirstOrDefault();
-
-            DbContext.DonationRequestItems.Remove(donationRequestItemToSoftDelete);
-            await DbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
         #region private

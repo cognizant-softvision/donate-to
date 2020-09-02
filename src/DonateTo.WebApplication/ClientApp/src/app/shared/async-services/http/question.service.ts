@@ -31,6 +31,7 @@ export class QuestionService extends BaseHttpClientService<QuestionModel> {
       params: queryString,
     });
   }
+
   getQuestions() {
     return this.get();
   }

@@ -98,11 +98,8 @@ namespace DonateTo.WebApi.V1.Controllers
         /// Soft Deletes an Organization
         /// </summary>
         /// <param name="id">Organization Id</param>
-        /// <param name=organization">Organization</param>
-        /// <returns>Organization soft deleted.</returns>
-        [HttpPut(Name = "[controller]_[action]")]
-        [ServiceFilter(typeof(OrganizationAccessFilter))]
-        public async Task<IActionResult> SoftDelete(long id, [FromBody] Organization organization)
+        /// <returns>IActionResult</returns>
+        public override async Task<IActionResult> Delete(long id)
         {
             if (!ModelState.IsValid)
             {
@@ -115,38 +112,12 @@ namespace DonateTo.WebApi.V1.Controllers
                     StringValues client;
                     Request.Headers.TryGetValue("Origin", out client);
 
-                    await _organizationService.SoftDelete(organization).ConfigureAwait(false);
+                    var organization = await _organizationService.GetAsync(id).ConfigureAwait(false);
+
+                    await _organizationService.SoftDelete(id).ConfigureAwait(false);
 
                     var contact = await _contactService.GetAsync(organization.ContactId).ConfigureAwait(false);
                     await _organizationService.SendDeletedOrganizationMailAsync(contact, client).ConfigureAwait(false);
-
-                    return Ok();
-                }
-                catch (KeyNotFoundException ex)
-                {
-                    return NotFound(ex);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Soft Deletes a Address
-        /// </summary>
-        /// <param name="address">Address</param>
-        /// <returns>Address soft deleted.</returns>
-        [HttpPut("softDeleteAddress", Name = "[controller]_[action]")]
-        [ServiceFilter(typeof(OrganizationAccessFilter))]
-        public async Task<IActionResult> SoftDeleteAddress([FromBody] Address address)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-            else
-            {
-                try
-                {
-                    await _organizationService.SoftDeleteAddress(address).ConfigureAwait(false);
 
                     return Ok();
                 }

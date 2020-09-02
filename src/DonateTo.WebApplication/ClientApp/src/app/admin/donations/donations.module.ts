@@ -53,6 +53,7 @@ import { DonationsDetailComponent } from './donations-detail/donations-detail.co
 import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
 import { QuestionsSandbox } from '../questions/questions.sandbox';
 import { DonationSandbox } from 'src/app/donation/donation.sandbox';
+import { DonationRequestItemEffects } from 'src/app/shared/store/donation-request-item';
 
 // FIX this should be moved to an upper level.
 registerLocaleData(es);
@@ -90,6 +91,7 @@ const ICONS: IconDefinition[] = [PlusOutline, EditOutline, DeleteOutline, ArrowL
       CategoryEffects,
       StatusEffects,
       QuestionEffects,
+      DonationRequestItemEffects,
     ]),
     StoreModule.forFeature(fromOrganization.organizationFeatureKey, fromOrganization.reducer),
     StoreModule.forFeature(fromStatus.statusFeatureKey, fromStatus.reducer),
