@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AddressModel, CityModel, CountryModel, OrganizationModel, StateModel } from '../../../shared/models';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OrganizationSandbox } from '../organization-sandbox';
+import { OrganizationSandbox } from '../organization.sandbox';
 
 @Component({
   selector: 'app-organization-detail',
