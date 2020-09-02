@@ -11,7 +11,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { LogsComponent } from './logs.component';
 import { LogEffects } from '../../shared/store/log/effects';
 import { LogsRoutingModule } from './logs-routing.module';
-import { LogsSandbox } from './logs-sandbox';
+import { LogsSandbox } from './logs.sandbox';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';

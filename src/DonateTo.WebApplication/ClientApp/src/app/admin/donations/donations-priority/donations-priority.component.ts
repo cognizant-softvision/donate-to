@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { ControlType } from 'src/app/shared/enum/controlTypes';
 import { QuestionResult } from 'src/app/shared/models/question-result.model';
 import { QuestionAnswer } from 'src/app/shared/models/question-answer.model';
-import { DonationsSandbox } from '../donations-sandbox';
+import { DonationsSandbox } from '../donations.sandbox';
 import { QuestionsSandbox } from '../../questions/questions.sandbox';
 import { ControlTypeModel } from 'src/app/shared/models/control-type.model';
 @Component({

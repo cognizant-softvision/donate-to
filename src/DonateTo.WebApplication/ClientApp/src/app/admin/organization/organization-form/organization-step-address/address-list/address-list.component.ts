@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 import { AddressModel, ColumnItem, ContactModel } from 'src/app/shared/models';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { OrganizationSandbox } from '../../../organization-sandbox';
+import { OrganizationSandbox } from '../../../organization.sandbox';
 import { NzModalRef, NzModalService, NzTableQueryParams } from 'ng-zorro-antd';
 import { TranslateService } from '@ngx-translate/core';
 

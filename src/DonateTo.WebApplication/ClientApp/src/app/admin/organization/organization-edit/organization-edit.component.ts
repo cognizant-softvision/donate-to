@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { OrganizationSandbox } from '../organization-sandbox';
+import { OrganizationSandbox } from '../organization.sandbox';
 import { OrganizationModel } from 'src/app/shared/models';
 
 @Component({

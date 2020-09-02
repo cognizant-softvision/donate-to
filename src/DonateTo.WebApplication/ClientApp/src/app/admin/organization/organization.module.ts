@@ -29,7 +29,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { OrganizationCreateComponent } from './organization-create/organization-create.component';
-import { OrganizationSandbox } from './organization-sandbox';
+import { OrganizationSandbox } from './organization.sandbox';
 import { OrganizationComponent } from './organization.component';
 import { OrganizationEditComponent } from './organization-edit/organization-edit.component';
 import { OrganizationFormComponent } from './organization-form/organization-form.component';

@@ -12,7 +12,7 @@ import { DonationPriorityComponent } from './donations-priority/donations-priori
 import { DonationsEditComponent } from './donations-edit/donations-edit.component';
 import { DonationsFormComponent } from './donations-form/donations-form.component';
 import { DonationsRoutingModule } from './donations-routing.module';
-import { DonationsSandbox } from './donations-sandbox';
+import { DonationsSandbox } from './donations.sandbox';
 import { EffectsModule } from '@ngrx/effects';
 import { FormsModule } from '@angular/forms';
 import { fromQuestion, fromStatus, fromUnit } from 'src/app/shared/store';

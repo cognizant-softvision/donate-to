@@ -1,6 +1,6 @@
 import { Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { DonationsFormComponent } from '../donations-form/donations-form.component';
-import { DonationsSandbox } from '../donations-sandbox';
+import { DonationsSandbox } from '../donations.sandbox';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd';
