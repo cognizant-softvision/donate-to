@@ -5,17 +5,19 @@
     </a>
   </div>
 
-  <ul nz-menu nzMode="horizontal">
-    <li nz-menu-item class="sv-margin-x sv-link-wrapper" *ngIf="!isAuthenticated">
-      <a class="sv-link" (click)="register()"> {{ 'Auth.Register.Title' | translate }} </a>
-    </li>
-    <li nz-menu-item class="sv-margin-x sv-link-wrapper" *ngIf="!isAuthenticated">
-      <a class="sv-link" (click)="login()"> {{ 'Auth.Login.Title' | translate }} </a>
-    </li>
-    <li nz-menu-item *ngIf="isAuthenticated">
-      <a class="menu-link" [routerLink]="['/donation/my-donations']"> {{ 'NavBar.MyDonations' | translate }} </a>
-    </li>
-  </ul>
+  <div>
+    <ul nz-menu nzMode="horizontal">
+      <li nz-menu-item *ngIf="!isAuthenticated">
+        <a class="menu-link" (click)="register()"> {{ 'Auth.Register.Title' | translate }} </a>
+      </li>
+      <li nz-menu-item *ngIf="!isAuthenticated">
+        <a class="menu-link" (click)="login()"> {{ 'Auth.Login.Title' | translate }} </a>
+      </li>
+      <li nz-menu-item *ngIf="isAuthenticated">
+        <a class="menu-link" [routerLink]="['/donation/my-donations']"> {{ 'NavBar.MyDonations' | translate }} </a>
+      </li>
+    </ul>
+  </div>
 
   <div class="container-username" *ngIf="isAuthenticated">
     <div class="avatar">
