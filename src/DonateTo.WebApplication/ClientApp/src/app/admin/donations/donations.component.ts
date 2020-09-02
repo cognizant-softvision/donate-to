@@ -1,6 +1,6 @@
 import { DonationRequestModel } from '../../shared/models';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { DonationsSandbox } from './donations-sandbox';
+import { DonationsSandbox } from './donations.sandbox';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DonationRequestFilter } from '../../shared/models/filters/donation-request-filter';

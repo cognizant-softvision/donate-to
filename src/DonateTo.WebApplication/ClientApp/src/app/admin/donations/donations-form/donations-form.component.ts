@@ -1,6 +1,6 @@
 import { StatusType } from './../../../shared/enum/statusType';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { DonationsSandbox } from '../donations-sandbox';
+import { DonationsSandbox } from '../donations.sandbox';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NzI18nService } from 'ng-zorro-antd';
 import { Subscription } from 'rxjs';

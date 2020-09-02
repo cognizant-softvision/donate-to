@@ -36,7 +36,7 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { UserComponent } from './user.component';
 import { UserRoutingModule } from './user-routing.module';
 import { PopupModalComponent } from './components/popup-modal/popup-modal.component';
-import { OrganizationSandbox } from '../organization/organization-sandbox';
+import { OrganizationSandbox } from '../organization/organization.sandbox';
 import { AuthSandbox } from '../../shared/auth/auth.sandbox';
 
 // FIX this should be moved to an upper level.
