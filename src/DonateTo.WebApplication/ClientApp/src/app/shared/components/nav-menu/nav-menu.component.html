@@ -11,7 +11,7 @@
         <a class="menu-link" (click)="register()"> {{ 'Auth.Register.Title' | translate }} </a>
       </li>
       <li nz-menu-item *ngIf="!isAuthenticated">
-        <a class="menu-link" (click)="login()"> {{ 'Auth.Login.Title' | translate }} </a>
+        <a class="menu-link login" (click)="login()"> {{ 'Auth.Login.Title' | translate }} </a>
       </li>
       <li nz-menu-item *ngIf="isAuthenticated">
         <a class="menu-link" [routerLink]="['/donation/my-donations']"> {{ 'NavBar.MyDonations' | translate }} </a>
