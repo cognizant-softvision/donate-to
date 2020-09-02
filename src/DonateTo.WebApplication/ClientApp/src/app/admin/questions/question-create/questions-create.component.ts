@@ -33,6 +33,8 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   public isOption = false;
   optionsArray = new FormArray([]);
   dataSaved = false;
+  questionsToDelete = [];
+  questionsToDeleteEmpty = true;
 
   label = '';
   placeholder = '';
@@ -124,6 +126,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
       }
     }
   }
+
   updateQuestion() {
     this.validateFormGroup(this.questionItemFormGroup);
     if (this.questionItemFormGroup.valid && this.validateOptions() && !this.existOrder()) {
@@ -201,6 +204,13 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
       this.questions.forEach((question) => {
         question.controlType = undefined;
       });
+
+      if (!this.questionsToDeleteEmpty) {
+        this.questionsToDelete.forEach((item) => {
+          this.questionSandbox.deleteQuestion(item);
+        });
+      }
+
       this.questionSandbox.updateQuestions(this.questions);
 
       this.dataUpdated.changeMessage(true);
@@ -242,16 +252,25 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     }
   }
 
+  /**
+   * Removes a Question from the list
+   * @param item: QuestionModel
+   */
   removeQuestion(item: QuestionModel): void {
     if (item.id === this.questionId) {
       this.resetForm();
     } else {
-      this.questionSandbox.deleteQuestion(item);
+      this.questionsToDelete.push(item);
+      this.questionsToDeleteEmpty = true;
       this.resetForm();
     }
     this.questions = this.questions.filter((q) => q !== item);
   }
 
+  /**
+   * Adds a question option field
+   * @param e: MouseEvent
+   */
   addField(e?: MouseEvent): void {
     if (e) {
       e.preventDefault();
@@ -281,6 +300,11 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     this.optionsArray.push(group);
   }
 
+  /**
+   * Removes a question option field
+   * @param i: number
+   * @param e: MouseEvent
+   */
   removeField(i: number, e: MouseEvent): void {
     e.preventDefault();
     if (this.optionsArray.length > 2) {
@@ -295,6 +319,10 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
     this.editedQuestion = null;
   }
 
+  /**
+   * Validates the questions entered have a total weight of 100
+   * @returns boolean
+   */
   private sumWeight(): number {
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
     return this.questions.map((q) => q.weight).reduce(reducer);
@@ -306,20 +334,28 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
 
   validateOptions(): boolean {
     this.isWeightValid = this.optionsWeight();
-    this.isRangeValid = this.optionsRange();
 
     if (this.questionItemFormGroup.value.controlTypeFormControl === ControlType.Textbox) {
+      this.isRangeValid = this.optionsRange();
       this.textboxQuestionOptionValid = this.textboxQuestionOptionValidation();
       return this.isWeightValid && this.isRangeValid && this.textboxQuestionOptionValid;
     } else {
-      return this.isWeightValid && this.isRangeValid;
+      return this.isWeightValid;
     }
   }
 
+  /**
+   * Validates the question options entered have a total weight of 100
+   * @returns boolean
+   */
   private optionsWeight(): boolean {
     return this.optionsArray.value.reduce((acc, cur) => acc + cur.optionWeight, 0) === this.requiredWeight;
   }
 
+  /**
+   * Validates the options entered for a Question Number, covers full range.
+   * @returns boolean
+   */
   private optionsRange(): boolean {
     const total = this.questionItemFormGroup.controls.maxFormControl.value;
     let relativeTotal = 0;
