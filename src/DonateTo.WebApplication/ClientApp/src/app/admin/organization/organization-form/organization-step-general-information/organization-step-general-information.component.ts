@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OrganizationModel } from 'src/app/shared/models/organization.model';
-import { OrganizationSandbox } from '../../organization-sandbox';
+import { OrganizationSandbox } from '../../organization.sandbox';
 
 @Component({
   selector: 'app-organization-step-general-information',

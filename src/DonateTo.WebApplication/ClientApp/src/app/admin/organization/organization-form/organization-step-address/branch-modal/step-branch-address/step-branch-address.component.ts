@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { OrganizationSandbox } from 'src/app/admin/organization/organization-sandbox';
+import { OrganizationSandbox } from 'src/app/admin/organization/organization.sandbox';
 import { AddressModel, CityModel, CountryModel, StateModel } from 'src/app/shared/models';
 import { Subscription } from 'rxjs';
 import { OrganizationStepContactComponent } from '../../../organization-step-contact/organization-step-contact.component';

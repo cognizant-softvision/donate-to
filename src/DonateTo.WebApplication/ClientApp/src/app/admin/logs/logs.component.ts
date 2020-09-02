@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NzTableQueryParams } from 'ng-zorro-antd';
 import { LogFilter } from 'src/app/shared/models/filters/log-filter';
 import { LogModel } from '../../shared/models/log.model';
-import { LogsSandbox } from './logs-sandbox';
+import { LogsSandbox } from './logs.sandbox';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { LogsDetailModalComponent } from './logs-detail-modal/logs-detail-modal.component';

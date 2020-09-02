@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AddressModel, ContactModel, OrganizationModel } from '../../../shared/models';
-import { OrganizationSandbox } from '../organization-sandbox';
+import { OrganizationSandbox } from '../organization.sandbox';
 import { OrganizationStepAddressComponent } from './organization-step-address/organization-step-address.component';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';

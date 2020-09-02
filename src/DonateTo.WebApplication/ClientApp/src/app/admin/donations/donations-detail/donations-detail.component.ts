@@ -2,7 +2,7 @@ import { DonationSandbox } from 'src/app/donation/donation.sandbox';
 import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DonationsSandbox } from '../donations-sandbox';
+import { DonationsSandbox } from '../donations.sandbox';
 import { DonationRequestModel } from 'src/app/shared/models/donation-request.model';
 import { DonationFilter } from 'src/app/shared/models/filters/donation-filter';
 import { DonationModel } from 'src/app/shared/models/donation.model';

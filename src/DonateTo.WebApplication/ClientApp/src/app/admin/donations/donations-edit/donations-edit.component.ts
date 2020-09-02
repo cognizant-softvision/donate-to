@@ -2,7 +2,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DonationRequestModel } from 'src/app/shared/models';
 import { DonationsFormComponent } from '../donations-form/donations-form.component';
-import { DonationsSandbox } from '../donations-sandbox';
+import { DonationsSandbox } from '../donations.sandbox';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/internal/operators/first';
 

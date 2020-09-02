@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NzTableQueryParams } from 'ng-zorro-antd';
 import { OrganizationFilter } from 'src/app/shared/models/filters/organization-filter';
 import { OrganizationModel } from './../../shared/models';
-import { OrganizationSandbox } from './organization-sandbox';
+import { OrganizationSandbox } from './organization.sandbox';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
