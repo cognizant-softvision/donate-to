@@ -1,15 +1,16 @@
-<form nz-form [formGroup]="responsableStepForm" [ngClass]="contactForBranch ? 'contact-for-branch-form' : ''">
+<form
+  class="form-container"
+  nz-form
+  [nzLayout]="'vertical'"
+  [formGroup]="responsableStepForm"
+  [ngClass]="contactForBranch ? 'contact-for-branch-form' : ''"
+>
   <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>
+    <nz-form-label nzRequired>
       {{ 'RequestDonation.DonationSteps.ResponsableStep.FirstName' | translate }}
     </nz-form-label>
-    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="firstNameErrorTpl">
-      <input
-        nz-input
-        formControlName="firstName"
-        [(ngModel)]="firstName"
-        placeholder="{{ 'RequestDonation.DonationSteps.ResponsableStep.FirstNamePlaceHolder' | translate }}"
-      />
+    <nz-form-control nzHasFeedback [nzErrorTip]="firstNameErrorTpl">
+      <input nz-input formControlName="firstName" [(ngModel)]="firstName" />
       <ng-template #firstNameErrorTpl let-control>
         <ng-container *ngIf="control.hasError('required')">
           {{ 'RequestDonation.DonationSteps.ResponsableStep.RequiredFirstName' | translate }}
@@ -19,16 +20,11 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>
+    <nz-form-label nzRequired>
       {{ 'RequestDonation.DonationSteps.ResponsableStep.LastName' | translate }}
     </nz-form-label>
-    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="lastNameErrorTpl">
-      <input
-        nz-input
-        formControlName="lastName"
-        [(ngModel)]="lastName"
-        placeholder="{{ 'RequestDonation.DonationSteps.ResponsableStep.LastNamePlaceHolder' | translate }}"
-      />
+    <nz-form-control nzHasFeedback [nzErrorTip]="lastNameErrorTpl">
+      <input nz-input formControlName="lastName" [(ngModel)]="lastName" />
       <ng-template #lastNameErrorTpl let-control>
         <ng-container *ngIf="control.hasError('required')">
           {{ 'RequestDonation.DonationSteps.ResponsableStep.RequiredLastName' | translate }}
@@ -38,16 +34,11 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>
+    <nz-form-label nzRequired>
       {{ 'RequestDonation.DonationSteps.ResponsableStep.IdentityNumber' | translate }}
     </nz-form-label>
-    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="identityNumberErrorTpl">
-      <input
-        nz-input
-        formControlName="identityNumber"
-        [(ngModel)]="identityNumber"
-        placeholder="{{ 'RequestDonation.DonationSteps.ResponsableStep.IdentityNumberPlaceHolder' | translate }}"
-      />
+    <nz-form-control nzHasFeedback [nzErrorTip]="identityNumberErrorTpl">
+      <input nz-input formControlName="identityNumber" [(ngModel)]="identityNumber" />
       <ng-template #identityNumberErrorTpl let-control>
         <ng-container *ngIf="control.hasError('required')">
           {{ 'RequestDonation.DonationSteps.ResponsableStep.RequiredIdentityNumber' | translate }}
@@ -57,17 +48,11 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>
+    <nz-form-label nzRequired>
       {{ 'RequestDonation.DonationSteps.ResponsableStep.Email' | translate }}
     </nz-form-label>
-    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="emailErrorTpl">
-      <input
-        nz-input
-        formControlName="email"
-        [(ngModel)]="email"
-        placeholder="{{ 'RequestDonation.DonationSteps.ResponsableStep.EmailPlaceHolder' | translate }}"
-        type="email"
-      />
+    <nz-form-control nzHasFeedback [nzErrorTip]="emailErrorTpl">
+      <input nz-input formControlName="email" [(ngModel)]="email" type="email" />
       <ng-template #emailErrorTpl let-control>
         <ng-container *ngIf="control.hasError('required')">
           {{ 'RequestDonation.DonationSteps.ResponsableStep.RequiredEmail' | translate }}
@@ -77,17 +62,11 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSpan]="7" nzRequired>
+    <nz-form-label nzRequired>
       {{ 'RequestDonation.DonationSteps.ResponsableStep.PhoneNumber' | translate }}
     </nz-form-label>
-    <nz-form-control [nzSpan]="12" nzHasFeedback [nzErrorTip]="phoneNumberErrorTpl">
-      <input
-        type="number"
-        nz-input
-        formControlName="phoneNumber"
-        [(ngModel)]="phoneNumber"
-        placeholder="{{ 'RequestDonation.DonationSteps.ResponsableStep.PhoneNumberPlaceHolder' | translate }}"
-      />
+    <nz-form-control nzHasFeedback [nzErrorTip]="phoneNumberErrorTpl">
+      <input type="number" nz-input formControlName="phoneNumber" [(ngModel)]="phoneNumber" />
       <ng-template #phoneNumberErrorTpl let-control>
         <ng-container *ngIf="control.hasError('required')">
           {{ 'RequestDonation.DonationSteps.ResponsableStep.RequiredPhoneNumber' | translate }}
@@ -97,16 +76,11 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSpan]="7">
+    <nz-form-label>
       {{ 'RequestDonation.DonationSteps.ResponsableStep.Position' | translate }}
     </nz-form-label>
-    <nz-form-control [nzSpan]="12">
-      <input
-        nz-input
-        formControlName="position"
-        [(ngModel)]="position"
-        placeholder="{{ 'RequestDonation.DonationSteps.ResponsableStep.PositionPlaceHolder' | translate }}"
-      />
+    <nz-form-control>
+      <input nz-input formControlName="position" [(ngModel)]="position" />
     </nz-form-control>
   </nz-form-item>
 </form>

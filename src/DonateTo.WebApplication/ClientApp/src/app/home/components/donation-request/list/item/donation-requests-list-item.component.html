@@ -3,7 +3,7 @@
   <div class="ant-card-body">
     {{ 'RequestDonation.Priority' | translate }}:
     <span>
-      <nz-rate [ngModel]="getPriority()" nzAllowHalf [nzCharacter]="heartIcon" disabled></nz-rate>
+      <nz-rate [ngModel]="getPriority()" nzDisabled [nzCharacter]="heartIcon"></nz-rate>
       <ng-template #heartIcon
         ><i nz-icon nzType="heart" class="hearts" nzTheme="fill" className="rate-icon"></i
       ></ng-template>
