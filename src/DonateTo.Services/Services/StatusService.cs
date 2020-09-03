@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DonateTo.Services
 {
-    public class StatusService : BaseService<Status, BaseFilterModel>, IStatusService
+    public class StatusService : BaseService<Status, BaseFilterModel>
     {
         private readonly IRepository<Status> _statusRepository;
         private readonly IUnitOfWork _unitOfWork;
