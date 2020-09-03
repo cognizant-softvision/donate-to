@@ -2,6 +2,7 @@
   <nz-spin *ngIf="this.homeSandbox.donationRequestsLoading$ | async" nzTip="Loading..."> </nz-spin>
   <nz-input-group [nzSuffix]="suffixIconSearch">
     <input
+      class="input-container"
       type="text"
       [(ngModel)]="searchValue"
       (input)="onChange()"
