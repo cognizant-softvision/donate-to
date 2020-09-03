@@ -99,7 +99,7 @@ namespace DonateTo.Services
             {
                 return new PagedResult<Organization>();
             }
-            else if (!roles.Any(r => r.Name == Roles.Admin || r.Name == Roles.Superadmin))
+            else if (!roles.Any( r => r.Name == Roles.Superadmin) && roles.Any(r => r.Name == Roles.Admin || r.Name == Roles.Organization))
             {
                 predicate = predicate.And(p => p.UserOrganizations.Any(uo => uo.UserId == filter.UserId));
             }

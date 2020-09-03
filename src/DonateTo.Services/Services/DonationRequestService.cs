@@ -44,17 +44,14 @@ namespace DonateTo.Services
         {
             // Get the organizations I am assocciated to
             var associatedOrganizations = await _userOrganizationRepository.GetAsync(x => x.UserId == userId).ConfigureAwait(false);
-
+            var associatedOrganizationsList = associatedOrganizations.ToList();
             // Get the donation requests
-            if(associatedOrganizations != null)
+            if(associatedOrganizationsList.Any())
             {
                 var predicateWithOrganizationIds = GetPredicateWithOrganizationIds(filter, associatedOrganizations.ToList());
                 return await _donationRequestRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicateWithOrganizationIds, GetSort(filter)).ConfigureAwait(false);
             }
-
-            var predicate = GetPredicate(filter);
-
-            return await _donationRequestRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicate, GetSort(filter)).ConfigureAwait(false);
+            return new PagedResult<DonationRequest>();
         }
 
         ///<inheritdoc cref="IDonationService"/>

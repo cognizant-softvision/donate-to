@@ -10,6 +10,7 @@ using IdentityServer4.Extensions;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using Microsoft.EntityFrameworkCore.Internal;
 using Newtonsoft.Json;
+using DonateTo.ApplicationCore.Common;
 
 namespace DonateTo.IdentityServer.Services
 {
@@ -45,7 +46,7 @@ namespace DonateTo.IdentityServer.Services
 
             if (userOrganizations.Any())
             {
-                claims.Add(new Claim("organizations", JsonConvert.SerializeObject(userOrganizations.Select(o => new { id = o.Id, name = o.Name }).ToArray())));
+                claims.Add(new Claim("organizations", JsonConvert.SerializeObject(userOrganizations.Select(o => new OrganizationClaim(){ Id = o.Id, Name = o.Name }).ToArray())));
             }
 
             var roleClaimName = JwtClaimTypes.Role;

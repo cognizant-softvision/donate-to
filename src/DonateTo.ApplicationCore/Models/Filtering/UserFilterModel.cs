@@ -11,5 +11,13 @@ namespace DonateTo.ApplicationCore.Models.Filtering
         public string Organization { get; set; }
 
         public IEnumerable<long> OrganizationIds { get; set; }
+
+        public UserFilterModel()
+        {
+            if(OrganizationIds == null)
+            {
+                OrganizationIds = new List<long>();
+            }
+        }
     }
 }
