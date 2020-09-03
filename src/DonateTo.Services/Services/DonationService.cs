@@ -24,16 +24,20 @@ namespace DonateTo.Services
         private readonly IMailSender _mailSender;
         private readonly IDonationRepository _donationRepository;
         private readonly IDonationRequestRepository _donationRequestRepository;
+        private readonly IStatusRepository _statusRepository;
+
 
         public DonationService(
             IMailSender mailSender,
             IDonationRepository donationRepository,
             IDonationRequestRepository donationRequestRepository,
+            IStatusRepository statusRepository,
             IUnitOfWork unitOfWork) : base(donationRepository, unitOfWork)
         {
             _mailSender = mailSender;
             _donationRepository = donationRepository;
             _donationRequestRepository = donationRequestRepository;
+            _statusRepository = statusRepository;
         }
 
         ///<inheritdoc cref="IDonationService"/>
@@ -67,11 +71,13 @@ namespace DonateTo.Services
                             <p>Your donation status has changed to: {1}.</p>
                             <p>Check it <a href='{2}'>here</a></p>";
 
+            var statusName = await _statusRepository.GetAsync(donation.StatusId).ConfigureAwait(false);
+
             var bodyMessage = new MessageBody()
             {
                 HtmlBody = string.Format(CultureInfo.InvariantCulture, body,
                                             user.FullName,
-                                            donation.Status.Name,
+                                            statusName.Name,
                                             client)
             };
 

@@ -117,15 +117,26 @@ namespace DonateTo.WebApi.V1.Controllers
             }
             else
             {
-                var currentDonation = await _donationService.GetAsync(id).ConfigureAwait(false);
-                if (currentDonation.StatusId != donation.StatusId)
+                try
                 {
+                    var result = await base.Put(id, donation).ConfigureAwait(false);
+
                     Request.Headers.TryGetValue("Origin", out StringValues client);
                     var userId = Convert.ToInt64(User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserId)?.Value, CultureInfo.InvariantCulture);
                     var user = await _userService.GetAsync(userId).ConfigureAwait(false);
-                    await _donationService.SendDonationStatusChangeMailAsync(donation, user, client).ConfigureAwait(false);
+
+                    //await _donationService.SendDonationStatusChangeMailAsync(donation, user, client).ConfigureAwait(false);
+
+                    return Ok(result);
                 }
-                return await base.Put(id, donation).ConfigureAwait(false);
+                catch (ArgumentNullException ex)
+                {
+                    return NotFound(ex);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    return BadRequest(ex);
+                }
             }
         }
     }
