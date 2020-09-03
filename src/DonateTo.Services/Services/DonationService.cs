@@ -23,7 +23,6 @@ namespace DonateTo.Services
     {
         private readonly IMailSender _mailSender;
         private readonly IDonationRepository _donationRepository;
-        private readonly IDonationRequestRepository _donationRequestRepository;
 
         public DonationService(
             IMailSender mailSender,
@@ -33,7 +32,6 @@ namespace DonateTo.Services
         {
             _mailSender = mailSender;
             _donationRepository = donationRepository;
-            _donationRequestRepository = donationRequestRepository;
         }
 
         ///<inheritdoc cref="IDonationService"/>
