@@ -183,16 +183,12 @@ export class DonationsDetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  changeDonationStatus(donationId: number) {
-    this.donationDetail = this.donationsList.find((d) => d.id === donationId);
-    this.createStatusModal(this.modalStatusContent);
-  }
-
-  changeItemStatus(donationId: number, donationItem: number) {
+  changeItemStatus(donationId: number, donationItem: number, newStatusId: any) {
     this.donationDetail = this.donationsList.find((d) => d.id === donationId);
     this.itemDetail = this.donationDetail.donationItems.find((i) => i.id === donationItem);
     this.isItem = true;
-    this.createStatusModal(this.modalStatusContent);
+    // this.createStatusModal(this.modalStatusContent);
+    this.saveStatus(donationId, newStatusId);
   }
 
   saveStatus(donationId: number, newStatusId: any) {
@@ -234,7 +230,7 @@ export class DonationsDetailComponent implements OnInit, OnDestroy {
     });
     if (this.isItem) {
       donation.statusId = this.donationDetail.statusId;
-      donation.donationItems.find((item) => item.id === this.itemDetail.id).statusId = this.idModifyStatus;
+      donation.donationItems.find((item) => item.id === this.itemDetail.id).statusId = newStatusId;
     } else {
       donation.statusId = newStatusId;
     }

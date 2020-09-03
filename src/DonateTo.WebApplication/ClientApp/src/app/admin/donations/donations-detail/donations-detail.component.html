@@ -109,9 +109,18 @@
                   <td>{{ item.quantity }}</td>
                   <td>{{ item.unit.name }}</td>
                   <td>
-                    <a (click)="changeItemStatus(data.id, item.id)">
-                      {{ item.status.name }}
-                    </a>
+                    <nz-select
+                      class="select-status"
+                      [(ngModel)]="item.statusId"
+                      (ngModelChange)="changeItemStatus(data.id, item.id, $event)"
+                    >
+                      <nz-option
+                        *ngFor="let state of this.donationRequestSandbox.status$ | async"
+                        [nzValue]="state.id"
+                        [nzLabel]="state.name"
+                      >
+                      </nz-option>
+                    </nz-select>
                   </td>
                 </tr>
               </tbody>
