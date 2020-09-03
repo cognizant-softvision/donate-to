@@ -5,6 +5,6 @@ namespace DonateTo.ApplicationCore.Interfaces.Repositories
 {
     public interface IAddressRepository: IRepository<Address>
     {
-        Task SoftDeleteAddress(Address address);
+        Task SoftDeleteAddress(long addressId);
     }
 }

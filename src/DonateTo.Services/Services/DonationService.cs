@@ -59,6 +59,31 @@ namespace DonateTo.Services
 
             await _mailSender.SendAsync(message).ConfigureAwait(false);
         }
+        
+        ///<inheritdoc cref="IDonationService"/>
+        public async Task SendDonationStatusChangeMailAsync(Donation donation, UserModel user, string client)
+        {
+            var body = @"<p>Hi {0}!</p>
+                            <p>Your donation status has changed to: {1}.</p>
+                            <p>Check it <a href='{2}'>here</a></p>";
+
+            var bodyMessage = new MessageBody()
+            {
+                HtmlBody = string.Format(CultureInfo.InvariantCulture, body,
+                                            user.FullName,
+                                            donation.Status.Name,
+                                            client)
+            };
+
+            var to = new List<string>
+            {
+                user.Email
+            };
+
+            var message = new Message(to, "Donation status changed!", bodyMessage);
+
+            await _mailSender.SendAsync(message).ConfigureAwait(false);
+        }
 
         public async Task SendDeletedDonationMailAsync(UserModel user, string client)
         {

@@ -44,7 +44,7 @@ namespace DonateTo.Infrastructure.Data.Repositories
             return await GetHydratedOrganization().FirstOrDefaultAsync(x => x.Id == id).ConfigureAwait(false);
         }
 
-        public async Task SoftDeleteOrganization(Organization organization)
+        public async Task SoftDeleteOrganization(long organizationId)
         {
             using var transaction = await DbContext.Database.BeginTransactionAsync().ConfigureAwait(false);
 
@@ -52,7 +52,7 @@ namespace DonateTo.Infrastructure.Data.Repositories
             {
                 var organizationToSoftDelete = Get(null)
                     .Include(o => o.Addresses)
-                    .Where(o => o.Id == organization.Id)
+                    .Where(o => o.Id == organizationId)
                     .FirstOrDefault();
 
                 if (organizationToSoftDelete.Addresses.ToList().Count > 0)

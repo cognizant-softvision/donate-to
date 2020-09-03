@@ -96,6 +96,21 @@ const addressReducer = createReducer(
     loading: false,
     failed: true,
     items: [],
+  })),
+  on(addressActions.deleteAddress, (state) => ({
+    ...state,
+    loading: true,
+    failed: false,
+  })),
+  on(addressActions.deleteAddressSuccess, (state) => ({
+    ...state,
+    loading: false,
+    failed: false,
+  })),
+  on(addressActions.deleteAddressFailed, (state) => ({
+    ...state,
+    loading: false,
+    failed: true,
   }))
 );
 

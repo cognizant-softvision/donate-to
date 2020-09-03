@@ -17,15 +17,16 @@
         >
         </app-organization-step-general-information>
 
-        <app-organization-step-contact
-          *ngIf="tab.currentStep === 1"
-          (isFormValid)="isContactStepReady($event)"
-          [contactModel]="contactModel"
-          [isEditOrganization]="isEditOrganization"
-          [contactForBranch]="false"
-        >
-        </app-organization-step-contact>
-
+        <div class="step-contact-container">
+          <app-organization-step-contact
+            *ngIf="tab.currentStep === 1"
+            (isFormValid)="isContactStepReady($event)"
+            [contactModel]="contactModel"
+            [isEditOrganization]="isEditOrganization"
+            [contactForBranch]="false"
+          >
+          </app-organization-step-contact>
+        </div>
         <app-organization-step-address
           *ngIf="tab.currentStep === 2"
           (isFormValid)="isAddressStepReady($event)"

@@ -1,18 +1,20 @@
-<nz-form-item>
-  <nz-form-label [nzSpan]="7">
-    {{ 'RequestDonation.DonationSteps.FinishStep.Observation' | translate }}
-  </nz-form-label>
-  <nz-form-control [nzSpan]="12">
-    <textarea
-      [(ngModel)]="observation"
-      nz-input
-      rows="2"
-      placeholder="{{ 'RequestDonation.DonationSteps.FinishStep.ObservationPlaceHolder' | translate }}"
-      (focusout)="emitForm()"
-    >
-    </textarea>
-  </nz-form-control>
-</nz-form-item>
+<form class="form-container" nz-form [nzLayout]="'vertical'">
+  <nz-form-item>
+    <nz-form-label>
+      {{ 'RequestDonation.DonationSteps.FinishStep.Observation' | translate }}
+    </nz-form-label>
+    <nz-form-control>
+      <textarea
+        [(ngModel)]="observation"
+        nz-input
+        rows="2"
+        placeholder="{{ 'RequestDonation.DonationSteps.FinishStep.ObservationPlaceHolder' | translate }}"
+        (focusout)="emitForm()"
+      >
+      </textarea>
+    </nz-form-control>
+  </nz-form-item>
+</form>
 
 <br />
 

@@ -51,9 +51,9 @@ namespace DonateTo.WebApi.V1.Controllers
             {
                 try
                 {
-                    var userRole = User.Claims.FirstOrDefault(claim => claim.Type.Contains(Claims.Role))?.Value;
+                    var userRole = User.Claims.Select(c => c.Value).ToList();
 
-                    if (userRole != Roles.Superadmin && userRole != Roles.Admin)
+                    if (!userRole.Contains(Roles.Superadmin) && !userRole.Contains(Roles.Admin))
                     {
                         return Unauthorized();
                     }
@@ -115,11 +115,9 @@ namespace DonateTo.WebApi.V1.Controllers
         /// <summary>
         /// Soft Deletes a Question
         /// </summary>
-        /// <param name="id">Question Id</param>
         /// <param name="question">Question</param>
-        /// <returns>Question soft deleted.</returns>
-        [HttpPut(Name = "[controller]_[action]")]
-        public async Task<IActionResult> SoftDelete(long id, [FromBody] Question question)
+        /// <returns>IActionResult</returns>
+        public override async Task<IActionResult> Delete(long id)
         {
             if (!ModelState.IsValid)
             {
@@ -129,7 +127,7 @@ namespace DonateTo.WebApi.V1.Controllers
             {
                 try
                 {
-                    await _questionService.SoftDelete(question).ConfigureAwait(false);
+                    await _questionService.SoftDelete(id).ConfigureAwait(false);
 
                     return Ok();
                 }

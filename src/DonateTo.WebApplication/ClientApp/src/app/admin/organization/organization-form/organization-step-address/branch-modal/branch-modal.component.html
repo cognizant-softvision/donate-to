@@ -25,13 +25,15 @@
     >
     </app-step-branch-address>
 
-    <app-organization-step-contact
-      *ngIf="currentStep === 1"
-      (isFormValid)="isContactStepReady($event)"
-      [contactModel]="contactModel"
-      [contactForBranch]="contactForBranch"
-    >
-    </app-organization-step-contact>
+    <div class="step-contact-container">
+      <app-organization-step-contact
+        *ngIf="currentStep === 1"
+        (isFormValid)="isContactStepReady($event)"
+        [contactModel]="contactModel"
+        [contactForBranch]="contactForBranch"
+      >
+      </app-organization-step-contact>
+    </div>
   </div>
 
   <!-- Steps Buttons -->

@@ -102,5 +102,31 @@ namespace DonateTo.WebApi.V1.Controllers
                 }
             }
         }
+
+        /// <summary>
+        /// Updates a Donation
+        /// </summary>
+        /// <param name="id">Donation Id</param>
+        /// <param name="donation">Donation</param>
+        /// <returns>Updated Donation.</returns>
+        public override async Task<IActionResult> Put(long id, [FromBody] Donation donation)
+        {
+            if (!ModelState.IsValid || donation == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                var currentDonation = await _donationService.GetAsync(id).ConfigureAwait(false);
+                if (currentDonation.StatusId != donation.StatusId)
+                {
+                    Request.Headers.TryGetValue("Origin", out StringValues client);
+                    var userId = Convert.ToInt64(User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserId)?.Value, CultureInfo.InvariantCulture);
+                    var user = await _userService.GetAsync(userId).ConfigureAwait(false);
+                    await _donationService.SendDonationStatusChangeMailAsync(donation, user, client).ConfigureAwait(false);
+                }
+                return await base.Put(id, donation).ConfigureAwait(false);
+            }
+        }
     }
 }

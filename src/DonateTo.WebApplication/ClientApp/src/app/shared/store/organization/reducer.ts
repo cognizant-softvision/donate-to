@@ -120,21 +120,6 @@ const organizationReducer = createReducer(
     ...state,
     loading: false,
     failed: true,
-  })),
-  on(organizationActions.deleteAddress, (state) => ({
-    ...state,
-    loading: true,
-    failed: false,
-  })),
-  on(organizationActions.deleteAddressSuccess, (state) => ({
-    ...state,
-    loading: false,
-    failed: false,
-  })),
-  on(organizationActions.deleteAddressFailed, (state) => ({
-    ...state,
-    loading: false,
-    failed: true,
   }))
 );
 

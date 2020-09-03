@@ -4,105 +4,67 @@
     <h4 class="section-title">{{ 'Admin.Questions.Create.Title' | translate }}</h4>
   </div>
   <br />
-  <form nz-form>
+  <form [nzLayout]="'vertical'" nz-form>
     <div [formGroup]="questionItemFormGroup" class="create-question-add-item-container">
       <div class="create-question-add-item-box-first">
-        <div class="create-item-container">
-          <nz-form-label class="question-item">{{ 'Admin.Questions.Form.Label' | translate }}</nz-form-label>
-          <nz-form-label class="question-item">{{ 'Admin.Questions.Form.Placeholder' | translate }}</nz-form-label>
-          <nz-form-label class="question-item">{{ 'Admin.Questions.Form.DefaultValue' | translate }}</nz-form-label>
-        </div>
-        <div class="create-item-container create-question-add-item-input">
+        <div>
+          <nz-form-label>{{ 'Admin.Questions.Form.Label' | translate }}</nz-form-label>
           <nz-form-item>
             <nz-form-control nzErrorTip="{{ 'Admin.Questions.Form.LabelRequired' | translate }}">
-              <input
-                nz-input
-                placeholder="{{ 'Admin.Questions.Form.LabelPlaceHolder' | translate }}"
-                formControlName="labelFormControl"
-                type="text"
-                [(ngModel)]="label"
-              />
+              <input nz-input formControlName="labelFormControl" type="text" [(ngModel)]="label" />
             </nz-form-control>
           </nz-form-item>
+          <nz-form-label>{{ 'Admin.Questions.Form.Placeholder' | translate }}</nz-form-label>
           <nz-form-item>
             <nz-form-control nzErrorTip="{{ 'Admin.Questions.Form.PlaceholderRequired' | translate }}">
+              <input nz-input formControlName="placeholderFormControl" type="text" [(ngModel)]="placeholder" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-label>{{ 'Admin.Questions.Form.DefaultValue' | translate }}</nz-form-label>
+          <nz-form-item>
+            <nz-form-control>
               <input
                 nz-input
-                placeholder="{{ 'Admin.Questions.Form.PlaceholderPlaceHolder' | translate }}"
-                formControlName="placeholderFormControl"
+                formControlName="defaultValueFormControl"
                 type="text"
-                [(ngModel)]="placeholder"
+                [disabled]="
+                  select.activatedValue == 'RadioButton' ||
+                  select.activatedValue == 'Checkbox' ||
+                  select.activatedValue == 'DropDown'
+                "
+                [(ngModel)]="defaultValue"
               />
             </nz-form-control>
           </nz-form-item>
-          <div class="item-quantity">
-            <nz-form-item>
-              <nz-form-control>
-                <input
-                  nz-input
-                  placeholder="{{ 'Admin.Questions.Form.DefaultValuePlaceHolder' | translate }}"
-                  formControlName="defaultValueFormControl"
-                  type="text"
-                  [disabled]="
-                    select.activatedValue == 'RadioButton' ||
-                    select.activatedValue == 'Checkbox' ||
-                    select.activatedValue == 'DropDown'
-                  "
-                  [(ngModel)]="defaultValue"
-                />
-              </nz-form-control>
-            </nz-form-item>
-          </div>
         </div>
       </div>
 
       <div class="create-question-add-item-box-second">
         <div class="create-item-container">
-          <nz-form-label class="question-item">{{ 'Admin.Questions.Form.Order' | translate }}</nz-form-label>
-          <nz-form-label class="question-item">{{ 'Admin.Questions.Form.Weight' | translate }}</nz-form-label>
-          <nz-form-label class="question-item">{{ 'Admin.Questions.Form.ControlType' | translate }}</nz-form-label>
-        </div>
-        <div class="create-item-container create-question-add-item-input">
-          <div class="item-quantity">
-            <nz-form-item>
-              <nz-form-control nzErrorTip="{{ 'Admin.Questions.Form.OrderRequired' | translate }}">
-                <input
-                  nz-input
-                  placeholder="{{ 'Admin.Questions.Form.OrderPlaceHolder' | translate }}"
-                  formControlName="orderFormControl"
-                  type="number"
-                  [(ngModel)]="order"
-                  min="1"
-                />
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-
-          <div class="item-quantity">
-            <nz-form-item>
-              <nz-form-control nzErrorTip="{{ 'Admin.Questions.Form.WeightRequired' | translate }}">
-                <input
-                  nz-input
-                  placeholder="{{ 'Admin.Questions.Form.WeightPlaceHolder' | translate }}"
-                  formControlName="weightFormControl"
-                  type="number"
-                  min="1"
-                  [(ngModel)]="weight"
-                  max="100"
-                  [ngModel]="weight"
-                />
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-
+          <nz-form-label>{{ 'Admin.Questions.Form.Order' | translate }}</nz-form-label>
+          <nz-form-item>
+            <nz-form-control nzErrorTip="{{ 'Admin.Questions.Form.OrderRequired' | translate }}">
+              <input nz-input formControlName="orderFormControl" type="number" [(ngModel)]="order" min="1" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-label>{{ 'Admin.Questions.Form.Weight' | translate }}</nz-form-label>
+          <nz-form-item>
+            <nz-form-control nzErrorTip="{{ 'Admin.Questions.Form.WeightRequired' | translate }}">
+              <input
+                nz-input
+                formControlName="weightFormControl"
+                type="number"
+                min="1"
+                [(ngModel)]="weight"
+                max="100"
+                [ngModel]="weight"
+              />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-label>{{ 'Admin.Questions.Form.ControlType' | translate }}</nz-form-label>
           <nz-form-item>
             <nz-form-control nzErrorTip="{{ 'Admin.Questions.Form.ControlTypeRequired' | translate }}">
-              <nz-select
-                #select
-                formControlName="controlTypeFormControl"
-                nzPlaceHolder="{{ 'Admin.Questions.Form.ControlTypePlaceHolder' | translate }}"
-                [(ngModel)]="controlTypeId"
-              >
+              <nz-select #select formControlName="controlTypeFormControl" [(ngModel)]="controlTypeId">
                 <nz-option
                   *ngFor="let controlType of this.questionSandbox.controlTypes$ | async"
                   [nzLabel]="controlType.name"
@@ -111,7 +73,9 @@
               </nz-select>
             </nz-form-control>
           </nz-form-item>
+        </div>
 
+        <div class="create-item-container create-question-add-item-input">
           <!-- textbox -->
           <nz-form-item *ngIf="controlTypeId === controlTypeEnum.Textbox">
             <div class="item-quantity-range">

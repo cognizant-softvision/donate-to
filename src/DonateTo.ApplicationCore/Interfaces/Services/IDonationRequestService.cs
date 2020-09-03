@@ -38,23 +38,8 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// <summary>
         /// Soft deletes a Donation Request
         /// </summary>
-        /// <param name="donationRequest">DonationRequest</param>
+        /// <param name="donationRequestId">DonationRequest Id</param>
         /// <returns></returns>
-        Task SoftDelete(DonationRequest donationRequest);
-
-        /// <summary>
-        /// Soft deletes a Donation Request Item
-        /// </summary>
-        /// <param name="donationRequestItem">DonationRequestItem</param>
-        /// <returns></returns>
-        Task SoftDelete(DonationRequestItem donationRequestItem);
-
-        /// <summary>
-        /// Send Deleted request item info mail to all donors
-        /// </summary>
-        /// <param name="users">IEnumerable<Users></param>
-        /// <param name="client">Client</param>
-        /// <returns></returns>
-        public Task SendDeletedDonationRequestItemMailAsync(DonationRequestItem donationRequestItem, IEnumerable<User> users, string client);
+        Task SoftDelete(long donationRequestId);
     }
 }

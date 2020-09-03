@@ -60,7 +60,3 @@ export const deleteOrganizationSuccess = createAction(
   props<{ organization: OrganizationModel }>()
 );
 export const deleteOrganizationFailed = createAction('[Address] Delete failed');
-
-export const deleteAddress = createAction('[Address] Delete', props<{ address: AddressModel }>());
-export const deleteAddressSuccess = createAction('[Address] Delete success', props<{ address: AddressModel }>());
-export const deleteAddressFailed = createAction('[Address] Delete failed');

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AddressModel, ContactModel, OrganizationModel } from 'src/app/shared/models';
-import { OrganizationSandbox } from '../../../organization-sandbox';
+import { OrganizationSandbox } from '../../../organization.sandbox';
 import { Router } from '@angular/router';
 import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
 import { Subscription } from 'rxjs';
