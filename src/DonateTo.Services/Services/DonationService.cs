@@ -24,14 +24,14 @@ namespace DonateTo.Services
         private readonly IMailSender _mailSender;
         private readonly IDonationRepository _donationRepository;
         private readonly IDonationRequestRepository _donationRequestRepository;
-        private readonly IStatusRepository _statusRepository;
+        private readonly IRepository<Status> _statusRepository;
 
 
         public DonationService(
             IMailSender mailSender,
             IDonationRepository donationRepository,
             IDonationRequestRepository donationRequestRepository,
-            IStatusRepository statusRepository,
+            IRepository<Status> statusRepository,
             IUnitOfWork unitOfWork) : base(donationRepository, unitOfWork)
         {
             _mailSender = mailSender;
