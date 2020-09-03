@@ -238,12 +238,12 @@ namespace DonateTo.WebApi.V1.Controllers
             else
             {
                 var roles = User.Claims.Select(c => c.Value).ToList();
-                //if (roles.Contains(Roles.Organization))
-                //{
-                //    var organizations = JsonConvert.SerializeObject(User.Claims.Where(claim => claim.Type == "organizations").Select(claim => claim.Value));
-                //    var organizationClaim = JsonConvert.DeserializeObject<List<OrganizationClaim>>(organizations);
-                //    filter.OrganizationIds = organizationClaim.Select(oc => oc.Id).ToList();
-                //}
+                if (roles.Contains(Roles.Organization))
+                {
+                    var organizations = JsonConvert.SerializeObject(User.Claims.Where(claim => claim.Type == "organizations").Select(claim => claim.Value));
+                    var organizationClaim = JsonConvert.DeserializeObject<List<OrganizationClaim>>(organizations);
+                    filter.OrganizationIds = organizationClaim.Select(oc => oc.Id).ToList();
+                }
                 var result = await _userService.GetPagedFilteredAsync(filter).ConfigureAwait(false);
 
                 if (result != null)

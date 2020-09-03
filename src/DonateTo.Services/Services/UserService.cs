@@ -411,7 +411,7 @@ namespace DonateTo.Services
                 predicate = predicate.Or(p => p.UpdateDate <= filter.UpdateDateEnd);
             }
 
-            if (filter.OrganizationIds.Any()) 
+            if (filter.OrganizationIds != null && filter.OrganizationIds.Any()) 
             {
                 predicate = predicate.And(p => p.UserOrganizations.Any(uo => filter.OrganizationIds.Any(oi => oi == uo.OrganizationId)));
             }
