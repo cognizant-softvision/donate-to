@@ -125,7 +125,7 @@ namespace DonateTo.WebApi.V1.Controllers
                     var userId = Convert.ToInt64(User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserId)?.Value, CultureInfo.InvariantCulture);
                     var user = await _userService.GetAsync(userId).ConfigureAwait(false);
 
-                    //await _donationService.SendDonationStatusChangeMailAsync(donation, user, client).ConfigureAwait(false);
+                    await _donationService.SendDonationStatusChangeMailAsync(donation, user, client).ConfigureAwait(false);
 
                     return Ok(result);
                 }
