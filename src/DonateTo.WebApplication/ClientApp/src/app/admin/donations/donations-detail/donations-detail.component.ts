@@ -183,23 +183,21 @@ export class DonationsDetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  changeDonationStatus(donationId: number) {
-    this.donationDetail = this.donationsList.find((d) => d.id === donationId);
-    this.createStatusModal(this.modalStatusContent);
-  }
-
-  changeItemStatus(donationId: number, donationItem: number) {
+  changeItemStatus(donationId: number, donationItem: number, newStatusId: any) {
     this.donationDetail = this.donationsList.find((d) => d.id === donationId);
     this.itemDetail = this.donationDetail.donationItems.find((i) => i.id === donationItem);
     this.isItem = true;
-    this.createStatusModal(this.modalStatusContent);
+    // this.createStatusModal(this.modalStatusContent);
+    this.saveStatus(donationId, newStatusId);
   }
 
-  saveStatus() {
+  saveStatus(donationId: number, newStatusId: any) {
+    this.donationDetail = this.donationsList.find((d) => d.id === donationId);
+
     this.isLoading = true;
-    this.donationSandbox.updateDonation(this.updateDonation());
+    const updatedDonation = this.updateDonation(newStatusId);
+    this.donationSandbox.updateDonation(updatedDonation);
     this.isItem = false;
-    this.tplModal.destroy();
 
     this.subscriptions.push(
       this.donationSandbox.donationsLoading$.subscribe((loading) => {
@@ -211,7 +209,7 @@ export class DonationsDetailComponent implements OnInit, OnDestroy {
     );
   }
 
-  updateDonation(): DonationModel {
+  updateDonation(newStatusId: number): DonationModel {
     const donation = new DonationModel();
     Object.entries(this.donationDetail).forEach((kv) => {
       if (['string', 'number', 'Date'].includes(typeof kv[1])) {
@@ -222,7 +220,6 @@ export class DonationsDetailComponent implements OnInit, OnDestroy {
     donation.observation = this.donationDetail.observation;
     donation.donationRequestId = this.donationDetail.donationRequest.id;
     donation.addressId = this.donationDetail.addressId;
-    donation.availabilities = [...this.donationDetail.availabilities];
     donation.donationItems = this.donationDetail.donationItems.map((item) => {
       const donationItem: DonationItemModel = new DonationItemModel();
       Object.assign(donationItem, item);
@@ -233,9 +230,9 @@ export class DonationsDetailComponent implements OnInit, OnDestroy {
     });
     if (this.isItem) {
       donation.statusId = this.donationDetail.statusId;
-      donation.donationItems.find((item) => item.id === this.itemDetail.id).statusId = this.idModifyStatus;
+      donation.donationItems.find((item) => item.id === this.itemDetail.id).statusId = newStatusId;
     } else {
-      donation.statusId = this.idModifyStatus;
+      donation.statusId = newStatusId;
     }
     return donation;
   }
