@@ -59,4 +59,4 @@ export const deleteOrganizationSuccess = createAction(
   '[Organization] Delete success',
   props<{ organization: OrganizationModel }>()
 );
-export const deleteOrganizationFailed = createAction('[Address] Delete failed');
+export const deleteOrganizationFailed = createAction('[Address] Delete failed', props<{ errorMessage: string }>());

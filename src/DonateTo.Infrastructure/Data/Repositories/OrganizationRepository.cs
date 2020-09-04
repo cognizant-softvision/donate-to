@@ -1,4 +1,5 @@
-﻿using DonateTo.ApplicationCore.Entities;
+﻿using DonateTo.ApplicationCore.Common;
+using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces.Repositories;
 using DonateTo.Infrastructure.Data.EntityFramework;
 using DonateTo.Infrastructure.Data.Extensions;
@@ -55,14 +56,25 @@ namespace DonateTo.Infrastructure.Data.Repositories
                     .Where(o => o.Id == organizationId)
                     .FirstOrDefault();
 
-                if (organizationToSoftDelete.Addresses.ToList().Count > 0)
-                {
-                    organizationToSoftDelete.Addresses.ToList().ForEach(a => DbContext.Addresses.Remove(a));
-                }
+                var donationsActive = DbContext.DonationRequests
+                    .Where(d => (d.OrganizationId == organizationId) &&
+                                (d.StatusId == StatusType.Pending))
+                    .ToList();
 
-                DbContext.Organizations.Remove(organizationToSoftDelete);
-                await DbContext.SaveChangesAsync().ConfigureAwait(false);
-                await transaction.CommitAsync().ConfigureAwait(false);
+                if (donationsActive.Count() > 0)
+                {
+                    throw new Exception("Admin.Organization.DeleteError");
+                } else
+                {
+                    if (organizationToSoftDelete.Addresses.ToList().Count > 0)
+                    {
+                        organizationToSoftDelete.Addresses.ToList().ForEach(a => DbContext.Addresses.Remove(a));
+                    }
+
+                    DbContext.Organizations.Remove(organizationToSoftDelete);
+                    await DbContext.SaveChangesAsync().ConfigureAwait(false);
+                    await transaction.CommitAsync().ConfigureAwait(false);
+                }
             }
             catch (Exception)
             {

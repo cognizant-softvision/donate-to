@@ -218,3 +218,13 @@
     <p>{{ 'NoEntries' | translate }}</p>
   </div>
 </ng-template>
+
+<nz-modal
+  [(nzVisible)]="errorDeletingOrganization"
+  [nzClosable]="false"
+  [nzCancelText]="null"
+  nzTitle="{{ errorMessage }}"
+  (nzOnOk)="switchErrorModal()"
+>
+  <div>{{ errorMessage }}</div>
+</nz-modal>

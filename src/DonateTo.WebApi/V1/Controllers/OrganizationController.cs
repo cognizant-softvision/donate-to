@@ -141,6 +141,10 @@ namespace DonateTo.WebApi.V1.Controllers
                 {
                     return NotFound(ex);
                 }
+                catch (Exception e)
+                {
+                    return UnprocessableEntity(e.Message);
+                }
             }
         }
     }

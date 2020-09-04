@@ -14,7 +14,10 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((error) => {
         let errorMessage = '';
-        if (error instanceof ErrorEvent) {
+        if (error.status === 422) {
+          error.title = 'Can not delete Organization';
+          errorMessage = `The Organization can not have donations requests in progress`;
+        } else if (error instanceof ErrorEvent) {
           errorMessage = `Client-side error: ${error.error.message}`;
         } else {
           errorMessage = `Server-side error: ${error.status} ${error.message}`;
