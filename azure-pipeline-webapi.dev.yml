@@ -32,7 +32,7 @@ steps:
     inputs:
       command: custom
       custom: tool
-      arguments: 'install --global dotnet-ef --version 3.0.0'
+      arguments: 'install --global dotnet-ef'
 
   - task: DotNetCoreCLI@2
     displayName: 'Create Sql Migration File'
