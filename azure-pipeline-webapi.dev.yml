@@ -39,7 +39,7 @@ steps:
     inputs:
       command: custom
       custom: ef
-      arguments: '--project "$(Build.SourcesDirectory)\src\DonateTo.WebApi\DonateTo.WebApi.csproj" -s "$(Build.SourcesDirectory)\src\DonateTo.WebApi\DonateTo.WebApi.csproj" --output "$(build.artifactstagingdirectory)\SQL\migrations.sql" --idempotent --verbose --no-build --configuration $(BuildConfiguration) --context "DonateToDbContext'
+      arguments: 'migrations script --project "$(Build.SourcesDirectory)\src\DonateTo.WebApi\DonateTo.WebApi.csproj" -s "$(Build.SourcesDirectory)\src\DonateTo.WebApi\DonateTo.WebApi.csproj" --output "$(build.artifactstagingdirectory)\SQL\migrations.sql" --idempotent --verbose --no-build --configuration $(BuildConfiguration) --context "DonateToDbContext'
 
   #- task: PowerShell@2
     #displayName: Create Sql Migration File
