@@ -56,7 +56,9 @@
         "AddItem": "Agregar Item",
         "CreateRequest": "Crear Solicitud",
         "TextboxRangeValueError": "El rango elegido está fuera del límite. El valor debe estar entre",
-        "And": "y"
+        "And": "y",
+        "ErrorTitle": "Error",
+        "ErrorMessage": "Ocurrió un error al querer crear una solicitud de donación"
       },
       "Edit": {
         "Title": "Editar Solicitud",

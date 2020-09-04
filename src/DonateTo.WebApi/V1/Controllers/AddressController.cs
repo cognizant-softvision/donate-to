@@ -14,6 +14,7 @@ namespace DonateTo.WebApi.V1.Controllers
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [Authorize]
     public class AddressController : BaseApiController<Address, BaseFilterModel>
     {
         private readonly IAddressService _addressService;

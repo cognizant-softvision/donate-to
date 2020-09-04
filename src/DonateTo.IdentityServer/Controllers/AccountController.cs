@@ -137,8 +137,10 @@ namespace DonateTo.IdentityServer.Controllers
         [HttpGet]
         public IActionResult Register(string returnUrl)
         {
-            var model = new UserRegistrationViewModel();
-            model.ReturnUrl = returnUrl;
+            var model = new UserRegistrationViewModel
+            {
+                ReturnUrl = returnUrl
+            };
             return View(model);
         }
 

@@ -3,6 +3,8 @@ using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models.Filtering;
 using DonateTo.WebApi.Common;
+using DonateTo.WebApi.Filters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,6 +17,7 @@ namespace DonateTo.WebApi.V1.Controllers
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [Authorize]
     public class QuestionController : BaseApiController<Question, QuestionFilterModel>
     {
         private readonly IQuestionService _questionService;
@@ -32,6 +35,7 @@ namespace DonateTo.WebApi.V1.Controllers
         /// <param name="value">Question list to update.</param>
         /// <returns>Updated Questions.</returns>
         [HttpPut(Name = "[controller]_[action]")]
+        [ServiceFilter(typeof(SuperAdminAccessFilter))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]

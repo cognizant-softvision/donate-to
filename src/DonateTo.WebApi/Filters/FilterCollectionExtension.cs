@@ -12,6 +12,7 @@ namespace DonateTo.WebApi.Filters
         {
             service.AddScoped<OrganizationAccessFilter>();
             service.AddScoped<AdminAccessFilter>();
+            service.AddScoped<SuperAdminAccessFilter>();
         }
     }
 }

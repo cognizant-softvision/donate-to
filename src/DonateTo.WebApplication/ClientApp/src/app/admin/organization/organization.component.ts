@@ -1,3 +1,4 @@
+import { AuthSandbox } from './../../shared/auth/auth.sandbox';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NzTableQueryParams } from 'ng-zorro-antd';
 import { OrganizationFilter } from 'src/app/shared/models/filters/organization-filter';
@@ -29,11 +30,14 @@ export class OrganizationComponent implements OnInit, OnDestroy {
   failedStatus = false;
   successStatus = false;
   dataSaved = false;
+  isAdmin = false;
+  isSuperAdmin = false;
   filter: string;
   isDeleteProcess = false;
 
   constructor(
     public organizationSandbox: OrganizationSandbox,
+    public authSandbox: AuthSandbox,
     public router: Router,
     private dataUpdated: DataUpdatedService,
     private filterUsers: FilterService
@@ -73,7 +77,7 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(
       this.organizationSandbox.isRoleProcessed$.subscribe((isRoleProcessed) => {
-        if (isRoleProcessed && !this.organizationSandbox.isSuperAdmin$.value) {
+        if (isRoleProcessed && !this.organizationSandbox.isOrganization$.value) {
           this.router.navigate(['']);
         }
       })
@@ -85,6 +89,18 @@ export class OrganizationComponent implements OnInit, OnDestroy {
           this.isDeleteProcess = false;
           this.organizationSandbox.loadOrganizationsFilteredPaged(this.organizationFilter);
         }
+      })
+    );
+
+    this.subscriptions.push(
+      this.authSandbox.isAdmin$.subscribe((isAdmin) => {
+        this.isAdmin = isAdmin;
+      })
+    );
+
+    this.subscriptions.push(
+      this.authSandbox.isSuperAdmin$.subscribe((isSuperAdmin) => {
+        this.isSuperAdmin = isSuperAdmin;
       })
     );
   }

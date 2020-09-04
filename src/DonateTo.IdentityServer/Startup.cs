@@ -168,39 +168,37 @@ namespace DonateTo.IdentityServer
 
             var clients = Configuration.GetSection("IdentityServer").GetSection("Clients").Get<IEnumerable<Client>>();
 
-            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            using var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
+            serviceScope.ServiceProvider.GetRequiredService<CustomPersistedGrantDbContext>().Database.Migrate();
+
+            var context = serviceScope.ServiceProvider.GetRequiredService<CustomConfigurationDbContext>();
+            context.Database.Migrate();
+
+            if (!context.Clients.Any())
             {
-                serviceScope.ServiceProvider.GetRequiredService<CustomPersistedGrantDbContext>().Database.Migrate();
-
-                var context = serviceScope.ServiceProvider.GetRequiredService<CustomConfigurationDbContext>();
-                context.Database.Migrate();
-
-                if (!context.Clients.Any())
+                foreach (var client in clients)
                 {
-                    foreach (var client in clients)
-                    {
-                        context.Clients.Add(client.ToEntity());
-                    }
-                    context.SaveChanges();
+                    context.Clients.Add(client.ToEntity());
                 }
+                context.SaveChanges();
+            }
 
-                if (!context.IdentityResources.Any())
+            if (!context.IdentityResources.Any())
+            {
+                foreach (var resource in Config.IdentityResources)
                 {
-                    foreach (var resource in Config.IdentityResources)
-                    {
-                        context.IdentityResources.Add(resource.ToEntity());
-                    }
-                    context.SaveChanges();
+                    context.IdentityResources.Add(resource.ToEntity());
                 }
+                context.SaveChanges();
+            }
 
-                if (!context.ApiResources.Any())
+            if (!context.ApiResources.Any())
+            {
+                foreach (var resource in apiResources)
                 {
-                    foreach (var resource in apiResources)
-                    {
-                        context.ApiResources.Add(resource.ToEntity());
-                    }
-                    context.SaveChanges();
+                    context.ApiResources.Add(resource.ToEntity());
                 }
+                context.SaveChanges();
             }
         }
         #endregion

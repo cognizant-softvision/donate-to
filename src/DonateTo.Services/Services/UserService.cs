@@ -411,9 +411,9 @@ namespace DonateTo.Services
                 predicate = predicate.Or(p => p.UpdateDate <= filter.UpdateDateEnd);
             }
 
-            if (filter.OrganizationId != 0) 
+            if (filter.OrganizationIds.Any()) 
             {
-                predicate = predicate.And(p => p.UserOrganizations.Any(uo => uo.OrganizationId == filter.OrganizationId));
+                predicate = predicate.And(p => p.UserOrganizations.Any(uo => filter.OrganizationIds.Any(oi => oi == uo.OrganizationId)));
             }
 
             //EF function is the way used to compare string avoiding EF core translation issue with

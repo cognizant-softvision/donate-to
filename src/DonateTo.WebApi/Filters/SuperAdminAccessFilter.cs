@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace DonateTo.WebApi.Filters
 {
-    public class AdminAccessFilter : IActionFilter
+    public class SuperAdminAccessFilter : IActionFilter
     {
         /// <inheritdoc cref="IActionFilter"/>
         public void OnActionExecuted(ActionExecutedContext context)
@@ -29,11 +29,11 @@ namespace DonateTo.WebApi.Filters
             switch (role)
             {
                 case Roles.Superadmin:
-                case Roles.Admin:
                     break;
+                case Roles.Admin:
                 case Roles.Organization:                    
                 case Roles.Donor:
-                    context.Result = new UnauthorizedObjectResult("User does not have admin access privileges.");
+                    context.Result = new UnauthorizedObjectResult("User does not have super admin access privileges.");
                     break;
                 default:
                     context.Result = new UnauthorizedObjectResult("User does not have access privileges.");

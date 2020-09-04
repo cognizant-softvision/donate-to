@@ -56,8 +56,7 @@ namespace DonateTo.WebApi.V1.Controllers
             }
             else
             {
-                StringValues client;
-                Request.Headers.TryGetValue("Origin", out client);
+                Request.Headers.TryGetValue("Origin", out StringValues client);
 
                 var username = User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserName)?.Value;
 
@@ -141,8 +140,7 @@ namespace DonateTo.WebApi.V1.Controllers
             {
                 try
                 {
-                    StringValues client;
-                    Request.Headers.TryGetValue("Origin", out client);
+                    Request.Headers.TryGetValue("Origin", out StringValues client);
 
                     var donationRequest = await _donationRequestService.GetAsync(id).ConfigureAwait(false);
 
@@ -153,7 +151,7 @@ namespace DonateTo.WebApi.V1.Controllers
                         var donations = await _donationService.GetAsync((donation => donation.DonationRequestId == id)).ConfigureAwait(false);
                         donations = donations.Where(donation => donation.StatusId != StatusType.Completed);
 
-                        if (donations.Count() > 0)
+                        if (donations.Any())
                         {
                             var users = await _userService.GetByOrganizationIdAsync(donationRequest.OrganizationId).ConfigureAwait(false);
                             await _donationRequestService.SendDeleteRequestMailToOrganizationUsersAsync(donationRequest, users, client).ConfigureAwait(false);

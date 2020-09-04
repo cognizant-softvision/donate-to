@@ -84,6 +84,7 @@ const ICONS: IconDefinition[] = [
     NzTableModule,
     NzTagModule,
     NzRadioModule,
+    NzSpinModule,
     NzButtonModule,
     NzSelectModule,
     NzInputModule,

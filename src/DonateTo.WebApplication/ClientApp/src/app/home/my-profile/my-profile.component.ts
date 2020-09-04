@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChildren } from '@angular/core';
 import { UserSandbox } from 'src/app/admin/user/user.sandbox';
 import { Subscription } from 'rxjs';
 import { UserModel } from 'src/app/shared/models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-profile',
@@ -20,7 +21,7 @@ export class MyProfileComponent implements OnInit, OnDestroy {
   isEdit = false;
   isEnable = false;
 
-  constructor(public userSandbox: UserSandbox) {}
+  constructor(public userSandbox: UserSandbox, public router: Router) {}
 
   ngOnDestroy(): void {
     this.unregisterEvents();
@@ -52,6 +53,14 @@ export class MyProfileComponent implements OnInit, OnDestroy {
       this.userSandbox.userId$.subscribe((userId) => {
         if (userId) {
           this.userSandbox.loadUser(userId);
+        }
+      })
+    );
+
+    this.subscriptions.push(
+      this.userSandbox.isRoleProcessed$.subscribe((isRoleProcessed) => {
+        if (isRoleProcessed && !this.userSandbox.isDonor$.value) {
+          this.router.navigate(['']);
         }
       })
     );
