@@ -64,7 +64,12 @@
           <nz-form-label>{{ 'Admin.Questions.Form.ControlType' | translate }}</nz-form-label>
           <nz-form-item>
             <nz-form-control nzErrorTip="{{ 'Admin.Questions.Form.ControlTypeRequired' | translate }}">
-              <nz-select #select formControlName="controlTypeFormControl" [(ngModel)]="controlTypeId">
+              <nz-select
+                #select
+                (ngModelChange)="onSelectChange($event)"
+                formControlName="controlTypeFormControl"
+                [(ngModel)]="controlTypeId"
+              >
                 <nz-option
                   *ngFor="let controlType of this.questionSandbox.controlTypes$ | async"
                   [nzLabel]="controlType.name"

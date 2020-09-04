@@ -273,6 +273,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
    */
   addField(e?: MouseEvent): void {
     if (e) {
+      this.isWeightValid = true;
       e.preventDefault();
     }
 
@@ -415,5 +416,9 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
 
   goBack() {
     this.router.navigate(['/admin/questions']);
+  }
+
+  onSelectChange(value) {
+    this.isWeightValid = true;
   }
 }
