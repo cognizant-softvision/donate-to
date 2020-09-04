@@ -57,15 +57,9 @@ namespace DonateTo.Infrastructure.Data.Repositories
 
         public IEnumerable<User> GetDonors(long donationRequestItemId)
         {
-            var donationRequestId = DbContext.DonationRequests
-                .Include(d => d.DonationRequestItems
-                    .Where(d => d.Id == donationRequestItemId))
-                .Select(d => d.Id)
-                .FirstOrDefault();
-
             var donors = Get(null)
-                .Include(d => d.OwnerId)
-                .Where(d => (d.DonationRequestId == donationRequestId) &&
+                .Include(d => d.Owner)
+                .Where(d => (d.DonationRequestId == donationRequestItemId) &&
                             (d.StatusId == StatusType.Pending))
                 .Select(d => d.Owner)
                 .ToList();
