@@ -34,6 +34,8 @@ export class OrganizationComponent implements OnInit, OnDestroy {
   isSuperAdmin = false;
   filter: string;
   isDeleteProcess = false;
+  errorMessage: string;
+  errorDeletingOrganization = false;
 
   constructor(
     public organizationSandbox: OrganizationSandbox,
@@ -60,6 +62,15 @@ export class OrganizationComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.organizationSandbox.failAction$.subscribe((status) => {
         this.failedStatus = status;
+      })
+    );
+
+    this.subscriptions.push(
+      this.organizationSandbox.errorMessage$.subscribe((msg) => {
+        if (msg && this.failedStatus) {
+          this.errorMessage = msg;
+          this.errorDeletingOrganization = true;
+        }
       })
     );
 
@@ -191,5 +202,9 @@ export class OrganizationComponent implements OnInit, OnDestroy {
   deleteOrganization(organization: OrganizationModel) {
     this.organizationSandbox.deleteOrganization(organization);
     this.isDeleteProcess = true;
+  }
+
+  switchErrorModal() {
+    this.errorDeletingOrganization = !this.errorDeletingOrganization;
   }
 }

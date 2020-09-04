@@ -15,6 +15,7 @@ export class OrganizationSandbox extends Sandbox {
   failAction$ = this.appState$.select(store.fromOrganization.getFailedStatus);
   loadAction$ = this.appState$.select(store.fromOrganization.getLoadingStatus);
   organizationsPagedFiltered$ = this.appState$.select(store.fromOrganization.getOrganizationsFilteredPaged);
+  errorMessage$ = this.appState$.select(store.fromOrganization.getErrorMessage);
 
   constructor(protected appState$: Store<store.State>) {
     super(appState$);

@@ -99,7 +99,7 @@ export class OrganizationEffects {
     switchMap((data: any) =>
       this.organizationService.deleteOrganization(data.organization).pipe(
         map((organization) => deleteOrganizationSuccess({ organization })),
-        catchError(() => of(deleteOrganizationFailed()))
+        catchError((errorMessage) => of(deleteOrganizationFailed(errorMessage)))
       )
     )
   );
