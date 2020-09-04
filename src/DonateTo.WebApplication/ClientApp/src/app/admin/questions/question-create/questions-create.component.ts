@@ -237,6 +237,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   }
 
   editQuestion(question: QuestionModel) {
+    this.resetOptionValidation();
     this.editedQuestion = question;
     this.label = question.label;
     this.placeholder = question.placeholder;
@@ -257,6 +258,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
    * @param item: QuestionModel
    */
   removeQuestion(item: QuestionModel): void {
+    this.resetOptionValidation();
     if (item.id === this.questionId) {
       this.resetForm();
     } else {
@@ -273,7 +275,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
    */
   addField(e?: MouseEvent): void {
     if (e) {
-      this.isWeightValid = true;
+      this.resetOptionValidation();
       e.preventDefault();
     }
 
@@ -307,6 +309,7 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
    * @param e: MouseEvent
    */
   removeField(i: number, e: MouseEvent): void {
+    this.resetOptionValidation();
     e.preventDefault();
     if (this.optionsArray.length > 2) {
       this.optionsArray.removeAt(i);
@@ -419,6 +422,14 @@ export class QuestionsCreateComponent implements OnDestroy, OnInit {
   }
 
   onSelectChange(value) {
+    this.resetOptionValidation();
+  }
+
+  resetOptionValidation() {
+    this.isQuestionsValid = true;
     this.isWeightValid = true;
+    this.isRangeValid = true;
+    this.textboxQuestionOptionValid = true;
+    this.questionOptionValid = true;
   }
 }
