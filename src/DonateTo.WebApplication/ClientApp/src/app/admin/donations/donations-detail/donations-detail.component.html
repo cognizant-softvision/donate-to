@@ -64,9 +64,14 @@
           <td>{{ data.owner.fullName }}</td>
           <td>{{ data.createdDate | date: 'longDate' }}</td>
           <td>
-            <a (click)="changeDonationStatus(data.id)">
-              {{ data.status.name }}
-            </a>
+            <nz-select class="select-status" [(ngModel)]="data.statusId" (ngModelChange)="saveStatus(data.id, $event)">
+              <nz-option
+                *ngFor="let state of this.donationRequestSandbox.status$ | async"
+                [nzValue]="state.id"
+                [nzLabel]="state.name"
+              >
+              </nz-option>
+            </nz-select>
           </td>
           <td>{{ data.observation }}</td>
           <td>
@@ -104,9 +109,18 @@
                   <td>{{ item.quantity }}</td>
                   <td>{{ item.unit.name }}</td>
                   <td>
-                    <a (click)="changeItemStatus(data.id, item.id)">
-                      {{ item.status.name }}
-                    </a>
+                    <nz-select
+                      class="select-status"
+                      [(ngModel)]="item.statusId"
+                      (ngModelChange)="changeItemStatus(data.id, item.id, $event)"
+                    >
+                      <nz-option
+                        *ngFor="let state of this.donationRequestSandbox.status$ | async"
+                        [nzValue]="state.id"
+                        [nzLabel]="state.name"
+                      >
+                      </nz-option>
+                    </nz-select>
                   </td>
                 </tr>
               </tbody>
@@ -214,19 +228,4 @@
       </tr>
     </tbody>
   </nz-table>
-</ng-template>
-
-<ng-template #modalStatusContent>
-  <nz-form-label>{{ 'Admin.Donation.Detail.Address.State' | translate }}</nz-form-label>
-  <nz-select class="select-status" [(ngModel)]="this.idModifyStatus">
-    <nz-option
-      *ngFor="let state of this.donationRequestSandbox.status$ | async"
-      [nzValue]="state.id"
-      [nzLabel]="state.name"
-    >
-    </nz-option>
-  </nz-select>
-  <div class="button-status">
-    <button nz-button nzType="secondary" (click)="saveStatus()">{{ 'SaveBtn' | translate }}</button>
-  </div>
 </ng-template>
