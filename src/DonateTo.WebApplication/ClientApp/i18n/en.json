@@ -56,7 +56,9 @@
         "AddItem": "Add Item",
         "CreateRequest": "Create request",
         "TextboxRangeValueError": "The range is out of bound. The value must be between",
-        "And": "and"
+        "And": "and",
+        "ErrorTitle": "Error",
+        "ErrorMessage": "An error has ocurred while creating a donation request"
       },
       "Edit": {
         "Title": "Edit Donation Request",
