@@ -21,7 +21,7 @@
 
   <div class="container-username" *ngIf="isAuthenticated">
     <div class="avatar">
-      <span>{{ initials }}</span>
+      <span class="initials">{{ initials }}</span>
     </div>
 
     <div>
@@ -47,7 +47,7 @@
   </nz-dropdown-menu>
 
   <nz-radio-group class="radio-group" [(ngModel)]="language" nzButtonStyle="solid" (ngModelChange)="switchLanguage()">
-    <label nz-radio-button nzValue="en" class="language-label">English</label>
-    <label nz-radio-button nzValue="es" class="language-label">Spanish</label>
+    <label nz-radio-button nzValue="en" class="language-label">{{ 'English' | translate }}</label>
+    <label nz-radio-button nzValue="es" class="language-label">{{ 'Spanish' | translate }}</label>
   </nz-radio-group>
 </nz-header>
