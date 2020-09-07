@@ -17,6 +17,8 @@
   "SearchPlaceHolder": "input search text",
   "NoEntries": "No entries",
   "Footer": "For support contact support@donate.com",
+  "English": "English",
+  "Spanish": "Español",
   "ConfirmDialog": {
     "Title": "Please confirm",
     "Content": "Do you want to leave without saving the changes?",

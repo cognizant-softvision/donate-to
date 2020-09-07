@@ -17,6 +17,8 @@
   "SearchPlaceHolder": "Escriba texto para buscar",
   "NoEntries": "No hay datos",
   "Footer": "Por ayuda contactar a support@donate.com",
+  "English": "English",
+  "Spanish": "Español",
   "ConfirmDialog": {
     "Title": "Por favor confirmar",
     "Content": "¿Quieres salir sin guardar los cambios?",
