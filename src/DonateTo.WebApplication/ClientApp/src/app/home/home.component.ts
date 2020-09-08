@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { HomeSandbox } from './home.sandbox';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   tplModal?: NzModalRef;
   item: any = null;
   isAuthenticated = false;
+  modalClosed = false;
 
   @ViewChild('modalContent') public modalContent: TemplateRef<any>;
   @ViewChild('modalFooter') public modalFooter: TemplateRef<any>;
@@ -58,11 +59,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   showModal(item: any) {
     this.item = item;
     this.createTplModal(this.modalContent, this.modalFooter);
+    this.modalClosed = false;
   }
 
   hideModal() {
     this.item = null;
     this.tplModal?.destroy();
+    this.modalClosed = true;
   }
 
   createTplModal(tplContent: TemplateRef<{}>, tplFooter: TemplateRef<{}>): void {
@@ -73,6 +76,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         top: '2em;',
       },
       nzWidth: '80%',
+      nzOnCancel: () => {
+        this.modalClosed = true;
+      },
     });
   }
 

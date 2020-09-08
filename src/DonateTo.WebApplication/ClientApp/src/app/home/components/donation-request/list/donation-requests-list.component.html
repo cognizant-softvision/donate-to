@@ -12,6 +12,7 @@
           <app-donation-requests-list-item
             [item]="itemData"
             [loading]="isLoading"
+            [modalClosed]="modalClosed"
             (showDetail)="showDetail($event)"
           ></app-donation-requests-list-item>
         </ng-template>
