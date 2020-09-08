@@ -10,6 +10,7 @@ export class DonationRequestsListItemComponent implements OnInit {
   @Output() showDetail = new EventEmitter<number>();
   @Input() item: DonationRequestModel;
   @Input() loading = true;
+  @Input() modalClosed = false;
   proportionalPercentage = 20;
 
   constructor() {}

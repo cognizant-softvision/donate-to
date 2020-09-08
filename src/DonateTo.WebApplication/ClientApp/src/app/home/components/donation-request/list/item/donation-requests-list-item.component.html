@@ -23,7 +23,15 @@
 
   <ng-template #actions class="ant-card-actions">
     <div class="action-buttons">
-      <button class="ant-btn-primary" nz-button ghost type="primary" [disabled]="loading" (click)="sendItem()">
+      <button
+        class="ant-btn-primary"
+        nz-button
+        ghost
+        type="primary"
+        [disabled]="loading"
+        (click)="sendItem()"
+        [ngClass]="modalClosed ? 'btn-closed-modal' : ''"
+      >
         {{ 'MoreDetail' | translate }}
       </button>
     </div>

@@ -24,6 +24,7 @@ export class DonationRequestsListComponent implements OnInit, OnDestroy {
   @Input() totalItems = 0;
   @Input() currentPage = 1;
   @Input() pageSize = 6;
+  @Input() modalClosed = false;
 
   @Output() showModal = new EventEmitter();
   @ViewChild('customTpl', { static: false }) customTpl?: TemplateRef<any>;
