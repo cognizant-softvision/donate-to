@@ -1,4 +1,4 @@
 export class QuestionAnswer {
   idQuestion: number;
-  value: string;
+  value: string[];
 }
