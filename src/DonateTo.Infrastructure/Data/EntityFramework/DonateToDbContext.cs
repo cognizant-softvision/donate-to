@@ -193,6 +193,9 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
 
                 modelBuilder.Entity<QuestionOption>()
                     .HasQueryFilter(qo => !qo.IsDeleted);
+
+                modelBuilder.Entity<Availability>()
+                    .HasQueryFilter(qo => !qo.IsDeleted);
             }
         }
 
