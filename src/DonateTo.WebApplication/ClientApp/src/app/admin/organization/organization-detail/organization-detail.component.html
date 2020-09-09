@@ -2,19 +2,20 @@
   <nz-page-header class="site-page-header" (nzBack)="goBack()" nzBackIcon [nzTitle]="title" [nzSubtitle]="subtitle">
   </nz-page-header>
   <a
-    [routerLink]="['../../../users']"
-    [queryParams]="{ organizationName: this.organization.name }"
+    [routerLink]="['./../../../users']"
+    [queryParams]="{ organizationId: this.organization.id }"
     nzTooltipTitle="{{ 'Admin.Menu.Title.Users' | translate }}"
     nzTooltipPlacement="bottom"
     nz-tooltip
     class="users-link"
+    *ngIf="this.organization"
   >
     <i nz-icon nzType="team" nzTheme="outline" class="action-icon"></i>
   </a>
 </div>
-
+<nz-spin *ngIf="this.organizationSandbox.loadAction$ | async" nzTip="Loading..."> </nz-spin>
 <!-- Responsable -->
-<nz-descriptions nzTitle="{{ 'Admin.Organization.OrganizationSteps.Contact.Responsable' | translate }}" [nzColumn]="2">
+<nz-descriptions nzTitle="{{ 'Admin.Organization.OrganizationSteps.Contact.Owner' | translate }}" [nzColumn]="2">
   <nz-descriptions-item nzTitle="{{ 'Admin.Organization.OrganizationSteps.Contact.FirstName' | translate }}">
     {{ this.organization?.contact?.firstName }}
   </nz-descriptions-item>

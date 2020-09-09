@@ -5,6 +5,8 @@ import { Injectable } from '@angular/core';
 // selectors
 export const getOrganizationState = createFeatureSelector<OrganizationState>('organization');
 
+export const getErrorMessage = createSelector(getOrganizationState, (state: OrganizationState) => state.errorMessage);
+
 export const getAllOrganizations = createSelector(
   getOrganizationState,
   (state: OrganizationState) => state.organizations

@@ -1,3 +1,4 @@
+import { SvgGuildComponent } from '../../../../../assets/images/svg-template/svg-guild.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { IconDefinition } from '@ant-design/icons-angular';
@@ -21,6 +22,7 @@ import { AdminLayoutRoutingModule } from './admin-layout-routing.module';
 import { HttpLoaderFactory } from '../../../../app.module';
 import { HttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FilterService } from 'src/app/shared/async-services/filter.service';
 
 const ICONS: IconDefinition[] = [HeartOutline, TeamOutline, ProfileOutline, StarOutline];
 
@@ -47,6 +49,7 @@ const ICONS: IconDefinition[] = [HeartOutline, TeamOutline, ProfileOutline, Star
     ComponentsModule,
     ReactiveFormsModule,
   ],
-  declarations: [AdminLayoutComponent],
+  declarations: [AdminLayoutComponent, SvgGuildComponent],
+  providers: [FilterService],
 })
 export class AdminLayoutModule {}

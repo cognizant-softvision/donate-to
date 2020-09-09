@@ -1,0 +1,160 @@
+<!-- Address -->
+<div nz-col nzSpan="16" class="address-form">
+  <form nz-form [nzLayout]="'vertical'" [formGroup]="addressStepForm">
+    <div class="form-container">
+      <div class="first-column">
+        <nz-form-item>
+          <nz-form-label nzRequired>
+            {{ 'Admin.Organization.OrganizationSteps.Address.Name' | translate }}
+          </nz-form-label>
+          <nz-form-control nzHasFeedback [nzErrorTip]="streetErrorTpl">
+            <input nz-input formControlName="name" [(ngModel)]="name" />
+            <ng-template #streetErrorTpl let-control>
+              <ng-container *ngIf="control.hasError('required')">
+                {{ 'Admin.Organization.OrganizationSteps.Address.RequiredName' | translate }}
+              </ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label nzRequired>
+            {{ 'RequestDonation.DonationSteps.AddressStep.Street' | translate }}
+          </nz-form-label>
+          <nz-form-control nzHasFeedback [nzErrorTip]="streetErrorTpl">
+            <input nz-input formControlName="street" [(ngModel)]="street" />
+            <ng-template #streetErrorTpl let-control>
+              <ng-container *ngIf="control.hasError('required')">
+                {{ 'RequestDonation.DonationSteps.AddressStep.RequiredStreet' | translate }}
+              </ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label nzRequired>
+            {{ 'RequestDonation.DonationSteps.AddressStep.PostalCode' | translate }}
+          </nz-form-label>
+          <nz-form-control nzHasFeedback [nzErrorTip]="postalCodeErrorTpl">
+            <input nz-input formControlName="postalCode" [(ngModel)]="postalCode" />
+            <ng-template #postalCodeErrorTpl let-control>
+              <ng-container *ngIf="control.hasError('required')">
+                {{ 'RequestDonation.DonationSteps.AddressStep.RequiredPostalCode' | translate }}
+              </ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label>{{ 'RequestDonation.DonationSteps.AddressStep.Floor' | translate }}</nz-form-label>
+          <nz-form-control>
+            <input nz-input type="number" formControlName="floor" [(ngModel)]="floor" />
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label>
+            {{ 'RequestDonation.DonationSteps.AddressStep.Appartment' | translate }}
+          </nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="appartment" [(ngModel)]="appartment" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <div class="second-column">
+        <nz-form-item>
+          <nz-form-label nzRequired>
+            {{ 'RequestDonation.DonationSteps.AddressStep.Country' | translate }}
+          </nz-form-label>
+          <nz-form-control nzHasFeedback [nzErrorTip]="countryErrorTpl">
+            <nz-select
+              class="select-format"
+              nzShowSearch
+              nzAllowClear
+              formControlName="countryId"
+              [(ngModel)]="country"
+              (ngModelChange)="setStates()"
+            >
+              <nz-option
+                *ngFor="let country of this.organizationSandbox.countries$ | async"
+                [nzValue]="country.id"
+                [nzLabel]="country.name"
+              >
+              </nz-option>
+            </nz-select>
+            <ng-template #countryErrorTpl let-control>
+              <ng-container *ngIf="control.hasError('required')">
+                {{ 'RequestDonation.DonationSteps.AddressStep.RequiredCountry' | translate }}
+              </ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label nzRequired>
+            {{ 'RequestDonation.DonationSteps.AddressStep.State' | translate }}
+          </nz-form-label>
+          <nz-form-control nzHasFeedback [nzErrorTip]="stateErrorTpl">
+            <nz-select
+              class="select-format"
+              nzShowSearch
+              nzAllowClear
+              formControlName="stateId"
+              [(ngModel)]="state"
+              (ngModelChange)="setCities()"
+            >
+              <nz-option
+                *ngFor="let state of this.organizationSandbox.states$ | async"
+                [nzValue]="state.id"
+                [nzLabel]="state.name"
+              >
+              </nz-option>
+            </nz-select>
+            <ng-template #stateErrorTpl let-control>
+              <ng-container *ngIf="control.hasError('required')">
+                {{ 'RequestDonation.DonationSteps.AddressStep.RequiredState' | translate }}
+              </ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label nzRequired>
+            {{ 'RequestDonation.DonationSteps.AddressStep.City' | translate }}
+          </nz-form-label>
+          <nz-form-control nzHasFeedback [nzErrorTip]="cityErrorTpl">
+            <nz-select class="select-format" nzShowSearch nzAllowClear [(ngModel)]="city" formControlName="cityId">
+              <nz-option
+                *ngFor="let city of this.organizationSandbox.cities$ | async"
+                [nzValue]="city.id"
+                [nzLabel]="city.name"
+              >
+              </nz-option>
+            </nz-select>
+            <ng-template #cityErrorTpl let-control>
+              <ng-container *ngIf="control.hasError('required')">
+                {{ 'RequestDonation.DonationSteps.AddressStep.RequiredCity' | translate }}
+              </ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label>
+            {{ 'RequestDonation.DonationSteps.AddressStep.AdditionalInformation' | translate }}
+          </nz-form-label>
+          <nz-form-control>
+            <textarea
+              class="select-format"
+              formControlName="additionalInformation"
+              [(ngModel)]="additionalInformation"
+              nz-input
+              rows="2"
+            ></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+</div>

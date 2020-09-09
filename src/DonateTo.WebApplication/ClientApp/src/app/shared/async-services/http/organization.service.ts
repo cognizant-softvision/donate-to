@@ -2,7 +2,7 @@ import { BaseHttpClientService } from './base-http-client.service';
 import { ConfigService } from 'src/app/app-config.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { OrganizationModel, PageModel } from '../../models';
+import { AddressModel, OrganizationModel, PageModel } from '../../models';
 import { Observable } from 'rxjs/internal/Observable';
 import { OrganizationFilter } from '../../models/filters/organization-filter';
 
@@ -40,7 +40,6 @@ export class OrganizationService extends BaseHttpClientService<OrganizationModel
 
   updateOrganization(item: OrganizationModel) {
     return this.update(item);
-    // return this.httpClient.put<OrganizationModel>(`${this.url}/${this.endpoint}/${id}`, JSON.stringify(item), this.httpOptions);
   }
 
   getByUser(userId: number): Observable<OrganizationModel[]> {
@@ -49,5 +48,12 @@ export class OrganizationService extends BaseHttpClientService<OrganizationModel
 
   getOrganization(id: number): Observable<OrganizationModel> {
     return this.getById(id);
+  }
+
+  deleteOrganization(organization: OrganizationModel): Observable<OrganizationModel> {
+    return this.httpClient.delete<OrganizationModel>(
+      `${this.url}/${this.endpoint}/${organization.id}`,
+      this.httpOptions
+    );
   }
 }

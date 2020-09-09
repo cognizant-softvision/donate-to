@@ -1,24 +1,37 @@
 <nz-card hoverable [nzSize]="'small'" [nzActions]="[actions]" *ngIf="item">
-  <nz-card-meta [nzTitle]="item.title" [nzDescription]="item.organization?.name"> </nz-card-meta>
-  <p class="item.observation">{{ item.observation }}</p>
-  <span>
+  <nz-card-meta class="ant-card-title" [nzTitle]="item.title" [nzDescription]="item.organization?.name"> </nz-card-meta>
+  <div class="ant-card-body">
     {{ 'RequestDonation.Priority' | translate }}:
-    <nz-rate [ngModel]="item.priority" nzAllowHalf [nzCharacter]="heartIcon" disabled></nz-rate>
-    <ng-template #heartIcon><i nz-icon nzType="heart" nzTheme="fill" className="rate-icon"></i></ng-template>
-  </span>
-  <br />
-  <span>{{ 'RequestDonation.CreatedOn' | translate }}: {{ item.createdDate | date: 'fullDate' }}</span
-  ><br />
-  <span>{{ 'RequestDonation.Finisheson' | translate }}: {{ item.finishDate | date: 'fullDate' }}</span>
-  <div class="tags">
-    <div *ngFor="let category of getCategories(item)">
-      <nz-tag>{{ category }}</nz-tag>
+    <span>
+      <nz-rate [ngModel]="getPriority()" nzDisabled [nzCharacter]="heartIcon"></nz-rate>
+      <ng-template #heartIcon
+        ><i nz-icon nzType="heart" class="hearts" nzTheme="fill" className="rate-icon"></i
+      ></ng-template>
+    </span>
+    <br />
+    <span class="item.observation"> {{ 'RequestDonation.Observation' | translate }}: {{ item.observation }} </span>
+    <br />
+    <span>{{ 'RequestDonation.CreatedOn' | translate }}: {{ item.createdDate | date: 'fullDate' }}</span
+    ><br />
+    <span>{{ 'RequestDonation.Finisheson' | translate }}: {{ item.finishDate | date: 'fullDate' }}</span>
+    <div class="tags">
+      <div *ngFor="let category of getCategories(item)">
+        <nz-tag>{{ category }}</nz-tag>
+      </div>
     </div>
   </div>
 
   <ng-template #actions class="ant-card-actions">
     <div class="action-buttons">
-      <button nz-button ghost type="primary" [disabled]="loading" (click)="sendItem()">
+      <button
+        class="ant-btn-primary"
+        nz-button
+        ghost
+        type="primary"
+        [disabled]="loading"
+        (click)="sendItem()"
+        [ngClass]="modalClosed ? 'btn-closed-modal' : ''"
+      >
         {{ 'MoreDetail' | translate }}
       </button>
     </div>

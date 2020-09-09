@@ -1,14 +1,31 @@
-<nz-layout id="main-layout">
+<nz-layout class="container">
   <app-nav-menu></app-nav-menu>
-  <nz-layout class="admin-layout">
-    <nz-sider nzCollapsible nzTheme="light">
-      <ul nz-menu nzMode="inline">
-        <li *ngFor="let menu of menus" nzDisabled="{{ !menu.show }}" nz-menu-item>
-          <a class="menu-link" routerLink="{{ menu.url }}">
-            <i nz-icon [nzTheme]="'outline'" nzType="{{ menu.iconType }}"></i>
-            <span>{{ menu.title | translate }}</span>
-          </a>
-        </li>
+  <nz-layout>
+    <nz-sider class="side-nav">
+      <ul>
+        <ng-container>
+          <li class="element-container sv-link-wrapper sv-margin-y">
+            <a class="sv-link link-container" routerLink="./donations">
+              <i nz-icon class="ico-container" [nzTheme]="'outline'">
+                <app-svg></app-svg>
+              </i>
+              <ng-container>
+                <small class="title-container">{{ 'Admin.Menu.Title.Donation' | translate }} </small>
+              </ng-container>
+            </a>
+          </li>
+        </ng-container>
+
+        <ng-container *ngFor="let menu of menus">
+          <li class="element-container sv-link-wrapper sv-margin-y" *ngIf="menu.show">
+            <a class="sv-link link-container" routerLink="{{ menu.url }}">
+              <i nz-icon class="ico-container" [nzTheme]="'outline'" nzType="{{ menu.iconType }}"></i>
+              <ng-container>
+                <small class="title-container">{{ menu.title | translate }}</small>
+              </ng-container>
+            </a>
+          </li>
+        </ng-container>
       </ul>
     </nz-sider>
     <nz-layout class="section-layout">

@@ -1,7 +1,6 @@
 ﻿using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models;
 using DonateTo.ApplicationCore.Models.Pagination;
-using DonateTo.ApplicationCore.Common;
 using DonateTo.WebApi.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,12 +9,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DonateTo.ApplicationCore.Models.Filtering;
+using Microsoft.AspNetCore.Authorization;
+using DonateTo.WebApi.Filters;
+using DonateTo.ApplicationCore.Common;
+using Newtonsoft.Json;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -66,6 +70,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ServiceFilter(typeof(OrganizationAccessFilter))]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "<Pending>")]
         public virtual async Task<ActionResult<IEnumerable<UserModel>>> Get()
         {
@@ -98,6 +103,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ServiceFilter(typeof(OrganizationAccessFilter))]
         public async Task<ActionResult<PagedResult<UserModel>>> GetPaged(int pageNumber, int pageSize)
         {
             if (!ModelState.IsValid)
@@ -130,6 +136,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ServiceFilter(typeof(OrganizationAccessFilter))]
         public async Task<ActionResult<PagedResult<UserModel>>> GetPagedUsersByOrganizationAsync(int pageNumber, int pageSize, long organizationId)
         {
             return await _userService.GetPagedAsync(pageNumber, pageSize, (u => u.Organizations.Any(o => o.Id == organizationId))).ConfigureAwait(false);
@@ -185,6 +192,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ServiceFilter(typeof(AdminAccessFilter))]
         public async Task<IActionResult> PutUserOrganizationsAsync(long userId, [FromBody] IEnumerable<long> value)
         {
             if (!ModelState.IsValid)
@@ -195,13 +203,6 @@ namespace DonateTo.WebApi.V1.Controllers
             {
                 try
                 {
-                    var userRole = User.Claims.FirstOrDefault(claim => claim.Type.Contains(Claims.Role))?.Value;
-
-                    if (userRole != Roles.Superadmin && userRole != Roles.Admin)
-                    {
-                        return Unauthorized();
-                    }
-
                     var username = User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserName)?.Value;
                     await _userService.UpdateUserOrganizationsAsync(userId, value, username).ConfigureAwait(false);
 
@@ -227,6 +228,7 @@ namespace DonateTo.WebApi.V1.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ServiceFilter(typeof(OrganizationAccessFilter))]
         public async Task<ActionResult<PagedResult<UserModel>>> GetPagedFiltered([FromQuery] UserFilterModel filter)
         {
             if (!ModelState.IsValid)
@@ -235,6 +237,29 @@ namespace DonateTo.WebApi.V1.Controllers
             }
             else
             {
+                var roles = User.Claims.Select(c => c.Value).ToList();
+                if ( !roles.Contains(Roles.Superadmin) && (roles.Contains(Roles.Organization) || roles.Contains(Roles.Admin)))
+                {
+                    var organizations = User.Claims.Where(claim => claim.Type == "organizations").Select(claim => claim.Value).FirstOrDefault();
+
+                    if(organizations != null)
+                    {
+                        var organizationsClaims = JsonConvert.DeserializeObject<List<OrganizationClaim>>(organizations);
+                        if (organizations.Any())
+                        {
+                            filter.OrganizationIds = organizationsClaims.Select(oc => oc.Id).ToList();
+                        }
+                        else
+                        {
+                            return Ok();
+                        }
+                    }
+                    else
+                    {
+                        return Ok();
+                    }
+                    
+                }
                 var result = await _userService.GetPagedFilteredAsync(filter).ConfigureAwait(false);
 
                 if (result != null)

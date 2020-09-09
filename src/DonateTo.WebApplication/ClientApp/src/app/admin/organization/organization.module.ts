@@ -16,6 +16,7 @@ import {
   NzRadioModule,
   NzRateModule,
   NzSelectModule,
+  NzSpinModule,
   NzTableModule,
   NzTagModule,
 } from 'ng-zorro-antd';
@@ -28,7 +29,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { OrganizationCreateComponent } from './organization-create/organization-create.component';
-import { OrganizationSandbox } from './organization-sandbox';
+import { OrganizationSandbox } from './organization.sandbox';
 import { OrganizationComponent } from './organization.component';
 import { OrganizationEditComponent } from './organization-edit/organization-edit.component';
 import { OrganizationFormComponent } from './organization-form/organization-form.component';
@@ -45,6 +46,7 @@ import {
   EditOutline,
   HomeOutline,
   InfoCircleOutline,
+  PlusOutline,
   SmileOutline,
   UserOutline,
 } from '@ant-design/icons-angular/icons';
@@ -53,6 +55,10 @@ import { OrganizationStepContactComponent } from './organization-form/organizati
 import { OrganizationStepAddressComponent } from './organization-form/organization-step-address/organization-step-address.component';
 import { OrganizationDetailComponent } from './organization-detail/organization-detail.component';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { AddressListComponent } from './organization-form/organization-step-address/address-list/address-list.component';
+import { StepBranchAddressComponent } from './organization-form/organization-step-address/branch-modal/step-branch-address/step-branch-address.component';
+import { BranchModalComponent } from './organization-form/organization-step-address/branch-modal/branch-modal.component';
 
 const ICONS: IconDefinition[] = [
   ArrowLeftOutline,
@@ -62,6 +68,7 @@ const ICONS: IconDefinition[] = [
   SmileOutline,
   DeleteOutline,
   EditOutline,
+  PlusOutline,
 ];
 
 @NgModule({
@@ -77,6 +84,7 @@ const ICONS: IconDefinition[] = [
     NzTableModule,
     NzTagModule,
     NzRadioModule,
+    NzSpinModule,
     NzButtonModule,
     NzSelectModule,
     NzInputModule,
@@ -87,6 +95,8 @@ const ICONS: IconDefinition[] = [
     NzPageHeaderModule,
     NzDescriptionsModule,
     NzToolTipModule,
+    NzTabsModule,
+    NzSpinModule,
 
     FormsModule,
     CommonModule,
@@ -116,6 +126,9 @@ const ICONS: IconDefinition[] = [
     OrganizationStepContactComponent,
     OrganizationStepAddressComponent,
     OrganizationDetailComponent,
+    AddressListComponent,
+    StepBranchAddressComponent,
+    BranchModalComponent,
   ],
   providers: [OrganizationSandbox, DataUpdatedService],
 })

@@ -1,15 +1,28 @@
 <div>
   <div class="create-donation-title">
-    <h4 class="section-title">{{ 'Admin.Donation.Edit.Title' | translate }}</h4>
+    <h5 class="section-title">{{ 'Admin.Donation.Edit.Title' | translate }}</h5>
   </div>
   <br />
+  <nz-spin *ngIf="this.donationSandbox.loadAction$ | async" nzTip="Loading..."> </nz-spin>
   <app-donations-form
     *ngIf="this.donationRequest"
     (validationResult)="updateDonationRequest($event)"
     [donationRequest]="this.donationRequest"
+    [id]="id"
   ></app-donations-form>
   <br />
   <div class="create-donation-form-buttons">
+    <button
+      nz-popconfirm
+      nzPopconfirmTitle="{{ 'Admin.Donation.BackConfirm' | translate }}"
+      nzPopconfirmPlacement="bottom"
+      (nzOnConfirm)="goBack()"
+      nz-button
+      nzType="secondary"
+      nz-button
+    >
+      {{ 'CancelBtn' | translate }}
+    </button>
     <button
       nz-popconfirm
       nzPopconfirmTitle="{{ 'Admin.Donation.EditConfirm' | translate }}"
@@ -20,18 +33,6 @@
       type="submit"
     >
       {{ 'Admin.Donation.Edit.Save' | translate }}
-    </button>
-    <button
-      nz-popconfirm
-      nzPopconfirmTitle="{{ 'Admin.Donation.BackConfirm' | translate }}"
-      nzPopconfirmPlacement="bottom"
-      (nzOnConfirm)="goBack()"
-      nz-button
-      nzType="primary"
-      nz-button
-      nzType="primary"
-    >
-      {{ 'BackBtn' | translate }}
     </button>
   </div>
 </div>

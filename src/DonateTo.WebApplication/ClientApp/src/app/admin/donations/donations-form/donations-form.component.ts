@@ -1,41 +1,44 @@
+import { StatusType } from './../../../shared/enum/statusType';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { DonationsSandbox } from '../donations-sandbox';
+import { DonationsSandbox } from '../donations.sandbox';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NzI18nService } from 'ng-zorro-antd';
 import { Subscription } from 'rxjs';
-import { CategoryModel, ColumnItem, DonationRequestItemModel, DonationRequestModel } from 'src/app/shared/models';
+import { ColumnItem, DonationRequestItemModel, DonationRequestModel } from 'src/app/shared/models';
 import { compareDate } from 'src/app/shared/utility/dates/compare-dates';
 import { AuthSandbox } from '../../../shared/auth/auth.sandbox';
 
 @Component({
   selector: 'app-donations-form',
   templateUrl: './donations-form.component.html',
-  styleUrls: ['./donations-form.component.css'],
+  styleUrls: ['./donations-form.component.less'],
 })
 export class DonationsFormComponent implements OnInit, OnDestroy {
   @Input() donationRequest: DonationRequestModel;
   @Output() validationResult = new EventEmitter<DonationRequestModel>();
+  @Input() id: number;
 
   private subscriptions: Subscription[] = [];
   disabledDates: (current: Date) => boolean;
   addressId: number;
-  categories: CategoryModel[] = [];
   donationRequestItems: DonationRequestItemModel[] = [];
   finishDate: Date;
   observations: string;
   organizationId: number;
   priority: number;
   statusId = 2;
-  selectedItemCategories: CategoryModel[] = [];
   title: string;
   ownerId: number;
   isEdit = false;
+
+  get statusEnum() {
+    return StatusType;
+  }
 
   listOfColumns: ColumnItem[] = [
     { name: 'Admin.Donation.Table.Itemcolumn' },
     { name: 'Admin.Donation.Table.Quantitycolumn' },
     { name: 'Admin.Donation.Table.Observationcolumn' },
-    { name: 'Admin.Donation.Table.Categorycolumn' },
     { name: 'Admin.Action' },
   ];
 
@@ -51,7 +54,6 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
 
   donationRequestItemFormGroup = new FormGroup({
     nameFormControl: new FormControl('', Validators.required),
-    itemCategoryFormControl: new FormControl(this.selectedItemCategories, Validators.required),
     observationFormControl: new FormControl(),
     quantityFormControl: new FormControl('', Validators.required),
     unitFormControl: new FormControl('', Validators.required),
@@ -64,25 +66,31 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    if (this.donationRequest) {
+    if (this.id !== 0 && this.id !== undefined) {
+      this.donationSandbox.loadDonationRequest(this.id);
+
       this.isEdit = true;
-      this.ownerId = this.donationRequest.ownerId;
-      this.title = this.donationRequest.title;
-      this.observations = this.donationRequest.observation;
-      this.priority = this.donationRequest.priority;
-      this.statusId = this.donationRequest.statusId;
-      this.finishDate = this.donationRequest.finishDate;
-      this.organizationId = this.donationRequest.organizationId;
-      this.addressId = this.donationRequest.addressId;
-      this.donationRequestItems = this.donationRequest.donationRequestItems;
+
+      this.subscriptions.push(
+        this.donationSandbox.donationRequest$.subscribe((d) => {
+          this.donationRequest = d;
+          this.ownerId = this.donationRequest.ownerId;
+          this.title = this.donationRequest.title;
+          this.observations = this.donationRequest.observation;
+          this.priority = this.donationRequest.priority;
+          this.statusId = this.donationRequest.statusId;
+          this.finishDate = this.donationRequest.finishDate;
+          this.organizationId = this.donationRequest.organizationId;
+          this.addressId = this.donationRequest.addressId;
+          this.donationRequestItems = this.donationRequest.donationRequestItems;
+        })
+      );
     } else {
       this.donationRequest = new DonationRequestModel();
       this.authSandbox.userId$.subscribe((uid) => {
         this.ownerId = uid;
       });
     }
-
-    this.sandBoxSubscriptionInit();
 
     this.disabledDates = (current: Date): boolean => {
       return compareDate(current, new Date()) < 0;
@@ -101,31 +109,16 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
     this.unregisterEvents();
   }
 
-  private sandBoxSubscriptionInit() {
-    this.subscriptions.push(
-      this.donationSandbox.categories$.subscribe((categories) => {
-        this.categories = categories;
-      })
-    );
-  }
-
   setOrganization() {
     if (this.organizationId >= 0) {
       this.donationSandbox.loadAddressesByOrganization(this.organizationId);
     }
   }
 
-  getCategoryName(categoryId) {
-    if (this.categories && this.categories.length > 0) {
-      return this.categories.find((c) => c.id === categoryId).name;
-    }
-  }
-
-  isItemCategorySelected(category: CategoryModel) {
-    return this.selectedItemCategories.indexOf(category) === -1;
-  }
-
   removeDonationRequestItem(donationRequestItemTarget: DonationRequestItemModel) {
+    if (this.isEdit) {
+      this.donationSandbox.deleteDonationRequestItem(donationRequestItemTarget);
+    }
     this.donationRequestItems = this.donationRequestItems.filter((item) => item !== donationRequestItemTarget);
   }
 
@@ -154,9 +147,6 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
       donationRequestItem.observation = this.donationRequestItemFormGroup.controls.observationFormControl.value;
       donationRequestItem.finishQuantity = this.donationRequestItemFormGroup.controls.quantityFormControl.value;
       donationRequestItem.unitId = this.donationRequestItemFormGroup.controls.unitFormControl.value;
-      donationRequestItem.donationRequestItemCategories = this.donationSandbox.mapCategoriesToDonationRequestItemCategories(
-        this.selectedItemCategories
-      );
 
       this.donationRequestItems = [...this.donationRequestItems, donationRequestItem];
     }

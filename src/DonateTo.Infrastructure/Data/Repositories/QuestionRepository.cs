@@ -129,6 +129,33 @@ namespace DonateTo.Infrastructure.Data.Repositories
             return await questions.GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
 
+        public async Task SoftDeleteQuestion(long questionId)
+        {
+            using var transaction = await DbContext.Database.BeginTransactionAsync().ConfigureAwait(false);
+
+            try
+            {
+                var questionToSoftDelete = Get(null)
+                    .Include(q => q.Options)
+                    .Where(q => q.Id == questionId)
+                    .FirstOrDefault();
+
+                if (questionToSoftDelete.Options.ToList().Count > 0)
+                {
+                    questionToSoftDelete.Options.ToList().ForEach(qo => DbContext.QuestionOption.Remove(qo));
+                }
+
+                DbContext.Question.Remove(questionToSoftDelete);
+                await DbContext.SaveChangesAsync().ConfigureAwait(false);
+                await transaction.CommitAsync().ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync().ConfigureAwait(false);
+                throw;
+            }
+        }
+
 
         #region private
         private IQueryable<Question> GetHydratedQuestions()

@@ -1,6 +1,8 @@
 <div class="search">
+  <nz-spin *ngIf="this.homeSandbox.donationRequestsLoading$ | async" nzTip="Loading..."> </nz-spin>
   <nz-input-group [nzSuffix]="suffixIconSearch">
     <input
+      class="input-container"
       type="text"
       [(ngModel)]="searchValue"
       (input)="onChange()"
@@ -18,6 +20,7 @@
   <app-donation-requests-list
     [totalItems]="totalItems"
     [pageSize]="pageSize"
+    [modalClosed]="modalClosed"
     (showModal)="showModal($event)"
   ></app-donation-requests-list>
 </div>
@@ -27,9 +30,10 @@
     <app-donation-request-detail [item]="item"></app-donation-request-detail>
   </div>
 </ng-template>
+
 <ng-template #modalFooter>
   <button nz-button key="back" (click)="hideModal()">{{ 'CancelBtn' | translate }}</button>
-  <button nz-button key="submit" type="primary" (click)="goToDonate(item.id)">
+  <button nz-button key="" type="primary" (click)="goToDonate(item.id)">
     {{ 'RequestDonation.Donate' | translate }}
   </button>
 </ng-template>

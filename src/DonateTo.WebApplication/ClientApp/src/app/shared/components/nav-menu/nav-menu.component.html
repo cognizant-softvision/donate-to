@@ -1,37 +1,53 @@
-<nz-header
-  class="header"
-  nz-menu
-  nzTheme="dark"
-  nzMode="horizontal"
-  [style]="{ position: 'fixed', zIndex: 1, width: '100%' }"
->
+<nz-header class="header" nz-menu nzMode="horizontal">
   <div class="logo">
-    <a routerLink="/">Donate</a>
+    <a routerLink="/">
+      <img src="assets/images/logo/logotype-black.png" />
+    </a>
   </div>
-  <ul nz-menu nzTheme="dark" nzMode="horizontal" class="float-right">
-    <li nz-menu-item *ngIf="!navMenuSandbox.isAuthenticated">
-      <a (click)="register()"> {{ 'Auth.Register.Title' | translate }} </a>
-    </li>
-    <li nz-menu-item *ngIf="!navMenuSandbox.isAuthenticated">
-      <a (click)="login()"> {{ 'Auth.Login.Title' | translate }} </a>
-    </li>
-    <li nz-menu-item *ngIf="navMenuSandbox.isAuthenticated">
-      <a [routerLink]="['/donation/my-donations']"> {{ 'NavBar.MyDonations' | translate }} </a>
-    </li>
-    <li nz-menu-item *ngIf="navMenuSandbox.isAuthenticated">
-      <a [routerLink]="['/my-profile']">{{ 'UserProfile.MyProfile' | translate }}</a>
-    </li>
-    <li nz-menu-item *ngIf="navMenuSandbox.isAuthenticated && navMenuSandbox.isAdmin">
-      <a href="/admin"> Admin </a>
-    </li>
-    <li nz-menu-item *ngIf="navMenuSandbox.isAuthenticated">
-      <a (click)="logout()">{{ 'ProfileActionBar.Logout' | translate }}</a>
-    </li>
-    <li nz-menu-item>
-      <nz-radio-group [(ngModel)]="language" nzButtonStyle="solid" (ngModelChange)="switchLanguage()">
-        <label nz-radio-button nzValue="en">En</label>
-        <label nz-radio-button nzValue="es">Es</label>
-      </nz-radio-group>
-    </li>
-  </ul>
+
+  <div>
+    <ul nz-menu nzMode="horizontal">
+      <li nz-menu-item *ngIf="!isAuthenticated">
+        <a class="menu-link" (click)="register()"> {{ 'Auth.Register.Title' | translate }} </a>
+      </li>
+      <li nz-menu-item *ngIf="!isAuthenticated">
+        <a class="menu-link login" (click)="login()"> {{ 'Auth.Login.Title' | translate }} </a>
+      </li>
+      <li nz-menu-item *ngIf="isAuthenticated">
+        <a class="menu-link" [routerLink]="['/donation/my-donations']"> {{ 'NavBar.MyDonations' | translate }} </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="container-username" *ngIf="isAuthenticated">
+    <div class="avatar">
+      <span class="initials">{{ initials }}</span>
+    </div>
+
+    <div>
+      <a nz-dropdown nzTrigger="click" [nzDropdownMenu]="menu" class="dropdown-menu">
+        <div class="user-name">{{ user.fullName }}</div>
+        <div><i nz-icon nzType="caret-down" nzTheme="outline"></i></div>
+      </a>
+    </div>
+  </div>
+
+  <nz-dropdown-menu #menu="nzDropdownMenu">
+    <ul nz-menu>
+      <li nz-menu-item *ngIf="isAuthenticated">
+        <a class="menu-item" [routerLink]="['/my-profile']">{{ 'UserProfile.MyProfile' | translate }}</a>
+      </li>
+      <li nz-menu-item *ngIf="isAuthenticated && isOrganization">
+        <a class="menu-item" href="/admin"> Admin </a>
+      </li>
+      <li nz-menu-item *ngIf="isAuthenticated">
+        <a class="menu-item" (click)="logout()">{{ 'ProfileActionBar.Logout' | translate }}</a>
+      </li>
+    </ul>
+  </nz-dropdown-menu>
+
+  <nz-radio-group class="radio-group" [(ngModel)]="language" nzButtonStyle="solid" (ngModelChange)="switchLanguage()">
+    <label nz-radio-button nzValue="en" class="language-label">{{ 'English' | translate }}</label>
+    <label nz-radio-button nzValue="es" class="language-label">{{ 'Spanish' | translate }}</label>
+  </nz-radio-group>
 </nz-header>

@@ -1,5 +1,6 @@
 ﻿using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces;
+using DonateTo.ApplicationCore.Interfaces.Repositories;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models;
 using DonateTo.ApplicationCore.Models.Filtering;
@@ -11,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -19,18 +21,37 @@ namespace DonateTo.Services
     public class DonationRequestService: BaseService<DonationRequest, DonationRequestFilterModel>, IDonationRequestService
     {
         private readonly IMailSender _mailSender;
-        private readonly IRepository<DonationRequest> _donationRequestRepository;
+        private readonly IDonationRequestRepository _donationRequestRepository;
+        private readonly IRepository<UserOrganization> _userOrganizationRepository;
         private readonly IOrganizationService _organizationService;
+        private readonly IUnitOfWork _unitOfWork;
 
         public DonationRequestService(
             IMailSender mailSender,
             IOrganizationService organizationService,
-            IRepository<DonationRequest> donationRequestRepository, 
+            IDonationRequestRepository donationRequestRepository,
+            IRepository<UserOrganization> userOrganizationRepository,
             IUnitOfWork unitOfWork) : base(donationRequestRepository, unitOfWork)
         {
             _mailSender = mailSender;
             _donationRequestRepository = donationRequestRepository;
+            _userOrganizationRepository = userOrganizationRepository;
             _organizationService = organizationService;
+            _unitOfWork = unitOfWork;
+        }
+
+        public async Task<PagedResult<DonationRequest>> GetPagedFilteredByOrganizationAsync(DonationRequestFilterModel filter, long userId)
+        {
+            // Get the organizations I am assocciated to
+            var associatedOrganizations = await _userOrganizationRepository.GetAsync(x => x.UserId == userId).ConfigureAwait(false);
+            var associatedOrganizationsList = associatedOrganizations.ToList();
+            // Get the donation requests
+            if(associatedOrganizationsList.Any())
+            {
+                var predicateWithOrganizationIds = GetPredicateWithOrganizationIds(filter, associatedOrganizations.ToList());
+                return await _donationRequestRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicateWithOrganizationIds, GetSort(filter)).ConfigureAwait(false);
+            }
+            return new PagedResult<DonationRequest>();
         }
 
         ///<inheritdoc cref="IDonationService"/>
@@ -65,6 +86,38 @@ namespace DonateTo.Services
             await _mailSender.SendMultipleAsync(messages).ConfigureAwait(false);
         }
 
+        ///<inheritdoc cref="IDonationService"/>
+        public async Task SendDeleteRequestMailToOrganizationUsersAsync(DonationRequest donationRequest, IEnumerable<UserModel> users, string client)
+        {
+            if (donationRequest.Organization == null)
+            {
+                donationRequest.Organization = _organizationService.Get(donationRequest.OrganizationId);
+            }
+
+            var messages = new List<Message>();
+            var body = @"<p>Hi {0}!</p>
+                            <p>A new Donation Request has been cancelled to {1}</p>
+                            <p>Check it <a href='{2}'>here</a></p>";
+
+            foreach (var user in users)
+            {
+                var bodyMessage = new MessageBody()
+                {
+                    HtmlBody = string.Format(CultureInfo.InvariantCulture, body,
+                                             user.FullName,
+                                             donationRequest.Organization.Name,
+                                             client)
+                };
+
+                var to = new List<string>();
+                to.Add(user.Email);
+
+                messages.Add(new Message(to, "Cancelled donation request!", bodyMessage));
+            }
+
+            await _mailSender.SendMultipleAsync(messages).ConfigureAwait(false);
+        }
+
         ///<inheritdoc cref="BaseService{DonationRequest, DonationRequestFilterModel}"/>
         public override PagedResult<DonationRequest> GetPagedFiltered(DonationRequestFilterModel filter)
         {
@@ -95,6 +148,12 @@ namespace DonateTo.Services
                                 EF.Functions.ILike(p.Title, string.Format(CultureInfo.CurrentCulture, "%{0}%", filter.Title)));
             }
 
+            if (!string.IsNullOrEmpty(filter.OrganizationName))
+            {
+                predicate = predicate.And(p =>
+                                EF.Functions.ILike(p.Organization.Name, string.Format(CultureInfo.CurrentCulture, "%{0}%", filter.OrganizationName)));
+            }
+
             if (!string.IsNullOrEmpty(filter.Observation))
             {
                 predicate = predicate.And(p =>
@@ -113,7 +172,7 @@ namespace DonateTo.Services
             {
                 if (DateTime.TryParse(filter.CreatedDateEnd, out var outDate))
                 {
-                    predicate = predicate.And(p => p.CreatedDate <= outDate);
+                    predicate = predicate.And(p => p.CreatedDate < outDate.AddDays(1));
                 }
             }
 
@@ -129,11 +188,32 @@ namespace DonateTo.Services
             {
                 if (DateTime.TryParse(filter.FinishDateEnd, out var outDate))
                 {
-                    predicate = predicate.And(p => p.FinishDate <= outDate);
+                    predicate = predicate.And(p => p.FinishDate < outDate.AddDays(1));
                 }
             }
 
             return predicate;
+        }
+
+        protected Expression<Func<DonationRequest, bool>> GetPredicateWithOrganizationIds(DonationRequestFilterModel filter, List<UserOrganization> associatedOrganizations)
+        {
+            var predicate = GetPredicate(filter);
+
+            if (associatedOrganizations != null)
+            {
+                foreach (var id in associatedOrganizations)
+                {
+                    predicate = predicate.And(p => p.OrganizationId == id.OrganizationId);
+                }
+                
+            }
+
+            return predicate;
+        }
+
+        public async Task SoftDelete(long donationRequestId)
+        {
+            await _donationRequestRepository.SoftDeleteDonationRequest(donationRequestId).ConfigureAwait(false);
         }
     }
 }

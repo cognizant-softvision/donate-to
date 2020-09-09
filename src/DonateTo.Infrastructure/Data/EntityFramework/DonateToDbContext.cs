@@ -1,6 +1,10 @@
 ﻿using DonateTo.ApplicationCore.Entities;
+using DonateTo.ApplicationCore.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DonateTo.Infrastructure.Data.EntityFramework
 {
@@ -31,6 +35,9 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
         public DbSet<UserToken> UserTokens { get; set; }
         public DbSet<UserOrganization> UserOrganizations { get; set; }
         public DbSet<Question> Question { get; set; }
+        public DbSet<QuestionOption> QuestionOption { get; set; }
+        public DbSet<Log> Logs { get; set; }
+        public DbSet<Availability> Availabilities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -121,7 +128,6 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
                 }
 
                 #region Many to many relationships
-
                 // Code to set up many to many relationships
                 modelBuilder.Entity<DonationRequestCategory>()
                     .HasOne<Category>(c => c.Category)
@@ -161,9 +167,58 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
 
                 modelBuilder.Entity<UserOrganization>().HasKey
                     (uo => new { uo.UserId, uo.OrganizationId });
-
                 #endregion
+
+                // Code to query objects from de db where IsDeleted = false
+                modelBuilder.Entity<Donation>()
+                    .HasQueryFilter(d => !d.IsDeleted);
+
+                modelBuilder.Entity<DonationItem>()
+                    .HasQueryFilter(di => !di.IsDeleted);
+
+                modelBuilder.Entity<DonationRequest>()
+                    .HasQueryFilter(dr => !dr.IsDeleted);
+
+                modelBuilder.Entity<DonationRequestItem>()
+                    .HasQueryFilter(dri => !dri.IsDeleted);
+
+                modelBuilder.Entity<Organization>()
+                    .HasQueryFilter(o => !o.IsDeleted);
+
+                modelBuilder.Entity<Address>()
+                    .HasQueryFilter(a => !a.IsDeleted);
+
+                modelBuilder.Entity<Question>()
+                    .HasQueryFilter(q => !q.IsDeleted);
+
+                modelBuilder.Entity<QuestionOption>()
+                    .HasQueryFilter(qo => !qo.IsDeleted);
+
+                modelBuilder.Entity<Availability>()
+                    .HasQueryFilter(qo => !qo.IsDeleted);
             }
+        }
+
+        /// <summary>
+        /// Marks any "Removed" Entities as "Modified" and then sets the Db [IsDeleted] Flag to true
+        /// </summary>
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            ChangeTracker.DetectChanges();
+
+            var markedAsDeleted = ChangeTracker.Entries().Where(x => x.State == EntityState.Deleted);
+
+            foreach (var item in markedAsDeleted)
+            {
+                if (item.Entity is IIsDeleted entity)
+                {
+                    // Set the entity to modified
+                    item.State = EntityState.Modified;
+                    // Only update the IsDeleted flag - only this will get sent to the Db
+                    entity.IsDeleted = true;
+                }
+            }
+            return await base.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
         }
     }
 }

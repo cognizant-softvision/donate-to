@@ -14,10 +14,14 @@ namespace DonateTo.WebApi.V1.Controllers
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [Authorize]
     public class AddressController : BaseApiController<Address, BaseFilterModel>
     {
-        public AddressController(IBaseService<Address, BaseFilterModel> addressService) : base(addressService)
+        private readonly IAddressService _addressService;
+
+        public AddressController(IAddressService addressService) : base(addressService)
         {
+            _addressService = addressService;   
         }
 
         /// <summary>
@@ -34,7 +38,7 @@ namespace DonateTo.WebApi.V1.Controllers
         {
             try
             {
-                var result = await _baseService.GetAsync(x => x.OrganizationId == organizationId).ConfigureAwait(false);
+                var result = await _addressService.GetAsync(x => x.OrganizationId == organizationId).ConfigureAwait(false);
 
                 if(!result.Any())
                 {
@@ -46,6 +50,32 @@ namespace DonateTo.WebApi.V1.Controllers
             catch (Exception ex)
             {
                 return BadRequest();
+            }
+        }
+
+        /// <summary>
+        /// Soft Deletes a Address
+        /// </summary>
+        /// <param name="address">Address</param>
+        /// <returns>IActionResult</returns>
+        public override async Task<IActionResult> Delete(long id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                try
+                {
+                    await _addressService.SoftDeleteAddress(id).ConfigureAwait(false);
+
+                    return Ok();
+                }
+                catch (KeyNotFoundException ex)
+                {
+                    return NotFound(ex);
+                }
             }
         }
     }

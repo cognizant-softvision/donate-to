@@ -7,4 +7,5 @@ export class ContactModel extends BaseModel {
   identityNumber: string;
   phoneNumber: string;
   position: string;
+  fullName: string;
 }

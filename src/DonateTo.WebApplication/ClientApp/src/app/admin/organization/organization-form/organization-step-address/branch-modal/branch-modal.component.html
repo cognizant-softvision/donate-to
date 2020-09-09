@@ -1,0 +1,66 @@
+<div>
+  <!-- Steps Title -->
+  <nz-steps [nzCurrent]="currentStep">
+    <nz-step
+      nzTitle="{{ 'Admin.Organization.OrganizationSteps.Address.AddressModalStep' | translate }}"
+      nzIcon="home"
+      [(nzStatus)]="statusAddress"
+    >
+    </nz-step>
+
+    <nz-step
+      nzTitle="{{ 'Admin.Organization.OrganizationSteps.Address.ContactModalStep' | translate }}"
+      nzIcon="user"
+      [(nzStatus)]="statusContact"
+    >
+    </nz-step>
+  </nz-steps>
+
+  <!-- Steps Content -->
+  <div>
+    <app-step-branch-address
+      *ngIf="currentStep === 0"
+      (isFormValid)="isAddressStepReady($event)"
+      [addressModel]="addressModel"
+    >
+    </app-step-branch-address>
+
+    <div class="step-contact-container">
+      <app-organization-step-contact
+        *ngIf="currentStep === 1"
+        (isFormValid)="isContactStepReady($event)"
+        [contactModel]="contactModel"
+        [contactForBranch]="contactForBranch"
+      >
+      </app-organization-step-contact>
+    </div>
+  </div>
+
+  <!-- Steps Buttons -->
+  <div class="steps-action">
+    <button nz-button nzType="default" (click)="prev()" *ngIf="currentStep === 1">
+      <span>{{ 'Admin.Organization.OrganizationSteps.Address.Previous' | translate }}</span>
+    </button>
+    <button nz-button nzType="default" (click)="next()" [disabled]="nextStepDisabled" *ngIf="currentStep === 0">
+      <span>{{ 'Admin.Organization.OrganizationSteps.Address.Next' | translate }}</span>
+    </button>
+    <button
+      nz-button
+      nzType="primary"
+      (click)="done()"
+      [disabled]="submitBranchDisabled"
+      *ngIf="currentStep === 1 && !isBranchEdit"
+    >
+      <span>{{ 'Admin.Organization.OrganizationSteps.Address.Create' | translate }}</span>
+    </button>
+    <button
+      nz-button
+      nzType="primary"
+      (click)="edit()"
+      [disabled]="submitBranchDisabled"
+      *ngIf="currentStep === 1 && isBranchEdit"
+    >
+      <span>{{ 'Admin.Organization.OrganizationSteps.Address.Edit' | translate }}</span>
+    </button>
+  </div>
+</div>

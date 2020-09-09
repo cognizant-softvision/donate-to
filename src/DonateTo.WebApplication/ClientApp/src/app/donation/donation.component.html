@@ -1,17 +1,18 @@
-<div class="donations-container">
+<div class="container">
+  <nz-spin *ngIf="this.donationSandbox.donationRequestLoading$ | async" nzTip="Loading..."> </nz-spin>
   <nz-skeleton [nzLoading]="this.donationSandbox.donationRequestLoading$ | async" [nzActive]="true">
     <div *ngIf="donationRequest">
       <div nz-row>
         <div nz-col>
-          <h2>
+          <h4>
             {{ donationRequest.title }}<span class="subtitle"> - {{ donationRequest.organization?.name }}</span>
-          </h2>
+          </h4>
         </div>
       </div>
       <div nz-row>
         <span>
           {{ 'RequestDonation.Priority' | translate }}:
-          <nz-rate [ngModel]="donationRequest.priority" nzAllowHalf [nzCharacter]="heartIcon" disabled></nz-rate>
+          <nz-rate [ngModel]="priority" nzAllowHalf [nzCharacter]="heartIcon" disabled></nz-rate>
           <ng-template #heartIcon><i nz-icon nzType="heart" nzTheme="fill" className="rate-icon"></i></ng-template>
         </span>
       </div>

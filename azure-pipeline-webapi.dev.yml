@@ -28,6 +28,20 @@ steps:
       arguments: "--configuration $(BuildConfiguration)"
 
   - task: DotNetCoreCLI@2
+    displayName: 'Initialize EntityFrameworkCore'
+    inputs:
+      command: custom
+      custom: tool
+      arguments: 'install --global dotnet-ef'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Create Sql Migration File'
+    inputs:
+      command: custom
+      custom: ef
+      arguments: 'migrations script --project "$(Build.SourcesDirectory)\src\DonateTo.WebApi\DonateTo.WebApi.csproj" -s "$(Build.SourcesDirectory)\src\DonateTo.WebApi\DonateTo.WebApi.csproj" --output "$(build.artifactstagingdirectory)\SQL\migrations.sql" --idempotent --verbose --no-build --configuration $(BuildConfiguration) --context "DonateToDbContext'
+
+  - task: DotNetCoreCLI@2
     displayName: Test
     inputs:
       command: test

@@ -8,6 +8,7 @@ export interface OrganizationState {
   pagedItems: PageModel<OrganizationModel>;
   organization: OrganizationModel;
   organizations: OrganizationModel[];
+  errorMessage: string;
 }
 
 const INITIAL_STATE: OrganizationState = {
@@ -16,6 +17,7 @@ const INITIAL_STATE: OrganizationState = {
   pagedItems: new PageModel<OrganizationModel>(),
   organization: undefined,
   organizations: [],
+  errorMessage: undefined,
 };
 
 const organizationReducer = createReducer(
@@ -105,6 +107,22 @@ const organizationReducer = createReducer(
     loading: false,
     failed: true,
     organization: new OrganizationModel(),
+  })),
+  on(organizationActions.deleteOrganization, (state) => ({
+    ...state,
+    loading: true,
+    failed: false,
+  })),
+  on(organizationActions.deleteOrganizationSuccess, (state) => ({
+    ...state,
+    loading: false,
+    failed: false,
+  })),
+  on(organizationActions.deleteOrganizationFailed, (state, { errorMessage }) => ({
+    ...state,
+    loading: false,
+    failed: true,
+    errorMessage,
   }))
 );
 

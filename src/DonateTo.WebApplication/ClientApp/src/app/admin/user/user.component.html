@@ -1,7 +1,8 @@
 <div class="table-operations">
+  <nz-spin *ngIf="this.userSandbox.loadAction$ | async" nzTip="Loading..."> </nz-spin>
   <h4 class="section-title">
     {{ 'Admin.User.Title' | translate }}
-    <span *ngIf="organizationName">{{ 'Admin.User.OrganizationTitle' | translate }} {{ organizationName }}</span>
+    <span *ngIf="organizationName">{{ 'Admin.User.OrganizationTitleJoin' | translate }} {{ organizationName }}</span>
   </h4>
   <nz-divider></nz-divider>
   <button nz-button nzType="secondary" (click)="reset()">{{ 'Admin.ClearFilter' | translate }}</button>
@@ -73,7 +74,7 @@
         </nz-filter-trigger>
       </th>
 
-      <th>{{ 'Admin.User.Table.Action' | translate }}</th>
+      <th *ngIf="this.isAdmin">{{ 'Admin.User.Table.Action' | translate }}</th>
     </tr>
   </thead>
 
@@ -82,7 +83,7 @@
       <td>{{ data.fullName }}</td>
       <td>{{ showOrganizations(data.organizations) }}</td>
       <td>{{ data.email }}</td>
-      <td>
+      <td *ngIf="this.isAdmin">
         <a (click)="editUser(data)">{{ 'Admin.User.Associate' | translate }}</a>
       </td>
     </tr>
@@ -98,7 +99,7 @@
         placeholder="{{ 'Admin.User.Table.Name' | translate }}"
         [(ngModel)]="searchNameValue"
       />
-      <button nz-button nzSize="small" nzType="primary" (click)="searchName()" class="search-button">
+      <button nz-button nzSize="small" nzType="primary" (click)="searchName()">
         {{ 'Admin.User.Table.Search' | translate }}
       </button>
       <button nz-button nzSize="small" (click)="resetNameSearch()">
@@ -117,7 +118,7 @@
         placeholder="{{ 'Admin.User.Table.Organization' | translate }}"
         [(ngModel)]="searchOrganizationValue"
       />
-      <button nz-button nzSize="small" nzType="primary" (click)="searchOrganization()" class="search-button">
+      <button nz-button nzSize="small" nzType="primary" (click)="searchOrganization()">
         {{ 'Admin.User.Table.Search' | translate }}
       </button>
       <button nz-button nzSize="small" (click)="resetOrganizationSearch()">
@@ -136,7 +137,7 @@
         placeholder="{{ 'Admin.User.Table.Email' | translate }}"
         [(ngModel)]="searchEmailValue"
       />
-      <button nz-button nzSize="small" nzType="primary" (click)="searchEmail()" class="search-button">
+      <button nz-button nzSize="small" nzType="primary" (click)="searchEmail()">
         {{ 'Admin.User.Table.Search' | translate }}
       </button>
       <button nz-button nzSize="small" (click)="resetEmailSearch()">

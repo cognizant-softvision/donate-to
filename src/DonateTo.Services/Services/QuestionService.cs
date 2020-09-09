@@ -2,6 +2,7 @@
 using DonateTo.ApplicationCore.Interfaces;
 using DonateTo.ApplicationCore.Interfaces.Repositories;
 using DonateTo.ApplicationCore.Interfaces.Services;
+using DonateTo.ApplicationCore.Models;
 using DonateTo.ApplicationCore.Models.Filtering;
 using DonateTo.ApplicationCore.Models.Pagination;
 using LinqKit;
@@ -9,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -81,6 +83,42 @@ namespace DonateTo.Services
             }
 
             return predicate;
+        }
+
+        public decimal CalculateWeightQuestionAsync(QuestionResult questionResults)
+        {
+            decimal totalWeight = 0;
+            CultureInfo culture = new CultureInfo("en-US");
+            questionResults.QuestionAnswers.ToList().ForEach(result =>
+            {
+                var question = _questionRepository.GetAsync(q => q.Id == result.IdQuestion).Result.FirstOrDefault();
+                decimal partialWeight = 0;
+                if (question.ControlTypeId == ControlTypes.Textbox)
+                {
+                    var decimalValue = Convert.ToDecimal(result.Value.FirstOrDefault(), culture);
+                    partialWeight = question.Options.ToList().FirstOrDefault(opt => (opt.MinimumRelative <= decimalValue && decimalValue <= opt.MaximumRelative)).Weight;
+                }
+                else if (question.ControlTypeId == ControlTypes.Checkbox)
+                {
+                    if (result.Value != null)
+                    {
+                        result.Value.ToList().ForEach(value =>
+                        partialWeight += question.Options.ToList().FirstOrDefault(opt => opt.Label == value).Weight);
+                    }
+                }
+                else
+                {
+                    partialWeight = question.Options.FirstOrDefault(opt => opt.Label == result.Value.FirstOrDefault()).Weight;
+                }
+                totalWeight += (question.Weight / 100) * (partialWeight / 100) * 100;
+            });
+
+            return totalWeight;
+        }
+
+        public async Task SoftDelete(long questionId)
+        {
+            await _questionRepository.SoftDeleteQuestion(questionId).ConfigureAwait(false);
         }
     }
 }

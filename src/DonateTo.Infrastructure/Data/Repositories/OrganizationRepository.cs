@@ -1,4 +1,6 @@
-﻿using DonateTo.ApplicationCore.Entities;
+﻿using DonateTo.ApplicationCore.Common;
+using DonateTo.ApplicationCore.Entities;
+using DonateTo.ApplicationCore.Interfaces.Repositories;
 using DonateTo.Infrastructure.Data.EntityFramework;
 using DonateTo.Infrastructure.Data.Extensions;
 using DonateTo.Infrastructure.Extensions;
@@ -11,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace DonateTo.Infrastructure.Data.Repositories
 {
-    public class OrganizationRepository : EntityFrameworkRepository<Organization, DonateToDbContext>
+    public class OrganizationRepository : EntityFrameworkRepository<Organization, DonateToDbContext>, IOrganizationRepository
     {
         public OrganizationRepository(DonateToDbContext dbContext) : base(dbContext)
         {
@@ -43,6 +45,54 @@ namespace DonateTo.Infrastructure.Data.Repositories
             return await GetHydratedOrganization().FirstOrDefaultAsync(x => x.Id == id).ConfigureAwait(false);
         }
 
+        public async Task SoftDeleteOrganization(long organizationId)
+        {
+            using var transaction = await DbContext.Database.BeginTransactionAsync().ConfigureAwait(false);
+
+            try
+            {
+                var organizationToSoftDelete = Get(null)
+                    .Include(o => o.Addresses)
+                    .Where(o => o.Id == organizationId)
+                    .FirstOrDefault();
+
+                var donationsActive = DbContext.DonationRequests
+                    .Where(d => (d.OrganizationId == organizationId) &&
+                                (d.StatusId == StatusType.Pending))
+                    .ToList();
+
+                if (donationsActive.Count() > 0)
+                {
+                    throw new Exception("Admin.Organization.DeleteError");
+                } else
+                {
+                    if (organizationToSoftDelete.Addresses.ToList().Count > 0)
+                    {
+                        organizationToSoftDelete.Addresses.ToList().ForEach(a => DbContext.Addresses.Remove(a));
+                    }
+
+                    DbContext.Organizations.Remove(organizationToSoftDelete);
+                    await DbContext.SaveChangesAsync().ConfigureAwait(false);
+                    await transaction.CommitAsync().ConfigureAwait(false);
+                }
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync().ConfigureAwait(false);
+                throw;
+            }
+        }
+
+        public async Task SoftDeleteAddress(Address address)
+        {
+            var addressToSoftDelete = DbContext.Addresses
+                .Where(a => a.Id == address.Id)
+                .FirstOrDefault();
+
+            DbContext.Addresses.Remove(addressToSoftDelete);
+            await DbContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+
         #region private
         private IQueryable<Organization> GetHydratedOrganization()
         {
@@ -51,7 +101,8 @@ namespace DonateTo.Infrastructure.Data.Repositories
                 .Include(a => a.Addresses).ThenInclude(c => c.Country)
                 .Include(a => a.Addresses).ThenInclude(s => s.State)
                 .Include(a => a.Addresses).ThenInclude(c => c.City)
-                .Include(c => c.Contact);
+                .Include(c => c.Contact)
+                .Include(u => u.UserOrganizations);
         }
         #endregion
     }

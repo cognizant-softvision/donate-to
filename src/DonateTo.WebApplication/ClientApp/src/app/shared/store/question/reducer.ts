@@ -85,6 +85,37 @@ const questionReducer = createReducer(
     ...state,
     loading: false,
     failed: true,
+  })),
+  on(questionActions.addResults, (state) => ({
+    ...state,
+    loading: true,
+    failed: false,
+  })),
+  on(questionActions.addResultsSuccess, (state, { results }) => ({
+    ...state,
+    loading: false,
+    failed: false,
+    results,
+  })),
+  on(questionActions.addResultsFailed, (state) => ({
+    ...state,
+    loading: false,
+    failed: true,
+  })),
+  on(questionActions.deleteQuestion, (state) => ({
+    ...state,
+    loading: true,
+    failed: false,
+  })),
+  on(questionActions.deleteQuestionSuccess, (state) => ({
+    ...state,
+    loading: false,
+    failed: false,
+  })),
+  on(questionActions.deleteQuestionFailed, (state) => ({
+    ...state,
+    loading: false,
+    failed: true,
   }))
 );
 

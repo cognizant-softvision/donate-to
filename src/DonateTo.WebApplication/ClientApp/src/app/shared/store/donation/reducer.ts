@@ -105,7 +105,38 @@ const donationRequestReducer = createReducer(
     ...state,
     loading: false,
     failed: true,
-    items: new PageModel<DonationModel>(),
+    items: new DonationModel(),
+  })),
+  on(donationRequestActions.loadPagedFilteredDonationsByDonationRequestId, (state, { donationFilter }) => ({
+    ...state,
+    loading: true,
+    failed: false,
+  })),
+  on(donationRequestActions.loadPagedFilteredDonationsByDonationRequestIdSuccess, (state, { donations }) => ({
+    ...state,
+    loading: false,
+    failed: false,
+    donations,
+  })),
+  on(donationRequestActions.loadPagedFilteredDonationsByDonationRequestIdFailed, (state) => ({
+    ...state,
+    loading: false,
+    failed: true,
+  })),
+  on(donationRequestActions.deleteAvailability, (state) => ({
+    ...state,
+    loading: true,
+    failed: false,
+  })),
+  on(donationRequestActions.deleteAvailabilitySuccess, (state) => ({
+    ...state,
+    loading: false,
+    failed: false,
+  })),
+  on(donationRequestActions.deleteAvailabilityFailed, (state) => ({
+    ...state,
+    loading: false,
+    failed: true,
   }))
 );
 

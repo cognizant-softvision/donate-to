@@ -21,49 +21,25 @@
       <td>{{ data.item.name }}</td>
       <td>{{ data.item.finishQuantity - data.item.currentQuantity }} {{ data.item.unit?.code }}</td>
       <td>{{ data.item.observation }}</td>
-      <ng-container *ngIf="!data.edit; else editTemplate">
-        <td class="quantity-to-donate">
-          {{ data.quantityToDonate }}
-          <i nz-icon nzType="edit" nzTheme="outline" (click)="startEdit(data.id)"></i>
-        </td>
-      </ng-container>
-
-      <ng-template #editTemplate>
-        <td class="quantity-to-donate">
-          <nz-input-number
-            [(ngModel)]="data.quantityToDonate"
-            [nzMin]="0"
-            [nzMax]="data.item.finishQuantity - data.item.currentQuantity"
-            (keyup.enter)="saveEdit(data.id)"
-          ></nz-input-number>
-
-          <div>
-            <i
-              nz-icon
-              nzType="check-circle"
-              nzTheme="twotone"
-              [nzTwotoneColor]="'#52c41a'"
-              (click)="saveEdit(data.id)"
-            ></i>
-            <i
-              nz-icon
-              nzType="close-circle"
-              nzTheme="twotone"
-              [nzTwotoneColor]="'#eb2f96'"
-              (click)="cancelEdit(data.id)"
-            ></i>
-          </div>
-        </td>
-      </ng-template>
+      <td>
+        <nz-input-number
+          [(ngModel)]="data.quantityToDonate"
+          [nzMin]="0"
+          [nzMax]="data.item.finishQuantity - data.item.currentQuantity"
+          (keyup.enter)="saveEdit(data.id)"
+          (focusout)="saveEdit(data.id)"
+        ></nz-input-number>
+      </td>
     </tr>
+
     <tr class="ant-row-end">
       <td colspan="6">
         <div class="donate">
-          <a nz-button nzType="primary" [routerLink]="['/donation/my-donations']" class="back-button">
+          <a nz-button nzType="secondary" [routerLink]="['/donation/my-donations']" class="back-button">
             <span *ngIf="isEdit">{{ 'BackBtn' | translate }}</span>
             <ng-template #notEditBlock>{{ 'RequestDonation.DonationItemList.DonateButton' | translate }}</ng-template>
           </a>
-          <button nz-button nzType="primary" (click)="donationConfirm()">
+          <button nz-button nzType="secondary" (click)="donationConfirm()">
             <span *ngIf="isEdit; else notEditBlock">{{
               'RequestDonation.DonationItemList.MoreOptions' | translate
             }}</span>

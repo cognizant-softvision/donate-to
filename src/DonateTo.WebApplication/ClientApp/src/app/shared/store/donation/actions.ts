@@ -1,6 +1,8 @@
 import { createAction, props } from '@ngrx/store';
 import { DonationRequestModel, PageModel } from '../../models';
 import { DonationModel } from '../../models/donation.model';
+import { DonationFilter } from '../../models/filters/donation-filter';
+import { AvailabilityModel } from '../../models/availability.model';
 
 export const loadDonationRequest = createAction('[Donation Request] Loads item from server', props<{ id: number }>());
 export const loadDonationRequestSuccess = createAction(
@@ -51,3 +53,24 @@ export const loadDonationByUserPagedSuccess = createAction(
   '[Donation Request] Load donations by user success',
   props<{ donations: PageModel<DonationModel> }>()
 );
+export const loadPagedFilteredDonationsByDonationRequestId = createAction(
+  '[Donations] Load Paged Filtered Donations by DonationRequestId',
+  props<{ donationFilter: DonationFilter }>()
+);
+export const loadPagedFilteredDonationsByDonationRequestIdSuccess = createAction(
+  '[Donations] Load Paged Filtered Donations by DonationRequestId Success',
+  props<{ donations: PageModel<DonationModel> }>()
+);
+export const loadPagedFilteredDonationsByDonationRequestIdFailed = createAction(
+  '[Donations] Load Paged Filtered Donations by DonationRequestId Failed'
+);
+
+export const deleteAvailability = createAction(
+  '[Availability] Deleted Availability on server',
+  props<{ availability: AvailabilityModel }>()
+);
+export const deleteAvailabilitySuccess = createAction(
+  '[Availability] Deleted Availability success',
+  props<{ availability: AvailabilityModel }>()
+);
+export const deleteAvailabilityFailed = createAction('[Availability] Deleted Availability failed');

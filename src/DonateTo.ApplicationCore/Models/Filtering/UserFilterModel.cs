@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace DonateTo.ApplicationCore.Models.Filtering
 {
@@ -11,5 +9,15 @@ namespace DonateTo.ApplicationCore.Models.Filtering
         public string Email { get; set; }
 
         public string Organization { get; set; }
+
+        public IEnumerable<long> OrganizationIds { get; set; }
+
+        public UserFilterModel()
+        {
+            if(OrganizationIds == null)
+            {
+                OrganizationIds = new List<long>();
+            }
+        }
     }
 }

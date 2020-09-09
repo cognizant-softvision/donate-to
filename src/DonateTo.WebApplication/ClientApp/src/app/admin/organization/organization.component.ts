@@ -1,16 +1,18 @@
+import { AuthSandbox } from './../../shared/auth/auth.sandbox';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NzTableQueryParams } from 'ng-zorro-antd';
 import { OrganizationFilter } from 'src/app/shared/models/filters/organization-filter';
 import { OrganizationModel } from './../../shared/models';
-import { OrganizationSandbox } from './organization-sandbox';
+import { OrganizationSandbox } from './organization.sandbox';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
+import { FilterService } from 'src/app/shared/async-services/filter.service';
 
 @Component({
   selector: 'app-organization-admin',
   templateUrl: './organization.component.html',
-  styleUrls: ['./organization.component.css'],
+  styleUrls: ['./organization.component.less'],
 })
 export class OrganizationComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
@@ -20,19 +22,27 @@ export class OrganizationComponent implements OnInit, OnDestroy {
   pageSize = 10;
   pageIndex = 1;
   searchNameValue = '';
-  searchDescriptionValue = '';
+  searchUsersQuantityValue = '';
   searchContactNameValue = '';
   nameVisible = false;
-  descriptionVisible = false;
+  usersQuantityVisible = false;
   contactNameVisible = false;
   failedStatus = false;
   successStatus = false;
   dataSaved = false;
+  isAdmin = false;
+  isSuperAdmin = false;
+  filter: string;
+  isDeleteProcess = false;
+  errorMessage: string;
+  errorDeletingOrganization = false;
 
   constructor(
-    private organizationSandbox: OrganizationSandbox,
+    public organizationSandbox: OrganizationSandbox,
+    public authSandbox: AuthSandbox,
     public router: Router,
-    private dataUpdated: DataUpdatedService
+    private dataUpdated: DataUpdatedService,
+    private filterUsers: FilterService
   ) {}
 
   ngOnInit(): void {
@@ -56,6 +66,15 @@ export class OrganizationComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.push(
+      this.organizationSandbox.errorMessage$.subscribe((msg) => {
+        if (msg && this.failedStatus) {
+          this.errorMessage = msg;
+          this.errorDeletingOrganization = true;
+        }
+      })
+    );
+
+    this.subscriptions.push(
       this.organizationSandbox.loadAction$.subscribe((status) => {
         this.successStatus = status;
       })
@@ -66,6 +85,35 @@ export class OrganizationComponent implements OnInit, OnDestroy {
       this.dataUpdated.changeMessage(false);
       window.location.reload();
     }
+
+    this.subscriptions.push(
+      this.organizationSandbox.isRoleProcessed$.subscribe((isRoleProcessed) => {
+        if (isRoleProcessed && !this.organizationSandbox.isOrganization$.value) {
+          this.router.navigate(['']);
+        }
+      })
+    );
+
+    this.subscriptions.push(
+      this.organizationSandbox.loadAction$.subscribe((isLoading) => {
+        if (!isLoading && this.isDeleteProcess) {
+          this.isDeleteProcess = false;
+          this.organizationSandbox.loadOrganizationsFilteredPaged(this.organizationFilter);
+        }
+      })
+    );
+
+    this.subscriptions.push(
+      this.authSandbox.isAdmin$.subscribe((isAdmin) => {
+        this.isAdmin = isAdmin;
+      })
+    );
+
+    this.subscriptions.push(
+      this.authSandbox.isSuperAdmin$.subscribe((isSuperAdmin) => {
+        this.isSuperAdmin = isSuperAdmin;
+      })
+    );
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
@@ -85,12 +133,12 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 
   reset(): void {
     this.searchNameValue = '';
-    this.searchDescriptionValue = '';
+    this.searchUsersQuantityValue = '';
     this.searchContactNameValue = '';
     this.organizationFilter = {
       ...this.organizationFilter,
       name: this.searchNameValue,
-      description: this.searchDescriptionValue,
+      description: this.searchUsersQuantityValue,
       contactName: this.searchContactNameValue,
     };
     this.organizationSandbox.loadOrganizationsFilteredPaged(this.organizationFilter);
@@ -103,8 +151,8 @@ export class OrganizationComponent implements OnInit, OnDestroy {
   }
 
   resetDescriptionSearch(): void {
-    this.searchDescriptionValue = '';
-    this.organizationFilter = { ...this.organizationFilter, description: this.searchDescriptionValue };
+    this.searchUsersQuantityValue = '';
+    this.organizationFilter = { ...this.organizationFilter };
     this.organizationSandbox.loadOrganizationsFilteredPaged(this.organizationFilter);
   }
 
@@ -121,8 +169,8 @@ export class OrganizationComponent implements OnInit, OnDestroy {
   }
 
   searchDescription(): void {
-    this.descriptionVisible = false;
-    this.organizationFilter = { ...this.organizationFilter, description: this.searchDescriptionValue };
+    this.usersQuantityVisible = false;
+    this.organizationFilter = { ...this.organizationFilter };
     this.organizationSandbox.loadOrganizationsFilteredPaged(this.organizationFilter);
   }
 
@@ -144,5 +192,19 @@ export class OrganizationComponent implements OnInit, OnDestroy {
 
   private unregisterEvents() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+  seeAssociatedUsers(organizationId: number) {
+    this.filterUsers.changeFilter(organizationId);
+    this.router.navigate(['./admin/users']);
+  }
+
+  deleteOrganization(organization: OrganizationModel) {
+    this.organizationSandbox.deleteOrganization(organization);
+    this.isDeleteProcess = true;
+  }
+
+  switchErrorModal() {
+    this.errorDeletingOrganization = !this.errorDeletingOrganization;
   }
 }

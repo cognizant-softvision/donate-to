@@ -2,6 +2,9 @@ import {
   addDonation,
   addDonationFailed,
   addDonationSuccess,
+  deleteAvailability,
+  deleteAvailabilityFailed,
+  deleteAvailabilitySuccess,
   deleteDonation,
   deleteDonationFailed,
   deleteDonationSuccess,
@@ -14,6 +17,9 @@ import {
   loadDonationRequest,
   loadDonationRequestFailed,
   loadDonationRequestSuccess,
+  loadPagedFilteredDonationsByDonationRequestId,
+  loadPagedFilteredDonationsByDonationRequestIdFailed,
+  loadPagedFilteredDonationsByDonationRequestIdSuccess,
   updateDonation,
   updateDonationFailed,
   updateDonationSuccess,
@@ -92,6 +98,29 @@ export class DonationRequestEffects {
       )
     )
   );
+
+  @Effect()
+  loadPagedFilteredDonationsByDonationRequestId$: Observable<{}> = this.actions$.pipe(
+    ofType(loadPagedFilteredDonationsByDonationRequestId),
+    switchMap(({ donationFilter }) =>
+      this.donationService.getPagedFilteredByDonationRequestId(donationFilter).pipe(
+        map((donations) => loadPagedFilteredDonationsByDonationRequestIdSuccess({ donations })),
+        catchError(() => of(loadPagedFilteredDonationsByDonationRequestIdFailed()))
+      )
+    )
+  );
+
+  @Effect()
+  deleteAvailability$: Observable<{}> = this.actions$.pipe(
+    ofType(deleteAvailability),
+    switchMap((data: any) =>
+      this.donationService.deleteAvailability(data.availability).pipe(
+        map((availability) => deleteAvailabilitySuccess({ availability })),
+        catchError(() => of(deleteAvailabilityFailed()))
+      )
+    )
+  );
+
   constructor(
     private actions$: Actions,
     private donationRequestService: DonationRequestService,

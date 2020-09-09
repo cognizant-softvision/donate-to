@@ -8,10 +8,11 @@ using System.Linq.Expressions;
 using System;
 using System.Linq.Dynamic.Core;
 using DonateTo.Infrastructure.Extensions;
+using DonateTo.ApplicationCore.Interfaces.Repositories;
 
 namespace DonateTo.Infrastructure.Data.Repositories
 {
-    public class DonationRequestRepository : EntityFrameworkRepository<DonationRequest, DonateToDbContext>
+    public class DonationRequestRepository : EntityFrameworkRepository<DonationRequest, DonateToDbContext>, IDonationRequestRepository
     {
         public DonationRequestRepository(DonateToDbContext dbContext) : base(dbContext)
         {
@@ -46,6 +47,32 @@ namespace DonateTo.Infrastructure.Data.Repositories
                 .FilterAndSort(filter, sort);
 
             return await questions.GetPagedAsync(page, pageSize).ConfigureAwait(false);
+        }
+
+        public async Task SoftDeleteDonationRequest(long donationRequestId)
+        {
+            using var transaction = await DbContext.Database.BeginTransactionAsync().ConfigureAwait(false);
+
+            try
+            {
+                var donationRequestToSoftDelete = Get(null)
+                    .Include(d => d.DonationRequestItems)
+                    .Where(d => d.Id == donationRequestId)
+                    .FirstOrDefault();
+
+                if(donationRequestToSoftDelete.DonationRequestItems.ToList().Count > 0)
+                {
+                    donationRequestToSoftDelete.DonationRequestItems.ToList().ForEach(i => DbContext.DonationRequestItems.Remove(i));
+                }
+                DbContext.DonationRequests.Remove(donationRequestToSoftDelete);
+                await DbContext.SaveChangesAsync().ConfigureAwait(false);
+                await transaction.CommitAsync().ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync().ConfigureAwait(false);
+                throw;
+            }            
         }
 
         #region private

@@ -5,37 +5,37 @@
 }
 
     <form class="form-card" asp-action="Register">
-        <h3 class="mb-3 font-weight-normal card-title">Sign Up</h3>
+        <div class="logo"><img src="~/Images/logotype-black.png"></div>
+        <h5 class="mb-3 font-weight-normal card-subtitle">Sign Up</h5>
         <input type="hidden" asp-for="ReturnUrl" />
 
         <label asp-for="FirstName" class="sr-only">First Name</label>
-        <input type="text" asp-for="FirstName" class="form-control" placeholder="First Name">
+        <input type="text" asp-for="FirstName" class="form-input form-control" placeholder="First Name">
         <span asp-validation-for="FirstName"></span>
 
         <label asp-for="LastName" class="sr-only">Last Name</label>
-        <input type="text" asp-for="LastName" class="form-control" placeholder="Last Name">
+        <input type="text" asp-for="LastName" class="form-input form-control" placeholder="Last Name">
         <span asp-validation-for="LastName"></span>
 
         <label asp-for="Email" class="sr-only">Email address</label>
-        <input type="email" asp-for="Email" class="form-control" placeholder="E-mail">
+        <input type="email" asp-for="Email" class="form-input form-control" placeholder="E-mail">
         <span asp-validation-for="Email"></span>
 
 
         <label asp-for="Password" class="sr-only">Password</label>
-        <input asp-for="Password" id="password" class="form-control" oninput="CheckPasswordCriteria(this.value)" placeholder="Password">
+        <input asp-for="Password" id="password" class="form-input form-control" oninput="CheckPasswordCriteria(this.value)" placeholder="Password">
         <i class="glyphicon glyphicon-heart"></i>
         <span asp-validation-for="Password"></span>
-        <small class="form-text text-muted">
-            The password must have at least 8 characters, 1 number, 1 uppercase letter, 1 lowercase letter.
-        </small>
-
-
+        <div class="alert-password">
+            <span>
+                The password must have at least 8 characters, 1 number, 1 uppercase letter, 1 lowercase letter.
+            </span>
+        </div>
         <label asp-for="ConfirmPassword" class="sr-only">Re-enter Password</label>
-        <input type="password" id="confirmPassword" asp-for="ConfirmPassword" class="form-control" oninput="CheckPasswordMatch(this.value)" placeholder="Re-enter Password">
+        <input type="password" id="confirmPassword" asp-for="ConfirmPassword" class="form-input form-control" oninput="CheckPasswordMatch(this.value)" placeholder="Re-enter Password">
         <span asp-validation-for="ConfirmPassword"></span>
 
-        <br />
-        <div asp-validation-summary="All" class="text-danger"></div>
+        <div asp-validation-summary="All"></div>
         <br />
         <div class="form-group">
             <input type="submit" value="Submit" class="btn btn-lg btn-primary btn-block submit-button" />

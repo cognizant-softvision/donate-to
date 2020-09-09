@@ -1,22 +1,18 @@
-<nz-layout id="main-layout">
+<nz-layout>
   <app-nav-menu></app-nav-menu>
-
-  <nz-layout class="profile-layout">
-    <div class="title">
-      <h3>{{ 'UserProfile.MyProfile' | translate }}</h3>
+  <nz-layout class="container">
+    <nz-spin *ngIf="this.userSandbox.loadAction$ | async" nzTip="Loading..."> </nz-spin>
+    <div>
+      <h4>{{ 'UserProfile.MyProfile' | translate }}</h4>
     </div>
-
-    <nz-tabset>
+    <nz-tabset class="card-container">
       <!-- TAB 1 -->
       <nz-tab nzTitle="{{ 'UserProfile.GeneralInformation' | translate }}">
-        <nz-page-header
-          class="site-page-header"
-          nzTitle="{{ 'UserProfile.GeneralInformation' | translate }}"
-          [nzSubtitle]="editSubtitle"
-        >
+        <nz-page-header nzTitle="{{ 'UserProfile.GeneralInformation' | translate }}" [nzSubtitle]="editSubtitle">
           <ng-template #editSubtitle>
-            <a [hidden]="isEdit" (click)="edit()"
-              >{{ 'Admin.Edit' | translate }}<i nz-icon nzType="edit" nzTheme="twotone" nzTwotoneColor="#B8B8B8"></i
+            <a [hidden]="isEdit" (click)="edit()">
+              {{ 'Admin.Edit' | translate }}
+              <i nz-icon nzType="edit" nzTheme="twotone" nzTwotoneColor="#B8B8B8"></i
             ></a>
           </ng-template>
         </nz-page-header>
@@ -32,18 +28,24 @@
 
         <nz-descriptions [hidden]="!isEdit">
           <nz-descriptions-item
-            *ngFor="let data of listOfRow"
+            *ngFor="let data of listOfRow; let i = index"
             class="editable-row"
             nzTitle="{{ data.row | translate }}"
           >
             <input
               nz-input
-              placeholder="{{ data.value | translate }}"
-              value="{{ data.value | translate }}"
+              name="userData{{ i }}"
+              ngModel
+              #userData="ngModel"
+              id="userData"
+              placeholder="{{ data.value }}"
+              value="{{ data.value }}"
               nzSize="small"
+              required="{{ data.required }}"
             />
           </nz-descriptions-item>
         </nz-descriptions>
+        <div class="errorMessage" *ngIf="!isValid">{{ 'UserProfile.ValidateForm' | translate }}</div>
         <div class="button-div" [hidden]="!isEdit">
           <button nz-button class="buttons" nzType="default" (click)="cancelGeneralInformation()">
             {{ 'CancelBtn' | translate }}
@@ -61,32 +63,9 @@
           >{{ 'UserProfile.ChangePassword' | translate }}
         </ng-template>
 
-        <nz-page-header
-          class="site-page-header"
-          nzTitle="{{ 'UserProfile.ChangePassword' | translate }}"
-        ></nz-page-header>
-
-        <nz-descriptions class="descriptions">
-          <nz-descriptions-item
-            *ngFor="let data of listChangePassword"
-            class="editable-row"
-            nzTitle="{{ data.row | translate }}"
-          >
-            <input
-              nz-input
-              placeholder="{{ data.value | translate }}"
-              value="{{ data.value | translate }}"
-              nzSize="small"
-            />
-          </nz-descriptions-item>
-        </nz-descriptions>
-
-        <div class="button-div">
-          <button nz-button class="buttons" nzType="default" (click)="cancelPassword()">
-            {{ 'CancelBtn' | translate }}
-          </button>
-          <button nz-button class="buttons" nzType="primary" (click)="saveNewPassword()">
-            {{ 'SaveBtn' | translate }}
+        <div class="center-align">
+          <button nz-button class="buttons" nzType="primary" (click)="changePassword()">
+            {{ 'UserProfile.ChangePassword' | translate }}
           </button>
         </div>
       </nz-tab>

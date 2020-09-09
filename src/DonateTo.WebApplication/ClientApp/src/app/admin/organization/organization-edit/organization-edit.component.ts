@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { OrganizationSandbox } from '../organization-sandbox';
+import { OrganizationSandbox } from '../organization.sandbox';
 import { OrganizationModel } from 'src/app/shared/models';
 
 @Component({
   selector: 'app-organization-edit',
   templateUrl: './organization-edit.component.html',
-  styleUrls: ['./organization-edit.component.css'],
+  styleUrls: ['./organization-edit.component.less'],
 })
 export class OrganizationEditComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];

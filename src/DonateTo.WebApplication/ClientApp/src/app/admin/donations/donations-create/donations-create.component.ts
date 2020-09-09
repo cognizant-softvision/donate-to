@@ -1,13 +1,13 @@
 import { Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { DonationsFormComponent } from '../donations-form/donations-form.component';
-import { DonationsSandbox } from '../donations-sandbox';
+import { DonationsSandbox } from '../donations.sandbox';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 @Component({
   selector: 'app-donations-create',
   templateUrl: './donations-create.component.html',
-  styleUrls: ['./donations-create.component.css'],
+  styleUrls: ['./donations-create.component.less'],
 })
 export class DonationsCreateComponent implements OnDestroy {
   @ViewChild(DonationsFormComponent)
@@ -16,6 +16,7 @@ export class DonationsCreateComponent implements OnDestroy {
   private isSubmited = false;
   private failedStatus = false;
   isErrorModalActive = false;
+
   @ViewChild('modalContent') public modalContent: TemplateRef<any>;
   tplModal?: NzModalRef;
   constructor(public donationSandbox: DonationsSandbox, private router: Router, private modal: NzModalService) {
@@ -39,35 +40,38 @@ export class DonationsCreateComponent implements OnDestroy {
         this.isSubmited = false;
         this.switchErrorModal();
       } else {
-        this.goBack();
+        this.showModal();
       }
     }
   }
-  submitPriority(priority: number): void {
+  submitPriority(value: boolean): void {
     this.hideModal();
-    this.donationsFormComponent.donationRequest.priority = priority;
-    this.createDonationRequest();
+    this.goBack();
   }
+
   openDonationPriority(): void {
     this.donationsFormComponent.validateForm();
     if (this.donationsFormComponent.donationRequestFormGroup.valid) {
-      this.showModal();
+      this.donationsFormComponent.donationRequest.priority = 0;
+      this.createDonationRequest();
     }
   }
   showModal() {
     this.createTplModal(this.modalContent);
   }
   createTplModal(tplContent: TemplateRef<{}>): void {
-    this.tplModal = this.modal.create({
-      nzContent: tplContent,
-      nzFooter: null,
-      nzClosable: true,
-      nzTitle: 'Questions',
-      nzStyle: {
-        top: '2em;',
-      },
-      nzWidth: '60%',
-    });
+    if (!this.tplModal) {
+      this.tplModal = this.modal.create({
+        nzContent: tplContent,
+        nzFooter: null,
+        nzClosable: true,
+        nzTitle: 'Questions',
+        nzStyle: {
+          top: '2em;',
+        },
+        nzWidth: '60%',
+      });
+    }
   }
   hideModal() {
     this.tplModal?.destroy();

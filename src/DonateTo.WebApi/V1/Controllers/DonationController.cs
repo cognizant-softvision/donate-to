@@ -9,9 +9,9 @@ using System.Linq;
 using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
 using DonateTo.ApplicationCore.Models.Pagination;
-
 using DonateTo.WebApi.Common;
 using DonateTo.ApplicationCore.Models.Filtering;
+using System.Collections.Generic;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -20,7 +20,7 @@ namespace DonateTo.WebApi.V1.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [Authorize]
-    public class DonationController : BaseApiController<Donation, BaseFilterModel>
+    public class DonationController : BaseApiController<Donation, DonationFilterModel>
     {
         private readonly IDonationService _donationService;
         private readonly IUserService _userService;
@@ -88,8 +88,8 @@ namespace DonateTo.WebApi.V1.Controllers
             {
                 var defaultedUserId = userId ?? long.Parse(User.Claims.First(claim => claim.Type == Claims.UserId).Value, CultureInfo.InvariantCulture);
                 var result = await _donationService.GetPagedAsync(
-                                                        pageNumber, 
-                                                        pageSize, 
+                                                        pageNumber,
+                                                        pageSize,
                                                         (d => (d.OwnerId == defaultedUserId) && (!statusId.HasValue || d.StatusId == statusId)))
                                                     .ConfigureAwait(false);
 
@@ -100,6 +100,74 @@ namespace DonateTo.WebApi.V1.Controllers
                 else
                 {
                     return NotFound();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates a Donation
+        /// </summary>
+        /// <param name="id">Donation Id</param>
+        /// <param name="donation">Donation</param>
+        /// <returns>Updated Donation.</returns>
+        public override async Task<IActionResult> Put(long id, [FromBody] Donation donation)
+        {
+            if (!ModelState.IsValid || donation == null)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                try
+                {
+                    var result = await base.Put(id, donation).ConfigureAwait(false);
+
+                    Request.Headers.TryGetValue("Origin", out StringValues client);
+                    var userId = Convert.ToInt64(User.Claims.FirstOrDefault(claim => claim.Type == Claims.UserId)?.Value, CultureInfo.InvariantCulture);
+                    var user = await _userService.GetAsync(userId).ConfigureAwait(false);
+
+                    await _donationService.SendDonationStatusChangeMailAsync(donation, user, client).ConfigureAwait(false);
+
+                    return Ok(result);
+                }
+                catch (ArgumentNullException ex)
+                {
+                    return NotFound(ex);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    return BadRequest(ex);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deletes an Availability
+        /// </summary>
+        /// <param name="id">Availability Id</param>
+        /// <returns>Delete Availability.</returns>
+        [HttpDelete("deleteAvailability", Name = "[controller]_[action]")]
+        public async Task<IActionResult> DeleteAvailability(long id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+
+
+            } else
+            {
+                try
+                {
+                    await _donationService.SoftDeleteAvailability(id).ConfigureAwait(false);
+                    return Ok();
+                }
+                catch (KeyNotFoundException ex)
+                {
+                    return NotFound(ex);
+                }
+                catch (Exception e)
+                {
+                    return UnprocessableEntity(e.Message);
                 }
             }
         }

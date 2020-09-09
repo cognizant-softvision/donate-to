@@ -1,3 +1,4 @@
+import { AuthSandbox } from './../../shared/auth/auth.sandbox';
 import { OrganizationModel, UserModel } from './../../shared/models';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { PopupModalComponent } from './components/popup-modal/popup-modal.component';
@@ -5,13 +6,14 @@ import { Subscription } from 'rxjs';
 import { UserSandbox } from './user.sandbox';
 import { UserFilter } from '../../shared/models/filters/user-filter';
 import { NzTableQueryParams } from 'ng-zorro-antd';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import 'rxjs/add/operator/filter';
+import { FilterService } from 'src/app/shared/async-services/filter.service';
 
 @Component({
   selector: 'app-user-admin',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css'],
+  styleUrls: ['./user.component.less'],
 })
 export class UserComponent implements OnInit, OnDestroy {
   @ViewChild(PopupModalComponent) private popUpModalComponent: PopupModalComponent;
@@ -32,32 +34,52 @@ export class UserComponent implements OnInit, OnDestroy {
   userFilter = new UserFilter();
   failedStatus = false;
   successStatus = false;
-  organizationName: '';
+  organizationId = 0;
+  organizationName = '';
+  isAdmin = false;
+  search = '';
 
-  constructor(private userSandbox: UserSandbox, private route: ActivatedRoute) {}
-
-  ngOnDestroy(): void {
-    this.unregisterEvents();
-  }
+  constructor(
+    public userSandbox: UserSandbox,
+    public authSandbox: AuthSandbox,
+    private route: ActivatedRoute,
+    private router: Router,
+    private filterUsers: FilterService
+  ) {}
 
   ngOnInit(): void {
+    this.filterUsers.currentFilter.subscribe((filter) => {
+      this.organizationId = filter;
+    });
+
     this.route.queryParams
-      .filter((params) => params.organizationName)
+      .filter((params) => params.organizationId)
       .subscribe((params) => {
-        this.organizationName = params.organizationName;
+        this.organizationId = +params.organizationId;
 
         this.userFilter = {
           ...this.userFilter,
           pageSize: this.pageSize,
           pageNumber: this.pageIndex,
-          organization: this.organizationName,
+          organizationId: this.organizationId,
         };
       });
+
+    if (this.organizationId !== 0) {
+      this.subscriptions.push(
+        this.userSandbox.organization$.subscribe((organization) => {
+          this.organizationName = organization?.name;
+        })
+      );
+    }
 
     this.subscriptions.push(
       this.userSandbox.usersPagedFiltered$.subscribe((res) => {
         this.total = res.rowCount;
         this.usersList = res.results;
+        if (this.organizationId !== 0) {
+          this.userSandbox.loadOrganization(this.organizationId);
+        }
       })
     );
 
@@ -73,6 +95,29 @@ export class UserComponent implements OnInit, OnDestroy {
         this.handleRequestResult();
       })
     );
+
+    this.subscriptions.push(
+      this.authSandbox.isAdmin$.subscribe((isAdmin) => {
+        this.isAdmin = isAdmin;
+      })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.unregisterEvents();
+
+    if (this.search) {
+      this.userFilter = {
+        ...this.userFilter,
+        pageSize: this.pageSize,
+        pageNumber: this.pageIndex,
+        organization: this.organizationName,
+      };
+
+      this.searchOrganizationValue = this.search;
+      this.searchOrganization();
+      this.filterUsers.changeFilter(0);
+    }
   }
 
   onQueryParamsChange(params: NzTableQueryParams): void {
@@ -85,13 +130,10 @@ export class UserComponent implements OnInit, OnDestroy {
       pageNumber: pageIndex,
       orderBy: (currentSort && currentSort.key) || '',
       orderDirection: (currentSort && currentSort.value) || '',
+      organizationId: this.organizationId,
     };
 
     this.userSandbox.loadUsersFilteredPaged(this.userFilter);
-  }
-
-  private unregisterEvents() {
-    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   editUser(user: UserModel) {
@@ -116,16 +158,24 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   reset(): void {
-    this.organizationName = '';
+    if (this.isAdmin) {
+      this.organizationName = '';
+      this.organizationId = 0;
+      this.router.navigate(['/admin/users']);
+    }
+
     this.searchNameValue = '';
     this.searchOrganizationValue = '';
     this.searchEmailValue = '';
+
     this.userFilter = {
       ...this.userFilter,
       fullName: this.searchNameValue,
       organization: this.searchOrganizationValue,
       email: this.searchEmailValue,
+      organizationId: this.organizationId,
     };
+
     this.userSandbox.loadUsersFilteredPaged(this.userFilter);
   }
 
@@ -163,5 +213,9 @@ export class UserComponent implements OnInit, OnDestroy {
     this.searchEmailVisible = false;
     this.userFilter = { ...this.userFilter, email: this.searchEmailValue };
     this.userSandbox.loadUsersFilteredPaged(this.userFilter);
+  }
+
+  private unregisterEvents() {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 }

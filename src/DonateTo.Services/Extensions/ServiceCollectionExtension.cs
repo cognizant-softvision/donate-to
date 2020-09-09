@@ -27,16 +27,19 @@ namespace DonateTo.Services.Extensions
             service.AddScoped<ICityService, CityService>();
             service.AddTransient<IDonationService, DonationService>();
             service.AddTransient<IDonationRequestService, DonationRequestService>();
+            service.AddTransient<IDonationRequestItemService, DonationRequestItemService>();
             service.AddTransient<IBaseService<Country, BaseFilterModel>, CountryService>();
             service.AddTransient<ISearchService, SearchService>();
             service.AddTransient<IOrganizationService, OrganizationService>();
-            service.AddTransient<IBaseService<Address, BaseFilterModel>, AddressService>();
+            service.AddTransient<IAddressService, AddressService>();
             service.AddTransient<IBaseService<Category, BaseFilterModel>, CategoryService>();
             service.AddTransient<IBaseService<Unit, BaseFilterModel>, UnitService>();
             service.AddTransient<IBaseService<Status, BaseFilterModel>, StatusService>();
             service.AddTransient<IMailSender, MailSender>();
             service.AddTransient<IQuestionService, QuestionService>();
             service.AddTransient<IBaseService<ControlType, BaseFilterModel>, ControlTypeService>();
+            service.AddTransient<ILogService, LogService>();
+            service.AddTransient<IContactService, ContactService>();
 
             service.AddAutoMapper(typeof(Startup));
         }

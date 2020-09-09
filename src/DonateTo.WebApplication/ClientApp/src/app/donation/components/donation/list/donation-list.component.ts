@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-donation-list',
   templateUrl: './donation-list.component.html',
-  styleUrls: ['./donation-list.component.css'],
+  styleUrls: ['./donation-list.component.less'],
 })
 export class DonationListComponent implements OnInit, OnDestroy {
   constructor(
@@ -26,7 +26,6 @@ export class DonationListComponent implements OnInit, OnDestroy {
   @Input() isEdit: boolean;
 
   isSubmited = false;
-
   subscriptions: Subscription[] = [];
 
   editCache: Array<{ edit: boolean; id: number; item: DonationRequestItemModel; quantityToDonate: number }> = [];

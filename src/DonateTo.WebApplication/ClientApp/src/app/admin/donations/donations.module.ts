@@ -1,3 +1,4 @@
+import { QuestionEffects } from './../../shared/store/question/effects';
 import * as fromAddress from 'src/app/shared/store/address';
 import * as fromCategory from 'src/app/shared/store/category';
 import * as fromOrganization from 'src/app/shared/store/organization';
@@ -11,10 +12,10 @@ import { DonationPriorityComponent } from './donations-priority/donations-priori
 import { DonationsEditComponent } from './donations-edit/donations-edit.component';
 import { DonationsFormComponent } from './donations-form/donations-form.component';
 import { DonationsRoutingModule } from './donations-routing.module';
-import { DonationsSandbox } from './donations-sandbox';
+import { DonationsSandbox } from './donations.sandbox';
 import { EffectsModule } from '@ngrx/effects';
 import { FormsModule } from '@angular/forms';
-import { fromStatus, fromUnit } from 'src/app/shared/store';
+import { fromQuestion, fromStatus, fromUnit } from 'src/app/shared/store';
 import { HttpClient } from '@angular/common/http';
 import { HttpLoaderFactory } from 'src/app/app.module';
 import { IconDefinition } from '@ant-design/icons-angular';
@@ -28,7 +29,9 @@ import { StoreModule } from '@ngrx/store';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { UnitEffects } from 'src/app/shared/store/unit';
 import {
+  NzCheckboxModule,
   NzDatePickerModule,
+  NzDescriptionsModule,
   NzDropDownModule,
   NzEmptyModule,
   NzFormModule,
@@ -41,18 +44,22 @@ import {
   NzRadioModule,
   NzRateModule,
   NzSelectModule,
+  NzSpinModule,
   NzTableModule,
   NzTagModule,
 } from 'ng-zorro-antd';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
-import { DeleteOutline, EditOutline, PlusOutline } from '@ant-design/icons-angular/icons';
+import { ArrowLeftOutline, DeleteOutline, EditOutline, PlusOutline } from '@ant-design/icons-angular/icons';
 import { DonationsDetailComponent } from './donations-detail/donations-detail.component';
 import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
+import { QuestionsSandbox } from '../questions/questions.sandbox';
+import { DonationSandbox } from 'src/app/donation/donation.sandbox';
+import { DonationRequestItemEffects } from 'src/app/shared/store/donation-request-item';
 
 // FIX this should be moved to an upper level.
 registerLocaleData(es);
 
-const ICONS: IconDefinition[] = [PlusOutline, EditOutline, DeleteOutline];
+const ICONS: IconDefinition[] = [PlusOutline, EditOutline, DeleteOutline, ArrowLeftOutline];
 
 @NgModule({
   imports: [
@@ -66,6 +73,7 @@ const ICONS: IconDefinition[] = [PlusOutline, EditOutline, DeleteOutline];
     NzFormModule,
     NzTableModule,
     NzTagModule,
+    NzDescriptionsModule,
     NzRadioModule,
     NzDatePickerModule,
     NzButtonModule,
@@ -75,13 +83,24 @@ const ICONS: IconDefinition[] = [PlusOutline, EditOutline, DeleteOutline];
     NzDropDownModule,
     NzTableModule,
     NzToolTipModule,
+    NzSpinModule,
+    NzCheckboxModule,
 
-    EffectsModule.forFeature([OrganizationEffects, AddressEffects, UnitEffects, CategoryEffects, StatusEffects]),
+    EffectsModule.forFeature([
+      OrganizationEffects,
+      AddressEffects,
+      UnitEffects,
+      CategoryEffects,
+      StatusEffects,
+      QuestionEffects,
+      DonationRequestItemEffects,
+    ]),
     StoreModule.forFeature(fromOrganization.organizationFeatureKey, fromOrganization.reducer),
     StoreModule.forFeature(fromStatus.statusFeatureKey, fromStatus.reducer),
     StoreModule.forFeature(fromAddress.addressFeatureKey, fromAddress.reducer),
     StoreModule.forFeature(fromCategory.categoryFeatureKey, fromCategory.reducer),
     StoreModule.forFeature(fromUnit.unitFeatureKey, fromUnit.reducer),
+    StoreModule.forFeature(fromQuestion.questionFeatureKey, fromQuestion.reducer),
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
@@ -104,6 +123,6 @@ const ICONS: IconDefinition[] = [PlusOutline, EditOutline, DeleteOutline];
     DonationPriorityComponent,
     DonationsDetailComponent,
   ],
-  providers: [DonationsSandbox, DataUpdatedService],
+  providers: [DonationsSandbox, DataUpdatedService, QuestionsSandbox, DonationSandbox],
 })
 export class DonationsModule {}

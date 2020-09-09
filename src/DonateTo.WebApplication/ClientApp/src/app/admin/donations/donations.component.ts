@@ -1,8 +1,6 @@
 import { DonationRequestModel } from '../../shared/models';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { compareDate } from '../../shared/utility/dates/compare-dates';
-
-import { DonationsSandbox } from './donations-sandbox';
+import { DonationsSandbox } from './donations.sandbox';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DonationRequestFilter } from '../../shared/models/filters/donation-request-filter';
@@ -12,7 +10,7 @@ import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.s
 @Component({
   selector: 'app-donations-admin',
   templateUrl: './donations.component.html',
-  styleUrls: ['./donations.component.css'],
+  styleUrls: ['./donations.component.less'],
 })
 export class DonationsComponent implements OnDestroy, OnInit {
   private subscriptions: Subscription[] = [];
@@ -27,20 +25,23 @@ export class DonationsComponent implements OnDestroy, OnInit {
   searchFinishDateBeginValue: Date;
   searchFinishDateEndValue: Date;
   searchObservationValue = '';
+  searchOrganizationValue = '';
   titleVisible = false;
   createdDateVisible = false;
   finishDateVisible = false;
   observationVisible = false;
   placedDonationsVisible = false;
+  organizationVisible = false;
   donationRequestFilter = new DonationRequestFilter();
   failedStatus = false;
   successStatus = false;
   createdRange: Date[] = [];
   finishRange: Date[] = [];
   dataSaved = false;
+  isDeleteProcess = false;
 
   constructor(
-    private donationSandbox: DonationsSandbox,
+    public donationSandbox: DonationsSandbox,
     protected router: Router,
     private dataUpdated: DataUpdatedService
   ) {}
@@ -54,6 +55,7 @@ export class DonationsComponent implements OnDestroy, OnInit {
       createdDateEnd: null,
       finishDateBegin: null,
       finishDateEnd: null,
+      organizationName: null,
     };
 
     this.subscriptions.push(
@@ -68,6 +70,15 @@ export class DonationsComponent implements OnDestroy, OnInit {
       this.dataUpdated.changeMessage(false);
       window.location.reload();
     }
+
+    this.subscriptions.push(
+      this.donationSandbox.loadAction$.subscribe((isLoading) => {
+        if (!isLoading && this.isDeleteProcess) {
+          this.isDeleteProcess = false;
+          this.donationSandbox.loadDonationRequestsFilteredPaged(this.donationRequestFilter);
+        }
+      })
+    );
   }
 
   ngOnDestroy(): void {
@@ -91,6 +102,7 @@ export class DonationsComponent implements OnDestroy, OnInit {
 
   deleteDonationRequest(donationRequest: DonationRequestModel) {
     this.donationSandbox.deleteDonationRequest(donationRequest);
+    this.isDeleteProcess = true;
   }
 
   reset(): void {
@@ -108,6 +120,7 @@ export class DonationsComponent implements OnDestroy, OnInit {
       finishDateBegin: this.searchFinishDateBeginValue,
       finishDateEnd: this.searchFinishDateEndValue,
       observation: this.searchObservationValue,
+      organizationName: this.searchOrganizationValue,
     };
 
     this.donationSandbox.loadDonationRequestsFilteredPaged(this.donationRequestFilter);
@@ -117,6 +130,13 @@ export class DonationsComponent implements OnDestroy, OnInit {
     this.titleVisible = false;
     this.searchTitleValue = '';
     this.donationRequestFilter = { ...this.donationRequestFilter, title: this.searchTitleValue };
+    this.donationSandbox.loadDonationRequestsFilteredPaged(this.donationRequestFilter);
+  }
+
+  resetOrganizationSearch(): void {
+    this.organizationVisible = false;
+    this.searchOrganizationValue = '';
+    this.donationRequestFilter = { ...this.donationRequestFilter, title: this.searchOrganizationValue };
     this.donationSandbox.loadDonationRequestsFilteredPaged(this.donationRequestFilter);
   }
 
@@ -154,6 +174,12 @@ export class DonationsComponent implements OnDestroy, OnInit {
   searchTitle(): void {
     this.titleVisible = false;
     this.donationRequestFilter = { ...this.donationRequestFilter, title: this.searchTitleValue };
+    this.donationSandbox.loadDonationRequestsFilteredPaged(this.donationRequestFilter);
+  }
+
+  searchOrganization(): void {
+    this.organizationVisible = false;
+    this.donationRequestFilter = { ...this.donationRequestFilter, organizationName: this.searchOrganizationValue };
     this.donationSandbox.loadDonationRequestsFilteredPaged(this.donationRequestFilter);
   }
 

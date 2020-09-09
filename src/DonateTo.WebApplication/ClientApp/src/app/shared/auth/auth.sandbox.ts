@@ -1,19 +1,13 @@
-import { AuthConfigService } from 'src/app/shared/auth/auth.config';
+import { AuthConfigService } from '../../shared/auth/auth.config';
 import { Injectable } from '@angular/core';
 import { OAuthEvent, OAuthService } from 'angular-oauth2-oidc';
 import { Sandbox } from '../sandbox/base.sandbox';
 import { Store } from '@ngrx/store';
 import * as store from '../store';
-import { BehaviorSubject, Subscription } from 'rxjs';
-import { Roles } from '../enum/roles';
 import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthSandbox extends Sandbox {
-  private subscriptions: Subscription[] = [];
-  public isAdmin = new BehaviorSubject(true);
-  public isSuperAdmin = new BehaviorSubject(true);
-
   constructor(
     protected appState$: Store<store.State>,
     private authService: OAuthService,
@@ -21,24 +15,6 @@ export class AuthSandbox extends Sandbox {
     private router: Router
   ) {
     super(appState$);
-    this.registerEvents();
-  }
-
-  /**
-   * Subscribes to events
-   */
-  private registerEvents(): void {
-    this.subscriptions.push(
-      this.userRoles$.subscribe((userRoles: string[]) => {
-        this.isAdmin.next(
-          userRoles.length === 0 ||
-            userRoles.includes(Roles.Admin) ||
-            userRoles.includes(Roles.Superadmin) ||
-            userRoles.includes(Roles.Organization)
-        );
-        this.isSuperAdmin.next(userRoles.length === 0 || userRoles.includes(Roles.Superadmin));
-      })
-    );
   }
 
   /**
@@ -50,8 +26,7 @@ export class AuthSandbox extends Sandbox {
     this.authService.configure(authConfig);
     this.authService.setupAutomaticSilentRefresh();
     this.appState$.dispatch(store.fromAuth.tryLogin());
-
-    this.authService.events.subscribe(this.handleAuthEvents.bind(this));
+    this.subscriptions.push(this.authService.events.subscribe(this.handleAuthEvents.bind(this)));
   }
 
   /**
@@ -63,6 +38,10 @@ export class AuthSandbox extends Sandbox {
 
   public register(): void {
     document.location.href = this.authService.issuer + '/Account/Register?returnUrl=' + this.authService.redirectUri;
+  }
+
+  public forgotPassword(): void {
+    document.location.href = this.authService.issuer + '/Account/ChangePassword?returnUrl=' + window.location.href;
   }
 
   /**

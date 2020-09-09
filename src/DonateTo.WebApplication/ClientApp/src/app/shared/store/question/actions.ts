@@ -1,3 +1,4 @@
+import { QuestionResult } from '../../models/question-result.model';
 import { createAction, props } from '@ngrx/store';
 import { PageModel, QuestionModel } from '../../models';
 import { QuestionFilter } from '../../models/filters/question-filter';
@@ -24,3 +25,10 @@ export const loadControlTypesSuccess = createAction(
   props<{ controlTypes: ControlTypeModel[] }>()
 );
 export const loadControlTypesFailed = createAction('[Control Types] Load failed');
+export const addResults = createAction('[Questions] Add results from server', props<{ results: QuestionResult }>());
+export const addResultsSuccess = createAction('[Questions] Add result success', props<{ results: QuestionResult }>());
+export const addResultsFailed = createAction('[Questions] Add result failed');
+
+export const deleteQuestion = createAction('[Question] Remove', props<{ question: QuestionModel }>());
+export const deleteQuestionSuccess = createAction('[Question] Remove success', props<{ question: QuestionModel }>());
+export const deleteQuestionFailed = createAction('[Question] Remove failed');

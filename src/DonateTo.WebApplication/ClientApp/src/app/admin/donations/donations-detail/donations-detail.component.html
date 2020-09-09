@@ -1,1 +1,231 @@
-<p>donations-detail works!</p>
+<div *ngIf="!outlet.isActivated">
+  <nz-spin *ngIf="this.donationRequestSandbox.loadAction$ | async" nzTip="Loading..."> </nz-spin>
+  <div class="table-operations">
+    <i nz-icon nzType="arrow-left" nzTheme="outline" (click)="goBack()" class="back-button"></i>
+    <h4 class="section-title">{{ 'Admin.Donation.Detail.Title' | translate }}</h4>
+    <nz-divider></nz-divider>
+    <button nz-button nzType="secondary" (click)="reset()">{{ 'Admin.ClearFilter' | translate }}</button>
+  </div>
+  <nz-table
+    #donationTable
+    [nzData]="donationsList"
+    [nzNoResult]="customTpl"
+    nzTableLayout="fixed"
+    [nzFrontPagination]="false"
+    [nzTotal]="total"
+    [nzPageSize]="pageSize"
+    [nzPageIndex]="pageIndex"
+    (nzQueryParams)="onQueryParamsChange($event)"
+  >
+    <thead>
+      <tr>
+        <th nzWidth="10em" nzCustomFilter nzColumnKey="itemName">
+          {{ 'Admin.Donation.Table.Items' | translate }}
+          <label
+            class="filter"
+            title="{{ 'Admin.Donation.Table.Filtered' | translate }}"
+            *ngIf="itemNameValue.length > 0 && !itemNameVisible"
+          >
+            ({{ itemNameValue }})
+          </label>
+          <nz-filter-trigger
+            [(nzVisible)]="itemNameVisible"
+            [nzActive]="itemNameValue.length > 0"
+            [nzDropdownMenu]="searchItemNameMenu"
+          >
+            <i nz-icon nzType="search"></i>
+          </nz-filter-trigger>
+        </th>
+        <th>
+          {{ 'Admin.Donation.Table.Donor' | translate }}
+        </th>
+        <th [nzSortFn]="true">
+          {{ 'Admin.Donation.Table.CreatedColumn' | translate }}
+        </th>
+        <th [nzSortFn]="true">
+          {{ 'Admin.Donation.Table.Status' | translate }}
+        </th>
+        <th>
+          {{ 'Admin.Donation.Table.Observation' | translate }}
+        </th>
+        <th>
+          {{ 'Admin.Donation.Table.Action' | translate }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let data of donationTable.data">
+        <tr>
+          <td
+            [nzExpand]="expandSet.has(data.id)"
+            (nzExpandChange)="onExpandChange(data.id, $event)"
+            [ngStyle]="data.donationItems.length === 0 && { visibility: 'hidden' }"
+          ></td>
+          <td>{{ data.owner.fullName }}</td>
+          <td>{{ data.createdDate | date: 'longDate' }}</td>
+          <td>
+            <nz-select class="select-status" [(ngModel)]="data.statusId" (ngModelChange)="saveStatus(data.id, $event)">
+              <nz-option
+                *ngFor="let state of this.donationRequestSandbox.status$ | async"
+                [nzValue]="state.id"
+                [nzLabel]="state.name"
+              >
+              </nz-option>
+            </nz-select>
+          </td>
+          <td>{{ data.observation }}</td>
+          <td>
+            <a
+              (click)="showDetails(data.id)"
+              nzTooltipTitle="{{ 'Admin.Donation.Detail.MoreInformationToolTipTitle' | translate }}"
+              nzTooltipPlacement="bottom"
+              nz-tooltip
+              class="icon-link"
+            >
+              <i nz-icon nzType="info-circle" nzTheme="outline" class="action-icon"></i>
+            </a>
+          </td>
+        </tr>
+        <tr [nzExpand]="expandSet.has(data.id)">
+          <span>
+            <nz-table
+              #innerTable
+              [nzData]="data.donationItems"
+              nzTitle="{{ 'Admin.Donation.Table.DonationItemsTitle' | translate }}"
+              nzSize="middle"
+              [nzShowPagination]="false"
+            >
+              <thead>
+                <tr>
+                  <th>{{ 'Admin.Donation.Table.DonationItem.Name' | translate }}</th>
+                  <th>{{ 'Admin.Donation.Table.DonationItem.Quantity' | translate }}</th>
+                  <th>{{ 'Admin.Donation.Table.DonationItem.Unit' | translate }}</th>
+                  <th>{{ 'Admin.Donation.Table.DonationItem.Status' | translate }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of innerTable.data">
+                  <td>{{ item.donationRequestItem.name }}</td>
+                  <td>{{ item.quantity }}</td>
+                  <td>{{ item.unit.name }}</td>
+                  <td>
+                    <nz-select
+                      class="select-status"
+                      [(ngModel)]="item.statusId"
+                      (ngModelChange)="changeItemStatus(data.id, item.id, $event)"
+                    >
+                      <nz-option
+                        *ngFor="let state of this.donationRequestSandbox.status$ | async"
+                        [nzValue]="state.id"
+                        [nzLabel]="state.name"
+                      >
+                      </nz-option>
+                    </nz-select>
+                  </td>
+                </tr>
+              </tbody>
+            </nz-table>
+          </span>
+        </tr>
+      </ng-container>
+    </tbody>
+  </nz-table>
+</div>
+
+<nz-dropdown-menu #searchItemNameMenu="nzDropdownMenu">
+  <div class="ant-table-filter-dropdown">
+    <div class="search-box">
+      <input
+        type="text"
+        nz-input
+        placeholder="{{ 'Admin.Donation.Table.DonationItemColumn' | translate }}"
+        [(ngModel)]="itemNameValue"
+      />
+      <button nz-button nzSize="small" nzType="primary" (click)="searchItemName()">
+        {{ 'Admin.Donation.Table.Search' | translate }}
+      </button>
+      <button nz-button nzSize="small" (click)="resetItemNameSearch()">
+        {{ 'Admin.Donation.Table.Reset' | translate }}
+      </button>
+    </div>
+  </div>
+</nz-dropdown-menu>
+
+<router-outlet #outlet="outlet"></router-outlet>
+
+<ng-template #customTpl let-name>
+  <div style="text-align: center;">
+    <nz-empty [nzNotFoundContent]="null"></nz-empty>
+    <p>{{ 'NoEntries' | translate }}</p>
+  </div>
+</ng-template>
+
+<ng-template #modalContent>
+  <nz-descriptions nzTitle="{{ translateService.instant('Admin.Donation.Detail.AddressTitle') }}">
+    <nz-descriptions-item nzTitle="{{ translateService.instant('Admin.Donation.Detail.Address.Street') }}">
+      {{ donationDetail?.address?.street }}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="{{ translateService.instant('Admin.Donation.Detail.Address.PostalCode') }}">
+      {{ donationDetail?.address?.postalCode }}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="{{ translateService.instant('Admin.Donation.Detail.Address.Floor') }}">
+      {{ donationDetail?.address?.floor }}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="{{ translateService.instant('Admin.Donation.Detail.Address.Appartment') }}">
+      {{ donationDetail?.address?.appartment }}
+    </nz-descriptions-item>
+    <nz-descriptions-item
+      nzTitle="{{ translateService.instant('Admin.Donation.Detail.Address.AdditionalInformation') }}"
+    >
+      {{ donationDetail?.address?.additionalInformation }}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="{{ translateService.instant('Admin.Donation.Detail.Address.City') }}">
+      {{ donationDetail?.address?.city.name }}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="{{ translateService.instant('Admin.Donation.Detail.Address.State') }}">
+      {{ donationDetail?.address?.state.name }}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="{{ translateService.instant('Admin.Donation.Detail.Address.Country') }}">
+      {{ donationDetail?.address?.country.name }}
+    </nz-descriptions-item>
+  </nz-descriptions>
+
+  <nz-descriptions nzTitle="{{ translateService.instant('Admin.Donation.Detail.ContactTitle') }}">
+    <nz-descriptions-item nzTitle="{{ translateService.instant('Admin.Donation.Detail.Contact.FullName') }}">
+      {{ donationDetail?.address?.contact.fullName }}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="{{ translateService.instant('Admin.Donation.Detail.Contact.Email') }}">
+      {{ donationDetail?.address?.contact.email }}
+    </nz-descriptions-item>
+    <nz-descriptions-item nzTitle="{{ translateService.instant('Admin.Donation.Detail.Contact.PhoneNumber') }}">
+      {{ donationDetail?.address?.contact.phoneNumber }}
+    </nz-descriptions-item>
+  </nz-descriptions>
+
+  <nz-descriptions
+    nzTitle="{{ translateService.instant('Admin.Donation.Detail.AvailabilitiesTitle') }}"
+  ></nz-descriptions>
+  <nz-table
+    #donationAvailabilities
+    [nzData]="donationDetail?.availabilities"
+    [nzNoResult]="customTpl"
+    nzTableLayout="fixed"
+    [nzShowPagination]="false"
+    [nzFrontPagination]="false"
+  >
+    <thead>
+      <tr>
+        <th>{{ 'Admin.Donation.Table.DayColumn' | translate }}</th>
+        <th>{{ 'Admin.Donation.Table.StartTimeColumn' | translate }}</th>
+        <th>{{ 'Admin.Donation.Table.FinishTimeColumn' | translate }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let availability of donationAvailabilities.data">
+        <td>{{ dayOfWeekDescription(availability.dayOfWeek) }}</td>
+        <td>{{ availability.startTime | date: 'HH:mm' }}</td>
+        <td>{{ availability.endTime | date: 'HH:mm' }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+</ng-template>

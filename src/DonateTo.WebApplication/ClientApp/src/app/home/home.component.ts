@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { HomeSandbox } from './home.sandbox';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs/internal/Subscription';
@@ -8,14 +8,15 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
+  styleUrls: ['./home.component.less'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   param = { value: 'world' };
   requests: any[];
-
   tplModal?: NzModalRef;
   item: any = null;
+  isAuthenticated = false;
+  modalClosed = false;
 
   @ViewChild('modalContent') public modalContent: TemplateRef<any>;
   @ViewChild('modalFooter') public modalFooter: TemplateRef<any>;
@@ -38,7 +39,13 @@ export class HomeComponent implements OnInit {
 
   subscriptions: Subscription[] = [];
 
-  ngOnInit(): void {}
+  ngOnInit() {
+    this.registerEvents();
+  }
+
+  ngOnDestroy() {
+    this.unregisterEvents();
+  }
 
   onChange() {
     if (this.searchValue.length >= this.searchLength) {
@@ -52,11 +59,13 @@ export class HomeComponent implements OnInit {
   showModal(item: any) {
     this.item = item;
     this.createTplModal(this.modalContent, this.modalFooter);
+    this.modalClosed = false;
   }
 
   hideModal() {
     this.item = null;
     this.tplModal?.destroy();
+    this.modalClosed = true;
   }
 
   createTplModal(tplContent: TemplateRef<{}>, tplFooter: TemplateRef<{}>): void {
@@ -67,16 +76,31 @@ export class HomeComponent implements OnInit {
         top: '2em;',
       },
       nzWidth: '80%',
+      nzOnCancel: () => {
+        this.modalClosed = true;
+      },
     });
   }
 
   goToDonate(donationRequestId: any) {
     const path = 'donation';
-    if (this.homeSandbox.isAuthenticated) {
+    if (this.isAuthenticated) {
       this.hideModal();
       this.router.navigate([path, donationRequestId]);
     } else {
       this.homeSandbox.login(path.concat('/').concat(donationRequestId));
     }
+  }
+
+  private registerEvents() {
+    this.subscriptions.push(
+      this.homeSandbox.isAuthenticated$.subscribe((isAuthenticated) => {
+        this.isAuthenticated = isAuthenticated;
+      })
+    );
+  }
+
+  private unregisterEvents() {
+    this.subscriptions.forEach((s) => s.unsubscribe());
   }
 }

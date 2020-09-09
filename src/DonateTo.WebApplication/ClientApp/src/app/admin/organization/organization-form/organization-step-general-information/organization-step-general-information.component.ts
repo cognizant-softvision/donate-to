@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OrganizationModel } from 'src/app/shared/models/organization.model';
-import { OrganizationSandbox } from '../../organization-sandbox';
+import { OrganizationSandbox } from '../../organization.sandbox';
 
 @Component({
   selector: 'app-organization-step-general-information',
   templateUrl: './organization-step-general-information.component.html',
-  styleUrls: ['./organization-step-general-information.component.css'],
+  styleUrls: ['./organization-step-general-information.component.less'],
 })
 export class OrganizationStepGeneralInformationComponent implements OnInit {
   generalInformationStepForm: FormGroup;
@@ -26,10 +26,12 @@ export class OrganizationStepGeneralInformationComponent implements OnInit {
       description: [this.generalInformationModel?.description, [Validators.required]],
     });
 
-    this.organizationSandbox.organization$.subscribe((organization) => {
-      this.organizationName = organization?.name;
-      this.description = organization?.description;
-    });
+    if (this.isEditOrganization) {
+      this.organizationSandbox.organization$.subscribe((organization) => {
+        this.organizationName = organization?.name;
+        this.description = organization?.description;
+      });
+    }
 
     this.generalInformationStepForm.valueChanges.subscribe(() =>
       this.isFormValid.emit({

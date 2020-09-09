@@ -1,3 +1,4 @@
+import { QuestionResult } from '../../models/question-result.model';
 import { BaseHttpClientService } from './base-http-client.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -30,6 +31,7 @@ export class QuestionService extends BaseHttpClientService<QuestionModel> {
       params: queryString,
     });
   }
+
   getQuestions() {
     return this.get();
   }
@@ -40,5 +42,16 @@ export class QuestionService extends BaseHttpClientService<QuestionModel> {
       JSON.stringify(question),
       this.httpOptions
     );
+  }
+  createQuestionsResult(result: QuestionResult): Observable<QuestionResult> {
+    return this.httpClient.put<QuestionResult>(
+      `${this.url}/${this.endpoint}/CalculateWeightQuestionAsync`,
+      JSON.stringify(result),
+      this.httpOptions
+    );
+  }
+
+  deleteQuestion(question: QuestionModel): Observable<QuestionModel> {
+    return this.httpClient.delete<QuestionModel>(`${this.url}/${this.endpoint}/${question.id}`, this.httpOptions);
   }
 }

@@ -1,7 +1,7 @@
 import { BaseHttpClientService } from './base-http-client.service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { DonationRequestModel, PageModel } from '../../models';
+import { DonationRequestItemModel, DonationRequestModel, PageModel } from '../../models';
 import { SearchHttpClientService } from './search-http-client.service';
 import { ConfigService } from '../../../app-config.service';
 import { Observable } from 'rxjs';
@@ -62,8 +62,35 @@ export class DonationRequestService extends BaseHttpClientService<DonationReques
       observation: donationRequestFilter?.observation ?? '',
       orderBy: donationRequestFilter?.orderBy ?? '',
       orderDirection: donationRequestFilter?.orderDirection ?? '',
+      organizationName: donationRequestFilter?.organizationName ?? '',
     };
     return this.httpClient.get<PageModel<DonationRequestModel>>(`${this.url}/${this.endpoint}/pagedFiltered`, {
+      params: queryString,
+    });
+  }
+
+  deleteDonationRequest(donationRequest: DonationRequestModel): Observable<DonationRequestModel> {
+    return this.httpClient.delete<DonationRequestModel>(
+      `${this.url}/${this.endpoint}/${donationRequest.id}`,
+      this.httpOptions
+    );
+  }
+
+  loadDonationRequestByOrganizationPaged(
+    pageNumber: number,
+    pageSize: number,
+    userId: number,
+    statusId: number
+  ): Observable<PageModel<DonationRequestModel>> {
+    const queryString = {
+      pageNumber: pageNumber.toString(),
+      pageSize: pageSize.toString(),
+      statusId: statusId.toString(),
+    };
+    if (userId) {
+      queryString['userId'] = userId.toString();
+    }
+    return this.httpClient.get<PageModel<DonationRequestModel>>(`${this.url}/${this.endpoint}/pagedByOrganization`, {
       params: queryString,
     });
   }

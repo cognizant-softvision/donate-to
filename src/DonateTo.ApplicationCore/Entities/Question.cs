@@ -1,16 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using DonateTo.ApplicationCore.Interfaces;
+using System.Collections.Generic;
 
 namespace DonateTo.ApplicationCore.Entities
 {
-    public class Question : EntityBase
+    public class Question : EntityBase, IIsDeleted
     {
         public string Label { get; set; }
         public int Order { get; set; }
         public string Placeholder { get; set; }
         public string DefaultValue { get; set; }
         public decimal Weight { get; set; }
+        public decimal? Min { get; set; }
+        public decimal? Max { get; set; }
         public long ControlTypeId { get; set; }
         public ControlType ControlType { get; set; }
         public IEnumerable<QuestionOption> Options { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

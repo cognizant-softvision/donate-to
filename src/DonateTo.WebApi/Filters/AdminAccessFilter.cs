@@ -33,6 +33,9 @@ namespace DonateTo.WebApi.Filters
                     break;
                 case Roles.Organization:                    
                 case Roles.Donor:
+                    context.Result = new UnauthorizedObjectResult("User does not have admin access privileges.");
+                    break;
+                default:
                     context.Result = new UnauthorizedObjectResult("User does not have access privileges.");
                     break;
             }

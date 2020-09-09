@@ -40,6 +40,22 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         Task UpdateUserOrganizationsAsync(long userId, IEnumerable<long> organizationsIds, string username = null);
 
         /// <summary>
+        /// Update an user linked roles.
+        /// </summary>
+        /// <param name="userId">User Id.</param>
+        /// <param name="rolesIds">Roles id list.</param>
+        /// <returns></returns>
+        void UpdateUserRoles(long userId, IEnumerable<long> rolesIds);
+
+        /// <summary>
+        /// Update an user linked roles async.
+        /// </summary>
+        /// <param name="userId">User Id.</param>
+        /// <param name="rolesIds">Roles id list.</param>
+        /// <returns></returns>
+        Task UpdateUserRolesAsync(long userId, IEnumerable<long> rolesIds);
+
+        /// <summary>
         /// First or default User matching filter
         /// </summary>
         /// <param name="filter"></param>

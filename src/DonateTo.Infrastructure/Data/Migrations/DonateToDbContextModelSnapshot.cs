@@ -54,6 +54,12 @@ namespace DonateTo.Infrastructure.Migrations
                     b.Property<bool>("IsDefault")
                         .HasColumnType("boolean");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
                     b.Property<long?>("OrganizationId")
                         .HasColumnType("bigint");
 
@@ -108,6 +114,9 @@ namespace DonateTo.Infrastructure.Migrations
 
                     b.Property<DateTime>("EndTime")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("timestamp without time zone");
@@ -309,6 +318,9 @@ namespace DonateTo.Infrastructure.Migrations
                     b.Property<long>("DonationRequestId")
                         .HasColumnType("bigint");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Observation")
                         .HasColumnType("text");
 
@@ -359,6 +371,9 @@ namespace DonateTo.Infrastructure.Migrations
                     b.Property<long>("DonationRequestItemId")
                         .HasColumnType("bigint");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Observation")
                         .HasColumnType("text");
 
@@ -408,6 +423,9 @@ namespace DonateTo.Infrastructure.Migrations
 
                     b.Property<DateTime?>("FinishDate")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Observation")
                         .HasColumnType("text");
@@ -483,6 +501,9 @@ namespace DonateTo.Infrastructure.Migrations
                     b.Property<decimal>("FinishQuantity")
                         .HasColumnType("numeric");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
@@ -522,6 +543,37 @@ namespace DonateTo.Infrastructure.Migrations
                     b.ToTable("DonationRequestItemCategory");
                 });
 
+            modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Log", b =>
+                {
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnName("timestamp")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Exception")
+                        .HasColumnName("exception")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Level")
+                        .HasColumnName("level")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("LogEvent")
+                        .HasColumnName("log_event")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Message")
+                        .HasColumnName("message")
+                        .HasColumnType("text");
+
+                    b.Property<string>("MessageTemplate")
+                        .HasColumnName("message_template")
+                        .HasColumnType("text");
+
+                    b.HasKey("TimeStamp");
+
+                    b.ToTable("Log");
+                });
+
             modelBuilder.Entity("DonateTo.ApplicationCore.Entities.Organization", b =>
                 {
                     b.Property<long>("Id")
@@ -540,6 +592,9 @@ namespace DonateTo.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -576,8 +631,17 @@ namespace DonateTo.Infrastructure.Migrations
                     b.Property<string>("DefaultValue")
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Label")
                         .HasColumnType("text");
+
+                    b.Property<decimal?>("Max")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("Min")
+                        .HasColumnType("numeric");
 
                     b.Property<int>("Order")
                         .HasColumnType("integer");
@@ -614,8 +678,17 @@ namespace DonateTo.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Label")
                         .HasColumnType("text");
+
+                    b.Property<decimal?>("MaximumRelative")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal?>("MinimumRelative")
+                        .HasColumnType("numeric");
 
                     b.Property<long>("QuestionId")
                         .HasColumnType("bigint");
@@ -1052,7 +1125,7 @@ namespace DonateTo.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("DonateTo.ApplicationCore.Entities.DonationRequest", "DonationRequest")
-                        .WithMany()
+                        .WithMany("Donations")
                         .HasForeignKey("DonationRequestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

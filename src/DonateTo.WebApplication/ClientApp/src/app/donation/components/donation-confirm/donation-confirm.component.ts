@@ -9,11 +9,12 @@ import { DonationStepAddressComponent } from './donation-step-address/donation-s
 import { DonationStepFinishComponent } from './donation-step-finish/donation-step-finish.component';
 import { DonationItemModel } from 'src/app/shared/models/donation-item.model';
 import { AvailabilityModel } from 'src/app/shared/models/availability.model';
+import { DonationStepAvailabilityComponent } from './donation-step-availability/donation-step-availability.component';
 
 @Component({
   selector: 'app-donation-confirm',
   templateUrl: './donation-confirm.component.html',
-  styleUrls: ['./donation-confirm.component.css'],
+  styleUrls: ['./donation-confirm.component.less'],
 })
 export class DonationConfirmComponent implements OnInit, OnDestroy {
   constructor(public donationSandbox: DonationSandbox) {}
@@ -27,12 +28,16 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
   @ViewChild(DonationStepFinishComponent)
   private donationStepFinishComponent: DonationStepFinishComponent;
 
+  @ViewChild(DonationStepAvailabilityComponent)
+  private donationStepAvailabilityComponent: DonationStepAvailabilityComponent;
+
   currentStep = 0;
   @Input() donation: DonationModel = new DonationModel();
   @Input() isEdit: boolean;
 
   _isResponsableStepReady = false;
   _isAddressStepReady = false;
+  _isAvailabilityStepReady = false;
   _isFinishStepReady = true;
 
   stepsData: boolean[] = [];
@@ -68,11 +73,18 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
     }
   }
 
+  isAvailabilityStepReady(event) {
+    if (event) {
+      this._isAvailabilityStepReady = event.value;
+      this.availabilities = event.availabilities;
+      this.updateStepsData();
+    }
+  }
+
   isFinishStepReady(event) {
     if (event) {
       this._isFinishStepReady = event.value;
       this.observation = event.observation;
-      this.availabilities = event.availabilities;
       this.updateStepsData();
     }
   }
@@ -92,6 +104,7 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.unregisterEvents();
   }
+
   /**
    * Unsubscribes from events
    */
@@ -157,7 +170,12 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
   }
 
   updateStepsData(): void {
-    this.stepsData = [this._isResponsableStepReady, this._isAddressStepReady, this._isFinishStepReady];
+    this.stepsData = [
+      this._isResponsableStepReady,
+      this._isAddressStepReady,
+      this._isAvailabilityStepReady,
+      this._isFinishStepReady,
+    ];
   }
 
   done(): void {
@@ -165,7 +183,7 @@ export class DonationConfirmComponent implements OnInit, OnDestroy {
   }
 
   next() {
-    if (this.currentStep < 2 && this.stepsData[this.currentStep]) {
+    if (this.currentStep < 3 && this.stepsData[this.currentStep]) {
       this.currentStep += 1;
     }
   }

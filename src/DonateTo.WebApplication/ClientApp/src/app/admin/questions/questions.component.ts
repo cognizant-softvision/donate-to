@@ -4,13 +4,13 @@ import { QuestionFilter } from 'src/app/shared/models/filters/question-filter';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { NzTableQueryParams } from 'ng-zorro-antd';
-import { QuestionsSandbox } from './questions-sandbox';
+import { QuestionsSandbox } from './questions.sandbox';
 import { DataUpdatedService } from 'src/app/shared/async-services/data-updated.service';
 
 @Component({
   selector: 'app-questions-admin',
   templateUrl: './questions.component.html',
-  styleUrls: ['./questions.component.css'],
+  styleUrls: ['./questions.component.less'],
 })
 export class QuestionsComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
@@ -32,7 +32,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   dataSaved = false;
 
   constructor(
-    private questionSandbox: QuestionsSandbox,
+    public questionSandbox: QuestionsSandbox,
     public router: Router,
     private dataUpdated: DataUpdatedService
   ) {}
@@ -66,6 +66,14 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.questionSandbox.loadAction$.subscribe((status) => {
         this.successStatus = status;
+      })
+    );
+
+    this.subscriptions.push(
+      this.questionSandbox.isRoleProcessed$.subscribe((isRoleProcessed) => {
+        if (isRoleProcessed && !this.questionSandbox.isSuperAdmin$.value) {
+          this.router.navigate(['']);
+        }
       })
     );
 

@@ -1,14 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AddressModel, CityModel, CountryModel, OrganizationModel, StateModel } from 'src/app/shared/models';
+import { AddressModel, CityModel, CountryModel, OrganizationModel, StateModel } from '../../../shared/models';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OrganizationSandbox } from '../organization-sandbox';
-import { getOrganization } from 'src/app/shared/store/organization';
+import { OrganizationSandbox } from '../organization.sandbox';
 
 @Component({
   selector: 'app-organization-detail',
   templateUrl: './organization-detail.component.html',
-  styleUrls: ['./organization-detail.component.css'],
+  styleUrls: ['./organization-detail.component.less'],
 })
 export class OrganizationDetailComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];

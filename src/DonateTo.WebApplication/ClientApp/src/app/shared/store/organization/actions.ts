@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { OrganizationModel, PageModel } from '../../models';
+import { AddressModel, OrganizationModel, PageModel } from '../../models';
 import { OrganizationFilter } from '../../models/filters/organization-filter';
 
 export const loadOrganizations = createAction('[Organization] Load items from server');
@@ -53,3 +53,10 @@ export const loadOrganizationSuccess = createAction(
   props<{ organization: OrganizationModel }>()
 );
 export const loadOrganizationFailed = createAction('[Organization] Load organization failed');
+
+export const deleteOrganization = createAction('[Organization] Delete', props<{ organization: OrganizationModel }>());
+export const deleteOrganizationSuccess = createAction(
+  '[Organization] Delete success',
+  props<{ organization: OrganizationModel }>()
+);
+export const deleteOrganizationFailed = createAction('[Address] Delete failed', props<{ errorMessage: string }>());
