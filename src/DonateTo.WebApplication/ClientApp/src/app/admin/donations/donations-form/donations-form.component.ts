@@ -16,6 +16,7 @@ import { AuthSandbox } from '../../../shared/auth/auth.sandbox';
 export class DonationsFormComponent implements OnInit, OnDestroy {
   @Input() donationRequest: DonationRequestModel;
   @Output() validationResult = new EventEmitter<DonationRequestModel>();
+  @Input() id: number;
 
   private subscriptions: Subscription[] = [];
   disabledDates: (current: Date) => boolean;
@@ -65,17 +66,25 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    if (this.donationRequest) {
+    if (this.id !== 0 && this.id !== undefined) {
+      this.donationSandbox.loadDonationRequest(this.id);
+
       this.isEdit = true;
-      this.ownerId = this.donationRequest.ownerId;
-      this.title = this.donationRequest.title;
-      this.observations = this.donationRequest.observation;
-      this.priority = this.donationRequest.priority;
-      this.statusId = this.donationRequest.statusId;
-      this.finishDate = this.donationRequest.finishDate;
-      this.organizationId = this.donationRequest.organizationId;
-      this.addressId = this.donationRequest.addressId;
-      this.donationRequestItems = this.donationRequest.donationRequestItems;
+
+      this.subscriptions.push(
+        this.donationSandbox.donationRequest$.subscribe((d) => {
+          this.donationRequest = d;
+          this.ownerId = this.donationRequest.ownerId;
+          this.title = this.donationRequest.title;
+          this.observations = this.donationRequest.observation;
+          this.priority = this.donationRequest.priority;
+          this.statusId = this.donationRequest.statusId;
+          this.finishDate = this.donationRequest.finishDate;
+          this.organizationId = this.donationRequest.organizationId;
+          this.addressId = this.donationRequest.addressId;
+          this.donationRequestItems = this.donationRequest.donationRequestItems;
+        })
+      );
     } else {
       this.donationRequest = new DonationRequestModel();
       this.authSandbox.userId$.subscribe((uid) => {
