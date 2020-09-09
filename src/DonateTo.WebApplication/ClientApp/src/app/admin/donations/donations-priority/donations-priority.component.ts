@@ -24,6 +24,7 @@ export class DonationPriorityComponent implements OnInit, OnDestroy {
   private donationRequest: DonationRequestModel;
   valid = true;
   textboxRangeValid = true;
+  checkedAnswers = [];
 
   get controlTypeEnum() {
     return ControlType;
@@ -62,17 +63,9 @@ export class DonationPriorityComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 
-  private validateFormGroup(formGroup: FormGroup) {
-    for (const i in formGroup.controls) {
-      if (formGroup.controls.hasOwnProperty(i)) {
-        formGroup.controls[i].markAsDirty();
-        formGroup.controls[i].updateValueAndValidity();
-      }
-    }
-  }
-
   onSubmit() {
-    this.validateFormGroup(this.form);
+    this.valid = true;
+    this.questions.forEach((question) => this.isValid(question));
     if (this.valid && this.validTexboxAnswer()) {
       this.addQuestionsSubmited();
       this.questionSandbox.updateQuestionsResult(this.questionResult);
@@ -90,7 +83,11 @@ export class DonationPriorityComponent implements OnInit, OnDestroy {
   }
 
   isValid(question: QuestionModel) {
-    this.valid = this.form.controls[question.id].valid;
+    if (question.controlTypeId === ControlType.Checkbox) {
+      this.valid = this.valid && true;
+    } else {
+      this.valid = this.valid && this.form.controls[question.id].valid;
+    }
   }
 
   /**
@@ -119,10 +116,27 @@ export class DonationPriorityComponent implements OnInit, OnDestroy {
     this.questions.forEach((question) => {
       const answerQuestion = new QuestionAnswer();
       answerQuestion.idQuestion = question.id;
-      answerQuestion.value = this.form.controls[question.id].value;
+      if (question.controlTypeId === this.controlTypeEnum.Checkbox) {
+        answerQuestion.value = this.checkedAnswers.pop();
+      } else {
+        const answer: string[] = [];
+        answer.push(this.form.controls[question.id].value);
+        answerQuestion.value = answer;
+      }
       answersQuestion = [...answersQuestion, answerQuestion];
     });
     this.questionResult.donationRequestId = this.donationRequest.id;
     this.questionResult.questionAnswers = answersQuestion;
+  }
+
+  getCheckboxValues(value: string[]): void {
+    if (!this.checkedAnswers.includes(value)) {
+      this.checkedAnswers.push(value);
+    } else {
+      const index = this.checkedAnswers.indexOf(value);
+      if (index > -1) {
+        this.checkedAnswers.splice(index, 1);
+      }
+    }
   }
 }

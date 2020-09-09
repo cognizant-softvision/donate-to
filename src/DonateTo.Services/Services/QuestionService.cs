@@ -92,17 +92,25 @@ namespace DonateTo.Services
             questionResults.QuestionAnswers.ToList().ForEach(result =>
             {
                 var question = _questionRepository.GetAsync(q => q.Id == result.IdQuestion).Result.FirstOrDefault();
-                var option = new QuestionOption();
+                decimal partialWeight = 0;
                 if (question.ControlTypeId == ControlTypes.Textbox)
                 {
-                    var decimalValue = Convert.ToDecimal(result.Value, culture);
-                    option = question.Options.ToList().FirstOrDefault(opt => (opt.MinimumRelative <= decimalValue && decimalValue <= opt.MaximumRelative));
+                    var decimalValue = Convert.ToDecimal(result.Value.FirstOrDefault(), culture);
+                    partialWeight = question.Options.ToList().FirstOrDefault(opt => (opt.MinimumRelative <= decimalValue && decimalValue <= opt.MaximumRelative)).Weight;
+                }
+                else if (question.ControlTypeId == ControlTypes.Checkbox)
+                {
+                    if (result.Value != null)
+                    {
+                        result.Value.ToList().ForEach(value =>
+                        partialWeight += question.Options.ToList().FirstOrDefault(opt => opt.Label == value).Weight);
+                    }
                 }
                 else
                 {
-                    option = question.Options.FirstOrDefault(opt => opt.Label == result.Value);
+                    partialWeight = question.Options.FirstOrDefault(opt => opt.Label == result.Value.FirstOrDefault()).Weight;
                 }
-                totalWeight += (question.Weight / 100) * (option.Weight / 100) * 100;
+                totalWeight += (question.Weight / 100) * (partialWeight / 100) * 100;
             });
 
             return totalWeight;
