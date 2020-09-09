@@ -98,7 +98,6 @@ export class DonationStepAvailabilityComponent implements OnInit, OnDestroy {
 
   removeAvailability(availability: AvailabilityModel): void {
     if (availability.id) {
-      console.log('soft delete this');
       this.donationSandbox.deleteAvailability(availability);
     }
     this.availabilities = this.availabilities.filter((item) => item !== availability);
