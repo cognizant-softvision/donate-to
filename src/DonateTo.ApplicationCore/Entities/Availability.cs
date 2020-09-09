@@ -1,8 +1,9 @@
-﻿using System;
+﻿using DonateTo.ApplicationCore.Interfaces;
+using System;
 
 namespace DonateTo.ApplicationCore.Entities
 {
-    public class Availability : EntityBase
+    public class Availability : EntityBase, IIsDeleted
     {
         public Availability() 
         {
@@ -13,5 +14,6 @@ namespace DonateTo.ApplicationCore.Entities
         public int DayOfWeek { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

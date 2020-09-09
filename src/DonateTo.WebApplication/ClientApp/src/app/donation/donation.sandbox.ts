@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Sandbox } from '../shared/sandbox/base.sandbox';
 import * as store from '../shared/store';
 import { DonationModel } from '../shared/models/donation.model';
+import { AvailabilityModel } from '../shared/models/availability.model';
 
 @Injectable()
 export class DonationSandbox extends Sandbox {
@@ -67,5 +68,12 @@ export class DonationSandbox extends Sandbox {
    */
   public loadCitiesByState(stateId: number): void {
     this.appState$.dispatch(store.fromAddress.loadCities({ stateId }));
+  }
+
+  /**
+   * Delete availability pick up date
+   */
+  public deleteAvailability(availability: AvailabilityModel): void {
+    this.appState$.dispatch(store.fromDonation.deleteAvailability({ availability }));
   }
 }

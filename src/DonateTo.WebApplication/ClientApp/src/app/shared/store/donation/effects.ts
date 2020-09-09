@@ -2,6 +2,9 @@ import {
   addDonation,
   addDonationFailed,
   addDonationSuccess,
+  deleteAvailability,
+  deleteAvailabilityFailed,
+  deleteAvailabilitySuccess,
   deleteDonation,
   deleteDonationFailed,
   deleteDonationSuccess,
@@ -103,6 +106,17 @@ export class DonationRequestEffects {
       this.donationService.getPagedFilteredByDonationRequestId(donationFilter).pipe(
         map((donations) => loadPagedFilteredDonationsByDonationRequestIdSuccess({ donations })),
         catchError(() => of(loadPagedFilteredDonationsByDonationRequestIdFailed()))
+      )
+    )
+  );
+
+  @Effect()
+  deleteAvailability$: Observable<{}> = this.actions$.pipe(
+    ofType(deleteAvailability),
+    switchMap((data: any) =>
+      this.donationService.deleteAvailability(data.availability).pipe(
+        map((availability) => deleteAvailabilitySuccess({ availability })),
+        catchError(() => of(deleteAvailabilityFailed()))
       )
     )
   );

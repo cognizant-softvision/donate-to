@@ -42,7 +42,7 @@
     ></app-donation-step-address>
     <app-donation-step-availability
       (isFormValid)="isAvailabilityStepReady($event)"
-      [availabilities]="availabilities"
+      [(availabilities)]="availabilities"
       *ngIf="currentStep === 2"
     ></app-donation-step-availability>
     <app-donation-step-finish
