@@ -55,6 +55,16 @@ namespace DonateTo.Infrastructure.Data.Repositories
             await DbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
+        public async Task SoftDeleteAvailability(long availabilityId)
+        {
+            var availabilityToSoftDelete = DbContext.Availabilities
+                .Where(a => a.Id == availabilityId)
+                .FirstOrDefault();
+
+            DbContext.Availabilities.Remove(availabilityToSoftDelete);
+            await DbContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+
         public IEnumerable<User> GetDonors(long donationRequestItemId)
         {
             var donors = Get(null)

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using DonateTo.ApplicationCore.Models.Pagination;
 using DonateTo.WebApi.Common;
 using DonateTo.ApplicationCore.Models.Filtering;
+using System.Collections.Generic;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -87,8 +88,8 @@ namespace DonateTo.WebApi.V1.Controllers
             {
                 var defaultedUserId = userId ?? long.Parse(User.Claims.First(claim => claim.Type == Claims.UserId).Value, CultureInfo.InvariantCulture);
                 var result = await _donationService.GetPagedAsync(
-                                                        pageNumber, 
-                                                        pageSize, 
+                                                        pageNumber,
+                                                        pageSize,
                                                         (d => (d.OwnerId == defaultedUserId) && (!statusId.HasValue || d.StatusId == statusId)))
                                                     .ConfigureAwait(false);
 
@@ -136,6 +137,37 @@ namespace DonateTo.WebApi.V1.Controllers
                 catch (InvalidOperationException ex)
                 {
                     return BadRequest(ex);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deletes an Availability
+        /// </summary>
+        /// <param name="id">Availability Id</param>
+        /// <returns>Delete Availability.</returns>
+        [HttpDelete("deleteAvailability", Name = "[controller]_[action]")]
+        public async Task<IActionResult> DeleteAvailability(long id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+
+
+            } else
+            {
+                try
+                {
+                    await _donationService.SoftDeleteAvailability(id).ConfigureAwait(false);
+                    return Ok();
+                }
+                catch (KeyNotFoundException ex)
+                {
+                    return NotFound(ex);
+                }
+                catch (Exception e)
+                {
+                    return UnprocessableEntity(e.Message);
                 }
             }
         }

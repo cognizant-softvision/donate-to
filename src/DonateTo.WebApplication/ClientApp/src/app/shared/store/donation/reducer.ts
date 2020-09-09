@@ -122,6 +122,21 @@ const donationRequestReducer = createReducer(
     ...state,
     loading: false,
     failed: true,
+  })),
+  on(donationRequestActions.deleteAvailability, (state) => ({
+    ...state,
+    loading: true,
+    failed: false,
+  })),
+  on(donationRequestActions.deleteAvailabilitySuccess, (state) => ({
+    ...state,
+    loading: false,
+    failed: false,
+  })),
+  on(donationRequestActions.deleteAvailabilityFailed, (state) => ({
+    ...state,
+    loading: false,
+    failed: true,
   }))
 );
 

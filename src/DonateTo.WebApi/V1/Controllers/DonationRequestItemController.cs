@@ -2,19 +2,10 @@
 using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using System.Linq;
 using Microsoft.Extensions.Primitives;
 using Microsoft.AspNetCore.Authorization;
-using DonateTo.WebApi.Common;
-using DonateTo.WebApi.Filters;
 using DonateTo.ApplicationCore.Models.Filtering;
-using DonateTo.ApplicationCore.Models.Pagination;
-using System.Globalization;
-using DonateTo.ApplicationCore.Common;
-using System;
 using System.Collections.Generic;
-using DonateTo.ApplicationCore.Interfaces.Repositories;
 
 namespace DonateTo.WebApi.V1.Controllers
 {

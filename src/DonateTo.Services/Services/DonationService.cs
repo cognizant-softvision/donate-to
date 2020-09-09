@@ -165,6 +165,9 @@ namespace DonateTo.Services
             return _donationRepository.GetDonors(donationRequestItemId);
         }
 
-
+        public async Task SoftDeleteAvailability(long id)
+        {
+            await _donationRepository.SoftDeleteAvailability(id).ConfigureAwait(false);
+        }
     }
 }

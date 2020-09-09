@@ -38,5 +38,12 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// <param name="donationRequestItemId">Donation Request Item Id</param>
         /// <returns></returns>
         IEnumerable<User> GetDonorsByDonationRequestItemId(long donationRequestItemId);
+
+        /// <summary>
+        /// Soft delete availability
+        /// <param name="id">Availability Id</param>
+        /// </summary>
+        /// <returns></returns>
+        Task SoftDeleteAvailability(long id);
     }
 }

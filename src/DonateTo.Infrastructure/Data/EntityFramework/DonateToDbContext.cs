@@ -37,6 +37,7 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
         public DbSet<Question> Question { get; set; }
         public DbSet<QuestionOption> QuestionOption { get; set; }
         public DbSet<Log> Logs { get; set; }
+        public DbSet<Availability> Availabilities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -191,6 +192,9 @@ namespace DonateTo.Infrastructure.Data.EntityFramework
                     .HasQueryFilter(q => !q.IsDeleted);
 
                 modelBuilder.Entity<QuestionOption>()
+                    .HasQueryFilter(qo => !qo.IsDeleted);
+
+                modelBuilder.Entity<Availability>()
                     .HasQueryFilter(qo => !qo.IsDeleted);
             }
         }

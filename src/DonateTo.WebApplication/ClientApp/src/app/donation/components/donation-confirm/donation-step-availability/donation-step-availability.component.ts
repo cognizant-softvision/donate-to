@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { WeekDays } from 'src/app/shared/enum/weekdays';
 import { compareDate, CompareDateResult } from 'src/app/shared/utility/dates/compare-dates';
+import { isTemplateRef } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-donation-step-availability',
@@ -15,6 +16,7 @@ import { compareDate, CompareDateResult } from 'src/app/shared/utility/dates/com
 })
 export class DonationStepAvailabilityComponent implements OnInit, OnDestroy {
   @Output() isFormValid = new EventEmitter();
+  @Output() availabilitiesUpdated = new EventEmitter();
 
   subscriptions: Subscription[] = [];
 
@@ -95,7 +97,12 @@ export class DonationStepAvailabilityComponent implements OnInit, OnDestroy {
   }
 
   removeAvailability(availability: AvailabilityModel): void {
+    if (availability.id) {
+      this.donationSandbox.deleteAvailability(availability);
+    }
     this.availabilities = this.availabilities.filter((item) => item !== availability);
+
+    this.isFormValid.emit(this.isFormValid.emit({ value: true, availabilities: this.availabilities }));
   }
 
   validateFormGroup(formGroup: FormGroup) {

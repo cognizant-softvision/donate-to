@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { DonationModel } from '../../models/donation.model';
 import { PageModel } from '../../models';
 import { DonationFilter } from '../../models/filters/donation-filter';
+import { AvailabilityModel } from '../../models/availability.model';
 
 @Injectable({
   providedIn: 'root',
@@ -51,5 +52,12 @@ export class DonationService extends BaseHttpClientService<DonationModel> {
     return this.httpClient.get<PageModel<DonationModel>>(`${this.url}/${this.endpoint}/pagedByUser`, {
       params: queryString,
     });
+  }
+
+  deleteAvailability(availability: AvailabilityModel): Observable<AvailabilityModel> {
+    return this.httpClient.delete<AvailabilityModel>(
+      `${this.url}/${this.endpoint}/deleteAvailability/?id=${availability.id}`,
+      this.httpOptions
+    );
   }
 }
