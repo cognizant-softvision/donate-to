@@ -8,6 +8,7 @@
     *ngIf="this.donationRequest"
     (validationResult)="updateDonationRequest($event)"
     [donationRequest]="this.donationRequest"
+    [id]="id"
   ></app-donations-form>
   <br />
   <div class="create-donation-form-buttons">

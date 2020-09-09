@@ -39,6 +39,10 @@ export class DonationsEditComponent implements OnInit, OnDestroy {
         this.handleRequestResult();
       })
     );
+
+    // this.donationSandbox.loadDonationRequest(this.id);
+
+    // console.log('Donation request: ', this.donationRequest);
   }
 
   ngOnDestroy(): void {
