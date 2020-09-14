@@ -31,6 +31,16 @@ export const updateUser = createAction('[User] Update', props<{ user: UserModel 
 export const updateUserSuccess = createAction('[User] Update success', props<{ user: UserModel }>());
 export const updateUserFailed = createAction('[User] Update failed');
 
+export const loadUsersSearchPaged = createAction(
+  '[User] Load paged search result items from server',
+  props<{ pageSize: number; pageNumber: number; query: string }>()
+);
+export const loadUsersSearchPagedSuccess = createAction(
+  '[User] Load paged search result success',
+  props<{ users: PageModel<UserModel> }>()
+);
+export const loadUsersSearchPagedFailed = createAction('[User] Load paged search result failed');
+
 export const loadUsersPagedFiltered = createAction(
   '[User] Load items from server filtered and paged',
   props<{ filter: UserFilter }>()

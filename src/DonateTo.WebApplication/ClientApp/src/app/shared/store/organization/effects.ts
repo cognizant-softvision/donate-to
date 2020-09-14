@@ -1,5 +1,5 @@
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { OrganizationService } from '../../async-services/http/organization.service';
@@ -15,9 +15,15 @@ import {
   loadOrganizations,
   loadOrganizationsByUser,
   loadOrganizationsFailed,
+  loadOrganizationsPaged,
+  loadOrganizationsPagedFailed,
   loadOrganizationsPagedFiltered,
   loadOrganizationsPagedFilteredFailed,
   loadOrganizationsPagedFilteredSuccess,
+  loadOrganizationsPagedSuccess,
+  loadOrganizationsSearchPaged,
+  loadOrganizationsSearchPagedFailed,
+  loadOrganizationsSearchPagedSuccess,
   loadOrganizationsSuccess,
   loadOrganizationSuccess,
   updateOrganization,
@@ -34,6 +40,30 @@ export class OrganizationEffects {
       this.organizationService.getPagedFiltered(organizationFilter).pipe(
         map((pagedOrganizations) => loadOrganizationsPagedFilteredSuccess({ pagedOrganizations })),
         catchError(() => of(loadOrganizationsPagedFilteredFailed()))
+      )
+    )
+  );
+
+  @Effect()
+  loadOrganizationsPaged$: Observable<{}> = this.actions$.pipe(
+    ofType(loadOrganizationsPaged),
+    switchMap(({ pageNumber, pageSize }) =>
+      this.organizationService.getOrganizationsPaged(pageNumber, pageSize).pipe(
+        map((organizations) => loadOrganizationsPagedSuccess({ organizations })),
+        catchError(() => of(loadOrganizationsPagedFailed()))
+      )
+    )
+  );
+
+  @Effect()
+  loadOrganizationsSearchPaged$: Observable<{}> = this.actions$.pipe(
+    ofType(loadOrganizationsSearchPaged),
+    debounceTime(1000),
+    distinctUntilChanged(),
+    switchMap(({ pageNumber, pageSize, query }) =>
+      this.organizationService.getOrganizationsSearchPaged(pageNumber, pageSize, query).pipe(
+        map((organizations) => loadOrganizationsSearchPagedSuccess({ organizations })),
+        catchError(() => of(loadOrganizationsSearchPagedFailed()))
       )
     )
   );

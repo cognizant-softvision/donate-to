@@ -1,21 +1,3 @@
-<div class="search">
-  <nz-spin *ngIf="this.homeSandbox.donationRequestsLoading$ | async" nzTip="Loading..."> </nz-spin>
-  <nz-input-group [nzSuffix]="suffixIconSearch">
-    <input
-      class="input-container"
-      type="text"
-      [(ngModel)]="searchValue"
-      (input)="onChange()"
-      size="large"
-      nz-input
-      placeholder="{{ 'SearchPlaceHolder' | translate }}"
-    />
-  </nz-input-group>
-  <ng-template #suffixIconSearch>
-    <i nz-icon nzType="search"></i>
-  </ng-template>
-</div>
-
 <div class="donations-list">
   <app-donation-requests-list
     [totalItems]="totalItems"

@@ -22,6 +22,15 @@ export const getOrganizationsFilteredPaged = createSelector(
   (state: OrganizationState) => state.pagedItems
 );
 
+export const getAllOrganizationsPaged = createSelector(
+  getOrganizationState,
+  (state: OrganizationState) => state.pagedItems
+);
+
+export const getAllOrganizationsSearchPaged = createSelector(
+  getOrganizationState,
+  (state: OrganizationState) => state.pagedItems
+);
 export const getFailedStatus = createSelector(getOrganizationState, (state: OrganizationState) => state.failed);
 
 export const getLoadingStatus = createSelector(getOrganizationState, (state: OrganizationState) => state.loading);
@@ -39,6 +48,8 @@ export class OrganizationSelectors {
   // selectors$
   organizationsFilteredPaged$ = this.store.select(getOrganizationsFilteredPaged);
   organizations$ = this.store.select(getAllOrganizations);
+  organizationsPaged$ = this.store.select(getAllOrganizationsPaged);
+  organizationsSearchPaged$ = this.store.select(getAllOrganizationsSearchPaged);
   organizationsByUser$ = this.store.select(getOrganizationsByUser);
   organizationState$ = this.store.select(getOrganizationState);
   loading$ = this.store.select(getOrganizationsLoading);

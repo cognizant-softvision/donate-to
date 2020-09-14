@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models.Pagination;
 using Microsoft.AspNetCore.Authorization;
+using DonateTo.ApplicationCore.Models;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -28,7 +29,7 @@ namespace DonateTo.WebApi.V1.Controllers
         /// <param name="pageSize">Page size</param>
         /// <returns>DonationRequest paged result.</returns>
         [AllowAnonymous]
-        [HttpGet]
+        [HttpGet("searchDonation", Name = "[controller]_[action]")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedResult<DonationRequest>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -53,6 +54,76 @@ namespace DonateTo.WebApi.V1.Controllers
             {
                 return BadRequest();
             }
-        }         
+        }
+
+        /// <summary>
+        /// Gets a DonationRequest paged result matching given search query.
+        /// </summary>
+        /// <param name="query">Text search query</param>
+        /// <param name="pageNumber">Page start number</param>
+        /// <param name="pageSize">Page size</param>
+        /// <returns>DonationRequest paged result.</returns>
+        [AllowAnonymous]
+        [HttpGet("searchOrganization", Name = "[controller]_[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedResult<Organization>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<PagedResult<Organization>>> SearchOrganization(string query, int pageNumber, int pageSize)
+        {
+            if (ModelState.IsValid)
+            {
+
+                var result = await _searchService.SearchOrganizationAsync(query, pageNumber, pageSize).ConfigureAwait(false);
+
+                if (result != null)
+                {
+                    return Ok(result);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        /// <summary>
+        /// Gets a DonationRequest paged result matching given search query.
+        /// </summary>
+        /// <param name="query">Text search query</param>
+        /// <param name="pageNumber">Page start number</param>
+        /// <param name="pageSize">Page size</param>
+        /// <returns>DonationRequest paged result.</returns>
+        [AllowAnonymous]
+        [HttpGet("searchUser", Name = "[controller]_[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedResult<User>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<PagedResult<UserModel>>> SearchUser(string query, int pageNumber, int pageSize)
+        {
+            if (ModelState.IsValid)
+            {
+
+                var result = await _searchService.SearchUserAsync(query, pageNumber, pageSize).ConfigureAwait(false);
+
+                if (result != null)
+                {
+                    return Ok(result);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }
