@@ -96,6 +96,40 @@ const userReducer = createReducer(
     loading: false,
     failed: true,
     pagedItems: new PageModel<UserModel>(),
+  })),
+  on(userActions.loadUsersPaged, (state) => ({
+    ...state,
+    loading: true,
+    failed: false,
+  })),
+  on(userActions.loadUsersPagedSuccess, (state, { users }) => ({
+    ...state,
+    loading: false,
+    failed: false,
+    pagedItems: users,
+  })),
+  on(userActions.loadUsersPagedFailed, (state) => ({
+    ...state,
+    loading: false,
+    failed: true,
+    pagedItems: new PageModel<UserModel>(),
+  })),
+  on(userActions.loadUsersSearchPaged, (state) => ({
+    ...state,
+    loading: true,
+    failed: false,
+  })),
+  on(userActions.loadUsersSearchPagedSuccess, (state, { users }) => ({
+    ...state,
+    loading: false,
+    failed: false,
+    pagedItems: users,
+  })),
+  on(userActions.loadUsersSearchPagedFailed, (state) => ({
+    ...state,
+    loading: false,
+    failed: true,
+    pagedItems: null,
   }))
 );
 

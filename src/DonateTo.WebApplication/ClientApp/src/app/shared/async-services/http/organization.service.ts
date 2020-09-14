@@ -5,14 +5,17 @@ import { Injectable } from '@angular/core';
 import { AddressModel, OrganizationModel, PageModel } from '../../models';
 import { Observable } from 'rxjs/internal/Observable';
 import { OrganizationFilter } from '../../models/filters/organization-filter';
+import { SearchHttpClientService } from './search-http-client.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrganizationService extends BaseHttpClientService<OrganizationModel> {
+  searchService: SearchHttpClientService;
   constructor(httpClient: HttpClient, configService: ConfigService) {
     const baseUrl = configService.get('baseUrl');
     super(httpClient, baseUrl, 'api/v1/organization');
+    this.searchService = new SearchHttpClientService(httpClient, baseUrl, 'api/v1/search');
   }
 
   getPagedFiltered(organizationFilter: OrganizationFilter): Observable<PageModel<OrganizationModel>> {
@@ -48,6 +51,18 @@ export class OrganizationService extends BaseHttpClientService<OrganizationModel
 
   getOrganization(id: number): Observable<OrganizationModel> {
     return this.getById(id);
+  }
+
+  getOrganizationsPaged(pageNumber: number, pageSize: number): Observable<PageModel<OrganizationModel>> {
+    return this.getPaged(pageNumber, pageSize);
+  }
+
+  getOrganizationsSearchPaged(
+    pageNumber: number,
+    pageSize: number,
+    query: string
+  ): Observable<PageModel<OrganizationModel>> {
+    return this.searchService.getSearchOrganization(pageNumber, pageSize, query);
   }
 
   deleteOrganization(organization: OrganizationModel): Observable<OrganizationModel> {

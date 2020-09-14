@@ -1,5 +1,5 @@
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { UserService } from '../../async-services/http/user.service';
@@ -8,9 +8,15 @@ import {
   loadUserFailed,
   loadUsers,
   loadUsersFailed,
+  loadUsersPaged,
+  loadUsersPagedFailed,
   loadUsersPagedFiltered,
   loadUsersPagedFilteredFailed,
   loadUsersPagedFilteredSuccess,
+  loadUsersPagedSuccess,
+  loadUsersSearchPaged,
+  loadUsersSearchPagedFailed,
+  loadUsersSearchPagedSuccess,
   loadUsersSuccess,
   loadUserSuccess,
   updateUser,
@@ -41,6 +47,30 @@ export class UserEffects {
       this.userService.getUsers().pipe(
         map((users) => loadUsersSuccess({ users })),
         catchError(() => of(loadUsersFailed()))
+      )
+    )
+  );
+
+  @Effect()
+  loadUsersPaged$: Observable<{}> = this.actions$.pipe(
+    ofType(loadUsersPaged),
+    switchMap(({ pageNumber, pageSize }) =>
+      this.userService.getUsersPaged(pageNumber, pageSize).pipe(
+        map((users) => loadUsersPagedSuccess({ users })),
+        catchError(() => of(loadUsersPagedFailed()))
+      )
+    )
+  );
+
+  @Effect()
+  loadUsersSearchPaged$: Observable<{}> = this.actions$.pipe(
+    ofType(loadUsersSearchPaged),
+    debounceTime(1000),
+    distinctUntilChanged(),
+    switchMap(({ pageNumber, pageSize, query }) =>
+      this.userService.getUserSearchPaged(pageNumber, pageSize, query).pipe(
+        map((users) => loadUsersSearchPagedSuccess({ users })),
+        catchError(() => of(loadUsersSearchPagedFailed()))
       )
     )
   );

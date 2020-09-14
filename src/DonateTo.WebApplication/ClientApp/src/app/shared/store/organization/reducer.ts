@@ -39,6 +39,40 @@ const organizationReducer = createReducer(
     failed: true,
     pagedItems: new PageModel<OrganizationModel>(),
   })),
+  on(organizationActions.loadOrganizationsPaged, (state) => ({
+    ...state,
+    loading: true,
+    failed: false,
+  })),
+  on(organizationActions.loadOrganizationsPagedSuccess, (state, { organizations }) => ({
+    ...state,
+    loading: false,
+    failed: false,
+    pagedItems: organizations,
+  })),
+  on(organizationActions.loadOrganizationsPagedFailed, (state) => ({
+    ...state,
+    loading: false,
+    failed: true,
+    pagedItems: null,
+  })),
+  on(organizationActions.loadOrganizationsSearchPaged, (state) => ({
+    ...state,
+    loading: true,
+    failed: false,
+  })),
+  on(organizationActions.loadOrganizationsSearchPagedSuccess, (state, { organizations }) => ({
+    ...state,
+    loading: false,
+    failed: false,
+    pagedItems: organizations,
+  })),
+  on(organizationActions.loadOrganizationsSearchPagedFailed, (state) => ({
+    ...state,
+    loading: false,
+    failed: true,
+    pagedItems: null,
+  })),
   on(organizationActions.loadOrganizations, (state, action) => ({
     ...state,
     loading: true,

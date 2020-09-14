@@ -26,5 +26,17 @@ namespace DonateTo.Services
         {
              return await _searchRepository.SearchDonationRequestAsync(queryString, page, pageSize).ConfigureAwait(false);
         }
+
+        ///<inheritdoc cref="ISearchService"/>
+        public async Task<PagedResult<Organization>> SearchOrganizationAsync(string queryString, int page, int pageSize)
+        {
+            return await _searchRepository.SearchOrganizationAsync(queryString, page, pageSize).ConfigureAwait(false);
+        }
+
+        ///<inheritdoc cref="ISearchService"/>
+        public async Task<PagedResult<User>> SearchUserAsync(string queryString, int page, int pageSize)
+        {
+            return await _searchRepository.SearchUserAsync(queryString, page, pageSize).ConfigureAwait(false);
+        }
     }
 }

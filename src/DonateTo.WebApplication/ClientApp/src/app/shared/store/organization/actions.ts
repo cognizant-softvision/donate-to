@@ -19,6 +19,26 @@ export const loadOrganizationsPagedFilteredSuccess = createAction(
 );
 export const loadOrganizationsPagedFilteredFailed = createAction('[Organizations] Load failed');
 
+export const loadOrganizationsPaged = createAction(
+  '[Organization] Load paged items from server',
+  props<{ pageSize: number; pageNumber: number }>()
+);
+export const loadOrganizationsPagedSuccess = createAction(
+  '[Organization] Load paged success',
+  props<{ organizations: PageModel<OrganizationModel> }>()
+);
+export const loadOrganizationsPagedFailed = createAction('[Organization] Load paged failed');
+
+export const loadOrganizationsSearchPaged = createAction(
+  '[Organization] Load paged search result items from server',
+  props<{ pageSize: number; pageNumber: number; query: string }>()
+);
+export const loadOrganizationsSearchPagedSuccess = createAction(
+  '[Organization] Load paged search result success',
+  props<{ organizations: PageModel<OrganizationModel> }>()
+);
+export const loadOrganizationsSearchPagedFailed = createAction('[Organization] Load paged search result failed');
+
 export const loadOrganizationsByUser = createAction(
   '[Organization] Load items from server by user',
   props<{ userId: number }>()

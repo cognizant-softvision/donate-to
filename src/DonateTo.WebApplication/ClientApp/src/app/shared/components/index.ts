@@ -1,9 +1,17 @@
+import { SearchMenuComponent } from './search-menu/search-menu.component';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 
-import { NzButtonModule, NzIconModule, NzLayoutModule, NzMenuModule, NzRadioModule } from 'ng-zorro-antd';
+import {
+  NzButtonModule,
+  NzIconModule,
+  NzInputModule,
+  NzLayoutModule,
+  NzMenuModule,
+  NzRadioModule,
+} from 'ng-zorro-antd';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { IconDefinition } from '@ant-design/icons-angular';
@@ -17,8 +25,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { UserEffects } from '../store/user';
 import { StoreModule } from '@ngrx/store';
 import { fromUser } from '../store';
+import { SearchMenuSandBox } from './search-menu/search-menu.sandbox';
 
-export const COMPONENTS = [NavMenuComponent];
+export const COMPONENTS = [NavMenuComponent, SearchMenuComponent];
 const ICONS: IconDefinition[] = [CaretDownFill];
 
 @NgModule({
@@ -33,6 +42,7 @@ const ICONS: IconDefinition[] = [CaretDownFill];
     RouterModule,
     NzRadioModule,
     NzDropDownModule,
+    NzInputModule,
     NzIconModule.forChild(ICONS),
 
     EffectsModule.forFeature([UserEffects]),
@@ -40,6 +50,6 @@ const ICONS: IconDefinition[] = [CaretDownFill];
   ],
   declarations: COMPONENTS,
   exports: COMPONENTS,
-  providers: [NavMenuSandBox, UserSandbox],
+  providers: [NavMenuSandBox, UserSandbox, SearchMenuSandBox],
 })
 export class ComponentsModule {}

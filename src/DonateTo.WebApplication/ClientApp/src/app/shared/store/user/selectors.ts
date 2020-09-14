@@ -11,7 +11,7 @@ export const getLoadingStatus = createSelector(getUserState, (state: UserState) 
 export const getUser = createSelector(getUserState, (state: UserState) => state.user);
 export const getAllUsersPaged = createSelector(getUserState, (state: UserState) => state.pagedItems);
 export const getUsersFilteredPaged = createSelector(getUserState, (state: UserState) => state.pagedItems);
-
+export const getAllUsersSearchPaged = createSelector(getUserState, (state: UserState) => state.pagedItems);
 @Injectable()
 export class UserSelectors {
   constructor(private store: Store<UserState>) {}
@@ -21,4 +21,6 @@ export class UserSelectors {
   loading$ = this.store.select(getLoadingStatus);
   user$ = this.store.select(getUser);
   usersFilteredPaged$ = this.store.select(getUsersFilteredPaged);
+  usersPaged$ = this.store.select(getAllUsersPaged);
+  organizationSearchPaged$ = this.store.select(getAllUsersSearchPaged);
 }
