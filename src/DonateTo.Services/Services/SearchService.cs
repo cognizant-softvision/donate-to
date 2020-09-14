@@ -3,16 +3,21 @@ using System.Threading.Tasks;
 using DonateTo.ApplicationCore.Entities;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Interfaces;
+using AutoMapper;
+using DonateTo.Services.Extensions;
+using DonateTo.ApplicationCore.Models;
 
 namespace DonateTo.Services
 {
     public class SearchService: ISearchService
     {
         private readonly ISearchRepository _searchRepository;
+        private readonly IMapper _mapper;
 
-        public SearchService(ISearchRepository searchRepository)
+        public SearchService(ISearchRepository searchRepository, IMapper mapper)
         {
             _searchRepository = searchRepository;
+            _mapper = mapper;
         }
 
         ///<inheritdoc cref="ISearchService"/>
@@ -34,9 +39,9 @@ namespace DonateTo.Services
         }
 
         ///<inheritdoc cref="ISearchService"/>
-        public async Task<PagedResult<User>> SearchUserAsync(string queryString, int page, int pageSize)
+        public async Task<PagedResult<UserModel>> SearchUserAsync(string queryString, int page, int pageSize)
         {
-            return await _searchRepository.SearchUserAsync(queryString, page, pageSize).ConfigureAwait(false);
+            return (await _searchRepository.SearchUserAsync(queryString, page, pageSize).ConfigureAwait(false)).Map<User, UserModel>(_mapper);
         }
     }
 }

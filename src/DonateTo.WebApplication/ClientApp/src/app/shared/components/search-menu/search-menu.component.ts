@@ -1,9 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { UserSandbox } from 'src/app/admin/user/user.sandbox';
-import { UserModel } from '../../models';
 import { SearchMenuSandBox } from './search-menu.sandbox';
-import { HomeSandbox } from 'src/app/home/home.sandbox';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-menu',
@@ -17,8 +16,12 @@ export class SearchMenuComponent implements OnInit, OnDestroy {
   searchLength = 2;
   pageSize = 6;
   currentPage = 1;
+  userUrl = '/admin/users';
+  organizationUrl = '/admin/organizations';
+  donationUrl = '/admin/donations';
+  baseUrl = '/';
 
-  constructor(public searchMenuSandbox: SearchMenuSandBox, public userSandbox: UserSandbox) {}
+  constructor(private router: Router, public searchMenuSandbox: SearchMenuSandBox, public userSandbox: UserSandbox) {}
 
   ngOnInit(): void {
     this.registerEvents();
@@ -37,16 +40,34 @@ export class SearchMenuComponent implements OnInit, OnDestroy {
   }
 
   onChange() {
-    // Abrir case dependiendo de la ruta donde me encuentro
+    const url = this.router.url;
     if (this.searchValue.length >= this.searchLength) {
-      // this.searchMenuSandbox.loadDonationRequestsSearchPaged(this.pageSize, this.currentPage, this.searchValue);
-      // this.searchMenuSandbox.loadOrganizationsSearchPaged(this.pageSize, this.currentPage, this.searchValue);
-      this.searchMenuSandbox.loadUsersSearchPaged(this.pageSize, this.currentPage, this.searchValue);
+      switch (url) {
+        case this.userUrl:
+          this.searchMenuSandbox.loadUsersSearchPaged(this.pageSize, this.currentPage, this.searchValue);
+          break;
+        case this.organizationUrl:
+          this.searchMenuSandbox.loadOrganizationsSearchPaged(this.pageSize, this.currentPage, this.searchValue);
+          break;
+        case this.baseUrl:
+        case this.donationUrl:
+          this.searchMenuSandbox.loadDonationRequestsSearchPaged(this.pageSize, this.currentPage, this.searchValue);
+          break;
+      }
     } else if (this.searchValue.length === 0) {
       this.currentPage = 1;
-      this.searchMenuSandbox.loadDonationRequestsPaged(this.pageSize, this.currentPage);
-      this.searchMenuSandbox.loadOrganizationsPaged(this.pageSize, this.currentPage);
-      this.searchMenuSandbox.loadUsersPaged(this.pageSize, this.currentPage);
+      switch (url) {
+        case this.userUrl:
+          this.searchMenuSandbox.loadUsersPaged(this.pageSize, this.currentPage);
+          break;
+        case this.organizationUrl:
+          this.searchMenuSandbox.loadOrganizationsPaged(this.pageSize, this.currentPage);
+          break;
+        case this.baseUrl:
+        case this.donationUrl:
+          this.searchMenuSandbox.loadDonationRequestsPaged(this.pageSize, this.currentPage);
+          break;
+      }
     }
   }
 }

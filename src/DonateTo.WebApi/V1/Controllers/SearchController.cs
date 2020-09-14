@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DonateTo.ApplicationCore.Interfaces.Services;
 using DonateTo.ApplicationCore.Models.Pagination;
 using Microsoft.AspNetCore.Authorization;
+using DonateTo.ApplicationCore.Models;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -28,7 +29,7 @@ namespace DonateTo.WebApi.V1.Controllers
         /// <param name="pageSize">Page size</param>
         /// <returns>DonationRequest paged result.</returns>
         [AllowAnonymous]
-        [HttpGet]
+        [HttpGet("searchDonation", Name = "[controller]_[action]")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedResult<DonationRequest>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -63,7 +64,7 @@ namespace DonateTo.WebApi.V1.Controllers
         /// <param name="pageSize">Page size</param>
         /// <returns>DonationRequest paged result.</returns>
         [AllowAnonymous]
-        [HttpGet]
+        [HttpGet("searchOrganization", Name = "[controller]_[action]")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedResult<Organization>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -98,12 +99,12 @@ namespace DonateTo.WebApi.V1.Controllers
         /// <param name="pageSize">Page size</param>
         /// <returns>DonationRequest paged result.</returns>
         [AllowAnonymous]
-        [HttpGet]
+        [HttpGet("searchUser", Name = "[controller]_[action]")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedResult<User>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<PagedResult<User>>> SearchUser(string query, int pageNumber, int pageSize)
+        public async Task<ActionResult<PagedResult<UserModel>>> SearchUser(string query, int pageNumber, int pageSize)
         {
             if (ModelState.IsValid)
             {

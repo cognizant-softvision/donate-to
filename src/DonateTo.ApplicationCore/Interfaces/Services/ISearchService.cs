@@ -1,6 +1,7 @@
 ﻿using DonateTo.ApplicationCore.Models.Pagination;
 using DonateTo.ApplicationCore.Entities;
 using System.Threading.Tasks;
+using DonateTo.ApplicationCore.Models;
 
 namespace DonateTo.ApplicationCore.Interfaces.Services
 {
@@ -40,6 +41,6 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// <param name="page"> Curent results page <param>
         /// <param name="pageSize"> Size of results page <param>
         /// <returns>Task of Paged Users of matching criteria.</returns>
-        Task<PagedResult<User>> SearchUserAsync(string queryString, int page, int pageSize);
+        Task<PagedResult<UserModel>> SearchUserAsync(string queryString, int page, int pageSize);
     }
 }

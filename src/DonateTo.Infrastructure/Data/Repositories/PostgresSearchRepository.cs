@@ -72,7 +72,7 @@ namespace DonateTo.Infrastructure.Data.Repositories
         {
             return _dbContext.Set<DonationRequest>().Include(d => d.Address).Include(d => d.Status).Include(d => d.DonationRequestItems)
                 .Include(d => d.DonationRequestItems).Include(d => d.DonationRequestCategories).ThenInclude(drc => drc.Category)
-                .Include(d => d.Organization).Include(d => d.Status);
+                .Include(d => d.Organization).Include(d => d.Status).Include(d => d.Donations);
         }
 
         private IQueryable<DonationRequest> SearchDonationRequestQuery(string queryString)
@@ -90,13 +90,18 @@ namespace DonateTo.Infrastructure.Data.Repositories
             return query;
         }
 
+        private IQueryable<Organization> GetHydratedOrganizations()
+        {
+            return _dbContext.Set<Organization>().Include(o => o.UserOrganizations).ThenInclude(uo => uo.Organization).
+            Include(o => o.Addresses).Include(o => o.Contact);
+        }
+
         private IQueryable<Organization> SearchOrganizationQuery(string queryString)
         {
             var likeString = $"%{queryString}%";
-            var query = _dbContext.Set<Organization>().Where(organization =>
+            var query = GetHydratedOrganizations().Where(organization =>
                EF.Functions.ILike(organization.Name, likeString) ||
                EF.Functions.ILike(organization.Description, likeString) ||
-               EF.Functions.ILike(organization.Contact.FullName, likeString) ||
                organization.UserOrganizations.Any(uo => EF.Functions.ILike(uo.User.LastName, likeString)) ||
                organization.UserOrganizations.Any(uo =>
                       EF.Functions.ILike(uo.User.FirstName, likeString)) ||
@@ -108,14 +113,19 @@ namespace DonateTo.Infrastructure.Data.Repositories
             return query;
         }
 
+        private IQueryable<User> GetHydratedUsers()
+        {
+            return _dbContext.Set<User>()
+                .Include(u => u.UserOrganizations).ThenInclude(uo => uo.Organization);
+        }
+
         private IQueryable<User> SearchUserQuery(string queryString)
         {
             var likeString = $"%{queryString}%";
-            var query = _dbContext.Set<User>().Where(user =>
+            var query = GetHydratedUsers().Where(user =>
                EF.Functions.ILike(user.FirstName, likeString) ||
                EF.Functions.ILike(user.LastName, likeString) ||
                EF.Functions.ILike(user.Email, likeString) ||
-               EF.Functions.ILike(user.FullName, likeString) ||
                user.UserOrganizations.Any(uo => EF.Functions.ILike(uo.Organization.Name, likeString))
             );
             return query;
