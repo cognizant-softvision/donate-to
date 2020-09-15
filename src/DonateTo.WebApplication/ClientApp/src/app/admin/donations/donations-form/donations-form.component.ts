@@ -30,6 +30,7 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
   title: string;
   ownerId: number;
   isEdit = false;
+  donationRequestItemToDelete: DonationRequestItemModel[] = [];
 
   get statusEnum() {
     return StatusType;
@@ -117,13 +118,19 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
 
   removeDonationRequestItem(donationRequestItemTarget: DonationRequestItemModel) {
     if (this.isEdit) {
-      this.donationSandbox.deleteDonationRequestItem(donationRequestItemTarget);
+      this.donationRequestItemToDelete.push(donationRequestItemTarget);
     }
     this.donationRequestItems = this.donationRequestItems.filter((item) => item !== donationRequestItemTarget);
   }
 
   validateForm() {
     this.validateFormGroup(this.donationRequestFormGroup);
+    if (this.isEdit) {
+      this.donationRequestItemToDelete.forEach((requestItem) => {
+        this.donationSandbox.deleteDonationRequestItem(requestItem);
+      });
+    }
+
     if (this.donationRequestFormGroup.valid) {
       this.buildDonationRequest();
       this.validationResult.emit(this.donationRequest);
