@@ -43,10 +43,11 @@ namespace DonateTo.Infrastructure.Data.Repositories
         public override async Task<ApplicationCore.Models.Pagination.PagedResult<DonationRequest>>
             GetPagedAsync(int page, int pageSize, Expression<Func<DonationRequest, bool>> filter = null, string sort = "")
         {
-            var questions = GetHydratedDonationRequests()
+            var donationRequests = GetHydratedDonationRequests()
+                .Where(d => d.Address.IsDeleted == false)
                 .FilterAndSort(filter, sort);
 
-            return await questions.GetPagedAsync(page, pageSize).ConfigureAwait(false);
+            return await donationRequests.GetPagedAsync(page, pageSize).ConfigureAwait(false);
         }
 
         public async Task SoftDeleteDonationRequest(long donationRequestId)

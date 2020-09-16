@@ -9,6 +9,7 @@ using System;
 using System.Linq.Dynamic.Core;
 using DonateTo.Infrastructure.Extensions;
 using DonateTo.ApplicationCore.Interfaces.Repositories;
+using DonateTo.ApplicationCore.Common;
 
 namespace DonateTo.Infrastructure.Data.Repositories
 {
@@ -24,8 +25,20 @@ namespace DonateTo.Infrastructure.Data.Repositories
                 .Where(a => a.Id == addressId)
                 .FirstOrDefault();
 
-            DbContext.Addresses.Remove(addressToSoftDelete);
-            await DbContext.SaveChangesAsync().ConfigureAwait(false);        
+            var donationsActive = DbContext.DonationRequests
+                    .Where(d => (d.AddressId == addressId) &&
+                                (d.StatusId == StatusType.Pending))
+                    .ToList();
+
+            if (donationsActive.Count() > 0)
+            {
+                throw new Exception("Admin.Organization.DeleteError");
+            }
+            else
+            {
+                DbContext.Addresses.Remove(addressToSoftDelete);
+                await DbContext.SaveChangesAsync().ConfigureAwait(false);
+            }
         }
     }
 }
