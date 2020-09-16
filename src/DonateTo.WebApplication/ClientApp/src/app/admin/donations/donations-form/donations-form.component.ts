@@ -125,13 +125,14 @@ export class DonationsFormComponent implements OnInit, OnDestroy {
 
   validateForm() {
     this.validateFormGroup(this.donationRequestFormGroup);
-    if (this.isEdit) {
-      this.donationRequestItemToDelete.forEach((requestItem) => {
-        this.donationSandbox.deleteDonationRequestItem(requestItem);
-      });
-    }
 
     if (this.donationRequestFormGroup.valid) {
+      if (this.isEdit) {
+        this.donationRequestItemToDelete.forEach((requestItem) => {
+          this.donationSandbox.deleteDonationRequestItem(requestItem);
+        });
+      }
+
       this.buildDonationRequest();
       this.validationResult.emit(this.donationRequest);
     }
