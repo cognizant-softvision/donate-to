@@ -12,6 +12,7 @@ export interface AddressState {
   states: StateModel[];
   cities: CityModel[];
   items: AddressModel[];
+  success: boolean;
 }
 
 const INITIAL_STATE: AddressState = {
@@ -21,6 +22,7 @@ const INITIAL_STATE: AddressState = {
   states: [],
   cities: [],
   items: [],
+  success: false,
 };
 
 const addressReducer = createReducer(
@@ -101,11 +103,13 @@ const addressReducer = createReducer(
     ...state,
     loading: true,
     failed: false,
+    success: false,
   })),
   on(addressActions.deleteAddressSuccess, (state) => ({
     ...state,
     loading: false,
     failed: false,
+    success: true,
   })),
   on(addressActions.deleteAddressFailed, (state) => ({
     ...state,

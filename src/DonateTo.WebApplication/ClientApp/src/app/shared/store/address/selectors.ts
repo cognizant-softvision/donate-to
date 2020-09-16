@@ -13,6 +13,7 @@ export const getCities = createSelector(getEntityState, (state: AddressState) =>
 export const getAddressLoading = createSelector(getEntityState, (state: AddressState) => state.loading);
 export const getAddressesByOrganizationId = createSelector(getEntityState, (state: AddressState) => state.items);
 export const getAddressesLoading = createSelector(getEntityState, (state: AddressState) => state.loading);
+export const getDeleteSuccess = createSelector(getEntityState, (state: AddressState) => state.success);
 
 @Injectable()
 export class DonationSelectors {
@@ -24,4 +25,5 @@ export class DonationSelectors {
   cities$ = this.store.select(getCities);
   addresses$ = this.store.select(getAddressesByOrganizationId);
   loading$ = this.store.select(getAddressesLoading);
+  deleteSuccess$ = this.store.select(getDeleteSuccess);
 }

@@ -1,18 +1,8 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { AddressModel, ColumnItem, ContactModel } from 'src/app/shared/models';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { OrganizationSandbox } from '../../../organization.sandbox';
-import { NzModalRef, NzModalService, NzTableQueryParams } from 'ng-zorro-antd';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
@@ -50,9 +40,7 @@ export class AddressListComponent implements OnInit, OnDestroy {
   total = 0;
   pageSize = 10;
   pageIndex = 1;
-  failedDeletedAddress = false;
   item: AddressModel;
-  deleteAddressFlag = true;
 
   expandSet = new Set<number>();
   addressItemFormGroup = new FormGroup({
@@ -93,15 +81,9 @@ export class AddressListComponent implements OnInit, OnDestroy {
 
   registerEvents() {
     this.subscriptions.push(
-      this.organizationSandbox.failedAddress$.subscribe((status) => {
-        if (this.deleteAddressFlag) {
-          this.failedDeletedAddress = status;
-
-          if (!this.failedDeletedAddress) {
-            this.addresses = this.addresses.filter((a) => a !== this.item);
-          }
-
-          this.deleteAddressFlag = false;
+      this.organizationSandbox.deleteSuccess$.subscribe((success) => {
+        if (success) {
+          this.deleteAddress.emit(this.addressModel);
         }
       })
     );
@@ -134,14 +116,9 @@ export class AddressListComponent implements OnInit, OnDestroy {
             'Admin.Organization.OrganizationSteps.Address.OneAddressRemainWarningMessage'
           ),
         });
-        this.addresses = this.addresses.filter((a) => a !== item);
-        this.deleteAddress.emit(item);
       } else {
-        this.deleteAddressFlag = true;
+        this.addressModel = item;
         this.organizationSandbox.deleteAddress(item);
-
-        // this.addresses = this.addresses.filter((a) => a !== item);
-        // this.deleteAddress.emit(item);
       }
     }
   }
