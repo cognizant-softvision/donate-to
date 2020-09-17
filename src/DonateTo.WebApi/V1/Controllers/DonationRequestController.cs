@@ -62,7 +62,7 @@ namespace DonateTo.WebApi.V1.Controllers
 
                 var donationRequest = await _baseService.CreateAsync(value, username).ConfigureAwait(false);
                 var users = await _userService.GetByOrganizationIdAsync(donationRequest.OrganizationId).ConfigureAwait(false);
-                await _donationRequestService.SendNewRequestMailToOrganizationUsersAsync(donationRequest, users, client).ConfigureAwait(false);
+                //await _donationRequestService.SendNewRequestMailToOrganizationUsersAsync(donationRequest, users, client).ConfigureAwait(false);
 
                 return Ok(donationRequest);
             }
