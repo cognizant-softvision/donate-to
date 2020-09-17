@@ -56,9 +56,11 @@ export class DonationsCreateComponent implements OnDestroy {
       this.createDonationRequest();
     }
   }
+
   showModal() {
     this.createTplModal(this.modalContent);
   }
+
   createTplModal(tplContent: TemplateRef<{}>): void {
     if (!this.tplModal) {
       this.tplModal = this.modal.create({
@@ -70,22 +72,32 @@ export class DonationsCreateComponent implements OnDestroy {
           top: '2em;',
         },
         nzWidth: '60%',
+        nzOnCancel: () => {
+          this.isSubmited = false;
+          this.switchErrorModal();
+          this.goBack();
+        },
       });
     }
   }
+
   hideModal() {
     this.tplModal?.destroy();
   }
+
   createDonationRequest() {
     this.isSubmited = true;
     this.donationSandbox.createDonationRequest(this.donationsFormComponent.donationRequest);
   }
+
   goBack() {
     this.router.navigate(['/admin/donations']);
   }
+
   switchErrorModal() {
     this.isErrorModalActive = !this.isErrorModalActive;
   }
+
   private unregisterEvents() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
