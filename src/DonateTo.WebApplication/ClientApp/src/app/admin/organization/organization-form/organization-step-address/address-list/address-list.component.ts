@@ -1,16 +1,17 @@
-import { Component, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { AddressModel, ColumnItem, ContactModel } from 'src/app/shared/models';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { OrganizationSandbox } from '../../../organization.sandbox';
-import { NzModalRef, NzModalService, NzTableQueryParams } from 'ng-zorro-antd';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd';
 import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-address-list',
   templateUrl: './address-list.component.html',
   styleUrls: ['./address-list.component.less'],
 })
-export class AddressListComponent {
+export class AddressListComponent implements OnInit, OnDestroy {
   @Input() isEditOrganization: boolean;
   @Input() addresses: AddressModel[];
   @Output() deleteAddress: EventEmitter<AddressModel> = new EventEmitter<AddressModel>();
@@ -18,6 +19,9 @@ export class AddressListComponent {
 
   addressModel: AddressModel;
   contactModel: ContactModel;
+
+  private subscriptions: Subscription[] = [];
+  addressesToDelete: AddressModel[] = [];
 
   name = '';
   street = '';
@@ -36,6 +40,7 @@ export class AddressListComponent {
   total = 0;
   pageSize = 10;
   pageIndex = 1;
+  item: AddressModel;
 
   expandSet = new Set<number>();
   addressItemFormGroup = new FormGroup({
@@ -66,6 +71,28 @@ export class AddressListComponent {
     private translateService: TranslateService
   ) {}
 
+  ngOnInit() {
+    this.registerEvents();
+  }
+
+  ngOnDestroy(): void {
+    this.unregisterEvents();
+  }
+
+  registerEvents() {
+    this.subscriptions.push(
+      this.organizationSandbox.deleteSuccess$.subscribe((success) => {
+        if (success) {
+          this.deleteAddress.emit(this.addressModel);
+        }
+      })
+    );
+  }
+
+  private unregisterEvents() {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
   editAddress(item: AddressModel, index: number) {
     this.itemIndex = index;
     this.addressModel = item;
@@ -89,12 +116,9 @@ export class AddressListComponent {
             'Admin.Organization.OrganizationSteps.Address.OneAddressRemainWarningMessage'
           ),
         });
-        this.addresses = this.addresses.filter((a) => a !== item);
-        this.deleteAddress.emit(item);
       } else {
+        this.addressModel = item;
         this.organizationSandbox.deleteAddress(item);
-        this.addresses = this.addresses.filter((a) => a !== item);
-        this.deleteAddress.emit(item);
       }
     }
   }

@@ -6,12 +6,14 @@ export const addressFeatureKey = 'address';
 
 // selectors
 export const getEntityState = createFeatureSelector<AddressState>(addressFeatureKey);
+export const getFailedStatus = createSelector(getEntityState, (state: AddressState) => state.failed);
 export const getCountries = createSelector(getEntityState, (state: AddressState) => state.countries);
 export const getStates = createSelector(getEntityState, (state: AddressState) => state.states);
 export const getCities = createSelector(getEntityState, (state: AddressState) => state.cities);
 export const getAddressLoading = createSelector(getEntityState, (state: AddressState) => state.loading);
 export const getAddressesByOrganizationId = createSelector(getEntityState, (state: AddressState) => state.items);
 export const getAddressesLoading = createSelector(getEntityState, (state: AddressState) => state.loading);
+export const getDeleteSuccess = createSelector(getEntityState, (state: AddressState) => state.success);
 
 @Injectable()
 export class DonationSelectors {
@@ -23,4 +25,5 @@ export class DonationSelectors {
   cities$ = this.store.select(getCities);
   addresses$ = this.store.select(getAddressesByOrganizationId);
   loading$ = this.store.select(getAddressesLoading);
+  deleteSuccess$ = this.store.select(getDeleteSuccess);
 }
