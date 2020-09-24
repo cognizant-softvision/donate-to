@@ -131,7 +131,7 @@ namespace DonateTo.Services
         {
             var predicate = GetPredicate(filter);
 
-            return await _donationRequestRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicate, GetSort(filter)).ConfigureAwait(false);
+            return await _donationRequestRepository.GetPagedForAdminAsync(filter.PageNumber, filter.PageSize, predicate, GetSort(filter)).ConfigureAwait(false);
         }
 
         ///<inheritdoc cref="BaseService{DonationRequest, DonationRequestFilterModel}"/>

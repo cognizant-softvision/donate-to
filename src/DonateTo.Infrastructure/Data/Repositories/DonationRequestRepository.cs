@@ -43,6 +43,20 @@ namespace DonateTo.Infrastructure.Data.Repositories
         public override async Task<ApplicationCore.Models.Pagination.PagedResult<DonationRequest>>
             GetPagedAsync(int page, int pageSize, Expression<Func<DonationRequest, bool>> filter = null, string sort = "")
         {
+            var today = DateTime.UtcNow.Date;
+
+            var donationRequests = GetHydratedDonationRequests()
+                .Where(d => (d.Address.IsDeleted == false) &&
+                            (d.FinishDate >= today))
+                .FilterAndSort(filter, sort);
+            
+
+            return await donationRequests.GetPagedAsync(page, pageSize).ConfigureAwait(false);
+        }
+
+        public async Task<ApplicationCore.Models.Pagination.PagedResult<DonationRequest>>
+            GetPagedForAdminAsync(int page, int pageSize, Expression<Func<DonationRequest, bool>> filter = null, string sort = "")
+        {
             var donationRequests = GetHydratedDonationRequests()
                 .Where(d => d.Address.IsDeleted == false)
                 .FilterAndSort(filter, sort);
