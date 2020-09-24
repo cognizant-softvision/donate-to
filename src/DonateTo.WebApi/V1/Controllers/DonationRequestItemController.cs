@@ -6,6 +6,7 @@ using Microsoft.Extensions.Primitives;
 using Microsoft.AspNetCore.Authorization;
 using DonateTo.ApplicationCore.Models.Filtering;
 using System.Collections.Generic;
+using System;
 
 namespace DonateTo.WebApi.V1.Controllers
 {
@@ -56,6 +57,10 @@ namespace DonateTo.WebApi.V1.Controllers
                 catch (KeyNotFoundException ex)
                 {
                     return NotFound(ex);
+                }
+                catch (Exception e)
+                {
+                    return UnprocessableEntity(e.Message);
                 }
             }
         }
