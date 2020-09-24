@@ -16,5 +16,6 @@ namespace DonateTo.ApplicationCore.Entities
         public Unit Unit { get; set; }       
         public IEnumerable<DonationRequestItemCategory> DonationRequestItemCategories { get; set; }
         public bool IsDeleted { get; set; }
+        public long DonationRequestId { get; set; }
     }
 }
