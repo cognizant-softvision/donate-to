@@ -47,7 +47,7 @@ namespace DonateTo.Infrastructure.Data.Repositories
 
             var donationRequests = GetHydratedDonationRequests()
                 .Where(d => (d.Address.IsDeleted == false) &&
-                            (d.FinishDate >= today))
+                            ((d.FinishDate >= today) || (d.FinishDate == null)))
                 .FilterAndSort(filter, sort);
             
 
