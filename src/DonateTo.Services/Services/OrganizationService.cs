@@ -107,6 +107,25 @@ namespace DonateTo.Services
             return await _organizationRepository.GetPagedAsync(filter.PageNumber, filter.PageSize, predicate, GetSort(filter)).ConfigureAwait(false);
         }
 
+        public async Task<Organization> UpdateAsync(Organization organization, long id, long userId)
+        {
+            if (organization == null)
+            {
+                throw new ArgumentNullException(typeof(Organization).ToString(), "Entity is null.");
+            }
+            else if (organization.Id != id)
+            {
+                throw new InvalidOperationException("Entity id and id parameter does not match.");
+            }
+
+            organization.UpdateDate = DateTime.UtcNow;
+
+            organization = await _organizationRepository.UpdateAsync(organization, userId).ConfigureAwait(false);
+            await _unitOfWork.SaveAsync().ConfigureAwait(false);
+
+            return organization;
+        }
+
         public async Task SoftDelete(long organizationId)
         {
             await _organizationRepository.SoftDeleteOrganization(organizationId).ConfigureAwait(false);

@@ -7,5 +7,7 @@ namespace DonateTo.ApplicationCore.Interfaces.Repositories
     {
         Task SoftDeleteOrganization(long organizationId);
         Task SoftDeleteAddress(Address address);
+        Task<Organization> UpdateAsync(Organization organization, long userId);
+
     }
 }

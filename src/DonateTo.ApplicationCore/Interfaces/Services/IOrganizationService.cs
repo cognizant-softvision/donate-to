@@ -37,5 +37,14 @@ namespace DonateTo.ApplicationCore.Interfaces.Services
         /// <returns></returns>
         Task SendDeletedOrganizationMailAsync(Contact contact, string client);
 
+        /// <summary>
+        /// Update the organization previous validate if the user can do that request
+        /// </summary>
+        /// <param name="organization">organization to update</param>
+        /// <param name="id">id of organization to update</param>
+        /// <param name="userId">id of user who wants do the update</param>
+        /// <returns></returns>
+        Task<Organization> UpdateAsync(Organization organization, long id, long userId);
+
     }
 }
