@@ -93,6 +93,20 @@ namespace DonateTo.Infrastructure.Data.Repositories
             await DbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
+        ///<inheritdoc cref="IRepository{Organization}"/>
+        public async Task<Organization> UpdateAsync(Organization organization, long userId)
+        {
+            var organizations = DbContext.Organizations.Where(o => o.UserOrganizations.Any(uo => uo.UserId.Equals(userId)));
+
+            if (!organizations.Any(o => o.Id == organization.Id))
+            {
+                throw new Exception("The user is not able to do that request");
+            }
+
+            DbContext.Set<Organization>().Update(organization);
+            return await Task.FromResult(organization).ConfigureAwait(false);
+        }
+
         #region private
         private IQueryable<Organization> GetHydratedOrganization()
         {

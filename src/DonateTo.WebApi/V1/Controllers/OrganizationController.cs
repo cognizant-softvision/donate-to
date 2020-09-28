@@ -73,14 +73,21 @@ namespace DonateTo.WebApi.V1.Controllers
         [ServiceFilter(typeof(AdminAccessFilter))]
         public override async Task<IActionResult> Put(long id, [FromBody] Organization organization)
         {
-            var organizations = await _organizationService.GetByUserIdAsync(GetUserId()).ConfigureAwait(false);
-
-            if (!organizations.Any(o => o.Id == id))
+            if (!ModelState.IsValid)
             {
-                return Unauthorized();
+                return BadRequest();
             }
-
-            return await base.Put(id, organization).ConfigureAwait(false);
+            else
+            {
+                try
+                {
+                    return Ok(await _organizationService.UpdateAsync(organization, id, GetUserId()).ConfigureAwait(false));
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e);
+                }
+            }
         }
 
         /// <summary>
